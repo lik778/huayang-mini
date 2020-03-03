@@ -1,0 +1,24 @@
+/* pages/list/list.wxss */
+.list .img-item {
+    width: 100%;
+    height: 300rpx;
+    position: relative;
+    margin-bottom: 10rpx;
+}
+
+.img-item image {
+    width: 100%;
+    height: 100%;
+    vertical-align: bottom;
+}
+.list .img-item .img-grade{
+    position: absolute;
+    left:0;
+    top:0;
+    width:60rpx;
+    height:60rpx;
+    text-align: center;
+    line-height: 60rpx;
+    background:#ddd;
+    border-radius: 0 4px 4px 0;
+}

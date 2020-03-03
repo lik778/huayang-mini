@@ -1,0 +1,4 @@
+<!--index.wxml-->
+<view class="container">
+  <button bindtap="enterList" type="primary">进入列表页</button>
+</view>
