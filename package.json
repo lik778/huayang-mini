@@ -1,0 +1,21 @@
+{
+  "name": "huayang-miniprogram",
+  "version": "1.0.0",
+  "description": "测试\r hi",
+  "main": "app.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.baixing.cn:hy-dev/huayang-miniprogram.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "md5": "^2.2.1"
+  }
+}
