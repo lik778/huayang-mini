@@ -1,13 +1,15 @@
 //index.js
 //获取应用实例
 const app = getApp()
-
+import { createStoreBindings } from 'mobx-miniprogram-bindings'
+import { store } from '../../store/index'
 Page({
   data: {
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    someData: '...'
   },
   //事件处理函数
   bindViewTap: function() {
