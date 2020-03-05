@@ -16,6 +16,12 @@ Page({
     })
   },
   onLoad: function () {
+    setTimeout(()=>{
+      wx.$request._get("/hy/banner/list?scene=1")
+    },3000)
+    
+
+
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -55,6 +61,18 @@ Page({
   enterList:()=>{
     wx.navigateTo({
       url: '../list/list',
+    })
+  },
+  // 进入地图
+  enterMap:()=>{
+    wx.navigateTo({
+      url: '../map/map',
+    })
+  },
+  // 进入直播
+  enterLive:()=>{
+    wx.navigateTo({
+      url: '../live/live',
     })
   }
 })

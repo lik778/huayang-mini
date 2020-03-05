@@ -1,4 +1,6 @@
 <!--index.wxml-->
 <view class="container">
   <button bindtap="enterList" type="primary">进入列表页</button>
+  <button bindtap="enterMap" type="primary">进入地图</button>
+  <button bindtap="enterLive" type="primary">进入直播</button>
 </view>

@@ -2,7 +2,8 @@
     "pages": [
         "pages/index/index",
         "pages/list/list",
-        
+        "pages/map/map",
+        "pages/live/live",
         "pages/logs/logs"
     ],
     "window": {
