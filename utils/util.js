@@ -1,4 +1,4 @@
-const md5 = require("md5")
+import md5 from 'md5'
 const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -7,15 +7,22 @@ const formatTime = date => {
   const minute = date.getMinutes()
   const second = date.getSeconds()
 
-  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+	return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
+
 // 查询token
-const queryToken = () => {
-  let memberUserInfo = "userInfo"; //普通平台成员用户信息,
-  return wx.getStorageSync(memberUserInfo) || {};
+export const queryToken = () => {
+	let memberUserInfo = "userInfo" // 普通平台成员用户信息,
+	return wx.getStorageSync(memberUserInfo) || {}
 }
+
+export const formatNumber = n => {
+	n = n.toString()
+	return n[1] ? n : '0' + n
+}
+
 // 唤起微信支付
-const requestPayment = (params) => {
+export const requestPayment = (params) => {
   let datas=getSign({
     prepay_id: params.prepay_id,
     key: params.key
@@ -31,8 +38,9 @@ const requestPayment = (params) => {
   //   fail(res) {}
   // })
 }
+
 // 生成支付的一系列数据sign
-const getSign = (paramsData) => {
+export const getSign = (paramsData) => {
   let params = {
     appId: "wx5705fece1e1cdc1e",
     timeStamp: parseInt(new Date().getTime() / 1000).toString(),
@@ -61,14 +69,22 @@ const getSign = (paramsData) => {
   return params;
 }
 
-// 格式化数字
-const formatNumber = n => {
-  n = n.toString()
-  return n[1] ? n : '0' + n
+/**
+ * 判断对象类型是否是空
+ * @param obj
+ * @returns {boolean} true => 不为空，false => 为空
+ */
+export const $notNull = (obj) => {
+  if (obj == null) return false;
+  if (Array.isArray(obj)) {
+    if (obj.length) {
+      return true;
+    }
+  } else if (Object.prototype.toString.call(obj) === "[object Object]") {
+    if (Object.keys(obj).length) {
+      return true;
+    }
+  }
+  return false;
 }
 
-module.exports = {
-  formatTime: formatTime,
-  queryToken,
-  requestPayment
-}

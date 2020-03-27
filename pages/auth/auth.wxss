@@ -1,0 +1,32 @@
+/* pages/auth/auth.wxss */
+.auth {
+  padding: 0 20px;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.txt {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.title {
+  font-size: 20px;
+}
+
+.desc {
+  font-size: 14px;
+  color: #333;
+}
+
+.main-title {
+  font-size: 18px;
+}

@@ -1,0 +1,4 @@
+<!--components/Tab/tab.wxml-->
+<view>
+  <text>This is a tab component.</text>
+</view>

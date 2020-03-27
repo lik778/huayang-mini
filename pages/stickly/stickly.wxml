@@ -1,0 +1,6 @@
+<view id="container" style="height: 250px; background-color: #E0E0E0;">
+  <view style="height: 100px; background-color: #FFFF99;"></view>
+  <mp-sticky container="{{container}}" offset-top="64">
+    <button size="mini" type="primary" style="margin-left: 215px; background-color: #ff976a">指定容器</button>
+  </mp-sticky>
+</view>
