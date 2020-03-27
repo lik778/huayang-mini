@@ -16,6 +16,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "md5": "^2.2.1"
+    "md5": "^2.2.1",
+    "miniprogram-computed": "^2.1.1",
+    "miniprogram-recycle-view": "^0.1.5",
+    "mobx-miniprogram": "^4.13.2",
+    "mobx-miniprogram-bindings": "^1.2.0"
   }
 }

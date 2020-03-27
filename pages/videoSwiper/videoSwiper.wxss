@@ -1,0 +1,10 @@
+/* pages/videoSwiper/videoSwiper.wxss */
+page{
+    background-color: #FFFFFF;
+    height: 100%;
+}
+
+mp-video-swiper {
+    width: 100%;
+    height: 100%;
+}

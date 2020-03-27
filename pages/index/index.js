@@ -74,5 +74,10 @@ Page({
     wx.navigateTo({
       url: '../live/live',
     })
+  },
+  enterRank:()=> {
+    wx.navigateTo({
+      url: "../rank/rank",
+    })
   }
 })

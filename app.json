@@ -1,10 +1,20 @@
 {
     "pages": [
         "pages/index/index",
+        "pages/rank/rank",
+        "pages/mobx/mobx",
         "pages/list/list",
         "pages/map/map",
         "pages/live/live",
-        "pages/logs/logs"
+        "pages/logs/logs",
+        "pages/recycleView/recycleView",
+        "pages/videoSwiper/videoSwiper",
+        "pages/tabs/tabs",
+        "pages/vtabs/vtabs",
+        "pages/indexList/indexList",
+        "pages/barrage/barrage",
+        "pages/canvas/canvas",
+        "pages/stickly/stickly"
     ],
     "window": {
         "backgroundTextStyle": "light",
