@@ -1,48 +1,42 @@
 {
-    "pages": [
-        "pages/mall/mall",
-        "pages/index/index",
-        "pages/rank/rank",
-        "pages/auth/auth",
-        "pages/mobx/mobx",
-        "pages/list/list",
-        "pages/map/map",
-        "pages/live/live",
-        "pages/mine/mine"
-        "pages/logs/logs",
-        "pages/recycleView/recycleView",
-        "pages/videoSwiper/videoSwiper",
-        "pages/tabs/tabs",
-        "pages/vtabs/vtabs",
-        "pages/indexList/indexList",
-        "pages/barrage/barrage",
-        "pages/canvas/canvas",
-        "pages/stickly/stickly"
-    ],
-    "window": {
-        "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "花样小程序",
-        "navigationBarTextStyle": "black"
-    },
-    "tabBar": {
-        "custom":false,
-        "color": "#fff",
-        "selectedColor": "#f44",
-        "backgroundColor": "#fff",
-        "list": [{
-                "pagePath": "pages/mall/mall",
-                "iconPath": "",
-                "text": "商城"
-            },
-            {
-                "pagePath":  "pages/mine/mine",
-                "iconPath": "",
-                "text": "我的"
-            }
-        ]
-    },
-    "style": "v2",
-    "sitemapLocation": "sitemap.json"
+  "pages": [
+    "pages/rank/rank",
+    "pages/mall/mall",
+    "pages/auth/auth",
+    "pages/mobx/mobx",
+    "pages/live/live",
+    "pages/mine/mine",
+    "pages/recycleView/recycleView",
+    "pages/videoSwiper/videoSwiper",
+    "pages/tabs/tabs",
+    "pages/vtabs/vtabs",
+    "pages/indexList/indexList"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "花样小程序",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "custom": false,
+    "color": "#fff",
+    "selectedColor": "#f44",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/mall/mall",
+        "iconPath": "",
+        "text": "商城"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "iconPath": "",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
 }
 
