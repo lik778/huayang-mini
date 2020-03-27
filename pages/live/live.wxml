@@ -1,5 +1,6 @@
 <!--pages/live/live.wxml-->
 <view class="live">
-   <navigator url="plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id={{roomId}}&custom_params={{customParams}}">直播</navigator>
-   <view bindtap="getReview">获取回看</view>
+  <navigator url="plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id={{roomId}}&custom_params={{customParams}}"><button style="margin-bottom: 20px;" type="primary">看直播</button></navigator>
+
+  <button bindtap="enterHistory">看历史直播</button>
 </view>

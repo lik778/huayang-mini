@@ -1,4 +1,6 @@
 // pages/auth/auth.js
+import { wxGetUserInfoPromise } from '../../utils/auth.js'
+import { GLOBAL_KEY } from '../../lib/config.js'
 Page({
 
   /**
@@ -62,5 +64,24 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  getUserInfo() {
+    try {
+      wxGetUserInfoPromise().then(response => {
+        console.log(response)
+        wx.setStorageSync(GLOBAL_KEY.userInfo, response)
+      })
+    } catch(error) {
+      console.log('用户取消微信授权')
+    }
+
+  },
+  getPhoneNumber(e) {
+   if (e.detail.errMsg.includes('ok')) {
+     console.log(e.detail)
+     // TODO 将加密数据传递给后台
+   } else {
+     console.log('用户取消手机号授权')
+   }
   }
 })

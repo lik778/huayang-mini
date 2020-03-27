@@ -1,15 +1,15 @@
 {
-  "pages": [
-    "pages/live/live",
-    "pages/auth/auth",
-    "pages/mall/mall"
-  ],
   "plugins": {
     "live-player-plugin": {
       "version": "1.0.3",
       "provider": "wx2b03c6e691cd7370"
     }
   },
+  "pages": [
+    "pages/live/live",
+    "pages/auth/auth",
+    "pages/mall/mall"
+  ],
   "subpackages": [{
     "root": "mine",
     "pages": [
