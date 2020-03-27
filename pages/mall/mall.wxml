@@ -1,6 +1,6 @@
 <!--pages/mall/mall.wxml-->
 <view class="mall">
-	<!-- <view class="list-main">
+	<view class="list-main">
 		<block wx:for="{{listData}}" wx:key="index">
 			<view class="list-item">
 				<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class="swiper">
@@ -20,5 +20,5 @@
 	</view>
     <view class="address-module" wx:if="{{showAddressMedal}}">
         <address bind:closeMadel="closeMadel" bind:buy="buyNow"></address>
-    </view> -->
+    </view>
 </view>

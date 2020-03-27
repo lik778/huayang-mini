@@ -1,4 +1,4 @@
-// mine/mine/videoSwiper/videoSwiper.js
+// pages/mine/mine.js
 Page({
 
     /**

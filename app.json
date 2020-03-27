@@ -1,11 +1,6 @@
 {
-  "plugins": {
-    "live-player-plugin": {
-      "version": "1.0.3",
-      "provider": "wx2b03c6e691cd7370"
-    }
-  },
   "pages": [
+    "pages/mine/mine",
     "pages/live/live",
     "pages/auth/auth",
     "pages/mall/mall"
@@ -13,13 +8,6 @@
   "subpackages": [{
     "root": "mine",
     "pages": [
-      "mine/tabs/tabs",
-      "mine/vtabs/vtabs",
-      "mine/indexList/indexList",
-      "mine/rank/rank",
-      "mine/mobx/mobx",
-      "mine/recycleView/recycleView",
-      "mine/videoSwiper/videoSwiper"
     ]
   }],
   "window": {
@@ -42,10 +30,16 @@
         "text": "商城"
       },
       {
-        "pagePath": "pages/auth/auth",
+        "pagePath": "pages/mine/mine",
         "text": "我的"
       }
     ]
+  },
+  "plugins": {
+    "live-player-plugin": {
+      "version": "1.0.3",
+      "provider": "wx2b03c6e691cd7370"
+    }
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"

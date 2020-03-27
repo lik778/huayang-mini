@@ -13,7 +13,7 @@ const checkAuth = () => {
 				wx.setStorageSync(GLOBAL_KEY.userInfo, originData)
 			} else {
 				// 跳转到授权页面
-				wx.navigateTo({
+				wx.redirectTo({
 					url: '/pages/auth/auth'
 				})
 			}
