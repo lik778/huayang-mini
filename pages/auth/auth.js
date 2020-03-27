@@ -1,5 +1,5 @@
 // pages/auth/auth.js
-import {} from ''
+// import {} from ''
 Page({
 
   /**
