@@ -2,6 +2,7 @@
     "pages": [
         "pages/index/index",
         "pages/rank/rank",
+        "pages/auth/auth",
         "pages/mobx/mobx",
         "pages/list/list",
         "pages/map/map",
