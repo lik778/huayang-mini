@@ -1,16 +1,31 @@
 {
     "pages": [
-        "pages/index/index",
-        "pages/list/list",
-        "pages/map/map",
+        "pages/mall/mall",
         "pages/live/live",
-        "pages/logs/logs"
+        "pages/mine/mine"
     ],
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#fff",
         "navigationBarTitleText": "花样小程序",
         "navigationBarTextStyle": "black"
+    },
+    "tabBar": {
+        "custom":false,
+        "color": "#fff",
+        "selectedColor": "#f44",
+        "backgroundColor": "#fff",
+        "list": [{
+                "pagePath": "pages/mall/mall",
+                "iconPath": "",
+                "text": "商城"
+            },
+            {
+                "pagePath":  "pages/mine/mine",
+                "iconPath": "",
+                "text": "我的"
+            }
+        ]
     },
     "style": "v2",
     "sitemapLocation": "sitemap.json"

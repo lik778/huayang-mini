@@ -1,4 +1,0 @@
-<!--pages/map/map.wxml-->
-<view class="map">
-	<map longitude="{{lgt}}" latitude="{{lat}}" markers="{{markers}}"></map>
-</view>
