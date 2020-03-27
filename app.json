@@ -4,20 +4,24 @@
     "pages/auth/auth",
     "pages/mall/mall"
   ],
-  "subpackages": [
-     {
-      "root": "mine",
-      "pages": [
-        "mine/tabs/tabs",
-        "mine/vtabs/vtabs",
-        "mine/indexList/indexList",
-        "mine/rank/rank",
-        "mine/mobx/mobx",
-        "mine/recycleView/recycleView",
-        "mine/videoSwiper/videoSwiper"
-      ]
+  "plugins": {
+    "live-player-plugin": {
+      "version": "1.0.3",
+      "provider": "wx2b03c6e691cd7370"
     }
-  ],
+  },
+  "subpackages": [{
+    "root": "mine",
+    "pages": [
+      "mine/tabs/tabs",
+      "mine/vtabs/vtabs",
+      "mine/indexList/indexList",
+      "mine/rank/rank",
+      "mine/mobx/mobx",
+      "mine/recycleView/recycleView",
+      "mine/videoSwiper/videoSwiper"
+    ]
+  }],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
@@ -29,15 +33,16 @@
     "color": "#999",
     "selectedColor": "#000",
     "backgroundColor": "#fff",
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/live/live",
-        "iconPath": "",
         "text": "直播"
       },
       {
+        "pagePath": "pages/mall/mall",
+        "text": "商城"
+      },
+      {
         "pagePath": "pages/auth/auth",
-        "iconPath": "",
         "text": "我的"
       }
     ]
@@ -45,4 +50,3 @@
   "style": "v2",
   "sitemapLocation": "sitemap.json"
 }
-

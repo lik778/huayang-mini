@@ -5,14 +5,23 @@ Page({
      * 页面的初始数据
      */
     data: {
-
+        roomId:[4],
+        customParams :encodeURIComponent(JSON.stringify({ path: 'pages/live/live' }))
     },
-
+    getReview(){
+        let params={
+            "action": "get_replay",
+            "room_id": 3, 
+            "start": 0, 
+            "limit": 10 
+        }
+        console.log(wx.$request)
+        wx.$request._get("http://api.weixin.qq.com/wxa/business/getliveinfo?access_token=ssssssadawqwdq",{type:"POST"})
+    },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
     },
 
     /**

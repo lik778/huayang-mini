@@ -9,43 +9,18 @@ Page({
         listData: [{
                 title: "粉底",
                 price: 69,
-                imgList: ["../../images/mall/1.jpg", "../../images/mall/2.jpg", "../../images/mall/3.jpg"]
+                imgList: ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1585301020xMaixX.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1585301020qAMChh.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1585301020LgUNZr.jpg"]
             },
             {
                 title: "睫毛膏",
                 price: 45,
-                imgList: ["../../images/mall/4.jpg", "../../images/mall/5.jpg", "../../images/mall/6.jpg"]
+                imgList: ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1585301020KEOErV.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1585301020bPvuuP.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1585301020OJsLHM.jpg"]
             },
             {
                 title: "三色修容粉",
                 price: 69,
-                imgList: ["../../images/mall/7.jpg", "../../images/mall/8.jpg", "../../images/mall/9.jpg"]
-            },
-            {
-                title: "十色眼影",
-                price: 89,
-                imgList: ["../../images/mall/10.jpg", "../../images/mall/11.jpg", "../../images/mall/12.jpg"]
-            },
-            {
-                title: "香蕉散粉",
-                price: 58,
-                imgList: ["../../images/mall/13.jpg", "../../images/mall/14.jpg", "../../images/mall/15.jpg"]
-            },
-            {
-                title: "英格芮眉膏",
-                price: 45,
-                imgList: ["../../images/mall/16.jpg", "../../images/mall/17.jpg", "../../images/mall/18.jpg"]
-            },
-            {
-                title: "遮瑕粉底液（辛巴推荐）",
-                price: 69,
-                imgList: ["../../images/mall/19.jpg", "../../images/mall/20.jpg", "../../images/mall/21.jpg"]
-            },
-            {
-                title: "妆前隔离",
-                price: 79,
-                imgList: ["../../images/mall/22.jpg", "../../images/mall/23.jpg", "../../images/mall/24.jpg"]
-            },
+                imgList: ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1585301020PeoxQJ.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1585301020vTmPkg.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1585301020PZjCxj.jpg"]
+            }
         ],
         indicatorDots: true,
         autoplay: true,
