@@ -8,7 +8,7 @@
         "pages/list/list",
         "pages/map/map",
         "pages/live/live",
-        "pages/mine/mine"
+        "pages/mine/mine",
         "pages/logs/logs",
         "pages/recycleView/recycleView",
         "pages/videoSwiper/videoSwiper",
