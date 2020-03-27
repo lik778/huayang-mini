@@ -1,0 +1,12 @@
+<!--pages/auth/auth.wxml-->
+<view class="auth">
+    <text class="txt title">花样值得买</text>
+    <view class="box">
+      <text class="txt main-title" open-type="getUserInfo" bindgetuserinfo="">1. 请您完成微信授权</text>
+      <button type="primary">立即授权</button>
+    </view>
+    <view class="box">
+      <text class="txt main-title" open-type="getPhoneNumber" bindgetphonenumber="">2. 为了给您提供更好的服务，推荐合适的商品，请您绑定您的手机号</text>
+      <button type="primary">立即绑定</button>
+    </view>
+</view>

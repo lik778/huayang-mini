@@ -7,7 +7,7 @@ App({
     wx.$request = request
 
     // 每次打开app检查授权
-    checkAuth()
+    // checkAuth()
 
     // 获取用户信息
     // wx.getSetting({
