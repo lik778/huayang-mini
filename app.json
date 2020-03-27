@@ -1,16 +1,22 @@
 {
   "pages": [
-    "pages/rank/rank",
-    "pages/mall/mall",
-    "pages/auth/auth",
-    "pages/mobx/mobx",
     "pages/live/live",
-    "pages/mine/mine",
-    "pages/recycleView/recycleView",
-    "pages/videoSwiper/videoSwiper",
-    "pages/tabs/tabs",
-    "pages/vtabs/vtabs",
-    "pages/indexList/indexList"
+    "pages/auth/auth",
+    "pages/mall/mall"
+  ],
+  "subpackages": [
+     {
+      "root": "mine",
+      "pages": [
+        "mine/tabs/tabs",
+        "mine/vtabs/vtabs",
+        "mine/indexList/indexList",
+        "mine/rank/rank",
+        "mine/mobx/mobx",
+        "mine/recycleView/recycleView",
+        "mine/videoSwiper/videoSwiper"
+      ]
+    }
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -20,17 +26,17 @@
   },
   "tabBar": {
     "custom": false,
-    "color": "#fff",
-    "selectedColor": "#f44",
+    "color": "#999",
+    "selectedColor": "#000",
     "backgroundColor": "#fff",
     "list": [
       {
-        "pagePath": "pages/mall/mall",
+        "pagePath": "pages/live/live",
         "iconPath": "",
-        "text": "商城"
+        "text": "直播"
       },
       {
-        "pagePath": "pages/mine/mine",
+        "pagePath": "pages/auth/auth",
         "iconPath": "",
         "text": "我的"
       }

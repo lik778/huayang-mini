@@ -1,7 +1,0 @@
-<view style="height: 100%;">
-  <text>MobX Page</text>
-  <view>
-    <text>{{numA}} + {{numB}} = {{sum}} </text>
-  </view>
-  <tab></tab>
-</view>

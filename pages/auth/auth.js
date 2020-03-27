@@ -1,5 +1,4 @@
 // pages/auth/auth.js
-// import {} from ''
 Page({
 
   /**
