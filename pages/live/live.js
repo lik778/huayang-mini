@@ -5,7 +5,9 @@ Page({
      * 页面的初始数据
      */
     data: {
-
+      api: 'http://api.weixin.qq.com/wxa/business/getliveinfo?access_token=',
+      roomId: 4,
+      customParams: encodeURIComponent(JSON.stringify({ path: 'pages/live/live'}))
     },
 
     /**
@@ -63,7 +65,23 @@ Page({
     onShareAppMessage: function () {
 
     },
-    statechange:(e)=>{
-        console.log(e)
-    }
+    enterHistory() {
+      wx.request({
+        url: 'http://api.weixin.qq.com/wxa/business/getliveinfo?access_token=',
+        method: 'get',
+        data: {
+          "action": "get_replay", // 获取回放
+          "room_id": 4, // 直播间   id
+          "start": 0, // 起始拉取视频，start = 0 表示从第 1 个视频片段开始拉取
+          "limit": 10 // 每次拉取的个数上限，不要设置过大，建议 100 以内
+        },
+        complete: (res) => {
+          console.log('res = ')
+          if (res.statusCode >= 200 && res.statusCode < 300) {
+            console.log(res)
+          } else {
+            console.error(res.message)
+          }}
+        })
+      }
 })

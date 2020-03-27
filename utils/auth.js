@@ -100,5 +100,7 @@ function wxGetSettingPromise(authKey = WX_AUTH_TYPE.userInfo) {
 export {
 	wxCheckSessionPromise,
 	wxLoginPromise,
+  wxGetUserInfoPromise,
+  wxGetSettingPromise,
 	checkAuth
 }
