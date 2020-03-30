@@ -1,0 +1,6 @@
+<!--mine/poster/poster.wxml-->
+<view class="poster">
+    <image src="{{qcCode}}" wx:if="{{qcCode!==''}}"></image>
+    <button type="primary" open-type="share" class="share">分享好友</button>
+    <button type="primary" bindtap="saveAlbum">保存到相册</button>
+</view>

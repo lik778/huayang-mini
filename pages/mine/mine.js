@@ -11,7 +11,10 @@ Page({
      * 页面的初始数据
      */
     data: {
-
+        userInfo: {},
+        width: 200,
+        inviteList: ["http://wx.qlogo.cn/mmhead/ver_1/elNO9PdibZmwiaSIvqhnPAA82r7o6Hnr0ibHwu0tsRF9925CN8X9ws4dx2hNc2Y4emaQ7KTUyQkF5giamfS3pa4BkW9ShfETbwoga96u7KAxxcM/132", 'http://wx.qlogo.cn/mmhead/ver_1/icNS8hT9WC6VmtqIAZXs3xia9iaeFwAbcWBV2lBoKhHrACduOR63vZTbDdkicvIOMceG1H1Ip9Q1SDAFicMH7icvIJHqKR5GPzdeATEOaZuXWKNQU/132', 'http://wx.qlogo.cn/mmhead/ver_1/O1AYCQEL5vF6zcQRGgvaPpn0yWs6iasFRsSIJ86FSWzA6ab0prkliaqKiajiarc5Cib88zWH8TxbhqpB9S4GYcPdQIA/132', 'http://wx.qlogo.cn/mmhead/ver_1/QwFET9thFpB7NAdcLibBg8G2TONicBLlanzJIicuyO1g0hBUxWpOMwlQHwgFVJwia9roVic1skxX3KHaw90jTDTibdRQIC6SqcqgZQE6niaJicFNFBI/132'],
+        inviteNum:4
     },
 
     /**
@@ -23,8 +26,24 @@ Page({
             fields: ['numA', 'numB', 'sum'],
             actions: ['update'],
         })
+        this.getUserInfo()
     },
-
+    /**
+     *事件
+     */
+    // 本地缓存获取用户信息
+    getUserInfo() {
+        let userInfo = wx.getStorageSync("hy_applets_user_info").userInfo
+        this.setData({
+            userInfo: userInfo
+        })
+    },
+    // 跳往会员权益页
+    toVip(){
+        wx.navigateTo({
+          url: '/mine/joinVip/joinVip',
+        })
+    },
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
@@ -41,9 +60,9 @@ Page({
         }, 4000)
     },
     // 事件
-    toMall(){
+    toMall() {
         wx.switchTab({
-          url: '/pages/mall/mall',
+            url: '/pages/mall/mall',
         })
     },
     /**

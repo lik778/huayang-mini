@@ -1,0 +1,13 @@
+<!--mine/joinVip/joinVip.wxml-->
+<view class="join-vip">
+	<view class="bottom-button">
+		<view class="poster" bindtap="toPoster">
+			<text>生成邀请海报</text>
+			<text>免费获取会员</text>
+		</view>
+		<view class="bug-vip">
+			<text>购买会员</text>
+			<text>¥365.00/年</text>
+		</view>
+	</view>
+</view>

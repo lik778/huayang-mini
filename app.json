@@ -11,7 +11,13 @@
     "pages/auth/auth",
     "pages/mall/mall"
   ],
-  "subpackages": [],
+  "subpackages": [{
+    "root": "mine",
+    "pages": [
+      "joinVip/joinVip",
+      "poster/poster"
+    ]
+  }],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
@@ -23,8 +29,7 @@
     "color": "#999",
     "selectedColor": "#000",
     "backgroundColor": "#fff",
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/live/live",
         "text": "直播"
       },

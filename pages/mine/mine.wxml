@@ -1,5 +1,32 @@
 <!--pages/mine/mine.wxml-->
 <view class="mine">
-     <view>我的{{sum}}</view>
-     <button type="primary" bindtap="toMall">跳转改变mobx</button>
+	<view class="user-module">
+		<view class="head-img-line">
+			<text class="head-img-label">头像：</text>
+			<image src="{{userInfo.avatarUrl}}" class="head-img"></image>
+		</view>
+		<view class="nick-name-line">
+			<text class="nick-name-label">昵称：</text>
+			<text class="nick-name-">{{userInfo.nickName}}</text>
+		</view>
+	</view>
+	<view class="invite-line">
+		<view class="process-line">
+			<text class="process-label">进度条：</text>
+			<view class="process">
+				<view class="inner-process" style="width:{{width/400*100}}%;"></view>
+			</view>
+		</view>
+		<view class="invite-list">
+			<text class="invite-label">邀请人列表：已邀请{{inviteNum}}/10人</text>
+			<view class="invite-list-line" wx:if="{{inviteList.length!==0}}">
+				<image wx:for="{{inviteList}}" wx:for-index="index" wx:key="index" src="{{item}}" class="invite-img"></image>
+			</view>
+               <view class="invite-button">
+                    <button type="primary" bindtap="toVip">立即邀请</button>
+               </view>
+		</view>
+	</view>
+	<view>我的{{sum}}</view>
+	<button type="primary" bindtap="toMall">跳转改变mobx</button>
 </view>
