@@ -11,13 +11,19 @@
     "pages/auth/auth",
     "pages/mall/mall"
   ],
-  "subpackages": [{
-    "root": "mine",
-    "pages": [
-      "joinVip/joinVip",
-      "poster/poster"
-    ]
-  }],
+  "subpackages": [
+    {
+      "root": "mine",
+      "pages": [
+        "joinVip/joinVip",
+        "poster/poster"
+      ]
+    },
+    {
+      "root": "subLive",
+      "pages": []
+    }
+  ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",

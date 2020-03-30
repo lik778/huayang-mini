@@ -1,23 +1,22 @@
 import { GLOBAL_KEY, WX_AUTH_TYPE } from "../lib/config"
-import { $notNull } from "./util"
+import { $notNull, hasUserInfo, setLocalStorage } from "./util"
 import { getWxInfo } from "../api/auth/index"
 
 const checkAuth = () => {
+	if (hasUserInfo()) return;
 	// 获取最新 res.code 到后台换取 微信用户信息
 	wxLoginPromise()
-		.then((code) => {
-			console.log(`返回的微信code = ${code}`)
-			// 用code查询服务端是否有该用户信息，如果有直接使用，反之从微信获取用户信息保存到服务端
-			// TODO 服务端获取用户信息，暂时使用本地缓存模拟
-			getWxInfo({code, app_id: "wx85d130227f745fc5"}).then((res) => {
-				console.log(res);
-			})
-			let originData = wx.getStorageSync(GLOBAL_KEY.userInfo)
-			if ($notNull(originData)) {
-				wx.setStorageSync(GLOBAL_KEY.userInfo, originData)
+		.then(async (code) => {
+			// 用code查询服务端是否有该用户信息，如果有更新本地用户信息，反之从微信获取用户信息保存到服务端
+			let originUserInfo = await getWxInfo({code, app_id: "wx85d130227f745fc5"})
+			// 缓存openId
+			setLocalStorage(GLOBAL_KEY.openId, originUserInfo.openid)
+			if ($notNull(originUserInfo) && originUserInfo.username) {
+				// 服务端返回用户信息包含username，缓存在本地
+				setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
 			} else {
 				// 跳转到授权页面
-				wx.redirectTo({
+				wx.navigateTo({
 					url: '/pages/auth/auth'
 				})
 			}
