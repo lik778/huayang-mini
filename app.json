@@ -11,20 +11,7 @@
     "pages/auth/auth",
     "pages/mall/mall"
   ],
-  "subpackages": [
-    {
-      "root": "mine",
-      "pages": [
-        "mine/tabs/tabs",
-        "mine/vtabs/vtabs",
-        "mine/indexList/indexList",
-        "mine/rank/rank",
-        "mine/mobx/mobx",
-        "mine/recycleView/recycleView",
-        "mine/videoSwiper/videoSwiper"
-      ]
-    }
-  ],
+  "subpackages": [],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
