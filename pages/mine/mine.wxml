@@ -1,4 +1,5 @@
 <!--pages/mine/mine.wxml-->
 <view class="mine">
-     <view>我的</view>
+     <view>我的{{sum}}</view>
+     <button type="primary" bindtap="toMall">跳转改变mobx</button>
 </view>

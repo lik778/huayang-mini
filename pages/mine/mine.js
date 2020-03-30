@@ -1,4 +1,10 @@
 // pages/mine/mine.js
+import {
+    createStoreBindings
+} from 'mobx-miniprogram-bindings'
+import {
+    store
+} from '../../store'
 Page({
 
     /**
@@ -12,7 +18,11 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+        this.storeBindings = createStoreBindings(this, {
+            store,
+            fields: ['numA', 'numB', 'sum'],
+            actions: ['update'],
+        })
     },
 
     /**
@@ -26,9 +36,16 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-
+        setTimeout(() => {
+            console.log(this.data.sum)
+        }, 4000)
     },
-
+    // 事件
+    toMall(){
+        wx.switchTab({
+          url: '/pages/mall/mall',
+        })
+    },
     /**
      * 生命周期函数--监听页面隐藏
      */

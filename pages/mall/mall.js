@@ -1,5 +1,7 @@
 // pages/mall/mall.js
 const untils=require("../../utils/util.js")
+import { createStoreBindings } from 'mobx-miniprogram-bindings'
+import { store } from '../../store'
 Page({
 
     /**
@@ -63,7 +65,12 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+        this.storeBindings = createStoreBindings(this, {
+            store,
+            fields: ['numA', 'numB', 'sum'],
+            actions: ['update'],
+          })
+          this.update()
     },
 
     /**
