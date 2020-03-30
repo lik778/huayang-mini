@@ -1,4 +1,6 @@
 // pages/live/live.js
+import { createStoreBindings } from 'mobx-miniprogram-bindings'
+import { store } from '../../store'
 Page({
 
     /**
@@ -14,6 +16,11 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+      this.storeBindings = createStoreBindings(this, {
+        store,
+        fields: ['liveTime', 'numA'],
+        actions: ['updateLiveTime'],
+      })
     },
 
     /**
@@ -41,7 +48,7 @@ Page({
      * 生命周期函数--监听页面卸载
      */
     onUnload: function () {
-
+      this.storeBindings.destroyStoreBindings()
     },
 
     /**
@@ -66,9 +73,10 @@ Page({
     },
     enterHistory() {
       wx.request({
-        url: 'http://api.weixin.qq.com/wxa/business/getliveinfo?access_token=',
+        url: 'http://api.weixin.qq.com/wxa/business/getliveinfo',
         method: 'get',
         data: {
+          "access_token": "",
           "action": "get_replay", // 获取回放
           "room_id": 4, // 直播间   id
           "start": 0, // 起始拉取视频，start = 0 表示从第 1 个视频片段开始拉取
