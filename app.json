@@ -10,18 +10,20 @@
     "pages/auth/auth",
     "pages/mall/mall"
   ],
-  "subpackages": [{
-    "root": "mine",
-    "pages": [
-      "mine/tabs/tabs",
-      "mine/vtabs/vtabs",
-      "mine/indexList/indexList",
-      "mine/rank/rank",
-      "mine/mobx/mobx",
-      "mine/recycleView/recycleView",
-      "mine/videoSwiper/videoSwiper"
-    ]
-  }],
+  "subpackages": [
+    {
+      "root": "mine",
+      "pages": [
+        "mine/tabs/tabs",
+        "mine/vtabs/vtabs",
+        "mine/indexList/indexList",
+        "mine/rank/rank",
+        "mine/mobx/mobx",
+        "mine/recycleView/recycleView",
+        "mine/videoSwiper/videoSwiper"
+      ]
+    }
+  ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
@@ -33,7 +35,8 @@
     "color": "#999",
     "selectedColor": "#000",
     "backgroundColor": "#fff",
-    "list": [{
+    "list": [
+      {
         "pagePath": "pages/live/live",
         "text": "直播"
       },
