@@ -11,7 +11,12 @@
     "pages/auth/auth",
     "pages/mall/mall"
   ],
-  "subpackages": [],
+  "subpackages": [
+    {
+      "root": "subLive",
+      "pages": []
+    }
+  ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",

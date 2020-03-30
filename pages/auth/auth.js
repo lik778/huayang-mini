@@ -1,8 +1,8 @@
 // pages/auth/auth.js
 import { wxGetUserInfoPromise, checkAuth } from '../../utils/auth.js'
 import { GLOBAL_KEY } from '../../lib/config.js'
-import { bindUserInfo } from "../../api/auth/index"
-import { getLocalStorage, setLocalStorage } from "../../utils/util"
+import { bindUserInfo, bindWxPhoneNumber } from "../../api/auth/index"
+import { getLocalStorage, setLocalStorage, toast } from "../../utils/util"
 
 Page({
 
@@ -15,7 +15,6 @@ Page({
 	 * Lifecycle function--Called when page load
 	 */
 	onLoad: function (options) {
-
 	},
 
 	/**
@@ -66,43 +65,48 @@ Page({
 	onShareAppMessage: function () {
 
 	},
-  /**
-   * 一键微信授权
-   */
+	/**
+	 * 一键微信授权
+	 */
 	getUserInfo() {
 		try {
 			wxGetUserInfoPromise().then(async (response) => {
-			  const userInfo = response.userInfo
+				const userInfo = response.userInfo
 				let params = {
-          open_id: getLocalStorage(GLOBAL_KEY.openId),
+					open_id: getLocalStorage(GLOBAL_KEY.openId),
 					avatarUrl: userInfo.avatarUrl,
 					city: userInfo.city,
-					nickName: userInfo.nickName,
+					nickname: userInfo.nickName,
 					province: userInfo.province,
 					country: userInfo.country,
 					gender: userInfo.gender
 				}
-				await bindUserInfo(params)
-        checkAuth()
-        // 返回上一页
-        wx.nextTick(() => {
-          wx.navigateBack()
-        })
+				let originUserInfo = await bindUserInfo(params)
+				setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
+				// 返回上一页
+				wx.nextTick(() => {
+					wx.navigateBack()
+				})
 			})
 		} catch (error) {
-			console.log('用户取消微信授权')
+			toast('用户取消微信授权')
 		}
 	},
-  /**
-   * 一键获取微信手机号
-   * @param e
-   */
-	getPhoneNumber(e) {
-		if (e.detail.errMsg.includes('ok')) {
-			console.log(e.detail)
-			// TODO 将加密数据传递给后台
+	/**
+	 * 一键获取微信手机号
+	 * @param e
+	 */
+	async getPhoneNumber(e) {
+		if (!e) return
+		let {errMsg = '', encryptedData: encrypted_data = '', iv = ''} = e.detail
+		if (errMsg.includes('ok')) {
+			let open_id = getLocalStorage(GLOBAL_KEY.openId)
+			if (encrypted_data && iv) {
+				let originAccountInfo = await bindWxPhoneNumber({open_id, encrypted_data, iv})
+				setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
+			}
 		} else {
-			console.log('用户取消手机号授权')
+			toast('用户拒绝手机号授权')
 		}
 	}
 })
