@@ -11,7 +11,7 @@ const checkAuth = () => {
 			let originUserInfo = await getWxInfo({code, app_id: "wx85d130227f745fc5"})
 			// 缓存openId
 			setLocalStorage(GLOBAL_KEY.openId, originUserInfo.openid)
-			if ($notNull(originUserInfo) && originUserInfo.username) {
+			if ($notNull(originUserInfo) && originUserInfo.nickname) {
 				// 服务端返回用户信息包含username，缓存在本地
 				setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
 			} else {
