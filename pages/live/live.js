@@ -18,8 +18,8 @@ Page({
     onLoad: function (options) {
       this.storeBindings = createStoreBindings(this, {
         store,
-        fields: ['liveTime', 'numA'],
-        actions: ['updateLiveTime'],
+        fields: [],
+        actions: [],
       })
     },
 

@@ -6,8 +6,8 @@
     }
   },
   "pages": [
-    "pages/mine/mine",
     "pages/live/live",
+    "pages/mine/mine",
     "pages/auth/auth",
     "pages/mall/mall"
   ],

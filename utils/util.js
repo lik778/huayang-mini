@@ -1,4 +1,5 @@
 import md5 from 'md5'
+import { GLOBAL_KEY } from '../lib/config'
 
 const formatTime = date => {
 	const year = date.getFullYear()
@@ -87,5 +88,91 @@ export const $notNull = (obj) => {
 		}
 	}
 	return false
+}
+
+/**
+ * 校验手机号是否正确
+ * @param phone 手机号
+ */
+export const verifyPhone = (phone = '') => {
+	const reg = /^1[3456789][0-9]{9}$/;
+	const _phone = phone.toString().trim();
+	let toastStr =
+		_phone === '' ? '手机号不能为空' : !reg.test(_phone) && '手机号不正确';
+	return {
+		errMsg: toastStr,
+		done: !toastStr,
+		value: _phone
+	};
+};
+
+/**
+ * 查询storage
+ * @param key
+ * @param noParse
+ * @returns {{}}
+ */
+export const getLocalStorage = function(key, noParse = false) {
+	try {
+		let value = wx.getStorageSync(key);
+		return value ? (noParse ? JSON.parse(value) : value) : (noParse ? {} : undefined);
+	} catch (e) {
+		console.error(e);
+	}
+};
+
+/**
+ * 设置storage
+ * @param key
+ * @param value
+ */
+export const setLocalStorage = function(key, value) {
+	try {
+		wx.setStorageSync(key, typeof value === 'object' ? JSON.stringify(value) : value);
+	} catch (e) {
+		console.error(e);
+	}
+};
+
+/**
+ * 清除token
+ * @param key
+ */
+export const removeLocalStorage = function(key) {
+	try {
+		wx.removeStorageSync(key);
+	} catch (e) {
+		console.error(e);
+	}
+};
+
+/**
+ * toast
+ * @param title
+ * @param icon [ 'success', 'loading', 'none' ]
+ * @param duration
+ */
+export const toast = function(title, duration = 3000, icon = 'none') {
+	wx.showToast({
+		title,
+		icon,
+		duration
+	});
+};
+
+/**
+ * token是否存在
+ * @returns {boolean} true，存在；false，不存在
+ */
+export const hasToken = function() {
+	return !!getLocalStorage(GLOBAL_KEY.token);
+};
+
+/**
+ * 用户信息是否存在
+ * @returns {boolean}
+ */
+export const hasUserInfo = function () {
+	return $notNull(getLocalStorage(GLOBAL_KEY.userInfo))
 }
 
