@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText":"邀请海报",
-  "usingComponents": {}
+  "usingComponents": {
+    "wxml-to-canvas":"wxml-to-canvas"
+  }
 }

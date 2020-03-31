@@ -8,7 +8,9 @@ App({
 
     // 每次打开app检查授权
     checkAuth()
-
+    // wx.navigateTo({
+    //   url: '/mine/poster/poster',
+    // })
     // 获取用户信息
     // wx.getSetting({
     //   success: res => {

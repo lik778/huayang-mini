@@ -18,10 +18,6 @@
         "joinVip/joinVip",
         "poster/poster"
       ]
-    },
-    {
-      "root": "subLive",
-      "pages": []
     }
   ],
   "window": {
