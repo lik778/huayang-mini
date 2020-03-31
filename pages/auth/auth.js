@@ -74,7 +74,7 @@ Page({
 				const userInfo = response.userInfo
 				let params = {
 					open_id: getLocalStorage(GLOBAL_KEY.openId),
-					avatarUrl: userInfo.avatarUrl,
+					avatar_url: userInfo.avatarUrl,
 					city: userInfo.city,
 					nickname: userInfo.nickName,
 					province: userInfo.province,
