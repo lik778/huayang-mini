@@ -23,7 +23,8 @@
       "root": "subLive",
       "pages": [
         "officialChannel/officialChannel",
-        "unAuthorized/unAuthorized"
+        "unAuthorized/unAuthorized",
+        "courseList/courseList"
       ]
     }
   ],
@@ -38,7 +39,8 @@
     "color": "#999",
     "selectedColor": "#000",
     "backgroundColor": "#fff",
-    "list": [{
+    "list": [
+      {
         "pagePath": "pages/live/live",
         "text": "直播"
       },
@@ -52,6 +54,5 @@
       }
     ]
   },
-  "style": "v2",
   "sitemapLocation": "sitemap.json"
 }

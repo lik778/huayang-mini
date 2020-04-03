@@ -1,8 +1,16 @@
 // pages/live/live.js
-import { createStoreBindings } from 'mobx-miniprogram-bindings'
-import { store } from '../../store'
-import { getLiveList } from "../../api/live/index"
-import { WeChatLiveStatus } from '../../lib/config'
+import {
+	createStoreBindings
+} from 'mobx-miniprogram-bindings'
+import {
+	store
+} from '../../store'
+import {
+	getLiveList
+} from "../../api/live/index"
+import {
+	WeChatLiveStatus
+} from '../../lib/config'
 
 const livePlayer = requirePlugin('live-player-plugin')
 
@@ -16,7 +24,12 @@ Page({
 		customParams: {},
 		liveList: []
 	},
-
+	// 跳转至课程列表
+	toCourese() {
+		wx.navigateTo({
+			url: '../../subLive/courseList/courseList',
+		})
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
@@ -32,7 +45,9 @@ Page({
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
-		getLiveList({limit: 100}).then((data) => {
+		getLiveList({
+			limit: 100
+		}).then((data) => {
 			console.log(this.batchQueryLiveStatus(data))
 			this.setData({
 				liveList: data.slice()
@@ -44,7 +59,9 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-
+		wx.navigateTo({
+			url: '../../subLive/courseList/courseList'
+		})
 	},
 
 	/**
@@ -78,8 +95,7 @@ Page({
 	/**
 	 * 用户点击右上角分享
 	 */
-	onShareAppMessage: function () {
-	},
+	onShareAppMessage: function () {},
 	/**
 	 * 跳转到微信直播页面
 	 * @param e
@@ -107,7 +123,7 @@ Page({
 		session.forEach(async (promise, index) => {
 			let result = await promise
 			console.log(index, WeChatLiveStatus[result.liveStatus])
-			result.push(WeChatLiveStatus[result.liveStatus])
+			// result.push(WeChatLiveStatus[result.liveStatus])
 		})
 
 		return result
@@ -119,7 +135,9 @@ Page({
 	 */
 	queryLiveStatus(roomId) {
 		return new Promise((resolve, reject) => {
-			livePlayer.getLiveStatus({room_id: roomId})
+			livePlayer.getLiveStatus({
+					room_id: roomId
+				})
 				.then(response => {
 					resolve(response)
 				})

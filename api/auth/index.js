@@ -1,7 +1,14 @@
 import request from "../../lib/request"
-import { URL, GLOBAL_KEY } from "../../lib/config"
-import { toast } from "../../utils/util"
-import { setLocalStorage } from "../../utils/util"
+import {
+	URL,
+	GLOBAL_KEY
+} from "../../lib/config"
+import {
+	toast
+} from "../../utils/util"
+import {
+	setLocalStorage,getLocalStorage
+} from "../../utils/util"
 
 /**
  * 用微信code换取服务端的用户信息
@@ -10,7 +17,9 @@ import { setLocalStorage } from "../../utils/util"
  */
 export function getWxInfo(params) {
 	return new Promise(resolve => {
-		request._get(URL.getWxInfo, params).then(({data}) => {
+		request._get(URL.getWxInfo, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -23,7 +32,10 @@ export function getWxInfo(params) {
  */
 export function bindUserInfo(params) {
 	return new Promise(resolve => {
-		request._post(URL.bindUserInfo, params).then(({code, data}) => {
+		request._post(URL.bindUserInfo, params).then(({
+			code,
+			data
+		}) => {
 			if (code === 0) {
 				resolve(data)
 			}
@@ -38,7 +50,10 @@ export function bindUserInfo(params) {
  */
 export function bindWxPhoneNumber(params) {
 	return new Promise(resolve => {
-		request._post(URL.bindWxPhoneNumber, params).then(({data, code}) => {
+		request._post(URL.bindWxPhoneNumber, params).then(({
+			data,
+			code
+		}) => {
 			// 服务端解析微信敏感数据失败
 			if (code === 112) {
 				toast('授权失败，请重试')
@@ -51,4 +66,29 @@ export function bindWxPhoneNumber(params) {
 			}
 		})
 	})
+}
+
+
+
+// 一键获取手机号
+export async function getPhoneNumber(e) {
+	if (!e) return
+	let {
+		errMsg = '', encryptedData: encrypted_data = '', iv = ''
+	} = e.detail
+	if (errMsg.includes('ok')) {
+		let open_id = getLocalStorage(GLOBAL_KEY.openId)
+		if (encrypted_data && iv) {
+			let originAccountInfo = await bindWxPhoneNumber({
+				open_id,
+				encrypted_data,
+				iv
+			})
+			setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
+			return 0
+		}
+	} else {
+		toast('用户拒绝手机号授权')
+		return 1
+	}
 }
