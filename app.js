@@ -2,36 +2,37 @@
 import request from './lib/request'
 import { checkAuth } from './utils/auth'
 App({
-  onLaunch: function () {
-    // 全局注册http
-    wx.$request = request
+	onLaunch: function () {
+		// 全局注册http
+		wx.$request = request
 
-    // 每次打开app检查授权
-    checkAuth()
-    
-   
-    // 获取用户信息
-    // wx.getSetting({
-    //   success: res => {
-    //     if (res.authSetting['scope.userInfo']) {
-    //       // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-    //       wx.getUserInfo({
-    //         success: res => {
-    //           // 可以将 res 发送给后台解码出 unionId
-    //           this.globalData.userInfo = res.userInfo
-    //
-    //           // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-    //           // 所以此处加入 callback 以防止这种情况
-    //           if (this.userInfoReadyCallback) {
-    //             this.userInfoReadyCallback(res)
-    //           }
-    //         }
-    //       })
-    //     }
-    //   }
+		// 每次打开app检查授权
+		checkAuth()
+	},
+	onShow(options) {
+
+	  // 通过直播插件获取用户openId
+    // livePlayer.getOpenid({ room_id: 4 }) // 该接口传入参数为房间号
+    //   .then(res => {
+    //     console.log('通过直播插件获取用户openId', res.openid) // 用户openid
+    //   }).catch(err => {
+    //   console.error('通过直播插件获取用户openId', err)
     // })
-  },
-  globalData: {
-    userInfo: null,
-  }
+
+		// 分享卡片入口场景才调用getShareParams接口获取以下参数
+		// if (options.scene == 1007 || options.scene == 1008 || options.scene == 1044) {
+		// 	livePlayer.getShareParams()
+		// 		.then(res => {
+		// 			console.log('分享卡片入口 room id', res.room_id) // 房间号
+		// 			console.log('分享卡片入口 openid', res.openid) // 用户openid
+		// 			console.log('分享卡片入口 share openid', res.share_openid) // 分享者openid，分享卡片进入场景才有
+		// 			console.log('分享卡片入口 custom params', res.custom_params) // 开发者在跳转进入直播间页面时，页面路径上携带的自定义参数，这里传回给开发者
+		// 		}).catch(err => {
+		// 		console.error('分享卡片入口 share params', err)
+		// 	})
+		// }
+	},
+	globalData: {
+		userInfo: null,
+	}
 })
