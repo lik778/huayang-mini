@@ -10,7 +10,6 @@ App({
 		checkAuth()
 	},
 	onShow(options) {
-
 	  // 通过直播插件获取用户openId
     // livePlayer.getOpenid({ room_id: 4 }) // 该接口传入参数为房间号
     //   .then(res => {
@@ -33,6 +32,12 @@ App({
 		// }
 	},
 	globalData: {
-		userInfo: null,
+		schedule: [
+			{
+				roomId: 9,
+				liveStatus: '已结束',
+				timestamp: 1585903853883
+			}
+		]
 	}
 })

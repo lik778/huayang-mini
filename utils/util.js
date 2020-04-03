@@ -2,9 +2,8 @@ import md5 from 'md5'
 import {
 	GLOBAL_KEY
 } from '../lib/config'
-import {
-	createOrder
-} from "../api/mine/payVip"
+import { createOrder } from "../api/mine/payVip"
+const livePlayer = requirePlugin('live-player-plugin')
 
 const formatTime = date => {
 	const year = date.getFullYear()
@@ -74,7 +73,7 @@ export const verifyPhone = (phone = '') => {
  * @param noParse
  * @returns {{}}
  */
-export const getLocalStorage = function (key, noParse = false) {
+export const getLocalStorage = function(key, noParse = false) {
 	try {
 		let value = wx.getStorageSync(key);
 		return value ? (noParse ? JSON.parse(value) : value) : (noParse ? {} : undefined);
@@ -88,7 +87,7 @@ export const getLocalStorage = function (key, noParse = false) {
  * @param key
  * @param value
  */
-export const setLocalStorage = function (key, value) {
+export const setLocalStorage = function(key, value) {
 	try {
 		wx.setStorageSync(key, typeof value === 'object' ? JSON.stringify(value) : value);
 	} catch (e) {
@@ -100,7 +99,7 @@ export const setLocalStorage = function (key, value) {
  * 清除token
  * @param key
  */
-export const removeLocalStorage = function (key) {
+export const removeLocalStorage = function(key) {
 	try {
 		wx.removeStorageSync(key);
 	} catch (e) {
@@ -114,7 +113,7 @@ export const removeLocalStorage = function (key) {
  * @param icon [ 'success', 'loading', 'none' ]
  * @param duration
  */
-export const toast = function (title, duration = 3000, icon = 'none') {
+export const toast = function(title, duration = 3000, icon = 'none') {
 	wx.showToast({
 		title,
 		icon,
@@ -126,7 +125,7 @@ export const toast = function (title, duration = 3000, icon = 'none') {
  * token是否存在
  * @returns {boolean} true，存在；false，不存在
  */
-export const hasToken = function () {
+export const hasToken = function() {
 	return !!getLocalStorage(GLOBAL_KEY.token);
 };
 
@@ -140,7 +139,7 @@ export const hasUserInfo = function () {
 
 /**
  * 购买会员
- * @returns 
+ * @returns
  */
 export const payVip = function () {
 	let createOrderParmas = {
@@ -207,4 +206,67 @@ export const getSign = (paramsData) => {
 	)
 	params["paySign"] = paySign.toUpperCase()
 	return params
+}
+
+export const getSchedule = function (roomIds = []) {
+	const scheduleData = getApp().globalData.schedule
+	let newScheduleData = roomIds.map(async roomId => {
+		const target = scheduleData.find(_ => _.roomId === roomId)
+		// 1. globalData中无值
+		if (!target) {
+			let { liveStatus } = await queryLiveStatus(roomId)
+			scheduleData.push({
+				roomId: roomId,
+				liveStatus: WeChatLiveStatus[liveStatus],
+				timestamp: + new Date() + 5 * 60 * 1000
+			})
+			return {
+				roomId: roomId,
+				liveStatus: WeChatLiveStatus[liveStatus]
+			}
+		} else {
+			let targetRoomId = target.roomId
+			// 2. globalData中有值
+			let nowTimestamp = +new Date()
+			if (nowTimestamp < target.timestamp) {
+				// 2.1 timestamp没过期
+				return {
+					roomId: targetRoomId,
+					liveStatus: target.liveStatus
+				}
+			} else {
+				// 2.2 timestamp过期
+				let { liveStatus } = await queryLiveStatus(targetRoomId)
+				target.liveStatus = WeChatLiveStatus[liveStatus]
+				target.timestamp = + new Date() + 5 * 60 * 1000
+				return {
+					roomId: targetRoomId,
+					liveStatus: WeChatLiveStatus[liveStatus]
+				}
+			}
+		}
+	})
+	getApp().globalData.schedule = scheduleData.slice()
+	return Promise.all(newScheduleData.slice())
+}
+
+/**
+ * 查询直播间的状态
+ * @param roomId
+ * @returns {Promise<unknown>}
+ */
+function queryLiveStatus(roomId) {
+	return new Promise((resolve, reject) => {
+		livePlayer.getLiveStatus({room_id: roomId})
+			.then(response => {
+				resolve(response)
+			})
+			.catch(error => {
+				console.error(error)
+				reject(error)
+			})
+			.finally(() => {
+				resolve({liveStatus: 0})
+			})
+	})
 }
