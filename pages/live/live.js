@@ -46,7 +46,7 @@ Page({
 			this.liveStatusIntervalTimer = setInterval(() => {
 				console.log('run getSchedule')
 				getSchedule(roomIds).then(this.handleLiveStatusCallback)
-			}, 6 * 1000)
+			}, 60 * 1000)
 		}
 	},
 

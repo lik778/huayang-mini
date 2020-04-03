@@ -1,7 +1,5 @@
 import md5 from 'md5'
-import {
-	GLOBAL_KEY
-} from '../lib/config'
+import { GLOBAL_KEY, WeChatLiveStatus } from '../lib/config'
 import { createOrder } from "../api/mine/payVip"
 const livePlayer = requirePlugin('live-player-plugin')
 
