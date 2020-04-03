@@ -1,4 +1,12 @@
 // mine/joinVip/joinVip.js
+
+import {
+    GLOBAL_KEY
+} from "../../lib/config"
+import {
+    getLocalStorage,
+    payVip
+} from "../../utils/util"
 Page({
 
     /**
@@ -14,12 +22,19 @@ Page({
     onLoad: function (options) {
 
     },
-        /**
+    /**
      * 事件
      */
-    toPoster(){
+    // 购买会员
+    buyVip() {
+        payVip().then(res=>{
+            console.log(res)
+        })
+    },
+    // 跳往海报页
+    toPoster() {
         wx.navigateTo({
-          url: '/mine/poster/poster',
+            url: '/mine/poster/poster',
         })
     },
     /**

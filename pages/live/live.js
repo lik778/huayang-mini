@@ -83,7 +83,6 @@ Page({
           "limit": 10 // 每次拉取的个数上限，不要设置过大，建议 100 以内
         },
         complete: (res) => {
-          console.log('res = ')
           if (res.statusCode >= 200 && res.statusCode < 300) {
             console.log(res)
           } else {
