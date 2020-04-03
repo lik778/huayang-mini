@@ -1,5 +1,12 @@
 <!--pages/live/live.wxml-->
 <view class="live">
-  <navigator url="plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id={{roomId}}&custom_params={{customParams}}"><button style="margin-bottom: 20px;" type="primary">看直播</button></navigator>
-  <button bindtap="enterHistory">看历史直播</button>
+<!--  <navigator url="plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id={{roomId}}&custom_params={{customParams}}"><button style="margin-bottom: 20px;" type="primary">看直播</button></navigator>-->
+  <view class="banner">
+    banner context
+  </view>
+  <view class="live-list">
+    <view class="live-item" bindtap="navigateToLive" data-item="{{item}}" wx:for="{{liveList}}" style="background-image: url('{{item.coverPicture}}')" wx:key="{{item.id}}">
+      <div class="live-info">{{item.roomName}}</div>
+    </view>
+  </view>
 </view>

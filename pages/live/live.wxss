@@ -1,8 +1,37 @@
 /* pages/live/live.wxss */
 .live {
-  height: 60vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    padding: 0 16px;
+}
+.banner {
+    height: 20vh;
+    line-height: 20vh;
+    background: #aaa;
+    text-align: center;
+    border-radius: 6px;
+}
+.live-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+.live-list .live-item {
+    position: relative;
+    width: calc(50% - 3px);
+    height: 20vh;
+    margin-bottom: 6px;
+    background-position: center;
+    background-size: cover;
+    border-radius: 8px;
+}
+.live-list .live-item .live-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: white;
+    text-align: center;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background: rgba(0,0,0, 0.6);
 }
