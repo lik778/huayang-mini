@@ -42,9 +42,8 @@ Page({
 		this.queryLiveList()
 
 		if (this.liveStatusIntervalTimer == null) {
-			const roomIds = this.data.liveList.map(_ => _.roomId)
 			this.liveStatusIntervalTimer = setInterval(() => {
-				console.log('run getSchedule')
+				const roomIds = this.data.liveList.map(_ => _.roomId)
 				getSchedule(roomIds).then(this.handleLiveStatusCallback)
 			}, 6 * 1000)
 		}
