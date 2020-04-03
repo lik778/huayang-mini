@@ -1,6 +1,7 @@
 import md5 from 'md5'
 import { GLOBAL_KEY } from '../lib/config'
 import { WeChatLiveStatus } from '../lib/config'
+
 const livePlayer = requirePlugin('live-player-plugin')
 
 const formatTime = date => {
@@ -97,16 +98,16 @@ export const $notNull = (obj) => {
  * @param phone 手机号
  */
 export const verifyPhone = (phone = '') => {
-	const reg = /^1[3456789][0-9]{9}$/;
-	const _phone = phone.toString().trim();
+	const reg = /^1[3456789][0-9]{9}$/
+	const _phone = phone.toString().trim()
 	let toastStr =
-		_phone === '' ? '手机号不能为空' : !reg.test(_phone) && '手机号不正确';
+		_phone === '' ? '手机号不能为空' : !reg.test(_phone) && '手机号不正确'
 	return {
 		errMsg: toastStr,
 		done: !toastStr,
 		value: _phone
-	};
-};
+	}
+}
 
 /**
  * 查询storage
@@ -114,39 +115,39 @@ export const verifyPhone = (phone = '') => {
  * @param noParse
  * @returns {{}}
  */
-export const getLocalStorage = function(key, noParse = false) {
+export const getLocalStorage = function (key, noParse = false) {
 	try {
-		let value = wx.getStorageSync(key);
-		return value ? (noParse ? JSON.parse(value) : value) : (noParse ? {} : undefined);
+		let value = wx.getStorageSync(key)
+		return value ? (noParse ? JSON.parse(value) : value) : (noParse ? {} : undefined)
 	} catch (e) {
-		console.error(e);
+		console.error(e)
 	}
-};
+}
 
 /**
  * 设置storage
  * @param key
  * @param value
  */
-export const setLocalStorage = function(key, value) {
+export const setLocalStorage = function (key, value) {
 	try {
-		wx.setStorageSync(key, typeof value === 'object' ? JSON.stringify(value) : value);
+		wx.setStorageSync(key, typeof value === 'object' ? JSON.stringify(value) : value)
 	} catch (e) {
-		console.error(e);
+		console.error(e)
 	}
-};
+}
 
 /**
  * 清除token
  * @param key
  */
-export const removeLocalStorage = function(key) {
+export const removeLocalStorage = function (key) {
 	try {
-		wx.removeStorageSync(key);
+		wx.removeStorageSync(key)
 	} catch (e) {
-		console.error(e);
+		console.error(e)
 	}
-};
+}
 
 /**
  * toast
@@ -154,21 +155,21 @@ export const removeLocalStorage = function(key) {
  * @param icon [ 'success', 'loading', 'none' ]
  * @param duration
  */
-export const toast = function(title, duration = 3000, icon = 'none') {
+export const toast = function (title, duration = 3000, icon = 'none') {
 	wx.showToast({
 		title,
 		icon,
 		duration
-	});
-};
+	})
+}
 
 /**
  * token是否存在
  * @returns {boolean} true，存在；false，不存在
  */
-export const hasToken = function() {
-	return !!getLocalStorage(GLOBAL_KEY.token);
-};
+export const hasToken = function () {
+	return !!getLocalStorage(GLOBAL_KEY.token)
+}
 
 /**
  * 用户信息是否存在
@@ -184,14 +185,13 @@ export const getSchedule = function (roomIds = []) {
 		const target = scheduleData.find(_ => _.roomId === roomId)
 		// 1. globalData中无值
 		if (!target) {
-			let { liveStatus = 0 } = await queryLiveStatus(roomId) || {}
-			// console.log('123');
+			let {liveStatus = 0} = await queryLiveStatus(roomId) || {}
 			scheduleData.push({
 				roomId: roomId,
 				liveStatus: WeChatLiveStatus[liveStatus],
-				timestamp: + new Date() + 5 * 60 * 1000
+				timestamp: +new Date() + 5 * 60 * 1000
 			})
-			console.log(scheduleData)
+			setLocalStorage(GLOBAL_KEY.schedule, scheduleData.slice())
 			return {
 				roomId: roomId,
 				liveStatus: WeChatLiveStatus[liveStatus]
@@ -208,9 +208,9 @@ export const getSchedule = function (roomIds = []) {
 				}
 			} else {
 				// 2.2 timestamp过期
-				let { liveStatus } = await queryLiveStatus(targetRoomId)
+				let {liveStatus} = await queryLiveStatus(targetRoomId)
 				target.liveStatus = WeChatLiveStatus[liveStatus]
-				target.timestamp = + new Date() + 5 * 60 * 1000
+				target.timestamp = +new Date() + 5 * 60 * 1000
 				return {
 					roomId: targetRoomId,
 					liveStatus: WeChatLiveStatus[liveStatus]
@@ -218,8 +218,7 @@ export const getSchedule = function (roomIds = []) {
 			}
 		}
 	})
-	console.error(scheduleData.slice())
-	setLocalStorage(GLOBAL_KEY.schedule, scheduleData.slice())
+
 	return Promise.all(newScheduleData.slice())
 }
 
