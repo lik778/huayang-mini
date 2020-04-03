@@ -18,7 +18,7 @@
 					<view class="item-right">
 						<view class="item-top">{{item1.zhibo_room.title}}</view>
 						<view class="item-middle">
-							<text class="item-live" wx:if="{{item1.kecheng.kecheng_type===0}}">直播中</text>
+							<text class="item-live" wx:if="{{item1.kecheng.kecheng_type===0}}">{{item1.zhibo_room.getStatus==="EOF"?"无状态":item1.zhibo_room.getStatus}}</text>
 							<text class="item-playback" wx:if="{{item1.kecheng.kecheng_type===1}}">回放</text>
 							<text decode="true">&nbsp;|&nbsp;</text>
 							<text>{{item1.zhibo_room.visit_count}}人观看</text>

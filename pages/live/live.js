@@ -46,12 +46,12 @@ Page({
 	onReady: function () {
 		this.queryLiveList()
 
-		if (this.liveStatusIntervalTimer == null) {
-			this.liveStatusIntervalTimer = setInterval(() => {
-				const roomIds = this.data.liveList.map(_ => _.roomId)
-				getSchedule(roomIds).then(this.handleLiveStatusCallback)
-			}, 60 * 1000)
-		}
+		// if (this.liveStatusIntervalTimer == null) {
+		// 	this.liveStatusIntervalTimer = setInterval(() => {
+		// 		const roomIds = this.data.liveList.map(_ => _.roomId)
+		// 		getSchedule(roomIds).then(this.handleLiveStatusCallback)
+		// 	}, 60 * 1000)
+		// }
 	},
 
 	/**

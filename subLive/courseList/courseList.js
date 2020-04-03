@@ -15,7 +15,8 @@ import {
   GLOBAL_KEY
 } from "../../lib/config"
 import {
-  getLocalStorage
+  getLocalStorage,
+  getSchedule
 } from "../../utils/util"
 Page({
 
@@ -30,7 +31,8 @@ Page({
     limit: 10,
     totalCount: 0,
     offset: 0,
-    showBindPhoneButton: true
+    showBindPhoneButton: true,
+    liveIdArr: []
   },
   // formID
   formSubmit(e) {
@@ -77,7 +79,7 @@ Page({
     let openId = getLocalStorage(GLOBAL_KEY.openId)
     let userId = getLocalStorage(GLOBAL_KEY.userId)
     getSubscriptionStatus(`?open_id=${openId}&user_id=${userId}`).then(res => {
-      console.log(res)
+      // console.log(res)
     })
   },
   //跳转去直播间
@@ -154,10 +156,39 @@ Page({
   // 获取课程列表
   getList(params) {
     getCourseList(`?limit=${this.data.limit}&offset=${this.data.offset}&category_id=${params}`).then(list => {
+      let liveArr = []
+      for (let i in list.list) {
+        if (list.list[i].kecheng.kecheng_type === 0) {
+          liveArr.push(list.list[i].zhibo_room.id)
+        }
+      }
       this.setData({
+        liveIdArr: liveArr,
         courseList: list.list || [],
         totalCount: list.count
       })
+      this.getStatusData(liveArr)
+      setTimeout(()=>{
+        this.getStatusData(liveArr)
+      },1000*60)
+    })
+  },
+  // 获取直播状态
+  getStatusData(liveArr) {
+    let courseList = this.data.courseList.concat([])
+    getSchedule(liveArr).then(res => {
+      console.log(res,111)
+      for (let i in res) {
+        for (let j in courseList) {
+          if (res[i].roomId === courseList[j].zhibo_room.id) {
+            courseList[j].zhibo_room.getStatus = res[i].liveStatus
+          }
+        }
+      }
+      this.setData({
+        courseList: courseList
+      })
+      console.log(this.data.courseList)
     })
   },
   /**
@@ -197,7 +228,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    
+    
   },
 
   /**
