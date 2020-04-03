@@ -3,6 +3,8 @@ const {
     wxml,
     style
 } = require('./canvasImg.js')
+import {createCanvas} from "./canvas"
+// const { wxml, style } = require('./demo.js')
 Page({
 
     /**
@@ -16,21 +18,32 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        this.widget = this.selectComponent('.widget')
+        // this.widget = this.selectComponent('.widget')
+        // setTimeout(()=>{
+        //     this.renderToCanvas()
+        // },300)
+        // this.widget = this.selectComponent('.widget')
     },
+    renderToCanvas() {
+        const p1 = this.widget.renderToCanvas({ wxml, style })
+        p1.then((res) => {
+          console.log('container', res.layoutBox)
+          this.container = res
+        })
+      },
     /**
      * 事件
      */
     // 渲染canvas
-    renderToCanvas() {
-        const p1 = this.widget.renderToCanvas({
-            wxml,
-            style
-        })
-        p1.then((res) => {
-            this.container = res
-        })
-    },
+    // renderToCanvas() {
+    //     const p1 = this.widget.renderToCanvas({
+    //         wxml,
+    //         style
+    //     })
+    //     p1.then((res) => {
+    //         this.container = res
+    //     })
+    // },
     // 保存到相册
     saveAlbum() {
         wx.downloadFile({
@@ -73,7 +86,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-
+        createCanvas()
     },
 
     /**

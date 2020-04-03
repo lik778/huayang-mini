@@ -1,5 +1,10 @@
 import md5 from 'md5'
-import { GLOBAL_KEY } from '../lib/config'
+import {
+	GLOBAL_KEY
+} from '../lib/config'
+import {
+	createOrder
+} from "../api/mine/payVip"
 
 const formatTime = date => {
 	const year = date.getFullYear()
@@ -12,10 +17,14 @@ const formatTime = date => {
 	return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
 
-// 查询token
+// 查询token以及userInfo
 export const queryToken = () => {
-	let memberUserInfo = "userInfo" // 普通平台成员用户信息,
-	return wx.getStorageSync(memberUserInfo) || {}
+	let returnValue = {}
+	if (wx.getStorageSync(GLOBAL_KEY.userInfo) !== '') {
+		returnValue = JSON.parse(wx.getStorageSync(GLOBAL_KEY.userInfo)) || ""
+	}
+	returnValue.token = wx.getStorageSync(GLOBAL_KEY.token) || ""
+	return returnValue
 }
 
 export const formatNumber = n => {
@@ -23,53 +32,6 @@ export const formatNumber = n => {
 	return n[1] ? n : '0' + n
 }
 
-// 唤起微信支付
-export const requestPayment = (params) => {
-	let datas = getSign({
-		prepay_id: params.prepay_id,
-		key: params.key
-	})
-	console.log(datas)
-	// wx.requestPayment({
-	//   timeStamp: params.timeStamp,
-	//   nonceStr: '',
-	//   package: params.package,
-	//   signType: params.signType,
-	//   paySign: ,
-	//   success(res) {},
-	//   fail(res) {}
-	// })
-}
-
-// 生成支付的一系列数据sign
-export const getSign = (paramsData) => {
-	let params = {
-		appId: "wx5705fece1e1cdc1e",
-		timeStamp: parseInt(new Date().getTime() / 1000).toString(),
-		nonceStr: Math.random()
-			.toString(36)
-			.substring(2),
-		signType: "MD5",
-		package: `prepay_id=${paramsData.prepay_id}`
-	}
-	let paramsList = [
-		"appId",
-		"timeStamp",
-		"nonceStr",
-		"package",
-		"signType"
-	]
-	paramsList = paramsList.sort()
-	let paramStr = ""
-	for (let i = 0; i < paramsList.length; i++) {
-		paramStr += paramsList[i] + "=" + params[paramsList[i]] + "&"
-	}
-	let paySign = md5(
-		paramStr + `key=${paramsData.key}` //商户Key
-	)
-	params["paySign"] = paySign.toUpperCase()
-	return params
-}
 
 /**
  * 判断对象类型是否是空
@@ -112,7 +74,7 @@ export const verifyPhone = (phone = '') => {
  * @param noParse
  * @returns {{}}
  */
-export const getLocalStorage = function(key, noParse = false) {
+export const getLocalStorage = function (key, noParse = false) {
 	try {
 		let value = wx.getStorageSync(key);
 		return value ? (noParse ? JSON.parse(value) : value) : (noParse ? {} : undefined);
@@ -126,7 +88,7 @@ export const getLocalStorage = function(key, noParse = false) {
  * @param key
  * @param value
  */
-export const setLocalStorage = function(key, value) {
+export const setLocalStorage = function (key, value) {
 	try {
 		wx.setStorageSync(key, typeof value === 'object' ? JSON.stringify(value) : value);
 	} catch (e) {
@@ -138,7 +100,7 @@ export const setLocalStorage = function(key, value) {
  * 清除token
  * @param key
  */
-export const removeLocalStorage = function(key) {
+export const removeLocalStorage = function (key) {
 	try {
 		wx.removeStorageSync(key);
 	} catch (e) {
@@ -152,7 +114,7 @@ export const removeLocalStorage = function(key) {
  * @param icon [ 'success', 'loading', 'none' ]
  * @param duration
  */
-export const toast = function(title, duration = 3000, icon = 'none') {
+export const toast = function (title, duration = 3000, icon = 'none') {
 	wx.showToast({
 		title,
 		icon,
@@ -164,7 +126,7 @@ export const toast = function(title, duration = 3000, icon = 'none') {
  * token是否存在
  * @returns {boolean} true，存在；false，不存在
  */
-export const hasToken = function() {
+export const hasToken = function () {
 	return !!getLocalStorage(GLOBAL_KEY.token);
 };
 
@@ -176,3 +138,73 @@ export const hasUserInfo = function () {
 	return $notNull(getLocalStorage(GLOBAL_KEY.userInfo))
 }
 
+/**
+ * 购买会员
+ * @returns 
+ */
+export const payVip = function () {
+	let createOrderParmas = {
+		scene: "real_product",
+		product_id: 36,
+		count: 1,
+		open_id: getLocalStorage(GLOBAL_KEY.openId),
+	}
+	return new Promise(resolve=>{
+		createOrder(createOrderParmas).then(res=>{
+			// resolve(res)
+			let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo"; //商户key
+			requestPayment({prepay_id:res,key:mallKey})
+		})
+	})
+}
+// 唤起微信支付
+export const requestPayment = (paramsData) => {
+	let params = getSign({
+		prepay_id: paramsData.prepay_id,
+		key: paramsData.key
+	})
+	console.log(params)
+
+	wx.requestPayment({
+	  timeStamp: params.timeStamp,
+	  nonceStr: params.nonceStr,
+	  package: params.package,
+	  signType: params.signType,
+	  paySign: params.paySign,
+	  success(res) {
+			console.log(res)
+		},
+	  fail(err) {
+			console.log(err)
+		}
+	})
+}
+// 生成支付的一系列数据sign
+export const getSign = (paramsData) => {
+	let params = {
+		appId:JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)).app_id,
+		timeStamp: parseInt(new Date().getTime() / 1000).toString(),
+		nonceStr: Math.random()
+			.toString(36)
+			.substring(2),
+		signType: "MD5",
+		package: `prepay_id=${paramsData.prepay_id}`
+	}
+	let paramsList = [
+		"appId",
+		"timeStamp",
+		"nonceStr",
+		"package",
+		"signType"
+	]
+	paramsList = paramsList.sort()
+	let paramStr = ""
+	for (let i = 0; i < paramsList.length; i++) {
+		paramStr += paramsList[i] + "=" + params[paramsList[i]] + "&"
+	}
+	let paySign = md5(
+		paramStr + `key=${paramsData.key}` //商户Key
+	)
+	params["paySign"] = paySign.toUpperCase()
+	return params
+}

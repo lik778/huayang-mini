@@ -29,4 +29,5 @@
 	</view>
 	<view>我的{{sum}}</view>
 	<button type="primary" bindtap="toMall">跳转改变mobx</button>
+	<button wx:if="{{showBindPhoneButton}}" type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">手机号授权</button>
 </view>

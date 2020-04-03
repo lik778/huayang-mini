@@ -1,69 +1,47 @@
 const wxml = `
 <view class="container" >
-  <view class="headIconLine">
-    <view class=""></view> 
+  <view class="head-icon-line">
+    <view class="head">
+      <image class="img" src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3582589792,4046843010&fm=26&gp=0.jpg"></image>
+    </view>
     <view class="desc">
-      <text class="descTitle">您的好友 樊悦</text>
-      <text class="descBottom">邀您共同赢取花样会员</text>
+      <text class="desc-title">您的好友 樊悦</text>
+      <text class="desc-bottom">邀您共同赢取花样会员</text>
     </view> 
   </view>
-  <view class="inviteSign">
-    <text class="inviteSignOne">享明星导师时尚直播课程</text>
-    <text class="inviteSignTwo">严选好物折购优惠</text>
-    <text class="inviteSignThree">参与专属活动</text>
+  <view class="invite-sign">
+    <text class="invite-sign-one">享明星导师时尚直播课程</text>
+    <text class="invite-sign-two">严选好物折购优惠</text>
+    <text class="inviteS-sign-three">参与专属活动</text>
   </view>
- 
 </view>
 `
 
 const style = {
   container: {
-    width: 300,
-    height: 200,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    width: 400,
+    height: 1000,
     backgroundColor: '#ccc',
     alignItems: 'center',
   },
   headIconLine: {
     flexDirection:'row',
+    marginLeft:20,
+    paddingTOP:20,
+    marginRight:10,
+    marginBottom:20,
+    width:360,
+    height:960
   },
-  descTitle:{
-    width:200,
-    height:40,
-    fontSize:14
+  head:{
+    flexDirection:"row",
+    justifyContent:"flex-start"
   },
-  descBottom:{
-    width:200,
-    height:40,
-    fontSize:14
-  },
-  inviteSign:{
-    width:200,
-    height:40,
-    fontSize:14
-  },
-  inviteSignOne:{
-    width:200,
-    height:40,
-    fontSize:14
-  },
-  inviteSignTwo:{
-    width:200,
-    height:40,
-    fontSize:14
-  },
-  inviteSignThree:{
-    width:200,
-    height:40,
-    fontSize:14
-  },
-
-  headIcon:{
-    width:40,
-    height:40,
-    borderRadius:20
-  },
+  img:{
+    width:30,
+    height:30,
+    
+  }
 }
 
 module.exports = {
