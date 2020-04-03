@@ -247,7 +247,7 @@ export const getSchedule = function (roomIds = []) {
 	})
 	console.log(scheduleData,2121)
 	setLocalStorage(GLOBAL_KEY.schedule, scheduleData.slice())
-	// return Promise.all(newScheduleData.slice())
+	return Promise.all(newScheduleData.slice())
 }
 
 /**
