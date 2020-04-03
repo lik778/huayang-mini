@@ -1,6 +1,7 @@
 import md5 from 'md5'
-import { GLOBAL_KEY, WeChatLiveStatus } from '../lib/config'
-import { createOrder } from "../api/mine/payVip"
+import { GLOBAL_KEY } from '../lib/config'
+import { WeChatLiveStatus } from '../lib/config'
+
 const livePlayer = requirePlugin('live-player-plugin')
 
 const formatTime = date => {
@@ -14,14 +15,10 @@ const formatTime = date => {
 	return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
 
-// 查询token以及userInfo
+// 查询token
 export const queryToken = () => {
-	let returnValue = {}
-	if (wx.getStorageSync(GLOBAL_KEY.userInfo) !== '') {
-		returnValue = JSON.parse(wx.getStorageSync(GLOBAL_KEY.userInfo)) || ""
-	}
-	returnValue.token = wx.getStorageSync(GLOBAL_KEY.token) || ""
-	return returnValue
+	let memberUserInfo = "userInfo" // 普通平台成员用户信息,
+	return wx.getStorageSync(memberUserInfo) || {}
 }
 
 export const formatNumber = n => {
@@ -29,157 +26,28 @@ export const formatNumber = n => {
 	return n[1] ? n : '0' + n
 }
 
-
-/**
- * 判断对象类型是否是空
- * @param obj
- * @returns {boolean} true => 不为空，false => 为空
- */
-export const $notNull = (obj) => {
-	if (obj == null) return false
-	if (Array.isArray(obj)) {
-		if (obj.length) {
-			return true
-		}
-	} else if (Object.prototype.toString.call(obj) === "[object Object]") {
-		if (Object.keys(obj).length) {
-			return true
-		}
-	}
-	return false
-}
-
-/**
- * 校验手机号是否正确
- * @param phone 手机号
- */
-export const verifyPhone = (phone = '') => {
-	const reg = /^1[3456789][0-9]{9}$/;
-	const _phone = phone.toString().trim();
-	let toastStr =
-		_phone === '' ? '手机号不能为空' : !reg.test(_phone) && '手机号不正确';
-	return {
-		errMsg: toastStr,
-		done: !toastStr,
-		value: _phone
-	};
-};
-
-/**
- * 查询storage
- * @param key
- * @param noParse
- * @returns {{}}
- */
-export const getLocalStorage = function(key, noParse = false) {
-	try {
-		let value = wx.getStorageSync(key);
-		return value ? (noParse ? JSON.parse(value) : value) : (noParse ? {} : undefined);
-	} catch (e) {
-		console.error(e);
-	}
-};
-
-/**
- * 设置storage
- * @param key
- * @param value
- */
-export const setLocalStorage = function(key, value) {
-	try {
-		wx.setStorageSync(key, typeof value === 'object' ? JSON.stringify(value) : value);
-	} catch (e) {
-		console.error(e);
-	}
-};
-
-/**
- * 清除token
- * @param key
- */
-export const removeLocalStorage = function(key) {
-	try {
-		wx.removeStorageSync(key);
-	} catch (e) {
-		console.error(e);
-	}
-};
-
-/**
- * toast
- * @param title
- * @param icon [ 'success', 'loading', 'none' ]
- * @param duration
- */
-export const toast = function(title, duration = 3000, icon = 'none') {
-	wx.showToast({
-		title,
-		icon,
-		duration
-	});
-};
-
-/**
- * token是否存在
- * @returns {boolean} true，存在；false，不存在
- */
-export const hasToken = function() {
-	return !!getLocalStorage(GLOBAL_KEY.token);
-};
-
-/**
- * 用户信息是否存在
- * @returns {boolean}
- */
-export const hasUserInfo = function () {
-	return $notNull(getLocalStorage(GLOBAL_KEY.userInfo))
-}
-
-/**
- * 购买会员
- * @returns
- */
-export const payVip = function () {
-	let createOrderParmas = {
-		scene: "real_product",
-		product_id: 36,
-		count: 1,
-		open_id: getLocalStorage(GLOBAL_KEY.openId),
-	}
-	return new Promise(resolve=>{
-		createOrder(createOrderParmas).then(res=>{
-			// resolve(res)
-			let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo"; //商户key
-			requestPayment({prepay_id:res,key:mallKey})
-		})
-	})
-}
 // 唤起微信支付
-export const requestPayment = (paramsData) => {
-	let params = getSign({
-		prepay_id: paramsData.prepay_id,
-		key: paramsData.key
+export const requestPayment = (params) => {
+	let datas = getSign({
+		prepay_id: params.prepay_id,
+		key: params.key
 	})
-	console.log(params)
-
-	wx.requestPayment({
-	  timeStamp: params.timeStamp,
-	  nonceStr: params.nonceStr,
-	  package: params.package,
-	  signType: params.signType,
-	  paySign: params.paySign,
-	  success(res) {
-			console.log(res)
-		},
-	  fail(err) {
-			console.log(err)
-		}
-	})
+	console.log(datas)
+	// wx.requestPayment({
+	//   timeStamp: params.timeStamp,
+	//   nonceStr: '',
+	//   package: params.package,
+	//   signType: params.signType,
+	//   paySign: ,
+	//   success(res) {},
+	//   fail(res) {}
+	// })
 }
+
 // 生成支付的一系列数据sign
 export const getSign = (paramsData) => {
 	let params = {
-		appId:JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)).app_id,
+		appId: "wx5705fece1e1cdc1e",
 		timeStamp: parseInt(new Date().getTime() / 1000).toString(),
 		nonceStr: Math.random()
 			.toString(36)
@@ -206,19 +74,124 @@ export const getSign = (paramsData) => {
 	return params
 }
 
+/**
+ * 判断对象类型是否是空
+ * @param obj
+ * @returns {boolean} true => 不为空，false => 为空
+ */
+export const $notNull = (obj) => {
+	if (obj == null) return false
+	if (Array.isArray(obj)) {
+		if (obj.length) {
+			return true
+		}
+	} else if (Object.prototype.toString.call(obj) === "[object Object]") {
+		if (Object.keys(obj).length) {
+			return true
+		}
+	}
+	return false
+}
+
+/**
+ * 校验手机号是否正确
+ * @param phone 手机号
+ */
+export const verifyPhone = (phone = '') => {
+	const reg = /^1[3456789][0-9]{9}$/
+	const _phone = phone.toString().trim()
+	let toastStr =
+		_phone === '' ? '手机号不能为空' : !reg.test(_phone) && '手机号不正确'
+	return {
+		errMsg: toastStr,
+		done: !toastStr,
+		value: _phone
+	}
+}
+
+/**
+ * 查询storage
+ * @param key
+ * @param noParse
+ * @returns {{}}
+ */
+export const getLocalStorage = function (key, noParse = false) {
+	try {
+		let value = wx.getStorageSync(key)
+		return value ? (noParse ? JSON.parse(value) : value) : (noParse ? {} : undefined)
+	} catch (e) {
+		console.error(e)
+	}
+}
+
+/**
+ * 设置storage
+ * @param key
+ * @param value
+ */
+export const setLocalStorage = function (key, value) {
+	try {
+		wx.setStorageSync(key, typeof value === 'object' ? JSON.stringify(value) : value)
+	} catch (e) {
+		console.error(e)
+	}
+}
+
+/**
+ * 清除token
+ * @param key
+ */
+export const removeLocalStorage = function (key) {
+	try {
+		wx.removeStorageSync(key)
+	} catch (e) {
+		console.error(e)
+	}
+}
+
+/**
+ * toast
+ * @param title
+ * @param icon [ 'success', 'loading', 'none' ]
+ * @param duration
+ */
+export const toast = function (title, duration = 3000, icon = 'none') {
+	wx.showToast({
+		title,
+		icon,
+		duration
+	})
+}
+
+/**
+ * token是否存在
+ * @returns {boolean} true，存在；false，不存在
+ */
+export const hasToken = function () {
+	return !!getLocalStorage(GLOBAL_KEY.token)
+}
+
+/**
+ * 用户信息是否存在
+ * @returns {boolean}
+ */
+export const hasUserInfo = function () {
+	return $notNull(getLocalStorage(GLOBAL_KEY.userInfo))
+}
+
 export const getSchedule = function (roomIds = []) {
 	const scheduleData = getLocalStorage(GLOBAL_KEY.schedule) ? JSON.parse(getLocalStorage(GLOBAL_KEY.schedule)) : []
 	let newScheduleData = roomIds.map(async roomId => {
 		const target = scheduleData.find(_ => _.roomId === roomId)
 		// 1. globalData中无值
 		if (!target) {
-			let { liveStatus = 0 } = await queryLiveStatus(roomId) || {}
-			// console.log('123');
+			let {liveStatus = 0} = await queryLiveStatus(roomId) || {}
 			scheduleData.push({
 				roomId: roomId,
 				liveStatus: WeChatLiveStatus[liveStatus],
-				timestamp: + new Date() + 5 * 60 * 1000
+				timestamp: +new Date() + 5 * 60 * 1000
 			})
+			setLocalStorage(GLOBAL_KEY.schedule, scheduleData.slice())
 			return {
 				roomId: roomId,
 				liveStatus: WeChatLiveStatus[liveStatus]
@@ -235,9 +208,9 @@ export const getSchedule = function (roomIds = []) {
 				}
 			} else {
 				// 2.2 timestamp过期
-				let { liveStatus } = await queryLiveStatus(targetRoomId)
+				let {liveStatus} = await queryLiveStatus(targetRoomId)
 				target.liveStatus = WeChatLiveStatus[liveStatus]
-				target.timestamp = + new Date() + 5 * 60 * 1000
+				target.timestamp = +new Date() + 5 * 60 * 1000
 				return {
 					roomId: targetRoomId,
 					liveStatus: WeChatLiveStatus[liveStatus]
@@ -245,8 +218,7 @@ export const getSchedule = function (roomIds = []) {
 			}
 		}
 	})
-	console.log(scheduleData,2121)
-	setLocalStorage(GLOBAL_KEY.schedule, scheduleData.slice())
+
 	return Promise.all(newScheduleData.slice())
 }
 

@@ -50,7 +50,7 @@ Page({
 			this.liveStatusIntervalTimer = setInterval(() => {
 				const roomIds = this.data.liveList.map(_ => _.roomId)
 				getSchedule(roomIds).then(this.handleLiveStatusCallback)
-			}, 6 * 1000)
+			}, 60 * 1000)
 		}
 	},
 
