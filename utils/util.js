@@ -219,7 +219,6 @@ export const getSchedule = function (roomIds = []) {
 				liveStatus: WeChatLiveStatus[liveStatus],
 				timestamp: + new Date() + 5 * 60 * 1000
 			})
-			console.log(scheduleData)
 			return {
 				roomId: roomId,
 				liveStatus: WeChatLiveStatus[liveStatus]
@@ -246,9 +245,9 @@ export const getSchedule = function (roomIds = []) {
 			}
 		}
 	})
-	console.error(scheduleData.slice())
+	console.log(scheduleData,2121)
 	setLocalStorage(GLOBAL_KEY.schedule, scheduleData.slice())
-	return Promise.all(newScheduleData.slice())
+	// return Promise.all(newScheduleData.slice())
 }
 
 /**

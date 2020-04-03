@@ -46,21 +46,21 @@ Page({
 	onReady: function () {
 		this.queryLiveList()
 
-		// if (this.liveStatusIntervalTimer == null) {
-		// 	this.liveStatusIntervalTimer = setInterval(() => {
-		// 		const roomIds = this.data.liveList.map(_ => _.roomId)
-		// 		getSchedule(roomIds).then(this.handleLiveStatusCallback)
-		// 	}, 60 * 1000)
-		// }
+		if (this.liveStatusIntervalTimer == null) {
+			this.liveStatusIntervalTimer = setInterval(() => {
+				const roomIds = this.data.liveList.map(_ => _.roomId)
+				getSchedule(roomIds).then(this.handleLiveStatusCallback)
+			}, 6 * 1000)
+		}
 	},
 
 	/**
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		wx.navigateTo({
-			url: '../../subLive/courseList/courseList'
-		})
+		// wx.navigateTo({
+		// 	url: '../../subLive/courseList/courseList'
+		// })
 	},
 
 	/**
