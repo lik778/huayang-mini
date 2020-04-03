@@ -179,17 +179,19 @@ export const hasUserInfo = function () {
 }
 
 export const getSchedule = function (roomIds = []) {
-	const scheduleData = getApp().globalData.schedule
+	const scheduleData = getLocalStorage(GLOBAL_KEY.schedule) ? JSON.parse(getLocalStorage(GLOBAL_KEY.schedule)) : []
 	let newScheduleData = roomIds.map(async roomId => {
 		const target = scheduleData.find(_ => _.roomId === roomId)
 		// 1. globalData中无值
 		if (!target) {
-			let { liveStatus } = await queryLiveStatus(roomId)
+			let { liveStatus = 0 } = await queryLiveStatus(roomId) || {}
+			// console.log('123');
 			scheduleData.push({
 				roomId: roomId,
 				liveStatus: WeChatLiveStatus[liveStatus],
 				timestamp: + new Date() + 5 * 60 * 1000
 			})
+			console.log(scheduleData)
 			return {
 				roomId: roomId,
 				liveStatus: WeChatLiveStatus[liveStatus]
@@ -216,7 +218,8 @@ export const getSchedule = function (roomIds = []) {
 			}
 		}
 	})
-	getApp().globalData.schedule = scheduleData.slice()
+	console.error(scheduleData.slice())
+	setLocalStorage(GLOBAL_KEY.schedule, scheduleData.slice())
 	return Promise.all(newScheduleData.slice())
 }
 
