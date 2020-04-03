@@ -35,3 +35,10 @@
     border-bottom-right-radius: 8px;
     background: rgba(0,0,0, 0.6);
 }
+
+.no-more {
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 12px;
+    color: #aaa;
+}

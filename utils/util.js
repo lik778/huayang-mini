@@ -1,5 +1,7 @@
 import md5 from 'md5'
 import { GLOBAL_KEY } from '../lib/config'
+import { WeChatLiveStatus } from '../lib/config'
+const livePlayer = requirePlugin('live-player-plugin')
 
 const formatTime = date => {
 	const year = date.getFullYear()
@@ -176,3 +178,65 @@ export const hasUserInfo = function () {
 	return $notNull(getLocalStorage(GLOBAL_KEY.userInfo))
 }
 
+export const getSchedule = function (roomIds = []) {
+	const scheduleData = getApp().globalData.schedule
+	let newScheduleData = roomIds.map(async roomId => {
+		const target = scheduleData.find(_ => _.roomId === roomId)
+		// 1. globalData中无值
+		if (!target) {
+			let { liveStatus } = await queryLiveStatus(roomId)
+			scheduleData.push({
+				roomId: roomId,
+				liveStatus: WeChatLiveStatus[liveStatus],
+				timestamp: + new Date() + 5 * 60 * 1000
+			})
+			return {
+				roomId: roomId,
+				liveStatus: WeChatLiveStatus[liveStatus]
+			}
+		} else {
+			let targetRoomId = target.roomId
+			// 2. globalData中有值
+			let nowTimestamp = +new Date()
+			if (nowTimestamp < target.timestamp) {
+				// 2.1 timestamp没过期
+				return {
+					roomId: targetRoomId,
+					liveStatus: target.liveStatus
+				}
+			} else {
+				// 2.2 timestamp过期
+				let { liveStatus } = await queryLiveStatus(targetRoomId)
+				target.liveStatus = WeChatLiveStatus[liveStatus]
+				target.timestamp = + new Date() + 5 * 60 * 1000
+				return {
+					roomId: targetRoomId,
+					liveStatus: WeChatLiveStatus[liveStatus]
+				}
+			}
+		}
+	})
+	getApp().globalData.schedule = scheduleData.slice()
+	return Promise.all(newScheduleData.slice())
+}
+
+/**
+ * 查询直播间的状态
+ * @param roomId
+ * @returns {Promise<unknown>}
+ */
+function queryLiveStatus(roomId) {
+	return new Promise((resolve, reject) => {
+		livePlayer.getLiveStatus({room_id: roomId})
+			.then(response => {
+				resolve(response)
+			})
+			.catch(error => {
+				console.error(error)
+				reject(error)
+			})
+			.finally(() => {
+				resolve({liveStatus: 0})
+			})
+	})
+}
