@@ -1,6 +1,6 @@
 <!--pages/live/live.wxml-->
 <view class="live">
-  <view class="banner">
+  <view class="banner" bindtap="toCourese">
     banner context
   </view>
   <view class="live-list">

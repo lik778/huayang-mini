@@ -1,0 +1,36 @@
+<!--subLive/courseList/courseList.wxml-->
+<view class="course-list">
+	<view class="banner">
+		<text>banner介绍位</text>
+		<form report-submit="true" bindsubmit="formSubmit" bindreset="formReset">
+			<button formType="submit" type="primary">订阅</button>
+		</form>
+	</view>
+	<view class="main">
+		<van-tabs active="{{ active }}" bind:change="onChange" swipeable>
+			<van-tab title="{{item.name}}" wx:for="{{categoryList}}" wx:key="index">
+				<view class="course-item" wx:for="{{courseList}}" wx:key="index1" wx:for-item="item1" wx:for-index="index1" wx:if="{{courseList!==null&&courseList.length!==0}}" bindtap="toLive" data-item="{{item1.zhibo_room.id}}">
+					<button wx:if="{{showBindPhoneButton}}" type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumberData" class="mobile-button"></button>
+					<view class="item-left">
+						<image src="{{item1.kecheng.cover_pic}}"></image>
+						<text wx:if="{{item1.kecheng.vip_only===1}}">会员专属</text>
+					</view>
+					<view class="item-right">
+						<view class="item-top">{{item1.zhibo_room.title}}</view>
+						<view class="item-middle">
+							<text class="item-live" wx:if="{{item1.kecheng.kecheng_type===0}}">直播中</text>
+							<text class="item-playback" wx:if="{{item1.kecheng.kecheng_type===1}}">回放</text>
+							<text decode="true">&nbsp;|&nbsp;</text>
+							<text>{{item1.zhibo_room.visit_count}}人观看</text>
+						</view>
+						<view class="item-bottom">
+							<image src="{{item1.teacher.avatar_url}}"></image>
+							<text>{{item1.teacher.nick_name}}</text>
+						</view>
+					</view>
+				</view>
+				<view wx:if="{{courseList===null||courseList.length===0}}">无数据</view>
+			</van-tab>
+		</van-tabs>
+	</view>
+</view>

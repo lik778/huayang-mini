@@ -23,7 +23,12 @@ Page({
 		didNoMore: false,
 		liveStatusIntervalTimer: null
 	},
-
+	// 跳转至课程列表
+	toCourese() {
+		wx.navigateTo({
+			url: '../../subLive/courseList/courseList',
+		})
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
@@ -53,7 +58,9 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-
+		wx.navigateTo({
+			url: '../../subLive/courseList/courseList'
+		})
 	},
 
 	/**
@@ -91,8 +98,7 @@ Page({
 	/**
 	 * 用户点击右上角分享
 	 */
-	onShareAppMessage: function () {
-	},
+	onShareAppMessage: function () {},
 	/**
 	 * 跳转到微信直播页面
 	 * @param e
@@ -129,7 +135,6 @@ Page({
 					vipOnly: item.zhibo_room.vip_only
 				}
 			})
-
 			const roomIds = result.map(_ => _.roomId)
 
 			getSchedule(roomIds).then(this.handleLiveStatusCallback)
