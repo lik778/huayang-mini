@@ -1,7 +1,13 @@
 import md5 from 'md5'
-import { GLOBAL_KEY } from '../lib/config'
-import { WeChatLiveStatus } from '../lib/config'
-
+import {
+	GLOBAL_KEY
+} from '../lib/config'
+import {
+	WeChatLiveStatus
+} from '../lib/config'
+import {
+	createOrder
+} from "../api/mine/payVip"
 const livePlayer = requirePlugin('live-player-plugin')
 
 const formatTime = date => {
@@ -17,8 +23,8 @@ const formatTime = date => {
 
 // 查询token
 export const queryToken = () => {
-	let memberUserInfo = "userInfo" // 普通平台成员用户信息,
-	return wx.getStorageSync(memberUserInfo) || {}
+	let token = wx.getStorageSync(GLOBAL_KEY.token)
+	return token
 }
 
 export const formatNumber = n => {
@@ -26,28 +32,63 @@ export const formatNumber = n => {
 	return n[1] ? n : '0' + n
 }
 
-// 唤起微信支付
-export const requestPayment = (params) => {
-	let datas = getSign({
-		prepay_id: params.prepay_id,
-		key: params.key
+/**
+ * 购买会员
+ * @returns 
+ */
+export const payVip = function (params) {
+	let createOrderParmas = {
+		scene: "zhide_vip",
+		recommend_user_id:params||"",
+		product_id: 36,
+		count: 1,
+		open_id: getLocalStorage(GLOBAL_KEY.openId),
+	}
+	return new Promise(resolve => {
+		createOrder(createOrderParmas).then(res => {
+			// resolve(res)
+			let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo"; //商户key
+			requestPayment({
+				prepay_id: res,
+				key: mallKey
+			})
+		})
 	})
-	console.log(datas)
-	// wx.requestPayment({
-	//   timeStamp: params.timeStamp,
-	//   nonceStr: '',
-	//   package: params.package,
-	//   signType: params.signType,
-	//   paySign: ,
-	//   success(res) {},
-	//   fail(res) {}
-	// })
 }
-
+// 唤起微信支付
+export const requestPayment = (paramsData) => {
+	let params = getSign({
+		prepay_id: paramsData.prepay_id,
+		key: paramsData.key
+	})
+	wx.requestPayment({
+		timeStamp: params.timeStamp,
+		nonceStr: params.nonceStr,
+		package: params.package,
+		signType: params.signType,
+		paySign: params.paySign,
+		success(res) {
+			if (res.errMsg === "requestPayment:ok") {
+				// let vipData = {
+				// 	agoDay: 1,
+				// 	nowTime: Date.parse(new Date())
+				// }
+				setLocalStorage(GLOBAL_KEY.vip,true)
+				// setLocalStorage(GLOBAL_KEY.vip, JSON.stringify(vipData))
+				wx.switchTab({
+					url: '/pages/live/live',
+				})
+			}
+		},
+		fail(err) {
+			console.log(err)
+		}
+	})
+}
 // 生成支付的一系列数据sign
 export const getSign = (paramsData) => {
 	let params = {
-		appId: "wx5705fece1e1cdc1e",
+		appId: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)).app_id,
 		timeStamp: parseInt(new Date().getTime() / 1000).toString(),
 		nonceStr: Math.random()
 			.toString(36)
@@ -73,6 +114,7 @@ export const getSign = (paramsData) => {
 	params["paySign"] = paySign.toUpperCase()
 	return params
 }
+
 
 /**
  * 判断对象类型是否是空
@@ -185,7 +227,9 @@ export const getSchedule = function (roomIds = []) {
 		const target = scheduleData.find(_ => _.roomId === roomId)
 		// 1. globalData中无值
 		if (!target) {
-			let {liveStatus = 0} = await queryLiveStatus(roomId) || {}
+			let {
+				liveStatus = 0
+			} = await queryLiveStatus(roomId) || {}
 			scheduleData.push({
 				roomId: roomId,
 				liveStatus: WeChatLiveStatus[liveStatus],
@@ -208,7 +252,9 @@ export const getSchedule = function (roomIds = []) {
 				}
 			} else {
 				// 2.2 timestamp过期
-				let {liveStatus} = await queryLiveStatus(targetRoomId)
+				let {
+					liveStatus
+				} = await queryLiveStatus(targetRoomId)
 				target.liveStatus = WeChatLiveStatus[liveStatus]
 				target.timestamp = +new Date() + 5 * 60 * 1000
 				return {
@@ -229,7 +275,9 @@ export const getSchedule = function (roomIds = []) {
  */
 function queryLiveStatus(roomId) {
 	return new Promise((resolve, reject) => {
-		livePlayer.getLiveStatus({room_id: roomId})
+		livePlayer.getLiveStatus({
+				room_id: roomId
+			})
 			.then(response => {
 				resolve(response)
 			})
@@ -238,7 +286,9 @@ function queryLiveStatus(roomId) {
 				reject(error)
 			})
 			.finally(() => {
-				resolve({liveStatus: 0})
+				resolve({
+					liveStatus: 0
+				})
 			})
 	})
 }

@@ -1,8 +1,10 @@
 /* pages/mine/mine.wxss */
+.user-module{
+    padding: 40rpx 40rpx;
+}
 .head-img-line {
     display: flex;
     align-items: center;
-    padding: 40rpx 40rpx;
 }
 
 .head-img {
@@ -14,7 +16,6 @@
 .nick-name-line {
     display: flex;
     align-items: center;
-    padding: 40rpx 40rpx;
 }
 
 .process {

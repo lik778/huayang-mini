@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText":"花样大学入学申请",
+  "usingComponents": {
+    "van-radio": "../../miniprogram_npm/@vant/weapp/radio/index",
+    "van-radio-group": "../../miniprogram_npm/@vant/weapp/radio-group/index"
+  }
+}
