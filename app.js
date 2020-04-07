@@ -5,7 +5,6 @@ App({
 	onLaunch: function () {
 		// 全局注册http
 		wx.$request = request
-
 		// 每次打开app检查授权
 		checkAuth()
 	},

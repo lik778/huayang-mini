@@ -9,22 +9,8 @@
     width: 100%;
 }
 
-.poster {
-    width: 50%;
-    background: rgba(40, 40, 40, 1);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: #fff;
-    justify-content: center;
-}
-.poster text:last-child{
-    font-size: 12px;
-}
-
 .bug-vip {
-    width: 50%;
+    width: 100%;
     background: rgba(255, 67, 67, 1);
     height: 100%;
     display: flex;
@@ -33,6 +19,7 @@
     color: #fff;
     justify-content: center;
 }
-.bug-vip text:last-child{
+
+.bug-vip text:last-child {
     font-size: 12px;
 }

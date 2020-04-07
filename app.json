@@ -6,8 +6,8 @@
     }
   },
   "pages": [
-    "pages/live/live",
     "pages/mine/mine",
+    "pages/live/live",
     "pages/auth/auth",
     "pages/mall/mall"
   ],
@@ -16,7 +16,9 @@
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
-        "poster/poster"
+        "joinSchool/joinSchool",
+        "invite/invite",
+        "wallet/wallet"
       ]
     },
     {

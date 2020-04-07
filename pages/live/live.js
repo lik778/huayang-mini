@@ -1,9 +1,22 @@
 // pages/live/live.js
-import { createStoreBindings } from 'mobx-miniprogram-bindings'
-import { store } from '../../store'
-import { getLiveList } from "../../api/live/index"
-import { WeChatLiveStatus } from '../../lib/config'
-import { getSchedule } from '../../utils/util'
+import {
+	createStoreBindings
+} from 'mobx-miniprogram-bindings'
+import {
+	store
+} from '../../store'
+import {
+	getLiveList
+} from "../../api/live/index"
+import {
+	WeChatLiveStatus,
+	GLOBAL_KEY
+} from '../../lib/config'
+import {
+	getSchedule,
+	getLocalStorage,
+	setLocalStorage
+} from '../../utils/util'
 
 const livePlayer = requirePlugin('live-player-plugin')
 
@@ -29,10 +42,39 @@ Page({
 			url: '../../subLive/courseList/courseList',
 		})
 	},
+	// 检查vip缓存
+	checkVipSrtoage() {
+		let isVip=getLocalStorage(GLOBAL_KEY.vip)
+		if(isVip==="true"){
+			wx.showModal({
+				cancelColor: 'cancelColor',
+			})
+			wx.removeStorageSync(GLOBAL_KEY.vip)
+		}
+		// if (isVip) {
+		// 	// 是vip
+		// 	let vipData = JSON.parse(getLocalStorage(GLOBAL_KEY.vip))
+		// 	// 86400000一天毫秒数
+		// 	if (vipData.nowTime + 86400000 < Date.parse(new Date())&&vipData.agoDay<3) {
+		// 		console.log(11)
+		// 		wx.showModal({
+		// 			cancelColor: 'cancelColor',
+		// 		})
+		// 		let vipDataNew = {
+		// 			agoDay: vipData.agoDay + 1,
+		// 			nowTime: Date.parse(new Date())
+		// 		}
+		// 		setLocalStorage(GLOBAL_KEY.vip, JSON.stringify(vipDataNew))
+		// 		console.log(vipData)
+		// 	}
+		// }
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
+		// 检查vip缓存
+		this.checkVipSrtoage()
 		this.storeBindings = createStoreBindings(this, {
 			store,
 			fields: [],
@@ -113,7 +155,10 @@ Page({
 		})
 	},
 	queryLiveList() {
-		getLiveList({limit: this.data.liveListLimit, offset: this.data.liveListOffset}).then((data) => {
+		getLiveList({
+			limit: this.data.liveListLimit,
+			offset: this.data.liveListOffset
+		}).then((data) => {
 			if (data.length < this.data.liveListLimit) {
 				this.data.didNoMore = true
 			}
@@ -147,7 +192,7 @@ Page({
 	handleLiveStatusCallback(callbackLiveStatus) {
 		if (callbackLiveStatus.length > 0) {
 			let originLiveList = [...this.data.liveList]
-			callbackLiveStatus.forEach((_)=> {
+			callbackLiveStatus.forEach((_) => {
 				let tar = originLiveList.find(o => o.roomId === _.roomId)
 				if (tar) {
 					tar.liveStatus = _.liveStatus

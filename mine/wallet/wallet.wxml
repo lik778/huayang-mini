@@ -1,0 +1,15 @@
+<!--mine/wallet/wallet.wxml-->
+<view class="wollet">
+	<text>花豆：{{wolletData.point}}</text>
+	<text>余额：{{wolletData.balance}}</text>
+	<text>最低可提现金额:20元</text>
+	<view class="list">
+		<block wx:for="{{inviteList}}" wx:key="index">
+			<view>
+				<image src="{{item.invite_user_info.avatar_url}}"></image>
+				<text>{{item.invite_user_info.nick_name}}</text>
+				<text>+{{item.amount/100}}</text>
+			</view>
+		</block>
+	</view>
+</view>
