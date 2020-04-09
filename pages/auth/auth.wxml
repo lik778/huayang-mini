@@ -1,12 +1,9 @@
 <!--pages/auth/auth.wxml-->
 <view class="auth">
-    <text class="txt title">🌹花样值得买🌹</text>
+    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586309241KigwDa.jpg" class="logo"></image>
     <view class="box">
-      <text class="txt main-title">1. 请您完成微信授权</text>
-      <button type="primary" open-type="getUserInfo" bindgetuserinfo="getUserInfo">立即授权</button>
+        <button open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="hidden-button"></button>
+        <view class="button">微信一键登录</view>
     </view>
-    <view class="box">
-      <text class="txt main-title">2. 为了给您提供更好的服务，推荐合适的商品，请您绑定您的手机号</text>
-      <button type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">立即绑定</button>
-    </view>
+    <view class="rules">注册/登录即代表同意 <text class="important">隐私协议</text> 和 <text class="important">服务条款</text></view>
 </view>

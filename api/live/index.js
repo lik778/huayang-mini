@@ -1,7 +1,5 @@
 import request from "../../lib/request"
-import { URL, GLOBAL_KEY } from "../../lib/config"
-import { toast } from "../../utils/util"
-import { setLocalStorage } from "../../utils/util"
+import { URL } from "../../lib/config"
 
 export function getLiveList(params) {
 	return new Promise(resolve => {
@@ -12,3 +10,24 @@ export function getLiveList(params) {
 	})
 }
 
+export function getLiveBannerList(params) {
+	return new Promise(resolve => {
+		request._get(URL.getLiveBannerList, params).then(({data}) => {
+			data = data || []
+			resolve(data)
+		})
+	})
+}
+
+export function updateLiveStatus(params) {
+	return new Promise((resolve, reject) => {
+		request._post(URL.updateLiveStatus, params).then(({code}) => {
+			if (code === 0) {
+				resolve()
+			}
+			reject()
+		}).catch(() => {
+			reject()
+		})
+	})
+}

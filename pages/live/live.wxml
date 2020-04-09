@@ -1,17 +1,43 @@
 <!--pages/live/live.wxml-->
 <view class="live">
-  <view class="banner" bindtap="toCourese">
-    banner context
-  </view>
-  <view class="live-list">
-    <view class="live-item" bindtap="navigateToLive" data-item="{{item}}" wx:for="{{liveList}}" wx:key="id" style="background-image: url('{{item.coverPicture}}')">
-      <view class="live-status">
-        <text>{{item.liveStatus}}</text>
+  <view class="banner" wx:if="{{bannerPictureObject != null}}" bindtap="navigateToCourse" data-item="{{bannerPictureObject}}">
+    <view class="swiper-image">
+      <view class="{{bannerPictureObject.liveStatus !== '直播中' ? 'status disabled' : 'status'}}">
+        <text class="{{bannerPictureObject.liveStatus !== '直播中' ? 'status-dot disabled' : 'status-dot'}}"></text>
+        <text class="status-text">{{bannerPictureObject.liveStatus}}</text>
       </view>
-      <view class="live-info">
-        <text>{{item.roomName}}</text>
+      <text class="course-name">{{bannerPictureObject.name}}</text>
+      <view class="course-info">
+        <text class="author">{{bannerPictureObject.author}}</text>
+        <text class="course-no">{{bannerPictureObject.visitCount}}人看过</text>
+      </view>
+    </view>
+    <image class="teacher" src="{{bannerPictureObject.bannerPicture}}"></image>
+  </view>
+
+  <view class="roof">
+    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586329816eeCbKr.jpg" class="star"></image>
+    <text class="recommend">推荐</text>
+  </view>
+
+  <view class="live-list">
+    <view class="live-item" bindtap="navigateToLive" data-item="{{item}}" wx:for="{{liveList}}" wx:key="index">
+      <view class="live-cover" style="background-image: url('{{item.coverPicture}}')">
+        <view class="{{item.liveStatus !== '直播中' ? 'status disabled' : 'status'}}">
+          <text class="{{item.liveStatus !== '直播中' ? 'status-dot disabled' : 'status-dot'}}"></text>
+          <text class="status-text">{{item.status === 2 ? '回看' : item.liveStatus}}</text>
+        </view>
+      </view>
+      <view class="live-title limit-one-line">{{item.roomName}}</view>
+      <view class="live-teacher-info">
+        <image class="teacher-avatar" src="{{item.avatar}}"></image>
+        <text class="author limit-one-line">{{item.author}}</text>
       </view>
     </view>
   </view>
   <view class="no-more" wx:if="didNoMore">到底啦～</view>
+  <view class="invite-box" wx:if="didVip">
+    <image class="gift" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586332094NWPXTg.jpg"></image>
+    <text class="gift-text">邀请有礼</text>
+  </view>
 </view>

@@ -1,15 +1,15 @@
 {
   "plugins": {
     "live-player-plugin": {
-      "version": "1.0.4",
+      "version": "1.0.5",
       "provider": "wx2b03c6e691cd7370"
     }
   },
   "pages": [
     "pages/live/live",
+    "pages/mall/mall",
     "pages/mine/mine",
-    "pages/auth/auth",
-    "pages/mall/mall"
+    "pages/auth/auth"
   ],
   "subpackages": [
     {
@@ -24,7 +24,8 @@
       "pages": [
         "officialChannel/officialChannel",
         "unAuthorized/unAuthorized",
-        "courseList/courseList"
+        "courseList/courseList",
+        "review/review"
       ]
     }
   ],

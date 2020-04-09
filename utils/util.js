@@ -1,6 +1,5 @@
 import md5 from 'md5'
-import { GLOBAL_KEY } from '../lib/config'
-import { WeChatLiveStatus } from '../lib/config'
+import { GLOBAL_KEY, WeChatLiveStatus } from '../lib/config'
 
 const livePlayer = requirePlugin('live-player-plugin')
 
@@ -179,10 +178,18 @@ export const hasUserInfo = function () {
 	return $notNull(getLocalStorage(GLOBAL_KEY.userInfo))
 }
 
-export const getSchedule = function (roomIds = []) {
-	const scheduleData = getLocalStorage(GLOBAL_KEY.schedule) ? JSON.parse(getLocalStorage(GLOBAL_KEY.schedule)) : []
-	let newScheduleData = roomIds.map(async roomId => {
-		const target = scheduleData.find(_ => _.roomId === roomId)
+/**
+ * 批量获取直播间状态
+ * @param roomIds
+ * @returns {Promise<unknown[]>}
+ */
+export const getSchedule = async function (roomIds = []) {
+	// 课程ID去重
+	roomIds = Array.from(new Set(roomIds))
+	let scheduleData = getLocalStorage(GLOBAL_KEY.schedule) ? JSON.parse(getLocalStorage(GLOBAL_KEY.schedule) || "") : []
+	for (let i = 0; i < roomIds.length; i++) {
+		let roomId = roomIds[i]
+		let target = scheduleData.find(_ => _.roomId === roomId)
 		// 1. globalData中无值
 		if (!target) {
 			let {liveStatus = 0} = await queryLiveStatus(roomId) || {}
@@ -191,35 +198,22 @@ export const getSchedule = function (roomIds = []) {
 				liveStatus: WeChatLiveStatus[liveStatus],
 				timestamp: +new Date() + 5 * 60 * 1000
 			})
-			setLocalStorage(GLOBAL_KEY.schedule, scheduleData.slice())
-			return {
-				roomId: roomId,
-				liveStatus: WeChatLiveStatus[liveStatus]
-			}
 		} else {
 			let targetRoomId = target.roomId
 			// 2. globalData中有值
 			let nowTimestamp = +new Date()
 			if (nowTimestamp < target.timestamp) {
 				// 2.1 timestamp没过期
-				return {
-					roomId: targetRoomId,
-					liveStatus: target.liveStatus
-				}
 			} else {
 				// 2.2 timestamp过期
 				let {liveStatus} = await queryLiveStatus(targetRoomId)
 				target.liveStatus = WeChatLiveStatus[liveStatus]
 				target.timestamp = +new Date() + 5 * 60 * 1000
-				return {
-					roomId: targetRoomId,
-					liveStatus: WeChatLiveStatus[liveStatus]
-				}
 			}
 		}
-	})
-
-	return Promise.all(newScheduleData.slice())
+	}
+	setLocalStorage(GLOBAL_KEY.schedule, scheduleData.slice())
+	return scheduleData.slice()
 }
 
 /**
