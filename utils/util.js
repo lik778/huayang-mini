@@ -1,6 +1,7 @@
 import md5 from 'md5'
 import { GLOBAL_KEY, WeChatLiveStatus } from '../lib/config'
 import { createOrder } from "../api/mine/payVip"
+
 const livePlayer = requirePlugin('live-player-plugin')
 
 const formatTime = date => {
@@ -16,8 +17,8 @@ const formatTime = date => {
 
 // 查询token
 export const queryToken = () => {
-	let memberUserInfo = "userInfo" // 普通平台成员用户信息,
-	return wx.getStorageSync(memberUserInfo) || {}
+	let userInfo = getLocalStorage(GLOBAL_KEY.userInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)) : {}
+	return userInfo.token || ''
 }
 
 export const formatNumber = n => {
