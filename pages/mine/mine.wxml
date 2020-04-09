@@ -1,5 +1,6 @@
 <!--pages/mine/mine.wxml-->
 <view class="mine">
+	
 	<view wx:if="{{false}}">
 		<view class="head-line">
 			<text>顶部信息</text>
