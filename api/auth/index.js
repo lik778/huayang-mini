@@ -1,14 +1,6 @@
 import request from "../../lib/request"
-import {
-	URL,
-	GLOBAL_KEY
-} from "../../lib/config"
-import {
-	toast
-} from "../../utils/util"
-import {
-	setLocalStorage,getLocalStorage
-} from "../../utils/util"
+import { GLOBAL_KEY, URL } from "../../lib/config"
+import { getLocalStorage, setLocalStorage, toast } from "../../utils/util"
 
 /**
  * 用微信code换取服务端的用户信息
@@ -67,7 +59,6 @@ export function bindWxPhoneNumber(params) {
 		})
 	})
 }
-
 
 
 // 一键获取手机号

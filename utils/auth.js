@@ -1,4 +1,4 @@
-import { GLOBAL_KEY, WX_AUTH_TYPE } from "../lib/config"
+import { APP_LET_ID, GLOBAL_KEY } from "../lib/config"
 import { $notNull, hasUserInfo, setLocalStorage } from "./util"
 import { getWxInfo } from "../api/auth/index"
 
@@ -8,7 +8,7 @@ const checkAuth = () => {
 	wxLoginPromise()
 		.then(async (code) => {
 			// 用code查询服务端是否有该用户信息，如果有更新本地用户信息，反之从微信获取用户信息保存到服务端
-			let originUserInfo = await getWxInfo({code, app_id: "wx85d130227f745fc5"})
+			let originUserInfo = await getWxInfo({code, app_id: APP_LET_ID.tx})
 			// 缓存openId
 			setLocalStorage(GLOBAL_KEY.openId, originUserInfo.openid)
 			if ($notNull(originUserInfo) && originUserInfo.nickname) {
@@ -83,14 +83,15 @@ function wxGetUserInfoPromise() {
 /**
  * wx.getSetting Promise
  * 微信授权记录
- * @param authKey
+ * @param withSubscriptions
  * @returns {Promise<unknown>}
  */
-function wxGetSettingPromise(authKey = WX_AUTH_TYPE.userInfo) {
+function wxGetSettingPromise(withSubscriptions = false) {
 	return new Promise((resolve, reject) => {
 		wx.getSetting({
-			success({authSetting}) {
-				resolve(authSetting)
+			withSubscriptions,
+			success(settings) {
+				resolve(settings)
 			},
 			fail(e) {
 				reject(e)

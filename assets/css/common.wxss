@@ -1,0 +1,19 @@
+.hidden-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: transparent;
+}
+.hidden-button::after {
+    border: 0 none;
+}
+
+.limit-one-line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}

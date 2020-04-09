@@ -1,36 +1,49 @@
 <!--subLive/courseList/courseList.wxml-->
 <view class="course-list">
-	<view class="banner">
-		<text>banner介绍位</text>
-		<form report-submit="true" bindsubmit="formSubmit" bindreset="formReset">
-			<button formType="submit" type="primary">订阅</button>
-		</form>
-	</view>
-	<view class="main">
-		<van-tabs active="{{ active }}" bind:change="onChange" swipeable>
-			<van-tab title="{{item.name}}" wx:for="{{categoryList}}" wx:key="index">
-				<view class="course-item" wx:for="{{courseList}}" wx:key="index1" wx:for-item="item1" wx:for-index="index1" wx:if="{{courseList!==null&&courseList.length!==0}}" bindtap="toLive" data-item="{{item1.zhibo_room.id}}">
-					<button wx:if="{{showBindPhoneButton}}" type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumberData" class="mobile-button"></button>
-					<view class="item-left">
-						<image src="{{item1.kecheng.cover_pic}}"></image>
-						<text wx:if="{{item1.kecheng.vip_only===1}}">会员专属</text>
-					</view>
-					<view class="item-right">
-						<view class="item-top">{{item1.zhibo_room.title}}</view>
-						<view class="item-middle">
-							<text class="item-live" wx:if="{{item1.kecheng.kecheng_type===0}}">{{item1.zhibo_room.getStatus==="EOF"?"无状态":item1.zhibo_room.getStatus}}</text>
-							<text class="item-playback" wx:if="{{item1.kecheng.kecheng_type===1}}">回放</text>
-							<text decode="true">&nbsp;|&nbsp;</text>
-							<text>{{item1.zhibo_room.visit_count}}人观看</text>
-						</view>
-						<view class="item-bottom">
-							<image src="{{item1.teacher.avatar_url}}"></image>
-							<text>{{item1.teacher.nick_name}}</text>
-						</view>
-					</view>
-				</view>
-				<view wx:if="{{courseList===null||courseList.length===0}}">无数据</view>
-			</van-tab>
-		</van-tabs>
-	</view>
+  <view class="course-box">
+    <image src="{{userInfo.avatar}}" class="course-avatar"></image>
+    <view class="course-content">
+      <text class="author limit-one-line">{{userInfo.name}}</text>
+      <text class="desc">{{userInfo.desc}}</text>
+    </view>
+    <view class="{{didSubscript ? 'subscript disabled' : 'subscript'}}" bindtap="subscript">
+      <image class="subscript-icon" src="{{didSubscript ? 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586344280zKmqhp.jpg' : 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586338529PQgEwy.jpg'}}"></image>
+      <text>{{didSubscript ? '已订阅' : '订阅'}}</text>
+    </view>
+  </view>
+  <van-tabs
+    active="{{ activeTabIndex }}"
+    tab-class="custom-tab-class"
+    tab-active-class="custom-tab-active-class"
+    bind:change="onChange" swipeable>
+    <van-tab title="{{item.name}}" wx:for="{{categoryList}}" wx:key="index">
+      <view class="course-item"
+            wx:for="{{courseList}}"
+            wx:for-item="courseItem"
+            wx:for-index="courseIndex"
+            wx:key="courseIndex"
+            wx:if="{{courseList != null&&courseList.length !== 0}}"
+            data-item="{{courseItem.zhibo_room}}"
+            bindtap="jumpToLive">
+        <button wx:if="{{showBindPhoneButton}}" class="mobile-button" type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumberData"></button>
+        <view class="item-left">
+          <image src="{{courseItem.kecheng.cover_pic}}"></image>
+          <view class="vip-only" wx:if="{{courseItem.kecheng.vip_only === 1}}">专享课</view>
+        </view>
+        <view class="item-right">
+          <view class="item-right-top limit-one-line">{{courseItem.zhibo_room.title}}</view>
+          <view class="item-right-middle">
+            <view class="class-dot"></view>
+            <text class="class-status">{{courseItem.kecheng.kecheng_type === 1 ? '回看' : courseItem.zhibo_room.liveStatus}}</text>
+            <text>{{courseItem.zhibo_room.visit_count}}人在看</text>
+          </view>
+          <view class="item-right-bottom">
+            <image src="{{courseItem.teacher.avatar_url}}"></image>
+            <text class="limit-one-line">{{courseItem.teacher.nick_name}}</text>
+          </view>
+        </view>
+      </view>
+      <view wx:if="{{courseList==null||courseList.length===0}}">敬请期待</view>
+    </van-tab>
+  </van-tabs>
 </view>
