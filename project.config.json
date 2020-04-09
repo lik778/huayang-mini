@@ -65,6 +65,26 @@
 					"pathName": "mine/joinVip/joinVip",
 					"query": "scene=217",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "subLive/courseList/courseList",
+					"pathName": "subLive/courseList/courseList",
+					"query": "id=25",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "subLive/unAuthorized/unAuthorized",
+					"pathName": "subLive/unAuthorized/unAuthorized",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/auth/auth",
+					"pathName": "pages/auth/auth",
+					"scene": null
 				}
 			]
 		}

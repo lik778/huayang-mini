@@ -1,13 +1,6 @@
 import md5 from 'md5'
-import {
-	GLOBAL_KEY
-} from '../lib/config'
-import {
-	WeChatLiveStatus
-} from '../lib/config'
-import {
-	createOrder
-} from "../api/mine/payVip"
+import { GLOBAL_KEY, WeChatLiveStatus } from '../lib/config'
+import { createOrder } from "../api/mine/payVip"
 const livePlayer = requirePlugin('live-player-plugin')
 
 const formatTime = date => {
@@ -23,8 +16,8 @@ const formatTime = date => {
 
 // 查询token
 export const queryToken = () => {
-	let token = wx.getStorageSync(GLOBAL_KEY.token)
-	return token
+	let memberUserInfo = "userInfo" // 普通平台成员用户信息,
+	return wx.getStorageSync(memberUserInfo) || {}
 }
 
 export const formatNumber = n => {
@@ -34,7 +27,7 @@ export const formatNumber = n => {
 
 /**
  * 购买会员
- * @returns 
+ * @returns
  */
 export const payVip = function (params) {
 	let createOrderParmas = {
@@ -221,51 +214,42 @@ export const hasUserInfo = function () {
 	return $notNull(getLocalStorage(GLOBAL_KEY.userInfo))
 }
 
-export const getSchedule = function (roomIds = []) {
-	const scheduleData = getLocalStorage(GLOBAL_KEY.schedule) ? JSON.parse(getLocalStorage(GLOBAL_KEY.schedule)) : []
-	let newScheduleData = roomIds.map(async roomId => {
-		const target = scheduleData.find(_ => _.roomId === roomId)
+/**
+ * 批量获取直播间状态
+ * @param roomIds
+ * @returns {Promise<unknown[]>}
+ */
+export const getSchedule = async function (roomIds = []) {
+	// 课程ID去重
+	roomIds = Array.from(new Set(roomIds))
+	let scheduleData = getLocalStorage(GLOBAL_KEY.schedule) ? JSON.parse(getLocalStorage(GLOBAL_KEY.schedule) || "") : []
+	for (let i = 0; i < roomIds.length; i++) {
+		let roomId = roomIds[i]
+		let target = scheduleData.find(_ => _.roomId === roomId)
 		// 1. globalData中无值
 		if (!target) {
-			let {
-				liveStatus = 0
-			} = await queryLiveStatus(roomId) || {}
+			let {liveStatus = 0} = await queryLiveStatus(roomId) || {}
 			scheduleData.push({
 				roomId: roomId,
 				liveStatus: WeChatLiveStatus[liveStatus],
 				timestamp: +new Date() + 5 * 60 * 1000
 			})
-			setLocalStorage(GLOBAL_KEY.schedule, scheduleData.slice())
-			return {
-				roomId: roomId,
-				liveStatus: WeChatLiveStatus[liveStatus]
-			}
 		} else {
 			let targetRoomId = target.roomId
 			// 2. globalData中有值
 			let nowTimestamp = +new Date()
 			if (nowTimestamp < target.timestamp) {
 				// 2.1 timestamp没过期
-				return {
-					roomId: targetRoomId,
-					liveStatus: target.liveStatus
-				}
 			} else {
 				// 2.2 timestamp过期
-				let {
-					liveStatus
-				} = await queryLiveStatus(targetRoomId)
+				let {liveStatus} = await queryLiveStatus(targetRoomId)
 				target.liveStatus = WeChatLiveStatus[liveStatus]
 				target.timestamp = +new Date() + 5 * 60 * 1000
-				return {
-					roomId: targetRoomId,
-					liveStatus: WeChatLiveStatus[liveStatus]
-				}
 			}
 		}
-	})
-
-	return Promise.all(newScheduleData.slice())
+	}
+	setLocalStorage(GLOBAL_KEY.schedule, scheduleData.slice())
+	return scheduleData.slice()
 }
 
 /**
@@ -275,9 +259,7 @@ export const getSchedule = function (roomIds = []) {
  */
 function queryLiveStatus(roomId) {
 	return new Promise((resolve, reject) => {
-		livePlayer.getLiveStatus({
-				room_id: roomId
-			})
+		livePlayer.getLiveStatus({room_id: roomId})
 			.then(response => {
 				resolve(response)
 			})
@@ -286,9 +268,7 @@ function queryLiveStatus(roomId) {
 				reject(error)
 			})
 			.finally(() => {
-				resolve({
-					liveStatus: 0
-				})
+				resolve({liveStatus: 0})
 			})
 	})
 }

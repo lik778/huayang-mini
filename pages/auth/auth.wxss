@@ -1,32 +1,45 @@
 /* pages/auth/auth.wxss */
+@import "../../assets/css/common.wxss";
 .auth {
-  padding: 0 20px;
+  position: relative;
+  height: 100vh;
+  text-align: center;
 }
 
-.box {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
-  padding: 20px 0;
-  border-bottom: 1px solid #eee;
+.auth .logo {
+  width: 466rpx;
+  height: 168rpx;
+  margin-top: 412rpx;
 }
-
-.txt {
-    width: 100%;
-    margin-bottom: 10px;
+.auth .box {
+  position: absolute;
+  bottom: 214rpx;
+  width: 100vw;
 }
-
-.title {
-  font-size: 20px;
+.auth .box:active {
+  opacity: 0.9;
 }
-
-.desc {
-  font-size: 14px;
-  color: #333;
+.button {
+  width: 630rpx;
+  height: 96rpx;
+  margin: 0 auto;
+  line-height: 96rpx;
+  border-radius: 48rpx;
+  font-size: 36rpx;
+  font-weight: 600;
+  background: rgb(5, 197, 98);
+  color: white;
 }
-
-.main-title {
-  font-size: 18px;
+.rules {
+  position: absolute;
+  bottom: 140rpx;
+  left: 0;
+  right: 0;
+  margin-top: 40rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: rgba(138, 138, 138, 1);
+}
+.important {
+  color: rgba(12, 169, 240, 1);
 }
