@@ -23,9 +23,10 @@ Page({
       webViewData: JSON.stringify({
         userId: wx.getStorageSync(GLOBAL_KEY.userId),
         mobile:mobile,
+        open_id:wx.getStorageSync(GLOBAL_KEY.openId),
       })
     })
-    // console.log(this.data.webViewData)
+    console.log(this.data.webViewData)
   },
   /**
    * 生命周期函数--监听页面加载

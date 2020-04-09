@@ -1,50 +1,53 @@
 <!--pages/mine/mine.wxml-->
 <view class="mine">
-	<view class="head-line">
-		<text>顶部信息</text>
-		<image src="{{userInfo.avatar_url}}" class="head-img"></image>
-		<text>{{userInfo.nick_name}}</text>
-		<text>{{userInfo.mobile}}</text>
-	</view>
-	<view class="vip-module">
-		<!--是超级会员（花豆，余额，有效期显示立即加入隐藏），
+	<view wx:if="{{false}}">
+		<view class="head-line">
+			<text>顶部信息</text>
+			<image src="{{userInfo.avatar_url}}" class="head-img"></image>
+			<text>{{userInfo.nick_name}}</text>
+			<text>{{userInfo.mobile}}</text>
+		</view>
+		<view class="vip-module">
+			<!--是超级会员（花豆，余额，有效期显示立即加入隐藏），
 			不是超级会员，已注册手机号（花豆、余额、立即加入显示，有效期隐藏）
 			未注册手机号（花豆，余额，有效期隐藏，绑定手机号、立即加入显示） -->
-		<view wx:if="{{userInfo.is_zhide_vip}}">
-			<text>有效期至：{{userInfo.zhide_end_time}}</text>
+			<view wx:if="{{userInfo.is_zhide_vip}}">
+				<text>有效期至：{{userInfo.zhide_end_time}}</text>
+			</view>
+			<view wx:if="{{!showBindPhoneButton}}">
+				<text>花豆：{{userInfo.zhide_point}}</text>
+			</view>
+			<view wx:if="{{!showBindPhoneButton}}" bindtap="toWallet">
+				<text>余额：{{userInfo.amount/100||0}}</text>
+			</view>
+			<view wx:if="{{showBindPhoneButton}}">
+				<button type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">绑定手机查看</button>
+			</view>
+			<view wx:if="{{!userInfo.is_zhide_vip||showBindPhoneButton}}" bindtap="joinVip">立即加入</view>
 		</view>
-		<view wx:if="{{!showBindPhoneButton}}">
-			<text>花豆：{{userInfo.zhide_point}}</text>
+		<!-- 列表模块 -->
+		<view>
+			<view wx:if="{{userInfo.is_zhide_vip}}">
+				<view>
+					<text>花样大学</text>
+					<text wx:if="{{userInfo.student_num===''}}" bindtap="applyJoinSchool">申请入学</text>
+					<text wx:else>学籍编号：{{userInfo.student_num}}</text>
+				</view>
+				<view bindtap="toInvite">
+					<text>邀请有礼</text>
+				</view>
+				<view>
+					<text>加入会员群</text>
+					<button open-type="contact" bindcontact="joinVipGroup" send-message-title="会话内消息卡片" send-message-path="/pages/mine/mine" send-message-img="https://imgsa.baidu.com/baike/pic/item/562c11dfa9ec8a13918d4ed4fb03918fa0ecc06b.jpg" show-message-card="true">加入会员群</button>
+				</view>
+			</view>
+			<view data-mobile="1739830519" bindtap="callPhone">
+				<text>联系客服：</text>
+				<text>0551-8322640</text>
+			</view>
 		</view>
-		<view wx:if="{{!showBindPhoneButton}}" bindtap="toWallet">
-			<text>余额：{{userInfo.amount/100}}</text>
-		</view>
-		<view wx:if="{{showBindPhoneButton}}">
-			<button type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">绑定手机查看</button>
-		</view>
-		<view wx:if="{{!userInfo.is_zhide_vip||showBindPhoneButton}}" bindtap="joinVip">立即加入</view>
 	</view>
-	<!-- 列表模块 -->
-	<view>
-		<view wx:if="{{userInfo.is_zhide_vip}}">
-			<view>
-				<text>花样大学</text>
-				<text wx:if="{{userInfo.student_num===''}}" bindtap="applyJoinSchool">申请入学</text>
-				<text wx:else>学籍编号：{{userInfo.student_num}}</text>
-			</view>
-			<view bindtap="toInvite">
-				<text>邀请有礼</text>
-			</view>
-			<view>
-				<text>加入会员群</text>
-				<button open-type="contact" bindcontact="joinVipGroup" send-message-title="会话内消息卡片" send-message-path="/pages/mine/mine" send-message-img="https://imgsa.baidu.com/baike/pic/item/562c11dfa9ec8a13918d4ed4fb03918fa0ecc06b.jpg" show-message-card="true">加入会员群</button>
-			</view>
-		</view>
-		<view data-mobile="1739830519" bindtap="callPhone">
-			<text>联系客服：</text>
-			<text>0551-8322640</text>
-		</view>
-	</view>
+
 
 
 </view>
