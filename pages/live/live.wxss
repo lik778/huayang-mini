@@ -35,6 +35,7 @@
     padding: 6rpx 20rpx;
     border-radius: 16rpx 0 16rpx 0;
     background: rgb(255, 68, 51);
+    color: rgb(255, 255, 255);
 }
 .status.disabled {
     color: rgba(255, 255, 255, 0.8);
