@@ -30,6 +30,12 @@
         "courseList/courseList",
         "review/review"
       ]
+    },
+    {
+      "root": "subMall",
+      "pages": [
+        "detail/detail"
+      ]
     }
   ],
   "window": {
