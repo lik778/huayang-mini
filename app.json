@@ -18,7 +18,8 @@
         "joinVip/joinVip",
         "joinSchool/joinSchool",
         "invite/invite",
-        "wallet/wallet"
+        "wallet/wallet",
+        "joinResult/joinResult"
       ]
     },
     {

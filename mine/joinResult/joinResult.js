@@ -1,37 +1,29 @@
-// mine/joinSchool/joinSchool.js
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+// mine/joinResult/joinResult.js
+import {getUserInfo} from "../../api/mine/index"
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    radio: '0',
-    webViewData: 0
+    userInfo:{}
   },
-  // 切换性别
-  changeSex(e) {
-    this.setData({
-      radio: e.detail
-    })
-    console.log(e.detail)
-  },
-  getWebViewData(mobile) {
-    this.setData({
-      webViewData: JSON.stringify({
-        userId: wx.getStorageSync(GLOBAL_KEY.userId),
-        mobile:mobile,
+  // 获取用户信息
+  getUserInfoData(){
+    getUserInfo("scene=zhide").then(res => {
+      if (res.code !== -2) {
+        this.setData({
+          userInfo: res || {}
       })
-    })
-    // console.log(this.data.webViewData)
+      } 
+  })
+
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getWebViewData(options.mobile)
+
   },
 
   /**
@@ -45,7 +37,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getUserInfoData()
+   
   },
 
   /**

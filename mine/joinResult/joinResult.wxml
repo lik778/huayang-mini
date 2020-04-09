@@ -1,0 +1,7 @@
+<!--mine/joinResult/joinResult.wxml-->
+<view class="result">
+	<view><text>申请成功</text></view>
+	<view><text>你已被花样大学成功录取</text></view>
+	<view> <text>您的学号是 ：{{userInfo.student_num}}</text></view>
+	<button open-type="contact" bindcontact="joinVipGroup" send-message-title="会话内消息卡片" send-message-path="/pages/mine/mine" send-message-img="https://imgsa.baidu.com/baike/pic/item/562c11dfa9ec8a13918d4ed4fb03918fa0ecc06b.jpg" show-message-card="true" type="primary">添加您的班主任</button>
+</view>

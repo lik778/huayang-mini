@@ -30,19 +30,19 @@ Page({
         showBindPhoneButton: true,
     },
     // 跳往邀请会员页
-    toInvite(){
+    toInvite() {
         wx.navigateTo({
-          url: '/mine/invite/invite',
+            url: '/mine/invite/invite',
         })
     },
     // 跳往我的钱包
-    toWallet(){
-        let wolletData={
-            balance:this.data.userInfo.amount/100,//余额
-            point:this.data.userInfo.zhide_point//花豆
+    toWallet() {
+        let wolletData = {
+            balance: this.data.userInfo.amount / 100, //余额
+            point: this.data.userInfo.zhide_point //花豆
         }
         wx.navigateTo({
-          url: `/mine/wallet/wallet?wolletData=${JSON.stringify(wolletData)}`,
+            url: `/mine/wallet/wallet?wolletData=${JSON.stringify(wolletData)}`,
         })
     },
     // 加入会员
@@ -50,7 +50,7 @@ Page({
         if (this.data.showBindPhoneButton) {
             wx.showToast({
                 title: '请先手机号注册',
-                icon:"none"
+                icon: "none"
             })
         } else {
             wx.navigateTo({
@@ -59,9 +59,9 @@ Page({
         }
     },
     // 申请入学
-    applyJoinSchool(){
+    applyJoinSchool() {
         wx.navigateTo({
-          url: '/mine/joinSchool/joinSchool',
+            url: `/mine/joinSchool/joinSchool?mobile=${this.data.userInfo.mobile}`,
         })
     },
     // 一键获取手机号
@@ -143,7 +143,7 @@ Page({
             fields: ['numA', 'numB', 'sum'],
             actions: ['update'],
         })
-        this.getUserInfoData()
+
     },
     // 生命周期函数--监听页面初次渲染完成
     onReady: function () {
@@ -151,6 +151,10 @@ Page({
     },
     // 生命周期函数--监听页面显示
     onShow: function () {
+        this.getUserInfoData()
+        // wx.navigateTo({
+        //     url: '/mine/joinResult/joinResult',
+        // })
     },
     // 生命周期函数--监听页面隐藏
     onHide: function () {

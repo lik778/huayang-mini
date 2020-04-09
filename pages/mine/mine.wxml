@@ -17,19 +17,19 @@
 			<text>花豆：{{userInfo.zhide_point}}</text>
 		</view>
 		<view wx:if="{{!showBindPhoneButton}}" bindtap="toWallet">
-			<text>余额：{{userInfo.zhide_end_time}}</text>
+			<text>余额：{{userInfo.amount/100}}</text>
 		</view>
 		<view wx:if="{{showBindPhoneButton}}">
 			<button type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">绑定手机查看</button>
 		</view>
-		<view wx:if="{{userInfo.is_zhide_vip}}" bindtap="joinVip">立即加入</view>
+		<view wx:if="{{!userInfo.is_zhide_vip||showBindPhoneButton}}" bindtap="joinVip">立即加入</view>
 	</view>
 	<!-- 列表模块 -->
 	<view>
 		<view wx:if="{{userInfo.is_zhide_vip}}">
 			<view>
 				<text>花样大学</text>
-				<text wx-if="{{userInfo.student_num===''}}" bindtap="applyJoinSchool">申请入学</text>
+				<text wx:if="{{userInfo.student_num===''}}" bindtap="applyJoinSchool">申请入学</text>
 				<text wx:else>学籍编号：{{userInfo.student_num}}</text>
 			</view>
 			<view bindtap="toInvite">
