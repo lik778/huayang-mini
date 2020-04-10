@@ -4,7 +4,7 @@
     <view class="swiper-image">
       <view class="{{bannerPictureObject.liveStatus !== '直播中' ? 'status disabled' : 'status'}}">
         <text class="{{bannerPictureObject.liveStatus !== '直播中' ? 'status-dot disabled' : 'status-dot'}}"></text>
-        <text class="status-text">{{bannerPictureObject.liveStatus}}</text>
+        <text class="status-text">{{bannerPictureObject.status === 2 ? '回看' : bannerPictureObject.liveStatus}}</text>
       </view>
       <text class="course-name">{{bannerPictureObject.name}}</text>
       <view class="course-info">
@@ -27,6 +27,9 @@
           <text class="{{item.liveStatus !== '直播中' ? 'status-dot disabled' : 'status-dot'}}"></text>
           <text class="status-text">{{item.status === 2 ? '回看' : item.liveStatus}}</text>
         </view>
+        <view class="visit-no">
+          <text>{{item.visitCount}}人看过</text>
+        </view>
       </view>
       <view class="live-title limit-one-line">{{item.roomName}}</view>
       <view class="live-teacher-info">
@@ -35,8 +38,8 @@
       </view>
     </view>
   </view>
-  <view class="no-more" wx:if="didNoMore">到底啦～</view>
-  <view class="invite-box" wx:if="didVip">
+  <view class="no-more" wx:if="{{didNoMore}}">到底啦～</view>
+  <view class="invite-box" wx:if="{{didVip}}">
     <image class="gift" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586332094NWPXTg.jpg"></image>
     <text class="gift-text">邀请有礼</text>
   </view>

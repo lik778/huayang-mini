@@ -1,6 +1,7 @@
 @import "../../assets/css/common.wxss";
 .live {
     padding: 16rpx 32rpx;
+    font-size: 0;
 }
 .banner {
     position: relative;
@@ -120,8 +121,26 @@
     background-size: cover;
     border-radius: 16rpx 16rpx 6rpx 6rpx;
 }
+.visit-no {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 106rpx;
+    text-align: right;
+    background:linear-gradient(360deg,rgba(0,0,0,0.5) 0%,rgba(0,0,0,0) 100%);
+}
+.visit-no text {
+    position: absolute;
+    bottom: 24rpx;
+    right: 24rpx;
+    font-size: 28rpx;
+    font-weight: 400;
+    color: white;
+}
 .live-title {
     margin: 24rpx 0 20rpx;
+    font-size: 36rpx;
     font-weight: 500;
 }
 .live-teacher-info {
@@ -151,7 +170,6 @@
     padding: 22rpx 32rpx;
     border-radius: 915rpx 0 0 915rpx;
     background: white;
-    font-size: 0;
     box-shadow: 0 8px 24px 0 rgba(0,0,0,0.1);
 }
 .invite-box:active {

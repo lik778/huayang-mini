@@ -1,10 +1,11 @@
 {
   "plugins": {
     "live-player-plugin": {
-      "version": "1.0.5",
+      "version": "1.0.6",
       "provider": "wx2b03c6e691cd7370"
     }
   },
+  "navigateToMiniProgramAppIdList": [ "wx95fb6b5dbe8739b7" ],
   "pages": [
     "pages/mine/mine",
     "pages/live/live",

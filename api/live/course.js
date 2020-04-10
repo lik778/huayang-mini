@@ -1,5 +1,6 @@
 import request from "../../lib/request"
 import { URL } from "../../lib/config"
+import { $notNull } from "../../utils/util"
 
 // 获取课程列表
 export function getCourseList(params) {
@@ -60,9 +61,9 @@ export function uploadFormId(params) {
 // 获取订阅状态
 export function getSubscriptionStatus(params) {
 	return new Promise(resolve => {
-		request._get(URL.getSubscriptionStatus + params).then(({code}) => {
+		request._get(URL.getSubscriptionStatus + params).then(({code, data}) => {
 			if (code === 0) {
-				resolve(true)
+				resolve($notNull(data))
 			}
 		})
 	})

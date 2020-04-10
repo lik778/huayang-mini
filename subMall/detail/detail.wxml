@@ -1,2 +1,23 @@
-<!--subMall/detail/detail.wxml-->
-<text>subMall/detail/detail.wxml</text>
+<view class="detail">
+  <swiper indicator-dots="{{indicatorDots}}"
+          autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class="swiper-item">
+    <block wx:for="{{bannerList}}" wx:key="index">
+      <swiper-item>
+        <image class="swiper-image" src="{{item.url}}"></image>
+      </swiper-item>
+    </block>
+  </swiper>
+
+  <view class="info">
+    <view class="title">{{productInfo.name}}</view>
+    <view class="price-info"><text class="unit">¥</text><text class="price">{{productInfo.price / 100}}</text></view>
+  </view>
+  <view class="detail-content">
+    <block wx:for="{{detailContent}}" wx:key="index">
+      <image src="{{item}}"></image>
+      <!--<image src="https://img.yzcdn.cn/upload_files/2019/05/17/FtZBOe3A6fDuzm8sn81JeWV4E_rK.jpg"></image>-->
+    </block>
+  </view>
+
+  <view class="fixed-btn" bindtap="navigateToMiniProgram"><text class="btn-price"><text class="btn-unit">¥</text>{{productInfo.price / 100}}</text> <text class="btn-text">立即购买</text></view>
+</view>

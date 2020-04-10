@@ -3,14 +3,12 @@ import {
 	getCourseList,
 	getCourseTypeList,
 	getSubscriptionStatus,
-	getWatchLiveAuth,
 	queryUserInfo,
-	statisticsWatchNo,
 	subscription
 } from "../../api/live/course"
 import { getPhoneNumber } from "../../api/auth/index"
 import { GLOBAL_KEY, SubscriptType } from "../../lib/config"
-import { getLocalStorage, getSchedule } from "../../utils/util"
+import { checkIdentity, getLocalStorage, getSchedule } from "../../utils/util"
 import { wxGetSettingPromise } from "../../utils/auth"
 
 Page({
@@ -48,7 +46,7 @@ Page({
 	},
 	// 订阅
 	subscript() {
-		if (!this.didSubscript) return
+		if (this.didSubscript) return
 		wxGetSettingPromise().then(settings => {
 			console.log(settings)
 			let self = this
@@ -82,8 +80,7 @@ Page({
 	// 获取订阅信息
 	getStatus() {
 		let openId = getLocalStorage(GLOBAL_KEY.openId)
-		let userId = getLocalStorage(GLOBAL_KEY.userId)
-		getSubscriptionStatus(`?open_id=${openId}&user_id=${userId}`).then(isSubscript => {
+		getSubscriptionStatus(`?open_id=${openId}&target_user_id=${this.data.courseId}`).then(isSubscript => {
 			if (isSubscript) {
 				this.setData({
 					didSubscript: true
@@ -95,62 +92,7 @@ Page({
 	jumpToLive(e) {
 		let item = e.currentTarget.dataset.item // 直播间信息
 		// 判断是否是会员/是否入学
-		this.checkIdentity(item)
-		console.log(item)
-	},
-	// 判断是否是会员/是否入学
-	checkIdentity({num: roomId, link, id}) {
-		let userId = getLocalStorage(GLOBAL_KEY.userId)
-		if (userId == null) {
-			wx.navigateTo({
-				url: '/pages/auth/auth'
-			})
-			return false
-		} else {
-			// 已授权获取权限
-			let params = {
-				room_id: roomId,
-				user_id: userId
-			}
-			// 获取直播权限
-			getWatchLiveAuth(params).then(res => {
-				if (res === 'vip') {
-					// 不是会员,跳往注册会员页 TODO
-					// wx.navigateTo({
-					//   url: 'url',
-					// })
-					wx.showToast({
-						title: '跳往注册会员页',
-					})
-				} else if (res === 'daxue') {
-					// 未加入花样大学,跳往入学申请页 TODO
-					// wx.navigateTo({
-					//   url: 'url',
-					// })
-					wx.showToast({
-						title: '跳往入学申请页',
-					})
-				} else {
-					// 反之，有权限查看
-					// 优先统计观看人数
-					statisticsWatchNo({
-						zhibo_room_id: roomId,
-						open_id: getLocalStorage(GLOBAL_KEY.openId)
-					}).then(() => {
-						if (link) {
-							wx.navigateTo({
-								url: `/subLive/review/review?roomId=` + id
-							})
-						} else {
-							// 跳往前去直播间
-							wx.navigateTo({
-								url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${roomId}&custom_params=${encodeURIComponent(JSON.stringify(this.data.customParams))}`
-							})
-						}
-					})
-				}
-			})
-		}
+		checkIdentity({roomId: item.num, link: item.link, zhiboRoomId: item.id})
 	},
 	// 获取手机号
 	getPhoneNumberData(e) {
