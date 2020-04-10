@@ -17,8 +17,8 @@ const formatTime = date => {
 
 // 查询token
 export const queryToken = () => {
-	let userInfo = getLocalStorage(GLOBAL_KEY.userInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)) : {}
-	return userInfo.token || ''
+	let token = getLocalStorage(GLOBAL_KEY.token) ?  getLocalStorage(GLOBAL_KEY.token) : {}
+	return token || ''
 }
 
 export const formatNumber = n => {

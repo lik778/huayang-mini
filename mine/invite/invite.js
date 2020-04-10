@@ -13,7 +13,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    qcCode: ""
+    qcCode: "",
+    canvasUrl:""
   },
   // 获取小程序邀请码
   inviteCode() {
@@ -26,7 +27,7 @@ Page({
   // 保存到相册
   saveAlbum() {
     wx.downloadFile({
-      url: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1585559408pfSCjI.jpg',
+      url: this.data.canvasUrl,
       success(res) {
         wx.saveImageToPhotosAlbum({
           filePath: res.tempFilePath,
@@ -60,7 +61,11 @@ Page({
    */
   onLoad: function (options) {
     this.inviteCode()
-    createCanvas()
+    createCanvas().then(res=>{
+      this.setData({
+        canvasUrl:res
+      })
+    })
   },
 
   /**

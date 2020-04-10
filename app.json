@@ -6,13 +6,12 @@
     }
   },
   "pages": [
+    "pages/mine/mine",
     "pages/live/live",
     "pages/mall/mall",
-    "pages/mine/mine",
     "pages/auth/auth"
   ],
-  "subpackages": [
-    {
+  "subpackages": [{
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -49,8 +48,7 @@
     "color": "#999",
     "selectedColor": "#000",
     "backgroundColor": "#fff",
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/live/live",
         "text": "直播"
       },

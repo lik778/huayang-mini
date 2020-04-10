@@ -1,6 +1,23 @@
 <!--mine/invite/invite.wxml-->
-<view class="join-vip">
-	<canvas canvas-id='posterCanvas' style="width:400px;height:600px;"></canvas>
-	<button type="primary" open-type="share" class="share">分享好友</button>
-	<button type="primary" bindtap="saveAlbum">保存到相册</button>
+<view class="invite">
+	<view class="banner">
+		<image src="../../assets/images/mine/pic-12.png"></image>
+	</view>
+	<view class="canvas">
+		<canvas canvas-id='posterCanvas' style="width:900px;height:1200px;"></canvas>
+	</view>
+	<view class="button-line">
+		<view class="share">
+			<text>分享给好友</text>
+			<button type="primary" open-type="share" class="share-button"></button>
+		</view>
+		<view class="save" bindtap="saveAlbum">保存海报到相册</view>
+	</view>
+</view>
+
+
+
+<view class="join-vip" wx:if="{{false}}">
+
+
 </view>

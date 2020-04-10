@@ -39,7 +39,8 @@ Page({
     toWallet() {
         let wolletData = {
             balance: this.data.userInfo.amount / 100, //余额
-            point: this.data.userInfo.zhide_point //花豆
+            point: this.data.userInfo.zhide_point, //花豆
+            isVip: this.data.userInfo.is_zhide_vip, //是否为vip
         }
         wx.navigateTo({
             url: `/mine/wallet/wallet?wolletData=${JSON.stringify(wolletData)}`,
@@ -116,6 +117,7 @@ Page({
                         showBindPhoneButton: true
                     })
                 } else {
+                    res.mobile = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).mobile
                     this.setData({
                         userInfo: res || {}
                     })
@@ -153,7 +155,7 @@ Page({
     onShow: function () {
         this.getUserInfoData()
         // wx.navigateTo({
-        //     url: '/mine/joinResult/joinResult',
+        //     url: '/mine/invite/invite',
         // })
     },
     // 生命周期函数--监听页面隐藏

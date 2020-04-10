@@ -1,32 +1,49 @@
 export const createCanvas = () => {
-  // 获取上下文
-  let ctx = wx.createCanvasContext('posterCanvas')
-  // 计算设备比
-  let systemInfo = wx.getSystemInfoSync()
-  let width = systemInfo.screenWidth
-  let height = systemInfo.screenHeight
+  return new Promise(resolve => {
+    // 获取上下文
+    let ctx = wx.createCanvasContext('posterCanvas')
+    // 计算设备比
+    let systemInfo = wx.getSystemInfoSync()
+    let width = systemInfo.screenWidth
+    let height = systemInfo.screenHeight
 
-  let radio = Number((width / 750).toFixed(2))
-  let src = "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1585650569wbTyQK.jpg"
-  // 绘制背景矩形
-  ctx.setFillStyle('red')
-  ctx.fillRect((width - 654 * radio) / 2, 60 * radio,654 * radio, 920 * radio)
-  wx.getImageInfo({
-    src: src,
-    success: function (res) {
-      // 绘制圆形头像
-      drawCircular(ctx, 100 * radio, 100 * radio, 100 * radio, 100 * radio, res.path, radio)
-      // 绘制名字
-      dramName(ctx,"您的好友 樊悦",20, 240 * radio,100 * radio,"#000")
-      dramName(ctx,"邀您共同赢取花样会员",20, 240 * radio,160 * radio,"#000")
-      // 绘制描述语
-      // 。。。。
-      ctx.draw()
-    }
+    let radio = Number((width / 750).toFixed(2))
+    let src = "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1585650569wbTyQK.jpg"
+    // 绘制背景矩形
+    ctx.setFillStyle('red')
+    ctx.fillRect(0, 0, 900, 1200)
+    wx.getImageInfo({
+      src: src,
+      success: function (res) {
+        // 绘制圆形头像
+        drawCircular(ctx, 100 * radio, 100 * radio, 100 * radio, 100 * radio, res.path, radio)
+        // 绘制名字
+        dramName(ctx, "您的好友 樊悦", 20, 240 * radio, 100 * radio, "#000")
+        dramName(ctx, "邀您共同赢取花样会员", 20, 240 * radio, 160 * radio, "#000")
+        // 绘制描述语
+        // 。。。。
+        ctx.draw(false, (res) => {
+          wx.canvasToTempFilePath({
+            canvasId: 'posterCanvas',
+            success: function (res) {
+              // console.log('先保存在本地', res.tempFilePath);
+              let tempFilePath = res.tempFilePath;
+              resolve(tempFilePath)
+            },
+            fail: function (res) {
+              console.log(res);
+            }
+          });
+        })
+      }
+    })
   })
 }
+
+
+
 // 绘制名字
-function dramName(ctx,text,fontSize,x,y,color){
+function dramName(ctx, text, fontSize, x, y, color) {
   ctx.setTextBaseline('top')
   ctx.setFillStyle(color)
   ctx.setFontSize(fontSize)
