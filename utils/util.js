@@ -1,6 +1,7 @@
 import md5 from 'md5'
 import { GLOBAL_KEY, WeChatLiveStatus } from '../lib/config'
 import { createOrder } from "../api/mine/payVip"
+import { getWatchLiveAuth, statisticsWatchNo } from "../api/live/course"
 
 const livePlayer = requirePlugin('live-player-plugin')
 
@@ -253,6 +254,54 @@ export const getSchedule = async function (roomIds = []) {
 	return scheduleData.slice()
 }
 
+// 判断是否是会员/是否入学
+export const checkIdentity = function({roomId, link, zhiboRoomId}) {
+	const userId = getLocalStorage(GLOBAL_KEY.userId)
+	if (userId == null) {
+		return false
+	} else {
+		// 获取直播权限
+		getWatchLiveAuth({
+			room_id: zhiboRoomId,
+			user_id: userId
+		}).then(res => {
+			if (res === 'vip') {
+				// 非会员，跳往花样汇
+				wx.navigateTo({
+					url: '/subLive/unAuthorized/unAuthorized',
+				})
+			} else if (res === 'daxue') {
+				// 未加入花样大学,跳往入学申请页 TODO
+				// wx.navigateTo({
+				//   url: 'url',
+				// })
+				wx.showToast({
+					title: '跳往入学申请页',
+				})
+			} else {
+				// 反之，有权限查看
+				// 优先统计观看人数
+				statisticsWatchNo({
+					zhibo_room_id: zhiboRoomId,
+					open_id: getLocalStorage(GLOBAL_KEY.openId)
+				}).then(() => {
+					// link存在去跳转回看页
+					if (link) {
+						wx.navigateTo({
+							url: `/subLive/review/review?zhiboRoomId=` + zhiboRoomId
+						})
+					} else {
+						// 跳往前去直播间
+						wx.navigateTo({
+							url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${roomId}&custom_params=${encodeURIComponent(JSON.stringify(this.data.customParams))}`
+						})
+					}
+				})
+			}
+		})
+	}
+}
+
 /**
  * 查询直播间的状态
  * @param roomId
@@ -267,9 +316,6 @@ function queryLiveStatus(roomId) {
 			.catch(error => {
 				console.error(error)
 				reject(error)
-			})
-			.finally(() => {
-				resolve({liveStatus: 0})
 			})
 	})
 }

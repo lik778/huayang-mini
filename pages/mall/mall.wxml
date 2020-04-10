@@ -1,24 +1,25 @@
-<!--pages/mall/mall.wxml-->
 <view class="mall">
-	<view class="list-main">
-		<block wx:for="{{listData}}" wx:key="index">
-			<view class="list-item">
-				<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class="swiper">
-					<block wx:for="{{item.imgList}}" wx:for-item="item1" wx:for-index="index1" wx:key="index1">
-						<swiper-item class="swiper-item">
-							<view style="background:url({{item1}}) no-repeat center;background-size:100% 100%;" class="swiper-img"></view>
-						</swiper-item>
-					</block>
-				</swiper>
-				<view class="des">
-					<view class="title">{{item.title}}</view>
-					<view class="price">￥{{item.price}}</view>
-				</view>
-				<view class="buy-button" bindtap="buy" data-item="{{item}}">购买</view>
-			</view>
-		</block>
+	<view class="banner"></view>
+
+	<view class="category">
+		<view class="category-item" wx:for="{{categoryList}}" wx:key="index">
+			<image src="{{item.pic}}"></image>
+			<text>{{item.name}}</text>
+		</view>
 	</view>
-    <view class="address-module" wx:if="{{showAddressMedal}}">
-        <address bind:closeMadel="closeMadel" bind:buy="buyNow"></address>
-    </view>
+
+	<block wx:for="{{productList}}" wx:key="index">
+		<view class="product-item">
+			<view class="preview-image">
+				<image class="normal-mode" src="{{item.cover_image}}"></image>
+				<view class="split-mode"></view>
+			</view>
+			<text class="product-name limit-two-line">{{item.name}}</text>
+			<view class="product-info">
+				<view class="price"><text class="unit">¥</text>{{item.discount_price / 100}}</view>
+				<view class="buying" bindtap="buy" data-item="{{item}}">购买</view>
+			</view>
+		</view>
+		<view class="ad">ad-banner</view>
+	</block>
 </view>

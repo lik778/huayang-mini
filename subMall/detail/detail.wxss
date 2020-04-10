@@ -1,1 +1,67 @@
-/* subMall/detail/detail.wxss */
+.detail {
+    overflow: hidden;
+    padding-bottom: 120rpx;
+    background: rgba(245, 245, 245, 1);
+    font-size: 0;
+}
+.swiper-item {
+    width: 750rpx;
+    height: 750rpx;
+}
+.swiper-image {
+    width: inherit;
+    height: inherit;
+}
+.info {
+    padding: 40rpx 32rpx;
+    margin-bottom: 24rpx;
+    background: white;
+}
+.title {
+    margin-bottom: 24rpx;
+    font-size: 40rpx;
+    font-weight: 500;
+    line-height: 56rpx;
+    color: rgb(0,0,0);
+}
+.price-info {
+    font-weight: 500;
+    color: black;
+}
+.unit {
+    font-size: 36rpx;
+}
+.price {
+    font-size: 48rpx;
+}
+.detail-content {
+    background: white;
+}
+.detail-content image {
+    width: 100%;
+}
+.fixed-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 120rpx;
+    background: rgba(255, 68, 51, 1);
+    color: white;
+}
+.fixed-btn:active {
+    opacity: 0.9;
+}
+.btn-unit {
+    font-size: 28rpx;
+}
+.btn-price, .btn-text {
+    font-size: 40rpx;
+}
+.btn-text {
+    margin-left: 20rpx;
+}
+

@@ -84,6 +84,21 @@
 					"id": -1,
 					"name": "pages/auth/auth",
 					"pathName": "pages/auth/auth",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/mall/mall",
+					"pathName": "pages/mall/mall",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "subMall/detail/detail",
+					"pathName": "subMall/detail/detail",
+					"query": "prdId=37",
 					"scene": null
 				}
 			]

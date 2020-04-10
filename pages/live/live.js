@@ -1,7 +1,7 @@
 // pages/live/live.js
 import { getLiveBannerList, getLiveList, updateLiveStatus } from "../../api/live/index"
 import { GLOBAL_KEY, WeChatLiveStatus } from '../../lib/config'
-import { $notNull, getLocalStorage, getSchedule } from '../../utils/util'
+import { $notNull, checkIdentity, getLocalStorage, getSchedule } from '../../utils/util'
 import { statisticsWatchNo } from "../../api/live/course"
 
 Page({
@@ -11,13 +11,12 @@ Page({
 	data: {
 		WeChatLiveStatus,
 		schedule: [],
-		roomId: 4,
 		customParams: {},
 		bannerPictureObject: null,
 		bannerList: [],
 		liveList: [],
 		liveListOffset: 0,
-		liveListLimit: 100,
+		liveListLimit: 10,
 		didNoMore: false,
 		didVip: false,
 		liveStatusIntervalTimer: null
@@ -27,24 +26,37 @@ Page({
 	 * @param e
 	 */
 	navigateToLive(e) {
-		let { roomId:targetId, link } = e.currentTarget.dataset.item
-		this.setData({
-			roomId: targetId
-		})
-		statisticsWatchNo({
-			zhibo_room_id: targetId,
-			open_id: getLocalStorage(GLOBAL_KEY.openId)
-		}).then(() => {
-			// 判读link是否存在
-			if (link) {
-				wx.navigateTo({
-					url: `/subLive/review/review?roomId=` + targetId
-				})
-			} else {
-				wx.navigateTo({
-					url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${targetId}&custom_params=${encodeURIComponent(JSON.stringify(this.data.customParams))}`
-				})
-			}
+		console.log(e.currentTarget.dataset.item)
+		let { zhiboRoomId, roomId, link, vipOnly } = e.currentTarget.dataset.item
+		// 当前课程是否仅限VIP用户学习
+		if (vipOnly === 1) {
+			// 判断是否是会员/是否入学
+			checkIdentity({roomId, link, zhiboRoomId})
+		} else {
+			statisticsWatchNo({
+				zhibo_room_id: zhiboRoomId, // 运营后台配置的课程ID
+				open_id: getLocalStorage(GLOBAL_KEY.openId)
+			}).then(() => {
+				// link存在去跳转回看页
+				if (link) {
+					wx.navigateTo({
+						url: `/subLive/review/review?zhiboRoomId=` + zhiboRoomId
+					})
+				} else {
+					wx.navigateTo({
+						url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${roomId}&custom_params=${encodeURIComponent(JSON.stringify(this.data.customParams))}`
+					})
+				}
+			})
+		}
+	},
+	/**
+	 * 跳转至课程列表
+	 */
+	navigateToCourse(e) {
+		let officialRoomId = e.currentTarget.dataset.item.officialRoomId
+		wx.navigateTo({
+			url: `/subLive/courseList/courseList?id=${officialRoomId}`,
 		})
 	},
 	/**
@@ -58,7 +70,7 @@ Page({
 			this.data.liveListOffset = data.length
 			const result = data.map(item => {
 				return {
-					id: item.zhibo_room.id,
+					zhiboRoomId: item.zhibo_room.id,
 					roomId: item.zhibo_room.num,
 					roomType: item.zhibo_room.room_type,
 					roomName: item.zhibo_room.title,
@@ -96,10 +108,14 @@ Page({
 					_.liveStatus = tar.liveStatus
 					// 如果微信返回的直播间状态为103-已过期
 					if (tar.liveStatus === WeChatLiveStatus[103]) {
-						updateLiveStatus({
-							status: 2, // 2->直播已结束
-							zhibo_room_id: _.id
-						})
+						let tt = this.data.liveList.find(t => t.roomId === tar.roomId)
+						// 如果tt的status不为回看，更新服务端的直播状态
+						if (tt.status !== 2) {
+							updateLiveStatus({
+								status: 2, // 2->直播已结束
+								zhibo_room_id: _.id
+							})
+						}
 					}
 				}
 			})
@@ -116,7 +132,8 @@ Page({
 		getLiveBannerList().then((banner) => {
 			let bannerList = banner.map(b => {
 				return {
-					id: b.kecheng.id,
+					zhiboRoomId: b.zhibo_room.id,
+					officialRoomId: b.kecheng.user_id,
 					roomId: b.zhibo_room.num,
 					roomType: b.zhibo_room.room_type,
 					author: b.user.nick_name,
@@ -132,34 +149,23 @@ Page({
 			getSchedule(courseRoomIds).then((callbackCourseStatus) => {
 				if (callbackCourseStatus.length > 0) {
 					let originCourseList = [...bannerList]
-					originCourseList.forEach(_ => {
-						let tar = callbackCourseStatus.find(o => o.roomId === _.roomId)
-						if (tar) {
-							_.liveStatus = tar.liveStatus
-							if (tar.liveStatus === WeChatLiveStatus[103]) {
-								updateLiveStatus({
-									status: 2, // 2->直播已结束
-									zhibo_room_id: _.id
-								})
-							}
+
+					callbackCourseStatus.forEach(_ => {
+						let tar = originCourseList.find(o => o.roomId === _.roomId)
+						// status -> [0：默认；1：直播中；2：直播已结束]
+						if (tar && tar.status !== 2 && tar.liveStatus === WeChatLiveStatus[103]) {
+							updateLiveStatus({
+								status: 2, // 2->直播已结束
+								zhibo_room_id: tar.zhiboRoomId
+							})
 						}
 					})
-
 					this.setData({
 						bannerList,
 						bannerPictureObject: bannerList.length > 0 ? bannerList[0] : null
 					})
 				}
 			})
-		})
-	},
-	/**
-	 * 跳转至课程列表
-	 */
-	navigateToCourse(e) {
-		let selectedCourseId = e.currentTarget.dataset.item.id
-		wx.navigateTo({
-			url: `../../subLive/courseList/courseList?id=${selectedCourseId}`,
 		})
 	},
 	/**
