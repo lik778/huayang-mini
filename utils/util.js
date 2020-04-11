@@ -255,7 +255,7 @@ export const getSchedule = async function (roomIds = []) {
 }
 
 // 判断是否是会员/是否入学
-export const checkIdentity = function({roomId, link, zhiboRoomId}) {
+export const checkIdentity = function({roomId, link, zhiboRoomId, customParams = {}}) {
 	const userId = getLocalStorage(GLOBAL_KEY.userId)
 	if (userId == null) {
 		return false
@@ -293,7 +293,7 @@ export const checkIdentity = function({roomId, link, zhiboRoomId}) {
 					} else {
 						// 跳往前去直播间
 						wx.navigateTo({
-							url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${roomId}&custom_params=${encodeURIComponent(JSON.stringify(this.data.customParams))}`
+							url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${roomId}&custom_params=${encodeURIComponent(JSON.stringify(customParams))}`
 						})
 					}
 				})

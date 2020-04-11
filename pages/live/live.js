@@ -26,7 +26,7 @@ Page({
 	 * @param e
 	 */
 	navigateToLive(e) {
-		console.log(e.currentTarget.dataset.item)
+		// console.log(e.currentTarget.dataset.item)
 		let { zhiboRoomId, roomId, link, vipOnly } = e.currentTarget.dataset.item
 		// 当前课程是否仅限VIP用户学习
 		if (vipOnly === 1) {
@@ -145,7 +145,7 @@ Page({
 				}
 			})
 			// 筛选出直播间状态不是"回看"的房间号[0:'默认',1:'直播中',2:'回看']
-			let courseRoomIds = bannerList.map(_ => _.roomId && _.status !== 2)
+			let courseRoomIds = bannerList.filter(_ => _.roomId && _.status !== 2).map(t => t.roomId)
 			getSchedule(courseRoomIds).then((callbackCourseStatus) => {
 				if (callbackCourseStatus.length > 0) {
 					let originCourseList = [...bannerList]
@@ -189,7 +189,7 @@ Page({
 		if (this.liveStatusIntervalTimer == null) {
 			this.liveStatusIntervalTimer = setInterval(() => {
 				// 筛选出直播间状态不是"回看"的房间号
-				const roomIds = this.data.liveList.map(_ => _.roomId && _.status !== 2)
+				const roomIds = this.data.liveList.filter(_ => _.roomId && _.status !== 2).map(t => t.roomId)
 				getSchedule(roomIds).then(this.handleLiveStatusCallback)
 			}, 60 * 1000)
 		}

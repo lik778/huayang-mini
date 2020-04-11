@@ -67,10 +67,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 1,
 					"name": "subLive/courseList/courseList",
 					"pathName": "subLive/courseList/courseList",
-					"query": "id=25",
+					"query": "id=207",
 					"scene": null
 				},
 				{
