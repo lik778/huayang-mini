@@ -127,7 +127,7 @@ Page({
 			.then(({list, count}) => {
 				list = list || []
 				// 筛选出直播间状态不是"回看"的房间号
-				let liveRoomIds = list.map(_ => _.zhibo_room.num && _.zhibo_room.status !== 2)
+				let liveRoomIds = list.filter(_ => _.zhibo_room.num && _.kecheng.kecheng_type === 0).map(t => t.zhibo_room.num)
 				let result = [...this.data.courseList, ...list] || []
 				this.setData({
 					courseList: result,
