@@ -14,5 +14,5 @@
       <text>{{item.name}}</text>
     </view>
   </view>
-  <view class="join-now" bindtap="joinNow">立即加入</view>
+  <view class="join-now" bindtap="joinVip">立即加入</view>
 </view>

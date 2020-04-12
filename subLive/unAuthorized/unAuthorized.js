@@ -20,8 +20,10 @@ Page({
       }
     ]
   },
-  joinNow() {
-    console.log('join now');
+  joinVip() {
+    wx.navigateTo({
+      url: '/mine/joinVip/joinVip'
+    })
   },
 
   /**

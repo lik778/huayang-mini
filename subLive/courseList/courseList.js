@@ -46,7 +46,12 @@ Page({
 	},
 	// 订阅
 	subscript() {
-		if (this.didSubscript) return
+		if (this.data.didSubscript) {
+			wx.showToast({
+				title: '您已订阅',
+			})
+			return
+		}
 		wxGetSettingPromise().then(settings => {
 			console.log(settings)
 			let self = this
