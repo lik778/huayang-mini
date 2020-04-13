@@ -92,7 +92,10 @@ Page({
 					didSubscript: true,
 				})
 			}
-		}).finally(() => {
+			this.setData({
+				didVisibleSubscribeBtn: false
+			})
+		}).catch(() => {
 			this.setData({
 				didVisibleSubscribeBtn: false
 			})
