@@ -1,4 +1,4 @@
-export const createCanvas = () => {
+export const createCanvas = (bgUrl) => {
   return new Promise(resolve => {
     // 获取上下文
     let ctx = wx.createCanvasContext('posterCanvas')
@@ -6,37 +6,50 @@ export const createCanvas = () => {
     let systemInfo = wx.getSystemInfoSync()
     let width = systemInfo.screenWidth
     let height = systemInfo.screenHeight
-
-    let radio = Number((width / 750).toFixed(2))
+    let radio = 1
     let src = "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1585650569wbTyQK.jpg"
-    // 绘制背景矩形
-    ctx.setFillStyle('red')
-    ctx.fillRect(0, 0, 900, 1200)
     wx.getImageInfo({
-      src: src,
-      success: function (res) {
-        // 绘制圆形头像
-        drawCircular(ctx, 100 * radio, 100 * radio, 100 * radio, 100 * radio, res.path, radio)
-        // 绘制名字
-        dramName(ctx, "您的好友 樊悦", 20, 240 * radio, 100 * radio, "#000")
-        dramName(ctx, "邀您共同赢取花样会员", 20, 240 * radio, 160 * radio, "#000")
-        // 绘制描述语
-        // 。。。。
-        ctx.draw(false, (res) => {
-          wx.canvasToTempFilePath({
-            canvasId: 'posterCanvas',
-            success: function (res) {
-              // console.log('先保存在本地', res.tempFilePath);
-              let tempFilePath = res.tempFilePath;
-              resolve(tempFilePath)
-            },
-            fail: function (res) {
-              console.log(res);
-            }
-          });
+      src: bgUrl,
+      success: function (bg) {
+        console.log(bg.path)
+        ctx.drawImage(bg.path, 0, 0, 267, 356)
+        // 绘制背景矩形
+        wx.getImageInfo({
+          src: src,
+          success: function (res) {
+            // 绘制圆形头像
+            drawCircular(ctx, 34, 34, 12, 18, res.path, radio)
+            // 绘制名字
+            dramName(ctx, "您的好友 樊悦", 14, 57, 18, "#fff")
+            dramName(ctx, "我刚刚成为花样汇俱乐部第 ", 9, 57, 34, "#DDDDDD")
+            dramName(ctx, " 888 ", 18, 130, 34, "#DDDDDD")
+            dramName(ctx, "位会员", 9, 200, 34, "#DDDDDD")
+            dramName(ctx, "邀您一起成为时尚达人", 9, 57, 52, "#DDDDDD")
+            // 绘制价格
+            dramName(ctx, "原价199元",12, 12, 297, "#fff")
+            
+            dramName(ctx, "限时19.9",24, 12, 316, "#EE0000")
+            dramName(ctx, "元/年",12, 108, 324, "#EE0000")
+            // 。。。。
+            ctx.draw(false, (res) => {
+              wx.canvasToTempFilePath({
+                canvasId: 'posterCanvas',
+                success: function (res) {
+                  // console.log('先保存在本地', res.tempFilePath);
+                  let tempFilePath = res.tempFilePath;
+                  console.log(tempFilePath)
+                  resolve(tempFilePath)
+                },
+                fail: function (res) {
+                  console.log(res);
+                }
+              });
+            })
+          }
         })
       }
     })
+
   })
 }
 
@@ -59,7 +72,7 @@ function drawCircular(ctx, width, height, x, y, url, radio) {
   let avatarurl_x = x;
   let avatarurl_y = y;
   ctx.save();
-  ctx.arc(avatarurl_width / 2 + avatarurl_x, avatarurl_heigth / 2 + avatarurl_y, avatarurl_width / 2 + 5 * radio, 0, Math.PI * 2, false);
+  ctx.arc(avatarurl_width / 2 + avatarurl_x, avatarurl_heigth / 2 + avatarurl_y, avatarurl_width / 2 + 2 * radio, 0, Math.PI * 2, false);
   ctx.setFillStyle('#fff')
   ctx.fill()
   ctx.clip();

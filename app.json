@@ -10,9 +10,9 @@
   },
   "navigateToMiniProgramAppIdList": [ "wx95fb6b5dbe8739b7" ],
   "pages": [
+    "pages/mine/mine",
     "pages/live/live",
     "pages/mall/mall",
-    "pages/mine/mine",
     "pages/auth/auth"
   ],
   "subpackages": [{

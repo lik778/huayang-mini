@@ -5,8 +5,12 @@ import {
 import {
   getInviteCode
 } from "../../api/mine/index"
-import {getLocalStorage } from "../../utils/util"
-import {GLOBAL_KEY} from "../../lib/config"
+import {
+  getLocalStorage
+} from "../../utils/util"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 Page({
 
   /**
@@ -14,7 +18,18 @@ Page({
    */
   data: {
     qcCode: "",
-    canvasUrl:""
+    canvasUrl: "",
+    posturl:""
+  },
+  // getImgUrl
+  getImgUrl() {
+    let  arr= ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586746698uNTYez.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586746556RRsZWh.jpg",
+      "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586747541IzaDvb.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586747562GBKDfI.jpg"
+    ];
+    let index=Math.floor((Math.random() * arr.length))
+    this.setData({
+      posturl:arr[index]
+    })
   },
   // 获取小程序邀请码
   inviteCode() {
@@ -26,9 +41,11 @@ Page({
   },
   // 保存到相册
   saveAlbum() {
+    console.log( this.data.canvasUrl)
     wx.downloadFile({
       url: this.data.canvasUrl,
       success(res) {
+        console.log(res)
         wx.saveImageToPhotosAlbum({
           filePath: res.tempFilePath,
           success(res) {
@@ -60,10 +77,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.getImgUrl()
     this.inviteCode()
-    createCanvas().then(res=>{
+    createCanvas(this.data.posturl).then(res => {
       this.setData({
-        canvasUrl:res
+        canvasUrl: res
       })
     })
   },
