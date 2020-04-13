@@ -231,6 +231,7 @@ export const getSchedule = async function (roomIds = []) {
 		// 1. globalData中无值
 		if (!target) {
 			let {liveStatus = 0} = await queryLiveStatus(roomId) || {}
+			console.log(liveStatus);
 			scheduleData.push({
 				roomId: roomId,
 				liveStatus: WeChatLiveStatus[liveStatus],
@@ -245,6 +246,7 @@ export const getSchedule = async function (roomIds = []) {
 			} else {
 				// 2.2 timestamp过期
 				let {liveStatus} = await queryLiveStatus(targetRoomId)
+				console.log(liveStatus);
 				target.liveStatus = WeChatLiveStatus[liveStatus]
 				target.timestamp = +new Date() + 5 * 60 * 1000
 			}
@@ -271,12 +273,9 @@ export const checkIdentity = function({roomId, link, zhiboRoomId, customParams =
 					url: '/subLive/unAuthorized/unAuthorized',
 				})
 			} else if (res === 'daxue') {
-				// 未加入花样大学,跳往入学申请页 TODO
-				// wx.navigateTo({
-				//   url: 'url',
-				// })
-				wx.showToast({
-					title: '跳往入学申请页',
+				// 未加入花样大学,跳往入学申请页
+				wx.navigateTo({
+				  url: '/mine/joinSchool/joinSchool',
 				})
 			} else {
 				// 反之，有权限查看
