@@ -277,9 +277,6 @@ export const checkIdentity = function({roomId, link, zhiboRoomId, customParams =
 				wx.navigateTo({
 				  url: '/mine/joinSchool/joinSchool',
 				})
-				wx.showToast({
-					title: '跳往入学申请页',
-				})
 			} else {
 				// 反之，有权限查看
 				// 优先统计观看人数
