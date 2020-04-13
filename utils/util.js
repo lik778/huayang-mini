@@ -18,7 +18,7 @@ const formatTime = date => {
 
 // 查询token
 export const queryToken = () => {
-	let token = getLocalStorage(GLOBAL_KEY.token) ?  getLocalStorage(GLOBAL_KEY.token) : {}
+	let token = getLocalStorage(GLOBAL_KEY.token) ?  getLocalStorage(GLOBAL_KEY.token) : ""
 	return token || ''
 }
 
