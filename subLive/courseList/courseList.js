@@ -6,9 +6,9 @@ import {
 	queryUserInfo,
 	subscription
 } from "../../api/live/course"
-import { getPhoneNumber } from "../../api/auth/index"
+import { bindWxPhoneNumber } from "../../api/auth/index"
 import { GLOBAL_KEY, SubscriptType } from "../../lib/config"
-import { checkIdentity, getLocalStorage, getSchedule } from "../../utils/util"
+import { checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from "../../utils/util"
 import { wxGetSettingPromise } from "../../utils/auth"
 
 Page({
@@ -16,6 +16,8 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
+		show: false,
+		didVisibleSubscribeBtn: true,
 		courseId: 0,
 		userInfo: {},
 		customParams: {},
@@ -25,7 +27,6 @@ Page({
 		courseList: [],
 		limit: 10,
 		offset: 0,
-		showBindPhoneButton: true,
 		didSubscript: false
 	},
 	/**
@@ -88,24 +89,41 @@ Page({
 		getSubscriptionStatus(`?open_id=${openId}&target_user_id=${this.data.courseId}`).then(isSubscript => {
 			if (isSubscript) {
 				this.setData({
-					didSubscript: true
+					didSubscript: true,
 				})
 			}
+		}).finally(() => {
+			this.setData({
+				didVisibleSubscribeBtn: false
+			})
 		})
 	},
 	// 跳转去直播间
 	jumpToLive(e) {
 		let item = e.currentTarget.dataset.item // 直播间信息
 		// 判断是否是会员/是否入学
-		checkIdentity({roomId: item.num, link: item.link, zhiboRoomId: item.id})
-	},
-	// 获取手机号
-	getPhoneNumberData(e) {
-		getPhoneNumber(e).then(res => {
+		checkIdentity({roomId: item.num, link: item.link, zhiboRoomId: item.id}).catch(() => {
 			this.setData({
-				showBindPhoneButton: res === 1
+				show: true
 			})
 		})
+	},
+	/**
+	 * 一键获取微信手机号
+	 * @param e
+	 */
+	async getPhoneNumber(e) {
+		if (!e) return
+		let {errMsg = '', encryptedData: encrypted_data = '', iv = ''} = e.detail
+		if (errMsg.includes('ok')) {
+			let open_id = getLocalStorage(GLOBAL_KEY.openId)
+			if (encrypted_data && iv) {
+				let originAccountInfo = await bindWxPhoneNumber({open_id, encrypted_data, iv})
+				setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
+			}
+		} else {
+			console.error('用户拒绝手机号授权')
+		}
 	},
 	// 切换分类
 	onChange(e) {
@@ -169,11 +187,6 @@ Page({
 		this.queryCourseInfo(courseId)
 		this.setData({
 			courseId
-		})
-		// 获取用户授权状态
-		let userId = getLocalStorage(GLOBAL_KEY.userId)
-		this.setData({
-			showBindPhoneButton: userId == null
 		})
 		// 获取分类列表
 		getCourseTypeList().then(categoryList => {

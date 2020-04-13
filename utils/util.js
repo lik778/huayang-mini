@@ -259,46 +259,51 @@ export const getSchedule = async function (roomIds = []) {
 // 判断是否是会员/是否入学
 export const checkIdentity = function({roomId, link, zhiboRoomId, customParams = {}}) {
 	const userId = getLocalStorage(GLOBAL_KEY.userId)
-	if (userId == null) {
-		return false
-	} else {
-		// 获取直播权限
-		getWatchLiveAuth({
-			room_id: zhiboRoomId,
-			user_id: userId
-		}).then(res => {
-			if (res === 'vip') {
-				// 非会员，跳往花样汇
-				wx.navigateTo({
-					url: '/subLive/unAuthorized/unAuthorized',
-				})
-			} else if (res === 'daxue') {
-				// 未加入花样大学,跳往入学申请页
-				wx.navigateTo({
-				  url: '/mine/joinSchool/joinSchool',
-				})
-			} else {
-				// 反之，有权限查看
-				// 优先统计观看人数
-				statisticsWatchNo({
-					zhibo_room_id: zhiboRoomId,
-					open_id: getLocalStorage(GLOBAL_KEY.openId)
-				}).then(() => {
-					// link存在去跳转回看页
-					if (link) {
+	return new Promise((resolve, reject) => {
+		if (userId == null) {
+			reject()
+		}
+		else {
+			// 获取直播权限
+			getWatchLiveAuth({
+				room_id: zhiboRoomId,
+				user_id: userId
+			})
+				.then(res => {
+					if (res === 'vip') {
+						// 非会员，跳往花样汇
 						wx.navigateTo({
-							url: `/subLive/review/review?zhiboRoomId=` + zhiboRoomId
+							url: '/subLive/unAuthorized/unAuthorized',
+						})
+					} else if (res === 'daxue') {
+						// 未加入花样大学,跳往入学申请页
+						wx.navigateTo({
+							url: '/mine/joinSchool/joinSchool',
 						})
 					} else {
-						// 跳往前去直播间
-						wx.navigateTo({
-							url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${roomId}&custom_params=${encodeURIComponent(JSON.stringify(customParams))}`
+						// 反之，有权限查看
+						// 优先统计观看人数
+						statisticsWatchNo({
+							zhibo_room_id: zhiboRoomId,
+							open_id: getLocalStorage(GLOBAL_KEY.openId)
+						}).then(() => {
+							// link存在去跳转回看页
+							if (link) {
+								wx.navigateTo({
+									url: `/subLive/review/review?zhiboRoomId=` + zhiboRoomId
+								})
+							} else {
+								// 跳往前去直播间
+								wx.navigateTo({
+									url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${roomId}&custom_params=${encodeURIComponent(JSON.stringify(customParams))}`
+								})
+							}
 						})
 					}
+					resolve()
 				})
-			}
-		})
-	}
+		}
+	})
 }
 
 /**

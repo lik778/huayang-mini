@@ -6,7 +6,7 @@
       <text class="author limit-one-line">{{userInfo.name}}</text>
       <text class="desc">{{userInfo.desc}}</text>
     </view>
-    <view class="{{didSubscript ? 'subscript disabled' : 'subscript'}}" bindtap="subscript">
+    <view class="subscript {{didSubscript && 'disabled'}} {{didVisibleSubscribeBtn && 'hidden-btn'}}" bindtap="subscript">
       <image class="subscript-icon" src="{{didSubscript ? 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586344280zKmqhp.jpg' : 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586338529PQgEwy.jpg'}}"></image>
       <text>{{didSubscript ? '已订阅' : '订阅'}}</text>
     </view>
@@ -25,7 +25,6 @@
             wx:if="{{courseList != null&&courseList.length !== 0}}"
             data-item="{{courseItem.zhibo_room}}"
             bindtap="jumpToLive">
-        <button wx:if="{{showBindPhoneButton}}" class="mobile-button" type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumberData"></button>
         <view class="item-left">
           <image src="{{courseItem.kecheng.cover_pic}}"></image>
           <view class="vip-only" wx:if="{{courseItem.kecheng.vip_only === 1}}">专享课</view>
@@ -46,4 +45,14 @@
       <view wx:if="{{courseList==null||courseList.length===0}}">敬请期待</view>
     </van-tab>
   </van-tabs>
+
+  <van-dialog
+    title="提示"
+    message="授权登录查看直播内容"
+    show="{{ show }}"
+    show-cancel-button
+    confirmButtonText="立即授权"
+    confirm-button-open-type="getPhoneNumber"
+    bind:getphonenumber="getPhoneNumber"
+  ></van-dialog>
 </view>

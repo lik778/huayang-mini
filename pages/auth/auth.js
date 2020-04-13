@@ -48,7 +48,7 @@ Page({
 				setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
 			}
 		} else {
-			toast('用户拒绝手机号授权')
+			console.error('用户拒绝手机号授权')
 		}
 	},
 	/**
