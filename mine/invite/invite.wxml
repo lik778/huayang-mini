@@ -1,10 +1,37 @@
 <!--mine/invite/invite.wxml-->
-<view class="invite">
+<view class="invite" wx:if="{{posturl!==''}}">
 	<view class="banner">
 		<image src="../../assets/images/mine/pic-12.png"></image>
 	</view>
-	<view class="canvas">
-		<canvas canvas-id='posterCanvas' style="width:900px;height:1200px;"></canvas>
+	<view class="canvas" wx:if="{{true}}">
+		<canvas canvas-id='posterCanvas' style="width:267px;height:356px;"></canvas>
+	</view>
+	<view class="canvas-html" wx:else>
+		<view class="canvas-img">
+			<image src="{{posturl}}" class="bg-img"></image>
+			<view class="head-icon-line">
+				<view class="head-icon-img">
+					<image src="{{}}"></image>
+				</view>
+				<view class="head-icon-desc">
+					<view class="head-icon-top">我是{{}}</view>
+					<view class="head-icon-bottom">
+						<view>我刚刚成为花样汇俱乐部第<text> 888 </text>位会员</view>
+						<view>邀您一起成为时尚达人</view>
+					</view>
+				</view>
+			</view>
+			<view class="price">
+				<view class="old-price">原价199元</view>
+				<view class="new-price">
+					<text>限时19.9</text>
+					<text>元/年</text>
+				</view>
+			</view>
+			<view class="erweima">
+				<image src="{{posturl}}"></image>
+			</view>	
+		</view>
 	</view>
 	<view class="button-line">
 		<view class="share">

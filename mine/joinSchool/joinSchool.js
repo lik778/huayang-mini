@@ -22,7 +22,6 @@ Page({
     this.setData({
       webViewData: JSON.stringify({
         userId: wx.getStorageSync(GLOBAL_KEY.userId),
-        mobile:mobile,
         open_id:wx.getStorageSync(GLOBAL_KEY.openId),
       })
     })
@@ -32,7 +31,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getWebViewData(options.mobile)
+    this.getWebViewData()
   },
 
   /**
