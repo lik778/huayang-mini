@@ -43,4 +43,14 @@
     <image class="gift" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586332094NWPXTg.jpg"></image>
     <text class="gift-text">邀请有礼</text>
   </view>
+
+  <van-dialog
+    title="提示"
+    message="授权登录查看直播内容"
+    show="{{ show }}"
+    show-cancel-button
+    confirmButtonText="立即授权"
+    confirm-button-open-type="getPhoneNumber"
+    bind:getphonenumber="getPhoneNumber"
+  ></van-dialog>
 </view>

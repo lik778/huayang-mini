@@ -1,14 +1,16 @@
 // pages/live/live.js
 import { getLiveBannerList, getLiveList, updateLiveStatus } from "../../api/live/index"
 import { GLOBAL_KEY, WeChatLiveStatus } from '../../lib/config'
-import { $notNull, checkIdentity, getLocalStorage, getSchedule } from '../../utils/util'
+import { $notNull, checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from '../../utils/util'
 import { statisticsWatchNo } from "../../api/live/course"
+import { bindWxPhoneNumber } from "../../api/auth/index"
 
 Page({
 	/**
 	 * 页面的初始数据
 	 */
 	data: {
+		show: false,
 		WeChatLiveStatus,
 		schedule: [],
 		customParams: {},
@@ -22,16 +24,37 @@ Page({
 		liveStatusIntervalTimer: null
 	},
 	/**
+	 * 一键获取微信手机号
+	 * @param e
+	 */
+	async getPhoneNumber(e) {
+		if (!e) return
+		let {errMsg = '', encryptedData: encrypted_data = '', iv = ''} = e.detail
+		if (errMsg.includes('ok')) {
+			let open_id = getLocalStorage(GLOBAL_KEY.openId)
+			if (encrypted_data && iv) {
+				let originAccountInfo = await bindWxPhoneNumber({open_id, encrypted_data, iv})
+				setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
+			}
+		} else {
+			console.error('用户拒绝手机号授权')
+		}
+	},
+	/**
 	 * 跳转到微信直播页面
 	 * @param e
 	 */
 	navigateToLive(e) {
 		// console.log(e.currentTarget.dataset.item)
-		let { zhiboRoomId, roomId, link, vipOnly } = e.currentTarget.dataset.item
+		let {zhiboRoomId, roomId, link, vipOnly} = e.currentTarget.dataset.item
 		// 当前课程是否仅限VIP用户学习
 		if (vipOnly === 1) {
 			// 判断是否是会员/是否入学
-			checkIdentity({roomId, link, zhiboRoomId})
+			checkIdentity({roomId, link, zhiboRoomId}).catch(() => {
+				this.setData({
+					show: true
+				})
+			})
 		} else {
 			statisticsWatchNo({
 				zhibo_room_id: zhiboRoomId, // 运营后台配置的课程ID
@@ -63,7 +86,11 @@ Page({
 	 * 请求直播间列表
 	 */
 	queryLiveList() {
-		getLiveList({limit: this.data.liveListLimit, offset: this.data.liveListOffset}).then((data) => {
+		getLiveList({
+			limit: this.data.liveListLimit,
+			offset: this.data.liveListOffset,
+			open_id: getLocalStorage(GLOBAL_KEY.openId)
+		}).then((data) => {
 			if (data.length < this.data.liveListLimit) {
 				this.data.didNoMore = true
 			}
@@ -104,18 +131,21 @@ Page({
 			let originLiveList = [...this.data.liveList]
 			originLiveList.forEach(_ => {
 				let tar = callbackLiveStatus.find(o => o.roomId === _.roomId)
-				if (tar) {
+				if (tar && _.status !== 2) {
+					// status -> [0：默认；1：直播中；2：直播已结束]
 					_.liveStatus = tar.liveStatus
-					// 如果微信返回的直播间状态为103-已过期
 					if (tar.liveStatus === WeChatLiveStatus[103]) {
-						let tt = this.data.liveList.find(t => t.roomId === tar.roomId)
-						// 如果tt的status不为回看，更新服务端的直播状态
-						if (tt.status !== 2) {
-							updateLiveStatus({
-								status: 2, // 2->直播已结束
-								zhibo_room_id: _.id
-							})
-						}
+						// 如果微信返回的直播间状态为103-已过期
+						updateLiveStatus({
+							status: 2, // 2->直播已结束
+							zhibo_room_id: _.id
+						})
+					} else if (tar.liveStatus === WeChatLiveStatus[104] || tar.liveStatus === WeChatLiveStatus[107]) {
+						// 如果微信返回的直播间状态为104、107-禁播、已过期
+						updateLiveStatus({
+							status: 3, // 3->直播禁播或删除
+							zhibo_room_id: _.id
+						})
 					}
 				}
 			})
@@ -146,18 +176,26 @@ Page({
 			})
 			// 筛选出直播间状态不是"回看"的房间号[0:'默认',1:'直播中',2:'回看']
 			let courseRoomIds = bannerList.filter(_ => _.roomId && _.status !== 2).map(t => t.roomId)
-			getSchedule(courseRoomIds).then((callbackCourseStatus) => {
+			getSchedule(courseRoomIds).then(callbackCourseStatus => {
 				if (callbackCourseStatus.length > 0) {
 					let originCourseList = [...bannerList]
-
-					callbackCourseStatus.forEach(_ => {
-						let tar = originCourseList.find(o => o.roomId === _.roomId)
+					originCourseList.forEach(_ => {
+						let tar = callbackCourseStatus.find(o => o.roomId === _.roomId)
 						// status -> [0：默认；1：直播中；2：直播已结束]
-						if (tar && tar.status !== 2 && tar.liveStatus === WeChatLiveStatus[103]) {
-							updateLiveStatus({
-								status: 2, // 2->直播已结束
-								zhibo_room_id: tar.zhiboRoomId
-							})
+						if (tar && _.status !== 2) {
+							_.liveStatus = tar.liveStatus
+							if (tar.liveStatus === WeChatLiveStatus[103]) {
+								updateLiveStatus({
+									status: 2, // 2->直播已结束
+									zhibo_room_id: _.zhiboRoomId
+								})
+							} else if (tar.liveStatus === WeChatLiveStatus[104] || tar.liveStatus === WeChatLiveStatus[107]) {
+								// 如果微信返回的直播间状态为104、107-禁播、已过期
+								updateLiveStatus({
+									status: 3, // 3->直播禁播或删除
+									zhibo_room_id: _.id
+								})
+							}
 						}
 					})
 					this.setData({
