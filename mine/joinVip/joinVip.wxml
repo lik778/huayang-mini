@@ -4,7 +4,7 @@
 	<view class="bottom-button">
 		<view class="bug-vip" bindtap="buyVip">
 			<text>购买会员</text>
-			<text>¥365.00/年</text>
+			<text>¥19.9/年</text>
 		</view>
 
 	</view>
