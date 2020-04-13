@@ -10,9 +10,17 @@ Page({
 		zhiboRoomInfo: {}
 	},
 	haveMore() {
-		wx.switchTab({
-			url: '/pages/live/live'
-		})
+		const type = this.data.zhiboRoomInfo.zhibo_room.room_type
+		const officialRoomId = this.data.zhiboRoomInfo.zhibo_room.user_id
+		if (type === 'kecheng') {
+			wx.redirectTo({
+				url: `/subLive/courseList/courseList?id=${officialRoomId}`,
+			})
+		} else {
+			wx.switchTab({
+				url: '/pages/live/live'
+			})
+		}
 	},
 	/**
 	 * 生命周期函数--监听页面加载
