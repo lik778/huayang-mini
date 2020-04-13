@@ -109,7 +109,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="list-common">
+		<view class="list-common" wx:if="{{userInfo.is_zhide_vip}}">
 			<button open-type="contact" bindcontact="joinVipGroup" send-message-title="会话内消息卡片" send-message-path="/pages/mine/mine" send-message-img="https://imgsa.baidu.com/baike/pic/item/562c11dfa9ec8a13918d4ed4fb03918fa0ecc06b.jpg" show-message-card="true" class="join-vip-group"></button>
 			<view class="common-left">
 				<image src="../../assets/images/mine/pic-5.png" class="common-icon-four"></image>
@@ -124,7 +124,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="list-common" data-mobile="1739830519" bindtap="callPhone">
+		<view class="list-common" data-mobile="021-31279777" bindtap="callPhone">
 			<view class="common-left">
 				<image src="../../assets/images/mine/pic-6.png" class="common-icon-five"></image>
 			</view>
