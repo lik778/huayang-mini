@@ -9,21 +9,40 @@ Page({
   data: {
     categoryId: 0,
     activeTabIndex: 0,
-    categoryList: []
+    categoryList: [],
+    productList: [],
+    offset: 0,
+    limit: 10,
+    didNoMore: false,
   },
   queryProductList(categoryId) {
     getProductList({
-      first_category_id: categoryId
+      first_category_id: categoryId,
+      limit: this.data.limit,
+      offset: this.data.offset,
     }).then(list => {
+      list = list || []
+      if (list.length < this.data.limit) {
+        this.data.didNoMore = true
+      }
       this.setData({
-        productList: list.slice()
+        productList: [...this.data.productList, ...list],
+        offset: list.length
       })
     })
   },
   queryCategory(categoryId) {
     getCategory({ level: 1 }).then(list => {
-      let tar = list.find(_ => _.id === categoryId)
-      console.log(tar)
+      list.forEach((item, index) => {
+        if (item.id == categoryId) {
+          // 更新标签
+          this.setData({
+            activeTabIndex: index
+          })
+          // 获取类目下的商品数据
+          this.queryProductList(categoryId)
+        }
+      })
       this.setData({
         categoryList: list.slice()
       })
@@ -37,16 +56,25 @@ Page({
       categoryId: categoryId
     })
     this.queryCategory(categoryId)
-    this.queryProductList(categoryId)
   },
   // 切换分类
   onChange(e) {
     // 清除缓存数据
-    this.data.categoryList.forEach(_ => {
-      if (_.name === e.detail.title) {
-        // TODO
-        console.log(_);
+    this.data.categoryList.forEach(item => {
+      if (item.name === e.detail.title) {
+        this.queryProductList(item.id)
+        this.setData({
+          categoryId: item.id,
+          offset: 0,
+          productList: []
+        })
       }
+    })
+  },
+  buy(e) {
+    let target = e.currentTarget.dataset.item
+    wx.navigateTo({
+      url: '/subMall/detail/detail?prdId=' + target.id
     })
   },
   /**
@@ -88,7 +116,10 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    if (this.data.didNoMore) {
+      return console.log('没有更多数据～')
+    }
+    this.queryProductList()
   },
 
   /**

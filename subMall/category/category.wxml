@@ -5,7 +5,19 @@
     tab-active-class="custom-tab-active-class"
     bind:change="onChange" swipeable>
     <van-tab title="{{item.name}}" wx:for="{{categoryList}}" wx:key="index">
-      <text>{{item.name}}</text>
+      <block wx:for="{{productList}}" wx:key="index">
+        <view class="product-item" bindtap="buy" data-item="{{item}}">
+          <view class="preview-image">
+            <image class="normal-mode" src="{{item.cover_image}}"></image>
+          </view>
+          <text class="product-name limit-two-line">{{item.name}}</text>
+          <view class="product-info">
+            <view class="price"><text class="unit">¥</text>{{item.discount_price / 100}}</view>
+            <view class="buying">购买</view>
+          </view>
+        </view>
+        <!--<view class="ad">ad-banner</view>-->
+      </block>
     </van-tab>
   </van-tabs>
 </view>

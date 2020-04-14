@@ -6,6 +6,7 @@ import { GLOBAL_KEY } from '../../lib/config'
 import { getLocalStorage, setLocalStorage } from "../../utils/util"
 
 import { store } from '../../store'
+import { checkAuth } from "../../utils/auth"
 
 Page({
 
@@ -162,7 +163,7 @@ Page({
             })
         }
 
-        // checkAuth()
+        checkAuth()
 
     },
     // 生命周期函数--监听页面隐藏
@@ -190,7 +191,7 @@ Page({
             title: "花样值得买",
             desc: "花样",
             path: '/pages/mine/mine',
-            imgUrl: "https://t11.baidu.com/it/u=2526969130,421039043&fm=76"
+            imgUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586870905SEwHoX.jpg"
         }
     }
 })

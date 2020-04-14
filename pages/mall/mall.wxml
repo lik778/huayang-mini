@@ -28,6 +28,6 @@
 				<view class="buying">购买</view>
 			</view>
 		</view>
-		<view class="ad">ad-banner</view>
+		<!--<view class="ad">ad-banner</view>-->
 	</block>
 </view>

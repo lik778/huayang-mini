@@ -1,5 +1,6 @@
 // pages/mall/mall.js
 import { getBannerList, getCategory, getProductList } from "../../api/mall/index"
+import { checkAuth } from "../../utils/auth"
 
 Page({
 	/**
@@ -15,7 +16,9 @@ Page({
 		autoplay: false,
 		interval: 2000,
 		duration: 500,
-		showAddressMedal: false
+		offset: 0,
+		limit: 10,
+		didNoMore: false,
 	},
 	currentHandle(e) {
 		let {
@@ -26,9 +29,17 @@ Page({
 		})
 	},
 	queryProductList() {
-		getProductList().then(list => {
+		getProductList({
+			limit: this.data.limit,
+			offset: this.data.offset,
+		}).then(list => {
+			list = list || []
+			if (list.length < this.data.limit) {
+				this.data.didNoMore = true
+			}
 			this.setData({
-				productList: list.slice()
+				productList: [...this.data.productList, ...list],
+				offset: list.length
 			})
 		})
 	},
@@ -78,7 +89,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		// checkAuth()
+		checkAuth()
 	},
 
 	/**
@@ -106,7 +117,10 @@ Page({
 	 * 页面上拉触底事件的处理函数
 	 */
 	onReachBottom: function () {
-
+		if (this.data.didNoMore) {
+			return console.log('没有更多数据～')
+		}
+		this.queryProductList()
 	},
 
 	/**

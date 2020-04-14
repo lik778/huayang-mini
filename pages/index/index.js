@@ -4,6 +4,8 @@ import { GLOBAL_KEY, WeChatLiveStatus } from '../../lib/config'
 import { $notNull, checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from '../../utils/util'
 import { statisticsWatchNo } from "../../api/live/course"
 import { bindWxPhoneNumber } from "../../api/auth/index"
+import { checkAuth } from "../../utils/auth"
+import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog'
 
 Page({
 	/**
@@ -55,6 +57,16 @@ Page({
 					this.setData({
 						show: true
 					})
+				} else if (callbackString === 'no-auth-daxue') {
+					Dialog.confirm({
+						title: '申请入学立即观看',
+						message: '完成入学信息登记，观看课程'
+					}).then(() => {
+						wx.navigateTo({
+							url: '/mine/joinSchool/joinSchool',
+						})
+					}).catch(() => {
+					})
 				}
 			})
 		} else {
@@ -103,10 +115,10 @@ Page({
 			offset: this.data.liveListOffset,
 			open_id: getLocalStorage(GLOBAL_KEY.openId)
 		}).then((data) => {
+			data = data || []
 			if (data.length < this.data.liveListLimit) {
 				this.data.didNoMore = true
 			}
-			this.data.liveListOffset = data.length
 			const result = data.map(item => {
 				return {
 					zhiboRoomId: item.zhibo_room.id,
@@ -131,6 +143,7 @@ Page({
 			getSchedule(roomIds).then(this.handleLiveStatusCallback)
 			this.setData({
 				liveList: [...this.data.liveList, ...result],
+				liveListOffset: data.length
 			})
 		})
 	},
@@ -255,7 +268,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		// checkAuth()
+		checkAuth()
 	},
 
 	/**
@@ -293,5 +306,11 @@ Page({
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
+		return {
+			title: "花样值得买",
+			desc: "花样",
+			path: '/pages/index/index',
+			imgUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586870905SEwHoX.jpg"
+		}
 	},
 })

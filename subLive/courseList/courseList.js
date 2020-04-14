@@ -10,6 +10,9 @@ import {
 import { bindWxPhoneNumber } from "../../api/auth/index"
 import { GLOBAL_KEY, SubscribeKey, SubscriptType } from "../../lib/config"
 import { checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from "../../utils/util"
+import { checkAuth } from "../../utils/auth"
+import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast'
+import Dialog from "../../miniprogram_npm/@vant/weapp/dialog/dialog"
 
 Page({
 	/**
@@ -54,8 +57,9 @@ Page({
 				sub_key: SubscribeKey.zhibo
 			}).then(() => {
 				this.getStatus()
-				wx.showToast({
-					title: '取消订阅成功',
+				Toast({
+					type: 'success',
+					message: '取消订阅成功',
 					duration: 2000
 				})
 			})
@@ -73,8 +77,9 @@ Page({
 							sub_key: SubscribeKey.zhibo
 						}).then(() => {
 							self.getStatus()
-							wx.showToast({
-								title: '订阅成功！',
+							Toast({
+								type: 'success',
+								message: '订阅成功',
 								duration: 2000
 							})
 						})
@@ -125,6 +130,16 @@ Page({
 				} else if (callbackString === 'no-phone-auth') {
 					this.setData({
 						show: true
+					})
+				} else if (callbackString === 'no-auth-daxue') {
+					Dialog.confirm({
+						title: '申请入学立即观看',
+						message: '完成入学信息登记，观看课程'
+					}).then(() => {
+						wx.navigateTo({
+							url: '/mine/joinSchool/joinSchool',
+						})
+					}).catch(() => {
 					})
 				}
 			})
@@ -225,14 +240,13 @@ Page({
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
-
 	},
 
 	/**
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		// checkAuth()
+		checkAuth()
 	},
 
 	/**
@@ -267,6 +281,11 @@ Page({
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
-
+		return {
+			title: "花样大学",
+			desc: "学习分享健康自信快乐的美",
+			path: '/pages/courseList/courseList',
+			imgUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586870905SEwHoX.jpg"
+		}
 	}
 })
