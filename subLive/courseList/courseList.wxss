@@ -76,6 +76,9 @@
   border: 1rpx solid rgba(0,0,0,.2);
   color: rgba(0,0,0,.4)
 }
+.subscript.hidden-btn {
+  visibility: hidden;
+}
 .subscript:active {
   opacity: 0.8;
 }

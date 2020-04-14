@@ -1,15 +1,10 @@
 // mine/joinVip/joinVip.js
 
-import {
-    GLOBAL_KEY
-} from "../../lib/config"
-import {
-    getLocalStorage,
-    payVip,
-    setLocalStorage 
-} from "../../utils/util"
-import {bindWxPhoneNumber} from "../../api/auth/index"
-import {getUserInfo} from "../../api/mine/index"
+import { GLOBAL_KEY } from "../../lib/config"
+import { getLocalStorage, payVip, setLocalStorage } from "../../utils/util"
+import { bindWxPhoneNumber } from "../../api/auth/index"
+import { getUserInfo } from "../../api/mine/index"
+
 Page({
 
     /**
@@ -79,7 +74,7 @@ Page({
                 this.getUserInfoData()
             }
         } else {
-            toast('用户拒绝手机号授权')
+            console.error('用户拒绝手机号授权')
         }
     },
     /**
