@@ -34,7 +34,8 @@
 								<view class="woller-middle" wx:if="{{!showBindPhoneButton}}"></view>
 								<view class="woller-right" wx:if="{{!showBindPhoneButton}}">
 									<image src="../../assets/images/mine/pic-8.png" class="vip-money"></image>
-									<text>{{userInfo.amount/100?0:userInfo.amount/100}}</text>
+									<text wx:if="{{userInfo.amount}}">{{userInfo.amount/100}}</text>
+									<text wx:else>{{0}}</text>
 								</view>
 								<view class="woller-right" wx:else>
 									<text class="bindmobile">绑定手机查看</text>
