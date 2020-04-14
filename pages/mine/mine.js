@@ -154,9 +154,9 @@ Page({
     // 生命周期函数--监听页面显示
     onShow: function () {
         this.getUserInfoData()
-        wx.navigateTo({
-            url: '/mine/invite/invite',
-        })
+        // wx.navigateTo({
+        //     url: '/mine/invite/invite',
+        // })
     },
     // 生命周期函数--监听页面隐藏
     onHide: function () {

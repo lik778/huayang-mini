@@ -212,7 +212,7 @@
 
 .wollet-left {
     display: flex;
-    align-items: flex-end;
+    align-items:center;
 }
 
 .woller-right text {

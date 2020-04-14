@@ -17,6 +17,7 @@ Page({
      */
     data: {
         userId: "",
+        statusHeight:0,
         showBindPhoneButton:true
     },
     // 购买会员
@@ -87,8 +88,15 @@ Page({
     onLoad: function (options) {
         let userId = options.scene ? decodeURIComponent(options.scene) : ""
         this.setData({
-            userId: userId
+            userId: userId,
+            statusHeight:JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
         })
+        console.log(getLocalStorage("sss"))
+        if(getLocalStorage(GLOBAL_KEY.userInfo)===undefined){
+            wx.navigateTo({
+              url: '/pages/auth/auth',
+            })
+        }
         this.getUserInfoData()
     },
     /**

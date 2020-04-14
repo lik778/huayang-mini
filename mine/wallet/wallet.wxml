@@ -1,5 +1,8 @@
 <!--mine/wallet/wallet.wxml-->
 <view class="wollet">
+	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+		<naviBar title="我的钱包"></naviBar>
+	</view>
 	<view class="{{wolletData.isVip?'wollet-card wollet-vip-card':'wollet-card'}}" >
 	<view class="wollet-box">
 			<view class="title">

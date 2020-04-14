@@ -1,0 +1,13 @@
+<!--components/navibar.wxml-->
+<view class="navibar" style="padding-top:{{statusBarHeight}}px;">
+	<view class="back-module" >
+		<view class="back-icon" bindtap="back">
+      <image src="../../assets/images/mine/back.png"></image>
+    </view>
+		<view class="line-icon"></view>
+		<view class="back-index" bindtap="backIndex">
+      <image src="../../assets/images/mine/home-b.png"></image>
+    </view>
+	</view>
+	<view class="title">{{title}}</view>
+</view>

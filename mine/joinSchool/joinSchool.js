@@ -9,7 +9,8 @@ Page({
    */
   data: {
     radio: '0',
-    webViewData: 0
+    webViewData: 0,
+    statusHeight:""
   },
   // 切换性别
   changeSex(e) {
@@ -32,6 +33,9 @@ Page({
    */
   onLoad: function (options) {
     this.getWebViewData()
+    this.setData({
+      statusHeight:JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
+    })
   },
 
   /**

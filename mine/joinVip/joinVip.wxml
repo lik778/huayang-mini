@@ -1,10 +1,13 @@
 <!--mine/joinVip/joinVip.wxml-->
 <view class="join-vip">
+	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+		<naviBar title="花样汇超级会员"></naviBar>
+	</view>
 	<button type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" wx:if="{{showBindPhoneButton}}">绑定手机查看</button>
 	<view class="bottom-button">
 		<view class="bug-vip" bindtap="buyVip">
 			<text>购买会员</text>
-			<text>¥19.9/年</text>
+			<text>¥99/年</text>
 		</view>
 
 	</view>

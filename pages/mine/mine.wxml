@@ -1,5 +1,6 @@
 <!--pages/mine/mine.wxml-->
 <view class="mine">
+
 	<view class="banner">
 		<image src="../../assets/images/mine/pic-1.png" class="banner-image"></image>
 		<view class="userinfo">

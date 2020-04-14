@@ -2,6 +2,8 @@
 import {
   getInviteList
 } from "../../api/mine/index"
+import { getLocalStorage } from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
 Page({
 
   /**
@@ -29,7 +31,8 @@ Page({
   onLoad: function (options) {
     this.inviteListData()
     this.setData({
-      wolletData:JSON.parse(options.wolletData)
+      wolletData:JSON.parse(options.wolletData),
+      statusHeight:JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
   },
 

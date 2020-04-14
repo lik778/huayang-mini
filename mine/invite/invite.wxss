@@ -1,40 +1,40 @@
 /* mine/invite/invite.wxss */
-/* .invite {
-} */
+.invite {
+  max-height: 100vh;
+}
 
 .banner image {
   width: 100%;
-  height: 632rpx;
+  height: 316px;
   vertical-align: bottom;
-
 }
 
 .canvas {
-  width: calc(100% - 32px);
-  height: 457px;
-  margin: 0 auto;
-  margin-top: -154rpx;
-  border-radius: 8rpx;
-  overflow: hidden;
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: -1200px;
 }
 
 .button-line {
   display: flex;
   align-items: center;
-  padding: 46rpx 32rpx 100rpx 32rpx;
+  padding: 16px 32rpx 12px 32rpx;
   justify-content: space-between;
+  position: relative;
+  top: -77px;
 }
 
 .share {
   width: 328rpx;
-  height: 88rpx;
+  height: 40px;
   background: rgba(255, 68, 51, 1);
   border-radius: 44rpx;
   font-size: 16px;
   font-family: PingFangSC-Semibold, PingFang SC;
   font-weight: 600;
   color: rgba(255, 255, 255, 1);
-  line-height: 88rpx;
+  line-height: 40px;
   text-align: center;
   position: relative;
 }
@@ -50,14 +50,14 @@
 
 .save {
   width: 320rpx;
-  height: 80rpx;
+  height: 40px;
   border-radius: 44rpx;
   border: 2px solid rgba(255, 68, 51, 1);
   font-size: 16px;
   font-family: PingFangSC-Semibold, PingFang SC;
   font-weight: 600;
   color: rgba(255, 68, 51, 1);
-  line-height: 80rpx;
+  line-height: 40px;
   text-align: center;
 }
 
@@ -65,99 +65,71 @@
 .canvas-html {
   display: flex;
   justify-content: center;
-  margin-top: -156rpx;
+  position: relative;
+  top: -77px;
+  margin: 0 auto;
 }
 
 .canvas-img {
-  position: relative;
-  width: 534rpx;
-  height: 712rpx;
+
+  width: 100%;
+  height: 100%;
 }
 
 .bg-img {
   position: absolute;
   left: 0;
   top: 0;
-  width: 534rpx;
-  height: 712rpx;
+  width: 100%;
+  height: 100%;
 }
 
 .head-icon-line {
   position: absolute;
-  left: 18.05rpx;
-  top: 27.07rpx;
   display: flex;
 }
 
 .head-icon-img image {
-  width: 95.2rpx;
-  height: 95.2rpx;
   border: 2px solid #fff;
   border-radius: 50%;
 }
 
-.head-icon-desc {
-  padding-left: 13.53rpx;
-}
-
 .head-icon-top {
-  font-size: 14px;
   font-family: PingFangSC-Semibold, PingFang SC;
   font-weight: 600;
   color: rgba(255, 255, 255, 1);
-  line-height: 14px;
 }
 
 .head-icon-bottom {
-  font-size: 9px;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: rgba(221, 221, 221, 1);
-  line-height: 13px;
-  padding-top: 2px;
 }
 
-.head-icon-bottom text {
-  font-size: 18px;
-}
 
 .price {
   position: absolute;
-  left: 18.05rpx;
-  bottom: 27.07rpx;
 }
 
 .old-price {
-  font-size: 12px;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: rgba(255, 255, 255, 1);
-  line-height: 12px;
   text-decoration: line-through;
 }
 
 .new-price {
-  font-size: 24px;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: rgba(238, 0, 0, 1);
-  line-height: 24px;
-  padding-top: 14rpx;
 }
 
-.new-price text:last-child {
-  font-size: 12px;
-}
 
 .erweima {
   position: absolute;
-  right: 32rpx;
-  bottom: 106rpx;
 }
 
 .erweima image {
-  width: 124rpx;
-  height: 124rpx;
   border-radius: 50%;
   vertical-align: bottom;
 }

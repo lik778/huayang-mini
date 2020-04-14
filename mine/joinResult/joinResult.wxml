@@ -1,5 +1,8 @@
 <!--mine/joinResult/joinResult.wxml-->
 <view class="result">
+	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+		<naviBar title="申请结果"></naviBar>
+	</view>
 	<view><text>申请成功</text></view>
 	<view><text>你已被花样大学成功录取</text></view>
 	<view> <text>您的学号是 ：{{userInfo.student_num}}</text></view>

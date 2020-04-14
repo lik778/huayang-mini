@@ -1,5 +1,6 @@
 /* pages/auth/auth.wxss */
 @import "../../assets/css/common.wxss";
+
 .auth {
   position: relative;
   height: 100vh;
@@ -11,14 +12,17 @@
   height: 168rpx;
   margin-top: 412rpx;
 }
+
 .auth .box {
   position: absolute;
   bottom: 214rpx;
   width: 100vw;
 }
+
 .auth .box:active {
   opacity: 0.9;
 }
+
 .button {
   width: 630rpx;
   height: 96rpx;
@@ -30,6 +34,7 @@
   background: rgb(5, 197, 98);
   color: white;
 }
+
 .rules {
   position: absolute;
   bottom: 140rpx;
@@ -40,6 +45,7 @@
   font-size: 28rpx;
   color: rgba(138, 138, 138, 1);
 }
+
 .important {
   color: rgba(12, 169, 240, 1);
 }

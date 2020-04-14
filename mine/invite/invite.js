@@ -19,16 +19,45 @@ Page({
   data: {
     qcCode: "",
     canvasUrl: "",
-    posturl:""
+    posturl: "",
+    statusHeight:0,
+    posterWidth:0,//海报宽度
+    posterHeigt:0,//海报高度
+    radio:0//海报缩放比
+  },
+  // 计算宽高,自适应海报
+  calculate() {
+    wx.getSystemInfo({
+      complete: (res) => {
+        let info = {
+          width: res.screenWidth,
+          height:  res.screenHeight
+        }
+        if((info.height-311)/1.33<info.width-32){
+          this.setData({
+            posterWidth:(info.height-311)/1.33,
+            posterHeigt:info.height-311,
+            radio:(info.height-311)/356
+          })
+        }else{
+          this.setData({
+            posterWidth:info.width-32,
+            posterHeigt:info.width*1.33,
+            radio:(info.width-32)/267
+          })
+        }
+        console.log(this.data.radio)
+      },
+    })
   },
   // getImgUrl
   getImgUrl() {
-    let  arr= ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586746698uNTYez.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586746556RRsZWh.jpg",
+    let arr = ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586746698uNTYez.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586746556RRsZWh.jpg",
       "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586747541IzaDvb.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586747562GBKDfI.jpg"
     ];
-    let index=Math.floor((Math.random() * arr.length))
+    let index = Math.floor((Math.random() * arr.length))
     this.setData({
-      posturl:arr[index]
+      posturl: arr[index]
     })
   },
   // 获取小程序邀请码
@@ -41,7 +70,7 @@ Page({
   },
   // 保存到相册
   saveAlbum() {
-    console.log( this.data.canvasUrl)
+    console.log(this.data.canvasUrl)
     wx.downloadFile({
       url: this.data.canvasUrl,
       success(res) {
@@ -77,12 +106,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // 获取设备宽高
+    this.calculate()
+    // 随机生成背景图
     this.getImgUrl()
+    // 获取小程序二维码
     this.inviteCode()
+    // 绘制canvas
     createCanvas(this.data.posturl).then(res => {
       this.setData({
         canvasUrl: res
       })
+    })
+    this.setData({
+      statusHeight:JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
   },
 
