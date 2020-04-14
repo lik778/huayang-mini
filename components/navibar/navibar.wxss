@@ -9,7 +9,7 @@
   width: 100vw;
   left: 0;
   top: 0;
-  background: #fff;
+  /* background: #fff; */
   z-index: 2000;
 }
 
@@ -22,6 +22,7 @@
   border: 0.5px solid #DDDDDD;
   border-radius: 999rpx;
   margin-left: 8px;
+  background: #fff;
 }
 
 .back-icon {

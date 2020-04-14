@@ -1,11 +1,24 @@
 // pages/mine/mine.js
-import { createStoreBindings } from 'mobx-miniprogram-bindings'
-import { getUserInfo } from "../../api/mine/index"
-import { bindWxPhoneNumber } from "../../api/auth/index"
-import { GLOBAL_KEY } from '../../lib/config'
-import { getLocalStorage, setLocalStorage } from "../../utils/util"
+import {
+    createStoreBindings
+} from 'mobx-miniprogram-bindings'
+import {
+    getUserInfo
+} from "../../api/mine/index"
+import {
+    bindWxPhoneNumber
+} from "../../api/auth/index"
+import {
+    GLOBAL_KEY
+} from '../../lib/config'
+import {
+    getLocalStorage,
+    setLocalStorage
+} from "../../utils/util"
 
-import { store } from '../../store'
+import {
+    store
+} from '../../store'
 
 Page({
 
@@ -17,6 +30,13 @@ Page({
         width: 200,
         showBindPhoneButton: true,
     },
+    // 跳转至课程列表
+    toCourseList() {
+        let officialRoomId = 207
+        wx.navigateTo({
+            url: `/subLive/courseList/courseList?id=${officialRoomId}`,
+        })
+    },
     // 跳往邀请会员页
     toInvite() {
         wx.navigateTo({
@@ -26,7 +46,7 @@ Page({
     // 跳往我的钱包
     toWallet() {
         let wolletData = {
-            balance: this.data.userInfo.amount / 100, //余额
+            balance: this.data.userInfo.amount / 100||0, //余额
             point: this.data.userInfo.zhide_point, //花豆
             isVip: this.data.userInfo.is_zhide_vip, //是否为vip
         }
@@ -69,9 +89,9 @@ Page({
                 })
                 setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
                 // 存储手机号信息后，隐藏授权手机号按钮
-                this.setData({
-                    showBindPhoneButton: false
-                })
+                // this.setData({
+                //     showBindPhoneButton: false
+                // })
                 this.getUserInfoData()
             }
         } else {
@@ -101,16 +121,18 @@ Page({
         if (!showBindPhoneButton) {
             getUserInfo("scene=zhide").then(res => {
                 if (res.code === -2) {
+                    console.log(JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)))
                     this.setData({
-                        showBindPhoneButton: true
+                        showBindPhoneButton: true,
+                        userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo))
                     })
                 } else {
                     res.mobile = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).mobile
                     this.setData({
+                        showBindPhoneButton: false,
                         userInfo: res || {}
                     })
                 }
-                console.log(res)
             })
         } else {
             setTimeout(() => {
@@ -133,7 +155,7 @@ Page({
             fields: ['numA', 'numB', 'sum'],
             actions: ['update'],
         })
-
+        console.log(JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight)
     },
     // 生命周期函数--监听页面初次渲染完成
     onReady: function () {
@@ -141,10 +163,19 @@ Page({
     },
     // 生命周期函数--监听页面显示
     onShow: function () {
-        this.getUserInfoData()
-        // wx.navigateTo({
-        //     url: '/mine/invite/invite',
-        // })
+        if (getLocalStorage(GLOBAL_KEY.userInfo)) {
+            let userInfo = JSON.parse(wx.getStorageSync(GLOBAL_KEY.userInfo))
+            this.setData({
+                userInfo: userInfo
+            })
+            this.getUserInfoData()
+        } else {
+            wx.navigateTo({
+                url: '/pages/auth/auth',
+            })
+        }
+
+
     },
     // 生命周期函数--监听页面隐藏
     onHide: function () {
@@ -167,6 +198,11 @@ Page({
     },
     // 用户点击右上角分享
     onShareAppMessage: function () {
-
+        return {
+            title: "花样值得买",
+            desc: "花样",
+            path: '/pages/mine/mine',
+            imgUrl: "https://t11.baidu.com/it/u=2526969130,421039043&fm=76"
+        }
     }
 })

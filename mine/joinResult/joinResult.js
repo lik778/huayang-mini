@@ -1,29 +1,68 @@
 // mine/joinResult/joinResult.js
-import {getUserInfo} from "../../api/mine/index"
+import {
+  getUserInfo
+} from "../../api/mine/index"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
+import {
+  getLocalStorage
+} from "../../utils/util"
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    userInfo:{}
+    userInfo: {},
+    statusHeight: 0,
+    width: 0,
+    height: 0,
+    radio: 0,
+    bottom:0
   },
   // 获取用户信息
-  getUserInfoData(){
+  getUserInfoData() {
     getUserInfo("scene=zhide").then(res => {
       if (res.code !== -2) {
+        res.vip_start_time= res.vip_start_time.replace(/-/g, ".")
         this.setData({
           userInfo: res || {}
-      })
-      } 
-  })
-
+        })
+      }
+    })
   },
+  // 获取屏幕宽高以及设备比
+  getSystemInfo() {
+    let info = {
+      width: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth,
+      height: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenHeight,
+    }
+    if (info.width - 40 < (info.height - 183) / 1.5) {
+      this.setData({
+        width: info.width - 40,
+        height: (info.width - 40) * 1.5,
+        radio: (info.width - 40) / 319,
+        bottom:54
+      })
+    } else {
+      this.setData({
+        width: (info.height - 183) / 1.5,
+        height: info.height - 183,
+        radio: (info.width - 40) / 484,
+        bottom:20
+      })
+    }
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getSystemInfo()
+    this.setData({
+      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
+    })
   },
 
   /**
@@ -38,7 +77,7 @@ Page({
    */
   onShow: function () {
     this.getUserInfoData()
-   
+
   },
 
   /**

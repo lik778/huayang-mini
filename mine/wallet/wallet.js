@@ -15,6 +15,14 @@ Page({
     limit: 10,
     offset: 0
   },
+  // 提现
+  withdraw(){
+    wx.showToast({
+      title: '提示',
+      duration:5000,
+      icon:"none"
+    })
+  },
   // 获取小程序邀请列表
   inviteListData() {
     getInviteList(`offset=${this.data.offset}&limit=${this.data.limit}`).then(res => {

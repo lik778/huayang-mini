@@ -1,4 +1,4 @@
-export const createCanvas = (bgUrl) => {
+export const createCanvas = ({bgUrl,nickname,num,headicon}) => {
   return new Promise(resolve => {
     // 获取上下文
     let ctx = wx.createCanvasContext('posterCanvas')
@@ -7,42 +7,40 @@ export const createCanvas = (bgUrl) => {
     let width = systemInfo.screenWidth
     let height = systemInfo.screenHeight
     let radio = 1
-    let src = "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1585650569wbTyQK.jpg"
     ctx.scale(3.37, 3.37)
+    // 绘制背景图
     wx.getImageInfo({
       src: bgUrl,
       success: function (bg) {
         ctx.drawImage(bg.path, 0, 0, 267, 356)
-        // 绘制背景矩形
         wx.getImageInfo({
-          src: src,
+          src: headicon,
           success: function (res) {
             // 绘制圆形头像
             drawCircular(ctx, 34, 34, 12, 18, res.path, radio)
             // 绘制名字
-            dramName(ctx, "您的好友 樊悦", 14, 57, 18, "#fff")
-            dramName(ctx, "我刚刚成为花样汇俱乐部第 ", 9, 57, 34, "#DDDDDD")
-            dramName(ctx, " 888 ", 18, 130, 34, "#DDDDDD")
-            dramName(ctx, "位会员", 9, 200, 34, "#DDDDDD")
+            dramName(ctx, `您的好友 ${nickname}`, 14, 57, 18, "#fff")
+            dramName(ctx, "我刚刚成为花样汇俱乐部第 ", 9, 57, 39, "#DDDDDD")
+            dramName(ctx, ` ${num} `, 18, 168, 33, "#DDDDDD")
+            dramName(ctx, "位会员", 9, 200, 39, "#DDDDDD")
             dramName(ctx, "邀您一起成为时尚达人", 9, 57, 52, "#DDDDDD")
             // 绘制价格
             dramName(ctx, "原价199元", 12, 12, 297, "#fff")
             drawLine(ctx, "#fff", 1, 12, 302, 68, 302)
-            dramName(ctx, "限时19.9", 24, 12, 316, "#EE0000")
+            dramName(ctx, "限时99", 24, 12, 316, "#EE0000")
             dramName(ctx, "元/年", 12, 108, 324, "#EE0000")
             //绘制小程序二维码
             wx.getImageInfo({
-              src: src,
-              success: function (res) {
-                drawHeadImg(ctx, 64, 64, 191, 242, res.path, radio)
-                
+              src: headicon,
+              success: function (res1) {
+                drawHeadImg(ctx, 64, 64, 191, 242, res1.path, radio)
                 // 绘制完成开成开始导出
-                ctx.draw(false, (res) => {
+                ctx.draw(false, () => {
                   wx.canvasToTempFilePath({
                     canvasId: 'posterCanvas',
-                    success: function (res) {
-                      // console.log('先保存在本地', res.tempFilePath);
-                      let tempFilePath = res.tempFilePath;
+                    success: function (res2) {
+                      console.log(res2,2222)
+                      let tempFilePath = res2.tempFilePath;
                       resolve(tempFilePath)
                     },
                     fail: function (res) {
