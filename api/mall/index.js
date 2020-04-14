@@ -27,3 +27,12 @@ export function getCategory(params) {
 		})
 	})
 }
+
+export function getBannerList(params) {
+	return new Promise(resolve => {
+		request._get(URL.mallBanner, params).then(({ data }) => {
+			data = data || []
+			resolve(data)
+		})
+	})
+}

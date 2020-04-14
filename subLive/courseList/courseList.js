@@ -10,6 +10,7 @@ import {
 import { bindWxPhoneNumber } from "../../api/auth/index"
 import { GLOBAL_KEY, SubscribeKey, SubscriptType } from "../../lib/config"
 import { checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from "../../utils/util"
+import { checkAuth } from "../../utils/auth"
 
 Page({
 	/**
@@ -56,6 +57,7 @@ Page({
 				this.getStatus()
 				wx.showToast({
 					title: '取消订阅成功',
+					duration: 2000
 				})
 			})
 		} else {
@@ -64,17 +66,20 @@ Page({
 			wx.requestSubscribeMessage({
 				tmplIds: [SubscriptType.subscriptMessage],
 				success(res) {
-					subscription({
-						open_id: getLocalStorage(GLOBAL_KEY.openId),
-						user_id: getLocalStorage(GLOBAL_KEY.userId),
-						target_user_id: self.data.courseId,
-						sub_key: SubscribeKey.zhibo
-					}).then(() => {
-						self.getStatus()
-						wx.showToast({
-							title: '订阅成功！',
+					if (res[SubscriptType.subscriptMessage] === 'accept') {
+						subscription({
+							open_id: getLocalStorage(GLOBAL_KEY.openId),
+							user_id: getLocalStorage(GLOBAL_KEY.userId),
+							target_user_id: self.data.courseId,
+							sub_key: SubscribeKey.zhibo
+						}).then(() => {
+							self.getStatus()
+							wx.showToast({
+								title: '订阅成功！',
+								duration: 2000
+							})
 						})
-					})
+					}
 					console.log(res, 'requestSubscribeMessage success callback')
 				},
 				fail(err) {
@@ -105,11 +110,26 @@ Page({
 	jumpToLive(e) {
 		let item = e.currentTarget.dataset.item // 直播间信息
 		// 判断是否是会员/是否入学
-		checkIdentity({roomId: item.num, link: item.link, zhiboRoomId: item.id}).catch(() => {
-			this.setData({
-				show: true
+		checkIdentity({roomId: item.num, link: item.link, zhiboRoomId: item.id})
+			.then((callbackString) => {
+				if (callbackString === 'updateWatchNo') {
+					// 更新直播间观看次数
+					let list = [...this.data.categoryList]
+					list.forEach(_ => {
+						if (_.zhibo_room.id === item.id) {
+							_.zhibo_room.visitCount += 1
+						}
+					})
+					this.setData({
+						categoryList: [ ...list ]
+					})
+				}
 			})
-		})
+			.catch(() => {
+				this.setData({
+					show: true
+				})
+			})
 	},
 	/**
 	 * 一键获取微信手机号
@@ -145,7 +165,7 @@ Page({
 	// 获取课程列表
 	getList(categoryId) {
 		if (categoryId) {
-			this.setData({ categoryId })
+			this.setData({categoryId})
 		} else {
 			categoryId = this.data.categoryId
 		}
@@ -176,7 +196,6 @@ Page({
 						_.zhibo_room.liveStatus = tar.liveStatus
 					}
 				})
-
 				this.setData({
 					courseList
 				})
@@ -215,8 +234,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-
-
+		checkAuth()
 	},
 
 	/**

@@ -81,7 +81,7 @@ export function getSubscriptionStatus(params) {
 // 查询用户信息
 export function queryUserInfo(params) {
 	return new Promise(resolve => {
-		request._get(URL.getUserInfo, params).then(({data: info}) => {
+		request._get(URL.getZhideUserInfo, params).then(({data: info}) => {
 			resolve(info)
 		})
 	})

@@ -6,6 +6,7 @@ import { GLOBAL_KEY } from '../../lib/config'
 import { getLocalStorage, setLocalStorage } from "../../utils/util"
 
 import { store } from '../../store'
+import { checkAuth } from "../../utils/auth"
 
 Page({
 
@@ -142,9 +143,7 @@ Page({
     // 生命周期函数--监听页面显示
     onShow: function () {
         this.getUserInfoData()
-        // wx.navigateTo({
-        //     url: '/mine/invite/invite',
-        // })
+        checkAuth()
     },
     // 生命周期函数--监听页面隐藏
     onHide: function () {

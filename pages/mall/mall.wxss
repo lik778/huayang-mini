@@ -4,11 +4,50 @@
     font-size: 0;
 }
 .banner {
+    overflow: hidden;
     width: 688rpx;
     height: 344rpx;
     margin: 32rpx auto;
-    background: #aaa;
+    border-radius: 16rpx;
 }
+.swiper-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 16rpx;
+}
+.swp-dot {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    margin-top: -24rpx;
+}
+
+.m-r-8 {
+    margin-right: 8rpx;
+}
+
+.m-l-8 {
+    margin-right: 8rpx;
+}
+
+.square-12 {
+    width: 8rpx;
+    height: 8rpx;
+    background-color: white;
+    border-radius: 915rpx;
+    transition: width 0.2s linear;
+    z-index: 100;
+}
+
+.active {
+    background-color: rgba(255, 68, 51, 1);
+    transition: width 0.2s linear;
+}
+
+.swiper {
+    height: inherit;
+}
+
 .category {
     display: flex;
     flex-wrap: wrap;

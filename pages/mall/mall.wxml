@@ -1,6 +1,15 @@
 <view class="mall">
-	<view class="banner"></view>
-
+	<view class="banner">
+		<swiper class="swiper" indicator-dots="{{indicatorDots}}" bindchange="currentHandle"
+						autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+			<swiper-item wx:for="{{bannerList}}" wx:key="index">
+				<view class="swiper-image" style="background: url('{{item.pic_url}}') no-repeat center;background-size: cover;"></view>
+			</swiper-item>
+		</swiper>
+		<cover-view class="swp-dot" wx:if="{{bannerList.length > 1}}">
+			<cover-view class="square-12 m-r-8 {{current === index ?'active': ''}}" wx:for="{{bannerList}}" wx:key="{{index}}"></cover-view>
+		</cover-view>
+	</view>
 	<view class="category">
 		<view class="category-item" wx:for="{{categoryList}}" wx:key="index">
 			<image src="{{item.pic}}"></image>
@@ -9,7 +18,7 @@
 	</view>
 
 	<block wx:for="{{productList}}" wx:key="index">
-		<view class="product-item">
+		<view class="product-item" bindtap="buy" data-item="{{item}}">
 			<view class="preview-image">
 				<image class="normal-mode" src="{{item.cover_image}}"></image>
 				<view class="split-mode"></view>
@@ -17,7 +26,7 @@
 			<text class="product-name limit-two-line">{{item.name}}</text>
 			<view class="product-info">
 				<view class="price"><text class="unit">¥</text>{{item.discount_price / 100}}</view>
-				<view class="buying" bindtap="buy" data-item="{{item}}">购买</view>
+				<view class="buying">购买</view>
 			</view>
 		</view>
 		<view class="ad">ad-banner</view>

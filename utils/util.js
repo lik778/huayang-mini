@@ -213,7 +213,8 @@ export const hasToken = function () {
  * @returns {boolean}
  */
 export const hasUserInfo = function () {
-	return $notNull(getLocalStorage(GLOBAL_KEY.userInfo))
+	let userInfo = getLocalStorage(GLOBAL_KEY.userInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)) : {}
+	return $notNull(userInfo)
 }
 
 /**
@@ -299,6 +300,7 @@ export const checkIdentity = function({roomId, link, zhiboRoomId, customParams =
 								})
 							}
 						})
+						resolve('updateWatchNo')
 					}
 					resolve()
 				})

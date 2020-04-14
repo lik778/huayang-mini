@@ -1,18 +1,30 @@
 // pages/mall/mall.js
-import { getCategory, getProductList } from "../../api/mall/index"
+import { getBannerList, getCategory, getProductList } from "../../api/mall/index"
+import { checkAuth } from "../../utils/auth"
 
 Page({
 	/**
 	 * 页面的初始数据
 	 */
 	data: {
+		bannerList: [],
 		categoryList: [],
 		productList: [],
-		indicatorDots: true,
-		autoplay: true,
+		current: 0,
+		indicatorDots: false,
+		vertical: false,
+		autoplay: false,
 		interval: 2000,
 		duration: 500,
 		showAddressMedal: false
+	},
+	currentHandle(e) {
+		let {
+			current
+		} = e.detail
+		this.setData({
+			current
+		})
 	},
 	queryProductList() {
 		getProductList(this.form).then(list => {
@@ -28,6 +40,13 @@ Page({
 			})
 		})
 	},
+	getBanner() {
+		getBannerList({ scene: 4 }).then(list => {
+			this.setData({
+				bannerList: list.slice()
+			})
+		})
+	},
 	buy(e) {
 		let target = e.currentTarget.dataset.item
 		wx.navigateTo({
@@ -40,6 +59,7 @@ Page({
 	onLoad: function (options) {
 		this.queryCategory()
 		this.queryProductList()
+		this.getBanner()
 	},
 
 	/**
@@ -53,7 +73,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-
+		checkAuth()
 	},
 
 	/**

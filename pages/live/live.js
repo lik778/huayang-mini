@@ -4,6 +4,7 @@ import { GLOBAL_KEY, WeChatLiveStatus } from '../../lib/config'
 import { $notNull, checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from '../../utils/util'
 import { statisticsWatchNo } from "../../api/live/course"
 import { bindWxPhoneNumber } from "../../api/auth/index"
+import { checkAuth } from "../../utils/auth"
 
 Page({
 	/**
@@ -63,13 +64,23 @@ Page({
 				// link存在去跳转回看页
 				if (link) {
 					wx.navigateTo({
-						url: `/subLive/review/review?zhiboRoomId=` + zhiboRoomId
+						url: `/subLive/review/review?zhiboRoomId=` + zhiboRoomId,
 					})
 				} else {
 					wx.navigateTo({
 						url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${roomId}&custom_params=${encodeURIComponent(JSON.stringify(this.data.customParams))}`
 					})
 				}
+				// 更新直播间观看次数
+				let list = [...this.data.liveList]
+				list.forEach(_ => {
+					if (_.zhiboRoomId === zhiboRoomId) {
+						_.visitCount += 1
+					}
+				})
+				this.setData({
+					liveList: [ ...list ]
+				})
 			})
 		}
 	},
@@ -206,6 +217,11 @@ Page({
 			})
 		})
 	},
+	invite() {
+		wx.navigateTo({
+			url: '/mine/invite/invite'
+		})
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
@@ -237,6 +253,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
+		checkAuth()
 	},
 
 	/**
