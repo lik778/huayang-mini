@@ -1,4 +1,4 @@
-// pages/index/index.js
+// pages/live/live.js
 import { getLiveBannerList, getLiveList, updateLiveStatus } from "../../api/live/index"
 import { GLOBAL_KEY, WeChatLiveStatus } from '../../lib/config'
 import { $notNull, checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from '../../utils/util'
@@ -51,14 +51,13 @@ Page({
 		// 当前课程是否仅限VIP用户学习
 		if (vipOnly === 1) {
 			// 判断是否是会员/是否入学
-			checkIdentity({roomId, link, zhiboRoomId})
-				.then((callbackString) => {
-					if (callbackString === 'no-phone-auth') {
-						this.setData({
-							show: true
-						})
-					}
-				})
+			checkIdentity({roomId, link, zhiboRoomId}).then((callbackString) => {
+				if (callbackString === 'no-phone-auth') {
+					this.setData({
+						show: true
+					})
+				}
+			})
 		} else {
 			statisticsWatchNo({
 				zhibo_room_id: zhiboRoomId, // 运营后台配置的课程ID
