@@ -10,7 +10,6 @@ import {
 import { bindWxPhoneNumber } from "../../api/auth/index"
 import { GLOBAL_KEY, SubscribeKey, SubscriptType } from "../../lib/config"
 import { checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from "../../utils/util"
-import { checkAuth } from "../../utils/auth"
 
 Page({
 	/**
@@ -233,7 +232,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		checkAuth()
+		// checkAuth()
 	},
 
 	/**

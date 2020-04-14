@@ -1,4 +1,16 @@
 /* subMall/category/category.wxss */
+.custom-tab-class {
+    flex-basis: 20% !important;
+    padding: 0 !important;
+    font-size: 32rpx !important;
+    font-weight: 500 !important;
+    color: rgba(0,0,0,.6) !important;
+}
+.custom-tab-active-class {
+    font-size: 32rpx !important;
+    font-weight: 500 !important;
+    color: rgb(0,0,0) !important;
+}
 .category {
 
 }

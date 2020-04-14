@@ -1,3 +1,11 @@
 <view class="category">
-  <text>category page123</text>
+  <van-tabs
+    active="{{ activeTabIndex }}"
+    tab-class="custom-tab-class"
+    tab-active-class="custom-tab-active-class"
+    bind:change="onChange" swipeable>
+    <van-tab title="{{item.name}}" wx:for="{{categoryList}}" wx:key="index">
+      <text>{{item.name}}</text>
+    </van-tab>
+  </van-tabs>
 </view>

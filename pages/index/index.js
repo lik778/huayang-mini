@@ -4,7 +4,6 @@ import { GLOBAL_KEY, WeChatLiveStatus } from '../../lib/config'
 import { $notNull, checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from '../../utils/util'
 import { statisticsWatchNo } from "../../api/live/course"
 import { bindWxPhoneNumber } from "../../api/auth/index"
-import { checkAuth } from "../../utils/auth"
 
 Page({
 	/**
@@ -256,7 +255,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		checkAuth()
+		// checkAuth()
 	},
 
 	/**

@@ -1,6 +1,5 @@
 // pages/mall/mall.js
 import { getBannerList, getCategory, getProductList } from "../../api/mall/index"
-import { checkAuth } from "../../utils/auth"
 
 Page({
 	/**
@@ -27,7 +26,7 @@ Page({
 		})
 	},
 	queryProductList() {
-		getProductList(this.form).then(list => {
+		getProductList().then(list => {
 			this.setData({
 				productList: list.slice()
 			})
@@ -55,10 +54,8 @@ Page({
 	},
 	navigateToCategory(e) {
 		let item = e.currentTarget.dataset.item
-		console.log(item)
-		return
 		wx.navigateTo({
-			url: '/subMall/category/category?categoryId' + item.id
+			url: '/subMall/category/category?categoryId=' + item.id
 		})
 	},
 	/**
@@ -81,7 +78,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		checkAuth()
+		// checkAuth()
 	},
 
 	/**

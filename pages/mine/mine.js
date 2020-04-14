@@ -6,7 +6,6 @@ import { GLOBAL_KEY } from '../../lib/config'
 import { getLocalStorage, setLocalStorage } from "../../utils/util"
 
 import { store } from '../../store'
-import { checkAuth } from "../../utils/auth"
 
 Page({
 
@@ -163,7 +162,7 @@ Page({
             })
         }
 
-        checkAuth()
+        // checkAuth()
 
     },
     // 生命周期函数--监听页面隐藏

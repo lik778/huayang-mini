@@ -11,7 +11,7 @@
 		</cover-view>
 	</view>
 	<view class="category">
-		<view class="category-item" wx:for="{{categoryList}}" wx:key="index" bindtap="navigateToCategory" data-item="item">
+		<view class="category-item" wx:for="{{categoryList}}" wx:key="index" bindtap="navigateToCategory" data-item="{{item}}">
 			<image src="{{item.pic}}"></image>
 			<text>{{item.name}}</text>
 		</view>
@@ -21,7 +21,6 @@
 		<view class="product-item" bindtap="buy" data-item="{{item}}">
 			<view class="preview-image">
 				<image class="normal-mode" src="{{item.cover_image}}"></image>
-				<view class="split-mode"></view>
 			</view>
 			<text class="product-name limit-two-line">{{item.name}}</text>
 			<view class="product-info">
