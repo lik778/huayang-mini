@@ -15,7 +15,7 @@
 .userinfo {
     position: absolute;
     left: 48rpx;
-    top: 60rpx;
+    top: 120rpx;
     display: flex;
     z-index: 10;
 }
