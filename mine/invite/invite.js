@@ -24,7 +24,7 @@ Page({
     posturl: "",
     userInfo: {},
     statusHeight: 0,
-    num:0,//会员编号
+    num: 0, //会员编号
     posterWidth: 0, //海报宽度
     posterHeigt: 0, //海报高度
     radio: 0 //海报缩放比
@@ -82,8 +82,8 @@ Page({
   saveAlbum() {
     wx.downloadFile({
       url: this.data.canvasUrl,
+      // url:"https://wx.qlogo.cn/mmopen/vi_32/stnAQ5ZE7cshbzDgmSk3iatIcdJJyJRA8ic76muIdJc4UhTicJb9rKKCqdAia397iawGC8Qib8oR9GyRcr48GC22bvHQ/132",
       success(res) {
-        console.log(res,12212)
         wx.saveImageToPhotosAlbum({
           filePath: res.tempFilePath,
           success(res) {
@@ -101,9 +101,7 @@ Page({
               })
             }
           },
-
         })
-
       },
       fail(err) {
         console.log(err)
@@ -127,16 +125,16 @@ Page({
       data
     }) => {
       this.setData({
-        num:data
+        num: data
       })
       // 绘制canvas
       createCanvas({
         bgUrl: this.data.posturl,
         nickname: this.data.userInfo.nickname,
         num: data,
-        headicon:this.data.userInfo.avatar_url
+        headicon: this.data.userInfo.avatar_url
       }).then(res => {
-        console.log(res,11111)
+        console.log(res, 11111)
         this.setData({
           canvasUrl: res
         })
