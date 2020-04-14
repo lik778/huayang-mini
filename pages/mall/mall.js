@@ -56,6 +56,7 @@ Page({
 	navigateToCategory(e) {
 		let item = e.currentTarget.dataset.item
 		console.log(item)
+		return
 		wx.navigateTo({
 			url: '/subMall/category/category?categoryId' + item.id
 		})
