@@ -1,6 +1,6 @@
 <!--mine/invite/invite.wxml-->
 <view class="invite" wx:if="{{posturl!==''}}">
-	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+	<view class="navigation">
 		<naviBar title="邀请有礼"></naviBar>
 	</view>
 	<view class="banner">
@@ -14,12 +14,12 @@
 			<image src="{{posturl}}" class="bg-img"></image>
 			<view class="head-icon-line" style="left:{{12*radio}}px;top:{{18*radio}}px;">
 				<view class="head-icon-img">
-					<image src="{{}}" style="width:{{34*radio}}px;height:{{34*radio}}px;"></image>
+					<image src="{{userInfo.avatar_url}}" style="width:{{34*radio}}px;height:{{34*radio}}px;"></image>
 				</view>
 				<view class="head-icon-desc" style="padding-left:{{9*radio}}px">
-					<view class="head-icon-top" style="font-size:{{14*radio}}px;line-height:{{14*radio}}px;">我是{{}}</view>
+					<view class="head-icon-top" style="font-size:{{14*radio}}px;line-height:{{14*radio}}px;">我是{{userInfo.nickname}}</view>
 					<view class="head-icon-bottom" style="font-size:{{9*radio}}px;line-height:{{13*radio}}px;padding-top:2px;">
-						<view>我刚刚成为花样汇俱乐部第<text style="font-size:{{18*radio}}px;"> 888 </text>位会员</view>
+						<view>我刚刚成为花样汇俱乐部第<text style="font-size:{{18*radio}}px;"> {{num}} </text>位会员</view>
 						<view>邀您一起成为时尚达人</view>
 					</view>
 				</view>
@@ -27,7 +27,7 @@
 			<view class="price" style="left:{{12*radio}}px;bottom:{{18*radio}}px;">
 				<view class="old-price" style="font-size:{{12*radio}}px; line-height:{{12*radio}}px;">原价199元</view>
 				<view class="new-price" style="font-size:{{24*radio}}px; line-height:{{24*radio}}px;padding-top:{{5*radio}}px;">
-					<text>限时19.9</text>
+					<text>限时99</text>
 					<text style="font-size:{{12*radio}}px;">元/年</text>
 				</view>
 			</view>

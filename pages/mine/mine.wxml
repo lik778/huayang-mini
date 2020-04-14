@@ -1,6 +1,5 @@
 <!--pages/mine/mine.wxml-->
 <view class="mine">
-
 	<view class="banner">
 		<image src="../../assets/images/mine/pic-1.png" class="banner-image"></image>
 		<view class="userinfo">
@@ -8,8 +7,8 @@
 				<image src="{{userInfo.avatar_url}}"></image>
 			</view>
 			<view class="{{showBindPhoneButton?'userinfo-right-diff':'userinfo-right'}}">
-				<text class="nickname">{{userInfo.nick_name}}</text>
-				<text wx:if="{{!showBindPhoneButton}}" class="mobile">{{userInfo.mobile||111}}</text>
+				<text class="nickname">{{userInfo.nick_name||userInfo.nickname}}</text>
+				<text wx:if="{{!showBindPhoneButton}}" class="mobile">{{userInfo.mobile||""}}</text>
 			</view>
 		</view>
 		<view class="{{userInfo.is_zhide_vip?'vip-module':'vip-module notvip-module'}}">
@@ -35,7 +34,7 @@
 								<view class="woller-middle" wx:if="{{!showBindPhoneButton}}"></view>
 								<view class="woller-right" wx:if="{{!showBindPhoneButton}}">
 									<image src="../../assets/images/mine/pic-8.png" class="vip-money"></image>
-									<text>{{userInfo.amount/100||0}}</text>
+									<text>{{userInfo.amount/100===null?0:userInfo.amount/100}}</text>
 								</view>
 								<view class="woller-right" wx:else>
 									<text class="bindmobile">绑定手机查看</text>
@@ -66,14 +65,14 @@
 		</view>
 	</view>
 	<view class="list">
-		<view class="list-common" wx:if="{{userInfo.is_zhide_vip}}">
+		<view class="list-common" wx:if="{{userInfo.is_zhide_vip}}" bindtap="toCourseList">
 			<view class="common-left">
 				<image src="../../assets/images/mine/pic-3.png" class="common-icon-one"></image>
 			</view>
 			<view class="common-right">
 				<view class="common-desc">
 					<view class="common-desc-top">花样大学</view>
-					<view class="common-desc-bottom" wx:if="{{userInfo.student_num!==''}}">学籍号：434732498HXZ</view>
+					<view class="common-desc-bottom" wx:if="{{userInfo.student_num!==''}}">学籍号：{{userInfo.student_num}}</view>
 					<view class="common-desc-bottom" wx:else>5大系列课程免费学</view>
 				</view>
 				<view class="common-arrow">

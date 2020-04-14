@@ -3,7 +3,9 @@ import {
   createCanvas
 } from "./canvas"
 import {
-  getInviteCode
+  getInviteCode,
+  getVipNum
+
 } from "../../api/mine/index"
 import {
   getLocalStorage
@@ -20,10 +22,12 @@ Page({
     qcCode: "",
     canvasUrl: "",
     posturl: "",
-    statusHeight:0,
-    posterWidth:0,//海报宽度
-    posterHeigt:0,//海报高度
-    radio:0//海报缩放比
+    userInfo: {},
+    statusHeight: 0,
+    num:0,//会员编号
+    posterWidth: 0, //海报宽度
+    posterHeigt: 0, //海报高度
+    radio: 0 //海报缩放比
   },
   // 计算宽高,自适应海报
   calculate() {
@@ -31,19 +35,19 @@ Page({
       complete: (res) => {
         let info = {
           width: res.screenWidth,
-          height:  res.screenHeight
+          height: res.screenHeight
         }
-        if((info.height-311)/1.33<info.width-32){
+        if ((info.height - 311) / 1.33 < info.width - 32) {
           this.setData({
-            posterWidth:(info.height-311)/1.33,
-            posterHeigt:info.height-311,
-            radio:(info.height-311)/356
+            posterWidth: (info.height - 311) / 1.33,
+            posterHeigt: info.height - 311,
+            radio: (info.height - 311) / 356
           })
-        }else{
+        } else {
           this.setData({
-            posterWidth:info.width-32,
-            posterHeigt:info.width*1.33,
-            radio:(info.width-32)/267
+            posterWidth: info.width - 32,
+            posterHeigt: info.width * 1.33,
+            radio: (info.width - 32) / 267
           })
         }
         console.log(this.data.radio)
@@ -60,6 +64,12 @@ Page({
       posturl: arr[index]
     })
   },
+  // 获取用户信息
+  getUserInfo() {
+    this.setData({
+      userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo))
+    })
+  },
   // 获取小程序邀请码
   inviteCode() {
     getInviteCode(`user_id=${getLocalStorage(GLOBAL_KEY.userId)}`).then(res => {
@@ -70,11 +80,10 @@ Page({
   },
   // 保存到相册
   saveAlbum() {
-    console.log(this.data.canvasUrl)
     wx.downloadFile({
       url: this.data.canvasUrl,
       success(res) {
-        console.log(res)
+        console.log(res,12212)
         wx.saveImageToPhotosAlbum({
           filePath: res.tempFilePath,
           success(res) {
@@ -101,25 +110,41 @@ Page({
       }
     })
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // 获取用户信息
+    this.getUserInfo()
     // 获取设备宽高
     this.calculate()
     // 随机生成背景图
     this.getImgUrl()
     // 获取小程序二维码
     this.inviteCode()
-    // 绘制canvas
-    createCanvas(this.data.posturl).then(res => {
+    // 获取会员编号
+    getVipNum(`user_id=${getLocalStorage(GLOBAL_KEY.userId)}`).then(({
+      data
+    }) => {
       this.setData({
-        canvasUrl: res
+        num:data
+      })
+      // 绘制canvas
+      createCanvas({
+        bgUrl: this.data.posturl,
+        nickname: this.data.userInfo.nickname,
+        num: data,
+        headicon:this.data.userInfo.avatar_url
+      }).then(res => {
+        console.log(res,11111)
+        this.setData({
+          canvasUrl: res
+        })
       })
     })
+
     this.setData({
-      statusHeight:JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
+      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
   },
 

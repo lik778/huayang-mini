@@ -39,3 +39,13 @@ export const getInviteList=(params)=>{
     })
   })
 }
+// 获取会员编号
+export const getVipNum=(params)=>{
+  return new Promise(resolve=>{
+    request._get(URL.getVipNum+"?"+params).then(res=>{
+      if(res.code===0){
+        resolve(res)
+      }
+    })
+  })
+}
