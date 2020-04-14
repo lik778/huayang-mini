@@ -1,24 +1,12 @@
 // pages/mine/mine.js
-import {
-    createStoreBindings
-} from 'mobx-miniprogram-bindings'
-import {
-    getUserInfo
-} from "../../api/mine/index"
-import {
-    bindWxPhoneNumber
-} from "../../api/auth/index"
-import {
-    GLOBAL_KEY
-} from '../../lib/config'
-import {
-    getLocalStorage,
-    setLocalStorage
-} from "../../utils/util"
+import { createStoreBindings } from 'mobx-miniprogram-bindings'
+import { getUserInfo } from "../../api/mine/index"
+import { bindWxPhoneNumber } from "../../api/auth/index"
+import { GLOBAL_KEY } from '../../lib/config'
+import { getLocalStorage, setLocalStorage } from "../../utils/util"
 
-import {
-    store
-} from '../../store'
+import { store } from '../../store'
+import { checkAuth } from "../../utils/auth"
 
 Page({
 
@@ -175,6 +163,7 @@ Page({
             })
         }
 
+        checkAuth()
 
     },
     // 生命周期函数--监听页面隐藏
