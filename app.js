@@ -1,6 +1,5 @@
 //app.js
 import request from './lib/request'
-import { checkAuth } from './utils/auth'
 import { setLocalStorage } from './utils/util'
 import { GLOBAL_KEY } from './lib/config'
 
@@ -10,7 +9,7 @@ App({
 		// 全局注册http
 		wx.$request = request
 		// 每次打开app检查授权
-		checkAuth()
+		// checkAuth()
 		// 记录设备信息，保证进入详情页时可以获取到statusHeight自定义navibar
 		wx.getSystemInfo({
 			complete: (res) => {

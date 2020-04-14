@@ -53,4 +53,7 @@
     confirm-button-open-type="getPhoneNumber"
     bind:getphonenumber="getPhoneNumber"
   ></van-dialog>
+
+  <van-dialog id="van-dialog" />
+
 </view>

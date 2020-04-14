@@ -33,7 +33,7 @@
           <view class="item-right-top limit-one-line">{{courseItem.zhibo_room.title}}</view>
           <view class="item-right-middle">
             <view class="class-dot"></view>
-            <text class="class-status">{{courseItem.kecheng.kecheng_type === 1 ? '回看' : courseItem.zhibo_room.liveStatus}}</text>
+            <text class="class-status">{{courseItem.kecheng.kecheng_type === 1 || courseItem.zhibo_room.status === 2 ? '回看' : courseItem.zhibo_room.liveStatus}}</text>
             <text>{{courseItem.zhibo_room.visit_count}}人在看</text>
           </view>
           <view class="item-right-bottom">
@@ -55,4 +55,8 @@
     confirm-button-open-type="getPhoneNumber"
     bind:getphonenumber="getPhoneNumber"
   ></van-dialog>
+
+  <van-dialog id="van-dialog" />
+
+  <van-toast id="van-toast" />
 </view>
