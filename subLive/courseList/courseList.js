@@ -4,12 +4,12 @@ import {
 	getCourseTypeList,
 	getSubscriptionStatus,
 	queryUserInfo,
-	subscription
+	subscription,
+	unSubscribe
 } from "../../api/live/course"
 import { bindWxPhoneNumber } from "../../api/auth/index"
-import { GLOBAL_KEY, SubscriptType } from "../../lib/config"
+import { GLOBAL_KEY, SubscribeKey, SubscriptType } from "../../lib/config"
 import { checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from "../../utils/util"
-import { wxGetSettingPromise } from "../../utils/auth"
 
 Page({
 	/**
@@ -45,54 +45,54 @@ Page({
 			})
 		})
 	},
-	// 订阅
+	// 订阅||取消订阅课程
 	subscript() {
 		if (this.data.didSubscript) {
-			wx.showToast({
-				title: '您已订阅',
+			unSubscribe({
+				open_id: getLocalStorage(GLOBAL_KEY.openId),
+				target_user_id: this.data.courseId,
+				sub_key: SubscribeKey.zhibo
+			}).then(() => {
+				this.getStatus()
+				wx.showToast({
+					title: '取消订阅成功',
+				})
 			})
-			return
-		}
-		wxGetSettingPromise().then(settings => {
-			console.log(settings)
-			let self = this
+		} else {
 			// 唤起微信小程序订阅
+			let self = this
 			wx.requestSubscribeMessage({
 				tmplIds: [SubscriptType.subscriptMessage],
 				success(res) {
-					self.sendSubscription()
+					subscription({
+						open_id: getLocalStorage(GLOBAL_KEY.openId),
+						user_id: getLocalStorage(GLOBAL_KEY.userId),
+						target_user_id: self.data.courseId,
+						sub_key: SubscribeKey.zhibo
+					}).then(() => {
+						self.getStatus()
+						wx.showToast({
+							title: '订阅成功！',
+						})
+					})
 					console.log(res, 'requestSubscribeMessage success callback')
 				},
 				fail(err) {
 					console.log(err, 'requestSubscribeMessage error callback')
 				}
 			})
-		})
-	},
-	// 订阅课程
-	sendSubscription() {
-		let params = {
-			open_id: getLocalStorage(GLOBAL_KEY.openId),
-			user_id: getLocalStorage(GLOBAL_KEY.userId),
-			target_user_id: this.data.courseId
 		}
-		subscription(params).then(() => {
-			this.getStatus()
-			wx.showToast({
-				title: '订阅成功！',
-			})
-		})
 	},
 	// 获取订阅信息
 	getStatus() {
 		let openId = getLocalStorage(GLOBAL_KEY.openId)
-		getSubscriptionStatus(`?open_id=${openId}&target_user_id=${this.data.courseId}`).then(isSubscript => {
-			if (isSubscript) {
-				this.setData({
-					didSubscript: true,
-				})
-			}
+		getSubscriptionStatus({
+			open_id: openId,
+			target_user_id: this.data.courseId,
+			sub_key: SubscribeKey.zhibo
+		}).then(isSubscript => {
 			this.setData({
+				didSubscript: !!isSubscript,
 				didVisibleSubscribeBtn: false
 			})
 		}).catch(() => {

@@ -49,6 +49,15 @@ export function subscription(params) {
 	})
 }
 
+// 用户取消订阅
+export function unSubscribe(params) {
+	return new Promise(resolve => {
+		request._post(URL.unSubscribe, params).then(({data}) => {
+			resolve(data)
+		})
+	})
+}
+
 // 上传formID
 export function uploadFormId(params) {
 	return new Promise(resolve => {
@@ -61,7 +70,7 @@ export function uploadFormId(params) {
 // 获取订阅状态
 export function getSubscriptionStatus(params) {
 	return new Promise(resolve => {
-		request._get(URL.getSubscriptionStatus + params).then(({code, data}) => {
+		request._get(URL.getSubscriptionStatus, params).then(({code, data}) => {
 			if (code === 0) {
 				resolve($notNull(data))
 			}
