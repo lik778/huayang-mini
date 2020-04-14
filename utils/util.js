@@ -71,7 +71,7 @@ export const requestPayment = (paramsData) => {
 				setLocalStorage(GLOBAL_KEY.vip,true)
 				// setLocalStorage(GLOBAL_KEY.vip, JSON.stringify(vipData))
 				wx.switchTab({
-					url: '/pages/live/live',
+					url: '/pages/index/index',
 				})
 			}
 		},
@@ -262,7 +262,7 @@ export const checkIdentity = function({roomId, link, zhiboRoomId, customParams =
 	const userId = getLocalStorage(GLOBAL_KEY.userId)
 	return new Promise((resolve, reject) => {
 		if (userId == null) {
-			reject()
+			resolve('no-phone-auth')
 		}
 		else {
 			// 获取直播权限

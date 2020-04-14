@@ -18,7 +18,7 @@ Page({
 			})
 		} else {
 			wx.switchTab({
-				url: '/pages/live/live'
+				url: '/pages/index/index'
 			})
 		}
 	},

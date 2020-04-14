@@ -11,7 +11,7 @@
 		</cover-view>
 	</view>
 	<view class="category">
-		<view class="category-item" wx:for="{{categoryList}}" wx:key="index">
+		<view class="category-item" wx:for="{{categoryList}}" wx:key="index" bindtap="navigateToCategory" data-item="item">
 			<image src="{{item.pic}}"></image>
 			<text>{{item.name}}</text>
 		</view>

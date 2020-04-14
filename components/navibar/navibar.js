@@ -1,10 +1,7 @@
 // components/navibar.js
-import {
-  getLocalStorage
-} from "../../utils/util"
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { getLocalStorage } from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
+
 Component({
   /**
    * 组件的属性列表
@@ -34,7 +31,7 @@ Component({
     back() {
       if (this.data.share) {
         wx.switchTab({
-          url: '/pages/live/live',
+          url: '/pages/index/index',
         })
       } else {
         wx.navigateBack({
@@ -45,7 +42,7 @@ Component({
     // 返回首页
     backIndex() {
       wx.switchTab({
-        url: '/pages/live/live',
+        url: '/pages/index/index',
       })
     }
   },

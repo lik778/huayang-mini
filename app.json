@@ -10,7 +10,7 @@
   },
   "navigateToMiniProgramAppIdList": [ "wx95fb6b5dbe8739b7" ],
   "pages": [
-    "pages/live/live",
+    "pages/index/index",
     "pages/mall/mall",
     "pages/auth/auth",
     "pages/mine/mine"
@@ -37,7 +37,8 @@
     {
       "root": "subMall",
       "pages": [
-        "detail/detail"
+        "detail/detail",
+        "category/category"
       ]
     }
   ],
@@ -53,7 +54,7 @@
     "selectedColor": "#000",
     "backgroundColor": "#fff",
     "list": [{
-        "pagePath": "pages/live/live",
+        "pagePath": "pages/index/index",
         "text": "直播"
       },
       {

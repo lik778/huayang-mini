@@ -1,4 +1,4 @@
-// pages/live/live.js
+// pages/index/index.js
 import { getLiveBannerList, getLiveList, updateLiveStatus } from "../../api/live/index"
 import { GLOBAL_KEY, WeChatLiveStatus } from '../../lib/config'
 import { $notNull, checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from '../../utils/util'
@@ -51,11 +51,14 @@ Page({
 		// 当前课程是否仅限VIP用户学习
 		if (vipOnly === 1) {
 			// 判断是否是会员/是否入学
-			checkIdentity({roomId, link, zhiboRoomId}).catch(() => {
-				this.setData({
-					show: true
+			checkIdentity({roomId, link, zhiboRoomId})
+				.then((callbackString) => {
+					if (callbackString === 'no-phone-auth') {
+						this.setData({
+							show: true
+						})
+					}
 				})
-			})
 		} else {
 			statisticsWatchNo({
 				zhibo_room_id: zhiboRoomId, // 运营后台配置的课程ID
@@ -79,7 +82,7 @@ Page({
 					}
 				})
 				this.setData({
-					liveList: [ ...list ]
+					liveList: [...list]
 				})
 			})
 		}
@@ -129,7 +132,7 @@ Page({
 
 			getSchedule(roomIds).then(this.handleLiveStatusCallback)
 			this.setData({
-				liveList: [...result],
+				liveList: [...this.data.liveList, ...result],
 			})
 		})
 	},
@@ -149,13 +152,13 @@ Page({
 						// 如果微信返回的直播间状态为103-已过期
 						updateLiveStatus({
 							status: 2, // 2->直播已结束
-							zhibo_room_id: _.id
+							zhibo_room_id: _.zhiboRoomId
 						})
 					} else if (tar.liveStatus === WeChatLiveStatus[104] || tar.liveStatus === WeChatLiveStatus[107]) {
 						// 如果微信返回的直播间状态为104、107-禁播、已过期
 						updateLiveStatus({
 							status: 3, // 3->直播禁播或删除
-							zhibo_room_id: _.id
+							zhibo_room_id: _.zhiboRoomId
 						})
 					}
 				}
@@ -204,16 +207,17 @@ Page({
 								// 如果微信返回的直播间状态为104、107-禁播、已过期
 								updateLiveStatus({
 									status: 3, // 3->直播禁播或删除
-									zhibo_room_id: _.id
+									zhibo_room_id: _.zhiboRoomId
 								})
 							}
 						}
 					})
-					this.setData({
-						bannerList,
-						bannerPictureObject: bannerList.length > 0 ? bannerList[0] : null
-					})
 				}
+			})
+
+			this.setData({
+				bannerList,
+				bannerPictureObject: bannerList.length > 0 ? bannerList[0] : null
 			})
 		})
 	},

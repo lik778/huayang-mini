@@ -53,6 +53,13 @@ Page({
 			url: '/subMall/detail/detail?prdId=' + target.id
 		})
 	},
+	navigateToCategory(e) {
+		let item = e.currentTarget.dataset.item
+		console.log(item)
+		wx.navigateTo({
+			url: '/subMall/category/category?categoryId' + item.id
+		})
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */

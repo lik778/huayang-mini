@@ -1,4 +1,4 @@
-<!--pages/live/live.wxml-->
+<!--pages/index/index.wxml-->
 <view class="live">
   <view class="banner" wx:if="{{bannerPictureObject != null}}" bindtap="navigateToCourse" data-item="{{bannerPictureObject}}">
     <view class="swiper-image">

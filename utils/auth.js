@@ -16,7 +16,7 @@ const checkAuth = () => {
 				setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
 			} else {
 				// 跳转到授权页面
-				wx.redirectTo({
+				wx.navigateTo({
 					url: '/pages/auth/auth'
 				})
 			}
