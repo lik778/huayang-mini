@@ -37,7 +37,8 @@
     {
       "root": "subMall",
       "pages": [
-        "detail/detail"
+        "detail/detail",
+        "category/category"
       ]
     }
   ],

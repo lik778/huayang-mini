@@ -14,7 +14,7 @@ Page({
   onLoad: function (options) {
 
     console.log(options);
-
+    console.log(options);
   },
 
   /**

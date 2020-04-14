@@ -123,12 +123,11 @@ Page({
 					this.setData({
 						categoryList: [ ...list ]
 					})
+				} else if (callbackString === 'no-phone-auth') {
+					this.setData({
+						show: true
+					})
 				}
-			})
-			.catch(() => {
-				this.setData({
-					show: true
-				})
 			})
 	},
 	/**
