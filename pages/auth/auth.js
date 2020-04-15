@@ -2,7 +2,7 @@
 import { wxGetUserInfoPromise } from '../../utils/auth.js'
 import { GLOBAL_KEY } from '../../lib/config.js'
 import { bindUserInfo, bindWxPhoneNumber } from "../../api/auth/index"
-import { getLocalStorage, setLocalStorage, toast } from "../../utils/util"
+import { getLocalStorage, setLocalStorage } from "../../utils/util"
 
 Page({
 
@@ -10,6 +10,16 @@ Page({
 	 * Page initial data
 	 */
 	data: {},
+	jumpToPrivacy() {
+		wx.navigateTo({
+			url: '/pages/privacy/privacy'
+		})
+	},
+	jumpToService() {
+		wx.navigateTo({
+			url: '/pages/service/service'
+		})
+	},
 	/**
 	 * 一键微信授权
 	 */
@@ -31,7 +41,7 @@ Page({
 				wx.navigateBack()
 			})
 		} catch (error) {
-			toast('用户取消微信授权')
+			console.log('用户取消微信授权')
 		}
 	},
 	/**
