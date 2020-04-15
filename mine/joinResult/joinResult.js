@@ -1,6 +1,7 @@
 // mine/joinResult/joinResult.js
 import {
-  getUserInfo
+  getUserInfo,
+  getScene
 } from "../../api/mine/index"
 import {
   GLOBAL_KEY
@@ -44,6 +45,14 @@ Page({
     }
 
   },
+  // 获取班主任号
+  changeScene() {
+    let params = {
+      scene: "daxue",
+      open_id: getLocalStorage(GLOBAL_KEY.openId)
+    }
+    getScene(params)
+  },
   // 获取屏幕宽高以及设备比
   getSystemInfo() {
     let info = {
@@ -75,11 +84,11 @@ Page({
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
-    if(!getLocalStorage(GLOBAL_KEY.addTeacher)){
+    if (!getLocalStorage(GLOBAL_KEY.addTeacher)) {
       this.setData({
-        showSuccess:true
+        showSuccess: true
       })
-      setLocalStorage(GLOBAL_KEY.addTeacher,"false")
+      setLocalStorage(GLOBAL_KEY.addTeacher, "false")
     }
   },
 
@@ -95,7 +104,7 @@ Page({
    */
   onShow: function () {
     this.getUserInfoData()
-
+    this.changeScene()
   },
 
   /**

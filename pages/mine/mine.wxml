@@ -111,7 +111,7 @@
 			</view>
 		</view>
 		<view class="list-common" wx:if="{{userInfo.is_zhide_vip}}">
-			<button open-type="contact" bindcontact="joinVipGroup" send-message-title="会话内消息卡片" send-message-path="/pages/mine/mine" send-message-img="https://imgsa.baidu.com/baike/pic/item/562c11dfa9ec8a13918d4ed4fb03918fa0ecc06b.jpg" show-message-card="true" class="join-vip-group"></button>
+			<button open-type="contact" bindcontact="joinVipGroup" send-message-path="/pages/mine/mine" show-message-card="true" class="join-vip-group"></button>
 			<view class="common-left">
 				<image src="../../assets/images/mine/pic-5.png" class="common-icon-four"></image>
 			</view>
@@ -140,4 +140,5 @@
 			</view>
 		</view>
 	</view>
+
 </view>

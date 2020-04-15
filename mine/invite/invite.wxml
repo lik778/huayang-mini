@@ -5,6 +5,7 @@
 	</view>
 	<view class="banner">
 		<image src="../../assets/images/mine/pic-12.png"></image>
+		<!-- <image src="{{canvasUrl}}"></image> -->
 	</view>
 	<view class="canvas">
 		<canvas canvas-id='posterCanvas' style="width:900px;height:1200px;"></canvas>
@@ -37,12 +38,13 @@
 		</view>
 	</view>
 	<view class="button-line">
-		<view class="share">
+		<view class="share" bindtap="show1">
 			<text>分享给好友</text>
 			<button type="primary" open-type="share" class="share-button"></button>
 		</view>
 		<view class="save" bindtap="saveAlbum">保存海报到相册</view>
 	</view>
-</view>
-<view class="join-vip" wx:if="{{false}}">
+	<van-dialog use-slot title="消息订阅" show="{{ showDialog }}" confirm-button-color="#00C200" confirm-button-text="订阅" bind:confirm="show">
+		<view style="text-align: center;padding: 40px 0;">订阅通知，实时获取收益变化</view>
+	</van-dialog>
 </view>
