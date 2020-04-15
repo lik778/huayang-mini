@@ -49,3 +49,14 @@ export const getVipNum=(params)=>{
     })
   })
 }
+
+// 获取客服消息场景
+export const getScene=(params)=>{
+  return new Promise(resolve=>{
+    request._post(URL.getScene,params).then(res=>{
+      if(res.code===0){
+        resolve(res)
+      }
+    })
+  })
+}

@@ -3,7 +3,8 @@ import {
     createStoreBindings
 } from 'mobx-miniprogram-bindings'
 import {
-    getUserInfo
+    getUserInfo,
+    getScene
 } from "../../api/mine/index"
 import {
     bindWxPhoneNumber
@@ -102,8 +103,12 @@ Page({
         }
     },
     // 加入会员群
-    joinVipGroup(e) {
-        console.log(e)
+    changeScene(e) {
+        let params={
+            scene:"vip",
+            open_id:getLocalStorage(GLOBAL_KEY.openId)
+        }
+        getScene(params)
     },
     // 联系客服
     callPhone(e) {
@@ -124,7 +129,6 @@ Page({
         if (!showBindPhoneButton) {
             getUserInfo("scene=zhide").then(res => {
                 if (res.code === -2) {
-                    console.log(JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)))
                     this.setData({
                         showBindPhoneButton: true,
                         userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo))
@@ -181,6 +185,7 @@ Page({
                 url: '/pages/auth/auth',
             })
         }
+        this.changeScene()
         checkAuth()
     },
     // 生命周期函数--监听页面隐藏

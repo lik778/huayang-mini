@@ -5,13 +5,16 @@ import {
 import {
   getInviteCode,
   getVipNum
-
 } from "../../api/mine/index"
+import {
+  subscription
+} from "../../api/live/course"
 import {
   getLocalStorage
 } from "../../utils/util"
 import {
-  GLOBAL_KEY
+  GLOBAL_KEY,
+  SubscriptType
 } from "../../lib/config"
 Page({
 
@@ -27,7 +30,39 @@ Page({
     num: 0, //会员编号
     posterWidth: 0, //海报宽度
     posterHeigt: 0, //海报高度
-    radio: 0 //海报缩放比
+    radio: 0, //海报缩放比
+    showDialog: false
+  },
+  // 订阅
+  show() {
+    this.order()
+  },
+  show1() {
+    this.setData({
+      showDialog: true
+    })
+  },
+  // 订阅封装
+  order() {
+    wx.requestSubscribeMessage({
+      tmplIds: [SubscriptType.inivteMessage],
+      success(res) {
+        if (res[SubscriptType.inivteMessage] === 'accept') {
+          subscription({
+            open_id: getLocalStorage(GLOBAL_KEY.openId),
+            user_id: getLocalStorage(GLOBAL_KEY.userId),
+            sub_key: "invite"
+          }).then(() => {
+            wx.showToast({
+              title: '订阅成功',
+            })
+          })
+        }
+      },
+      fail(err) {
+        console.log(err, 'requestSubscribeMessage error callback')
+      }
+    })
   },
   // 计算宽高,自适应海报
   calculate() {
@@ -80,18 +115,16 @@ Page({
   },
   // 保存到相册
   saveAlbum() {
+    let _this = this
     wx.downloadFile({
       url: this.data.canvasUrl,
-      // url:"https://wx.qlogo.cn/mmopen/vi_32/stnAQ5ZE7cshbzDgmSk3iatIcdJJyJRA8ic76muIdJc4UhTicJb9rKKCqdAia397iawGC8Qib8oR9GyRcr48GC22bvHQ/132",
       success(res) {
         wx.saveImageToPhotosAlbum({
           filePath: res.tempFilePath,
           success(res) {
             if (res.errMsg === 'saveImageToPhotosAlbum:ok') {
-              wx.showToast({
-                title: '保存成功',
-                icon: "success",
-                duration: 3000
+              _this.setData({
+                showDialog: true
               })
             } else {
               wx.showToast({
@@ -191,7 +224,12 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
+  onShareAppMessage: function (res) {
+    // console.log(res)
+    return {
+      success: (data) => {
+        console.log(data)
+      }
+    }
   }
 })
