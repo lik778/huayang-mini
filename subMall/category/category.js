@@ -1,5 +1,6 @@
 // subMall/category/category.js
 import { getCategory, getProductListByCategory } from "../../api/mall/index"
+import { checkAuth } from "../../utils/auth"
 
 Page({
 
@@ -89,7 +90,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    checkAuth()
   },
 
   /**

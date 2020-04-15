@@ -1,6 +1,7 @@
 // subMall/detail/detail.js
 import { getProductInfo } from "../../api/mall/index"
 import { THIRD_APPLETS_SOURCE } from "../../lib/config"
+import { checkAuth } from "../../utils/auth"
 
 Page({
 	/**
@@ -73,7 +74,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-
+		checkAuth()
 	},
 
 	/**
