@@ -21,7 +21,7 @@
 				<view class="bottom">
 					<view class="bottom-left">
 						<view>录取日期</view>
-						<view>{{userInfo.vip_start_time}}</view>
+						<view>{{userInfo.zhide_start_time}}</view>
 					</view>
 					<view class="bottom-right">
 						<view>您的学号</view>

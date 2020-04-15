@@ -20,7 +20,7 @@
 						<text>超级会员</text>
 					</view>
 					<view class="validity-date" wx:if="{{userInfo.is_zhide_vip}}">有效期至 {{userInfo.zhide_end_time}}</view>
-					<view class="wollet">
+					<view class="wollet" bindtap="{{!showBindPhoneButton?'toWallet':''}}">
 						<view class="wollet-title">我的钱包</view>
 						<view class="wollet-bottom">
 							<view class="wollet-one">
@@ -42,7 +42,7 @@
 									<button type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="bindmobile-botton"></button>
 								</view>
 							</view>
-							<view class="wollet-two" bindtap="{{!showBindPhoneButton?'toWallet':''}}">
+							<view class="wollet-two">
 								<image src="../../assets/images/mine/pic-7.png" class="vip-arrow"></image>
 							</view>
 						</view>
@@ -66,7 +66,7 @@
 		</view>
 	</view>
 	<view class="list">
-		<view class="list-common" wx:if="{{userInfo.is_zhide_vip}}" bindtap="toCourseList">
+		<view class="list-common" wx:if="{{userInfo.is_zhide_vip}}" bindtap="{{userInfo.student_num!==''?'toCourseList':''}}">
 			<view class="common-left">
 				<image src="../../assets/images/mine/pic-3.png" class="common-icon-one"></image>
 			</view>

@@ -25,10 +25,11 @@ Page({
   getUserInfoData() {
     getUserInfo("scene=zhide").then(res => {
       if (res.code !== -2) {
-        res.vip_start_time= res.vip_start_time.replace(/-/g, ".")
+        res.zhide_start_time= res.zhide_start_time.replace(/-/g, ".").split(" ")[0]
         this.setData({
           userInfo: res || {}
         })
+        console.log(res)
       }
     })
   },

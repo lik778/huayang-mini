@@ -2,6 +2,9 @@
 import {
   GLOBAL_KEY
 } from "../../lib/config"
+import {
+  getLocalStorage
+} from "../../utils/util"
 Page({
 
   /**
@@ -10,7 +13,7 @@ Page({
   data: {
     radio: '0',
     webViewData: 0,
-    statusHeight:""
+    statusHeight: ""
   },
   // 切换性别
   changeSex(e) {
@@ -23,7 +26,7 @@ Page({
     this.setData({
       webViewData: JSON.stringify({
         userId: wx.getStorageSync(GLOBAL_KEY.userId),
-        open_id:wx.getStorageSync(GLOBAL_KEY.openId),
+        open_id: wx.getStorageSync(GLOBAL_KEY.openId),
       })
     })
     console.log(this.data.webViewData)
@@ -34,7 +37,7 @@ Page({
   onLoad: function (options) {
     this.getWebViewData()
     this.setData({
-      statusHeight:JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
+      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
   },
 

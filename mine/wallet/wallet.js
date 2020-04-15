@@ -2,8 +2,12 @@
 import {
   getInviteList
 } from "../../api/mine/index"
-import { getLocalStorage } from "../../utils/util"
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  getLocalStorage
+} from "../../utils/util"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 Page({
 
   /**
@@ -11,26 +15,36 @@ Page({
    */
   data: {
     inviteList: ["", ""],
-    wolletData:"",
+    wolletData: "",
     limit: 10,
     offset: 0
   },
   // 提现
-  withdraw(){
+  withdraw() {
     wx.showToast({
       title: '提示',
-      duration:5000,
-      icon:"none"
+      duration: 5000,
+      icon: "none"
     })
   },
   // 获取小程序邀请列表
   inviteListData() {
     getInviteList(`offset=${this.data.offset}&limit=${this.data.limit}`).then(res => {
       res = res.data || []
+      if (res.length !== 0) {
+        for (let i in res) {
+          if (Number.isInteger(res[i].amount / 100)) {
+            console.log(res[i].amount / 100 + ".00")
+            res[i].amount = res[i].amount / 100 + ".00"
+          } else {
+            res[i].amount = res[i].amount / 100
+          }
+        }
+      }
       this.setData({
         inviteList: res
       })
-      console.log(res)
+
     })
   },
   /**
@@ -39,8 +53,8 @@ Page({
   onLoad: function (options) {
     this.inviteListData()
     this.setData({
-      wolletData:JSON.parse(options.wolletData),
-      statusHeight:JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
+      wolletData: JSON.parse(options.wolletData),
+      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
   },
 

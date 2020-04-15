@@ -37,7 +37,7 @@
 				<text>{{item.invite_user_info.nick_name}}</text>
 			</view>
 			<view class="invite-item-right">
-				<text>+{{item.amount/100}}</text>
+				<text>+{{item.amount}}</text>
 			</view>
 		</view>
 	</view>
