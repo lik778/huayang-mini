@@ -32,14 +32,15 @@ Page({
 		getProductList({
 			limit: this.data.limit,
 			offset: this.data.offset,
-		}).then(list => {
+		}).then((list) => {
 			list = list || []
 			if (list.length < this.data.limit) {
 				this.data.didNoMore = true
 			}
+			let result = [...this.data.productList, ...list]
 			this.setData({
-				productList: [...this.data.productList, ...list],
-				offset: list.length
+				productList: result,
+				offset: result.length
 			})
 		})
 	},
@@ -60,7 +61,7 @@ Page({
 	buy(e) {
 		let target = e.currentTarget.dataset.item
 		wx.navigateTo({
-			url: '/subMall/detail/detail?prdId=' + target.id
+			url: '/subMall/detail/detail?prdId=' + target.product.id
 		})
 	},
 	navigateToCategory(e) {

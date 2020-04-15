@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "直播",
+  "navigationBarTitleText": "花样直播",
   "usingComponents": {
     "subscribe": "plugin-private://wx2b03c6e691cd7370/components/subscribe/subscribe"
   }

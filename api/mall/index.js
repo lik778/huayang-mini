@@ -19,6 +19,15 @@ export function getProductList(params) {
 	})
 }
 
+export function getProductListByCategory(params) {
+	return new Promise((resolve) => {
+		request._get(URL.getProductListByCategory, params).then(({ data }) => {
+			data = data || []
+			resolve(data)
+		})
+	})
+}
+
 export function getCategory(params) {
 	return new Promise(resolve => {
 		request._get(URL.getCategory, params).then(({ data }) => {
