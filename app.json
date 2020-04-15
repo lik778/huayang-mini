@@ -15,7 +15,9 @@
     "pages/index/index",
     "pages/mall/mall",
     "pages/auth/auth",
-    "pages/mine/mine"
+    "pages/mine/mine",
+    "pages/privacy/privacy",
+    "pages/service/sercive"
   ],
   "subpackages": [
     {
