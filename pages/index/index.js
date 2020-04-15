@@ -302,9 +302,9 @@ Page({
 	 */
 	onShow: function () {
 		checkAuth()
-		wx.navigateTo({
-			url: '/mine/joinVip/joinVip',
-		})
+		// wx.navigateTo({
+		// 	url: '/mine/joinVip/joinVip',
+		// })
 	},
 
 	/**
