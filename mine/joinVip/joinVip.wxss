@@ -338,6 +338,11 @@
     line-height: 18px;
 }
 
+.button view text:first-child {
+    text-decoration: line-through;
+    padding-right: 1em;
+}
+
 .button view:nth-child(2) {
     font-size: 14px;
     font-family: PingFangSC-Medium, PingFang SC;

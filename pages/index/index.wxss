@@ -1,13 +1,16 @@
 @import "../../assets/css/common.wxss";
+
 .live {
     padding: 16rpx 32rpx;
     font-size: 0;
 }
+
 .banner {
     position: relative;
     overflow: hidden;
     height: 438rpx;
 }
+
 .banner .teacher {
     position: absolute;
     top: 0;
@@ -17,6 +20,7 @@
     height: 100%;
     width: 100%;
 }
+
 .swiper-image {
     position: relative;
     height: 398rpx;
@@ -26,6 +30,7 @@
     background-blend-mode: multiply;
     color: white;
 }
+
 .status {
     position: absolute;
     left: 0;
@@ -38,24 +43,29 @@
     background: rgb(255, 68, 51);
     color: rgb(255, 255, 255);
 }
+
 .status.disabled {
     color: rgba(255, 255, 255, 0.8);
     background: rgba(17, 17, 17, .6);
 }
+
 .status .status-dot {
     width: 16rpx;
     height: 16rpx;
     border-radius: 915rpx;
     background: rgb(255, 187, 17);
 }
+
 .status .status-dot.disabled {
     background: rgba(255, 255, 255, 0.8);
 }
+
 .status .status-text {
     margin-left: 8rpx;
     font-size: 28rpx;
     font-weight: 400;
 }
+
 .swiper-image .course-name {
     position: absolute;
     top: 108rpx;
@@ -64,8 +74,9 @@
     line-height: 66rpx;
     font-size: 48rpx;
     font-weight: 400;
-    font-family: PingFangSC-Medium,PingFang SC;
+    font-family: PingFangSC-Medium, PingFang SC;
 }
+
 .swiper-image .course-info {
     position: absolute;
     bottom: 0;
@@ -77,43 +88,53 @@
     padding: 0 24rpx 26rpx;
     font-weight: 300;
 }
+
 .swiper-image .course-info .author {
     font-size: 32rpx;
 }
+
 .swiper-image .course-info .course-no {
     font-size: 28rpx;
 }
+
 .roof {
     display: flex;
     align-items: center;
     margin: 30rpx 0 24rpx;
 }
+
 .star {
     width: 40rpx;
     height: 38rpx;
 }
+
 .recommend {
     margin-left: 14rpx;
     font-size: 48rpx;
     font-weight: 400;
 }
+
 .live-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     margin: 32rpx 0;
 }
+
 .live-list .status .status-dot {
     width: 12rpx;
     height: 12rpx;
 }
+
 .live-list .status .status-text {
     font-size: 24rpx;
 }
+
 .live-item {
     width: calc(50% - 8rpx);
     margin-bottom: 32rpx;
 }
+
 .live-cover {
     position: relative;
     height: 420rpx;
@@ -121,6 +142,7 @@
     background-size: cover;
     border-radius: 16rpx 16rpx 6rpx 6rpx;
 }
+
 .visit-no {
     position: absolute;
     bottom: 0;
@@ -128,8 +150,9 @@
     left: 0;
     height: 106rpx;
     text-align: right;
-    background:linear-gradient(360deg,rgba(0,0,0,0.5) 0%,rgba(0,0,0,0) 100%);
+    background: linear-gradient(360deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
 }
+
 .visit-no text {
     position: absolute;
     bottom: 24rpx;
@@ -138,18 +161,21 @@
     font-weight: 400;
     color: white;
 }
+
 .live-title {
     margin: 24rpx 0 20rpx;
     font-size: 36rpx;
     font-weight: 500;
 }
+
 .live-teacher-info {
     display: flex;
     align-items: center;
     font-size: 32rpx;
     font-weight: 400;
-    color: rgba(0,0,0,.8)
+    color: rgba(0, 0, 0, .8)
 }
+
 .teacher-avatar {
     flex-shrink: 0;
     width: 52rpx;
@@ -157,12 +183,14 @@
     margin-right: 16rpx;
     border-radius: 915rpx;
 }
+
 .no-more {
     margin-bottom: 20rpx;
     text-align: center;
     font-size: 24rpx;
     color: #aaa;
 }
+
 .invite-box {
     position: fixed;
     bottom: 30rpx;
@@ -170,21 +198,61 @@
     padding: 22rpx 32rpx;
     border-radius: 915rpx 0 0 915rpx;
     background: white;
-    box-shadow: 0 8px 24px 0 rgba(0,0,0,0.1);
+    box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.1);
 }
+
 .invite-box:active {
     opacity: 0.9;
 }
+
 .gift {
     width: 32rpx;
     height: 32rpx;
     margin-right: 16rpx;
     vertical-align: middle;
 }
+
 .gift-text {
     line-height: 32rpx;
     font-size: 32rpx;
     font-weight: 400;
     color: #000;
     vertical-align: middle;
+}
+
+/* 成为会员后弹窗 */
+.box {
+    width: 600rpx;
+    height: 600rpx;
+    border-radius: 40rpx;
+    background: #161616;
+    margin: 0 auto;
+    margin-top: 260rpx;
+}
+
+.box-img {
+    display: flex;
+    justify-content: center;
+}
+
+.box-img image {
+    width: 392rpx;
+    height: 300rpx;
+    padding-top: 82rpx;
+    vertical-align: bottom;
+}
+
+.button {
+    width: 504rpx;
+    height: 94rpx;
+    border-radius: 48rpx;
+    background: linear-gradient(90deg, rgba(255, 221, 170, 1) 0%, rgba(221, 170, 119, 1) 100%);
+    text-align: center;
+    line-height: 94rpx;
+    font-size: 18px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: rgba(37, 32, 24, 1);
+    margin: 0 auto;
+    margin-top: 76rpx;
 }

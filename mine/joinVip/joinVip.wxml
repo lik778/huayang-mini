@@ -68,19 +68,19 @@
 			<view class="activity-main">
 				<view class="activity-main-common">
 					<view class="activity-main-common-left">
-						<image src="../../assets/images/mine/pic-27.png"></image>
+						<image src="../../assets/images/mine/pic-19.png"></image>
 					</view>
 					<view class="activity-main-common-right">大型赛事专享资格</view>
 				</view>
 				<view class="activity-main-common">
 					<view class="activity-main-common-left">
-						<image src="../../assets/images/mine/pic-27.png"></image>
+						<image src="../../assets/images/mine/pic-15.png"></image>
 					</view>
 					<view class="activity-main-common-right">有机会成为花样人物专栏嘉宾</view>
 				</view>
 				<view class="activity-main-common">
 					<view class="activity-main-common-left">
-						<image src="../../assets/images/mine/pic-27.png"></image>
+						<image src="../../assets/images/mine/pic-18.png"></image>
 					</view>
 					<view class="activity-main-common-right">
 						<view>每年10场时尚线下沙龙</view>
@@ -150,7 +150,7 @@
 			<view class="button" bindtap="buyVip">
 				<view>立即加入</view>
 				<button type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" wx:if="{{showBindPhoneButton}}"></button>
-				<view>原价¥199.00 ¥99年</view>
+				<view><text decode="true">原价¥199.00</text><text>¥99年</text></view>
 			</view>
 			<view class="bottom">
 				<van-checkbox value="{{ checked }}" shape="square" checked-color="#07c160" bind:change="onChange"></van-checkbox>

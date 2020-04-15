@@ -26,7 +26,8 @@
         "invite/invite",
         "wallet/wallet",
         "joinResult/joinResult",
-        "buyAgreement/buyAgreement"
+        "buyAgreement/buyAgreement",
+        "beanExplain/beanExplain"
       ]
     },
     {

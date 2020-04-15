@@ -1,0 +1,38 @@
+/* mine/beanExplain/beanExplain.wxss */
+.main {
+  padding-top: 36rpx;
+}
+
+.logo {
+  font-size: 24px;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 1);
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.logo image {
+  width: 68rpx;
+  height: 68rpx;
+  padding-bottom: 22rpx;
+}
+
+.text {
+  margin: 0 32rpx;
+  background: #F9F9F9;
+  padding: 50rpx 38rpx;
+  border-radius: 20rpx;
+  margin-top: 40rpx;
+  font-size: 16px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  line-height: 30px;
+}
+
+.text view {
+  margin-bottom: 40rpx;
+}

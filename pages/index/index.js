@@ -42,7 +42,14 @@ Page({
 		liveListLimit: 10,
 		didNoMore: false,
 		didVip: false,
-		liveStatusIntervalTimer: null
+		liveStatusIntervalTimer: null,
+		showSuccess:false,//成为超级会员弹窗
+	},
+	// 关闭立即邀请
+	onClickHide(){
+		this.setData({
+			showSuccess:false
+		})
 	},
 	/**
 	 * 一键获取微信手机号
@@ -302,9 +309,16 @@ Page({
 	 */
 	onShow: function () {
 		checkAuth()
-		// wx.navigateTo({
-		// 	url: '/mine/joinVip/joinVip',
-		// })
+		// 检查是否会员开通成功
+		if(getLocalStorage(GLOBAL_KEY.vip)===true){
+			this.setData({
+				showSuccess:true
+			})
+			wx.removeStorageSync(GLOBAL_KEY.vip)
+		}
+		wx.navigateTo({
+			url: '/mine/joinResult/joinResult',
+		})
 	},
 
 	/**

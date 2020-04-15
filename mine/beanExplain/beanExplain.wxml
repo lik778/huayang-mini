@@ -1,0 +1,18 @@
+<!--mine/beanExplain/beanExplain.wxml-->
+<view>
+	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+		<naviBar title="花豆说明"></naviBar>
+	</view>
+	<view class="main">
+		<view class="logo">
+			<image src="../../assets/images/mine/pic-30.png"></image>
+			<view>花豆介绍</view>
+		</view>
+		<view class="text">
+			<view>花豆是花样值得买会员用户的专属积分，也是会员专属权益，</view>
+			<view>您可以通过邀请好友加入花样汇会员获得，您邀请的好友加入花样汇会员后，该好友在花样值得买小程序购物，您即可获得相应的花豆奖励。</view>
+			<view>花豆可用于支付花样值得买小程序的会员产品，具体以相关规则为准。</view>
+			<view>花豆仅可在花样值得买使用，不可提现。如用户帐号暂停使用，花样值得买将取消该用户帐号内花豆相关使用权益。</view>
+		</view>
+	</view>
+</view>

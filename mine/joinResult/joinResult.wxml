@@ -37,4 +37,16 @@
 	<view class="add-button" style="bottom:{{bottom*2}}rpx;">
 		<button open-type="contact" bindcontact="joinVipGroup" send-message-title="会话内消息卡片" send-message-path="/pages/mine/mine" send-message-img="https://imgsa.baidu.com/baike/pic/item/562c11dfa9ec8a13918d4ed4fb03918fa0ecc06b.jpg" show-message-card="true" type="primary">添加您的班主任</button>
 	</view>
+	<view class="pupup">
+		<van-overlay show="{{ showSuccess }}">
+			<view class="box">
+				<view class="box-title">提示</view>
+				<view class="box-desc">点击右下角卡片，继续完成操作</view>
+				<view>
+					<image src="../../assets/images/mine/pic-31.png"></image>
+				</view>
+				<view bindtap="onClickHide" data-index="1">确定</view>
+			</view>
+		</van-overlay>
+	</view>
 </view>
