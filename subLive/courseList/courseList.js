@@ -56,12 +56,7 @@ Page({
 				target_user_id: this.data.courseId,
 				sub_key: SubscribeKey.zhibo
 			}).then(() => {
-				this.getStatus()
-				Toast({
-					type: 'success',
-					message: '取消订阅成功',
-					duration: 2000
-				})
+				this.getStatus({callbackMessage: '取消订阅成功'})
 			})
 		} else {
 			// 唤起微信小程序订阅
@@ -76,12 +71,7 @@ Page({
 							target_user_id: self.data.courseId,
 							sub_key: SubscribeKey.zhibo
 						}).then(() => {
-							self.getStatus()
-							Toast({
-								type: 'success',
-								message: '订阅成功',
-								duration: 2000
-							})
+							self.getStatus({callbackMessage: '订阅成功'})
 						})
 					}
 					console.log(res, 'requestSubscribeMessage success callback')
@@ -93,7 +83,7 @@ Page({
 		}
 	},
 	// 获取订阅信息
-	getStatus() {
+	getStatus({callbackMessage} = {}) {
 		let openId = getLocalStorage(GLOBAL_KEY.openId)
 		getSubscriptionStatus({
 			open_id: openId,
@@ -104,6 +94,14 @@ Page({
 				didSubscript: !!isSubscript,
 				didVisibleSubscribeBtn: false
 			})
+
+			if (callbackMessage) {
+				Toast({
+					type: 'success',
+					message: callbackMessage,
+					duration: 2000
+				})
+			}
 		}).catch(() => {
 			this.setData({
 				didVisibleSubscribeBtn: false
@@ -117,16 +115,18 @@ Page({
 		checkIdentity({roomId: item.num, link: item.link, zhiboRoomId: item.id})
 			.then((callbackString) => {
 				if (callbackString === 'updateWatchNo') {
-					// 更新直播间观看次数
-					let list = [...this.data.categoryList]
-					list.forEach(_ => {
-						if (_.zhibo_room.id === item.id) {
-							_.zhibo_room.visitCount += 1
-						}
-					})
-					this.setData({
-						categoryList: [ ...list ]
-					})
+					setTimeout(() => {
+						// 更新直播间观看次数
+						let list = [...this.data.categoryList]
+						list.forEach(_ => {
+							if (_.zhibo_room.id === item.id) {
+								_.zhibo_room.visitCount += 1
+							}
+						})
+						this.setData({
+							categoryList: [ ...list ]
+						})
+					}, 1000)
 				} else if (callbackString === 'no-phone-auth') {
 					this.setData({
 						show: true

@@ -8,11 +8,11 @@
       <block wx:for="{{productList}}" wx:key="index">
         <view class="product-item" bindtap="buy" data-item="{{item}}">
           <view class="preview-image">
-            <image class="normal-mode" src="{{item.cover_image}}"></image>
+            <image class="normal-mode" src="{{item.product.cover_image}}"></image>
           </view>
-          <text class="product-name limit-two-line">{{item.name}}</text>
+          <text class="product-name limit-two-line">{{item.product.name}}</text>
           <view class="product-info">
-            <view class="price"><text class="unit">¥</text>{{item.discount_price / 100}}</view>
+            <view class="price"><text class="unit">¥</text>{{item.product.discount_price / 100}}</view>
             <view class="buying">购买</view>
           </view>
         </view>

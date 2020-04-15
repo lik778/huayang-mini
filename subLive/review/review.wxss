@@ -3,11 +3,11 @@
 }
 .review .btn {
     position: absolute;
-    bottom: 100rpx;
+    bottom: 120rpx;
     right: 20rpx;
     color: white;
     padding: 20rpx;
-    font-size: 32rpx;
+    font-size: 16px;
     border-radius: 915rpx;
     background: #57bd6a;
 }

@@ -139,12 +139,12 @@
 .item-right-middle {
   display: flex;
   align-items: center;
-  font-size: 28rpx;
-  font-weight: 400;
   color: rgba(0,0,0,.6)
 }
-.item-right-middle text {
+.item-right-middle-text {
   margin-right: 16rpx;
+  font-size: 28rpx;
+  font-weight: 400;
 }
 .class-dot {
   display: inline-block;

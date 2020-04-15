@@ -124,16 +124,18 @@ Page({
 						url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${roomId}&custom_params=${encodeURIComponent(JSON.stringify(this.data.customParams))}`
 					})
 				}
-				// 更新直播间观看次数
-				let list = [...this.data.liveList]
-				list.forEach(_ => {
-					if (_.zhiboRoomId === zhiboRoomId) {
-						_.visitCount += 1
-					}
-				})
-				this.setData({
-					liveList: [...list]
-				})
+				setTimeout(() => {
+					// 更新直播间观看次数
+					let list = [...this.data.liveList]
+					list.forEach(_ => {
+						if (_.zhiboRoomId === zhiboRoomId) {
+							_.visitCount += 1
+						}
+					})
+					this.setData({
+						liveList: [...list]
+					})
+				}, 1000)
 			})
 		}
 	},
@@ -181,9 +183,10 @@ Page({
 			const roomIds = result.filter(_ => _.roomId && _.status !== 2).map(t => t.roomId)
 
 			getSchedule(roomIds).then(this.handleLiveStatusCallback)
+			let arr = [...this.data.liveList, ...result]
 			this.setData({
-				liveList: [...this.data.liveList, ...result],
-				liveListOffset: data.length
+				liveList: arr,
+				liveListOffset: arr.length
 			})
 		})
 	},
@@ -316,9 +319,9 @@ Page({
 			})
 			wx.removeStorageSync(GLOBAL_KEY.vip)
 		}
-		wx.navigateTo({
-			url: '/mine/joinResult/joinResult',
-		})
+		// wx.navigateTo({
+		// 	url: '/mine/joinResult/joinResult',
+		// })
 	},
 
 	/**

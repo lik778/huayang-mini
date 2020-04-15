@@ -75,12 +75,12 @@ Page({
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
-    // if(!getLocalStorage(GLOBAL_KEY.addTeacher)){
-    //   this.setData({
-    //     showSuccess:true
-    //   })
-    //   setLocalStorage(GLOBAL_KEY.addTeacher,"false")
-    // }
+    if(!getLocalStorage(GLOBAL_KEY.addTeacher)){
+      this.setData({
+        showSuccess:true
+      })
+      setLocalStorage(GLOBAL_KEY.addTeacher,"false")
+    }
   },
 
   /**
