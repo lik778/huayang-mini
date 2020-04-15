@@ -1,10 +1,29 @@
 // pages/live/live.js
-import { getLiveBannerList, getLiveList, updateLiveStatus } from "../../api/live/index"
-import { GLOBAL_KEY, WeChatLiveStatus } from '../../lib/config'
-import { $notNull, checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from '../../utils/util'
-import { statisticsWatchNo } from "../../api/live/course"
-import { bindWxPhoneNumber } from "../../api/auth/index"
-import { checkAuth } from "../../utils/auth"
+import {
+	getLiveBannerList,
+	getLiveList,
+	updateLiveStatus
+} from "../../api/live/index"
+import {
+	GLOBAL_KEY,
+	WeChatLiveStatus
+} from '../../lib/config'
+import {
+	$notNull,
+	checkIdentity,
+	getLocalStorage,
+	getSchedule,
+	setLocalStorage
+} from '../../utils/util'
+import {
+	statisticsWatchNo
+} from "../../api/live/course"
+import {
+	bindWxPhoneNumber
+} from "../../api/auth/index"
+import {
+	checkAuth
+} from "../../utils/auth"
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog'
 
 Page({
@@ -31,11 +50,17 @@ Page({
 	 */
 	async getPhoneNumber(e) {
 		if (!e) return
-		let {errMsg = '', encryptedData: encrypted_data = '', iv = ''} = e.detail
+		let {
+			errMsg = '', encryptedData: encrypted_data = '', iv = ''
+		} = e.detail
 		if (errMsg.includes('ok')) {
 			let open_id = getLocalStorage(GLOBAL_KEY.openId)
 			if (encrypted_data && iv) {
-				let originAccountInfo = await bindWxPhoneNumber({open_id, encrypted_data, iv})
+				let originAccountInfo = await bindWxPhoneNumber({
+					open_id,
+					encrypted_data,
+					iv
+				})
 				setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
 			}
 		} else {
@@ -48,11 +73,20 @@ Page({
 	 */
 	navigateToLive(e) {
 		// console.log(e.currentTarget.dataset.item)
-		let {zhiboRoomId, roomId, link, vipOnly} = e.currentTarget.dataset.item
+		let {
+			zhiboRoomId,
+			roomId,
+			link,
+			vipOnly
+		} = e.currentTarget.dataset.item
 		// 当前课程是否仅限VIP用户学习
 		if (vipOnly === 1) {
 			// 判断是否是会员/是否入学
-			checkIdentity({roomId, link, zhiboRoomId}).then((callbackString) => {
+			checkIdentity({
+				roomId,
+				link,
+				zhiboRoomId
+			}).then((callbackString) => {
 				if (callbackString === 'no-phone-auth') {
 					this.setData({
 						show: true
@@ -65,8 +99,7 @@ Page({
 						wx.navigateTo({
 							url: '/mine/joinSchool/joinSchool',
 						})
-					}).catch(() => {
-					})
+					}).catch(() => {})
 				}
 			})
 		} else {
@@ -269,6 +302,9 @@ Page({
 	 */
 	onShow: function () {
 		checkAuth()
+		wx.navigateTo({
+			url: '/mine/joinVip/joinVip',
+		})
 	},
 
 	/**

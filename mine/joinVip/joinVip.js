@@ -1,9 +1,19 @@
 // mine/joinVip/joinVip.js
 
-import { GLOBAL_KEY } from "../../lib/config"
-import { getLocalStorage, payVip, setLocalStorage } from "../../utils/util"
-import { bindWxPhoneNumber } from "../../api/auth/index"
-import { getUserInfo } from "../../api/mine/index"
+import {
+    GLOBAL_KEY
+} from "../../lib/config"
+import {
+    getLocalStorage,
+    payVip,
+    setLocalStorage
+} from "../../utils/util"
+import {
+    bindWxPhoneNumber
+} from "../../api/auth/index"
+import {
+    getUserInfo
+} from "../../api/mine/index"
 
 Page({
 
@@ -12,8 +22,14 @@ Page({
      */
     data: {
         userId: "",
-        statusHeight:0,
-        showBindPhoneButton:true
+        statusHeight: 0,
+        showBindPhoneButton: true
+    },
+    // 用户购买协议
+    toBuyBook() {
+        wx.navigateTo({
+            url: '/mine/buyAgreement/buyAgreement',
+        })
     },
     // 购买会员
     buyVip() {
@@ -52,8 +68,8 @@ Page({
             showBindPhoneButton: showBindPhoneButton
         })
     },
-     // 一键获取手机号
-     async getPhoneNumber(e) {
+    // 一键获取手机号
+    async getPhoneNumber(e) {
         if (!e) return
         let {
             errMsg = '', encryptedData: encrypted_data = '', iv = ''
@@ -84,12 +100,11 @@ Page({
         let userId = options.scene ? decodeURIComponent(options.scene) : ""
         this.setData({
             userId: userId,
-            statusHeight:JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
+            statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
         })
-        console.log(getLocalStorage("sss"))
-        if(getLocalStorage(GLOBAL_KEY.userInfo)===undefined){
+        if (getLocalStorage(GLOBAL_KEY.userInfo) === undefined) {
             wx.navigateTo({
-              url: '/pages/auth/auth',
+                url: '/pages/auth/auth',
             })
         }
         this.getUserInfoData()

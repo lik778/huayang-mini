@@ -8,21 +8,25 @@
   "usingComponents": {
     "van-dialog": "../miniprogram_npm/@vant/weapp/dialog/index"
   },
-  "navigateToMiniProgramAppIdList": [ "wx95fb6b5dbe8739b7" ],
+  "navigateToMiniProgramAppIdList": [
+    "wx95fb6b5dbe8739b7"
+  ],
   "pages": [
     "pages/index/index",
     "pages/mall/mall",
     "pages/auth/auth",
     "pages/mine/mine"
   ],
-  "subpackages": [{
+  "subpackages": [
+    {
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
         "joinSchool/joinSchool",
         "invite/invite",
         "wallet/wallet",
-        "joinResult/joinResult"
+        "joinResult/joinResult",
+        "buyAgreement/buyAgreement"
       ]
     },
     {
@@ -53,7 +57,8 @@
     "color": "#999",
     "selectedColor": "#000",
     "backgroundColor": "#fff",
-    "list": [{
+    "list": [
+      {
         "pagePath": "pages/index/index",
         "text": "直播"
       },
