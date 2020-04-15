@@ -63,12 +63,12 @@ Page({
     // 清除缓存数据
     this.data.categoryList.forEach(item => {
       if (item.name === e.detail.title) {
-        this.queryProductList(item.id)
         this.setData({
           categoryId: item.id,
           offset: 0,
           productList: []
         })
+        this.queryProductList(item.id)
       }
     })
   },

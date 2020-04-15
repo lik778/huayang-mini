@@ -1,12 +1,7 @@
 //app.js
 import request from './lib/request'
-import {
-	setLocalStorage,
-	getLocalStorage
-} from './utils/util'
-import {
-	GLOBAL_KEY
-} from './lib/config'
+import { getLocalStorage, setLocalStorage } from './utils/util'
+import { GLOBAL_KEY } from './lib/config'
 
 let livePlayer = requirePlugin('live-player-plugin')
 App({
