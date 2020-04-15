@@ -109,7 +109,7 @@
     width: 160rpx;
     height: 72rpx;
     box-sizing: border-box;
-    border: 1rpx solid rgba(255, 68, 51, 1);
+    border: 2rpx solid rgba(255, 68, 51, 1);
     border-radius: 915rpx;
     color: rgba(255, 68, 51, 1);
     font-size: 32rpx;

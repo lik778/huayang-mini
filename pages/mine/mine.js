@@ -208,7 +208,7 @@ Page({
             title: "花样值得买",
             desc: "花样",
             path: '/pages/mine/mine',
-            imgUrl: "https://t11.baidu.com/it/u=2526969130,421039043&fm=76"
+            imgUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586870905SEwHoX.jpg"
         }
     }
 })

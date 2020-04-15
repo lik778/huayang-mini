@@ -16,7 +16,9 @@ Page({
 		autoplay: false,
 		interval: 2000,
 		duration: 500,
-		showAddressMedal: false
+		offset: 0,
+		limit: 10,
+		didNoMore: false,
 	},
 	currentHandle(e) {
 		let {
@@ -27,9 +29,17 @@ Page({
 		})
 	},
 	queryProductList() {
-		getProductList(this.form).then(list => {
+		getProductList({
+			limit: this.data.limit,
+			offset: this.data.offset,
+		}).then(list => {
+			list = list || []
+			if (list.length < this.data.limit) {
+				this.data.didNoMore = true
+			}
 			this.setData({
-				productList: list.slice()
+				productList: [...this.data.productList, ...list],
+				offset: list.length
 			})
 		})
 	},
@@ -55,10 +65,8 @@ Page({
 	},
 	navigateToCategory(e) {
 		let item = e.currentTarget.dataset.item
-		console.log(item)
-		return
 		wx.navigateTo({
-			url: '/subMall/category/category?categoryId' + item.id
+			url: '/subMall/category/category?categoryId=' + item.id
 		})
 	},
 	/**
@@ -109,7 +117,10 @@ Page({
 	 * 页面上拉触底事件的处理函数
 	 */
 	onReachBottom: function () {
-
+		if (this.data.didNoMore) {
+			return console.log('没有更多数据～')
+		}
+		this.queryProductList()
 	},
 
 	/**
