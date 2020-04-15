@@ -2,14 +2,14 @@
 <view class="live">
   <view class="banner" wx:if="{{bannerPictureObject != null}}" bindtap="navigateToCourse" data-item="{{bannerPictureObject}}">
     <view class="swiper-image">
-      <view class="{{bannerPictureObject.liveStatus !== '直播中' ? 'status disabled' : 'status'}}">
-        <text class="{{bannerPictureObject.liveStatus !== '直播中' ? 'status-dot disabled' : 'status-dot'}}"></text>
+      <view class="status {{bannerPictureObject.liveStatus !== '直播中' && 'disabled'}}">
+        <text class="status-dot {{bannerPictureObject.liveStatus !== '直播中' && 'disabled'}}"></text>
         <text class="status-text">{{bannerPictureObject.status === 2 ? '回看' : bannerPictureObject.liveStatus}}</text>
       </view>
       <text class="course-name">{{bannerPictureObject.name}}</text>
       <view class="course-info">
         <text class="author">{{bannerPictureObject.author}}</text>
-        <text class="course-no">{{bannerPictureObject.visitCount}}人看过</text>
+        <text class="course-no">{{bannerPictureObject.visitCount}}{{ bannerPictureObject.liveStatus === '直播中' || bannerPictureObject.liveStatus === '异常' ? '人在看' : '人看过' }}</text>
       </view>
     </view>
     <image class="teacher" src="{{bannerPictureObject.bannerPicture}}"></image>
@@ -23,12 +23,12 @@
   <view class="live-list">
     <view class="live-item" bindtap="navigateToLive" data-item="{{item}}" wx:for="{{liveList}}" wx:key="index">
       <view class="live-cover" style="background-image: url('{{item.coverPicture}}')">
-        <view class="{{item.liveStatus !== '直播中' ? 'status disabled' : 'status'}}">
-          <text class="{{item.liveStatus !== '直播中' ? 'status-dot disabled' : 'status-dot'}}"></text>
+        <view class="status {{item.liveStatus !== '直播中' && 'disabled'}}">
+          <text class="status-dot {{item.liveStatus !== '直播中' && 'disabled'}}"></text>
           <text class="status-text">{{item.status === 2 ? '回看' : item.liveStatus}}</text>
         </view>
         <view class="visit-no">
-          <text>{{item.visitCount}}人看过</text>
+          <text>{{item.visitCount}}{{ bannerPictureObject.liveStatus === '直播中' || bannerPictureObject.liveStatus === '异常' ? '人在看' : '人看过' }}</text>
         </view>
       </view>
       <view class="live-title limit-one-line">{{item.roomName}}</view>

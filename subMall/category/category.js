@@ -1,5 +1,5 @@
 // subMall/category/category.js
-import { getCategory, getProductList } from "../../api/mall/index"
+import { getCategory, getProductListByCategory } from "../../api/mall/index"
 
 Page({
 
@@ -16,7 +16,7 @@ Page({
     didNoMore: false,
   },
   queryProductList(categoryId) {
-    getProductList({
+    getProductListByCategory({
       first_category_id: categoryId,
       limit: this.data.limit,
       offset: this.data.offset,
@@ -25,9 +25,10 @@ Page({
       if (list.length < this.data.limit) {
         this.data.didNoMore = true
       }
+      let result = [...this.data.productList, ...list]
       this.setData({
-        productList: [...this.data.productList, ...list],
-        offset: list.length
+        productList: result,
+        offset: result.length
       })
     })
   },
@@ -74,7 +75,7 @@ Page({
   buy(e) {
     let target = e.currentTarget.dataset.item
     wx.navigateTo({
-      url: '/subMall/detail/detail?prdId=' + target.id
+      url: '/subMall/detail/detail?prdId=' + target.product.id
     })
   },
   /**
