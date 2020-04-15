@@ -1,12 +1,27 @@
 // pages/mine/mine.js
-import { createStoreBindings } from 'mobx-miniprogram-bindings'
-import { getUserInfo } from "../../api/mine/index"
-import { bindWxPhoneNumber } from "../../api/auth/index"
-import { GLOBAL_KEY } from '../../lib/config'
-import { getLocalStorage, setLocalStorage } from "../../utils/util"
+import {
+    createStoreBindings
+} from 'mobx-miniprogram-bindings'
+import {
+    getUserInfo
+} from "../../api/mine/index"
+import {
+    bindWxPhoneNumber
+} from "../../api/auth/index"
+import {
+    GLOBAL_KEY
+} from '../../lib/config'
+import {
+    getLocalStorage,
+    setLocalStorage
+} from "../../utils/util"
 
-import { store } from '../../store'
-import { checkAuth } from "../../utils/auth"
+import {
+    store
+} from '../../store'
+import {
+    checkAuth
+} from "../../utils/auth"
 
 Page({
 
@@ -34,7 +49,7 @@ Page({
     // 跳往我的钱包
     toWallet() {
         let wolletData = {
-            balance: this.data.userInfo.amount / 100||0, //余额
+            balance: this.data.userInfo.amount / 100 || 0, //余额
             point: this.data.userInfo.zhide_point, //花豆
             isVip: this.data.userInfo.is_zhide_vip, //是否为vip
         }
@@ -143,28 +158,30 @@ Page({
             fields: ['numA', 'numB', 'sum'],
             actions: ['update'],
         })
-        console.log(JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight)
     },
     // 生命周期函数--监听页面初次渲染完成
     onReady: function () {
-        
+
     },
     // 生命周期函数--监听页面显示
     onShow: function () {
         if (getLocalStorage(GLOBAL_KEY.userInfo)) {
-            let userInfo = JSON.parse(wx.getStorageSync(GLOBAL_KEY.accountInfo))
-            this.setData({
-                userInfo: userInfo
-            })
+            if (getLocalStorage(GLOBAL_KEY.accountInfo)) {
+                this.setData({
+                    userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+                })
+            } else {
+                this.setData({
+                    userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo))
+                })
+            }
             this.getUserInfoData()
         } else {
             wx.navigateTo({
                 url: '/pages/auth/auth',
             })
         }
-
         checkAuth()
-
     },
     // 生命周期函数--监听页面隐藏
     onHide: function () {
