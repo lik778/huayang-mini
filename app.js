@@ -1,44 +1,39 @@
 //app.js
-const api = require('./lib/request')
+import request from './lib/request'
+import { getLocalStorage, setLocalStorage } from './utils/util'
+import { GLOBAL_KEY } from './lib/config'
+
+let livePlayer = requirePlugin('live-player-plugin')
 App({
-  onLaunch: function () {
-    // 全局注册request
-    wx.$request = api
-    let res={token:"ssssssadawqwdq"}
-    wx.setStorageSync("userInfo",res)
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+	onLaunch: function () {
+		// 全局注册http
+		wx.$request = request
+		// 每次打开app检查授权
+		// checkAuth()
 
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo
-
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
-              }
-            }
-          })
-        }
-      }
-    })
-  },
-  globalData: {
-    userInfo: null,
-  }
+	},
+	onShow(options) {
+		// 分享卡片入口场景才调用getShareParams接口获取以下参数
+		if (options.scene == 1007 || options.scene == 1008 || options.scene == 1044) {
+			livePlayer.getShareParams()
+				.then(res => {
+					console.log('get room id', res.room_id) // 房间号
+					console.log('get openid', res.openid) // 用户openid
+					console.log('get share openid', res.share_openid) // 分享者openid，分享卡片进入场景才有
+					console.log('get custom params', res.custom_params) // 开发者在跳转进入直播间页面时，页面路径上携带的自定义参数，这里传回给开发者
+				}).catch(err => {
+					console.log('get share params', err)
+				})
+		}
+		// 记录设备信息，保证进入详情页时可以获取到statusHeight自定义navibar
+		if (!getLocalStorage(GLOBAL_KEY.systemParams)) {
+			wx.getSystemInfo({
+				complete: (res) => {
+					setLocalStorage(GLOBAL_KEY.systemParams, res)
+				},
+			})
+		}
+	},
+	onUnload() {},
+	globalData: {}
 })

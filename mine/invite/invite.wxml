@@ -1,0 +1,50 @@
+<!--mine/invite/invite.wxml-->
+<view class="invite" wx:if="{{posturl!==''}}">
+	<view class="navigation">
+		<naviBar title="邀请有礼"></naviBar>
+	</view>
+	<view class="banner">
+		<image src="../../assets/images/mine/pic-12.png"></image>
+		<!-- <image src="{{canvasUrl}}"></image> -->
+	</view>
+	<view class="canvas">
+		<canvas canvas-id='posterCanvas' style="width:900px;height:1200px;"></canvas>
+	</view>
+	<view class="canvas-html" style="width:{{posterWidth}}px;height:{{posterHeigt}}px;">
+		<view class="canvas-img">
+			<image src="{{posturl}}" class="bg-img"></image>
+			<view class="head-icon-line" style="left:{{12*radio}}px;top:{{18*radio}}px;">
+				<view class="head-icon-img">
+					<image src="{{userInfo.avatar_url}}" style="width:{{34*radio}}px;height:{{34*radio}}px;"></image>
+				</view>
+				<view class="head-icon-desc" style="padding-left:{{9*radio}}px">
+					<view class="head-icon-top" style="font-size:{{14*radio}}px;line-height:{{14*radio}}px;">我是{{userInfo.nickname}}</view>
+					<view class="head-icon-bottom" style="font-size:{{9*radio}}px;line-height:{{13*radio}}px;padding-top:2px;">
+						<view>我刚刚成为花样汇俱乐部第<text style="font-size:{{18*radio}}px;"> {{num}} </text>位会员</view>
+						<view>邀您一起成为时尚达人</view>
+					</view>
+				</view>
+			</view>
+			<view class="price" style="left:{{12*radio}}px;bottom:{{18*radio}}px;">
+				<view class="old-price" style="font-size:{{12*radio}}px; line-height:{{12*radio}}px;">原价199元</view>
+				<view class="new-price" style="font-size:{{24*radio}}px; line-height:{{24*radio}}px;padding-top:{{5*radio}}px;">
+					<text>限时99</text>
+					<text style="font-size:{{12*radio}}px;">元/年</text>
+				</view>
+			</view>
+			<view class="erweima" style="right:{{14*radio}}px;bottom:{{52*radio}}px;">
+				<image src="{{posturl}}" style="width:{{64*radio}}px;height:{{64*radio}}px;"></image>
+			</view>
+		</view>
+	</view>
+	<view class="button-line">
+		<view class="share" bindtap="show1">
+			<text>分享给好友</text>
+			<button type="primary" open-type="share" class="share-button"></button>
+		</view>
+		<view class="save" bindtap="saveAlbum">保存海报到相册</view>
+	</view>
+	<van-dialog use-slot title="消息订阅" show="{{ showDialog }}" confirm-button-color="#00C200" confirm-button-text="订阅" bind:confirm="show">
+		<view style="text-align: center;padding: 40px 0;">订阅通知，实时获取收益变化</view>
+	</van-dialog>
+</view>

@@ -1,17 +1,79 @@
 {
-    "pages": [
-        "pages/index/index",
-        "pages/list/list",
-        "pages/map/map",
-        "pages/live/live",
-        "pages/logs/logs"
-    ],
-    "window": {
-        "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "花样小程序",
-        "navigationBarTextStyle": "black"
+  "plugins": {
+    "live-player-plugin": {
+      "version": "1.0.7",
+      "provider": "wx2b03c6e691cd7370"
+    }
+  },
+  "usingComponents": {
+    "van-dialog": "../miniprogram_npm/@vant/weapp/dialog/index"
+  },
+  "navigateToMiniProgramAppIdList": [
+    "wx95fb6b5dbe8739b7"
+  ],
+  "pages": [
+    "pages/index/index",
+    "pages/mall/mall",
+    "pages/auth/auth",
+    "pages/mine/mine",
+    "pages/privacy/privacy",
+    "pages/service/service"
+  ],
+  "subpackages": [
+    {
+      "root": "mine",
+      "pages": [
+        "joinVip/joinVip",
+        "joinSchool/joinSchool",
+        "invite/invite",
+        "wallet/wallet",
+        "joinResult/joinResult",
+        "buyAgreement/buyAgreement",
+        "beanExplain/beanExplain"
+      ]
     },
-    "style": "v2",
-    "sitemapLocation": "sitemap.json"
+    {
+      "root": "subLive",
+      "pages": [
+        "officialChannel/officialChannel",
+        "unAuthorized/unAuthorized",
+        "courseList/courseList",
+        "review/review"
+      ]
+    },
+    {
+      "root": "subMall",
+      "pages": [
+        "detail/detail",
+        "category/category"
+      ]
+    }
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "花样小程序",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "custom": false,
+    "color": "#999",
+    "selectedColor": "#000",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "直播"
+      },
+      {
+        "pagePath": "pages/mall/mall",
+        "text": "商城"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
 }

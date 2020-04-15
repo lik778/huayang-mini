@@ -1,0 +1,3 @@
+<view class="privacy">
+  <web-view src="http://huayang.baixing.cn/#/zhide/privacy"></web-view>
+</view>

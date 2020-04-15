@@ -1,0 +1,386 @@
+/* pages/mine/mine.wxss */
+
+.banner {
+    width: 100%;
+    height: 560rpx;
+    position: relative;
+    margin-bottom: 56rpx;
+}
+
+.banner-image {
+    width: 100%;
+    height: 560rpx;
+}
+
+.userinfo {
+    position: absolute;
+    left: 48rpx;
+    top: 120rpx;
+    display: flex;
+    z-index: 10;
+}
+
+.userinfo image {
+    width: 96rpx;
+    height: 96rpx;
+    border-radius: 50%;
+}
+
+.userinfo-right {
+    padding-left: 24rpx;
+    display: flex;
+    flex-direction: column;
+}
+
+.userinfo-right-diff {
+    padding-left: 24rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.nickname {
+    font-size: 20px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 1);
+    line-height: 20px;
+    padding-top: 2px;
+}
+
+.mobile {
+    font-size: 16px;
+    font-family: PingFangSC-Light, PingFang SC;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 1);
+    line-height: 16px;
+    padding-top: 16rpx;
+}
+
+.vip-module {
+    width: calc(100vw - 64rpx);
+    height: 344rpx;
+    position: absolute;
+    left: 32rpx;
+    bottom: -56rpx;
+    z-index: 20;
+    background: linear-gradient(270deg, rgba(248, 232, 211, 1) 0%, rgba(248, 221, 194, 1) 100%);
+    box-shadow: 0px 40rpx 64rpx -32rpx rgba(201, 156, 112, 0.3);
+    border-radius: 32rpx;
+}
+
+.notvip-module {
+    background: rgba(242, 212, 184, 1);
+}
+
+.vip-bg {
+    width: 344rpx;
+    height: 344rpx;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 10;
+}
+
+.vip-icon {
+    width: 148rpx;
+    height: 58rpx;
+    vertical-align: bottom;
+}
+
+.bean {
+    width: 32rpx;
+    height: 32rpx;
+    vertical-align: bottom;
+}
+
+.vip-money {
+    width: 36rpx;
+    height: 36rpx;
+    vertical-align: bottom;
+}
+
+.vip-arrow {
+    width: 8px;
+    height: 14px;
+}
+
+.vip-postion {
+    position: relative;
+}
+
+.vip-title {
+    padding-left: 40rpx;
+    padding-top: 40rpx;
+}
+
+.vip-title text {
+    font-size: 16px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(153, 102, 68, 1);
+    line-height: 16px;
+    padding-left: 12rpx;
+}
+
+.validity-date {
+    font-size: 14px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 1);
+    line-height: 16px;
+    padding: 24rpx 40rpx 10rpx 40rpx;
+}
+
+.wollet {
+    padding: 0 40rpx;
+    padding-top: 40rpx;
+}
+
+.wollet-left .no-wollet {
+    font-size: 16px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 1);
+    line-height: 16px;
+    padding: 0;
+}
+
+.woller-right .bindmobile {
+    font-size: 16px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: rgba(170, 68, 51, 1);
+    line-height: 16px;
+    background: none;
+}
+
+.bindmobile-botton {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 16px;
+    padding: 0;
+    width: 100%;
+}
+
+.vip-main {
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+}
+
+.wollet-title {
+    font-size: 16px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1);
+    line-height: 18px;
+}
+
+.wollet-one {
+    display: flex;
+    align-items: center;
+}
+
+.woller-middle {
+    width: 1px;
+    height: 28rpx;
+    background: #000000;
+    margin: 0 32rpx;
+}
+
+.wollet-left text {
+    padding-left: 16rpx;
+    font-size: 20px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1);
+    line-height: 20px;
+}
+
+.woller-right {
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+}
+
+.wollet-left {
+    display: flex;
+    align-items:center;
+}
+
+.woller-right text {
+    padding-left: 16rpx;
+    font-size: 20px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1);
+    line-height: 20px;
+}
+
+.wollet-bottom {
+    display: flex;
+    align-items: center;
+    padding-top: 24rpx;
+    position: relative;
+}
+
+.wollet-two {
+    position: absolute;
+    right: 0;
+    top: 24rpx;
+}
+
+.join-vip-module {
+    display: flex;
+    align-items: flex-end;
+    padding: 82rpx 40rpx 0 40rpx;
+    justify-content: space-between;
+}
+
+.join-vip-top {
+    font-size: 20px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.8);
+    line-height: 16px;
+    padding-bottom: 26rpx;
+}
+
+.join-vip-bottom {
+    font-size: 16px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(153, 102, 68, 1);
+    line-height: 16px;
+}
+
+.join-button {
+    width: 196rpx;
+    height: 72rpx;
+    border-radius: 36rpx;
+    opacity: 0.8;
+    border: 2px solid rgba(0, 0, 0, 1);
+    text-align: center;
+    line-height: 72rpx;
+    font-size: 16px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+/* 列表 */
+.list {
+    padding: 0 32rpx;
+    padding-top: 40rpx;
+    padding-bottom: 140rpx;
+}
+
+.list-common {
+    width: 100%;
+    height: 140rpx;
+    display: flex;
+    align-items: center;
+    margin-bottom: 8rpx;
+    position: relative;
+}
+
+.join-vip-group {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.common-icon-one {
+    width: 46rpx;
+    height: 46rpx;
+    padding-left: 34rpx;
+    padding-right: 24rpx;
+}
+
+.common-icon-two {
+    width: 42rpx;
+    height: 42rpx;
+    padding-left: 36rpx;
+    padding-right: 26rpx;
+}
+
+.common-icon-three {
+    width: 40rpx;
+    height: 44rpx;
+    padding-left: 38rpx;
+    padding-right: 26rpx;
+}
+
+.common-icon-four {
+    width: 46rpx;
+    height: 38rpx;
+    padding-left: 34rpx;
+    padding-right: 24rpx;
+}
+
+.common-icon-five {
+    width: 46rpx;
+    height: 40rpx;
+    padding-left: 34rpx;
+    padding-right: 24rpx;
+}
+.common-arrow{
+    padding-right: 32rpx;
+}
+.common-left image {
+    vertical-align: bottom;
+}
+
+
+.common-arrow image {
+    width: 16rpx;
+    height: 28rpx;
+    
+}
+
+.common-right {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.common-desc-top {
+    font-size: 18px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1);
+    line-height: 18px;
+}
+
+.common-desc-bottom {
+    font-size: 16px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5);
+    line-height: 16px;
+    padding-top: 16rpx;
+}
+
+.joinschool-button {
+    width: 196rpx;
+    height: 72rpx;
+    background: linear-gradient(270deg, rgba(239, 202, 164, 1) 0%, rgba(243, 220, 191, 1) 100%);
+    border-radius: 36rpx;
+    font-size: 16px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.8);
+    line-height: 72rpx;
+    text-align: center;
+}

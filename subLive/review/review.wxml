@@ -1,0 +1,5 @@
+<!--subLive/review/review.wxml-->
+<view class="review">
+  <video src="{{zhiboRoomInfo.zhibo_room.link}}" class="video-container"></video>
+  <cover-view class="btn" bindtap="haveMore">点击查看更多</cover-view>
+</view>

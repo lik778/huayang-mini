@@ -1,0 +1,9 @@
+<!--pages/auth/auth.wxml-->
+<view class="auth">
+    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586309241KigwDa.jpg" class="logo"></image>
+    <view class="box">
+        <button open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="hidden-button"></button>
+        <view class="button">微信一键登录</view>
+    </view>
+    <view class="rules">注册/登录即代表同意 <text class="important" bindtap="jumpToPrivacy">隐私协议</text> 和 <text class="important" bindtap="jumpToService">服务条款</text></view>
+</view>

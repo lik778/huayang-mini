@@ -1,0 +1,18 @@
+<!--components/mall/address.wxml-->
+<view class="address">
+    <view class="address-box">
+    <view class="common-line">
+        <label class="common-label">地址：</label>
+        <input placeholder="请输入您的地址" class="common-input" value="{{addressData}}" bindinput="changeAddressData"></input>
+    </view>
+    <view class="common-line">
+        <label class="common-label">手机：</label>
+        <input placeholder="请输入您的手机号" class="common-input" value="{{mobileData}}" bindinput="changeMobileData"></input>
+    </view>
+    <view class="address-button">
+        <view class="address-button-cancel" bindtap="cancel">取消</view>
+        <view class="address-button-sure" bindtap="sure">确定</view>
+    </view>
+    </view>
+    <view class="address-bg" bindtap="cancel"></view>
+</view>

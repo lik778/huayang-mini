@@ -1,0 +1,3 @@
+<view class="service">
+  <web-view src="http://huayang.baixing.cn/#/zhide/service"></web-view>
+</view>

@@ -1,0 +1,18 @@
+<view class="un-authorized">
+  <image class="un-auth" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586397005SnhqHS.jpg"></image>
+  <view class="tips">
+    <text>很遗憾，该直播仅对“花样汇”超级会员开放</text>
+    <text>请前往加入会员</text>
+  </view>
+  <image class="logo" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586397268DFTsYe.jpg"></image>
+  <view class="divider">专属福利</view>
+  <view class="equity">
+    <view class="equity-item" wx:for="{{ equityList }}" wx:key="index">
+      <view class="image-box">
+        <image src="{{item.pic}}" class="{{'item-image-' + index}}" style="{{item.size}}"></image>
+      </view>
+      <text>{{item.name}}</text>
+    </view>
+  </view>
+  <view class="join-now" bindtap="joinVip">立即加入</view>
+</view>

@@ -1,0 +1,51 @@
+/* pages/auth/auth.wxss */
+@import "../../assets/css/common.wxss";
+
+.auth {
+  position: relative;
+  height: 100vh;
+  text-align: center;
+}
+
+.auth .logo {
+  width: 466rpx;
+  height: 168rpx;
+  margin-top: 412rpx;
+}
+
+.auth .box {
+  position: absolute;
+  bottom: 214rpx;
+  width: 100vw;
+}
+
+.auth .box:active {
+  opacity: 0.9;
+}
+
+.button {
+  width: 630rpx;
+  height: 96rpx;
+  margin: 0 auto;
+  line-height: 96rpx;
+  border-radius: 48rpx;
+  font-size: 36rpx;
+  font-weight: 600;
+  background: rgb(5, 197, 98);
+  color: white;
+}
+
+.rules {
+  position: absolute;
+  bottom: 140rpx;
+  left: 0;
+  right: 0;
+  margin-top: 40rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: rgba(138, 138, 138, 1);
+}
+
+.important {
+  color: rgba(12, 169, 240, 1);
+}

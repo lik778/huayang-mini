@@ -1,6 +1,60 @@
-<!--index.wxml-->
-<view class="container">
-  <button bindtap="enterList" type="primary">进入列表页</button>
-  <button bindtap="enterMap" type="primary">进入地图</button>
-  <button bindtap="enterLive" type="primary">进入直播</button>
+<!--pages/index/index.wxml-->
+<view class="live">
+  <view class="banner" wx:if="{{bannerPictureObject != null}}" bindtap="navigateToCourse" data-item="{{bannerPictureObject}}">
+    <view class="swiper-image">
+      <view class="status {{bannerPictureObject.liveStatus !== '直播中' && 'disabled'}}">
+        <text class="status-dot {{bannerPictureObject.liveStatus !== '直播中' && 'disabled'}}"></text>
+        <text class="status-text">{{bannerPictureObject.status === 2 ? '回看' : bannerPictureObject.liveStatus}}</text>
+      </view>
+      <text class="course-name">{{bannerPictureObject.name}}</text>
+      <view class="course-info">
+        <text class="author">{{bannerPictureObject.author}}</text>
+        <text class="course-no">{{bannerPictureObject.visitCount}}{{ bannerPictureObject.liveStatus === '直播中' || bannerPictureObject.liveStatus === '异常' ? '人在看' : '人看过' }}</text>
+      </view>
+    </view>
+    <image class="teacher" src="{{bannerPictureObject.bannerPicture}}"></image>
+  </view>
+
+	<view class="roof">
+		<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586329816eeCbKr.jpg" class="star"></image>
+		<text class="recommend">推荐</text>
+	</view>
+
+  <view class="live-list">
+    <view class="live-item" bindtap="navigateToLive" data-item="{{item}}" wx:for="{{liveList}}" wx:key="index">
+      <view class="live-cover" style="background-image: url('{{item.coverPicture}}')">
+        <view class="status {{item.liveStatus !== '直播中' && 'disabled'}}">
+          <text class="status-dot {{item.liveStatus !== '直播中' && 'disabled'}}"></text>
+          <text class="status-text">{{item.status === 2 ? '回看' : item.liveStatus}}</text>
+        </view>
+        <view class="visit-no">
+          <text>{{item.visitCount}}{{ bannerPictureObject.liveStatus === '直播中' || bannerPictureObject.liveStatus === '异常' ? '人在看' : '人看过' }}</text>
+        </view>
+      </view>
+      <view class="live-title limit-one-line">{{item.roomName}}</view>
+      <view class="live-teacher-info">
+        <image class="teacher-avatar" src="{{item.avatar}}"></image>
+        <text class="author limit-one-line">{{item.author}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="no-more" wx:if="{{didNoMore}}">到底啦～</view>
+  <view class="invite-box" wx:if="{{didVip}}">
+    <image class="gift" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586332094NWPXTg.jpg"></image>
+    <text class="gift-text" bindtap="invite">邀请有礼</text>
+  </view>
+
+	<van-dialog title="提示" message="授权登录查看直播内容" show="{{ show }}" show-cancel-button confirmButtonText="立即授权" confirm-button-open-type="getPhoneNumber" bind:getphonenumber="getPhoneNumber"></van-dialog>
+
+	<van-overlay show="{{ showSuccess }}" bind:click="onClickHide">
+		<view class="box">
+			<view class="box-img">
+				<image src="../../assets/images/index/pic-1.png"></image>
+			</view>
+			<view class="button" bindtap="invite">立即邀请</view>
+		</view>
+	</van-overlay>
+
+	<van-dialog id="van-dialog" />
+
 </view>

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "花样商城",
+  "usingComponents": {
+    "address":"/components/mall/address"
+  }
+}

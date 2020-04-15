@@ -1,7 +1,0 @@
-<!--pages/list/list.wxml-->
-<view class="list">
-    <view wx:for="{{listArr}}" wx:key="index" class="img-item">
-        <image src="{{item.src}}"></image>
-        <view class="img-grade">{{item.grade}}</view>
-    </view>
-</view>

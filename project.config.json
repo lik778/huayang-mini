@@ -26,8 +26,8 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.10.2",
-	"appid": "wx733627090b4a495d",
+	"libVersion": "2.10.4",
+	"appid": "wx85d130227f745fc5",
 	"projectname": "list",
 	"debugOptions": {
 		"hidedInDevtools": []
@@ -44,13 +44,64 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
 			"currentL": -1,
 			"list": []
 		},
-		"miniprogram": {
+		"gamePlugin": {
 			"current": -1,
 			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": 0,
+					"name": "mine/joinVip/joinVip",
+					"pathName": "mine/joinVip/joinVip",
+					"query": "scene=217",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "subLive/courseList/courseList",
+					"pathName": "subLive/courseList/courseList",
+					"query": "id=207",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "subLive/unAuthorized/unAuthorized",
+					"pathName": "subLive/unAuthorized/unAuthorized",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/auth/auth",
+					"pathName": "pages/auth/auth",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/mall/mall",
+					"pathName": "pages/mall/mall",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "subMall/detail/detail",
+					"pathName": "subMall/detail/detail",
+					"query": "prdId=37",
+					"scene": null
+				}
+			]
 		}
 	}
 }

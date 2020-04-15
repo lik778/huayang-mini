@@ -1,0 +1,52 @@
+<!--mine/joinResult/joinResult.wxml-->
+<view class="result">
+	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+		<naviBar title="申请结果"></naviBar>
+	</view>
+	<view class="success">
+		<view class="success-box">
+			<view class="main">
+				<view class="logo">
+					<image src="../../assets/images/mine/pic-14.png" class="logo-icon"></image>
+				</view>
+				<view class="title">
+					<view class="title-line"></view>
+					<view class="title-text">申请成功</view>
+					<view class="title-line"></view>
+				</view>
+				<view class="desc">
+					<view>您已被花样大学</view>
+					<view>成功录取</view>
+				</view>
+				<view class="bottom">
+					<view class="bottom-left">
+						<view>录取日期</view>
+						<view>{{userInfo.zhide_start_time}}</view>
+					</view>
+					<view class="bottom-right">
+						<view>您的学号</view>
+						<view>{{userInfo.student_num}}</view>
+					</view>
+				</view>
+			</view>
+			<view class="bg-img">
+				<image src="../../assets/images/mine/pic-13.png"></image>
+			</view>
+		</view>
+	</view>
+	<view class="add-button" style="bottom:{{bottom*2}}rpx;">
+		<button open-type="contact" bindcontact="joinVipGroup" send-message-path="/pages/mine/mine" show-message-card="true" type="primary">添加您的班主任</button>
+	</view>
+	<view class="pupup">
+		<van-overlay show="{{ showSuccess }}">
+			<view class="box">
+				<view class="box-title">提示</view>
+				<view class="box-desc">点击右下角卡片，继续完成操作</view>
+				<view>
+					<image src="../../assets/images/mine/pic-31.png"></image>
+				</view>
+				<view bindtap="onClickHide" data-index="1">确定</view>
+			</view>
+		</van-overlay>
+	</view>
+</view>

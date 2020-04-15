@@ -1,4 +1,0 @@
-<!--pages/live/live.wxml-->
-<view class="live">
-    <live-player src="http://pili-media.live-test.v2gogo.com/recordings/z1.v2gogo-live-test.620b18566a5d4848b6d8ca789a1120c3/1534301729.flv" mode="RTC" autoplay style="width: 100vw; height:100vh;" />
-</view>

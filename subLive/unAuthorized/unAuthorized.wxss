@@ -1,0 +1,95 @@
+.un-authorized {
+    overflow: hidden;
+    height: 100vh;
+    text-align: center;
+    background: rgba(22, 22, 22, 1);
+    color: rgba(255, 221, 170, 1);
+}
+.un-auth {
+    height: 246rpx;
+    width: 292rpx;
+    margin: 9.694vh auto 38rpx;
+}
+.tips {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 6.196vh;
+    line-height: 48rpx;
+    font-size: 32rpx;
+    font-weight: 300;
+    color: rgba(255, 221, 170, .8);
+}
+.logo {
+    width: 186rpx;
+    height: 74rpx;
+}
+.divider {
+    margin: 3.298vh 0 4.798vh;
+    line-height: 2.999vh;
+    font-size: 40rpx;
+    font-weight: 300;
+    vertical-align: middle;
+}
+.divider::before, .divider::after {
+    content: '';
+    display: inline-block;
+    width: 14.393vh;
+    height: 2rpx;
+    margin: 0 2.67vw;
+    background: rgba(255, 221, 170, .5);
+    vertical-align: middle;
+}
+.equity {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 13.87vw;
+}
+.equity-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 0;
+}
+.equity-item text {
+    margin-top: 1.499vh;
+    font-size: 32rpx;
+    font-weight: 300;
+    line-height: 3.598vh;
+}
+.equity-item .image-box {
+    height: 5.097vh;
+    line-height: 5.097vh;
+}
+.equity-item image {
+    vertical-align: middle;
+}
+.item-image-0 {
+    width: 66rpx;
+    height: 64rpx;
+}
+.item-image-1 {
+    width: 56rpx;
+    height: 68rpx;
+}
+.item-image-2 {
+    width: 60rpx;
+    height: 60rpx;
+}
+.join-now {
+    width: 84vw;
+    height: 7.196vh;
+    line-height: 7.196vh;
+    margin: 7.196vh auto;
+    background: linear-gradient(90deg,rgba(255,221,170,1) 0%,rgba(221,170,119,1) 100%);
+    color: black;
+    font-size: 40rpx;
+    font-weight: 500;
+    border-radius: 915rpx;
+}
+.join-now:active {
+    opacity: 0.8;
+}

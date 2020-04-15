@@ -1,0 +1,144 @@
+<!--pages/mine/mine.wxml-->
+<view class="mine">
+	<view class="banner">
+		<image src="../../assets/images/mine/pic-1.png" class="banner-image"></image>
+		<view class="userinfo">
+			<view class="userinfo-left">
+				<image src="{{userInfo.avatar_url}}"></image>
+			</view>
+			<view class="{{showBindPhoneButton?'userinfo-right-diff':'userinfo-right'}}">
+				<text class="nickname">{{userInfo.nick_name||userInfo.nickname}}</text>
+				<text wx:if="{{!showBindPhoneButton}}" class="mobile">{{userInfo.mobile||""}}</text>
+			</view>
+		</view>
+		<view class="{{userInfo.is_zhide_vip?'vip-module':'vip-module notvip-module'}}">
+			<view class="vip-postion">
+				<image src="../../assets/images/mine/pic-10.png" class="vip-bg" wx:if="{{userInfo.is_zhide_vip}}"></image>
+				<view class="vip-main">
+					<view class="vip-title" wx:if="{{userInfo.is_zhide_vip}}">
+						<image src="../../assets/images/mine/pic-4.png" class="vip-icon"></image>
+						<text>超级会员</text>
+					</view>
+					<view class="validity-date" wx:if="{{userInfo.is_zhide_vip}}">有效期至 {{userInfo.zhide_end_time}}</view>
+					<view class="wollet" bindtap="{{!showBindPhoneButton?'toWallet':''}}">
+						<view class="wollet-title">我的钱包</view>
+						<view class="wollet-bottom">
+							<view class="wollet-one">
+								<view class="wollet-left" wx:if="{{!showBindPhoneButton}}">
+									<image src="../../assets/images/mine/pic-2.png" class="bean"></image>
+									<text>{{userInfo.zhide_point}} 花豆</text>
+								</view>
+								<view class="wollet-left" wx:else>
+									<text class="no-wollet">暂无信息</text>
+								</view>
+								<view class="woller-middle" wx:if="{{!showBindPhoneButton}}"></view>
+								<view class="woller-right" wx:if="{{!showBindPhoneButton}}">
+									<image src="../../assets/images/mine/pic-8.png" class="vip-money"></image>
+									<text wx:if="{{userInfo.amount}}">{{userInfo.amount/100}}</text>
+									<text wx:else>{{0}}</text>
+								</view>
+								<view class="woller-right" wx:else>
+									<text class="bindmobile">绑定手机查看</text>
+									<button type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="bindmobile-botton"></button>
+								</view>
+							</view>
+							<view class="wollet-two">
+								<image src="../../assets/images/mine/pic-7.png" class="vip-arrow"></image>
+							</view>
+						</view>
+					</view>
+					<view class="join-vip-module" wx:if="{{!userInfo.is_zhide_vip||showBindPhoneButton}}">
+						<view class="join-vip-left">
+							<view class="join-vip-top">
+								花样汇超级会员
+							</view>
+							<view class="join-vip-bottom">
+								3大专享特权
+							</view>
+						</view>
+						<view class="join-vip-right">
+							<view class="join-button" bindtap="joinVip">立即加入</view>
+						</view>
+					</view>
+				</view>
+			</view>
+
+		</view>
+	</view>
+	<view class="list">
+		<view class="list-common" wx:if="{{userInfo.is_zhide_vip}}" bindtap="{{userInfo.student_num!==''?'toCourseList':''}}">
+			<view class="common-left">
+				<image src="../../assets/images/mine/pic-3.png" class="common-icon-one"></image>
+			</view>
+			<view class="common-right">
+				<view class="common-desc">
+					<view class="common-desc-top">花样大学</view>
+					<view class="common-desc-bottom" wx:if="{{userInfo.student_num!==''}}">学籍号：{{userInfo.student_num}}</view>
+					<view class="common-desc-bottom" wx:else>5大系列课程免费学</view>
+				</view>
+				<view class="common-arrow">
+					<image src="../../assets/images/mine/pic-7.png" wx:if="{{userInfo.student_num!==''}}"></image>
+					<view class="joinschool-button" wx:else bindtap="applyJoinSchool">申请入学</view>
+				</view>
+			</view>
+		</view>
+		<view class="list-common" bindtap="toInvite" wx:if="{{userInfo.is_zhide_vip}}">
+			<view class="common-left">
+				<image src="../../assets/images/mine/pic-11.png" class="common-icon-two"></image>
+			</view>
+			<view class="common-right">
+				<view class="common-desc">
+					<view class="common-desc-top">邀请有礼</view>
+					<view class="common-desc-bottom">邀请还能获取惊喜好礼</view>
+				</view>
+				<view class="common-arrow">
+					<image src="../../assets/images/mine/pic-7.png"></image>
+				</view>
+			</view>
+		</view>
+		<view class="list-common" wx:if="{{false}}">
+			<view class="common-left">
+				<image src="../../assets/images/mine/pic-9.png" class="common-icon-three"></image>
+			</view>
+			<view class="common-right">
+				<view class="common-desc">
+					<view class="common-desc-top">我的订单</view>
+					<view class="common-desc-bottom">查询订单信息</view>
+				</view>
+				<view class="common-arrow">
+					<image src="../../assets/images/mine/pic-7.png"></image>
+				</view>
+			</view>
+		</view>
+		<view class="list-common" wx:if="{{userInfo.is_zhide_vip}}">
+			<button open-type="contact" bindcontact="joinVipGroup" send-message-path="/pages/mine/mine" show-message-card="true" class="join-vip-group"></button>
+			<view class="common-left">
+				<image src="../../assets/images/mine/pic-5.png" class="common-icon-four"></image>
+			</view>
+			<view class="common-right">
+				<view class="common-desc">
+					<view class="common-desc-top">加入会员群</view>
+					<view class="common-desc-bottom">群内定期发放专享好礼</view>
+				</view>
+				<view class="common-arrow">
+					<image src="../../assets/images/mine/pic-7.png"></image>
+				</view>
+			</view>
+		</view>
+		<view class="list-common" data-mobile="021-31279777" bindtap="callPhone">
+			<view class="common-left">
+				<image src="../../assets/images/mine/pic-6.png" class="common-icon-five"></image>
+			</view>
+			<view class="common-right">
+				<view class="common-desc">
+					<view class="common-desc-top">联系客服</view>
+					<view class="common-desc-bottom">021-31279777 工作日9:00-18:00</view>
+				</view>
+				<view class="common-arrow">
+					<image src="../../assets/images/mine/pic-7.png"></image>
+				</view>
+			</view>
+		</view>
+	</view>
+
+</view>

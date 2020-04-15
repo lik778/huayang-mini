@@ -1,0 +1,62 @@
+/* components/mall/address.wxss */
+.address {}
+
+.address-box {
+    width: 100vw;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: #fff;
+    z-index: 20;
+}
+
+.common-line {
+    display: flex;
+    align-items: center;
+    padding: 0 40rpx 0 40rpx;
+    border-bottom: 1px solid #ddd;
+}
+
+.common-label {
+    font-size: 16px;
+    font-weight: bold;
+    padding-right: 20rpx;
+}
+
+.common-input {
+    width: 400rpx;
+    height: 40rpx;
+    padding: 30rpx 0;
+}
+
+.address-bg {
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+}
+
+.address-button {
+    width: 100%;
+    height: 80rpx;
+    display: flex;
+    align-items: center;
+    padding-top: 20rpx;
+}
+
+.address-button-cancel {
+    width: 50%;
+    background: #ccc;
+    text-align: center;
+    line-height: 80rpx;
+}
+
+.address-button-sure {
+    width: 50%;
+    background: #f44;
+    text-align: center;
+    line-height: 80rpx;
+}

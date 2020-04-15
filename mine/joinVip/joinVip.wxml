@@ -1,0 +1,162 @@
+<!--mine/joinVip/joinVip.wxml-->
+<view class="join-vip">
+	<!-- style="padding-top:{{statusHeight+44}}px;" -->
+	<view class="navigation">
+		<naviBar title="花样汇超级会员"></naviBar>
+	</view>
+	<view class="banner">
+		<view class="bg">
+			<image src="../../assets/images/mine/pic-24.png"></image>
+		</view>
+		<view class="banner-main">
+			<image src="../../assets/images/mine/pic-25.png"></image>
+			<text>花样百姓旗下专为50+青年精心打造的生活方式会员专区，为您精心定制专属会员权益，用心策划精致会员活动，引领时尚、健康、快乐的生活方式。</text>
+		</view>
+	</view>
+	<view class="main">
+		<view class="main-title">
+			<view class="main-title-line"></view>
+			<view class="main-title-text">3大会员权益</view>
+			<view class="main-title-line"></view>
+		</view>
+		<view class="main-course">
+			<view class="course-title">
+				<view>
+					<image src="../../assets/images/mine/pic-29.png"></image>
+				</view>
+				<view>品质课程</view>
+				<view>花样大学入学资格</view>
+			</view>
+			<view class="course-main">
+				<view class="course-main-common">
+					<view class="course-main-common-left">
+						<image src="../../assets/images/mine/pic-27.png"></image>
+					</view>
+					<view class="course-main-common-right">
+						<view>50位大咖导师</view>
+						<view>手把手教您成为时尚达人</view>
+					</view>
+				</view>
+				<view class="course-main-common">
+					<view class="course-main-common-left">
+						<image src="../../assets/images/mine/pic-27.png"></image>
+					</view>
+					<view class="course-main-common-right">
+						<view>200节直播好课</view>
+						<view>全年无限回看</view>
+					</view>
+				</view>
+				<view class="course-main-common">
+					<view class="course-main-common-left">
+						<image src="../../assets/images/mine/pic-27.png"></image>
+					</view>
+					<view class="course-main-common-right">
+						<view>50人小班教学</view>
+						<view>让您收获同窗友谊</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="main-activity">
+			<view class="activity-title">
+				<view>
+					<image src="../../assets/images/mine/pic-28.png"></image>
+				</view>
+				<view>精品活动</view>
+				<view>花样活动尊享特权</view>
+			</view>
+			<view class="activity-main">
+				<view class="activity-main-common">
+					<view class="activity-main-common-left">
+						<image src="../../assets/images/mine/pic-19.png"></image>
+					</view>
+					<view class="activity-main-common-right">大型赛事专享资格</view>
+				</view>
+				<view class="activity-main-common">
+					<view class="activity-main-common-left">
+						<image src="../../assets/images/mine/pic-15.png"></image>
+					</view>
+					<view class="activity-main-common-right">有机会成为花样人物专栏嘉宾</view>
+				</view>
+				<view class="activity-main-common">
+					<view class="activity-main-common-left">
+						<image src="../../assets/images/mine/pic-18.png"></image>
+					</view>
+					<view class="activity-main-common-right">
+						<view>每年10场时尚线下沙龙</view>
+						<view>优先获得报名资格</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="main-mall">
+			<view class="mall-title">
+				<view>
+					<image src="../../assets/images/mine/pic-26.png"></image>
+				</view>
+				<view>严选评测</view>
+				<view>会员专享商城</view>
+			</view>
+			<view class="mall-main">
+				<view class="mall-item">
+					<view>
+						<image src="../../assets/images/mine/pic-16.png"></image>
+					</view>
+					<view>
+						<view>真实评测</view>
+						<view>严选好物</view>
+					</view>
+				</view>
+				<view class="mall-item">
+					<view>
+						<image src="../../assets/images/mine/pic-21.png"></image>
+					</view>
+					<view>
+						<view>一对一</view>
+						<view>专属导购</view>
+					</view>
+				</view>
+				<view class="mall-item">
+					<view>
+						<image src="../../assets/images/mine/pic-17.png"></image>
+					</view>
+					<view>全场工厂价</view>
+				</view>
+				<view class="mall-item">
+					<view>
+						<image src="../../assets/images/mine/pic-22.png"></image>
+					</view>
+					<view>花豆当钱花</view>
+				</view>
+				<view class="mall-item">
+					<view>
+						<image src="../../assets/images/mine/pic-20.png"></image>
+					</view>
+					<view>超值优惠券</view>
+				</view>
+				<view class="mall-item">
+					<view>
+						<image src="../../assets/images/mine/pic-23.png"></image>
+					</view>
+					<view>
+						<view>成功邀请</view>
+						<view>100%得花豆</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="desc">更多特权，敬请期待…</view>
+		<view class="button-line">
+			<view class="button" bindtap="buyVip">
+				<view>立即加入</view>
+				<button type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" wx:if="{{showBindPhoneButton}}"></button>
+				<view><text decode="true">原价¥199.00</text><text>¥99年</text></view>
+			</view>
+			<view class="bottom">
+				<van-checkbox value="{{ checked }}" shape="square" checked-color="#07c160" bind:change="onChange"></van-checkbox>
+				<text bindtap="toBuyBook">阅读并同意 《用户购买协议》</text>
+			</view>
+		</view>
+	</view>
+	
+</view>

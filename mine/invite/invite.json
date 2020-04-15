@@ -1,0 +1,9 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "邀请有礼",
+
+  "usingComponents": {
+    "naviBar": "../../components/navibar/navibar",
+    "van-dialog": "../../miniprogram_npm/@vant/weapp/dialog/index"
+  }
+}
