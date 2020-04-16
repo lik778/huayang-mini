@@ -7,7 +7,8 @@ import {
   getVipNum
 } from "../../api/mine/index"
 import {
-  subscription
+  subscription,
+  getSubscriptionStatus
 } from "../../api/live/course"
 import {
   getLocalStorage
@@ -146,6 +147,12 @@ Page({
 
 
   },
+  // 获取订阅状态
+  getSubscription(){
+    getSubscriptionStatus({open_id:getLocalStorage(GLOBAL_KEY.openId)}).then(res=>{
+      console.log(res)
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -158,6 +165,8 @@ Page({
     this.getImgUrl()
     // 获取小程序二维码
     this.inviteCode()
+    // 获取小程序订阅信息
+    // this.getSubscription()
     // 获取会员编号
     getVipNum(`user_id=${getLocalStorage(GLOBAL_KEY.userId)}`).then(({
       data

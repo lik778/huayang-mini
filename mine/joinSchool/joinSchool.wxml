@@ -3,7 +3,7 @@
 	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
 		<naviBar title="入学申请"></naviBar>
 	</view>
-	<web-view src="https://huayang.baixing.cn/#/home/zhideJoinSchool?data={{webViewData}}"></web-view>
+	<web-view src="https://huayang.baixing.com/#/home/zhideJoinSchool?data={{webViewData}}"></web-view>
 </view>
 <!-- <view class="join-school">
 	<view>
