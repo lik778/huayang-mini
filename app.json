@@ -9,7 +9,7 @@
     "van-dialog": "../miniprogram_npm/@vant/weapp/dialog/index"
   },
   "navigateToMiniProgramAppIdList": [
-    "wx95fb6b5dbe8739b7"
+    "wx6593cf087b7686dd"
   ],
   "pages": [
     "pages/index/index",
