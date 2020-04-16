@@ -23,7 +23,14 @@ Page({
     data: {
         userId: "",
         statusHeight: 0,
-        showBindPhoneButton: true
+        showBindPhoneButton: true,
+        checked: false
+    },
+    // 选中
+    onChange() {
+        this.setData({
+            checked: !this.data.checked
+        })
     },
     // 用户购买协议
     toBuyBook() {
@@ -33,9 +40,14 @@ Page({
     },
     // 购买会员
     buyVip() {
-        payVip(this.data.userId).then(res => {
-            console.log(res)
-        })
+        if (this.data.checked) {
+            payVip(this.data.userId)
+        } else {
+            wx.showToast({
+                title: '请先同意会员服务协议',
+                icon: "none"
+            })
+        }
     },
     // 获取用户信息
     getUserInfoData() {
@@ -98,6 +110,7 @@ Page({
      */
     onLoad: function (options) {
         let userId = options.scene ? decodeURIComponent(options.scene) : ""
+        console.log(userId)
         this.setData({
             userId: userId,
             statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight

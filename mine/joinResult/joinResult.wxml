@@ -35,7 +35,8 @@
 		</view>
 	</view>
 	<view class="add-button" style="bottom:{{bottom*2}}rpx;">
-		<button open-type="contact" bindcontact="joinVipGroup" send-message-path="/pages/mine/mine" show-message-card="true" type="primary">添加您的班主任</button>
+		<button type="primary" wx:if="{{isFirst}}" bindtap="addTeacher">添加您的班主任</button>
+		<button open-type="contact" bindcontact="joinVipGroup" send-message-path="/pages/mine/mine" show-message-card="true" type="primary" wx:else>添加您的班主任</button>
 	</view>
 	<view class="pupup">
 		<van-overlay show="{{ showSuccess }}">
@@ -45,7 +46,7 @@
 				<view>
 					<image src="../../assets/images/mine/pic-31.png"></image>
 				</view>
-				<view bindtap="onClickHide" data-index="1">确定</view>
+				<view bindtap="onClickHide" data-index="1">确定<button open-type="contact" bindcontact="joinVipGroup" send-message-path="/pages/mine/mine" show-message-card="true" type="primary">添加您的班主任</button></view>
 			</view>
 		</van-overlay>
 	</view>

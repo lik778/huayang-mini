@@ -104,9 +104,9 @@ Page({
     },
     // 加入会员群
     changeScene(e) {
-        let params={
-            scene:"vip",
-            open_id:getLocalStorage(GLOBAL_KEY.openId)
+        let params = {
+            scene: "vip",
+            open_id: getLocalStorage(GLOBAL_KEY.openId)
         }
         getScene(params)
     },
@@ -133,12 +133,17 @@ Page({
                         showBindPhoneButton: true,
                         userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo))
                     })
+
                 } else {
                     res.mobile = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).mobile
                     this.setData({
                         showBindPhoneButton: false,
                         userInfo: res || {}
                     })
+                    if (getLocalStorage(GLOBAL_KEY.updateAccountInfo) === "true") {
+                        setLocalStorage(GLOBAL_KEY.accountInfo, res.data)
+                        setLocalStorage(GLOBAL_KEY.updateAccountInfo, "false")
+                    }
                 }
             })
         } else {

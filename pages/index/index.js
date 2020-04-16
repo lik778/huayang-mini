@@ -319,9 +319,9 @@ Page({
 			})
 			wx.removeStorageSync(GLOBAL_KEY.vip)
 		}
-		// wx.navigateTo({
-		// 	url: '/mine/joinResult/joinResult',
-		// })
+		wx.navigateTo({
+			url: '/mine/invite/invite',
+		})
 	},
 
 	/**

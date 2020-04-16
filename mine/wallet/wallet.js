@@ -27,10 +27,10 @@ Page({
   },
   // 提现
   withdraw() {
-    wx.showToast({
+    wx.showModal({
       title: '提示',
-      duration: 5000,
-      icon: "none"
+      content:" 提现功能将在5月中旬开放，敬请期待哦！",
+      showCancel:false,
     })
   },
   // 获取小程序邀请列表

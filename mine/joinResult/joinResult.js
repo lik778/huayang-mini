@@ -22,7 +22,16 @@ Page({
     height: 0,
     radio: 0,
     bottom: 0,
-    showSuccess: true
+    showSuccess: false,
+    isFirst: false
+  },
+  // 添加班主任
+  addTeacher() {
+    if (this.data.isFirst) {
+      this.setData({
+        showSuccess: true
+      })
+    }
   },
   // 获取用户信息
   getUserInfoData() {
@@ -86,10 +95,11 @@ Page({
     })
     if (!getLocalStorage(GLOBAL_KEY.addTeacher)) {
       this.setData({
-        showSuccess: true
+        isFirst: true
       })
       setLocalStorage(GLOBAL_KEY.addTeacher, "false")
     }
+    setLocalStorage(GLOBAL_KEY.updateAccountInfo, "true")
   },
 
   /**
