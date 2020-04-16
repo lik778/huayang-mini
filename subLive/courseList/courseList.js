@@ -117,14 +117,14 @@ Page({
 				if (callbackString === 'updateWatchNo') {
 					setTimeout(() => {
 						// 更新直播间观看次数
-						let list = [...this.data.categoryList]
+						let list = [...this.data.courseList]
 						list.forEach(_ => {
 							if (_.zhibo_room.id === item.id) {
-								_.zhibo_room.visitCount += 1
+								_.zhibo_room.visit_count += 1
 							}
 						})
 						this.setData({
-							categoryList: [ ...list ]
+							courseList: [...list]
 						})
 					}, 1000)
 				} else if (callbackString === 'no-phone-auth') {
@@ -179,12 +179,19 @@ Page({
 	},
 	// 获取课程列表
 	getList(categoryId) {
-		if (categoryId) {
+		if (categoryId != null) {
 			this.setData({categoryId})
 		} else {
 			categoryId = this.data.categoryId
 		}
-		getCourseList(`?limit=${this.data.limit}&offset=${this.data.offset}&category_id=${categoryId}`)
+		let params = {
+			limit: this.data.limit,
+			offset: this.data.offset,
+		}
+		if (categoryId) {
+			params['category_id'] = categoryId
+		}
+		getCourseList(params)
 			.then(({list, count}) => {
 				list = list || []
 				// 筛选出直播间状态不是"回看"的房间号
@@ -228,9 +235,8 @@ Page({
 		// 获取分类列表
 		getCourseTypeList().then(categoryList => {
 			if (categoryList.length > 0) {
-				this.setData({
-					categoryList: categoryList
-				})
+				categoryList = [{id: 0, name: '全部'}, ...categoryList]
+				this.setData({categoryList})
 				this.getList(categoryList[0].id)
 			}
 		})
