@@ -111,7 +111,7 @@
 			</view>
 		</view>
 		<view class="list-common" wx:if="{{userInfo.is_zhide_vip}}">
-			<button open-type="contact" bindcontact="joinVipGroup" send-message-path="/pages/mine/mine" show-message-card="true" class="join-vip-group"></button>
+			<button open-type="contact" bindcontact="joinVipGroup" send-message-path="/pages/mine/mine" show-message-card="true"  class="join-vip-group" send-message-img="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587032983Vfcurw.jpg"></button>
 			<view class="common-left">
 				<image src="../../assets/images/mine/pic-5.png" class="common-icon-four"></image>
 			</view>
