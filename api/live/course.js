@@ -5,7 +5,7 @@ import { $notNull } from "../../utils/util"
 // 获取课程列表
 export function getCourseList(params) {
 	return new Promise(resolve => {
-		request._get(URL.getCourseList + params).then(({data}) => {
+		request._get(URL.getCourseList, params).then(({data}) => {
 			data = data || []
 			resolve(data)
 		})
