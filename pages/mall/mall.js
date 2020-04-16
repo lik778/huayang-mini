@@ -45,7 +45,7 @@ Page({
 		})
 	},
 	queryCategory() {
-		getCategory({ level: 1 }).then(list => {
+		getCategory({ level: 1 ,category_type:0}).then(list => {
 			this.setData({
 				categoryList: list.slice()
 			})
