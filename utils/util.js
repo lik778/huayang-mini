@@ -64,12 +64,8 @@ export const requestPayment = (paramsData) => {
 		paySign: params.paySign,
 		success(res) {
 			if (res.errMsg === "requestPayment:ok") {
-				// let vipData = {
-				// 	agoDay: 1,
-				// 	nowTime: Date.parse(new Date())
-				// }
 				setLocalStorage(GLOBAL_KEY.vip,true)
-				// setLocalStorage(GLOBAL_KEY.vip, JSON.stringify(vipData))
+				setLocalStorage(GLOBAL_KEY.vipupdateAccountInfo,true)
 				wx.switchTab({
 					url: '/pages/index/index',
 				})

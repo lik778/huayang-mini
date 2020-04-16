@@ -1,12 +1,28 @@
 // pages/mine/mine.js
-import { createStoreBindings } from 'mobx-miniprogram-bindings'
-import { getScene, getUserInfo } from "../../api/mine/index"
-import { bindWxPhoneNumber } from "../../api/auth/index"
-import { GLOBAL_KEY } from '../../lib/config'
-import { getLocalStorage, setLocalStorage } from "../../utils/util"
+import {
+    createStoreBindings
+} from 'mobx-miniprogram-bindings'
+import {
+    getScene,
+    getUserInfo
+} from "../../api/mine/index"
+import {
+    bindWxPhoneNumber
+} from "../../api/auth/index"
+import {
+    GLOBAL_KEY
+} from '../../lib/config'
+import {
+    getLocalStorage,
+    setLocalStorage
+} from "../../utils/util"
 
-import { store } from '../../store'
-import { checkAuth } from "../../utils/auth"
+import {
+    store
+} from '../../store'
+import {
+    checkAuth
+} from "../../utils/auth"
 
 Page({
 
@@ -126,9 +142,10 @@ Page({
                         showBindPhoneButton: false,
                         userInfo: res || {}
                     })
-                    if (getLocalStorage(GLOBAL_KEY.updateAccountInfo) === "true") {
+                    if (getLocalStorage(GLOBAL_KEY.updateAccountInfo) === "true" || getLocalStorage(GLOBAL_KEY.vipupdateAccountInfo) === "true") {
                         setLocalStorage(GLOBAL_KEY.accountInfo, res.data)
                         setLocalStorage(GLOBAL_KEY.updateAccountInfo, "false")
+                        setLocalStorage(GLOBAL_KEY.vipupdateAccountInfo, "false")
                     }
                 }
             })
@@ -161,16 +178,16 @@ Page({
     // 生命周期函数--监听页面显示
     onShow: function () {
         checkAuth().then(() => {
-						if (getLocalStorage(GLOBAL_KEY.accountInfo)) {
-								this.setData({
-										userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-								})
-						} else {
-								this.setData({
-										userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo))
-								})
-						}
-						this.getUserInfoData()
+            if (getLocalStorage(GLOBAL_KEY.accountInfo)) {
+                this.setData({
+                    userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+                })
+            } else {
+                this.setData({
+                    userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo))
+                })
+            }
+            this.getUserInfoData()
             this.changeScene()
         })
     },

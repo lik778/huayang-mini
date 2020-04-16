@@ -32,16 +32,20 @@ Page({
     posterWidth: 0, //海报宽度
     posterHeigt: 0, //海报高度
     radio: 0, //海报缩放比
-    showDialog: false
+    showDialog: false,
+    status: false //订阅状态
   },
   // 订阅
   show() {
     this.order()
   },
   show1() {
-    this.setData({
-      showDialog: true
-    })
+    if (!this.data.status) {
+      this.setData({
+        showDialog: true
+      })
+    }
+
   },
   // 订阅封装
   order() {
@@ -123,16 +127,23 @@ Page({
       bgUrl: this.data.posturl,
       nickname: this.data.userInfo.nickname,
       num: this.data.num,
-      headicon: this.data.userInfo.avatar_url
+      headicon: this.data.userInfo.avatar_url,
+      qcCode: this.data.qcCode
     }).then(url => {
       console.log(url, 9000)
       wx.saveImageToPhotosAlbum({
         filePath: url,
         success(res) {
           if (res.errMsg === 'saveImageToPhotosAlbum:ok') {
-            _this.setData({
-              showDialog: true
-            })
+            if (!_this.data.status) {
+              _this.setData({
+                showDialog: true
+              })
+            } else {
+              wx.showToast({
+                title: '保存成功',
+              })
+            }
             wx.hideLoading()
           } else {
             wx.showToast({
@@ -148,9 +159,14 @@ Page({
 
   },
   // 获取订阅状态
-  getSubscription(){
-    getSubscriptionStatus({open_id:getLocalStorage(GLOBAL_KEY.openId)}).then(res=>{
-      console.log(res)
+  getSubscription() {
+    getSubscriptionStatus({
+      open_id: getLocalStorage(GLOBAL_KEY.openId),
+      sub_key: "invite"
+    }).then(res => {
+      this.setData({
+        status: res
+      })
     })
   },
   /**
@@ -166,7 +182,7 @@ Page({
     // 获取小程序二维码
     this.inviteCode()
     // 获取小程序订阅信息
-    // this.getSubscription()
+    this.getSubscription()
     // 获取会员编号
     getVipNum(`user_id=${getLocalStorage(GLOBAL_KEY.userId)}`).then(({
       data

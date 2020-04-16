@@ -2,7 +2,8 @@ export const createCanvas = ({
   bgUrl,
   nickname,
   num,
-  headicon
+  headicon,
+  qcCode
 }) => {
   return new Promise(resolve => {
     // 获取上下文
@@ -40,7 +41,7 @@ export const createCanvas = ({
             dramName(ctx, "前往“花样值得买”", 9, 186, 325, "#DDDDDD")
             //绘制小程序二维码
             wx.downloadFile({
-              url: headicon,
+              url: qcCode,
               success: function (res1) {
                 drawHeadImg(ctx, 66, 66, 190, 240, res1.tempFilePath, radio)
                 // 绘制完成开成开始导出

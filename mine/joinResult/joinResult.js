@@ -29,7 +29,8 @@ Page({
   addTeacher() {
     if (this.data.isFirst) {
       this.setData({
-        showSuccess: true
+        showSuccess: true,
+        isFirst:false
       })
     }
   },

@@ -33,7 +33,7 @@
 				</view>
 			</view>
 			<view class="erweima" style="right:{{8*radio}}px;bottom:{{18*radio}}px;text-align: center;font-size:9px;font-family:PingFangSC-Regular,PingFang SC;font-weight:400;color:rgba(221,221,221,1);line-height:13px;">
-				<image src="{{posturl}}" style="width:{{64*radio}}px;height:{{64*radio}}px;"></image>
+				<image src="{{qcCode}}" style="width:{{64*radio}}px;height:{{64*radio}}px;background:#fff;"></image>
 				<view style="padding-top:{{6*radio}}px;">长按识别</view>
 				<view>前往“花样值得买”</view>
 			</view>
