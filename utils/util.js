@@ -35,7 +35,7 @@ export const payVip = function (params) {
 	let createOrderParmas = {
 		scene: "zhide_vip",
 		recommend_user_id:params||"",
-		product_id: 36,
+		product_id: 5,
 		count: 1,
 		open_id: getLocalStorage(GLOBAL_KEY.openId),
 	}
