@@ -125,7 +125,7 @@ function drawHeadImg(ctx, width, height, x, y, url, radio) {
   let avatarurl_x = x;
   let avatarurl_y = y;
   ctx.save();
-  ctx.arc(avatarurl_width / 2 + avatarurl_x, avatarurl_heigth / 2 + avatarurl_y, avatarurl_width / 2, 0, Math.PI * 3, false);
+  ctx.arc(avatarurl_width / 2 + avatarurl_x, avatarurl_heigth / 2 + avatarurl_y, avatarurl_width / 2, 0, Math.PI * 2, false);
   ctx.clip();
   ctx.drawImage(url, avatarurl_x, avatarurl_y, avatarurl_width, avatarurl_heigth);
   ctx.restore();
