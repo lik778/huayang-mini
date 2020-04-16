@@ -1,29 +1,10 @@
 // pages/live/live.js
-import {
-	getLiveBannerList,
-	getLiveList,
-	updateLiveStatus
-} from "../../api/live/index"
-import {
-	GLOBAL_KEY,
-	WeChatLiveStatus
-} from '../../lib/config'
-import {
-	$notNull,
-	checkIdentity,
-	getLocalStorage,
-	getSchedule,
-	setLocalStorage
-} from '../../utils/util'
-import {
-	statisticsWatchNo
-} from "../../api/live/course"
-import {
-	bindWxPhoneNumber
-} from "../../api/auth/index"
-import {
-	checkAuth
-} from "../../utils/auth"
+import { getLiveBannerList, getLiveList, updateLiveStatus } from "../../api/live/index"
+import { GLOBAL_KEY, WeChatLiveStatus } from '../../lib/config'
+import { $notNull, checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from '../../utils/util'
+import { statisticsWatchNo } from "../../api/live/course"
+import { bindWxPhoneNumber } from "../../api/auth/index"
+import { checkAuth } from "../../utils/auth"
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog'
 
 Page({
@@ -55,7 +36,7 @@ Page({
 	 * 一键获取微信手机号
 	 * @param e
 	 */
-	async getPhoneNumber(e) {
+	getPhoneNumber(e) {
 		if (!e) return
 		let {
 			errMsg = '', encryptedData: encrypted_data = '', iv = ''
@@ -63,12 +44,14 @@ Page({
 		if (errMsg.includes('ok')) {
 			let open_id = getLocalStorage(GLOBAL_KEY.openId)
 			if (encrypted_data && iv) {
-				let originAccountInfo = await bindWxPhoneNumber({
-					open_id,
-					encrypted_data,
-					iv
+				checkAuth().then(async () => {
+					let originAccountInfo = await bindWxPhoneNumber({
+						open_id,
+						encrypted_data,
+						iv
+					})
+					setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
 				})
-				setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
 			}
 		} else {
 			console.error('用户拒绝手机号授权')

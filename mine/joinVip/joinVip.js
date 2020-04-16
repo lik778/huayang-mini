@@ -1,19 +1,10 @@
 // mine/joinVip/joinVip.js
 
-import {
-    GLOBAL_KEY
-} from "../../lib/config"
-import {
-    getLocalStorage,
-    payVip,
-    setLocalStorage
-} from "../../utils/util"
-import {
-    bindWxPhoneNumber
-} from "../../api/auth/index"
-import {
-    getUserInfo
-} from "../../api/mine/index"
+import { GLOBAL_KEY } from "../../lib/config"
+import { getLocalStorage, payVip, setLocalStorage } from "../../utils/util"
+import { bindWxPhoneNumber } from "../../api/auth/index"
+import { getUserInfo } from "../../api/mine/index"
+import { checkAuth } from "../../utils/auth"
 
 Page({
 
@@ -69,7 +60,7 @@ Page({
         })
     },
     // 一键获取手机号
-    async getPhoneNumber(e) {
+    getPhoneNumber(e) {
         if (!e) return
         let {
             errMsg = '', encryptedData: encrypted_data = '', iv = ''
@@ -77,17 +68,19 @@ Page({
         if (errMsg.includes('ok')) {
             let open_id = getLocalStorage(GLOBAL_KEY.openId)
             if (encrypted_data && iv) {
-                let originAccountInfo = await bindWxPhoneNumber({
-                    open_id,
-                    encrypted_data,
-                    iv
+                checkAuth().then(async () => {
+                    let originAccountInfo = await bindWxPhoneNumber({
+                        open_id,
+                        encrypted_data,
+                        iv
+                    })
+                    setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
+                    // 存储手机号信息后，隐藏授权手机号按钮
+                    this.setData({
+                        showBindPhoneButton: false
+                    })
+                    this.getUserInfoData()
                 })
-                setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
-                // 存储手机号信息后，隐藏授权手机号按钮
-                this.setData({
-                    showBindPhoneButton: false
-                })
-                this.getUserInfoData()
             }
         } else {
             console.error('用户拒绝手机号授权')
