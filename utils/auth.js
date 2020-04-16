@@ -3,27 +3,47 @@ import { $notNull, hasUserInfo, setLocalStorage } from "./util"
 import { getWxInfo } from "../api/auth/index"
 
 const checkAuth = () => {
-	if (hasUserInfo()) return;
-	// 获取最新 res.code 到后台换取 微信用户信息
-	wxLoginPromise()
-		.then(async (code) => {
-			// 用code查询服务端是否有该用户信息，如果有更新本地用户信息，反之从微信获取用户信息保存到服务端
-			let originUserInfo = await getWxInfo({code, app_id: APP_LET_ID.tx})
-			// 缓存openId
-			setLocalStorage(GLOBAL_KEY.openId, originUserInfo.openid)
-			if ($notNull(originUserInfo) && originUserInfo.nickname) {
-				// 服务端返回用户信息包含username，缓存在本地
-				setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
-			} else {
-				// 跳转到授权页面
-				wx.navigateTo({
-					url: '/pages/auth/auth'
+	return new Promise(resolve => {
+		if (hasUserInfo()) {
+			wxCheckSessionPromise().then(() => {
+				resolve()
+			}).catch(() => {
+				wxLogin().then(() => {
+					resolve()
 				})
-			}
-		})
-		.catch((error) => {
-			console.error(error)
-		})
+			})
+		} else {
+			wxLogin().then(() => {
+				resolve()
+			})
+		}
+	})
+}
+
+const wxLogin = () => {
+	return new Promise((resolve, reject) => {
+		// 获取最新 res.code 到后台换取 微信用户信息
+		wxLoginPromise()
+			.then(async (code) => {
+				// 用code查询服务端是否有该用户信息，如果有更新本地用户信息，反之从微信获取用户信息保存到服务端
+				let originUserInfo = await getWxInfo({code, app_id: APP_LET_ID.tx})
+				// 缓存openId
+				setLocalStorage(GLOBAL_KEY.openId, originUserInfo.openid)
+				if ($notNull(originUserInfo) && originUserInfo.nickname) {
+					// 服务端返回用户信息包含username，缓存在本地
+					setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
+					resolve()
+				} else {
+					// 跳转到授权页面
+					wx.navigateTo({
+						url: '/pages/auth/auth'
+					})
+				}
+			})
+			.catch((error) => {
+				console.error(error)
+			})
+	})
 }
 
 /**
@@ -35,10 +55,12 @@ function wxCheckSessionPromise() {
 		wx.checkSession({
 			success() {
 				// session_key valid
+				console.log('login code 有效')
 				resolve()
 			},
 			fail() {
 				// session_key invalid
+				console.log('login code 超时')
 				reject()
 			}
 		})
@@ -103,7 +125,7 @@ function wxGetSettingPromise(withSubscriptions = false) {
 export {
 	wxCheckSessionPromise,
 	wxLoginPromise,
-  wxGetUserInfoPromise,
-  wxGetSettingPromise,
+	wxGetUserInfoPromise,
+	wxGetSettingPromise,
 	checkAuth
 }
