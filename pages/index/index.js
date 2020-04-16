@@ -302,9 +302,9 @@ Page({
 			})
 			wx.removeStorageSync(GLOBAL_KEY.vip)
 		}
-		wx.navigateTo({
-			url: '/mine/invite/invite',
-		})
+		// wx.navigateTo({
+		// 	url: '/mine/invite/invite',
+		// })
 	},
 
 	/**
