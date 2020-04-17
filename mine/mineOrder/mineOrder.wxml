@@ -1,4 +1,21 @@
 <!--mine/mineOrder/mineOrder.wxml-->
 <view class="mine-order">
-  
+	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+		<naviBar title="我的订单" color="rgba(250,250,250,0.6)"></naviBar>
+	</view>
+  <view class="main">
+    <view class="main-item">
+      <view class="main-item-left">
+        <image src=""></image>
+      </view>
+      <view class="main-item-right">
+        <view class="item-top">
+          故宫宫廷文化四合如意茶具套装故宫宫廷文化四合如意茶具套装
+        </view>
+        <view class="item-bottom">
+          
+        </view>
+      </view>
+    </view>
+  </view>
 </view>
