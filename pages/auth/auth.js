@@ -4,6 +4,7 @@ import { GLOBAL_KEY } from '../../lib/config.js'
 import { bindUserInfo, bindWxPhoneNumber } from "../../api/auth/index"
 import { getLocalStorage, setLocalStorage } from "../../utils/util"
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog'
+import { getUniversityCode } from "../../api/mine/index"
 
 Page({
 
@@ -59,8 +60,10 @@ Page({
 									confirmButtonText: '查看课程',
 									showCancelButton: false
 								}).then(() => {
-									wx.navigateTo({
-										url: '/pages/courseList/courseList?id=' + 207, // TODO
+									getUniversityCode(`user_key=daxue`).then(res => {
+										wx.navigateTo({
+											url: `/subLive/courseList/courseList?id=${res.data.id}`,
+										})
 									})
 								}).catch(() => {})
 							} else {
