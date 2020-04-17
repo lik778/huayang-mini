@@ -1,7 +1,8 @@
 import md5 from 'md5'
-import { GLOBAL_KEY, WeChatLiveStatus } from '../lib/config'
+import { GLOBAL_KEY, WeChatLiveStatus,ROOT_URL } from '../lib/config'
 import { createOrder } from "../api/mine/payVip"
 import { getWatchLiveAuth, statisticsWatchNo } from "../api/live/course"
+import request from "../lib/request"
 
 const livePlayer = requirePlugin('live-player-plugin')
 
@@ -35,7 +36,7 @@ export const payVip = function (params) {
 	let createOrderParmas = {
 		scene: "zhide_vip",
 		recommend_user_id:params||"",
-		product_id: 5,
+		product_id: request.baseUrl===ROOT_URL.dev?36:5,
 		count: 1,
 		open_id: getLocalStorage(GLOBAL_KEY.openId),
 	}

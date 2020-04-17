@@ -303,7 +303,7 @@ Page({
 			wx.removeStorageSync(GLOBAL_KEY.vip)
 		}
 		// wx.navigateTo({
-		// 	url: '/mine/invite/invite',
+		// 	url: '/mine/joinVip/joinVip',
 		// })
 	},
 

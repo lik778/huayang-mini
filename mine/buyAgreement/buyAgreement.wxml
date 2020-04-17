@@ -1,4 +1,4 @@
 <!--mine/buyAgreement.wxml-->
 <view>
-	<web-view src="http://huayang.baixing.cn/#/home/buyAgreement"></web-view>
+	<web-view src="{{baseUrl}}/#/home/buyAgreement"></web-view>
 </view>

@@ -41,9 +41,11 @@ Page({
   },
   show1() {
     if (!this.data.status) {
-      this.setData({
-        showDialog: true
-      })
+      setTimeout(() => {
+        this.setData({
+          showDialog: true
+        })
+      }, 1500)
     }
 
   },
