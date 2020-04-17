@@ -42,7 +42,6 @@ Page({
         this.setData({
           userInfo: res || {}
         })
-        console.log(res)
       }
     })
   },

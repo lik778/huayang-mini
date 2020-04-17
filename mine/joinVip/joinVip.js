@@ -43,10 +43,9 @@ Page({
     buyVip() {
         if (this.data.checked) {
             payVip(this.data.userId).then(res => {
-                console.log(res)
                 if (this.data.formAuth) {
                     wx.navigateTo({
-                        url: '/pages/auth/auth?from=article',
+                        url: '/pages/joinSchool/joinSchool',
                     })
                 } else {
                     wx.navigateTo({
