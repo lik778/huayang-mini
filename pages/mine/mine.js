@@ -4,7 +4,8 @@ import {
 } from 'mobx-miniprogram-bindings'
 import {
     getScene,
-    getUserInfo
+    getUserInfo,
+    getUniversityCode
 } from "../../api/mine/index"
 import {
     bindWxPhoneNumber
@@ -34,12 +35,23 @@ Page({
         width: 200,
         showBindPhoneButton: true,
     },
+    // 查询我的订单
+    toMineOrder() {
+        if (!this.data.showBindPhoneButton) {
+            wx.navigateTo({
+                url: '/mine/mineOrder/mineOrder',
+            })
+        }
+
+    },
     // 跳转至课程列表
     toCourseList() {
-        let officialRoomId = 207
-        wx.navigateTo({
-            url: `/subLive/courseList/courseList?id=${officialRoomId}`,
+        getUniversityCode(`user_key=daxue`).then(res => {
+            wx.navigateTo({
+                url: `/subLive/courseList/courseList?id=${res.data.id}`,
+            })
         })
+
     },
     // 跳往邀请会员页
     toInvite() {

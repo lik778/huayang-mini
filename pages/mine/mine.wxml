@@ -96,7 +96,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="list-common" wx:if="{{false}}">
+		<view class="list-common" bindtap="toMineOrder" wx:if="{{false}}">
 			<view class="common-left">
 				<image src="../../assets/images/mine/pic-9.png" class="common-icon-three"></image>
 			</view>
@@ -109,9 +109,10 @@
 					<image src="../../assets/images/mine/pic-7.png"></image>
 				</view>
 			</view>
+			<button style="height: 100%;" type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="bindmobile-botton" wx:if="{{showBindPhoneButton}}"></button>
 		</view>
 		<view class="list-common" wx:if="{{userInfo.is_zhide_vip}}">
-			<button open-type="contact" bindcontact="joinVipGroup" send-message-path="/pages/mine/mine" show-message-card="true"  class="join-vip-group" send-message-img="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587032983Vfcurw.jpg"></button>
+			<button open-type="contact" bindcontact="joinVipGroup" send-message-path="/pages/mine/mine" show-message-card="true" class="join-vip-group" send-message-img="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587032983Vfcurw.jpg" send-message-title="长按识别下方二维码，添加客服"></button>
 			<view class="common-left">
 				<image src="../../assets/images/mine/pic-5.png" class="common-icon-four"></image>
 			</view>

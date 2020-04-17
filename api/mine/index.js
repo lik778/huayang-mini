@@ -60,3 +60,13 @@ export const getScene=(params)=>{
     })
   })
 }
+// 获取大学Id跳转课程列表
+export const getUniversityCode=(params)=>{
+  return new Promise(resolve=>{
+    request._get(URL.getUniversityCode+"?"+params).then(res=>{
+      if(res.code===0){
+        resolve(res)
+      }
+    })
+  })
+}
