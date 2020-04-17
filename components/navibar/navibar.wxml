@@ -1,6 +1,6 @@
 <!--components/navibar.wxml-->
-<view class="navibar" style="padding-top:{{statusBarHeight}}px;">
-	<view class="back-module" style="background:{{color===''?'#fff':color}};">
+<view class="navibar" style="padding-top:{{statusBarHeight}}px;background:{{color===''?'#fff':color}};">
+	<view class="back-module">
 		<view class="back-icon" bindtap="back">
       <image src="../../assets/images/mine/back.png"></image>
     </view>

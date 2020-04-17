@@ -2,7 +2,7 @@
 <view class="join-vip">
 	<!-- style="padding-top:{{statusHeight+44}}px;" -->
 	<view class="navigation">
-		<naviBar title="花样汇超级会员" color='rgba(255, 255, 255, 0.6)'></naviBar>
+		<naviBar title="花样汇超级会员" color="rgba(250,250,250,0)" style="padding-top:{{statusHeight+44}}px;"></naviBar>
 	</view>
 	<view class="banner">
 		<view class="bg">

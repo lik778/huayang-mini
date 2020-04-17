@@ -1,15 +1,50 @@
 // mine/mineOrder/mineOrder.js
-import {getLocalStorage } from "../../utils/util"
-import {GLOBAL_KEY} from "../../lib/config.js"
+import {
+  getLocalStorage
+} from "../../utils/util"
+import {
+  getMineOrder
+} from "../../api/mine/index"
+import {
+  GLOBAL_KEY,
+  THIRD_APPLETS_SOURCE
+} from "../../lib/config.js"
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    statusHeight: 0
+    statusHeight: 0,
+    orderData: []
   },
-
+  // 获取订单列表
+  getMineOrderData(e) {
+    getMineOrder(`user_id=${getLocalStorage(GLOBAL_KEY.userId)}`).then(res => {
+      console.log(res)
+      if (res.code === 0) {
+        this.setData({
+          orderData: res.data
+        })
+      }
+    })
+  },
+  // 查看订单
+  toOrder() {
+    wx.navigateToMiniProgram({
+      appId: THIRD_APPLETS_SOURCE.youZan.appId,
+      path: "/pages/usercenter/dashboard/index",
+      success() {
+        console.log('success');
+      },
+      fail(e) {
+        console.error(e);
+      },
+      complete() {
+        console.log('complete');
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -17,6 +52,8 @@ Page({
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
+    // 获取订单列表
+    this.getMineOrderData()
   },
 
   /**

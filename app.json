@@ -13,9 +13,10 @@
   ],
   "pages": [
     "pages/index/index",
+    "pages/mine/mine",
+   
     "pages/mall/mall",
     "pages/auth/auth",
-    "pages/mine/mine",
     "pages/privacy/privacy",
     "pages/service/service"
   ],

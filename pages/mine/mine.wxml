@@ -96,7 +96,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="list-common" bindtap="toMineOrder" wx:if="{{false}}">
+		<view class="list-common" bindtap="toMineOrder" wx:if="{{true}}">
 			<view class="common-left">
 				<image src="../../assets/images/mine/pic-9.png" class="common-icon-three"></image>
 			</view>
