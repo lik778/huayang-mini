@@ -70,3 +70,13 @@ export const getUniversityCode=(params)=>{
     })
   })
 }
+// 获取我的订单列表
+export const getMineOrder=(params)=>{
+  return new Promise(resolve=>{
+    request._get(URL.getMineOrder+"?"+params).then(res=>{
+      if(res.code===0){
+        resolve(res)
+      }
+    })
+  })
+}
