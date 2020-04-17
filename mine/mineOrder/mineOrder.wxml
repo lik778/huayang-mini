@@ -1,21 +1,26 @@
 <!--mine/mineOrder/mineOrder.wxml-->
 <view class="mine-order">
-	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
-		<naviBar title="我的订单" color="rgba(250,250,250,0.6)"></naviBar>
+	<view class="navigation">
+		<naviBar title="我的订单"></naviBar>
 	</view>
-  <view class="main">
-    <view class="main-item">
-      <view class="main-item-left">
-        <image src=""></image>
-      </view>
-      <view class="main-item-right">
-        <view class="item-top">
-          故宫宫廷文化四合如意茶具套装故宫宫廷文化四合如意茶具套装
-        </view>
-        <view class="item-bottom">
-          
-        </view>
-      </view>
-    </view>
-  </view>
+	<view class="main" style="padding-top:{{statusHeight+44}}px;">
+		<view class="main-item" wx:for="{{orderData}}" wx:key="index">
+			<view class="main-item-top">
+				<view class="main-item-left">
+					<image src="{{item.product_pic}}"></image>
+				</view>
+				<view class="main-item-right">
+					<view class="item-top">{{item.product_title}}</view>
+					<view class="item-bottom">
+						<view class="order-price">订单金额：<text style="font-size:18px;font-weight:600;color:rgba(0, 0, 0, 1);">¥{{item.total_fee}}</text></view>
+						<view class="order-time">订单时间：{{item.order_create_time}}</view>
+					</view>
+					<view class="main-item-bottom">
+						<view class="button" bindtap="toOrder">查看订单</view>
+					</view>
+				</view>
+			</view>
+
+		</view>
+	</view>
 </view>

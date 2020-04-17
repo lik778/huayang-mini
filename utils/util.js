@@ -47,34 +47,36 @@ export const payVip = function (params) {
 			requestPayment({
 				prepay_id: res,
 				key: mallKey
+			}).then(res=>{
+				resolve(res)
 			})
 		})
 	})
 }
 // 唤起微信支付
 export const requestPayment = (paramsData) => {
-	let params = getSign({
-		prepay_id: paramsData.prepay_id,
-		key: paramsData.key
-	})
-	wx.requestPayment({
-		timeStamp: params.timeStamp,
-		nonceStr: params.nonceStr,
-		package: params.package,
-		signType: params.signType,
-		paySign: params.paySign,
-		success(res) {
-			if (res.errMsg === "requestPayment:ok") {
-				setLocalStorage(GLOBAL_KEY.vip,true)
-				setLocalStorage(GLOBAL_KEY.vipupdateAccountInfo,true)
-				wx.switchTab({
-					url: '/pages/index/index',
-				})
+	return new Promise((resolve)=>{
+		let params = getSign({
+			prepay_id: paramsData.prepay_id,
+			key: paramsData.key
+		})
+		wx.requestPayment({
+			timeStamp: params.timeStamp,
+			nonceStr: params.nonceStr,
+			package: params.package,
+			signType: params.signType,
+			paySign: params.paySign,
+			success(res) {
+				if (res.errMsg === "requestPayment:ok") {
+					setLocalStorage(GLOBAL_KEY.vip,true)
+					setLocalStorage(GLOBAL_KEY.vipupdateAccountInfo,true)
+					resolve(res)
+				}
+			},
+			fail(err) {
+				console.log(err)
 			}
-		},
-		fail(err) {
-			console.log(err)
-		}
+		})
 	})
 }
 // 生成支付的一系列数据sign

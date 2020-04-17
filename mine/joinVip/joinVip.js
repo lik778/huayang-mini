@@ -1,9 +1,19 @@
 // mine/joinVip/joinVip.js
 
-import { GLOBAL_KEY } from "../../lib/config"
-import { getLocalStorage, payVip, setLocalStorage } from "../../utils/util"
-import { bindWxPhoneNumber } from "../../api/auth/index"
-import { getUserInfo } from "../../api/mine/index"
+import {
+    GLOBAL_KEY
+} from "../../lib/config"
+import {
+    getLocalStorage,
+    payVip,
+    setLocalStorage
+} from "../../utils/util"
+import {
+    bindWxPhoneNumber
+} from "../../api/auth/index"
+import {
+    getUserInfo
+} from "../../api/mine/index"
 
 Page({
 
@@ -14,7 +24,8 @@ Page({
         userId: "",
         statusHeight: 0,
         showBindPhoneButton: true,
-        checked: false
+        checked: false,
+        formAuth: false
     },
     // 选中
     onChange() {
@@ -31,7 +42,18 @@ Page({
     // 购买会员
     buyVip() {
         if (this.data.checked) {
-            payVip(this.data.userId)
+            payVip(this.data.userId).then(res => {
+                console.log(res)
+                if (this.data.formAuth) {
+                    wx.navigateTo({
+                        url: '/pages/auth/auth?from=article',
+                    })
+                } else {
+                    wx.navigateTo({
+                        url: '/pages/index/index',
+                    })
+                }
+            })
         } else {
             wx.showToast({
                 title: '请先同意会员服务协议',
@@ -100,7 +122,11 @@ Page({
      */
     onLoad: function (options) {
         let userId = options.scene ? decodeURIComponent(options.scene) : ""
-        console.log(userId)
+        if (options.from === "article") {
+            this.setData({
+                formAuth: true
+            })
+        }
         this.setData({
             userId: userId,
             statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
