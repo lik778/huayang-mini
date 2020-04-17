@@ -1,8 +1,8 @@
 <!--mine/joinSchool/joinSchool.wxml-->
 <view>
-	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+	<!-- <view class="navigation" style="padding-top:{{statusHeight+44}}px;">
 		<naviBar title="入学申请"></naviBar>
-	</view>
+	</view> -->
 	<!-- <web-view src="https://huayang.baixing.com/#/home/zhideJoinSchool?data={{webViewData}}"></web-view> -->
-	<web-view src="{{baseUrl}}/#/home/zhideJoinSchool?data={{webViewData}}"></web-view>
+	<web-view src="{{baseUrl}}/#/home/zhideJoinSchool?data={{webViewData}}" style="height:100vh;"></web-view>
 </view>
