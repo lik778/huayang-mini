@@ -1,19 +1,9 @@
 // mine/joinVip/joinVip.js
 
-import {
-    GLOBAL_KEY
-} from "../../lib/config"
-import {
-    getLocalStorage,
-    payVip,
-    setLocalStorage
-} from "../../utils/util"
-import {
-    bindWxPhoneNumber
-} from "../../api/auth/index"
-import {
-    getUserInfo
-} from "../../api/mine/index"
+import { GLOBAL_KEY } from "../../lib/config"
+import { getLocalStorage, payVip, setLocalStorage } from "../../utils/util"
+import { bindWxPhoneNumber } from "../../api/auth/index"
+import { getUserInfo } from "../../api/mine/index"
 
 Page({
 
@@ -45,7 +35,7 @@ Page({
             payVip(this.data.userId).then(res => {
                 if (this.data.formAuth) {
                     wx.navigateTo({
-                        url: '/pages/joinSchool/joinSchool',
+                        url: '/mine/joinSchool/joinSchool',
                     })
                 } else {
                     wx.navigateTo({
