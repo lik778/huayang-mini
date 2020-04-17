@@ -275,9 +275,6 @@ export const checkIdentity = function({roomId, link, zhiboRoomId, customParams =
 					} else if (res === 'daxue') {
 						// 未加入花样大学,跳往入学申请页
 						resolve('no-auth-daxue')
-						// wx.navigateTo({
-						// 	url: '/mine/joinSchool/joinSchool',
-						// })
 					} else {
 						// 反之，有权限查看
 						// 优先统计观看人数
