@@ -22,7 +22,7 @@
   border: 0.5px solid #DDDDDD;
   border-radius: 999rpx;
   margin-left: 8px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .back-icon {
