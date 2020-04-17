@@ -8,9 +8,6 @@ App({
 	onLaunch: function () {
 		// 全局注册http
 		wx.$request = request
-		// 每次打开app检查授权
-		// checkAuth()
-
 	},
 	onShow(options) {
 		// 分享卡片入口场景才调用getShareParams接口获取以下参数
@@ -22,7 +19,7 @@ App({
 					console.log('get share openid', res.share_openid) // 分享者openid，分享卡片进入场景才有
 					console.log('get custom params', res.custom_params) // 开发者在跳转进入直播间页面时，页面路径上携带的自定义参数，这里传回给开发者
 				}).catch(err => {
-					console.log('get share params', err)
+					console.warn('get share params', err)
 				})
 		}
 		// 记录设备信息，保证进入详情页时可以获取到statusHeight自定义navibar

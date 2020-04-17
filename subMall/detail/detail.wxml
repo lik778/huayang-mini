@@ -14,8 +14,7 @@
   </view>
   <view class="detail-content">
     <block wx:for="{{detailContent}}" wx:key="index">
-      <image src="{{item}}"></image>
-      <!--<image src="https://img.yzcdn.cn/upload_files/2019/05/17/FtZBOe3A6fDuzm8sn81JeWV4E_rK.jpg"></image>-->
+      <image class="detail-image" mode="widthFix" src="{{item}}"></image>
     </block>
   </view>
 

@@ -37,7 +37,7 @@
 .detail-content {
     background: white;
 }
-.detail-content image {
+.detail-image {
     width: 100%;
 }
 .fixed-btn {

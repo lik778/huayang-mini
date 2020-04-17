@@ -2,22 +2,26 @@ import { APP_LET_ID, GLOBAL_KEY } from "../lib/config"
 import { $notNull, hasUserInfo, setLocalStorage } from "./util"
 import { getWxInfo } from "../api/auth/index"
 
-const checkAuth = () => {
-	return new Promise(resolve => {
-		if (hasUserInfo()) {
-			wxCheckSessionPromise().then(() => {
-				resolve()
-			}).catch(() => {
+const checkAuth = ({listenable = false} = {}) => {
+	if (listenable) {
+		return wxLogin()
+	} else {
+		return new Promise(resolve => {
+			if (hasUserInfo()) {
+				wxCheckSessionPromise().then(() => {
+					resolve()
+				}).catch(() => {
+					wxLogin().then(() => {
+						resolve()
+					})
+				})
+			} else {
 				wxLogin().then(() => {
 					resolve()
 				})
-			})
-		} else {
-			wxLogin().then(() => {
-				resolve()
-			})
-		}
-	})
+			}
+		})
+	}
 }
 
 const wxLogin = () => {
@@ -54,13 +58,11 @@ function wxCheckSessionPromise() {
 	return new Promise((resolve, reject) => {
 		wx.checkSession({
 			success() {
-				// session_key valid
-				console.log('login code 有效')
+				// console.log('session_key valid')
 				resolve()
 			},
 			fail() {
-				// session_key invalid
-				console.log('login code 超时')
+				// console.log('session_key invalid')
 				reject()
 			}
 		})

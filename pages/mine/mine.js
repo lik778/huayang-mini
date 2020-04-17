@@ -18,12 +18,8 @@ import {
     setLocalStorage
 } from "../../utils/util"
 
-import {
-    store
-} from '../../store'
-import {
-    checkAuth
-} from "../../utils/auth"
+import { store } from '../../store'
+import { checkAuth } from "../../utils/auth"
 
 Page({
 
@@ -90,7 +86,7 @@ Page({
         })
     },
     // 一键获取手机号
-    getPhoneNumber(e) {
+    async getPhoneNumber(e) {
         if (!e) return
         let {
             errMsg = '', encryptedData: encrypted_data = '', iv = ''
@@ -98,19 +94,17 @@ Page({
         if (errMsg.includes('ok')) {
             let open_id = getLocalStorage(GLOBAL_KEY.openId)
             if (encrypted_data && iv) {
-                checkAuth().then(async () => {
-                    let originAccountInfo = await bindWxPhoneNumber({
-                        open_id,
-                        encrypted_data,
-                        iv
-                    })
-                    setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
-                    // 存储手机号信息后，隐藏授权手机号按钮
-                    // this.setData({
-                    //     showBindPhoneButton: false
-                    // })
-                    this.getUserInfoData()
+                let originAccountInfo = await bindWxPhoneNumber({
+                    open_id,
+                    encrypted_data,
+                    iv
                 })
+                setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
+                // 存储手机号信息后，隐藏授权手机号按钮
+                // this.setData({
+                //     showBindPhoneButton: false
+                // })
+                this.getUserInfoData()
             }
         } else {
             console.error('用户拒绝手机号授权')
@@ -189,7 +183,7 @@ Page({
     },
     // 生命周期函数--监听页面显示
     onShow: function () {
-        checkAuth().then(() => {
+        checkAuth({listenable: true}).then(() => {
             if (getLocalStorage(GLOBAL_KEY.accountInfo)) {
                 this.setData({
                     userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))

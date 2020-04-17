@@ -148,16 +148,14 @@ Page({
 	 * 一键获取微信手机号
 	 * @param e
 	 */
-	getPhoneNumber(e) {
+	async getPhoneNumber(e) {
 		if (!e) return
 		let {errMsg = '', encryptedData: encrypted_data = '', iv = ''} = e.detail
 		if (errMsg.includes('ok')) {
 			let open_id = getLocalStorage(GLOBAL_KEY.openId)
 			if (encrypted_data && iv) {
-				checkAuth().then(async () => {
-					let originAccountInfo = await bindWxPhoneNumber({open_id, encrypted_data, iv})
-					setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
-				})
+				let originAccountInfo = await bindWxPhoneNumber({open_id, encrypted_data, iv})
+				setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
 			}
 		} else {
 			console.error('用户拒绝手机号授权')
@@ -254,7 +252,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		checkAuth()
+		checkAuth({listenable: true})
 	},
 
 	/**
