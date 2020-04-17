@@ -2,7 +2,7 @@
 <view class="join-vip">
 	<!-- style="padding-top:{{statusHeight+44}}px;" -->
 	<view class="navigation">
-		<naviBar title="花样汇超级会员"></naviBar>
+		<naviBar title="花样汇超级会员" color='rgba(255, 255, 255, 0.6)'></naviBar>
 	</view>
 	<view class="banner">
 		<view class="bg">
@@ -147,7 +147,7 @@
 		</view>
 		<view class="desc">更多特权，敬请期待…</view>
 		<view class="button-line">
-			<view class="button" bindtap="buyVip">
+			<view class="button {{checked?'button-active':''}}" bindtap="buyVip">
 				<view>立即加入</view>
 				<button type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" wx:if="{{showBindPhoneButton}}"></button>
 				<view><text decode="true">原价¥199.00</text><text>¥99年</text></view>

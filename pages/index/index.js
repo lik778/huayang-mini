@@ -1,10 +1,29 @@
 // pages/live/live.js
-import { getLiveBannerList, getLiveList, updateLiveStatus } from "../../api/live/index"
-import { GLOBAL_KEY, WeChatLiveStatus } from '../../lib/config'
-import { $notNull, checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from '../../utils/util'
-import { statisticsWatchNo } from "../../api/live/course"
-import { bindWxPhoneNumber } from "../../api/auth/index"
-import { checkAuth } from "../../utils/auth"
+import {
+	getLiveBannerList,
+	getLiveList,
+	updateLiveStatus
+} from "../../api/live/index"
+import {
+	GLOBAL_KEY,
+	WeChatLiveStatus
+} from '../../lib/config'
+import {
+	$notNull,
+	checkIdentity,
+	getLocalStorage,
+	getSchedule,
+	setLocalStorage
+} from '../../utils/util'
+import {
+	statisticsWatchNo
+} from "../../api/live/course"
+import {
+	bindWxPhoneNumber
+} from "../../api/auth/index"
+import {
+	checkAuth
+} from "../../utils/auth"
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog'
 
 Page({
@@ -24,12 +43,12 @@ Page({
 		didNoMore: false,
 		didVip: false,
 		liveStatusIntervalTimer: null,
-		showSuccess:false,//成为超级会员弹窗
+		showSuccess: false, //成为超级会员弹窗
 	},
 	// 关闭立即邀请
-	onClickHide(){
+	onClickHide() {
 		this.setData({
-			showSuccess:false
+			showSuccess: false
 		})
 	},
 	/**
@@ -292,16 +311,18 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		checkAuth({listenable: true})
+		checkAuth({
+			listenable: true
+		})
 		// 检查是否会员开通成功
-		if(getLocalStorage(GLOBAL_KEY.vip)===true){
+		if (getLocalStorage(GLOBAL_KEY.vip) === true) {
 			this.setData({
-				showSuccess:true
+				showSuccess: true
 			})
 			wx.removeStorageSync(GLOBAL_KEY.vip)
 		}
 		// wx.navigateTo({
-		// 	url: '/mine/invite/invite',
+		// 	url: '/mine/joinVip/joinVip',
 		// })
 	},
 

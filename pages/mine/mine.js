@@ -1,9 +1,22 @@
 // pages/mine/mine.js
-import { createStoreBindings } from 'mobx-miniprogram-bindings'
-import { getScene, getUserInfo } from "../../api/mine/index"
-import { bindWxPhoneNumber } from "../../api/auth/index"
-import { GLOBAL_KEY } from '../../lib/config'
-import { getLocalStorage, setLocalStorage } from "../../utils/util"
+import {
+    createStoreBindings
+} from 'mobx-miniprogram-bindings'
+import {
+    getScene,
+    getUserInfo,
+    getUniversityCode
+} from "../../api/mine/index"
+import {
+    bindWxPhoneNumber
+} from "../../api/auth/index"
+import {
+    GLOBAL_KEY
+} from '../../lib/config'
+import {
+    getLocalStorage,
+    setLocalStorage
+} from "../../utils/util"
 
 import { store } from '../../store'
 import { checkAuth } from "../../utils/auth"
@@ -18,12 +31,23 @@ Page({
         width: 200,
         showBindPhoneButton: true,
     },
+    // 查询我的订单
+    toMineOrder() {
+        if (!this.data.showBindPhoneButton) {
+            wx.navigateTo({
+                url: '/mine/mineOrder/mineOrder',
+            })
+        }
+
+    },
     // 跳转至课程列表
     toCourseList() {
-        let officialRoomId = 207
-        wx.navigateTo({
-            url: `/subLive/courseList/courseList?id=${officialRoomId}`,
+        getUniversityCode(`user_key=daxue`).then(res => {
+            wx.navigateTo({
+                url: `/subLive/courseList/courseList?id=${res.data.id}`,
+            })
         })
+
     },
     // 跳往邀请会员页
     toInvite() {

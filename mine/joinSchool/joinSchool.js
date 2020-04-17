@@ -5,6 +5,7 @@ import {
 import {
   getLocalStorage
 } from "../../utils/util"
+import request from "../../lib/request"
 Page({
 
   /**
@@ -13,6 +14,7 @@ Page({
   data: {
     radio: '0',
     webViewData: 0,
+    baseUrl:"",
     statusHeight: ""
   },
   // 切换性别
@@ -37,7 +39,8 @@ Page({
   onLoad: function (options) {
     this.getWebViewData()
     this.setData({
-      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
+      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
+      baseUrl:request.baseUrl
     })
   },
 

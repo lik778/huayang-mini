@@ -13,6 +13,10 @@ Component({
     share:{
       type:Boolean,
       default:true
+    },
+    color:{
+      type:String,
+      default:""
     }
   },
 
@@ -20,7 +24,8 @@ Component({
    * 组件的初始数据
    */
   data: {
-    statusBarHeight: 0
+    statusBarHeight: 0,
+    color:""
   },
 
   /**

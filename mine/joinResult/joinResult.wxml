@@ -36,7 +36,7 @@
 	</view>
 	<view class="add-button" style="bottom:{{bottom*2}}rpx;">
 		<button wx:if="{{isFirst}}" bindtap="addTeacher">添加您的班主任</button>
-		<button open-type="contact" send-message-img="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587032983Vfcurw.jpg" bindcontact="joinVipGroup" send-message-path="/pages/mine/mine" show-message-card="true"  wx:else>添加您的班主任</button>
+		<button open-type="contact" send-message-img="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587032983Vfcurw.jpg" bindcontact="joinVipGroup" send-message-title="长按识别下方二维码，添加班主任" send-message-path="/pages/mine/mine" show-message-card="true"  wx:else>添加您的班主任</button>
 	</view>
 	<view class="pupup">
 		<van-overlay show="{{ showSuccess }}">
@@ -46,7 +46,7 @@
 				<view>
 					<image src="../../assets/images/mine/pic-31.png"></image>
 				</view>
-				<view bindtap="onClickHide" data-index="1">确定<button open-type="contact" bindcontact="joinVipGroup" send-message-path="/pages/mine/mine" send-message-img="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587032983Vfcurw.jpg" show-message-card="true" type="primary">添加您的班主任</button></view>
+				<view bindtap="onClickHide" data-index="1">确定<button open-type="contact" bindcontact="joinVipGroup" send-message-path="/pages/mine/mine" send-message-img="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587032983Vfcurw.jpg"  send-message-title="长按识别下方二维码，添加班主任" show-message-card="true" type="primary">添加您的班主任</button></view>
 			</view>
 		</van-overlay>
 	</view>

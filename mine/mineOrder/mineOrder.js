@@ -1,12 +1,13 @@
-// mine/buyAgreement.js
-import request from "../../lib/request"
+// mine/mineOrder/mineOrder.js
+import {getLocalStorage } from "../../utils/util"
+import {GLOBAL_KEY} from "../../lib/config.js"
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    baseUrl:""
+    statusHeight: 0
   },
 
   /**
@@ -14,7 +15,7 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      baseUrl:request.baseUrl
+      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
   },
 

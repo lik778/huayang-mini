@@ -298,11 +298,18 @@
     color: rgba(238, 187, 136, 1);
     line-height: 18px;
     padding-top: 80rpx;
-    padding-bottom: 102rpx;
+    padding-bottom: 62rpx;
 }
 
 .button-line {
     padding: 0 60rpx;
+    padding-top: 40rpx;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 50;
+    width: calc(100% - 120rpx);
+    background: #161616;
 }
 
 .button {
@@ -314,6 +321,10 @@
     justify-content: center;
     flex-direction: column;
     position: relative;
+}
+
+.button-active {
+    background: linear-gradient(90deg, #DDAA77 0%, rgba(221, 170, 119, 1) 100%);
 }
 
 .button view {
