@@ -60,7 +60,6 @@ Page({
 									show: true
 								})
 							} else {
-								// 1 是否是VIP
 								if (is_zhide_vip) {
 									if (student_num) {
 										Dialog.confirm({
