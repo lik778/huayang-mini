@@ -1,18 +1,22 @@
 // mine/mineOrder/mineOrder.js
+import {getLocalStorage } from "../../utils/util"
+import {GLOBAL_KEY} from "../../lib/config.js"
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    statusHeight: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.setData({
+      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
+    })
   },
 
   /**

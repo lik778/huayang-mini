@@ -112,7 +112,7 @@ Page({
   },
   // 获取小程序邀请码
   inviteCode() {
-    getInviteCode(`user_id=${getLocalStorage(GLOBAL_KEY.userId)}`).then(res => {
+    getInviteCode(`user_id=${getLocalStorage(GLOBAL_KEY.userId)}&size=64*64`).then(res => {
       this.setData({
         qcCode: res
       })
@@ -144,6 +144,7 @@ Page({
             } else {
               wx.showToast({
                 title: '保存成功',
+                duration:2000
               })
             }
             wx.hideLoading()
