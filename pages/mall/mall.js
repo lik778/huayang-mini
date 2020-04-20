@@ -22,12 +22,8 @@ Page({
 		didNoMore: false,
 	},
 	currentHandle(e) {
-		let {
-			current
-		} = e.detail
-		this.setData({
-			current
-		})
+		let {current} = e.detail
+		this.setData({current})
 	},
 	queryProductList() {
 		getProductList({

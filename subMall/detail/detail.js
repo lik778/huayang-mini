@@ -2,6 +2,7 @@
 import { getProductInfo } from "../../api/mall/index"
 import { THIRD_APPLETS_SOURCE } from "../../lib/config"
 import { checkAuth } from "../../utils/auth"
+import { changeTwoDecimal_f } from "../../utils/util"
 
 Page({
 	/**
@@ -9,12 +10,13 @@ Page({
 	 */
 	data: {
 		prdId: 0,
-		indicatorDots: true,
+		indicatorDots: false,
 		vertical: false,
 		autoplay: false,
 		interval: 2000,
 		duration: 500,
 		bannerList: [],
+		current: 0,
 		productInfo: {
 			price: 0
 		},
@@ -27,7 +29,7 @@ Page({
 	},
 	navigateToMiniProgram() {
 		wx.navigateToMiniProgram({
-			appId: THIRD_APPLETS_SOURCE.youZan.appId,
+			appId: THIRD_APPLETS_SOURCE.xinXuan.appId,
 			path: this.data.productInfo.third_link,
 			success() {
 				console.log('success');
@@ -42,12 +44,17 @@ Page({
 	},
 	getProductInfo(productId) {
 		getProductInfo({product_id: productId}).then(({media_list, product}) => {
+			product.price = changeTwoDecimal_f(product.price / 100)
 			this.setData({
 				bannerList: [...media_list],
 				productInfo: {...product},
 				detailContent: product.detail_content.split(',')
 			})
 		})
+	},
+	currentHandle(e) {
+		let {current} = e.detail
+		this.setData({current})
 	},
 	/**
 	 * 生命周期函数--监听页面加载

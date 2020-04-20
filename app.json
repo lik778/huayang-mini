@@ -9,12 +9,14 @@
     "van-dialog": "../miniprogram_npm/@vant/weapp/dialog/index"
   },
   "navigateToMiniProgramAppIdList": [
-    "wx6593cf087b7686dd"
+    "wx95fb6b5dbe8739b7",
+    "wx6593cf087b7686dd",
+    "wx85d130227f745fc5"
   ],
   "pages": [
     "pages/index/index",
     "pages/mine/mine",
-   
+
     "pages/mall/mall",
     "pages/auth/auth",
     "pages/privacy/privacy",

@@ -1,14 +1,8 @@
 // mine/mineOrder/mineOrder.js
-import {
-  getLocalStorage
-} from "../../utils/util"
-import {
-  getMineOrder
-} from "../../api/mine/index"
-import {
-  GLOBAL_KEY,
-  THIRD_APPLETS_SOURCE
-} from "../../lib/config.js"
+import { getLocalStorage } from "../../utils/util"
+import { getMineOrder } from "../../api/mine/index"
+import { GLOBAL_KEY, THIRD_APPLETS_SOURCE } from "../../lib/config.js"
+
 Page({
 
   /**
@@ -32,7 +26,7 @@ Page({
   // 查看订单
   toOrder() {
     wx.navigateToMiniProgram({
-      appId: THIRD_APPLETS_SOURCE.youZan.appId,
+      appId: THIRD_APPLETS_SOURCE.xinXuan.appId,
       path: "/pages/usercenter/dashboard/index",
       success() {
         console.log('success');
