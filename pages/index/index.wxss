@@ -19,6 +19,7 @@
     bottom: 0;
     height: 100%;
     width: 100%;
+    border-radius: 16rpx;
 }
 
 .swiper-image {
@@ -111,14 +112,13 @@
 .recommend {
     margin-left: 14rpx;
     font-size: 48rpx;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .live-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin: 32rpx 0;
 }
 
 .live-list .status .status-dot {
@@ -137,6 +137,7 @@
 
 .live-cover {
     position: relative;
+    overflow: hidden;
     height: 420rpx;
     background-position: center;
     background-size: cover;
@@ -163,7 +164,7 @@
 }
 
 .live-title {
-    margin: 24rpx 0 20rpx;
+    margin: 24rpx 0 16rpx;
     font-size: 36rpx;
     font-weight: 500;
 }

@@ -12,7 +12,7 @@
 	</view>
 	<view class="category">
 		<view class="category-item" wx:for="{{categoryList}}" wx:key="index" bindtap="navigateToCategory" data-item="{{item}}">
-			<image src="{{item.pic}}"></image>
+			<image mode="aspectFill" src="{{item.pic}}"></image>
 			<text>{{item.name}}</text>
 		</view>
 	</view>
@@ -20,14 +20,20 @@
 	<block wx:for="{{productList}}" wx:key="index">
 		<view class="product-item" bindtap="buy" data-item="{{item}}">
 			<view class="preview-image">
-				<image class="normal-mode" src="{{item.product.cover_image}}"></image>
+				<image class="normal-mode" mode="aspectFill" wx:if="{{item.media_list.length < 3}}" src="{{item.product.cover_image}}"></image>
+				<view class="multiple-mode" wx:if="{{item.media_list.length >= 3}}">
+					<image class="multiple-mode-left" mode="aspectFill" src="{{item.media_list[0].url}}"></image>
+					<view class="multiple-mode-right">
+						<image mode="aspectFill" src="{{item.media_list[1].url}}"></image>
+						<image mode="aspectFill" src="{{item.media_list[2].url}}"></image>
+					</view>
+				</view>
 			</view>
 			<text class="product-name limit-two-line">{{item.product.name}}</text>
 			<view class="product-info">
-				<view class="price"><text class="unit">¥</text>{{item.product.discount_price / 100}}</view>
+				<view class="price"><text class="unit">¥</text>{{	item.product.discount_price }}</view>
 				<view class="buying">购买</view>
 			</view>
 		</view>
-		<!--<view class="ad">ad-banner</view>-->
 	</block>
 </view>

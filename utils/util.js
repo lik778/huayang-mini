@@ -1,5 +1,5 @@
 import md5 from 'md5'
-import { GLOBAL_KEY, WeChatLiveStatus,ROOT_URL } from '../lib/config'
+import { GLOBAL_KEY, ROOT_URL, WeChatLiveStatus } from '../lib/config'
 import { createOrder } from "../api/mine/payVip"
 import { getWatchLiveAuth, statisticsWatchNo } from "../api/live/course"
 import request from "../lib/request"
@@ -19,7 +19,7 @@ const formatTime = date => {
 
 // 查询token
 export const queryToken = () => {
-	let token = getLocalStorage(GLOBAL_KEY.token) ?  getLocalStorage(GLOBAL_KEY.token) : ""
+	let token = getLocalStorage(GLOBAL_KEY.token) ? getLocalStorage(GLOBAL_KEY.token) : ""
 	return token || ''
 }
 
@@ -35,19 +35,19 @@ export const formatNumber = n => {
 export const payVip = function (params) {
 	let createOrderParmas = {
 		scene: "zhide_vip",
-		recommend_user_id:params||"",
-		product_id: request.baseUrl===ROOT_URL.dev?36:5,
+		recommend_user_id: params || "",
+		product_id: request.baseUrl === ROOT_URL.dev ? 36 : 5,
 		count: 1,
 		open_id: getLocalStorage(GLOBAL_KEY.openId),
 	}
 	return new Promise(resolve => {
 		createOrder(createOrderParmas).then(res => {
 			// resolve(res)
-			let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo"; //商户key
+			let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo" //商户key
 			requestPayment({
 				prepay_id: res,
 				key: mallKey
-			}).then(res=>{
+			}).then(res => {
 				resolve(res)
 			})
 		})
@@ -55,7 +55,7 @@ export const payVip = function (params) {
 }
 // 唤起微信支付
 export const requestPayment = (paramsData) => {
-	return new Promise((resolve)=>{
+	return new Promise((resolve) => {
 		let params = getSign({
 			prepay_id: paramsData.prepay_id,
 			key: paramsData.key
@@ -68,8 +68,8 @@ export const requestPayment = (paramsData) => {
 			paySign: params.paySign,
 			success(res) {
 				if (res.errMsg === "requestPayment:ok") {
-					setLocalStorage(GLOBAL_KEY.vip,true)
-					setLocalStorage(GLOBAL_KEY.vipupdateAccountInfo,true)
+					setLocalStorage(GLOBAL_KEY.vip, true)
+					setLocalStorage(GLOBAL_KEY.vipupdateAccountInfo, true)
 					resolve(res)
 				}
 			},
@@ -231,7 +231,7 @@ export const getSchedule = async function (roomIds = []) {
 		// 1. globalData中无值
 		if (!target) {
 			let {liveStatus = 0} = await queryLiveStatus(roomId) || {}
-			console.log(liveStatus);
+			console.log(liveStatus)
 			scheduleData.push({
 				roomId: roomId,
 				liveStatus: WeChatLiveStatus[liveStatus],
@@ -246,7 +246,7 @@ export const getSchedule = async function (roomIds = []) {
 			} else {
 				// 2.2 timestamp过期
 				let {liveStatus} = await queryLiveStatus(targetRoomId)
-				console.log(liveStatus);
+				console.log(liveStatus)
 				target.liveStatus = WeChatLiveStatus[liveStatus]
 				target.timestamp = +new Date() + 5 * 60 * 1000
 			}
@@ -257,13 +257,12 @@ export const getSchedule = async function (roomIds = []) {
 }
 
 // 判断是否是会员/是否入学
-export const checkIdentity = function({roomId, link, zhiboRoomId, customParams = {}}) {
+export const checkIdentity = function ({roomId, link, zhiboRoomId, customParams = {}}) {
 	const userId = getLocalStorage(GLOBAL_KEY.userId)
 	return new Promise((resolve, reject) => {
 		if (userId == null) {
 			resolve('no-phone-auth')
-		}
-		else {
+		} else {
 			// 获取直播权限
 			getWatchLiveAuth({
 				room_id: zhiboRoomId,
@@ -321,4 +320,28 @@ function queryLiveStatus(roomId) {
 				reject(error)
 			})
 	})
+}
+
+/**
+ * 保留2位小数
+ * @param x
+ * @returns {string|boolean}
+ */
+export function changeTwoDecimal_f(x) {
+	var f_x = parseFloat(x)
+	if (isNaN(f_x)) {
+		console.error('f_x is not a number.')
+		return false
+	}
+	var f_x = Math.round(x * 100) / 100
+	let s_x = f_x.toString()
+	let pos_decimal = s_x.indexOf('.')
+	if (pos_decimal < 0) {
+		pos_decimal = s_x.length
+		s_x += '.'
+	}
+	while (s_x.length <= pos_decimal + 2) {
+		s_x += '0'
+	}
+	return s_x
 }
