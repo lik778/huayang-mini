@@ -1,9 +1,19 @@
 // mine/joinVip/joinVip.js
 
-import { GLOBAL_KEY } from "../../lib/config"
-import { getLocalStorage, payVip, setLocalStorage } from "../../utils/util"
-import { bindWxPhoneNumber } from "../../api/auth/index"
-import { getUserInfo } from "../../api/mine/index"
+import {
+    GLOBAL_KEY
+} from "../../lib/config"
+import {
+    getLocalStorage,
+    payVip,
+    setLocalStorage
+} from "../../utils/util"
+import {
+    bindWxPhoneNumber
+} from "../../api/auth/index"
+import {
+    getUserInfo
+} from "../../api/mine/index"
 
 Page({
 
@@ -38,7 +48,7 @@ Page({
                         url: '/mine/joinSchool/joinSchool',
                     })
                 } else {
-                    wx.navigateTo({
+                    wx.switchTab({
                         url: '/pages/index/index',
                     })
                 }
@@ -65,6 +75,7 @@ Page({
                         userInfo: res || {}
                     })
                 }
+                wx.hideLoading()
                 console.log(res)
             })
         } else {
@@ -75,6 +86,7 @@ Page({
                 this.setData({
                     userInfo: userInfo
                 })
+                wx.hideLoading()
             }, 500)
         }
         this.setData({
@@ -110,6 +122,10 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        wx.showLoading({
+          title: '加载中...',
+          mask:true
+        })
         let userId = options.scene ? decodeURIComponent(options.scene) : ""
         if (options.from === "article") {
             this.setData({

@@ -298,12 +298,11 @@
     color: rgba(238, 187, 136, 1);
     line-height: 18px;
     padding-top: 80rpx;
-    padding-bottom: 62rpx;
+    padding-bottom: 360rpx;
 }
 
 .button-line {
     padding: 0 60rpx;
-    padding-top: 40rpx;
     position: fixed;
     left: 0;
     bottom: 0;

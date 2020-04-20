@@ -16,7 +16,7 @@
 .back-module {
   display: flex;
   align-items: center;
-  width: 92px;
+  /* width: 92px; */
   height: 30px;
   border: 0.5px solid #DDDDDD;
   border-radius: 999rpx;

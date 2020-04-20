@@ -46,7 +46,7 @@
 				<view>
 					<image src="../../assets/images/mine/pic-31.png"></image>
 				</view>
-				<view bindtap="onClickHide" data-index="1">确定<button open-type="contact" bindcontact="joinVipGroup" send-message-path="/pages/mine/mine" send-message-img="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587032983Vfcurw.jpg"  send-message-title="长按识别下方二维码，添加班主任" show-message-card="true" type="primary">添加您的班主任</button></view>
+				<view bindtap="onClickHide" data-index="1">确定<button open-type="contact" bindcontact="joinVipGroup" send-message-path="/pages/mine/mine" send-message-img="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587032983Vfcurw.jpg"  send-message-title="长按识别下方二维码，添加班主任" show-message-card="true">添加您的班主任</button></view>
 			</view>
 		</van-overlay>
 	</view>
