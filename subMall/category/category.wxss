@@ -16,9 +16,9 @@
     border-width: 0 !important;
 }
 .van-tabs__line {
-    height: 4rpx;
+    height: 4rpx !important;
     bottom: 18rpx !important;
-    background: rgb(255, 68, 51) !important;
+    background-color: rgb(255, 68, 51) !important;
 }
 .category {
 

@@ -1,6 +1,7 @@
 // pages/mall/mall.js
 import { getBannerList, getCategory, getProductList } from "../../api/mall/index"
 import { checkAuth } from "../../utils/auth"
+import { changeTwoDecimal_f } from "../../utils/util"
 
 Page({
 	/**
@@ -37,6 +38,11 @@ Page({
 			if (list.length < this.data.limit) {
 				this.data.didNoMore = true
 			}
+
+			list.forEach(item => {
+				item.product.discount_price = changeTwoDecimal_f(item.product.discount_price / 100);
+			})
+
 			let result = [...this.data.productList, ...list]
 			this.setData({
 				productList: result,

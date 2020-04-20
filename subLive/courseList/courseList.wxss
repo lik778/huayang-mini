@@ -1,3 +1,4 @@
+@import "../../assets/css/common.wxss";
 .custom-tab-class {
   flex-basis: 20% !important;
   padding: 0 !important;
@@ -11,9 +12,10 @@
   color: rgb(0,0,0) !important;
 }
 .van-tabs__line {
-  /*width: 48rpx !important;*/
-  /*height: 8rpx !important;*/
-  /*border-radius: 915rpx !important;*/
+  width: 48rpx !important;
+  margin: 0 13.5rpx !important;
+  height: 8rpx !important;
+  border-radius: 915rpx !important;
 }
 .course-list {
   font-size: 0;

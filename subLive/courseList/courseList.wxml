@@ -33,7 +33,7 @@
           <view class="item-right-top limit-one-line">{{courseItem.zhibo_room.title}}</view>
           <view class="item-right-middle">
             <view class="class-dot"></view>
-            <text class="item-right-middle-text">{{courseItem.kecheng.kecheng_type === 1 || courseItem.zhibo_room.status === 2 ? '回看' : courseItem.zhibo_room.liveStatus}}  {{courseItem.zhibo_room.visit_count}}{{courseItem.zhibo_room.liveStatus === '直播中' || courseItem.zhibo_room.liveStatus === '异常' ? '人在看' : '人看过'}}</text>
+            <text class="item-right-middle-text">{{courseItem.kecheng.kecheng_type === 1 || courseItem.zhibo_room.status === 2 ? '回看' : courseItem.zhibo_room.liveStatus}}  {{courseItem.zhibo_room.liveStatus === '未开始' ? '' : courseItem.zhibo_room.visit_count}}{{courseItem.zhibo_room.liveStatus === '未开始' ? '' : (courseItem.zhibo_room.liveStatus === '直播中' || courseItem.zhibo_room.liveStatus === '异常' ? '人在看' : '人看过')}}</text>
           </view>
           <view class="item-right-bottom">
             <image src="{{courseItem.teacher.avatar_url}}"></image>
