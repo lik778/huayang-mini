@@ -48,11 +48,11 @@
 	<van-overlay show="{{ showSuccess }}" bind:click="onClickHide">
 		<view class="box">
 			<view class="box-img">
-				<image src="../../assets/images/index/pic-1.png"></image>
+				<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587367667DlJmRa.jpg"></image>
 			</view>
 			<view class="button" bindtap="invite">立即邀请</view>
 			<view class="close-icon">
-				<image src="../../assets/images/mine/pic-34.png"></image>
+				<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587370098gwYTkb.jpg"></image>
 			</view>
 		</view>
 	</van-overlay>

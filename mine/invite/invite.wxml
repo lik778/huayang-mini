@@ -4,7 +4,7 @@
 		<naviBar title="邀请有礼" color="rgba(250,250,250,0)"></naviBar>
 	</view>
 	<view class="banner">
-		<image src="../../assets/images/mine/pic-12.png"></image>
+		<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368497hFoSIq.jpg"></image>
 		<!-- <image src="{{canvasUrl}}"></image> -->
 	</view>
 	<view class="canvas">
