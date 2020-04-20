@@ -9,7 +9,7 @@
       </block>
     </swiper>
     <cover-view class="swp-dot" wx:if="{{bannerList.length > 1}}">
-      <cover-view class="square-12 {{current === index ? 'active' : ''}}">{{current + 1}}/{{bannerList.length}}</cover-view>
+      <cover-view class="square-12">{{current + 1}}/{{bannerList.length}}</cover-view>
     </cover-view>
   </view>
 
