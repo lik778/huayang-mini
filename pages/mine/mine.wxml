@@ -34,8 +34,8 @@
 								<view class="woller-middle" wx:if="{{!showBindPhoneButton}}"></view>
 								<view class="woller-right" wx:if="{{!showBindPhoneButton}}">
 									<image src="../../assets/images/mine/pic-8.png" class="vip-money"></image>
-									<text wx:if="{{userInfo.amount}}">{{userInfo.amount/100}}</text>
-									<text wx:else>{{0}}</text>
+									<text wx:if="{{userInfo.amount}}">{{userInfo.amount}}</text>
+									<text wx:else>0.00</text>
 								</view>
 								<view class="woller-right" wx:else>
 									<text class="bindmobile">绑定手机查看</text>
@@ -96,7 +96,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="list-common" bindtap="toMineOrder" wx:if="{{true}}">
+		<view class="list-common" bindtap="toMineOrder">
 			<view class="common-left">
 				<image src="../../assets/images/mine/pic-9.png" class="common-icon-three"></image>
 			</view>
@@ -141,5 +141,4 @@
 			</view>
 		</view>
 	</view>
-
 </view>

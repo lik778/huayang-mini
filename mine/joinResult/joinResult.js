@@ -68,7 +68,12 @@ Page({
       width: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth,
       height: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenHeight,
     }
-    if (info.width - 40 < (info.height - 183) / 1.5) {
+    console.log(info)
+    if(info.height<667){
+      this.setData({
+        bottom:-1
+      })
+    }else if (info.width - 40 < (info.height - 183) / 1.5) {
       this.setData({
         width: info.width - 40,
         height: (info.width - 40) * 1.5,

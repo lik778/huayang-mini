@@ -40,7 +40,6 @@ Page({
       if (res.length !== 0) {
         for (let i in res) {
           if (Number.isInteger(res[i].amount / 100)) {
-            console.log(res[i].amount / 100 + ".00")
             res[i].amount = res[i].amount / 100 + ".00"
           } else {
             res[i].amount = res[i].amount / 100

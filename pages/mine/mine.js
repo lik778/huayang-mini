@@ -154,6 +154,15 @@ Page({
                         setLocalStorage(GLOBAL_KEY.vipupdateAccountInfo, "false")
                     }
                 }
+                if (Number.isInteger(res.amount / 100)) {
+                    res.amount =res.amount / 100 + ".00"
+                  } else {
+                    res.amount = res.amount / 100
+                  }
+                  console.log(res)
+                  this.setData({
+                    userInfo: res
+                  })
             })
         } else {
             setTimeout(() => {
@@ -179,7 +188,10 @@ Page({
     },
     // 生命周期函数--监听页面初次渲染完成
     onReady: function () {
-
+        let systemInfo = wx.getSystemInfoSync()
+        // 底部tabBar的高度
+        let tabBarHeight =systemInfo.screenHeight-systemInfo.windowHeight
+        console.log(tabBarHeight)
     },
     // 生命周期函数--监听页面显示
     onShow: function () {

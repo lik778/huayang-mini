@@ -66,20 +66,17 @@
       {
         "pagePath": "pages/index/index",
         "selectedIconPath": "assets/images/common/liveActive.png",
-        "iconPath": "assets/images/common/live.png",
-        "text": ""
+        "iconPath": "assets/images/common/live.png"
       },
       {
         "pagePath": "pages/mall/mall",
         "selectedIconPath": "assets/images/common/mallActive.png",
-        "iconPath": "assets/images/common/mall.png",
-        "text": ""
+        "iconPath": "assets/images/common/mall.png"
       },
       {
         "pagePath": "pages/mine/mine",
         "selectedIconPath": "assets/images/common/mineActive.png",
-        "iconPath": "assets/images/common/mine.png",
-        "text": ""
+        "iconPath": "assets/images/common/mine.png"
       }
     ]
   },

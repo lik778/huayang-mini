@@ -262,17 +262,17 @@
 }
 
 .join-button {
-    width: 196rpx;
-    height: 72rpx;
+    width: 188rpx;
+    height: 64rpx;
     border-radius: 36rpx;
     opacity: 0.8;
     border: 2px solid rgba(0, 0, 0, 1);
     text-align: center;
-    line-height: 72rpx;
+    line-height: 64rpx;
     font-size: 16px;
     font-family: PingFangSC-Semibold, PingFang SC;
     font-weight: 600;
-    color: rgba(0, 0, 0, 0.8);
+    color: rgba(0, 0, 0, 0.8);    
 }
 
 /* 列表 */

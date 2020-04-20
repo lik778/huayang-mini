@@ -210,7 +210,7 @@
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: rgba(238, 187, 136, 1);
-    line-height: 16px;
+    line-height: 22px;
     padding-left: 28rpx;
 }
 
