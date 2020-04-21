@@ -14,7 +14,7 @@ Page({
   data: {
     radio: '0',
     webViewData: 0,
-    baseUrl:"",
+    baseUrl: "",
     statusHeight: ""
   },
   // 切换性别
@@ -36,12 +36,24 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    this.getWebViewData()
-    this.setData({
-      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
-      baseUrl:request.baseUrl
-    })
+  onLoad: function () {
+    if (getLocalStorage(GLOBAL_KEY.accountInfo)===undefined) {
+      // 未手机号授权
+      wx.switchTab({
+        url: '/pages/mine/mine',
+      })
+    } else if (!JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).is_zhide_vip) {
+      // 手机号授权，但不是vip
+      wx.navigateTo({
+        url: '/mine/joinVip/joinVip?from=article',
+      })
+    } else {
+      this.getWebViewData()
+      this.setData({
+        statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
+        baseUrl: request.baseUrl
+      })
+    }
   },
 
   /**

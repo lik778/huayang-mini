@@ -18,8 +18,12 @@ import {
     setLocalStorage
 } from "../../utils/util"
 
-import { store } from '../../store'
-import { checkAuth } from "../../utils/auth"
+import {
+    store
+} from '../../store'
+import {
+    checkAuth
+} from "../../utils/auth"
 
 Page({
 
@@ -27,7 +31,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        userInfo: {},
+        userInfo: "",
         width: 200,
         showBindPhoneButton: true,
     },
@@ -62,6 +66,8 @@ Page({
             point: this.data.userInfo.zhide_point, //花豆
             isVip: this.data.userInfo.is_zhide_vip, //是否为vip
         }
+        console.log(wolletData)
+        // return
         wx.navigateTo({
             url: `/mine/wallet/wallet?wolletData=${JSON.stringify(wolletData)}`,
         })
@@ -134,6 +140,9 @@ Page({
     getUserInfoData() {
         // 判断是否手机号登录，控制显示授权手机号按钮
         let showBindPhoneButton = getLocalStorage(GLOBAL_KEY.accountInfo) === undefined ? true : false
+        this.setData({
+            showBindPhoneButton: showBindPhoneButton
+        })
         if (!showBindPhoneButton) {
             getUserInfo("scene=zhide").then(res => {
                 if (res.code === -2) {
@@ -141,28 +150,25 @@ Page({
                         showBindPhoneButton: true,
                         userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo))
                     })
-
                 } else {
+                    if (Number.isInteger(res.amount / 100)) {
+                        res.amount = res.amount / 100 + ".00"
+                    } else {
+                        res.amount = res.amount / 100
+                    }
                     res.mobile = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).mobile
+                    setLocalStorage(GLOBAL_KEY.accountInfo, res)
                     this.setData({
                         showBindPhoneButton: false,
-                        userInfo: res || {}
+                        userInfo:res
                     })
-                    if (getLocalStorage(GLOBAL_KEY.updateAccountInfo) === "true" || getLocalStorage(GLOBAL_KEY.vipupdateAccountInfo) === "true") {
-                        setLocalStorage(GLOBAL_KEY.accountInfo, res.data)
-                        setLocalStorage(GLOBAL_KEY.updateAccountInfo, "false")
-                        setLocalStorage(GLOBAL_KEY.vipupdateAccountInfo, "false")
-                    }
+
+                    // if (getLocalStorage(GLOBAL_KEY.updateAccountInfo) === "true" || getLocalStorage(GLOBAL_KEY.vipupdateAccountInfo) === "true") {
+                    //     setLocalStorage(GLOBAL_KEY.accountInfo, res.data)
+                    //     setLocalStorage(GLOBAL_KEY.updateAccountInfo, "false")
+                    //     setLocalStorage(GLOBAL_KEY.vipupdateAccountInfo, "false")
+                    // }
                 }
-                if (Number.isInteger(res.amount / 100)) {
-                    res.amount =res.amount / 100 + ".00"
-                  } else {
-                    res.amount = res.amount / 100
-                  }
-                  console.log(res)
-                  this.setData({
-                    userInfo: res
-                  })
             })
         } else {
             setTimeout(() => {
@@ -174,37 +180,23 @@ Page({
                 })
             }, 500)
         }
-        this.setData({
-            showBindPhoneButton: showBindPhoneButton
-        })
+
     },
     // 生命周期函数--监听页面加载
     onLoad: function (options) {
-        this.storeBindings = createStoreBindings(this, {
-            store,
-            fields: ['numA', 'numB', 'sum'],
-            actions: ['update'],
-        })
     },
     // 生命周期函数--监听页面初次渲染完成
-    onReady: function () {
-        let systemInfo = wx.getSystemInfoSync()
-        // 底部tabBar的高度
-        let tabBarHeight =systemInfo.screenHeight-systemInfo.windowHeight
-        console.log(tabBarHeight)
-    },
+    onReady: function () {},
     // 生命周期函数--监听页面显示
     onShow: function () {
-        checkAuth({listenable: true}).then(() => {
-            if (getLocalStorage(GLOBAL_KEY.accountInfo)) {
-                this.setData({
-                    userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-                })
-            } else {
-                this.setData({
-                    userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo))
-                })
-            }
+        checkAuth({
+            listenable: true
+        }).then(() => {
+            // if (getLocalStorage(GLOBAL_KEY.accountInfo)) {
+            //     this.setData({
+            //         userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+            //     })
+            // }
             this.getUserInfoData()
             this.changeScene()
         })

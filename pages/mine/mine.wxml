@@ -1,5 +1,5 @@
 <!--pages/mine/mine.wxml-->
-<view class="mine">
+<view class="mine" wx:if="{{userInfo!==''}}">
 	<view class="banner">
 		<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368049ZbJKPz.jpg" class="banner-image"></image>
 		<view class="userinfo">

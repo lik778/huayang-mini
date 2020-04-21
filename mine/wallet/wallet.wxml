@@ -20,7 +20,7 @@
 				<view class="money-middle"></view>
 				<view class="money-right">
 					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368357mBYwJU.jpg"></image>
-					<text>{{wolletData.balance}}</text>
+					<text>{{wolletData.balance||'0.00'}}</text>
 				</view>
 			</view>
 			<view class="button-line">

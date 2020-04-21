@@ -235,7 +235,6 @@ export const getSchedule = async function (roomIds = []) {
 		// 1. globalData中无值
 		if (!target) {
 			let {liveStatus = 0} = await queryLiveStatus(roomId) || {}
-			console.log(liveStatus)
 			scheduleData.push({
 				roomId: roomId,
 				liveStatus: WeChatLiveStatus[liveStatus],
@@ -250,7 +249,7 @@ export const getSchedule = async function (roomIds = []) {
 			} else {
 				// 2.2 timestamp过期
 				let {liveStatus} = await queryLiveStatus(targetRoomId)
-				console.log(liveStatus)
+				
 				target.liveStatus = WeChatLiveStatus[liveStatus]
 				target.timestamp = +new Date() + 5 * 60 * 1000
 			}

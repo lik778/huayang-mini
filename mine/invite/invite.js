@@ -247,7 +247,7 @@ Page({
   onShareAppMessage: function (res) {
     console.log(res)
     return {
-      title: '分享',
+      title: `${this.data.userInfo.nickname}刚加入花样汇，邀请你一起加入，免费课程看不完`,
       path: `/mine/joinVip/joinVip?scene=${getLocalStorage(GLOBAL_KEY.userId)}`,
       success: function (res) {
         // 转发成功
