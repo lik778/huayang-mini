@@ -19,7 +19,8 @@ export function createOrder(params) {
 	return new Promise(resolve => {
 		request._post(URL.createOrder, params).then(({
 			data,
-			code
+			code,
+			message
 		}) => {
 			if (code === 0) {
 				// 调用获取支付凭证
@@ -27,11 +28,17 @@ export function createOrder(params) {
 					open_id: getLocalStorage(GLOBAL_KEY.openId),
 					product_title: "花样会员",
 					order_id: data.id,
-					app_id:JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)).app_id
+					app_id: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)).app_id
 					// app_id:"wx5705fece1e1cdc1e"
 				}
-				getPaySign(getPaySignParams).then(res=>{
+				getPaySign(getPaySignParams).then(res => {
 					resolve(res)
+				})
+			} else {
+				wx.showToast({
+					title: message,
+					icon: "none",
+					duration: 3000
 				})
 			}
 		})

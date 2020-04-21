@@ -58,7 +58,7 @@ Page({
     // 跳往我的钱包
     toWallet() {
         let wolletData = {
-            balance: this.data.userInfo.amount / 100 || 0, //余额
+            balance: this.data.userInfo.amount, //余额
             point: this.data.userInfo.zhide_point, //花豆
             isVip: this.data.userInfo.is_zhide_vip, //是否为vip
         }

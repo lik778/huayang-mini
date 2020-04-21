@@ -186,6 +186,7 @@
 .wollet-one {
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .woller-middle {
@@ -208,11 +209,16 @@
     display: flex;
     align-items: flex-end;
     position: relative;
+
+}
+
+.wollet-right-data {
+    width: calc(100% - 130rpx);
 }
 
 .wollet-left {
     display: flex;
-    align-items:center;
+    align-items: center;
 }
 
 .woller-right text {
@@ -272,7 +278,14 @@
     font-size: 16px;
     font-family: PingFangSC-Semibold, PingFang SC;
     font-weight: 600;
-    color: rgba(0, 0, 0, 0.8);    
+    color: rgba(0, 0, 0, 0.8);
+    background: transparent;
+    box-sizing: content-box;
+    padding: 0;
+}
+
+.join-button::after {
+    display: none;
 }
 
 /* 列表 */
@@ -334,9 +347,11 @@
     padding-left: 34rpx;
     padding-right: 24rpx;
 }
-.common-arrow{
+
+.common-arrow {
     padding-right: 32rpx;
 }
+
 .common-left image {
     vertical-align: bottom;
 }
@@ -345,7 +360,7 @@
 .common-arrow image {
     width: 16rpx;
     height: 28rpx;
-    
+
 }
 
 .common-right {
