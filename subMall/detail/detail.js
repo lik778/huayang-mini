@@ -1,6 +1,7 @@
 // subMall/detail/detail.js
 import { getProductInfo, getYouZanAppId } from "../../api/mall/index"
 import { checkAuth } from "../../utils/auth"
+import { changeTwoDecimal_f } from "../../utils/util"
 
 Page({
 	/**
@@ -42,6 +43,7 @@ Page({
 	},
 	getProductInfo(productId) {
 		getProductInfo({product_id: productId}).then(({media_list, product}) => {
+			product.discount_price = changeTwoDecimal_f(product.discount_price / 100)
 			this.setData({
 				bannerList: [...media_list],
 				productInfo: {...product},

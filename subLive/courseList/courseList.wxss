@@ -11,12 +11,6 @@
   font-weight: 500 !important;
   color: rgb(0,0,0) !important;
 }
-.van-tabs__line {
-  width: 48rpx !important;
-  margin: 0 13.5rpx !important;
-  height: 8rpx !important;
-  border-radius: 915rpx !important;
-}
 .course-list {
   font-size: 0;
   min-height: 100vh;

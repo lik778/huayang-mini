@@ -10,7 +10,7 @@
 
   <view class="info">
     <view class="title">{{productInfo.name}}</view>
-    <view class="price-info"><text class="unit">¥</text><text class="price">{{productInfo.price / 100}}</text></view>
+    <view class="price-info"><text class="unit">¥</text><text class="price">{{productInfo.discount_price}}</text></view>
   </view>
   <view class="detail-content">
     <block wx:for="{{detailContent}}" wx:key="index">
@@ -18,5 +18,5 @@
     </block>
   </view>
 
-  <view class="fixed-btn" bindtap="navigateToMiniProgram"><text class="btn-price"><text class="btn-unit">¥</text>{{productInfo.price / 100}}</text> <text class="btn-text">立即购买</text></view>
+  <view class="fixed-btn" bindtap="navigateToMiniProgram"><text class="btn-price"><text class="btn-unit">¥</text>{{productInfo.discount_price}}</text> <text class="btn-text">立即购买</text></view>
 </view>
