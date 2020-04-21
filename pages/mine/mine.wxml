@@ -62,7 +62,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="vip-num-module">
+				<view class="vip-num-module"  wx:if="{{userInfo.is_zhide_vip}}">
 					<view>会员号</view>
 					<view>{{userInfo.zhide_num}}</view>
 				</view>
