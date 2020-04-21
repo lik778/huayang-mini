@@ -1,21 +1,16 @@
 <view class="detail">
-  <view class="banner">
-    <swiper indicator-dots="{{indicatorDots}}" bindchange="currentHandle"
-            autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class="swiper-item">
-      <block wx:for="{{bannerList}}" wx:key="index">
-        <swiper-item>
-          <image class="swiper-image" src="{{item.url}}"></image>
-        </swiper-item>
-      </block>
-    </swiper>
-    <cover-view class="swp-dot" wx:if="{{bannerList.length > 1}}">
-      <cover-view class="square-12">{{current + 1}}/{{bannerList.length}}</cover-view>
-    </cover-view>
-  </view>
+  <swiper indicator-dots="{{indicatorDots}}"
+          autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class="swiper-item">
+    <block wx:for="{{bannerList}}" wx:key="index">
+      <swiper-item>
+        <image class="swiper-image" mode="aspectFill" src="{{item.url}}"></image>
+      </swiper-item>
+    </block>
+  </swiper>
 
   <view class="info">
-    <view class="title limit-one-line">{{productInfo.name}}</view>
-    <view class="price-info"><text class="unit">¥</text><text class="price">{{productInfo.price}}</text></view>
+    <view class="title">{{productInfo.name}}</view>
+    <view class="price-info"><text class="unit">¥</text><text class="price">{{productInfo.price / 100}}</text></view>
   </view>
   <view class="detail-content">
     <block wx:for="{{detailContent}}" wx:key="index">
@@ -23,5 +18,5 @@
     </block>
   </view>
 
-  <view class="fixed-btn" bindtap="navigateToMiniProgram"><text class="btn-price"><text class="btn-unit">¥</text>{{productInfo.price}}</text> <text class="btn-text">立即购买</text></view>
+  <view class="fixed-btn" bindtap="navigateToMiniProgram"><text class="btn-price"><text class="btn-unit">¥</text>{{productInfo.price / 100}}</text> <text class="btn-text">立即购买</text></view>
 </view>

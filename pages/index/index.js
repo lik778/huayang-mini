@@ -1,30 +1,12 @@
 // pages/live/live.js
-import {
-	getLiveBannerList,
-	getLiveList,
-	updateLiveStatus
-} from "../../api/live/index"
-import {
-	GLOBAL_KEY,
-	WeChatLiveStatus
-} from '../../lib/config'
-import {
-	$notNull,
-	checkIdentity,
-	getLocalStorage,
-	getSchedule,
-	setLocalStorage
-} from '../../utils/util'
-import {
-	statisticsWatchNo
-} from "../../api/live/course"
-import {
-	bindWxPhoneNumber
-} from "../../api/auth/index"
-import {
-	checkAuth
-} from "../../utils/auth"
+import { getLiveBannerList, getLiveList, updateLiveStatus } from "../../api/live/index"
+import { GLOBAL_KEY, WeChatLiveStatus } from '../../lib/config'
+import { $notNull, checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from '../../utils/util'
+import { statisticsWatchNo } from "../../api/live/course"
+import { bindWxPhoneNumber } from "../../api/auth/index"
+import { checkAuth } from "../../utils/auth"
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog'
+import { getUserInfo } from "../../api/mine/index"
 
 Page({
 	/**
@@ -44,6 +26,15 @@ Page({
 		didVip: false,
 		liveStatusIntervalTimer: null,
 		showSuccess: false, //成为超级会员弹窗
+		indicatorDots: false,
+		vertical: false,
+		autoplay: false,
+		interval: 2000,
+		duration: 500,
+	},
+	// 处理swiper点击回调
+	handleSwiperTap() {
+		wx.navigateTo({url: this.data.bannerPictureObject.link})
 	},
 	// 关闭立即邀请
 	onClickHide() {
@@ -172,7 +163,7 @@ Page({
 					coverPicture: item.zhibo_room.cover_pic,
 					sharePicture: item.zhibo_room.share_pic,
 					status: item.zhibo_room.status,
-					liveStatus: 0,
+					liveStatus: '',
 					link: item.zhibo_room.link,
 					vipOnly: item.zhibo_room.vip_only,
 					avatar: item.user && item.user.avatar_url ? item.user.avatar_url : 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586332410GvsWnF.jpg',
@@ -229,17 +220,25 @@ Page({
 	getBanner() {
 		getLiveBannerList().then((banner) => {
 			let bannerList = banner.map(b => {
-				return {
-					zhiboRoomId: b.zhibo_room.id,
-					officialRoomId: b.kecheng.user_id,
-					roomId: b.zhibo_room.num,
-					roomType: b.zhibo_room.room_type,
-					author: b.user.nick_name,
-					name: b.banner.title ? b.banner.title.split('\\n').join('\n') : '',
-					bannerPicture: b.banner.pic_url,
-					color: b.banner.bg_color,
-					visitCount: b.zhibo_room.visit_count,
-					status: b.zhibo_room.status
+				if (b.zhibo_room && b.kecheng && b.user) {
+					return {
+						zhiboRoomId: b.zhibo_room.id,
+						officialRoomId: b.kecheng.user_id,
+						roomId: b.zhibo_room.num,
+						roomType: b.zhibo_room.room_type,
+						author: b.user.nick_name,
+						name: b.banner.title ? b.banner.title.split('\\n').join('\n') : '',
+						bannerPicture: b.banner.pic_url,
+						color: b.banner.bg_color,
+						link: b.banner.link,
+						visitCount: b.zhibo_room.visit_count,
+						status: b.zhibo_room.status,
+					}
+				} else {
+					return {
+						bannerPicture: b.banner.pic_url,
+						link: b.banner.link
+					}
 				}
 			})
 			// 筛选出直播间状态不是"回看"的房间号[0:'默认',1:'直播中',2:'回看']
@@ -284,12 +283,6 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
-		if ($notNull(accountInfo)) {
-			this.setData({
-				didVip: accountInfo.is_zhide_vip
-			})
-		}
 	},
 
 	/**
@@ -311,6 +304,17 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
+		// 检查本地账户信息
+		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
+		if ($notNull(accountInfo)) {
+			getUserInfo("scene=zhide").then(info => {
+				setLocalStorage(GLOBAL_KEY.accountInfo, info)
+				this.setData({
+					didVip: info.is_zhide_vip
+				})
+			})
+		}
+
 		checkAuth({
 			listenable: true
 		})
@@ -321,9 +325,6 @@ Page({
 			})
 			wx.removeStorageSync(GLOBAL_KEY.vip)
 		}
-		// wx.navigateTo({
-		// 	url: '/mine/joinSchool/joinSchool',
-		// })
 	},
 
 	/**
@@ -362,10 +363,8 @@ Page({
 	 */
 	onShareAppMessage: function () {
 		return {
-			title: "花样值得买",
-			desc: "花样",
+			title: "花样直播",
 			path: '/pages/index/index',
-			imgUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586870905SEwHoX.jpg"
 		}
 	},
 })

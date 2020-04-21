@@ -14,7 +14,7 @@ Page({
 	 * Page initial data
 	 */
 	data: {
-		didFromArticle: false,
+		didFromPublic: false,
 		show: false
 	},
 	jumpToPrivacy() {
@@ -52,7 +52,7 @@ Page({
 						}
 						let originUserInfo = await bindUserInfo(params)
 						setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
-						if (this.data.didFromArticle) {
+						if (this.data.didFromPublic) {
 							let userId = getLocalStorage(GLOBAL_KEY.userId)
 							let { is_zhide_vip, student_num } = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 							if (userId == null) {
@@ -87,7 +87,7 @@ Page({
 										showCancelButton: false
 									}).then(() => {
 										wx.navigateTo({
-											url: '/mine/joinVip/joinVip?from=article',
+											url: `/mine/joinVip/joinVip?from=${this.data.fromPath}`,
 										})
 									}).catch(() => {})
 								}
@@ -129,11 +129,12 @@ Page({
 	 * Lifecycle function--Called when page load
 	 */
 	onLoad: function (options) {
-		let from = options.from
+		let fromPath = options.from
 		// 判断是否来自公众号文章
-		if (from === 'article') {
+		if (fromPath != null) {
 			this.setData({
-				didFromArticle: true
+				didFromPublic: true,
+				fromPath
 			})
 		}
 	},
@@ -177,13 +178,6 @@ Page({
 	 * Called when page reach bottom
 	 */
 	onReachBottom: function () {
-
-	},
-
-	/**
-	 * Called when user click on the top right corner to share
-	 */
-	onShareAppMessage: function () {
 
 	}
 })

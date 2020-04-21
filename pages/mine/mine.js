@@ -18,12 +18,8 @@ import {
     setLocalStorage
 } from "../../utils/util"
 
-import {
-    store
-} from '../../store'
-import {
-    checkAuth
-} from "../../utils/auth"
+import { store } from '../../store'
+import { checkAuth } from "../../utils/auth"
 
 Page({
 
@@ -66,8 +62,6 @@ Page({
             point: this.data.userInfo.zhide_point, //花豆
             isVip: this.data.userInfo.is_zhide_vip, //是否为vip
         }
-        console.log(wolletData)
-        // return
         wx.navigateTo({
             url: `/mine/wallet/wallet?wolletData=${JSON.stringify(wolletData)}`,
         })
@@ -224,9 +218,7 @@ Page({
     onShareAppMessage: function () {
         return {
             title: "花样值得买",
-            desc: "花样",
-            path: '/pages/mine/mine',
-            imgUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586870905SEwHoX.jpg"
+            path: '/pages/index/index',
         }
     }
 })

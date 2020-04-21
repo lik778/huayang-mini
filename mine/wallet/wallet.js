@@ -103,5 +103,5 @@ Page({
    */
   onReachBottom: function () {
 
-  },
+  }
 })

@@ -148,6 +148,5 @@ Page({
    */
   onReachBottom: function () {
 
-  },
-
+  }
 })

@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "加入会员",
+  "navigationBarTitleText": "加入花样会员",
   "navigationStyle": "custom",
   "usingComponents": {
     "naviBar": "../../components/navibar/navibar",

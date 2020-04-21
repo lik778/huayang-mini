@@ -1,5 +1,10 @@
 // subLive/review/review.js
-import { getLiveInfo } from "../../api/live/course"
+import { getLiveInfo, getWatchLiveAuth, statisticsWatchNo } from "../../api/live/course"
+import { getLocalStorage, setLocalStorage } from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
+import Dialog from "../../miniprogram_npm/@vant/weapp/dialog/dialog"
+import { checkAuth } from "../../utils/auth"
+import { bindWxPhoneNumber } from "../../api/auth/index"
 
 Page({
 
@@ -7,7 +12,9 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
-		zhiboRoomInfo: {}
+		zhiboRoomInfo: {},
+		zhiboRoomId: 0,
+		show: false
 	},
 	haveMore() {
 		const type = this.data.zhiboRoomInfo.zhibo_room.room_type
@@ -22,14 +29,75 @@ Page({
 			})
 		}
 	},
+	auth(zhiboRoomId) {
+		let userId = getLocalStorage(GLOBAL_KEY.userId)
+		if (userId == null) {
+			this.setData({show: true})
+		} else {
+			// 获取直播权限
+			getWatchLiveAuth({room_id: zhiboRoomId, user_id: userId}).then(res => {
+				if (res === 'vip') {
+					// 非会员，跳往花样汇
+					wx.navigateTo({
+						url: '/subLive/unAuthorized/unAuthorized',
+					})
+				} else if (res === 'daxue') {
+					// 未加入花样大学,跳往入学申请页
+					Dialog.confirm({
+						showCancelButton: false,
+						title: '申请入学立即观看',
+						message: '完成入学信息登记，观看课程'
+					})
+						.then(() => {
+							wx.navigateTo({
+								url: '/mine/joinSchool/joinSchool',
+							})
+						})
+				} else {
+					// 反之，有权限查看
+					// 优先统计观看人数
+					statisticsWatchNo({
+						zhibo_room_id: zhiboRoomId,
+						open_id: getLocalStorage(GLOBAL_KEY.openId)
+					})
+				}
+			})
+		}
+	},
+	/**
+	 * 一键获取微信手机号
+	 * @param e
+	 */
+	async getPhoneNumber(e) {
+		if (!e) return
+		let {
+			errMsg = '', encryptedData: encrypted_data = '', iv = ''
+		} = e.detail
+		if (errMsg.includes('ok')) {
+			let open_id = getLocalStorage(GLOBAL_KEY.openId)
+			if (encrypted_data && iv) {
+				let originAccountInfo = await bindWxPhoneNumber({
+					open_id,
+					encrypted_data,
+					iv
+				})
+				setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
+			}
+		} else {
+			this.auth(this.data.zhiboRoomId)
+			console.error('用户拒绝手机号授权')
+		}
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function ({zhiboRoomId}) {
 		getLiveInfo({zhibo_room_id: zhiboRoomId}).then((response) => {
 			this.setData({
-				zhiboRoomInfo: { ...response }
+				zhiboRoomInfo: { ...response },
+				zhiboRoomId
 			})
+			this.auth(zhiboRoomId)
 		})
 	},
 
@@ -44,7 +112,8 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-
+		checkAuth()
+		this.data.zhiboRoomId && this.auth(this.data.zhiboRoomId)
 	},
 
 	/**
@@ -79,6 +148,9 @@ Page({
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
-
+		return {
+			title: '花样直播',
+			path: `/subLive/review/review?zhiboRoomId=` + this.data.zhiboRoomId,
+		}
 	}
 })
