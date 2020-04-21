@@ -399,3 +399,16 @@
     line-height: 72rpx;
     text-align: center;
 }
+
+.vip-num-module {
+    position: absolute;
+    right: 24rpx;
+    top: 22rpx;
+    font-size: 12px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(153, 102, 68, 1);
+    line-height: 17px;
+    z-index: 50;
+    text-align: right;
+}

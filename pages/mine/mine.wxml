@@ -62,6 +62,10 @@
 						</view>
 					</view>
 				</view>
+				<view class="vip-num-module">
+					<view>会员号</view>
+					<view>{{userInfo.zhide_num}}</view>
+				</view>
 			</view>
 
 		</view>
