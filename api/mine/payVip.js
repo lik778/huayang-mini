@@ -16,7 +16,7 @@ import {
  * @returns {Promise<unknown>}
  */
 export function createOrder(params) {
-	return new Promise(resolve => {
+	return new Promise((resolve,reject) => {
 		request._post(URL.createOrder, params).then(({
 			data,
 			code,
@@ -40,7 +40,10 @@ export function createOrder(params) {
 					icon: "none",
 					duration: 3000
 				})
+				resolve(0)
 			}
+		}).catch(err=>{
+			reject(err)
 		})
 	})
 }

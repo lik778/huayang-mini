@@ -25,7 +25,8 @@ Page({
         statusHeight: 0,
         showBindPhoneButton: true,
         checked: false,
-        formAuth: false
+        formAuth: false,
+        buyRepeat: true
     },
     // 选中
     onChange() {
@@ -41,17 +42,34 @@ Page({
     },
     // 购买会员
     buyVip() {
-        if (this.data.checked) {
-            payVip(this.data.userId).then(res => {
-                if (this.data.formAuth) {
-                    wx.navigateTo({
-                        url: '/mine/joinSchool/joinSchool',
+        if (this.data.checked && this.data.buyRepeat) {
+            this.setData({
+                buyRepeat: false
+            })
+            payVip({
+                id: this.data.userId,
+                buyRepeat: this.data.buyRepeat
+            }).then(res => {
+                if (res === 0) {
+                    this.setData({
+                        buyRepeat: true
                     })
                 } else {
-                    wx.switchTab({
-                        url: '/pages/index/index',
-                    })
+                    if (this.data.formAuth) {
+                        wx.navigateTo({
+                            url: '/mine/joinSchool/joinSchool',
+                        })
+                    } else {
+                        wx.switchTab({
+                            url: '/pages/index/index',
+                        })
+                    }
                 }
+
+            }).catch(() => {
+                this.setData({
+                    buyRepeat: true
+                })
             })
         } else {
             wx.showToast({

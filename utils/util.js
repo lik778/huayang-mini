@@ -32,7 +32,7 @@ export const formatNumber = n => {
  * 购买会员
  * @returns
  */
-export const payVip = function (params) {
+export const payVip = function ({params,buyRepeat}) {
 	let createOrderParmas = {
 		scene: "zhide_vip",
 		recommend_user_id: params || "",
@@ -41,15 +41,20 @@ export const payVip = function (params) {
 		open_id: getLocalStorage(GLOBAL_KEY.openId),
 	}
 	return new Promise(resolve => {
-		createOrder(createOrderParmas).then(res => {
-			let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo" //商户key
-			requestPayment({
-				prepay_id: res,
-				key: mallKey
-			}).then(res => {
-				resolve(res)
+			createOrder(createOrderParmas).then(res1 => {
+				if(res1===0){
+					// 库存不足
+					resolve(res1)
+				}else{
+					let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo" //商户key
+					requestPayment({
+						prepay_id: res1,
+						key: mallKey
+					}).then(res => {
+						resolve(res)
+					})
+				}
 			})
-		})
 	})
 }
 // 唤起微信支付
