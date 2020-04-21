@@ -1,19 +1,9 @@
 import request from "../../lib/request"
-import {
-  URL,
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  toast,
-  setLocalStorage,
-  getLocalStorage
-} from "../../utils/util"
+import { URL } from "../../lib/config"
 // 获取用户信息
 export const getUserInfo = (params) => {
   return new Promise(resolve => {
-    request._get(URL.getUserInfo + "?" + params).then(({
-      data
-    }) => {
+    request._get(URL.getUserInfo + "?" + params).then(({data}) => {
       resolve(data)
     })
   })

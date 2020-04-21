@@ -1,19 +1,9 @@
 // mine/joinVip/joinVip.js
 
-import {
-    GLOBAL_KEY
-} from "../../lib/config"
-import {
-    getLocalStorage,
-    payVip,
-    setLocalStorage
-} from "../../utils/util"
-import {
-    bindWxPhoneNumber
-} from "../../api/auth/index"
-import {
-    getUserInfo
-} from "../../api/mine/index"
+import { GLOBAL_KEY } from "../../lib/config"
+import { getLocalStorage, payVip, setLocalStorage } from "../../utils/util"
+import { bindWxPhoneNumber } from "../../api/auth/index"
+import { getUserInfo } from "../../api/mine/index"
 
 Page({
 
@@ -189,6 +179,9 @@ Page({
      * 用户点击右上角分享
      */
     onShareAppMessage: function () {
-
+        return {
+            title: "加入花样会员",
+            path: '/mine/joinVip/joinVip'
+        }
     }
 })

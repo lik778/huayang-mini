@@ -1,22 +1,9 @@
 // pages/mine/mine.js
-import {
-    createStoreBindings
-} from 'mobx-miniprogram-bindings'
-import {
-    getScene,
-    getUserInfo,
-    getUniversityCode
-} from "../../api/mine/index"
-import {
-    bindWxPhoneNumber
-} from "../../api/auth/index"
-import {
-    GLOBAL_KEY
-} from '../../lib/config'
-import {
-    getLocalStorage,
-    setLocalStorage
-} from "../../utils/util"
+import { createStoreBindings } from 'mobx-miniprogram-bindings'
+import { getScene, getUniversityCode, getUserInfo } from "../../api/mine/index"
+import { bindWxPhoneNumber } from "../../api/auth/index"
+import { GLOBAL_KEY } from '../../lib/config'
+import { getLocalStorage, setLocalStorage } from "../../utils/util"
 
 import { store } from '../../store'
 import { checkAuth } from "../../utils/auth"
@@ -159,7 +146,6 @@ Page({
                   } else {
                     res.amount = res.amount / 100
                   }
-                  console.log(res)
                   this.setData({
                     userInfo: res
                   })
@@ -232,9 +218,7 @@ Page({
     onShareAppMessage: function () {
         return {
             title: "花样值得买",
-            desc: "花样",
-            path: '/pages/mine/mine',
-            imgUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586870905SEwHoX.jpg"
+            path: '/pages/index/index',
         }
     }
 })

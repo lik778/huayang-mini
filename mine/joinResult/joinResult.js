@@ -1,15 +1,8 @@
 // mine/joinResult/joinResult.js
-import {
-  getUserInfo,
-  getScene
-} from "../../api/mine/index"
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  getLocalStorage,
-  setLocalStorage
-} from "../../utils/util"
+import { getScene, getUserInfo } from "../../api/mine/index"
+import { GLOBAL_KEY } from "../../lib/config"
+import { getLocalStorage, setLocalStorage } from "../../utils/util"
+
 Page({
 
   /**
@@ -147,13 +140,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
 
   }
 })

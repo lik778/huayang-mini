@@ -1,20 +1,14 @@
 <view class="mall">
-	<view class="banner" wx:if="{{bannerList.length > 0}}">
+	<view class="banner" style="height: {{swiperHeight}}" wx:if="{{bannerList.length > 0}}">
 		<swiper class="swiper" indicator-dots="{{indicatorDots}}" bindchange="currentHandle"
 						autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
 			<swiper-item wx:for="{{bannerList}}" wx:key="index">
-				<view class="swiper-image" style="background: url('{{item.pic_url}}') no-repeat center;background-size: cover;"></view>
+				<view class="swiper-image" bindtap="jumpToLink" data-item="{{item}}" style="background: url('{{item.pic_url}}') no-repeat center;background-size: cover;"></view>
 			</swiper-item>
 		</swiper>
 		<cover-view class="swp-dot" wx:if="{{bannerList.length > 1}}">
 			<cover-view class="square-12 m-r-8 {{current === index ?'active': ''}}" wx:for="{{bannerList}}" wx:key="{{index}}"></cover-view>
 		</cover-view>
-	</view>
-	<view class="category">
-		<view class="category-item" wx:for="{{categoryList}}" wx:key="index" bindtap="navigateToCategory" data-item="{{item}}">
-			<image mode="aspectFill" src="{{item.pic}}"></image>
-			<text>{{item.name}}</text>
-		</view>
 	</view>
 
 	<block wx:for="{{productList}}" wx:key="index">
@@ -36,4 +30,11 @@
 			</view>
 		</view>
 	</block>
+
+	<view class="category">
+		<view class="category-item" wx:for="{{categoryList}}" wx:key="index" bindtap="navigateToCategory" data-item="{{item}}">
+			<image mode="aspectFill" src="{{item.pic}}"></image>
+			<text>{{item.name}}</text>
+		</view>
+	</view>
 </view>

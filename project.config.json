@@ -107,6 +107,20 @@
 					"pathName": "pages/mine/mine",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "mine/joinSchool/joinSchool",
+					"pathName": "mine/joinSchool/joinSchool",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 8,
+					"name": "subLive/review/review",
+					"pathName": "subLive/review/review",
+					"query": "zhiboRoomId=87",
+					"scene": null
 				}
 			]
 		}

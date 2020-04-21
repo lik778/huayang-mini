@@ -345,3 +345,22 @@ export function changeTwoDecimal_f(x) {
 	}
 	return s_x
 }
+
+/**
+ * 获取网络图片信息
+ * @param src
+ * @returns {Promise<unknown>}
+ */
+export function queryImageInfo(src) {
+	return new Promise((resolve, reject) => {
+		wx.getImageInfo({
+			src,
+			success(response) {
+				resolve(response)
+			},
+			fail(error) {
+				reject(error)
+			}
+		})
+	})
+}

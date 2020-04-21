@@ -13,12 +13,14 @@ import { checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from "..
 import { checkAuth } from "../../utils/auth"
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast'
 import Dialog from "../../miniprogram_npm/@vant/weapp/dialog/dialog"
+import { getUniversityCode } from "../../api/mine/index"
 
 Page({
 	/**
 	 * 页面的初始数据
 	 */
 	data: {
+		daxueId: 0,
 		show: false,
 		didVisibleSubscribeBtn: true,
 		courseId: 0,
@@ -240,6 +242,10 @@ Page({
 		})
 		// 获取订阅状态
 		this.getStatus()
+		// 获取花样大学id，用于分享配置
+		getUniversityCode(`user_key=daxue`).then(res => {
+			this.setData({daxueId: res.data.id})
+		})
 	},
 
 	/**
@@ -289,9 +295,7 @@ Page({
 	onShareAppMessage: function () {
 		return {
 			title: "花样大学",
-			desc: "学习分享健康自信快乐的美",
-			path: '/pages/courseList/courseList',
-			imgUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586870905SEwHoX.jpg"
+			path: '/subLive/courseList/courseList?id=' + this.data.daxueId,
 		}
 	}
 })

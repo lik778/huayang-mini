@@ -1,13 +1,8 @@
 // mine/wallet/wallet.js
-import {
-  getInviteList
-} from "../../api/mine/index"
-import {
-  getLocalStorage
-} from "../../utils/util"
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { getInviteList } from "../../api/mine/index"
+import { getLocalStorage } from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
+
 Page({
 
   /**
@@ -102,13 +97,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
 
   }
 })

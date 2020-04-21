@@ -31,7 +31,17 @@
     background-blend-mode: multiply;
     color: white;
 }
-
+.swiper {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    border-radius: 16rpx;
+}
+.swiper image {
+    width: inherit;
+    height: inherit;
+    border-radius: 16rpx;
+}
 .status {
     position: absolute;
     left: 0;

@@ -8,6 +8,7 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
+		swiperHeight: '',
 		bannerList: [],
 		categoryList: [],
 		productList: [],
@@ -21,13 +22,13 @@ Page({
 		limit: 10,
 		didNoMore: false,
 	},
+	jumpToLink(e) {
+		let item = e.currentTarget.dataset.item
+		wx.navigateTo({url: item.link})
+	},
 	currentHandle(e) {
-		let {
-			current
-		} = e.detail
-		this.setData({
-			current
-		})
+		let {current} = e.detail
+		this.setData({current})
 	},
 	queryProductList() {
 		getProductList({
@@ -40,7 +41,7 @@ Page({
 			}
 
 			list.forEach(item => {
-				item.product.discount_price = changeTwoDecimal_f(item.product.discount_price / 100);
+				item.product.discount_price = changeTwoDecimal_f(item.product.discount_price / 100)
 			})
 
 			let result = [...this.data.productList, ...list]
@@ -51,14 +52,19 @@ Page({
 		})
 	},
 	queryCategory() {
-		getCategory({ level: 1 ,category_type:0}).then(list => {
+		getCategory({level: 1, category_type: 0}).then(list => {
 			this.setData({
 				categoryList: list.slice()
 			})
 		})
 	},
 	getBanner() {
-		getBannerList({ scene: 4 }).then(list => {
+		getBannerList({scene: 4}).then(list => {
+			// 获取首张banner图片信息
+			if (list.length > 0) {
+				let {pic_width: width, pic_height: height} = list[0]
+				this.setData({swiperHeight: (height * 688) / width + 'rpx'})
+			}
 			this.setData({
 				bannerList: list.slice()
 			})
@@ -134,6 +140,9 @@ Page({
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
-
+		return {
+			title: '花样值得买',
+			path: '/pages/mall/mall'
+		}
 	}
 })

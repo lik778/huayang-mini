@@ -6,7 +6,7 @@
 .banner {
     overflow: hidden;
     width: 688rpx;
-    height: 344rpx;
+    /*height: 344rpx;*/
     margin: 32rpx auto;
     border-radius: 16rpx;
 }
@@ -54,6 +54,7 @@
     justify-content: flex-start;
     align-items: center;
     padding: 0;
+    margin: 70rpx 0;
 }
 .category-item {
     display: flex;
