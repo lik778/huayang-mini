@@ -42,7 +42,6 @@ export const payVip = function (params) {
 	}
 	return new Promise(resolve => {
 		createOrder(createOrderParmas).then(res => {
-			// resolve(res)
 			let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo" //商户key
 			requestPayment({
 				prepay_id: res,

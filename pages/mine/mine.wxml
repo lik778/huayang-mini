@@ -37,9 +37,9 @@
 									<text wx:if="{{userInfo.amount}}">{{userInfo.amount}}</text>
 									<text wx:else>0.00</text>
 								</view>
-								<view class="woller-right" wx:else>
+								<view class="woller-right wollet-right-data" wx:else>
 									<text class="bindmobile">绑定手机查看</text>
-									<button type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="bindmobile-botton"></button>
+									<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="bindmobile-botton"></button>
 								</view>
 							</view>
 							<view class="wollet-two">
@@ -57,7 +57,8 @@
 							</view>
 						</view>
 						<view class="join-vip-right">
-							<view class="join-button" bindtap="joinVip">立即加入</view>
+							<view class="join-button" bindtap="joinVip" wx:if="{{!showBindPhoneButton}}">立即加入</view>
+							<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" wx:else class="join-button">立即加入</button>
 						</view>
 					</view>
 				</view>

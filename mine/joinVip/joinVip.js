@@ -93,6 +93,13 @@ Page({
             showBindPhoneButton: showBindPhoneButton
         })
     },
+    // 改变选择框
+    changeChecked() {
+        console.log(1)
+        this.setData({
+            checked: !this.data.checked
+        })
+    },
     // 一键获取手机号
     async getPhoneNumber(e) {
         if (!e) return
@@ -123,8 +130,8 @@ Page({
      */
     onLoad: function (options) {
         wx.showLoading({
-          title: '加载中...',
-          mask:true
+            title: '加载中...',
+            mask: true
         })
         let userId = options.scene ? decodeURIComponent(options.scene) : ""
         if (options.from === "article") {
