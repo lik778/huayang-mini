@@ -47,10 +47,8 @@ Page({
             this.setData({
                 buyRepeat: false
             })
-            payVip({
-                id: this.data.userId,
-                buyRepeat: this.data.buyRepeat
-            }).then(res => {
+            console.log()
+            payVip({id: this.data.userId}).then(res => {
                 if (res === 0) {
                     this.setData({
                         buyRepeat: true
@@ -158,6 +156,7 @@ Page({
                 formAuth: true
             })
         }
+        console.log(options)
         this.setData({
             userId: userId,
             statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight

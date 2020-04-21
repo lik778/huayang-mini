@@ -32,10 +32,10 @@ export const formatNumber = n => {
  * 购买会员
  * @returns
  */
-export const payVip = function ({params,buyRepeat}) {
+export const payVip = function ({id}) {
 	let createOrderParmas = {
 		scene: "zhide_vip",
-		recommend_user_id: params || "",
+		recommend_user_id: id || "",
 		product_id: request.baseUrl === ROOT_URL.dev ? 36 : 5,
 		count: 1,
 		open_id: getLocalStorage(GLOBAL_KEY.openId),
