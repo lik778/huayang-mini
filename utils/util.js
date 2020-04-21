@@ -40,7 +40,7 @@ export const payVip = function ({params,buyRepeat}) {
 		count: 1,
 		open_id: getLocalStorage(GLOBAL_KEY.openId),
 	}
-	return new Promise(resolve => {
+	return new Promise((resolve,reject) => {
 			createOrder(createOrderParmas).then(res1 => {
 				if(res1===0){
 					// 库存不足
@@ -52,6 +52,8 @@ export const payVip = function ({params,buyRepeat}) {
 						key: mallKey
 					}).then(res => {
 						resolve(res)
+					}).catch(err=>{
+						reject(err)
 					})
 				}
 			})
@@ -59,7 +61,7 @@ export const payVip = function ({params,buyRepeat}) {
 }
 // 唤起微信支付
 export const requestPayment = (paramsData) => {
-	return new Promise((resolve) => {
+	return new Promise((resolve,reject) => {
 		let params = getSign({
 			prepay_id: paramsData.prepay_id,
 			key: paramsData.key
@@ -78,7 +80,7 @@ export const requestPayment = (paramsData) => {
 				}
 			},
 			fail(err) {
-				console.log(err)
+				reject(err)
 			}
 		})
 	})
