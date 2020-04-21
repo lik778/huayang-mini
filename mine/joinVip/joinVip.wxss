@@ -1,6 +1,7 @@
 /* mine/joinVip/joinVip.wxss */
 .join-vip {
     background: #161616;
+    min-height: 100vh;
 }
 
 .banner {

@@ -1,9 +1,20 @@
 // mine/joinVip/joinVip.js
 
-import { GLOBAL_KEY } from "../../lib/config"
-import { getLocalStorage, payVip, setLocalStorage } from "../../utils/util"
-import { bindWxPhoneNumber } from "../../api/auth/index"
-import { getUserInfo } from "../../api/mine/index"
+import {
+    GLOBAL_KEY
+} from "../../lib/config"
+import {
+    getLocalStorage,
+    payVip,
+    setLocalStorage
+} from "../../utils/util"
+import {
+    bindWxPhoneNumber
+} from "../../api/auth/index"
+import {
+    getUserInfo,
+    getVipBg
+} from "../../api/mine/index"
 
 Page({
 
@@ -16,11 +27,12 @@ Page({
         showBindPhoneButton: true,
         checked: false,
         formAuth: false,
-        buyRepeat: true
+        buyRepeat: true,
+        bgList: ''
     },
     // 选中
     onChange() {
-        console.log(this.data.checked,21211)
+        console.log(this.data.checked, 21211)
         this.setData({
             checked: !this.data.checked
         })
@@ -38,7 +50,9 @@ Page({
                 buyRepeat: false
             })
             console.log()
-            payVip({id: this.data.userId}).then(res => {
+            payVip({
+                id: this.data.userId
+            }).then(res => {
                 if (res === 0) {
                     this.setData({
                         buyRepeat: true
@@ -102,7 +116,7 @@ Page({
     },
     // 改变选择框
     changeChecked() {
-        console.log(this.data.checked,9999999)
+        console.log(this.data.checked, 9999999)
         this.setData({
             checked: !this.data.checked
         })
@@ -132,6 +146,30 @@ Page({
             console.error('用户拒绝手机号授权')
         }
     },
+    // 获取背景图
+    getVipBgData() {
+        getVipBg().then(({
+            data
+        }) => {
+            let arr = []
+            let _this = this
+            for (let i in data) {
+                wx.getImageInfo({
+                    src: data[i],
+                    success(res) {
+                        let obj = {
+                            src: res.path,
+                            height: res.height
+                        }
+                        arr.push(obj)
+                        _this.setData({
+                            bgList: arr
+                        })
+                    }
+                })
+            }
+        })
+    },
     /**
      * 生命周期函数--监听页面加载
      */
@@ -146,7 +184,6 @@ Page({
                 formAuth: true
             })
         }
-        console.log(options)
         this.setData({
             userId: userId,
             statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
@@ -157,6 +194,7 @@ Page({
             })
         }
         this.getUserInfoData()
+        this.getVipBgData()
     },
     /**
      * 生命周期函数--监听页面初次渲染完成

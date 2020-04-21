@@ -1,5 +1,5 @@
 <!--mine/joinVip/joinVip.wxml-->
-<view class="join-vip">
+<view class="join-vip" wx:if="bgList!==''">
 	<!-- style="padding-top:{{statusHeight+44}}px;" -->
 	<view class="navigation">
 		<naviBar title="花样汇超级会员" color="rgba(250,250,250,0)" style="padding-top:{{statusHeight+44}}px;"></naviBar>
@@ -13,7 +13,7 @@
 			<text>花样百姓旗下专为50+青年精心打造的生活方式会员专区，为您精心定制专属会员权益，用心策划精致会员活动，引领时尚、健康、快乐的生活方式。</text>
 		</view>
 	</view>
-	<view class="main">
+	<view class="main" wx:if="{{false}}">
 		<view class="main-title">
 			<view class="main-title-line"></view>
 			<view class="main-title-text">3大会员权益</view>
@@ -146,18 +146,22 @@
 			</view>
 		</view>
 		<view class="desc">更多特权，敬请期待…</view>
-		<view class="button-line">
-			<view class="button {{checked?'button-active':''}}" bindtap="buyVip">
-				<view>立即加入</view>
-				<button type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" wx:if="{{showBindPhoneButton}}"></button>
-				<view><text decode="true">原价¥199.00</text><text>¥99年</text></view>
-			</view>
-			<view class="bottom">
-				<van-checkbox value="{{ checked }}" shape="square" checked-color="#FF4433" bind:change="onChange"></van-checkbox>
-				<view>
-					<text bindtap="changeChecked">阅读并同意</text>
-					<text bindtap="toBuyBook">《用户购买协议》</text>
-				</view>
+
+	</view>
+	<view>
+		<image mode='aspectFit' src="{{item.src}}" wx:for="{{bgList}}" wx:key="index" style="height:{{item.height}}rpx;width:100vw;vertical-align: bottom;padding-bottom:150px;"></image>
+	</view>
+	<view class="button-line">
+		<view class="button {{checked?'button-active':''}}" bindtap="buyVip">
+			<view>立即加入</view>
+			<button type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" wx:if="{{showBindPhoneButton}}"></button>
+			<view><text decode="true">原价¥199.00</text><text>¥99年</text></view>
+		</view>
+		<view class="bottom">
+			<van-checkbox value="{{ checked }}" shape="square" checked-color="#FF4433" bind:change="onChange"></van-checkbox>
+			<view>
+				<text bindtap="changeChecked">阅读并同意</text>
+				<text bindtap="toBuyBook">《用户购买协议》</text>
 			</view>
 		</view>
 	</view>

@@ -70,3 +70,14 @@ export const getMineOrder=(params)=>{
     })
   })
 }
+
+// 获取加入会员背景图
+export const getVipBg=()=>{
+  return new Promise(resolve=>{
+    request._get(URL.getVipBg).then(res=>{
+      if(res.code===0){
+        resolve(res)
+      }
+    })
+  })
+}
