@@ -15,6 +15,9 @@ Page({
 		zhiboRoomInfo: {},
 		zhiboRoomId: 0,
 	},
+	handleWaiting(e) {
+		console.log(e.detail);
+	},
 	haveMore() {
 		const type = this.data.zhiboRoomInfo.zhibo_room.room_type
 		const officialRoomId = this.data.zhiboRoomInfo.zhibo_room.user_id

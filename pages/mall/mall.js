@@ -86,6 +86,7 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
+		checkAuth({ignoreFocusLogin: true})
 		this.queryCategory()
 		this.queryProductList()
 		this.getBanner()
