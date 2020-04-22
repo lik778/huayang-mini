@@ -106,19 +106,14 @@ Page({
 	 */
 	onShow: function () {
 		checkAuth({listenable: true}).then(() => {
-			let userId = getLocalStorage(GLOBAL_KEY.userId)
-			if (userId == null) {
-				wx.navigateTo({url: '/pages/auth/auth'})
-			} else {
-				let zhiboRoomId = this.data.zhiboRoomId
-				getLiveInfo({zhibo_room_id: zhiboRoomId}).then((response) => {
-					this.setData({
-						zhiboRoomInfo: { ...response },
-						zhiboRoomId
-					})
-					zhiboRoomId && this.auth(zhiboRoomId)
+			let zhiboRoomId = this.data.zhiboRoomId
+			getLiveInfo({zhibo_room_id: zhiboRoomId}).then((response) => {
+				this.setData({
+					zhiboRoomInfo: { ...response },
+					zhiboRoomId
 				})
-			}
+				zhiboRoomId && this.auth(zhiboRoomId)
+			})
 		})
 	},
 
