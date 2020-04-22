@@ -1,7 +1,9 @@
 <!--subLive/review/review.wxml-->
 <view class="review">
+  <view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+    <naviBar title="花样直播" titleColor="transparent" color="transparent"></naviBar>
+  </view>
   <video src="{{zhiboRoomInfo.zhibo_room.link}}" class="video-container"></video>
   <cover-view class="btn" bindtap="haveMore">点击查看更多</cover-view>
-  <van-dialog title="提示" message="授权登录查看直播内容" show="{{ show }}" confirmButtonText="立即授权" confirm-button-open-type="getPhoneNumber" bind:getphonenumber="getPhoneNumber"></van-dialog>
   <van-dialog id="van-dialog" />
 </view>

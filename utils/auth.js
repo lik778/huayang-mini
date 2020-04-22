@@ -1,26 +1,32 @@
-import { APP_LET_ID, GLOBAL_KEY } from "../lib/config"
+import { APP_LET_ID, GLOBAL_KEY, Version } from "../lib/config"
 import { $notNull, hasUserInfo, setLocalStorage } from "./util"
-import { getWxInfo } from "../api/auth/index"
+import { checkFocusLogin, getWxInfo } from "../api/auth/index"
 
-const checkAuth = ({listenable = false} = {}) => {
-	if (listenable) {
-		return wxLogin()
-	} else {
-		return new Promise(resolve => {
-			if (hasUserInfo()) {
-				wxCheckSessionPromise().then(() => {
-					resolve()
-				}).catch(() => {
+const checkAuth = async ({listenable = false, ignoreFocusLogin = false} = {}) => {
+	let didFocusLogin = await checkFocusLogin({app_version: Version})
+
+	if (ignoreFocusLogin || didFocusLogin) {
+
+		if (listenable) {
+			return wxLogin()
+		} else {
+			return new Promise(resolve => {
+				if (hasUserInfo()) {
+					wxCheckSessionPromise().then(() => {
+						resolve()
+					}).catch(() => {
+						wxLogin().then(() => {
+							resolve()
+						})
+					})
+				} else {
 					wxLogin().then(() => {
 						resolve()
 					})
-				})
-			} else {
-				wxLogin().then(() => {
-					resolve()
-				})
-			}
-		})
+				}
+			})
+		}
+
 	}
 }
 
@@ -42,6 +48,7 @@ const wxLogin = () => {
 					wx.navigateTo({
 						url: '/pages/auth/auth'
 					})
+					reject()
 				}
 			})
 			.catch((error) => {

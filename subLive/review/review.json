@@ -1,4 +1,7 @@
 {
-  "usingComponents": {},
+  "navigationStyle":"custom",
+  "usingComponents": {
+    "naviBar": "../../components/navibar/navibar"
+  },
   "navigationBarTitleText": "花样直播"
 }

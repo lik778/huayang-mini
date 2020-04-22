@@ -1,24 +1,8 @@
 // pages/mine/mine.js
-import {
-    createStoreBindings
-} from 'mobx-miniprogram-bindings'
-import {
-    getScene,
-    getUserInfo,
-    getUniversityCode
-} from "../../api/mine/index"
-import {
-    bindWxPhoneNumber
-} from "../../api/auth/index"
-import {
-    GLOBAL_KEY
-} from '../../lib/config'
-import {
-    getLocalStorage,
-    setLocalStorage
-} from "../../utils/util"
-
-import { store } from '../../store'
+import { getScene, getUniversityCode, getUserInfo } from "../../api/mine/index"
+import { bindWxPhoneNumber } from "../../api/auth/index"
+import { GLOBAL_KEY } from '../../lib/config'
+import { getLocalStorage, setLocalStorage } from "../../utils/util"
 import { checkAuth } from "../../utils/auth"
 
 Page({
@@ -183,14 +167,7 @@ Page({
     onReady: function () {},
     // 生命周期函数--监听页面显示
     onShow: function () {
-        checkAuth({
-            listenable: true
-        }).then(() => {
-            // if (getLocalStorage(GLOBAL_KEY.accountInfo)) {
-            //     this.setData({
-            //         userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-            //     })
-            // }
+        checkAuth({listenable: true, ignoreFocusLogin: true}).then(() => {
             this.getUserInfoData()
             this.changeScene()
         })

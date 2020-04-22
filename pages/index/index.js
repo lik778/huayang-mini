@@ -265,12 +265,12 @@ Page({
 							}
 						}
 					})
-				}
-			})
 
-			this.setData({
-				bannerList,
-				bannerPictureObject: bannerList.length > 0 ? bannerList[0] : null
+					this.setData({
+						bannerList,
+						bannerPictureObject: bannerList.length > 0 ? bannerList[0] : null
+					})
+				}
 			})
 		})
 	},
@@ -309,15 +309,12 @@ Page({
 		if ($notNull(accountInfo)) {
 			getUserInfo("scene=zhide").then(info => {
 				setLocalStorage(GLOBAL_KEY.accountInfo, info)
-				this.setData({
-					didVip: info.is_zhide_vip
-				})
+				this.setData({didVip: info.is_zhide_vip})
 			})
 		}
 
-		checkAuth({
-			listenable: true
-		})
+		checkAuth({listenable: true})
+
 		// 检查是否会员开通成功
 		if (getLocalStorage(GLOBAL_KEY.vip) === true) {
 			this.setData({

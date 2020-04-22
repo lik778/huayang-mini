@@ -2,9 +2,13 @@ import request from "../../lib/request"
 import { URL } from "../../lib/config"
 // 获取用户信息
 export const getUserInfo = (params) => {
-  return new Promise(resolve => {
-    request._get(URL.getUserInfo + "?" + params).then(({data}) => {
-      resolve(data)
+  return new Promise((resolve, reject) => {
+    request._get(URL.getUserInfo + "?" + params).then(({data, code}) => {
+      if (code === 0) {
+        resolve(data)
+      } else {
+        reject()
+      }
     })
   })
 }

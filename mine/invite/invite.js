@@ -1,22 +1,10 @@
 // mine/invite/invite.js
-import {
-  createCanvas
-} from "./canvas"
-import {
-  getInviteCode,
-  getVipNum
-} from "../../api/mine/index"
-import {
-  subscription,
-  getSubscriptionStatus
-} from "../../api/live/course"
-import {
-  getLocalStorage
-} from "../../utils/util"
-import {
-  GLOBAL_KEY,
-  SubscriptType
-} from "../../lib/config"
+import { createCanvas } from "./canvas"
+import { getInviteCode, getVipNum } from "../../api/mine/index"
+import { getSubscriptionStatus, subscription } from "../../api/live/course"
+import { getLocalStorage } from "../../utils/util"
+import { GLOBAL_KEY, SubscriptType } from "../../lib/config"
+
 Page({
 
   /**
@@ -197,6 +185,9 @@ Page({
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
+
+    // 禁用右上角原生分享
+    wx.hideShareMenu()
   },
 
   /**

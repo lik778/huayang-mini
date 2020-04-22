@@ -14,7 +14,6 @@ Page({
 	data: {
 		zhiboRoomInfo: {},
 		zhiboRoomId: 0,
-		show: false
 	},
 	haveMore() {
 		const type = this.data.zhiboRoomInfo.zhibo_room.room_type
@@ -32,7 +31,7 @@ Page({
 	auth(zhiboRoomId) {
 		let userId = getLocalStorage(GLOBAL_KEY.userId)
 		if (userId == null) {
-			this.setData({show: true})
+			wx.navigateTo({url: '/pages/auth/auth'})
 		} else {
 			// 获取直播权限
 			getWatchLiveAuth({room_id: zhiboRoomId, user_id: userId}).then(res => {
@@ -92,13 +91,7 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function ({zhiboRoomId}) {
-		getLiveInfo({zhibo_room_id: zhiboRoomId}).then((response) => {
-			this.setData({
-				zhiboRoomInfo: { ...response },
-				zhiboRoomId
-			})
-			this.auth(zhiboRoomId)
-		})
+		this.setData({zhiboRoomId})
 	},
 
 	/**
@@ -112,8 +105,16 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		checkAuth()
-		this.data.zhiboRoomId && this.auth(this.data.zhiboRoomId)
+		checkAuth({listenable: true}).then(() => {
+			let zhiboRoomId = this.data.zhiboRoomId
+			getLiveInfo({zhibo_room_id: zhiboRoomId}).then((response) => {
+				this.setData({
+					zhiboRoomInfo: { ...response },
+					zhiboRoomId
+				})
+				zhiboRoomId && this.auth(zhiboRoomId)
+			})
+		})
 	},
 
 	/**
