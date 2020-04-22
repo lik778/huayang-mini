@@ -145,5 +145,20 @@
 				</view>
 			</view>
 		</view>
+		<!-- 会员权益介绍 -->
+		<!-- <view class="list-common" bindtap="toVipWelfare">
+			<view class="common-left">
+				<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368282YcibfN.jpg" class="common-icon-five"></image>
+			</view>
+			<view class="common-right">
+				<view class="common-desc">
+					<view class="common-desc-top">会员权益</view>
+					<view class="common-desc-bottom">会员权益介绍</view>
+				</view>
+				<view class="common-arrow">
+					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368318iSMbqC.jpg"></image>
+				</view>
+			</view>
+		</view> -->
 	</view>
 </view>

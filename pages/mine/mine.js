@@ -15,6 +15,12 @@ Page({
         width: 200,
         showBindPhoneButton: true,
     },
+    // 跳往会员权益介绍
+    toVipWelfare(){
+        wx.navigateTo({
+          url: '/mine/vipWelfare/vipWelfare',
+        })
+    },
     // 查询我的订单
     toMineOrder() {
         if (!this.data.showBindPhoneButton) {
