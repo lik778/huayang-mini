@@ -122,7 +122,7 @@ Page({
   onShareAppMessage: function () {
     return {
 			title: '花样大学入学申请',
-			path: `/mine/joinSchool/joinSchool?${getLocalStorage(GLOBAL_KEY.userId)}`
+			path: `/mine/joinSchool/joinSchool`
 		}
   }
 })

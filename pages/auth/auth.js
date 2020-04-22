@@ -87,7 +87,7 @@ Page({
 						}
 						let originUserInfo = await bindUserInfo(params)
 						setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
-						wx.navigateBack()
+						this.setData({show: true})
 					})
 				})
 
