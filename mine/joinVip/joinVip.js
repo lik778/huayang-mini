@@ -151,6 +151,7 @@ Page({
         getVipBg().then(({
             data
         }) => {
+            data=data.reverse()
             let arr = []
             let _this = this
             for (let i in data) {

@@ -40,7 +40,7 @@ Page({
         url: '/pages/mine/mine',
       })
     } else if (!JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).is_zhide_vip) {
-      // 手机号授权，但不是vip
+      // 手机号授权，但不是vip,from=article代表从公众号进入，买完会员后回到申请入学
       wx.navigateTo({
         url: '/mine/joinVip/joinVip?from=article',
       })

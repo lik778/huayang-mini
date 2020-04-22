@@ -148,8 +148,8 @@
 		<view class="desc">更多特权，敬请期待…</view>
 
 	</view>
-	<view>
-		<image mode='aspectFit' src="{{item.src}}" wx:for="{{bgList}}" wx:key="index" style="height:{{item.height}}rpx;width:100vw;vertical-align: bottom;padding-bottom:150px;"></image>
+	<view class="images">
+		<image mode='aspectFit' src="{{item.src}}" wx:for="{{bgList}}" wx:key="index" style="height:{{item.height}}rpx;width:100vw;vertical-align: bottom;"></image>
 	</view>
 	<view class="button-line">
 		<view class="button {{checked?'button-active':''}}" bindtap="buyVip">

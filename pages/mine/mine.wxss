@@ -187,6 +187,7 @@
     display: flex;
     align-items: center;
     width: 100%;
+    z-index: 10;
 }
 
 .woller-middle {
@@ -213,16 +214,18 @@
 }
 
 .wollet-right-data {
-    width: calc(100% - 130rpx);
+    width: calc(100% - 76px);
 }
-
+.no-msg{
+    width: 76px;
+}
 .wollet-left {
     display: flex;
     align-items: center;
+    
 }
 
 .woller-right text {
-    padding-left: 16rpx;
     font-size: 20px;
     font-family: PingFangSC-Semibold, PingFang SC;
     font-weight: 600;
