@@ -77,10 +77,7 @@
 .btn-unit {
     font-size: 28rpx;
 }
-.btn-price, .btn-text {
+.btn-price {
     font-size: 40rpx;
-}
-.btn-text {
-    margin-left: 20rpx;
 }
 
