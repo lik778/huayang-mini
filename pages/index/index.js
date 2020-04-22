@@ -241,6 +241,10 @@ Page({
 					}
 				}
 			})
+			this.setData({
+				bannerList,
+				bannerPictureObject: bannerList.length > 0 ? bannerList[0] : null
+			})
 			// 筛选出直播间状态不是"回看"的房间号[0:'默认',1:'直播中',2:'回看']
 			let courseRoomIds = bannerList.filter(_ => _.roomId && _.status !== 2).map(t => t.roomId)
 			getSchedule(courseRoomIds).then(callbackCourseStatus => {
