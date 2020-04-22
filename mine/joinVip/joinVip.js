@@ -16,9 +16,11 @@ Page({
         statusHeight: 0,
         showBindPhoneButton: true,
         checked: false,
-        formAuth: false,
+        fromAuth: false,
+        fromReview:false,
         buyRepeat: true,
-        bgList: ''
+        bgList: '',
+        roomId:''
     },
     // 选中
     onChange() {
@@ -47,9 +49,13 @@ Page({
                         buyRepeat: true
                     })
                 } else {
-                    if (this.data.formAuth) {
+                    if (this.data.fromAuth) {
                         wx.navigateTo({
                             url: '/mine/joinSchool/joinSchool',
+                        })
+                    }else if(this.data.fromReview){
+                        wx.navigateTo({
+                            url: `/subLive/review/review?zhiboRoomId=${this.data.roomId}`,
                         })
                     } else {
                         wx.switchTab({
@@ -163,20 +169,28 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        console.log(options)
         wx.showLoading({
             title: '加载中...',
             mask: true
         })
-
-        checkAuth({listenable: true}).then(() => {
+        checkAuth({listenable: true,ignoreFocusLogin:true}).then(() => {
             let userId = options.scene ? decodeURIComponent(options.scene) : ""
             if (options.from === "article") {
+                // 公众号文章跳转过来de
                 this.setData({
-                    formAuth: true
+                    fromAuth: true
+                })
+            }else if(options.from === "review"){
+                // 回看跳转过来de
+                this.setData({
+                    fromReview: true,
+                    roomId:options.zhiboRoomId
                 })
             }
+
             this.setData({
-                userId: userId,
+                userId: userId,//分享跳转过来de
                 statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
             })
             this.getUserInfoData()
