@@ -70,65 +70,62 @@ Page({
 	 * @param e
 	 */
 	navigateToLive(e) {
-		// console.log(e.currentTarget.dataset.item)
-		let {
-			zhiboRoomId,
-			roomId,
-			link,
-			vipOnly
-		} = e.currentTarget.dataset.item
-		// 当前课程是否仅限VIP用户学习
-		if (vipOnly === 1) {
-			// 判断是否是会员/是否入学
-			checkIdentity({
-				roomId,
-				link,
-				zhiboRoomId
-			}).then((callbackString) => {
-				if (callbackString === 'no-phone-auth') {
-					this.setData({
-						show: true
-					})
-				} else if (callbackString === 'no-auth-daxue') {
-					Dialog.confirm({
-						title: '申请入学立即观看',
-						message: '完成入学信息登记，观看课程'
-					}).then(() => {
-						wx.navigateTo({
-							url: '/mine/joinSchool/joinSchool',
+		checkAuth({listenable: true, ignoreFocusLogin: true}).then(() => {
+			let {zhiboRoomId, roomId, link, vipOnly} = e.currentTarget.dataset.item
+			// 当前课程是否仅限VIP用户学习
+			if (vipOnly === 1) {
+				// 判断是否是会员/是否入学
+				checkIdentity({
+					roomId,
+					link,
+					zhiboRoomId
+				}).then((callbackString) => {
+					if (callbackString === 'no-phone-auth') {
+						this.setData({
+							show: true
 						})
-					}).catch(() => {})
-				}
-			})
-		} else {
-			statisticsWatchNo({
-				zhibo_room_id: zhiboRoomId, // 运营后台配置的课程ID
-				open_id: getLocalStorage(GLOBAL_KEY.openId)
-			}).then(() => {
-				// link存在去跳转回看页
-				if (link) {
-					wx.navigateTo({
-						url: `/subLive/review/review?zhiboRoomId=` + zhiboRoomId,
-					})
-				} else {
-					wx.navigateTo({
-						url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${roomId}&custom_params=${encodeURIComponent(JSON.stringify(this.data.customParams))}`
-					})
-				}
-				setTimeout(() => {
-					// 更新直播间观看次数
-					let list = [...this.data.liveList]
-					list.forEach(_ => {
-						if (_.zhiboRoomId === zhiboRoomId) {
-							_.visitCount += 1
-						}
-					})
-					this.setData({
-						liveList: [...list]
-					})
-				}, 1000)
-			})
-		}
+					} else if (callbackString === 'no-auth-daxue') {
+						Dialog.confirm({
+							title: '申请入学立即观看',
+							message: '完成入学信息登记，观看课程'
+						}).then(() => {
+							wx.navigateTo({
+								url: '/mine/joinSchool/joinSchool',
+							})
+						}).catch(() => {})
+					}
+				})
+			}
+			else {
+				statisticsWatchNo({
+					zhibo_room_id: zhiboRoomId, // 运营后台配置的课程ID
+					open_id: getLocalStorage(GLOBAL_KEY.openId)
+				}).then(() => {
+					// link存在去跳转回看页
+					if (link) {
+						wx.navigateTo({
+							url: `/subLive/review/review?zhiboRoomId=` + zhiboRoomId,
+						})
+					} else {
+						wx.navigateTo({
+							url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${roomId}&custom_params=${encodeURIComponent(JSON.stringify(this.data.customParams))}`
+						})
+					}
+					setTimeout(() => {
+						// 更新直播间观看次数
+						let list = [...this.data.liveList]
+						list.forEach(_ => {
+							if (_.zhiboRoomId === zhiboRoomId) {
+								_.visitCount += 1
+							}
+						})
+						this.setData({
+							liveList: [...list]
+						})
+					}, 1000)
+				})
+			}
+		})
 	},
 	/**
 	 * 跳转至课程列表

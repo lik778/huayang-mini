@@ -113,38 +113,40 @@ Page({
 	// 跳转去直播间
 	jumpToLive(e) {
 		let item = e.currentTarget.dataset.item // 直播间信息
-		// 判断是否是会员/是否入学
-		checkIdentity({roomId: item.num, link: item.link, zhiboRoomId: item.id})
-			.then((callbackString) => {
-				if (callbackString === 'updateWatchNo') {
-					setTimeout(() => {
-						// 更新直播间观看次数
-						let list = [...this.data.courseList]
-						list.forEach(_ => {
-							if (_.zhibo_room.id === item.id) {
-								_.zhibo_room.visit_count += 1
-							}
-						})
+		checkAuth({listenable: true, ignoreFocusLogin: true}).then(() => {
+			// 判断是否是会员/是否入学
+			checkIdentity({roomId: item.num, link: item.link, zhiboRoomId: item.id})
+				.then((callbackString) => {
+					if (callbackString === 'updateWatchNo') {
+						setTimeout(() => {
+							// 更新直播间观看次数
+							let list = [...this.data.courseList]
+							list.forEach(_ => {
+								if (_.zhibo_room.id === item.id) {
+									_.zhibo_room.visit_count += 1
+								}
+							})
+							this.setData({
+								courseList: [...list]
+							})
+						}, 1000)
+					} else if (callbackString === 'no-phone-auth') {
 						this.setData({
-							courseList: [...list]
+							show: true
 						})
-					}, 1000)
-				} else if (callbackString === 'no-phone-auth') {
-					this.setData({
-						show: true
-					})
-				} else if (callbackString === 'no-auth-daxue') {
-					Dialog.confirm({
-						title: '申请入学立即观看',
-						message: '完成入学信息登记，观看课程'
-					}).then(() => {
-						wx.navigateTo({
-							url: '/mine/joinSchool/joinSchool',
+					} else if (callbackString === 'no-auth-daxue') {
+						Dialog.confirm({
+							title: '申请入学立即观看',
+							message: '完成入学信息登记，观看课程'
+						}).then(() => {
+							wx.navigateTo({
+								url: '/mine/joinSchool/joinSchool',
+							})
+						}).catch(() => {
 						})
-					}).catch(() => {
-					})
-				}
-			})
+					}
+				})
+		})
 	},
 	/**
 	 * 一键获取微信手机号
