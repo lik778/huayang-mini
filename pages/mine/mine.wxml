@@ -28,14 +28,14 @@
 									<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368076KOQTuY.jpg" class="bean"></image>
 									<text>{{userInfo.zhide_point}} 花豆</text>
 								</view>
-								<view class="wollet-left" wx:else>
+								<view class="wollet-left no-msg" wx:else>
 									<text class="no-wollet">暂无信息</text>
 								</view>
 								<view class="woller-middle" wx:if="{{!showBindPhoneButton}}"></view>
 								<view class="woller-right" wx:if="{{!showBindPhoneButton}}">
 									<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368357mBYwJU.jpg" class="vip-money"></image>
-									<text wx:if="{{userInfo.amount}}">{{userInfo.amount}}</text>
-									<text wx:else>0.00</text>
+									<text wx:if="{{userInfo.amount}}" style="padding-left:16rpx;">{{userInfo.amount}}</text>
+									<text wx:else style="padding-left:16rpx;">0.00</text>
 								</view>
 								<view class="woller-right wollet-right-data" wx:else>
 									<text class="bindmobile">绑定手机查看</text>

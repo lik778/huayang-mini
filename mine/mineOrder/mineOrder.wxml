@@ -4,7 +4,7 @@
 		<naviBar title="我的订单"></naviBar>
 	</view>
 	<view class="main" style="padding-top:{{statusHeight+44}}px;">
-		<view class="main-item" wx:for="{{orderData}}" wx:key="index">
+		<view class="main-item" wx:for="{{orderData}}" wx:key="index" bindtap="toOrder">
 			<view class="main-item-top">
 				<view class="main-item-left">
 					<image src="{{item.product_pic}}"></image>
@@ -16,11 +16,14 @@
 						<view class="order-time">订单时间：{{item.order_create_time}}</view>
 					</view>
 					<view class="main-item-bottom">
-						<view class="button" bindtap="toOrder">查看订单</view>
+						<view class="button">查看订单</view>
 					</view>
 				</view>
 			</view>
-
+		</view>
+		<view class="no-data" wx:if="{{orderData.length===0}}">
+			<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587518514eiIpEZ.jpg"></image>
+			<view class="text-tip" bindtap="toOrder">暂无订单，快去挑选商品吧</view>
 		</view>
 	</view>
 </view>
