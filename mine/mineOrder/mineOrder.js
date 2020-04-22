@@ -27,6 +27,7 @@ Page({
   },
   // 查看订单
   toOrder() {
+    console.log(1)
     wx.navigateToMiniProgram({
       appId: this.data.appId,
       path: "/pages/usercenter/dashboard/index",
@@ -44,6 +45,7 @@ Page({
   // 获取有赞aooId
   getMiniProgramAppId() {
     getYouZanAppId().then(appId => {
+      console.log(appId)
       this.setData({appId})
     })
   },
@@ -56,6 +58,8 @@ Page({
     })
     // 获取订单列表
     this.getMineOrderData()
+    // 获取有赞id
+   this.getMiniProgramAppId()
   },
 
   /**
