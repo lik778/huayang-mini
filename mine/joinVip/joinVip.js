@@ -1,10 +1,23 @@
 // mine/joinVip/joinVip.js
 
-import { GLOBAL_KEY } from "../../lib/config"
-import { getLocalStorage, payVip, setLocalStorage } from "../../utils/util"
-import { bindWxPhoneNumber } from "../../api/auth/index"
-import { getUserInfo, getVipBg } from "../../api/mine/index"
-import { checkAuth } from "../../utils/auth"
+import {
+    GLOBAL_KEY
+} from "../../lib/config"
+import {
+    getLocalStorage,
+    payVip,
+    setLocalStorage
+} from "../../utils/util"
+import {
+    bindWxPhoneNumber
+} from "../../api/auth/index"
+import {
+    getUserInfo,
+    getVipBg
+} from "../../api/mine/index"
+import {
+    checkAuth
+} from "../../utils/auth"
 
 Page({
 
@@ -17,10 +30,10 @@ Page({
         showBindPhoneButton: true,
         checked: false,
         fromAuth: false,
-        fromReview:false,
+        fromReview: false,
         buyRepeat: true,
         bgList: '',
-        roomId:''
+        roomId: ''
     },
     // 选中
     onChange() {
@@ -44,25 +57,28 @@ Page({
             payVip({
                 id: this.data.userId
             }).then(res => {
-                if (res === 0) {
-                    this.setData({
-                        buyRepeat: true
-                    })
-                } else {
-                    if (this.data.fromAuth) {
-                        wx.navigateTo({
-                            url: '/mine/joinSchool/joinSchool',
-                        })
-                    }else if(this.data.fromReview){
-                        wx.navigateTo({
-                            url: `/subLive/review/review?zhiboRoomId=${this.data.roomId}`,
+                getUserInfo("scene=zhide").then(res1 => {
+                    setLocalStorage(GLOBAL_KEY.accountInfo, res1)
+                    if (res === 0) {
+                        this.setData({
+                            buyRepeat: true
                         })
                     } else {
-                        wx.switchTab({
-                            url: '/pages/index/index',
-                        })
+                        if (this.data.fromAuth) {
+                            wx.navigateTo({
+                                url: '/mine/joinSchool/joinSchool',
+                            })
+                        } else if (this.data.fromReview) {
+                            wx.navigateTo({
+                                url: `/subLive/review/review?zhiboRoomId=${this.data.roomId}`,
+                            })
+                        } else {
+                            wx.switchTab({
+                                url: '/pages/index/index',
+                            })
+                        }
                     }
-                }
+                })
 
             }).catch(() => {
                 this.setData({
@@ -174,23 +190,26 @@ Page({
             title: '加载中...',
             mask: true
         })
-        checkAuth({listenable: true,ignoreFocusLogin:true}).then(() => {
+        checkAuth({
+            listenable: true,
+            ignoreFocusLogin: true
+        }).then(() => {
             let userId = options.scene ? decodeURIComponent(options.scene) : ""
             if (options.from === "article") {
                 // 公众号文章跳转过来de
                 this.setData({
                     fromAuth: true
                 })
-            }else if(options.from === "review"){
+            } else if (options.from === "review") {
                 // 回看跳转过来de
                 this.setData({
                     fromReview: true,
-                    roomId:options.zhiboRoomId
+                    roomId: options.zhiboRoomId
                 })
             }
 
             this.setData({
-                userId: userId,//分享跳转过来de
+                userId: userId, //分享跳转过来de
                 statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
             })
             this.getUserInfoData()
