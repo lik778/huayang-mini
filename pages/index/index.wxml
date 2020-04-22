@@ -3,7 +3,7 @@
 	<view class="banner" wx:if="{{bannerPictureObject != null}}" bindtap="navigateToCourse" data-item="{{bannerPictureObject}}">
 		<block wx:if="{{bannerPictureObject.officialRoomId != null}}">
 			<view class="swiper-image">
-				<view style="display:{{bannerPictureObject.liveStatus ? 'block' : 'none'}}" class="status {{bannerPictureObject.liveStatus !== '直播中' && 'disabled'}}">
+				<view class="status {{bannerPictureObject.liveStatus !== '直播中' && 'disabled'}}">
 					<text class="status-dot {{bannerPictureObject.liveStatus !== '直播中' && 'disabled'}}"></text>
 					<text class="status-text">{{bannerPictureObject.status === 2 ? '回看' : bannerPictureObject.liveStatus}}</text>
 				</view>
@@ -33,7 +33,7 @@
 	<view class="live-list">
 		<view class="live-item" bindtap="navigateToLive" data-item="{{item}}" wx:for="{{liveList}}" wx:key="index">
 			<view class="live-cover" style="background-image: url('{{item.coverPicture}}')">
-				<view style="display:{{bannerPictureObject.liveStatus ? 'block' : 'none'}}" class="status {{item.liveStatus !== '直播中' && 'disabled'}}">
+				<view class="status {{item.liveStatus !== '直播中' && 'disabled'}}">
 					<text class="status-dot {{item.liveStatus !== '直播中' && 'disabled'}}"></text>
 					<text class="status-text">{{item.status === 2 ? '回看' : item.liveStatus}}</text>
 				</view>
