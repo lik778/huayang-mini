@@ -16,7 +16,6 @@
   "pages": [
     "pages/index/index",
     "pages/mine/mine",
-
     "pages/mall/mall",
     "pages/auth/auth",
     "pages/privacy/privacy",
@@ -33,7 +32,8 @@
         "joinResult/joinResult",
         "buyAgreement/buyAgreement",
         "beanExplain/beanExplain",
-        "mineOrder/mineOrder"
+        "mineOrder/mineOrder",
+        "vipWelfare/vipWelfare"
       ]
     },
     {
