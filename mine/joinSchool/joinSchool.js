@@ -30,6 +30,7 @@ Page({
         open_id: wx.getStorageSync(GLOBAL_KEY.openId),
       })
     })
+   
   },
   checkUserAuth({is_zhide_vip, student_num}) {
     if (is_zhide_vip) {
@@ -73,6 +74,12 @@ Page({
         this.getWebViewData()
         // 如果是从公众号来的需要二次检查用户VIP、学籍号
         this.checkUserAuth({is_zhide_vip, student_num})
+        // if(!getLocalStorage(GLOBAL_KEY.repeatView)){
+        //   setLocalStorage(GLOBAL_KEY.repeatView,true)
+        //   wx.navigateTo({
+        //     url: '/mine/joinSchool/joinSchool',
+        //   })
+        // }
       }
       this.setData({
         statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
