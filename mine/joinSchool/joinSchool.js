@@ -78,9 +78,7 @@ Page({
       } else {
         this.getWebViewData()
         // 如果是从公众号来的需要二次检查用户VIP、学籍号
-        if (this.data.fromPath) {
-          this.checkUserAuth({is_zhide_vip, student_num})
-        }
+        this.checkUserAuth({is_zhide_vip, student_num})
       }
       this.setData({
         statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
