@@ -39,6 +39,7 @@ Page({
     getUserInfo("scene=zhide").then(res => {
       if (res.code !== -2) {
         res.zhide_start_time = res.zhide_start_time.replace(/-/g, ".").split(" ")[0]
+        setLocalStorage(GLOBAL_KEY.accountInfo,res)
         this.setData({
           userInfo: res || {}
         })
@@ -68,7 +69,6 @@ Page({
       width: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth,
       height: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenHeight,
     }
-    console.log(info)
     if(info.height<667){
       this.setData({
         bottom:-1
@@ -89,7 +89,6 @@ Page({
       })
     }
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
