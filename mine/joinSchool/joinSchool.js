@@ -14,8 +14,7 @@ Page({
     radio: '0',
     webViewData: 0,
     baseUrl: "",
-    statusHeight: "",
-    fromPath: null
+    statusHeight: ""
   },
   // 切换性别
   changeSex(e) {
@@ -45,19 +44,14 @@ Page({
       }
     } else {
       wx.navigateTo({
-        url: `/mine/joinVip/joinVip?from=${this.data.fromPath}`,
+        url: `/mine/joinVip/joinVip?from=article`,
       })
     }
   },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    const fromPath = options.from
-    if (fromPath != null) {
-      this.setData({fromPath})
-    }
-  },
+  onLoad: function (options) {},
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -121,7 +115,7 @@ Page({
   onShareAppMessage: function () {
     return {
 			title: '花样大学入学申请',
-			path: '/mine/joinSchool/joinSchool?from=article'
+			path: '/mine/joinSchool/joinSchool'
 		}
   }
 })

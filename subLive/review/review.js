@@ -36,9 +36,8 @@ Page({
 			// 获取直播权限
 			getWatchLiveAuth({room_id: zhiboRoomId, user_id: userId}).then(res => {
 				if (res === 'vip') {
-					// 非会员，跳往花样汇
 					wx.navigateTo({
-						url: '/subLive/unAuthorized/unAuthorized',
+						url: `/mine/joinVip/joinVip?from=review&zhiboRoomId=${this.data.zhiboRoomId}`,
 					})
 				} else if (res === 'daxue') {
 					// 未加入花样大学,跳往入学申请页
