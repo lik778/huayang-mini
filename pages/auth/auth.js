@@ -2,7 +2,7 @@
 import { wxGetUserInfoPromise } from '../../utils/auth.js'
 import { GLOBAL_KEY } from '../../lib/config.js'
 import { bindUserInfo, bindWxPhoneNumber, getWxInfo } from "../../api/auth/index"
-import { getLocalStorage, setLocalStorage } from "../../utils/util"
+import { $notNull, getLocalStorage, setLocalStorage } from "../../utils/util"
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog'
 import { getUniversityCode } from "../../api/mine/index"
 import { APP_LET_ID } from "../../lib/config"
@@ -14,7 +14,7 @@ Page({
 	 * Page initial data
 	 */
 	data: {
-		didFromPublic: false,
+		didGetPhoneNumber: false,
 		show: false
 	},
 	jumpToPrivacy() {
@@ -26,6 +26,41 @@ Page({
 		wx.navigateTo({
 			url: '/pages/service/service'
 		})
+	},
+	checkUserAuth({is_zhide_vip, student_num}) {
+		if (is_zhide_vip) {
+			if (student_num) {
+				Dialog.confirm({
+					title: '提示',
+					message: '您已是花样大学学员',
+					confirmButtonText: '查看课程',
+					showCancelButton: false
+				}).then(() => {
+					getUniversityCode(`user_key=daxue`).then(res => {
+						wx.navigateTo({
+							url: `/subLive/courseList/courseList?id=${res.data.id}`,
+						})
+					})
+				}).catch(() => {
+				})
+			} else {
+				wx.navigateTo({
+					url: '/mine/joinSchool/joinSchool',
+				})
+			}
+		} else {
+			Dialog.confirm({
+				title: '提示',
+				message: '花样大学为花样汇超级会员专属权益，您暂无权限申请',
+				confirmButtonText: '立即加入“花样汇”',
+				showCancelButton: false
+			}).then(() => {
+				wx.navigateTo({
+					url: `/mine/joinVip/joinVip?from=${this.data.fromPath}`,
+				})
+			}).catch(() => {
+			})
+		}
 	},
 	/**
 	 * 一键微信授权
@@ -52,49 +87,7 @@ Page({
 						}
 						let originUserInfo = await bindUserInfo(params)
 						setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
-						if (this.data.didFromPublic) {
-							let userId = getLocalStorage(GLOBAL_KEY.userId)
-							let { is_zhide_vip, student_num } = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
-							if (userId == null) {
-								this.setData({
-									show: true
-								})
-							} else {
-								if (is_zhide_vip) {
-									if (student_num) {
-										Dialog.confirm({
-											title: '提示',
-											message: '您已是花样大学学员',
-											confirmButtonText: '查看课程',
-											showCancelButton: false
-										}).then(() => {
-											getUniversityCode(`user_key=daxue`).then(res => {
-												wx.navigateTo({
-													url: `/subLive/courseList/courseList?id=${res.data.id}`,
-												})
-											})
-										}).catch(() => {})
-									} else {
-										wx.navigateTo({
-											url: '/mine/joinSchool/joinSchool',
-										})
-									}
-								} else {
-									Dialog.confirm({
-										title: '提示',
-										message: '花样大学为花样汇超级会员专属权益，您暂无权限申请',
-										confirmButtonText: '立即加入“花样汇”',
-										showCancelButton: false
-									}).then(() => {
-										wx.navigateTo({
-											url: `/mine/joinVip/joinVip?from=${this.data.fromPath}`,
-										})
-									}).catch(() => {})
-								}
-							}
-						} else {
-							wx.navigateBack()
-						}
+						wx.navigateBack()
 					})
 				})
 
@@ -120,23 +113,17 @@ Page({
 					iv
 				})
 				setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
+				wx.navigateBack()
 			}
 		} else {
 			console.error('用户拒绝手机号授权')
+			wx.navigateBack()
 		}
 	},
 	/**
 	 * Lifecycle function--Called when page load
 	 */
 	onLoad: function (options) {
-		let fromPath = options.from
-		// 判断是否来自公众号文章
-		if (fromPath != null) {
-			this.setData({
-				didFromPublic: true,
-				fromPath
-			})
-		}
 	},
 
 	/**
@@ -150,7 +137,18 @@ Page({
 	 * Lifecycle function--Called when page show
 	 */
 	onShow: function () {
-
+		wxLoginPromise()
+			.then(async (code) => {
+				let originUserInfo = await getWxInfo({code, app_id: APP_LET_ID.tx})
+				if ($notNull(originUserInfo) && originUserInfo.nickname) {
+					// 缓存openId、userInfo
+					setLocalStorage(GLOBAL_KEY.openId, originUserInfo.openid)
+					setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
+					// 用户已完成微信授权，引导用户手机号授权
+					this.setData({didGetPhoneNumber: true})
+				}
+			})
+			.catch((error) => {console.error(error)})
 	},
 
 	/**

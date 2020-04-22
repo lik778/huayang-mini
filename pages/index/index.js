@@ -241,6 +241,10 @@ Page({
 					}
 				}
 			})
+			this.setData({
+				bannerList,
+				bannerPictureObject: bannerList.length > 0 ? bannerList[0] : null
+			})
 			// 筛选出直播间状态不是"回看"的房间号[0:'默认',1:'直播中',2:'回看']
 			let courseRoomIds = bannerList.filter(_ => _.roomId && _.status !== 2).map(t => t.roomId)
 			getSchedule(courseRoomIds).then(callbackCourseStatus => {
@@ -265,12 +269,12 @@ Page({
 							}
 						}
 					})
-				}
-			})
 
-			this.setData({
-				bannerList,
-				bannerPictureObject: bannerList.length > 0 ? bannerList[0] : null
+					this.setData({
+						bannerList,
+						bannerPictureObject: bannerList.length > 0 ? bannerList[0] : null
+					})
+				}
 			})
 		})
 	},
@@ -309,15 +313,12 @@ Page({
 		if ($notNull(accountInfo)) {
 			getUserInfo("scene=zhide").then(info => {
 				setLocalStorage(GLOBAL_KEY.accountInfo, info)
-				this.setData({
-					didVip: info.is_zhide_vip
-				})
+				this.setData({didVip: info.is_zhide_vip})
 			})
 		}
 
-		checkAuth({
-			listenable: true
-		})
+		checkAuth({listenable: true})
+
 		// 检查是否会员开通成功
 		if (getLocalStorage(GLOBAL_KEY.vip) === true) {
 			this.setData({

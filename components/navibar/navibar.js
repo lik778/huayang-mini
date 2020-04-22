@@ -10,6 +10,10 @@ Component({
     title: {
       type: String
     },
+    titleColor: {
+      type: String,
+      default: "black"
+    },
     share:{
       type:Boolean,
       default:true

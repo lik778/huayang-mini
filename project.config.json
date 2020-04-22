@@ -109,10 +109,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 7,
 					"name": "mine/joinSchool/joinSchool",
 					"pathName": "mine/joinSchool/joinSchool",
-					"query": "",
+					"query": "from=article",
 					"scene": null
 				},
 				{

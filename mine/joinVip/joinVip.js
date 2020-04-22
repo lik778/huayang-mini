@@ -1,20 +1,10 @@
 // mine/joinVip/joinVip.js
 
-import {
-    GLOBAL_KEY
-} from "../../lib/config"
-import {
-    getLocalStorage,
-    payVip,
-    setLocalStorage
-} from "../../utils/util"
-import {
-    bindWxPhoneNumber
-} from "../../api/auth/index"
-import {
-    getUserInfo,
-    getVipBg
-} from "../../api/mine/index"
+import { GLOBAL_KEY } from "../../lib/config"
+import { getLocalStorage, payVip, setLocalStorage } from "../../utils/util"
+import { bindWxPhoneNumber } from "../../api/auth/index"
+import { getUserInfo, getVipBg } from "../../api/mine/index"
+import { checkAuth } from "../../utils/auth"
 
 Page({
 
@@ -32,7 +22,6 @@ Page({
     },
     // 选中
     onChange() {
-        console.log(this.data.checked, 21211)
         this.setData({
             checked: !this.data.checked
         })
@@ -45,11 +34,11 @@ Page({
     },
     // 购买会员
     buyVip() {
+        if (this.data.showBindPhoneButton) return
         if (this.data.checked && this.data.buyRepeat) {
             this.setData({
                 buyRepeat: false
             })
-            console.log()
             payVip({
                 id: this.data.userId
             }).then(res => {
@@ -178,23 +167,21 @@ Page({
             title: '加载中...',
             mask: true
         })
-        let userId = options.scene ? decodeURIComponent(options.scene) : ""
-        if (options.from === "article") {
+
+        checkAuth({listenable: true}).then(() => {
+            let userId = options.scene ? decodeURIComponent(options.scene) : ""
+            if (options.from === "article") {
+                this.setData({
+                    formAuth: true
+                })
+            }
             this.setData({
-                formAuth: true
+                userId: userId,
+                statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
             })
-        }
-        this.setData({
-            userId: userId,
-            statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
+            this.getUserInfoData()
+            this.getVipBgData()
         })
-        if (getLocalStorage(GLOBAL_KEY.userInfo) === undefined) {
-            wx.navigateTo({
-                url: '/pages/auth/auth',
-            })
-        }
-        this.getUserInfoData()
-        this.getVipBgData()
     },
     /**
      * 生命周期函数--监听页面初次渲染完成
