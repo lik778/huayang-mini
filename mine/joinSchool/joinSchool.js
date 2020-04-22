@@ -115,5 +115,15 @@ Page({
    */
   onReachBottom: function () {
 
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    return {
+			title: '花样大学入学申请',
+			path: '/mine/joinSchool/joinSchool'
+		}
   }
 })
