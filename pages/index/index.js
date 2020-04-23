@@ -1,5 +1,5 @@
 // pages/live/live.js
-import { getLiveBannerList, getLiveList, updateLiveStatus } from "../../api/live/index"
+import { getLiveBannerList, getLiveList, setPoint, updateLiveStatus } from "../../api/live/index"
 import { GLOBAL_KEY, WeChatLiveStatus } from '../../lib/config'
 import { $notNull, checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from '../../utils/util'
 import { statisticsWatchNo } from "../../api/live/course"
@@ -81,9 +81,7 @@ Page({
 					zhiboRoomId
 				}).then((callbackString) => {
 					if (callbackString === 'no-phone-auth') {
-						this.setData({
-							show: true
-						})
+						this.setData({show: true})
 					} else if (callbackString === 'no-auth-daxue') {
 						Dialog.confirm({
 							title: '申请入学立即观看',
@@ -131,7 +129,9 @@ Page({
 	 * 跳转至课程列表
 	 */
 	navigateToCourse(e) {
-		let officialRoomId = e.currentTarget.dataset.item.officialRoomId
+		let {officialRoomId,bannerId} = e.currentTarget.dataset.item
+		// 打点
+		setPoint({banner_id: bannerId})
 		wx.navigateTo({
 			url: `/subLive/courseList/courseList?id=${officialRoomId}`,
 		})
@@ -219,6 +219,7 @@ Page({
 			let bannerList = banner.map(b => {
 				if (b.zhibo_room && b.kecheng && b.user) {
 					return {
+						bannerId: b.banner.id,
 						zhiboRoomId: b.zhibo_room.id,
 						officialRoomId: b.kecheng.user_id,
 						roomId: b.zhibo_room.num,
@@ -233,6 +234,7 @@ Page({
 					}
 				} else {
 					return {
+						bannerId: b.banner.id,
 						bannerPicture: b.banner.pic_url,
 						link: b.banner.link
 					}
