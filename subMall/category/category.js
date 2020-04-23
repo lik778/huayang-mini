@@ -34,7 +34,7 @@ Page({
     })
   },
   queryCategory(categoryId) {
-    getCategory({ level: 1 }).then(list => {
+    getCategory({ level: 1, category_type: 0 }).then(list => {
       list.forEach((item, index) => {
         if (item.id == categoryId) {
           // 更新标签
