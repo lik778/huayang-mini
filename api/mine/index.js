@@ -85,3 +85,13 @@ export const getVipBg=()=>{
     })
   })
 }
+// 获取会员权益开关
+export const getVipShow=()=>{
+  return new Promise(resolve=>{
+    request._get(URL.getVipShow).then(res=>{
+      if(res.code===0){
+        resolve(res)
+      }
+    })
+  })
+}
