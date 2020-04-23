@@ -1,18 +1,9 @@
 // mine/joinSchool/joinSchool.js
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  getLocalStorage,
-  setLocalStorage
-} from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
+import { getLocalStorage, setLocalStorage } from "../../utils/util"
 import request from "../../lib/request"
-import {
-  getUniversityCode
-} from "../../api/mine/index"
-import {
-  checkAuth
-} from "../../utils/auth"
+import { getUniversityCode } from "../../api/mine/index"
+import { checkAuth } from "../../utils/auth"
 
 Page({
 
@@ -41,10 +32,7 @@ Page({
     })
 
   },
-  checkUserAuth({
-    is_zhide_vip,
-    student_num
-  }) {
+  checkUserAuth({is_zhide_vip, student_num}) {
     if (is_zhide_vip) {
       if (student_num) {
         getUniversityCode(`user_key=daxue`).then(res => {
@@ -54,7 +42,6 @@ Page({
         })
       } else {
         // 继续填写大学入学申请
-        console.log(getLocalStorage(GLOBAL_KEY.repeatView))
         if (!getLocalStorage(GLOBAL_KEY.repeatView)) {
           setLocalStorage(GLOBAL_KEY.repeatView, true)
           wx.navigateTo({
@@ -84,31 +71,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    checkAuth({
-      listenable: true
-    }).then(() => {
+    checkAuth({listenable: true}).then(() => {
       let userId = getLocalStorage(GLOBAL_KEY.userId)
-      let {
-        is_zhide_vip,
-        student_num
-      } = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
+      let { is_zhide_vip, student_num } = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
       if (userId == null) {
-        wx.navigateTo({
-          url: '/pages/auth/auth'
-        })
+        wx.navigateTo({url: '/pages/auth/auth'})
       } else {
         this.getWebViewData()
         // 如果是从公众号来的需要二次检查用户VIP、学籍号
-        this.checkUserAuth({
-          is_zhide_vip,
-          student_num
-        })
-        // if(!getLocalStorage(GLOBAL_KEY.repeatView)){
-        //   setLocalStorage(GLOBAL_KEY.repeatView,true)
-        //   wx.navigateTo({
-        //     url: '/mine/joinSchool/joinSchool',
-        //   })
-        // }
+        this.checkUserAuth({is_zhide_vip, student_num})
       }
       this.setData({
         statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
@@ -150,8 +121,8 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: '花样大学入学申请',
-      path: `/mine/joinSchool/joinSchool`
-    }
+			title: '花样大学入学申请',
+			path: `/mine/joinSchool/joinSchool`
+		}
   }
 })
