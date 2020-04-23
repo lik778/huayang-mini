@@ -16,8 +16,7 @@
 			<image class="teacher" src="{{bannerPictureObject.bannerPicture}}"></image>
 		</block>
 		<block wx:if="{{bannerPictureObject.officialRoomId == null}}">
-			<swiper class="swiper" indicator-dots="{{indicatorDots}}" bindtap="handleSwiperTap"
-							autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+			<swiper class="swiper" indicator-dots="{{indicatorDots}}" bindtap="handleSwiperTap" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
 				<swiper-item wx:for="{{[bannerPictureObject]}}" wx:key="index">
 					<image mode="aspectFill" src="{{bannerPictureObject.bannerPicture}}"></image>
 				</swiper-item>

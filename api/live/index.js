@@ -31,3 +31,16 @@ export function updateLiveStatus(params) {
 		})
 	})
 }
+
+export function setPoint(params) {
+	return new Promise((resolve, reject) => {
+		request._post(URL.point, params).then(({ code }) => {
+			if (code === 0) {
+				resolve()
+			}
+			reject()
+		}).catch(() => {
+			reject()
+		})
+	})
+}

@@ -2,6 +2,7 @@
 import { getBannerList, getCategory, getProductList } from "../../api/mall/index"
 import { checkAuth } from "../../utils/auth"
 import { changeTwoDecimal_f } from "../../utils/util"
+import { setPoint } from "../../api/live/index"
 
 Page({
 	/**
@@ -23,8 +24,9 @@ Page({
 		didNoMore: false,
 	},
 	jumpToLink(e) {
-		let item = e.currentTarget.dataset.item
-		wx.navigateTo({url: item.link})
+		let {link, id} = e.currentTarget.dataset.item
+		setPoint({ banner_id: id })
+		wx.navigateTo({url: link})
 	},
 	currentHandle(e) {
 		let {current} = e.detail
