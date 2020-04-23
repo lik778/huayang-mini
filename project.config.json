@@ -121,6 +121,13 @@
 					"pathName": "subLive/review/review",
 					"query": "zhiboRoomId=87",
 					"scene": null
+				},
+				{
+					"id": 9,
+					"name": "subLive/officialChannel/officialChannel",
+					"pathName": "subLive/officialChannel/officialChannel",
+					"query": "",
+					"scene": null
 				}
 			]
 		}
