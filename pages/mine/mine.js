@@ -154,7 +154,7 @@ Page({
                         res.amount = res.amount / 100
                     }
                     res.mobile = res.mobile.substr(0, 3) + "****" + res.mobile.substr(7)//手机号中间四位数*
-                    res.zhide_end_time = res.zhide_end_time === '' ? '' : res.zhide_end_time.split(':')[0] + ":" + res.zhide_end_time.split(':')[1]//处理会员到期时间到分
+                    res.zhide_end_time = res.zhide_end_time === '' ? '' : res.zhide_end_time.split(' ')[0]//处理会员到期时间到分
                     setLocalStorage(GLOBAL_KEY.accountInfo, res)
                     this.setData({
                         showBindPhoneButton: false,
