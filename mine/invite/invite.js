@@ -1,9 +1,22 @@
 // mine/invite/invite.js
-import { createCanvas } from "./canvas"
-import { getInviteCode, getVipNum } from "../../api/mine/index"
-import { getSubscriptionStatus, subscription } from "../../api/live/course"
-import { getLocalStorage } from "../../utils/util"
-import { GLOBAL_KEY, SubscriptType } from "../../lib/config"
+import {
+  createCanvas
+} from "./canvas"
+import {
+  getInviteCode,
+  getVipNum
+} from "../../api/mine/index"
+import {
+  getSubscriptionStatus,
+  subscription
+} from "../../api/live/course"
+import {
+  getLocalStorage
+} from "../../utils/util"
+import {
+  GLOBAL_KEY,
+  SubscriptType
+} from "../../lib/config"
 
 Page({
 
@@ -120,34 +133,80 @@ Page({
       headicon: this.data.userInfo.avatar_url,
       qcCode: this.data.qcCode
     }).then(url => {
-      console.log(url, 9000)
-      wx.saveImageToPhotosAlbum({
-        filePath: url,
+      wx.getSetting({
         success(res) {
-          if (res.errMsg === 'saveImageToPhotosAlbum:ok') {
-            if (!_this.data.status) {
-              _this.setData({
-                showDialog: true
-              })
-            } else {
-              wx.showToast({
-                title: '保存成功',
-                duration:2000
-              })
-            }
-            wx.hideLoading()
+          if (!res.authSetting['scope.writePhotosAlbum']) {
+            wx.authorize({
+              scope: 'scope.writePhotosAlbum',
+              success: () => {
+                _this.saveImg({
+                  url,
+                  _this
+                })
+              },
+              fail: () => {
+                wx.showModal({
+                  title: "请打开相册权限",
+                  duration: 2000,
+                  showCancel:false,
+                  success: (res1) => {
+                    console.log(res1)
+                    if (res1.confirm) {
+                      wx.openSetting({
+                        success(res) {
+                          console.log(res)
+                        }
+                      })
+                    }
+                  }
+                })
+              }
+            })
+           
           } else {
-            wx.showToast({
-              title: '保存失败',
-              icon: "none",
-              duration: 3000
+            _this.saveImg({
+              url,
+              _this
             })
           }
-        },
+        }
       })
+
     })
 
 
+  },
+  saveImg({
+    url,
+    _this
+  }) {
+    wx.saveImageToPhotosAlbum({
+      filePath: url,
+      success(res) {
+        if (res.errMsg === 'saveImageToPhotosAlbum:ok') {
+          if (!_this.data.status) {
+            _this.setData({
+              showDialog: true
+            })
+          } else {
+            wx.showToast({
+              title: '保存成功',
+              duration: 3000,
+            })
+            setTimeout(() => {
+              wx.hideLoading()
+            }, 3000)
+          }
+
+        } else {
+          wx.showToast({
+            title: '保存失败',
+            icon: "none",
+            duration: 3000
+          })
+        }
+      },
+    })
   },
   // 获取订阅状态
   getSubscription() {
