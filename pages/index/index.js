@@ -33,7 +33,10 @@ Page({
 		duration: 500,
 	},
 	// 处理swiper点击回调
-	handleSwiperTap() {
+	handleSwiperTap(e) {
+		let {bannerId} = e.currentTarget.dataset.item
+		// 打点
+		setPoint({banner_id: bannerId})
 		wx.navigateTo({url: this.data.bannerPictureObject.link})
 	},
 	// 关闭立即邀请

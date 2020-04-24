@@ -3,7 +3,7 @@
   <view class="navigation" style="padding-top:{{statusHeight+44}}px;">
     <naviBar title="花样直播" titleColor="transparent" color="transparent"></naviBar>
   </view>
-  <video bindprogress="handleWaiting" custom-cache="false" src="{{zhiboRoomInfo.zhibo_room.link}}" class="video-container"></video>
+  <video bindprogress="handleWaiting" custom-cache="false" object-fit="cover" src="{{zhiboRoomInfo.zhibo_room.link}}" class="video-container"></video>
   <cover-view class="btn" bindtap="haveMore">点击查看更多</cover-view>
   <van-dialog id="van-dialog" />
 </view>
