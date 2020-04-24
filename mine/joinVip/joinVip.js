@@ -167,23 +167,26 @@ Page({
         getVipBg().then(({
             data
         }) => {
-            let arr = []
-            let _this = this
-            for (let i in data) {
-                wx.getImageInfo({
-                    src: data[i],
-                    success(res) {
-                        let obj = {
-                            src: res.path,
-                            height: res.height
-                        }
-                        arr.push(obj)
-                        _this.setData({
-                            bgList: arr
-                        })
-                    }
-                })
-            }
+            this.setData({
+                bgList:data
+            })
+            // let arr = []
+            // let _this = this
+            // for (let i in data) {
+            //     wx.getImageInfo({
+            //         src: data[i],
+            //         success(res) {
+            //             let obj = {
+            //                 src: res.path,
+            //                 height: res.height
+            //             }
+            //             arr.push(obj)
+            //             _this.setData({
+            //                 bgList: arr
+            //             })
+            //         }
+            //     })
+            // }
         })
     },
     /**

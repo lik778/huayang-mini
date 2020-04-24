@@ -1,13 +1,33 @@
 //app.js
 import request from './lib/request'
-import { getLocalStorage, setLocalStorage } from './utils/util'
-import { GLOBAL_KEY } from './lib/config'
-
+import {
+	getLocalStorage,
+	setLocalStorage
+} from './utils/util'
+import {
+	GLOBAL_KEY
+} from './lib/config'
+import {
+	BxTracker
+} from './miniprogram_npm/@anka-dev/tracker/index'
+const tracker = BxTracker.generateTrackerInstance({
+	trackerHost: 'http://huayang.baixing.cn/hy/zhide/user/vip/from/record',
+	detectChanel: false,
+	detectAppStart: true,
+	retry:0,//失败重复打点
+})
 let livePlayer = requirePlugin('live-player-plugin')
 App({
 	onLaunch: function () {
 		// 全局注册http
 		wx.$request = request
+		this.tracker = tracker
+		tracker.asyncInitWithCommonData({
+			open_id: 'mock_open_id',
+			union_id: 'mock_union_id'
+	}).then(() => {
+			console.log('初始化成功，开始执行打点任务')
+	})
 	},
 	onShow(options) {
 		// 分享卡片入口场景才调用getShareParams接口获取以下参数

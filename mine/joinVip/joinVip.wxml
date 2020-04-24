@@ -149,7 +149,7 @@
 
 	</view>
 	<view class="images">
-		<image mode='aspectFit' src="{{item.src}}" wx:for="{{bgList}}" wx:key="index" style="height:{{item.height}}rpx;width:100vw;vertical-align: bottom;"></image>
+		<image mode='widthFix' src="{{item}}" bindload="getHeight" wx:for="{{bgList}}" wx:key="index" style="width:100vw;vertical-align: bottom;"></image>
 	</view>
 	<view class="button-line">
 		<view class="button {{checked?'button-active':''}}" bindtap="buyVip">

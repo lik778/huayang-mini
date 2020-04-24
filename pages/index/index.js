@@ -7,6 +7,7 @@ import { bindWxPhoneNumber } from "../../api/auth/index"
 import { checkAuth } from "../../utils/auth"
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog'
 import { getUserInfo } from "../../api/mine/index"
+const app=getApp()
 
 Page({
 	/**
@@ -288,7 +289,12 @@ Page({
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
-	onLoad: function (options) {},
+	onLoad: function (options) {
+		app.tracker.pv('__viewPage', {
+			page_id: 'index',
+			page_title: '首页',
+		})
+	},
 
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
