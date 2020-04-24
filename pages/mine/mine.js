@@ -2,7 +2,8 @@
 import {
     getScene,
     getUniversityCode,
-    getUserInfo
+    getUserInfo,
+    getVipShow
 } from "../../api/mine/index"
 import {
     bindWxPhoneNumber
@@ -27,6 +28,7 @@ Page({
         userInfo: "",
         width: 200,
         showBindPhoneButton: true,
+        showVipEnter:false,//是否展示会员权益入口
     },
     // 跳往会员权益介绍
     toVipWelfare() {
@@ -81,6 +83,14 @@ Page({
                 url: '/mine/joinVip/joinVip',
             })
         }
+    },
+    // 获取会员权益开关
+    getVipShowData(){
+        getVipShow().then(res=>{
+            this.setData({
+                showVipEnter:res.data
+            })
+        })
     },
     // 申请入学
     applyJoinSchool() {
@@ -160,12 +170,6 @@ Page({
                         showBindPhoneButton: false,
                         userInfo: res
                     })
-
-                    // if (getLocalStorage(GLOBAL_KEY.updateAccountInfo) === "true" || getLocalStorage(GLOBAL_KEY.vipupdateAccountInfo) === "true") {
-                    //     setLocalStorage(GLOBAL_KEY.accountInfo, res.data)
-                    //     setLocalStorage(GLOBAL_KEY.updateAccountInfo, "false")
-                    //     setLocalStorage(GLOBAL_KEY.vipupdateAccountInfo, "false")
-                    // }
                 }
             })
         } else {
@@ -181,7 +185,9 @@ Page({
 
     },
     // 生命周期函数--监听页面加载
-    onLoad: function (options) {},
+    onLoad: function (options) {
+        this.getVipShowData()
+    },
     // 生命周期函数--监听页面初次渲染完成
     onReady: function () {},
     // 生命周期函数--监听页面显示
