@@ -298,7 +298,7 @@ Page({
     console.log(res)
     return {
       title: `${this.data.userInfo.nickname}刚加入花样汇，邀请你一起加入，免费课程看不完`,
-      path: `/mine/joinVip/joinVip?scene=${getLocalStorage(GLOBAL_KEY.userId)}`,
+      path: `/mine/joinVip/joinVip?scene=${getLocalStorage(GLOBAL_KEY.userId)}&from=invitePoster`,
       success: function (res) {
         // 转发成功
         wx.showToast({

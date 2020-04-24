@@ -22,7 +22,7 @@ Page({
   },
   joinVip() {
     wx.navigateTo({
-      url: '/mine/joinVip/joinVip'
+      url: '/mine/joinVip/joinVip?from=unAuthorized'
     })
   },
 

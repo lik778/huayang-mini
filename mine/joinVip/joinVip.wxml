@@ -1,4 +1,4 @@
-<!--mine/joinVip/joinVip.wxml-->
+
 <view class="join-vip" wx:if="bgList!==''">
 	<!-- style="padding-top:{{statusHeight+44}}px;" -->
 	<view class="navigation">

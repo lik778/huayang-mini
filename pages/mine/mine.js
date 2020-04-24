@@ -80,7 +80,7 @@ Page({
             })
         } else {
             wx.navigateTo({
-                url: '/mine/joinVip/joinVip',
+                url: '/mine/joinVip/joinVip?from=mine',
             })
         }
     },
@@ -140,7 +140,7 @@ Page({
     // 跳往会员权益页
     toVip() {
         wx.navigateTo({
-            url: '/mine/joinVip/joinVip',
+            url: '/mine/joinVip/joinVip?from=mine',
         })
     },
     // 获取用户信息

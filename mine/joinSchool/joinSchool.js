@@ -51,7 +51,7 @@ Page({
       }
     } else {
       wx.navigateTo({
-        url: `/mine/joinVip/joinVip?from=article`,
+        url: `/mine/joinVip/joinVip?from=joinSchool`,
       })
     }
   },

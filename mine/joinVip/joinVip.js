@@ -1,4 +1,4 @@
-// mine/joinVip/joinVip.js
+
 
 import {
     GLOBAL_KEY
@@ -13,7 +13,8 @@ import {
 } from "../../api/auth/index"
 import {
     getUserInfo,
-    getVipBg
+    getVipBg,
+    pointjoinVipFrom
 } from "../../api/mine/index"
 import {
     checkAuth
@@ -157,6 +158,10 @@ Page({
             console.error('用户拒绝手机号授权')
         }
     },
+    // 打点路径来源
+    pointFrom(e){
+        pointjoinVipFrom({from:e})
+    },
     // 获取背景图
     getVipBgData() {
         getVipBg().then(({
@@ -185,7 +190,6 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        console.log(options)
         wx.showLoading({
             title: '加载中...',
             mask: true
@@ -195,7 +199,7 @@ Page({
             ignoreFocusLogin: true
         }).then(() => {
             let userId = options.scene ? decodeURIComponent(options.scene) : ""
-            if (options.from === "article") {
+            if (options.from === "joinSchool") {
                 // 公众号文章跳转过来de
                 this.setData({
                     fromAuth: true
@@ -207,11 +211,13 @@ Page({
                     roomId: options.zhiboRoomId
                 })
             }
-
             this.setData({
                 userId: userId, //分享跳转过来de
                 statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
             })
+            if(options.from){
+                this.pointFrom(options.from)
+            }
             this.getUserInfoData()
             this.getVipBgData()
         })
@@ -264,7 +270,7 @@ Page({
     onShareAppMessage: function () {
         return {
             title: "加入花样会员",
-            path: '/mine/joinVip/joinVip'
+            path: '/mine/joinVip/joinVip?from=joinVipShare'
         }
     }
 })

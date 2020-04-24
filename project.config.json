@@ -63,7 +63,7 @@
 					"id": 0,
 					"name": "mine/joinVip/joinVip",
 					"pathName": "mine/joinVip/joinVip",
-					"query": "from=review&zhiboRoomId=87",
+					"query": "from=joinSchool",
 					"scene": null
 				},
 				{
