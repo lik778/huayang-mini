@@ -1,13 +1,36 @@
 // pages/live/live.js
-import { getLiveBannerList, getLiveList, setPoint, updateLiveStatus } from "../../api/live/index"
-import { GLOBAL_KEY, WeChatLiveStatus } from '../../lib/config'
-import { $notNull, checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from '../../utils/util'
-import { statisticsWatchNo } from "../../api/live/course"
-import { bindWxPhoneNumber } from "../../api/auth/index"
-import { checkAuth } from "../../utils/auth"
+import {
+	getLiveBannerList,
+	getLiveList,
+	setPoint,
+	updateLiveStatus
+} from "../../api/live/index"
+import {
+	GLOBAL_KEY,
+	WeChatLiveStatus
+} from '../../lib/config'
+import {
+	$notNull,
+	checkIdentity,
+	getLocalStorage,
+	getSchedule,
+	setLocalStorage
+} from '../../utils/util'
+import {
+	statisticsWatchNo
+} from "../../api/live/course"
+import {
+	bindWxPhoneNumber,
+	checkBecomeVip
+} from "../../api/auth/index"
+import {
+	checkAuth
+} from "../../utils/auth"
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog'
-import { getUserInfo } from "../../api/mine/index"
-const app=getApp()
+import {
+	getUserInfo
+} from "../../api/mine/index"
+const app = getApp()
 
 Page({
 	/**
@@ -35,10 +58,16 @@ Page({
 	},
 	// 处理swiper点击回调
 	handleSwiperTap(e) {
-		let {bannerId} = e.currentTarget.dataset.item
+		let {
+			bannerId
+		} = e.currentTarget.dataset.item
 		// 打点
-		setPoint({banner_id: bannerId})
-		wx.navigateTo({url: this.data.bannerPictureObject.link})
+		setPoint({
+			banner_id: bannerId
+		})
+		wx.navigateTo({
+			url: this.data.bannerPictureObject.link
+		})
 	},
 	// 关闭立即邀请
 	onClickHide() {
@@ -74,8 +103,16 @@ Page({
 	 * @param e
 	 */
 	navigateToLive(e) {
-		checkAuth({listenable: true, ignoreFocusLogin: true}).then(() => {
-			let {zhiboRoomId, roomId, link, vipOnly} = e.currentTarget.dataset.item
+		checkAuth({
+			listenable: true,
+			ignoreFocusLogin: true
+		}).then(() => {
+			let {
+				zhiboRoomId,
+				roomId,
+				link,
+				vipOnly
+			} = e.currentTarget.dataset.item
 			// 当前课程是否仅限VIP用户学习
 			if (vipOnly === 1) {
 				// 判断是否是会员/是否入学
@@ -85,7 +122,9 @@ Page({
 					zhiboRoomId
 				}).then((callbackString) => {
 					if (callbackString === 'no-phone-auth') {
-						this.setData({show: true})
+						this.setData({
+							show: true
+						})
 					} else if (callbackString === 'no-auth-daxue') {
 						Dialog.confirm({
 							title: '申请入学立即观看',
@@ -97,8 +136,7 @@ Page({
 						}).catch(() => {})
 					}
 				})
-			}
-			else {
+			} else {
 				statisticsWatchNo({
 					zhibo_room_id: zhiboRoomId, // 运营后台配置的课程ID
 					open_id: getLocalStorage(GLOBAL_KEY.openId)
@@ -133,9 +171,14 @@ Page({
 	 * 跳转至课程列表
 	 */
 	navigateToCourse(e) {
-		let {officialRoomId,bannerId} = e.currentTarget.dataset.item
+		let {
+			officialRoomId,
+			bannerId
+		} = e.currentTarget.dataset.item
 		// 打点
-		setPoint({banner_id: bannerId})
+		setPoint({
+			banner_id: bannerId
+		})
 		wx.navigateTo({
 			url: `/subLive/courseList/courseList?id=${officialRoomId}`,
 		})
@@ -286,6 +329,20 @@ Page({
 			url: '/mine/invite/invite'
 		})
 	},
+	// 检查是否第一次成为会员
+	checkBecomeVipData() {
+		// GLOBAL_KEY.vip为true代表已经请求过接口不再请求接口了
+		if (!getLocalStorage(GLOBAL_KEY.vip)) {
+			checkBecomeVip(`user_id=${getLocalStorage(GLOBAL_KEY.userId)}`).then(res => {
+				setLocalStorage(GLOBAL_KEY.vip,true)
+				if (res) {
+					this.setData({
+						showSuccess: res
+					})
+				}
+			})
+		}
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
@@ -294,6 +351,9 @@ Page({
 			page_id: 'index',
 			page_title: '首页',
 		})
+		if (getLocalStorage(GLOBAL_KEY.userId)) {
+			this.checkBecomeVipData()
+		}
 	},
 
 	/**
@@ -309,6 +369,9 @@ Page({
 				getSchedule(roomIds).then(this.handleLiveStatusCallback)
 			}, 60 * 1000)
 		}
+		// wx.navigateTo({
+		// 	url: '/mine/withdraw/withdraw',
+		// })
 	},
 
 	/**
@@ -320,19 +383,16 @@ Page({
 		if ($notNull(accountInfo)) {
 			getUserInfo("scene=zhide").then(info => {
 				setLocalStorage(GLOBAL_KEY.accountInfo, info)
-				this.setData({didVip: info.is_zhide_vip})
+				this.setData({
+					didVip: info.is_zhide_vip
+				})
 			})
 		}
+		checkAuth({
+			listenable: true
+		})
 
-		checkAuth({listenable: true})
 
-		// 检查是否会员开通成功
-		if (getLocalStorage(GLOBAL_KEY.vip) === true) {
-			this.setData({
-				showSuccess: true
-			})
-			wx.removeStorageSync(GLOBAL_KEY.vip)
-		}
 	},
 
 	/**

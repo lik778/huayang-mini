@@ -1,5 +1,3 @@
-
-
 import {
     GLOBAL_KEY
 } from "../../lib/config"
@@ -34,7 +32,8 @@ Page({
         fromReview: false,
         buyRepeat: true,
         bgList: '',
-        roomId: ''
+        roomId: '',
+        buttonText: "立即加入"
     },
     // 选中
     onChange() {
@@ -109,7 +108,24 @@ Page({
                     })
                 }
                 wx.hideLoading()
-                console.log(res)
+                if (res.is_zhide_vip) {
+                    wx.showModal({
+                        title: "提示",
+                        cancelText: "返回首页",
+                        confirmText: "继续购买",
+                        content: "你已是尊贵的花样汇超级会员",
+                        success(res) {
+                            if (res.cancel) {
+                                wx.switchTab({
+                                    url: "/pages/index/index"
+                                })
+                            }
+                        }
+                    })
+                    this.setData({
+                        buttonText: "立即续费",
+                    })
+                }
             })
         } else {
             setTimeout(() => {
@@ -159,8 +175,10 @@ Page({
         }
     },
     // 打点路径来源
-    pointFrom(e){
-        pointjoinVipFrom({from:e})
+    pointFrom(e) {
+        pointjoinVipFrom({
+            from: e
+        })
     },
     // 获取背景图
     getVipBgData() {
@@ -168,7 +186,7 @@ Page({
             data
         }) => {
             this.setData({
-                bgList:data
+                bgList: data
             })
         })
     },
@@ -201,7 +219,7 @@ Page({
                 userId: userId, //分享跳转过来de
                 statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
             })
-            if(options.from){
+            if (options.from) {
                 this.pointFrom(options.from)
             }
             this.getUserInfoData()

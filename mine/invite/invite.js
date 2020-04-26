@@ -4,7 +4,8 @@ import {
 } from "./canvas"
 import {
   getInviteCode,
-  getVipNum
+  getVipNum,
+  getActivityTime
 } from "../../api/mine/index"
 import {
   getSubscriptionStatus,
@@ -34,7 +35,10 @@ Page({
     posterHeigt: 0, //海报高度
     radio: 0, //海报缩放比
     showDialog: false,
-    status: false //订阅状态
+    status: false, //订阅状态
+    bannerSrc: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587884129ygbRvw.jpg",
+    // noteText:"活动截止日期：2020年1月1日 23:59:59",
+    noteText: "xx"
   },
   // 订阅
   show() {
@@ -81,16 +85,20 @@ Page({
           height: res.screenHeight
         }
         if ((info.height - 311) / 1.33 < info.width - 32) {
+          // 长屏
           this.setData({
             posterWidth: (info.height - 311) / 1.33,
             posterHeigt: info.height - 311,
-            radio: (info.height - 311) / 356
+            radio: (info.height - 311) / 356,
+            bannerSrc: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587884129ygbRvw.jpg"
           })
         } else {
+          // 短屏
           this.setData({
             posterWidth: info.width - 32,
             posterHeigt: info.width * 1.33,
-            radio: (info.width - 32) / 267
+            radio: (info.width - 32) / 267,
+            bannerSrc: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587884183ZLKsxQ.jpg"
           })
         }
         console.log(this.data.radio)
@@ -131,7 +139,8 @@ Page({
       nickname: this.data.userInfo.nickname,
       num: this.data.num,
       headicon: this.data.userInfo.avatar_url,
-      qcCode: this.data.qcCode
+      qcCode: this.data.qcCode,
+      noteText: this.data.noteText
     }).then(url => {
       wx.getSetting({
         success(res) {
@@ -148,7 +157,7 @@ Page({
                 wx.showModal({
                   title: "请打开相册权限",
                   duration: 2000,
-                  showCancel:false,
+                  showCancel: false,
                   success: (res1) => {
                     console.log(res1)
                     if (res1.confirm) {
@@ -162,7 +171,7 @@ Page({
                 })
               }
             })
-           
+
           } else {
             _this.saveImg({
               url,
@@ -173,9 +182,8 @@ Page({
       })
 
     })
-
-
   },
+  // 保存图片封装
   saveImg({
     url,
     _this
@@ -185,9 +193,16 @@ Page({
       success(res) {
         if (res.errMsg === 'saveImageToPhotosAlbum:ok') {
           if (!_this.data.status) {
-            _this.setData({
-              showDialog: true
+            wx.showToast({
+              title: '保存成功',
+              duration: 3000,
             })
+            setTimeout(() => {
+              wx.hideLoading()
+              _this.setData({
+                showDialog: true
+              })
+            }, 3000)
           } else {
             wx.showToast({
               title: '保存成功',
@@ -206,6 +221,14 @@ Page({
           })
         }
       },
+    })
+  },
+  // 获取活动日期文案
+  getActivityTimeData() {
+    getActivityTime().then(res => {
+      this.setData({
+        noteText: "活动截止日期：" + res.data
+      })
     })
   },
   // 获取订阅状态
@@ -229,6 +252,8 @@ Page({
     this.calculate()
     // 随机生成背景图
     this.getImgUrl()
+    // 获取活动日期文案
+    this.getActivityTimeData()
     // 获取小程序二维码
     this.inviteCode()
     // 获取小程序订阅信息
