@@ -1,5 +1,5 @@
 <!--mine/invite/invite.wxml-->
-<view class="invite" wx:if="{{posturl!==''}}">
+<view class="invite" wx:if="{{qcCode!==''}}">
 	<view class="navigation">
 		<naviBar title="邀请有礼" color="rgba(250,250,250,0)"></naviBar>
 	</view>

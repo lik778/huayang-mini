@@ -26,7 +26,6 @@ Page({
    */
   data: {
     qcCode: "",
-    canvasUrl: "",
     posturl: "",
     userInfo: {},
     statusHeight: 0,
@@ -38,7 +37,8 @@ Page({
     status: false, //订阅状态
     bannerSrc: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587884129ygbRvw.jpg",
     // noteText:"活动截止日期：2020年1月1日 23:59:59",
-    noteText: "xx"
+    noteText: "",
+    canvasBgUrl: ""
   },
   // 订阅
   show() {
@@ -133,61 +133,82 @@ Page({
     wx.showLoading({
       title: "加载中",
     })
-    // 绘制canvas
-    createCanvas({
-      bgUrl: this.data.posturl,
-      nickname: this.data.userInfo.nickname,
-      num: this.data.num,
-      headicon: this.data.userInfo.avatar_url,
-      qcCode: this.data.qcCode,
-      noteText: this.data.noteText
-    }).then(url => {
-      wx.getSetting({
-        success(res) {
-          if (!res.authSetting['scope.writePhotosAlbum']) {
-            wx.authorize({
-              scope: 'scope.writePhotosAlbum',
-              success: () => {
-                _this.saveImg({
-                  url,
-                  _this
-                })
-              },
-              fail: () => {
-                wx.showModal({
-                  title: "请打开相册权限",
-                  duration: 2000,
-                  showCancel: false,
-                  success: (res1) => {
-                    console.log(res1)
-                    if (res1.confirm) {
-                      wx.openSetting({
-                        success(res) {
-                          console.log(res)
-                        }
-                      })
-                    }
-                  }
-                })
-              }
-            })
-
-          } else {
-            _this.saveImg({
-              url,
-              _this
-            })
-          }
-        }
+    if (this.data.canvasBgUrl == '') {
+      this.beginDraw().then(() => {
+        this.getAblumAuth(_this)
       })
-
+    } else {
+      this.getAblumAuth(_this)
+    }
+  },
+  // 获取保存相册授权
+  getAblumAuth(_this) {
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.writePhotosAlbum']) {
+          wx.authorize({
+            scope: 'scope.writePhotosAlbum',
+            success: () => {
+              _this.saveImg({
+                url: _this.data.canvasBgUrl,
+                _this
+              })
+            },
+            fail: () => {
+              wx.showModal({
+                title: "请打开相册权限",
+                duration: 2000,
+                showCancel: false,
+                success: (res1) => {
+                  console.log(res1)
+                  if (res1.confirm) {
+                    wx.openSetting({
+                      success(res) {
+                        console.log(res)
+                      }
+                    })
+                  }
+                }
+              })
+            }
+          })
+        } else {
+          console.log("获取授权好了")
+          _this.saveImg({
+            url: _this.data.canvasBgUrl,
+            _this
+          })
+        }
+      }
     })
+  },
+  // 绘制canvas
+  beginDraw() {
+    // 绘制canvas
+    return new Promise(resolve => {
+      createCanvas({
+        bgUrl: this.data.posturl,
+        nickname: this.data.userInfo.nickname,
+        num: this.data.num,
+        headicon: this.data.userInfo.avatar_url,
+        qcCode: this.data.qcCode,
+        noteText: this.data.noteText
+      }).then(url => {
+        console.log("canvas图片有了")
+        this.setData({
+          canvasBgUrl: url
+        })
+        resolve()
+      })
+    })
+
   },
   // 保存图片封装
   saveImg({
     url,
     _this
   }) {
+    console.log("保存")
     wx.saveImageToPhotosAlbum({
       filePath: url,
       success(res) {
@@ -212,7 +233,6 @@ Page({
               wx.hideLoading()
             }, 3000)
           }
-
         } else {
           wx.showToast({
             title: '保存失败',
@@ -265,6 +285,7 @@ Page({
       this.setData({
         num: data
       })
+      this.beginDraw()
     })
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
