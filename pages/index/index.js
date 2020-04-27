@@ -1,6 +1,6 @@
 // pages/live/live.js
 import { getLiveBannerList, getLiveList, setPoint, updateLiveStatus } from "../../api/live/index"
-import { GLOBAL_KEY, WeChatLiveStatus } from '../../lib/config'
+import { GLOBAL_KEY, SHARE_PARAMS, WeChatLiveStatus } from '../../lib/config'
 import { $notNull, checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from '../../utils/util'
 import { statisticsWatchNo } from "../../api/live/course"
 import { bindWxPhoneNumber } from "../../api/auth/index"
@@ -13,6 +13,11 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
+		// 页面打点参数，用于打点sdk劫持onshow钩子时自动PV打点
+		__shareParams: {
+			page_type: SHARE_PARAMS.pageTypeCommon,
+			page_level: SHARE_PARAMS.pageLevelTabBarPage
+		},
 		show: false,
 		WeChatLiveStatus,
 		schedule: [],

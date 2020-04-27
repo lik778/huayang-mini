@@ -1,14 +1,16 @@
 //app.js
-import request from './lib/request'
 import { getLocalStorage, setLocalStorage } from './utils/util'
 import { GLOBAL_KEY } from './lib/config'
+import { BxTracker } from './anka-tracker.min'
+const tracker = BxTracker.generateTrackerInstance({
+	trackerHost: 'https://example.com/log', // TODO 需要初始化host
+	detectChanel: false,
+	detectAppStart: false
+})
 
 let livePlayer = requirePlugin('live-player-plugin')
 App({
-	onLaunch: function () {
-		// 全局注册http
-		wx.$request = request
-	},
+	onLaunch: function () {},
 	onShow(options) {
 		// 分享卡片入口场景才调用getShareParams接口获取以下参数
 		if (options.scene == 1007 || options.scene == 1008 || options.scene == 1044) {
@@ -30,6 +32,16 @@ App({
 				},
 			})
 		}
+	},
+	// 初始化打点sdk
+	initialPointMachine() {
+		let openId = getLocalStorage(GLOBAL_KEY.openId)
+		if (!openId || this.tracker) return false
+		this.tracker = tracker.asyncInitWithCommonData({
+			open_id: openId
+		}).then(() => {
+			console.log('初始化成功，开始执行打点任务')
+		})
 	},
 	onUnload() {},
 	globalData: {}

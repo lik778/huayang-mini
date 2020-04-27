@@ -19,7 +19,7 @@
 					<image class="multiple-mode-left" mode="aspectFill" src="{{item.media_list[0].url}}"></image>
 					<view class="multiple-mode-right">
 						<image mode="aspectFill" src="{{item.media_list[1].url}}"></image>
-						<image mode="aspectFill" src="{{item.media_list[2].url}}"></image>
+						<image mode="aspectFill" style="border-radius: 6rpx;" src="{{item.media_list[2].url}}"></image>
 					</view>
 				</view>
 			</view>

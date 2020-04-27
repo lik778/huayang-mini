@@ -14,9 +14,8 @@ Page({
 	data: {
 		zhiboRoomInfo: {},
 		zhiboRoomId: 0,
-	},
-	handleWaiting(e) {
-		console.log(e.detail);
+		show: false,
+		adapter: false
 	},
 	haveMore() {
 		const type = this.data.zhiboRoomInfo.zhibo_room.room_type
@@ -34,11 +33,12 @@ Page({
 	auth(zhiboRoomId) {
 		let userId = getLocalStorage(GLOBAL_KEY.userId)
 		if (userId == null) {
-			wx.navigateTo({url: '/pages/auth/auth'})
+			this.setData({show: true})
 		} else {
 			// 获取直播权限
 			getWatchLiveAuth({room_id: zhiboRoomId, user_id: userId}).then(res => {
 				if (res === 'vip') {
+					// 非会员，跳往花样汇
 					wx.navigateTo({
 						url: `/mine/joinVip/joinVip?from=review&zhiboRoomId=${this.data.zhiboRoomId}`,
 					})
@@ -93,7 +93,17 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function ({zhiboRoomId}) {
-		this.setData({zhiboRoomId})
+		getLiveInfo({zhibo_room_id: zhiboRoomId}).then((response) => {
+			this.setData({
+				zhiboRoomInfo: {...response},
+				zhiboRoomId,
+			})
+			this.auth(zhiboRoomId)
+			let res = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
+			this.setData({
+				adapter: res.screenHeight - res.windowHeight - res.statusBarHeight - 32 > 72
+			})
+		})
 	},
 
 	/**
@@ -107,16 +117,8 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		checkAuth({listenable: true}).then(() => {
-			let zhiboRoomId = this.data.zhiboRoomId
-			getLiveInfo({zhibo_room_id: zhiboRoomId}).then((response) => {
-				this.setData({
-					zhiboRoomInfo: { ...response },
-					zhiboRoomId
-				})
-				zhiboRoomId && this.auth(zhiboRoomId)
-			})
-		})
+		checkAuth()
+		this.data.zhiboRoomId && this.auth(this.data.zhiboRoomId)
 	},
 
 	/**

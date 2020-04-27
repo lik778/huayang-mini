@@ -3,5 +3,6 @@
   "usingComponents": {
     "naviBar": "../../components/navibar/navibar"
   },
-  "navigationBarTitleText": "花样直播"
+  "navigationBarTitleText": "花样直播",
+  "backgroundColor": "#000000"
 }

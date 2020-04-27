@@ -95,3 +95,12 @@ export function getLiveInfo(params) {
 		})
 	})
 }
+
+// 获取课程详情
+export function getCourseInfo(params) {
+	return new Promise(resolve => {
+		request._get(URL.getCourseInfo, params).then(({ data }) => {
+			resolve(data)
+		})
+	})
+}

@@ -90,7 +90,7 @@
     overflow: hidden;
     width: 452rpx;
     height: 452rpx;
-    border-radius: 16rpx 6rpx 6rpx 16rpx;
+    border-radius: 16rpx 6rpx 6rpx 6rpx;
 }
 .multiple-mode-right {
     height: 452rpx;
