@@ -317,6 +317,9 @@ Page({
 				getSchedule(roomIds).then(this.handleLiveStatusCallback)
 			}, 60 * 1000)
 		}
+		// wx.navigateTo({
+		// 	url: '/mine/invite/invite',
+		// })
 	},
 
 	/**

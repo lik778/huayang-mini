@@ -10,9 +10,6 @@ export const createCanvas = ({
     // 获取上下文
     let ctx = wx.createCanvasContext('posterCanvas')
     // 计算设备比
-    // let systemInfo = wx.getSystemInfoSync()
-    // let width = systemInfo.screenWidth
-    // let height = systemInfo.screenHeight
     ctx.scale(3.37, 3.37)
     wx.downloadFile({
       url: bgUrl,

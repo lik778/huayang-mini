@@ -21,8 +21,7 @@
     "pages/privacy/privacy",
     "pages/service/service"
   ],
-  "subpackages": [
-    {
+  "subpackages": [{
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -34,6 +33,7 @@
         "beanExplain/beanExplain",
         "mineOrder/mineOrder",
         "vipWelfare/vipWelfare",
+        "withdrawResult/withdrawResult",
         "withdraw/withdraw"
       ]
     },
@@ -65,24 +65,23 @@
     "color": "#999",
     "selectedColor": "#000",
     "backgroundColor": "#fff",
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/index/index",
         "selectedIconPath": "assets/images/common/liveActive.png",
         "iconPath": "assets/images/common/live.png",
-        "text":"直播"
+        "text": "直播"
       },
       {
         "pagePath": "pages/mall/mall",
         "selectedIconPath": "assets/images/common/mallActive.png",
         "iconPath": "assets/images/common/mall.png",
-        "text":"值得买"
+        "text": "值得买"
       },
       {
         "pagePath": "pages/mine/mine",
         "selectedIconPath": "assets/images/common/mineActive.png",
         "iconPath": "assets/images/common/mine.png",
-        "text":"我的"
+        "text": "我的"
       }
     ]
   },

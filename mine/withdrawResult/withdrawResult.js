@@ -1,32 +1,13 @@
-// mine/withdraw/withdraw.js
+// mine/withdrawResult/withdrawResult.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    keyboardHeight:0,
-    canWithdrawPrice:224.3,
-    inputValue:""
+
   },
-  // 获取焦点处理定位
-  getFocus(e){
-    this.setData({
-      keyboardHeight:parseInt(e.detail.height)+20
-    })
-  },
-  // 失去焦点定位复位
-  leaveFocus(){
-    this.setData({
-      keyboardHeight:20
-    })
-  },
-  // 全部提现
-  allWithdraw(){
-    this.setData({
-      inputValue:this.data.canWithdrawPrice
-    })
-  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -76,4 +57,10 @@ Page({
 
   },
 
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  }
 })
