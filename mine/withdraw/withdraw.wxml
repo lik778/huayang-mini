@@ -1,9 +1,13 @@
 <!--mine/withdraw/withdraw.wxml-->
 <view class="withdraw">
+	<!-- navibar -->
+	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+		<naviBar title="花样汇超级会员" color="rgba(250,250,250,0)"></naviBar>
+	</view>
 	<view class="input-module">
 		<view class="input-module-title">提现金额</view>
 		<view class="input-box">
-			<input type="idcard" bindfocus="getFocus" bindblur='leaveFocus' value="{{inputValue}}"></input>
+			<input type="idcard" bindfocus="getFocus" bindblur='leaveFocus' value="{{inputValue}}" bindinput="changeInputValue"></input>
 			<text>¥</text>
 		</view>
 		<view class="input-note">
@@ -13,6 +17,6 @@
 	</view>
 	<view class="button-line" style="bottom:{{keyboardHeight}}px;">
 		<view class="button-line-title">提现免手续费，最快2小时内到账，最慢不超过48小时</view>
-		<view class="button">提现</view>
+		<view class="button" bindtap="withdraw">提现</view>
 	</view>
 </view>

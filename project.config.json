@@ -142,6 +142,13 @@
 					"pathName": "mine/joinVip/joinVip",
 					"query": "prdId=37",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "mine/withdrawResult/withdrawResult",
+					"pathName": "mine/withdrawResult/withdrawResult",
+					"query": "money=212",
+					"scene": null
 				}
 			]
 		}

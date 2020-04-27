@@ -1,18 +1,29 @@
 // mine/withdrawResult/withdrawResult.js
+import {
+  getLocalStorage
+} from "../../utils/util"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    money: "",
+    titleText: "提现成功",
+    statusHeight: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.setData({
+      money: options.money,
+      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
+    })
   },
 
   /**
@@ -56,11 +67,4 @@ Page({
   onReachBottom: function () {
 
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })
