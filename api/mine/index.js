@@ -111,3 +111,14 @@ export const pointjoinVipFrom = (params) => {
     })
   })
 }
+
+// 获取邀请有礼海报有效期
+export const getActivityTime = (params) => {
+  return new Promise(resolve => {
+    request._get(URL.getActivityTime+"?"+params).then(res => {
+      if (res.code === 0) {
+        resolve(res)
+      }
+    })
+  })
+}

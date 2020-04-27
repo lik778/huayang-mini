@@ -33,7 +33,8 @@
         "buyAgreement/buyAgreement",
         "beanExplain/beanExplain",
         "mineOrder/mineOrder",
-        "vipWelfare/vipWelfare"
+        "vipWelfare/vipWelfare",
+        "withdraw/withdraw"
       ]
     },
     {

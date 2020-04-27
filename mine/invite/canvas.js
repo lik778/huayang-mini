@@ -3,7 +3,8 @@ export const createCanvas = ({
   nickname,
   num,
   headicon,
-  qcCode
+  qcCode,
+  noteText
 }) => {
   return new Promise(resolve => {
     // 获取上下文
@@ -38,6 +39,8 @@ export const createCanvas = ({
             dramName(ctx, "元/年", 12, textWidth2 + 12, 324, "#EE0000")
             dramName(ctx, "长按识别", 9, 205, 312, "#DDDDDD")
             dramName(ctx, "前往“花样值得买”", 9, 186, 325, "#DDDDDD")
+            // 绘制活动日期
+            dramName(ctx, noteText, 6, 4, 346, "#fff")
             //绘制小程序二维码
             wx.downloadFile({
               url: qcCode,

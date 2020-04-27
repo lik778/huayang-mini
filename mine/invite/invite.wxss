@@ -133,3 +133,12 @@
   border-radius: 50%;
   vertical-align: bottom;
 }
+
+.note-line {
+  position: absolute;
+  left: 4px;
+  bottom: 4px;
+  font-size: 6px;
+  color: #fff;
+
+}

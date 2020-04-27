@@ -4,7 +4,7 @@
 		<naviBar title="邀请有礼" color="rgba(250,250,250,0)"></naviBar>
 	</view>
 	<view class="banner">
-		<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368497hFoSIq.jpg"></image>
+		<image src="{{bannerSrc}}"></image>
 		<!-- <image src="{{canvasUrl}}"></image> -->
 	</view>
 	<view class="canvas">
@@ -37,6 +37,7 @@
 				<view style="padding-top:{{6*radio}}px;">长按识别</view>
 				<view>前往“花样值得买”</view>
 			</view>
+			<view class="note-line">{{noteText}}</view>
 		</view>
 	</view>
 	<view class="button-line">

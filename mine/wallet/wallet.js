@@ -20,7 +20,7 @@ Page({
     offset: 0
   },
   // 花豆介绍
-  explain(){
+  explain() {
     wx.navigateTo({
       url: '/mine/beanExplain/beanExplain',
     })
@@ -29,9 +29,12 @@ Page({
   withdraw() {
     wx.showModal({
       title: '提示',
-      content:" 提现功能将在5月中旬开放，敬请期待哦！",
-      showCancel:false,
+      content: " 提现功能将在5月中旬开放，敬请期待哦！",
+      showCancel: false,
     })
+    // wx.navigateTo({
+    //   url: '/mine/withdraw/withdraw',
+    // })
   },
   // 获取小程序邀请列表
   inviteListData() {

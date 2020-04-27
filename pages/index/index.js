@@ -1,6 +1,6 @@
 // pages/live/live.js
 import { getLiveBannerList, getLiveList, setPoint, updateLiveStatus } from "../../api/live/index"
-import { GLOBAL_KEY, SHARE_PARAMS, WeChatLiveStatus } from '../../lib/config'
+import { GLOBAL_KEY, WeChatLiveStatus } from '../../lib/config'
 import { $notNull, checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from '../../utils/util'
 import { statisticsWatchNo } from "../../api/live/course"
 import { bindWxPhoneNumber } from "../../api/auth/index"
@@ -13,11 +13,6 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
-		// 页面打点参数，用于打点sdk劫持onshow钩子时自动PV打点
-		__shareParams: {
-			page_type: SHARE_PARAMS.pageTypeCommon,
-			page_level: SHARE_PARAMS.pageLevelTabBarPage
-		},
 		show: false,
 		WeChatLiveStatus,
 		schedule: [],
@@ -290,6 +285,20 @@ Page({
 			url: '/mine/invite/invite'
 		})
 	},
+	// 检查是否第一次成为会员
+	checkBecomeVipData() {
+		// GLOBAL_KEY.vip为true代表已经请求过接口不再请求接口了
+		if (!getLocalStorage(GLOBAL_KEY.vip)) {
+			checkBecomeVip(`user_id=${getLocalStorage(GLOBAL_KEY.userId)}`).then(res => {
+				setLocalStorage(GLOBAL_KEY.vip,true)
+				if (res) {
+					this.setData({
+						showSuccess: res
+					})
+				}
+			})
+		}
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
@@ -324,14 +333,6 @@ Page({
 		}
 
 		checkAuth({listenable: true})
-
-		// 检查是否会员开通成功
-		if (getLocalStorage(GLOBAL_KEY.vip) === true) {
-			this.setData({
-				showSuccess: true
-			})
-			wx.removeStorageSync(GLOBAL_KEY.vip)
-		}
 	},
 
 	/**
