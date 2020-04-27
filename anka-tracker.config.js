@@ -35,11 +35,12 @@ module.exports = {
 
 	// 劫持 page onShow 方法开启自动 pv 打点
 	autoPageView (currentPage, callback) {
-		const {page_level, page_type} = currentPage.data.__shareParams
+		const {page_level, page_type, page_title} = currentPage.data.__shareParams
 		callback({
 			action: '__viewPage',
 			page_level,
-			page_type
+			page_type,
+			page_title
 		})
 	},
 

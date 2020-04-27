@@ -251,7 +251,7 @@ export const getSchedule = async function (roomIds = []) {
 			} else {
 				// 2.2 timestamp过期
 				let {liveStatus} = await queryLiveStatus(targetRoomId)
-				
+
 				target.liveStatus = WeChatLiveStatus[liveStatus]
 				target.timestamp = +new Date() + 5 * 60 * 1000
 			}
@@ -368,4 +368,8 @@ export function queryImageInfo(src) {
 			}
 		})
 	})
+}
+
+export function f() {
+
 }

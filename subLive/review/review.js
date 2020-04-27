@@ -1,7 +1,7 @@
 // subLive/review/review.js
 import { getLiveInfo, getWatchLiveAuth, statisticsWatchNo } from "../../api/live/course"
 import { getLocalStorage, setLocalStorage } from "../../utils/util"
-import { GLOBAL_KEY } from "../../lib/config"
+import { GLOBAL_KEY, SHARE_PARAMS } from "../../lib/config"
 import Dialog from "../../miniprogram_npm/@vant/weapp/dialog/dialog"
 import { checkAuth } from "../../utils/auth"
 import { bindWxPhoneNumber } from "../../api/auth/index"
@@ -12,6 +12,12 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
+		// 页面打点参数，用于打点sdk劫持onshow钩子时自动PV打点
+		__shareParams: {
+			page_type: SHARE_PARAMS.pageType.webview,
+			page_level: SHARE_PARAMS.pageLevel.secondPage,
+			page_title: "视频回看页",
+		},
 		zhiboRoomInfo: {},
 		zhiboRoomId: 0,
 		show: false,

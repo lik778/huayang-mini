@@ -2,11 +2,8 @@
 import { getLocalStorage, setLocalStorage } from './utils/util'
 import { GLOBAL_KEY } from './lib/config'
 import { BxTracker } from './anka-tracker.min'
-const tracker = BxTracker.generateTrackerInstance({
-	trackerHost: 'https://example.com/log', // TODO 需要初始化host
-	detectChanel: false,
-	detectAppStart: false
-})
+import trackerConfig from './anka.config'
+const Tracker = BxTracker.generateTrackerInstance(trackerConfig)
 
 let livePlayer = requirePlugin('live-player-plugin')
 App({
@@ -37,8 +34,9 @@ App({
 	initialPointMachine() {
 		let openId = getLocalStorage(GLOBAL_KEY.openId)
 		if (!openId || this.tracker) return false
-		this.tracker = tracker.asyncInitWithCommonData({
-			open_id: openId
+		this.tracker = Tracker.asyncInitWithCommonData({
+			open_id: openId,
+			union_id: ''
 		}).then(() => {
 			console.log('初始化成功，开始执行打点任务')
 		})

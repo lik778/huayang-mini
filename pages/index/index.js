@@ -15,8 +15,9 @@ Page({
 	data: {
 		// 页面打点参数，用于打点sdk劫持onshow钩子时自动PV打点
 		__shareParams: {
-			page_type: SHARE_PARAMS.pageTypeCommon,
-			page_level: SHARE_PARAMS.pageLevelTabBarPage
+			page_type: SHARE_PARAMS.pageType.common,
+			page_level: SHARE_PARAMS.pageLevel.tabBarPage,
+			page_title: "直播首页"
 		},
 		show: false,
 		WeChatLiveStatus,
