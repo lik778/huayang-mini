@@ -37,4 +37,7 @@
 			<text>{{item.name}}</text>
 		</view>
 	</view>
+
+	<van-dialog title="微信授权" message="授权获取更多优惠" show="{{ show }}" confirmButtonText="立即授权" show-cancel-button confirm-button-open-type="getPhoneNumber" bind:getphonenumber="getPhoneNumber"></van-dialog>
+	<van-dialog id="van-dialog" />
 </view>

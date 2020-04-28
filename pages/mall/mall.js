@@ -1,8 +1,11 @@
 // pages/mall/mall.js
-import { getBannerList, getCategory, getProductList } from "../../api/mall/index"
+import { getBannerList, getCategory, getProductList, getYouZanAppId } from "../../api/mall/index"
 import { checkAuth } from "../../utils/auth"
-import { changeTwoDecimal_f } from "../../utils/util"
+import { $notNull, changeTwoDecimal_f, getLocalStorage, setLocalStorage } from "../../utils/util"
 import { setPoint } from "../../api/live/index"
+import { GLOBAL_KEY } from "../../lib/config"
+import { bindWxPhoneNumber } from "../../api/auth/index"
+import Dialog from "../../miniprogram_npm/@vant/weapp/dialog/dialog"
 
 Page({
 	/**
@@ -22,11 +25,65 @@ Page({
 		offset: 0,
 		limit: 10,
 		didNoMore: false,
+		show: false
 	},
 	jumpToLink(e) {
-		let {link, id} = e.currentTarget.dataset.item
-		setPoint({ banner_id: id })
-		wx.navigateTo({url: link})
+		let {link, id, vip_only, link_type} = e.currentTarget.dataset.item
+		if (vip_only == 1) {
+			let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
+			if (!$notNull(accountInfo)) {
+				// 手机号鉴权
+				this.setData({show: true})
+				return false
+			}
+
+			if (!accountInfo.is_zhide_vip) {
+				Dialog.confirm({
+					title: '提示',
+					message: '立即加入“花样汇”享专属活动优惠'
+				})
+					.then(() => {
+						wx.navigateTo({
+							url: '/mine/joinVip/joinVip',
+						})
+					})
+				return false
+			}
+		}
+		setPoint({banner_id: id})
+		if (link_type === 'youzan') {
+			getYouZanAppId().then(appId => {
+				wx.navigateToMiniProgram({
+					appId,
+					path: link,
+				})
+			})
+		} else {
+			wx.navigateTo({url: link})
+		}
+	},
+	/**
+	 * 一键获取微信手机号
+	 * @param e
+	 */
+	async getPhoneNumber(e) {
+		if (!e) return
+		let {
+			errMsg = '', encryptedData: encrypted_data = '', iv = ''
+		} = e.detail
+		if (errMsg.includes('ok')) {
+			let open_id = getLocalStorage(GLOBAL_KEY.openId)
+			if (encrypted_data && iv) {
+				let originAccountInfo = await bindWxPhoneNumber({
+					open_id,
+					encrypted_data,
+					iv
+				})
+				setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
+			}
+		} else {
+			console.error('用户拒绝手机号授权')
+		}
 	},
 	currentHandle(e) {
 		let {current} = e.detail
