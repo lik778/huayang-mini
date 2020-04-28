@@ -3,6 +3,7 @@
 
 .input-module {
   padding: 64rpx 40rpx;
+  padding-bottom: 0;
 }
 
 .input-module-title {
@@ -65,13 +66,6 @@
   line-height: 16px;
 }
 
-.button-line {
-  position: fixed;
-  bottom: 64rpx;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 40rpx);
-}
 
 .button-line-title {
   font-size: 14px;
@@ -95,4 +89,9 @@
   color: rgba(255, 255, 255, 1);
   text-align: center;
   margin: 0 auto;
+}
+
+.none-button {
+  background: rgba(182, 182, 182, 1);
+  color: rgba(255, 255, 255, 1);
 }

@@ -1,12 +1,12 @@
 
 <view class="join-vip" wx:if="bgList!==''">
 	<!-- style="padding-top:{{statusHeight+44}}px;" -->
-	<view class="navigation">
-		<naviBar title="花样汇超级会员" color="rgba(250,250,250,0)" style="padding-top:{{statusHeight+44}}px;"></naviBar>
+	<view class="navigation" style="padding-top:{{statusHeight+43}}px;">
+		<naviBar title="花样汇超级会员" color="#e1bd95"></naviBar>
 	</view>
 	<view class="banner">
 		<view class="bg">
-			<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587369827hRoeqz.jpg"></image>
+			<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1588052660lJwnjY.jpg"></image>
 		</view>
 		<view class="banner-main">
 			<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587369855fRLKPm.jpg"></image>

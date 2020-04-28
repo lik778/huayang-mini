@@ -1,0 +1,33 @@
+/* mine/contact/contact.wxss */
+.main {
+  padding-top: 160rpx;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-size: 18px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  line-height: 25px;
+  padding-bottom: 72rpx;
+}
+
+.main image {
+  width: 160rpx;
+  height: 140rpx;
+  vertical-align: bottom;
+  padding-bottom: 40rpx;
+}
+
+.contact-button {
+  width: 590rpx;
+  height: 84rpx;
+  border-radius: 48rpx;
+  background: rgba(255, 68, 51, 1);
+  text-align: center;
+  line-height: 84rpx;
+  font-size: 18px;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1);
+}

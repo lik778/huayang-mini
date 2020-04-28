@@ -318,7 +318,7 @@ Page({
 			}, 60 * 1000)
 		}
 		// wx.navigateTo({
-		// 	url: '/mine/withdraw/withdraw',
+		// 	url: '/mine/contact/contact',
 		// })
 	},
 

@@ -63,7 +63,7 @@
 					"id": 0,
 					"name": "mine/joinVip/joinVip",
 					"pathName": "mine/joinVip/joinVip",
-					"query": "from=joinSchool",
+					"query": "",
 					"scene": null
 				},
 				{
@@ -148,6 +148,20 @@
 					"name": "mine/withdrawResult/withdrawResult",
 					"pathName": "mine/withdrawResult/withdrawResult",
 					"query": "money=212",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "mine/contact/contact",
+					"pathName": "mine/contact/contact",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 14,
+					"name": "mine/vipWelfare/vipWelfare",
+					"pathName": "mine/vipWelfare/vipWelfare",
+					"query": "",
 					"scene": null
 				}
 			]

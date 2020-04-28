@@ -1,7 +1,7 @@
 <!--mine/withdrawResult/withdrawResult.wxml-->
 <view class="withdraw-result">
 	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
-		<naviBar title="花样汇超级会员" color="rgba(250,250,250,0)"></naviBar>
+		<naviBar title="我的钱包" color="rgba(250,250,250,0)"></naviBar>
 	</view>
 	<view class="main">
 		<view class="main-title">{{titleText}}</view>
