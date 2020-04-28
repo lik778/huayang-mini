@@ -24,6 +24,12 @@ Page({
   },
   // 输入框改变输入
   changeInputValue(e) {
+    console.log(isNaN(e.detail.value))
+    if(isNaN(e.detail.value)){
+      this.setData({
+        inputValue:""
+      })
+    }
     if (e.detail.value === ''||Number(e.detail.value)<20) {
       this.setData({
         changeCss: true,

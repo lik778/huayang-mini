@@ -1,7 +1,7 @@
 <!--mine/contact/contact.wxml-->
 <view class="contact">
 	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
-		<naviBar title="填写收货地址" color="rgba(250,250,250,0)"></naviBar>
+		<naviBar title="领取福利" color="rgba(250,250,250,0)" share="true"></naviBar>
 	</view>
 	<view class="main">
 		<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1588053408WCMzSn.jpg"></image>

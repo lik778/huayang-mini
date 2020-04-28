@@ -83,12 +83,13 @@ Page({
                                             url: "/mine/vipWelfare/vipWelfare",
                                         })
                                     } else {
-                                        // wx.switchTab({
-                                        //     url: '/pages/index/index',
-                                        // })
-                                        wx.navigateTo({
-                                            url: '/mine/contact/contact',
+                                        setLocalStorage(GLOBAL_KEY.vipBack,true)
+                                        wx.switchTab({
+                                            url: '/pages/index/index',
                                         })
+                                        // wx.navigateTo({
+                                        //     url: '/mine/contact/contact',
+                                        // })
                                     }
                                 }
                             })
