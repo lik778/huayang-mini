@@ -1,5 +1,5 @@
 import md5 from 'md5'
-import { GLOBAL_KEY, ROOT_URL, WeChatLiveStatus } from '../lib/config'
+import { GLOBAL_KEY, ROOT_URL, SHARE_PARAMS, WeChatLiveStatus } from '../lib/config'
 import { createOrder } from "../api/mine/payVip"
 import { getWatchLiveAuth, statisticsWatchNo } from "../api/live/course"
 import request from "../lib/request"
@@ -370,6 +370,91 @@ export function queryImageInfo(src) {
 	})
 }
 
-export function f() {
-
+/**
+ * 打点 - 用户点击事件
+ * @param component 交互组件名称
+ * @param click_type 跳转类型
+ */
+export function dotByUserClick({component, click_type}) {
+	getApp().tracker.evt('user_click', {
+		tracktype: SHARE_PARAMS.trackType.event,
+		component,
+		click_type
+	})
 }
+
+/**
+ * 打点 - 用户分享
+ * @param method 分享的途径
+ */
+export function dotByShare({method}) {
+	getApp().tracker.evt('app_share', {
+		tracktype: SHARE_PARAMS.trackType.event,
+		method
+	})
+}
+
+/**
+ * 打点 - 用户分享结果
+ * @param method 分享的途径
+ * @param status 分享行为的结果
+ */
+export function dotByShareResult({method, status}) {
+	getApp().tracker.evt('app_share_result', {
+		tracktype: SHARE_PARAMS.trackType.event,
+		method,
+		status
+	})
+}
+
+/**
+ * 打点 - 通过其他人分享进入
+ * @param share_from 邀请者的 OpenID
+ */
+export function dotByShareEnter({share_from}) {
+	getApp().tracker.evt('share_enter', {
+		tracktype: SHARE_PARAMS.trackType.event,
+		share_from,
+	})
+}
+
+/**
+ * 打点 - 频道打点
+ */
+export function dotByChannel() {
+	getApp().tracker.evt('channel', {
+		tracktype: SHARE_PARAMS.trackType.event
+	})
+}
+
+/**
+ * 打点 - 用户输入
+ * @param input_form_type 输入input的名称
+ */
+export function dotByUserInputCollect({input_form_type}) {
+	getApp().tracker.evt('user_input_collect', {
+		tracktype: SHARE_PARAMS.trackType.event,
+		input_form_type
+	})
+}
+
+/**
+ * 打点 - 小程序启动打点
+ */
+export function dotByAppStart() {
+	getApp().tracker.evt('app_start')
+}
+
+/**
+ * 打点 - 用户微信基础信息授权
+ * @param sex
+ * @param age
+ * @param province
+ * @param city
+ */
+export function dotByUserWxAuth({sex, age, province, city}) {
+	getApp().tracker.evt('user_info', {
+		sex, age, province, city
+	})
+}
+

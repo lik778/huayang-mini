@@ -1,7 +1,14 @@
 // pages/live/live.js
 import { getLiveBannerList, getLiveList, setPoint, updateLiveStatus } from "../../api/live/index"
 import { GLOBAL_KEY, SHARE_PARAMS, WeChatLiveStatus } from '../../lib/config'
-import { $notNull, checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from '../../utils/util'
+import {
+	$notNull,
+	checkIdentity,
+	dotByUserClick,
+	getLocalStorage,
+	getSchedule,
+	setLocalStorage
+} from '../../utils/util'
 import { statisticsWatchNo } from "../../api/live/course"
 import { bindWxPhoneNumber } from "../../api/auth/index"
 import { checkAuth } from "../../utils/auth"
@@ -287,6 +294,7 @@ Page({
 		})
 	},
 	invite() {
+		dotByUserClick({component: SHARE_PARAMS.component.btn, click_type: SHARE_PARAMS.clickType.url})
 		wx.navigateTo({
 			url: '/mine/invite/invite'
 		})

@@ -7,7 +7,9 @@ const Tracker = BxTracker.generateTrackerInstance(trackerConfig)
 
 let livePlayer = requirePlugin('live-player-plugin')
 App({
-	onLaunch: function () {},
+	onLaunch: function () {
+		this.tracker = Tracker
+	},
 	onShow(options) {
 		// 分享卡片入口场景才调用getShareParams接口获取以下参数
 		if (options.scene == 1007 || options.scene == 1008 || options.scene == 1044) {
@@ -33,11 +35,12 @@ App({
 	// 初始化打点sdk
 	initialPointMachine() {
 		let openId = getLocalStorage(GLOBAL_KEY.openId)
-		if (!openId || this.tracker) return false
-		this.tracker = Tracker.asyncInitWithCommonData({
+		if (!openId || this.initialize) return false
+		Tracker.asyncInitWithCommonData({
 			open_id: openId,
 			union_id: ''
 		}).then(() => {
+			this.initialize = true
 			console.log('初始化成功，开始执行打点任务')
 		})
 	},

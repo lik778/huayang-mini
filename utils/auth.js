@@ -40,7 +40,7 @@ const wxLogin = () => {
 				// 缓存openId
 				setLocalStorage(GLOBAL_KEY.openId, originUserInfo.openid)
 				// 初始化打点sdk
-				getApp().initialPointMachine()
+				// getApp().initialPointMachine()
 				if ($notNull(originUserInfo) && originUserInfo.nickname) {
 					// 服务端返回用户信息包含username，缓存在本地
 					setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)

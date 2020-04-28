@@ -12,12 +12,6 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
-		// 页面打点参数，用于打点sdk劫持onshow钩子时自动PV打点
-		__shareParams: {
-			page_type: SHARE_PARAMS.pageType.webview,
-			page_level: SHARE_PARAMS.pageLevel.secondPage,
-			page_title: "视频回看页",
-		},
 		zhiboRoomInfo: {},
 		zhiboRoomId: 0,
 		show: false,
