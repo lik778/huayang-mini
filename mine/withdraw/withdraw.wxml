@@ -1,9 +1,13 @@
 <!--mine/withdraw/withdraw.wxml-->
 <view class="withdraw">
-	<view class="input-module">
+	<!-- navibar -->
+	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+		<naviBar title="我的钱包" color="rgba(250,250,250,0)"></naviBar>
+	</view>
+	<view class="input-module" style="paddig-top:{{64+specialHeight}}rpx;">
 		<view class="input-module-title">提现金额</view>
 		<view class="input-box">
-			<input type="idcard" bindfocus="getFocus" bindblur='leaveFocus' value="{{inputValue}}"></input>
+			<input type="idcard" value="{{inputValue}}" bindinput="changeInputValue"></input>
 			<text>¥</text>
 		</view>
 		<view class="input-note">
@@ -11,8 +15,8 @@
 			<view class="input-note-right" bindtap="allWithdraw">全部提现</view>
 		</view>
 	</view>
-	<view class="button-line" style="bottom:{{keyboardHeight}}px;">
+	<view class="button-line" style="padding-top:{{keyboardHeight}}rpx;">
 		<view class="button-line-title">提现免手续费，最快2小时内到账，最慢不超过48小时</view>
-		<view class="button">提现</view>
+		<view class="{{changeCss?'button none-button':'button'}}" bindtap="{{changeCss?'':'withdraw'}}">提现</view>
 	</view>
 </view>

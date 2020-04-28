@@ -1,4 +1,7 @@
-// mine/withdrawResult/withdrawResult.js
+// mine/contact/contact.js
+import {
+  getScene
+} from "../../api/mine/index"
 import {
   getLocalStorage
 } from "../../utils/util"
@@ -11,18 +14,21 @@ Page({
    * 页面的初始数据
    */
   data: {
-    money: "",
-    titleText: "提现成功",
-    statusHeight: 0
+    statusHeight:20
   },
-
+  // 获取客服场景
+  getSceneData() {
+    getScene(`open_id=${getLocalStorage(GLOBAL_KEY.openId)}&scene=gift`).then((res) => {
+      console.log(res)
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.getSceneData()
     this.setData({
-      money: options.money,
-      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
+      statusHeight:getLocalStorage(GLOBAL_KEY.systemParams).statusHeight
     })
   },
 

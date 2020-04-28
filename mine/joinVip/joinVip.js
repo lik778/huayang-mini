@@ -30,6 +30,7 @@ Page({
         checked: false,
         fromAuth: false,
         fromReview: false,
+        fromVipWelfare: false,
         buyRepeat: true,
         bgList: '',
         roomId: '',
@@ -57,28 +58,45 @@ Page({
             payVip({
                 id: this.data.userId
             }).then(res => {
-                getUserInfo("scene=zhide").then(res1 => {
-                    setLocalStorage(GLOBAL_KEY.accountInfo, res1)
-                    if (res === 0) {
-                        this.setData({
-                            buyRepeat: true
-                        })
-                    } else {
-                        if (this.data.fromAuth) {
-                            wx.navigateTo({
-                                url: '/mine/joinSchool/joinSchool',
-                            })
-                        } else if (this.data.fromReview) {
-                            wx.navigateTo({
-                                url: `/subLive/review/review?zhiboRoomId=${this.data.roomId}`,
-                            })
-                        } else {
-                            wx.switchTab({
-                                url: '/pages/index/index',
+                let tmplId = 'vsh0jfKYs0-yM2q7ACUo-NjwNmTHEi7Caz60JCW30Bk'
+                wx.requestSubscribeMessage({
+                    tmplIds: [tmplId],
+                    success: (res) => {
+                        if (res.errMsg === "requestSubscribeMessage:ok") {
+                            getUserInfo("scene=zhide").then(res1 => {
+                                setLocalStorage(GLOBAL_KEY.accountInfo, res1)
+                                if (res === 0) {
+                                    this.setData({
+                                        buyRepeat: true
+                                    })
+                                } else {
+                                    if (this.data.fromAuth) {
+                                        wx.navigateTo({
+                                            url: '/mine/joinSchool/joinSchool',
+                                        })
+                                    } else if (this.data.fromReview) {
+                                        wx.navigateTo({
+                                            url: `/subLive/review/review?zhiboRoomId=${this.data.roomId}`,
+                                        })
+                                    } else if (this.data.fromVipWelfare) {
+                                        wx.navigateTo({
+                                            url: "/mine/vipWelfare/vipWelfare",
+                                        })
+                                    } else {
+                                        setLocalStorage(GLOBAL_KEY.vipBack,true)
+                                        wx.switchTab({
+                                            url: '/pages/index/index',
+                                        })
+                                        // wx.navigateTo({
+                                        //     url: '/mine/contact/contact',
+                                        // })
+                                    }
+                                }
                             })
                         }
                     }
                 })
+
 
             }).catch(() => {
                 this.setData({
@@ -103,6 +121,7 @@ Page({
                         showBindPhoneButton: true
                     })
                 } else {
+                    setLocalStorage(GLOBAL_KEY.accountInfo, res)
                     this.setData({
                         userInfo: res || {}
                     })
@@ -213,6 +232,10 @@ Page({
                 this.setData({
                     fromReview: true,
                     roomId: options.zhiboRoomId
+                })
+            } else if (options.from === "vipWelfare") {
+                this.setData({
+                    fromVipWelfare: true
                 })
             }
             this.setData({

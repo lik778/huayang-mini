@@ -7,7 +7,7 @@
 .banner {
     position: relative;
     width: 100vw;
-    height: 564rpx;
+    height: 392rpx;
 }
 
 .bg {
@@ -27,7 +27,7 @@
 
 .banner-main {
     position: absolute;
-    top: 208rpx;
+    bottom: 112rpx;
     z-index: 20;
     padding: 0 64rpx;
     display: flex;
@@ -385,6 +385,7 @@
     border-radius: 2px;
     background: #fff;
 }
-.images image:last-child{
-    padding-bottom:300rpx;
+
+.images image:last-child {
+    padding-bottom: 300rpx;
 }

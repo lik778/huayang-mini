@@ -1,12 +1,18 @@
 // mine/vipWelfare/vipWelfare.js
 import request from "../../lib/request"
+import {
+  GLOBAL_KEY
+} from "../../lib/config.js"
+import {
+  getLocalStorage
+} from "../../utils/util"
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    baseUrl:""
+    baseUrl: ""
   },
 
   /**
@@ -14,8 +20,9 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      baseUrl:request.baseUrl
+      baseUrl: request.baseUrl
     })
+
   },
 
   /**
@@ -29,7 +36,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if (!getLocalStorage(GLOBAL_KEY.userId)) {
+      wx.navigateTo({
+        url: '/pages/auth/auth',
+      })
+    } else if (!JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).is_zhide_vip) {
+      wx.navigateTo({
+        url: `/mine/joinVip/joinVip?from=vipWelfare`,
+      })
+    }
   },
 
   /**
@@ -60,10 +75,4 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

@@ -1,2 +1,14 @@
 <!--mine/withdrawResult/withdrawResult.wxml-->
-<text>mine/withdrawResult/withdrawResult.wxml</text>
+<view class="withdraw-result">
+	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+		<naviBar title="我的钱包" color="rgba(250,250,250,0)"></naviBar>
+	</view>
+	<view class="main">
+		<view class="main-title">{{titleText}}</view>
+		<view class="money-line">
+			<text>金额：</text>
+			<text>¥{{money}}</text>
+		</view>
+		<view class="note">请留意您的微信账户资金变动</view>
+	</view>
+</view>
