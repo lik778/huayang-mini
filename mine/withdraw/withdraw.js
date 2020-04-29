@@ -22,15 +22,27 @@ Page({
     specialHeight: 0,
     repeatLock: true,
   },
+  // 检查提现金额
+  checkMoneyNum(e) {
+    let regNum = new RegExp('[0-9]', 'g');
+    let rsNum = regNum.exec(e.detail.value);
+    if (!rsNum) {
+      this.setData({
+        inputValue: ""
+      })
+      return false
+    } else {
+      return true
+    }
+  },
   // 输入框改变输入
   changeInputValue(e) {
-    console.log(isNaN(e.detail.value))
-    if(isNaN(e.detail.value)){
-      this.setData({
-        inputValue:""
-      })
+    // 正则检查提现金额
+    let result = this.checkMoneyNum(e)
+    if (!result) {
+      return
     }
-    if (e.detail.value === ''||Number(e.detail.value)<20) {
+    if (e.detail.value === '' || Number(e.detail.value) < 20) {
       this.setData({
         changeCss: true,
         inputValue: e.detail.value
@@ -63,17 +75,21 @@ Page({
   // 全部提现
   allWithdraw() {
     this.setData({
-      inputValue: this.data.canWithdrawPrice,
+      inputValue: this.data.canWithdrawPrice || 0,
       changeCss: true
     })
   },
-  // 体现
+  // 提现
   withdraw() {
     if (this.data.repeatLock) {
       this.setData({
         repeatLock: false
       })
-      withDraw().then(res => {
+      let requestParams = {
+        amount: this.data.inputValue,
+        open_id: getLocalStorage(GLOBAL_KEY.openId)
+      }
+      withDraw(requestParams).then(res => {
         if (res.code === 0) {
           console.log(res)
           // wx.navigateTo({
@@ -95,7 +111,7 @@ Page({
     this.getPosition()
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
-      canWithdrawPrice:options.money
+      canWithdrawPrice: options.money
     })
   },
 

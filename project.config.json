@@ -163,6 +163,13 @@
 					"pathName": "mine/vipWelfare/vipWelfare",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": 15,
+					"name": "mine/withdraw/withdraw",
+					"pathName": "mine/withdraw/withdraw",
+					"query": "",
+					"scene": null
 				}
 			]
 		}
