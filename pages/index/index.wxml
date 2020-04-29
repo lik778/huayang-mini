@@ -2,7 +2,7 @@
 <view class="live">
 	<view class="banner" wx:if="{{bannerPictureObject != null}}">
 		<block wx:if="{{bannerPictureObject.officialRoomId != null}}">
-			<view class="swiper-image">
+			<view class="swiper-image" style="background-color: {{bannerPictureObject.color}}">
 				<view class="status {{bannerPictureObject.liveStatus !== '直播中' && 'disabled'}}">
 					<text class="status-dot {{bannerPictureObject.liveStatus !== '直播中' && 'disabled'}}"></text>
 					<text class="status-text">{{bannerPictureObject.status === 2 ? '回看' : bannerPictureObject.liveStatus}}</text>
