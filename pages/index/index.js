@@ -345,7 +345,7 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		
+
 	},
 
 	/**
@@ -362,9 +362,6 @@ Page({
 				getSchedule(roomIds).then(this.handleLiveStatusCallback)
 			}, 60 * 1000)
 		}
-		// wx.navigateTo({
-		// 	url: '/mine/contact/contact',
-		// })
 	},
 
 	/**
