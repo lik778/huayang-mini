@@ -170,6 +170,13 @@
 					"pathName": "mine/withdraw/withdraw",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": 16,
+					"name": "mine/invite/invite",
+					"pathName": "mine/invite/invite",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

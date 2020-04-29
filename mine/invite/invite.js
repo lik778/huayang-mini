@@ -90,7 +90,7 @@ Page({
             posterWidth: (info.height - 311) / 1.33,
             posterHeigt: info.height - 311,
             radio: (info.height - 311) / 356,
-            bannerSrc: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587884129ygbRvw.jpg"
+            bannerSrc: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1588149332gxwlOK.jpg"
           })
         } else {
           // 短屏
@@ -98,7 +98,8 @@ Page({
             posterWidth: info.width - 32,
             posterHeigt: info.width * 1.33,
             radio: (info.width - 32) / 267,
-            bannerSrc: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587884183ZLKsxQ.jpg"
+            // bannerSrc: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587884183ZLKsxQ.jpg",
+            bannerSrc:"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1588149332gxwlOK.jpg"
           })
         }
         console.log(this.data.radio)

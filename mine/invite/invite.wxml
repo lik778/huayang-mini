@@ -1,7 +1,7 @@
 <!--mine/invite/invite.wxml-->
 <view class="invite" wx:if="{{qcCode!==''}}">
-	<view class="navigation">
-		<naviBar title="邀请有礼" color="rgba(250,250,250,0)"></naviBar>
+	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+		<naviBar title="邀请有礼" color="rgba(170, 0, 0, 1)" titleColor="#FFFFFF"></naviBar>
 	</view>
 	<view class="banner">
 		<image src="{{bannerSrc}}"></image>
@@ -32,10 +32,10 @@
 					<text style="font-size:{{12*radio}}px;">元/年</text>
 				</view>
 			</view>
-			<view class="erweima" style="right:{{8*radio}}px;bottom:{{18*radio}}px;text-align: center;font-size:9px;font-family:PingFangSC-Regular,PingFang SC;font-weight:400;color:rgba(221,221,221,1);line-height:13px;">
+			<view class="erweima" style="right:{{12*radio}}px;bottom:{{8*radio}}px;text-align: center;font-size:9px;font-family:PingFangSC-Regular,PingFang SC;font-weight:400;color:rgba(221,221,221,1);line-height:13px;">
 				<image src="{{qcCode}}" style="width:{{64*radio}}px;height:{{64*radio}}px;background:#fff;"></image>
 				<view style="padding-top:{{6*radio}}px;">长按识别</view>
-				<view>前往“花样值得买”</view>
+				<view>了解更多会员权益</view>
 			</view>
 			<view class="note-line">{{noteText}}</view>
 		</view>
