@@ -20,7 +20,7 @@
 		<view class="button {{checked?'button-active':''}}" bindtap="buyVip">
 			<view>{{buttonText}}</view>
 			<button type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" wx:if="{{showBindPhoneButton}}"></button>
-			<view><text decode="true">原价¥199.00</text><text>¥99年</text></view>
+			<view><text decode="true">原价¥199.00</text><text>¥99/年</text></view>
 		</view>
 		<view class="bottom">
 			<van-checkbox value="{{ checked }}" shape="square" checked-color="#FF4433" bind:change="onChange"></van-checkbox>
