@@ -282,3 +282,6 @@
     height: 96rpx;
     vertical-align: bottom;
 }
+.van-transition{
+    z-index: 50;
+}

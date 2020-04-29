@@ -20,14 +20,16 @@ import {
 	statisticsWatchNo
 } from "../../api/live/course"
 import {
-	bindWxPhoneNumber
+	bindWxPhoneNumber,
+	checkBecomeVip
 } from "../../api/auth/index"
 import {
 	checkAuth
 } from "../../utils/auth"
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog'
 import {
-	getUserInfo
+	getUserInfo,
+
 } from "../../api/mine/index"
 
 Page({
@@ -330,9 +332,9 @@ Page({
 	// 检查是否第一次成为会员
 	checkBecomeVipData() {
 		// GLOBAL_KEY.vip为true代表已经请求过接口不再请求接口了
-		if (!getLocalStorage(GLOBAL_KEY.vip)) {
+		if (getLocalStorage(GLOBAL_KEY.vip)) {
 			checkBecomeVip(`user_id=${getLocalStorage(GLOBAL_KEY.userId)}`).then(res => {
-				setLocalStorage(GLOBAL_KEY.vip, true)
+				setLocalStorage(GLOBAL_KEY.vip, false)
 				if (res) {
 					this.setData({
 						showSuccess: res
@@ -373,6 +375,10 @@ Page({
 			wx.navigateTo({
 				url: '/mine/contact/contact',
 			})
+		} else {
+			if (getLocalStorage(GLOBAL_KEY.userId)) {
+				this.checkBecomeVipData()
+			}
 		}
 		// 检查本地账户信息
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
