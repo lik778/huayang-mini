@@ -372,7 +372,7 @@ Page({
 	onShow: function () {
 		if (getLocalStorage(GLOBAL_KEY.vipBack)) {
 			setLocalStorage(GLOBAL_KEY.vipBack, false)
-			wx.navigateTo({
+			wx.redirectTo({
 				url: '/mine/contact/contact',
 			})
 		} else {
