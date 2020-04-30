@@ -108,7 +108,7 @@ Page({
   },
   // getImgUrl
   getImgUrl() {
-    let arr = ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587002742wEdydN.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587002775RSdvpH.jpg"];
+    let arr = ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1588225875dHdZPH.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1588225906sguvUa.jpg"];
     let index = Math.floor((Math.random() * arr.length))
     this.setData({
       posturl: arr[index]
