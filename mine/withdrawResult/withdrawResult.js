@@ -1,18 +1,19 @@
-// mine/vipWelfare/vipWelfare.js
-import request from "../../lib/request"
-import {
-  GLOBAL_KEY
-} from "../../lib/config.js"
+// mine/withdrawResult/withdrawResult.js
 import {
   getLocalStorage
 } from "../../utils/util"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    baseUrl: ""
+    money: "",
+    titleText: "提现成功",
+    statusHeight: 0
   },
 
   /**
@@ -20,9 +21,9 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      baseUrl: request.baseUrl
+      money: options.money,
+      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
-
   },
 
   /**
@@ -36,15 +37,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (!getLocalStorage(GLOBAL_KEY.userId)) {
-      wx.navigateTo({
-        url: '/pages/auth/auth',
-      })
-    } else if (!JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).is_zhide_vip) {
-      wx.navigateTo({
-        url: `/mine/joinVip/joinVip?from=vipWelfare`,
-      })
-    }
+
   },
 
   /**
@@ -74,5 +67,4 @@ Page({
   onReachBottom: function () {
 
   },
-
 })

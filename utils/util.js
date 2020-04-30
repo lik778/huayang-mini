@@ -6,7 +6,7 @@ import request from "../lib/request"
 
 const livePlayer = requirePlugin('live-player-plugin')
 
-const formatTime = date => {
+export const formatTime = date => {
 	const year = date.getFullYear()
 	const month = date.getMonth() + 1
 	const day = date.getDate()

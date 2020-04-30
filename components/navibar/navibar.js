@@ -38,6 +38,7 @@ Component({
   methods: {
     // 返回
     back() {
+      console.log(this.data.share)
       if (this.data.share) {
         wx.switchTab({
           url: '/pages/index/index',

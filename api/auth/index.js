@@ -98,3 +98,16 @@ export function checkFocusLogin(params) {
 		})
 	})
 }
+
+
+// 检查是否刚成为会员需要弹窗
+export const checkBecomeVip=(params)=>{
+	return new Promise((resolve) => {
+		request._get(URL.checkBecomeVip+"?"+params).then(({ data, code }) => {
+			if (code === 0) {
+				resolve(data)
+			}
+		})
+	})
+}
+

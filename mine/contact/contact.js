@@ -1,28 +1,35 @@
-// mine/vipWelfare/vipWelfare.js
-import request from "../../lib/request"
+// mine/contact/contact.js
 import {
-  GLOBAL_KEY
-} from "../../lib/config.js"
+  getScene
+} from "../../api/mine/index"
 import {
   getLocalStorage
 } from "../../utils/util"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    baseUrl: ""
+    statusHeight:20
   },
-
+  // 获取客服场景
+  getSceneData() {
+    getScene(`open_id=${getLocalStorage(GLOBAL_KEY.openId)}&scene=gift`).then((res) => {
+      console.log(res)
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.getSceneData()
     this.setData({
-      baseUrl: request.baseUrl
+      statusHeight:getLocalStorage(GLOBAL_KEY.systemParams).statusHeight
     })
-
   },
 
   /**
@@ -36,15 +43,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (!getLocalStorage(GLOBAL_KEY.userId)) {
-      wx.navigateTo({
-        url: '/pages/auth/auth',
-      })
-    } else if (!JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).is_zhide_vip) {
-      wx.navigateTo({
-        url: `/mine/joinVip/joinVip?from=vipWelfare`,
-      })
-    }
+
   },
 
   /**
@@ -74,5 +73,4 @@ Page({
   onReachBottom: function () {
 
   },
-
 })

@@ -4,7 +4,8 @@ import {
 } from "./canvas"
 import {
   getInviteCode,
-  getVipNum
+  getVipNum,
+  getActivityTime
 } from "../../api/mine/index"
 import {
   getSubscriptionStatus,
@@ -25,7 +26,6 @@ Page({
    */
   data: {
     qcCode: "",
-    canvasUrl: "",
     posturl: "",
     userInfo: {},
     statusHeight: 0,
@@ -34,7 +34,11 @@ Page({
     posterHeigt: 0, //海报高度
     radio: 0, //海报缩放比
     showDialog: false,
-    status: false //订阅状态
+    status: false, //订阅状态
+    bannerSrc: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587884129ygbRvw.jpg",
+    // noteText:"活动截止日期：2020年1月1日 23:59:59",
+    noteText: "",
+    canvasBgUrl: ""
   },
   // 订阅
   show() {
@@ -81,16 +85,21 @@ Page({
           height: res.screenHeight
         }
         if ((info.height - 311) / 1.33 < info.width - 32) {
+          // 长屏
           this.setData({
             posterWidth: (info.height - 311) / 1.33,
             posterHeigt: info.height - 311,
-            radio: (info.height - 311) / 356
+            radio: (info.height - 311) / 356,
+            bannerSrc: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1588149332gxwlOK.jpg"
           })
         } else {
+          // 短屏
           this.setData({
             posterWidth: info.width - 32,
             posterHeigt: info.width * 1.33,
-            radio: (info.width - 32) / 267
+            radio: (info.width - 32) / 267,
+            // bannerSrc: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587884183ZLKsxQ.jpg",
+            bannerSrc:"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1588149332gxwlOK.jpg"
           })
         }
         console.log(this.data.radio)
@@ -125,69 +134,97 @@ Page({
     wx.showLoading({
       title: "加载中",
     })
-    // 绘制canvas
-    createCanvas({
-      bgUrl: this.data.posturl,
-      nickname: this.data.userInfo.nickname,
-      num: this.data.num,
-      headicon: this.data.userInfo.avatar_url,
-      qcCode: this.data.qcCode
-    }).then(url => {
-      wx.getSetting({
-        success(res) {
-          if (!res.authSetting['scope.writePhotosAlbum']) {
-            wx.authorize({
-              scope: 'scope.writePhotosAlbum',
-              success: () => {
-                _this.saveImg({
-                  url,
-                  _this
-                })
-              },
-              fail: () => {
-                wx.showModal({
-                  title: "请打开相册权限",
-                  duration: 2000,
-                  showCancel:false,
-                  success: (res1) => {
-                    console.log(res1)
-                    if (res1.confirm) {
-                      wx.openSetting({
-                        success(res) {
-                          console.log(res)
-                        }
-                      })
-                    }
-                  }
-                })
-              }
-            })
-           
-          } else {
-            _this.saveImg({
-              url,
-              _this
-            })
-          }
-        }
+    if (this.data.canvasBgUrl == '') {
+      this.beginDraw().then(() => {
+        this.getAblumAuth(_this)
       })
-
+    } else {
+      this.getAblumAuth(_this)
+    }
+  },
+  // 获取保存相册授权
+  getAblumAuth(_this) {
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.writePhotosAlbum']) {
+          wx.authorize({
+            scope: 'scope.writePhotosAlbum',
+            success: () => {
+              _this.saveImg({
+                url: _this.data.canvasBgUrl,
+                _this
+              })
+            },
+            fail: () => {
+              wx.showModal({
+                title: "请打开相册权限",
+                duration: 2000,
+                showCancel: false,
+                success: (res1) => {
+                  console.log(res1)
+                  if (res1.confirm) {
+                    wx.openSetting({
+                      success(res) {
+                        console.log(res)
+                      }
+                    })
+                  }
+                }
+              })
+            }
+          })
+        } else {
+          console.log("获取授权好了")
+          _this.saveImg({
+            url: _this.data.canvasBgUrl,
+            _this
+          })
+        }
+      }
+    })
+  },
+  // 绘制canvas
+  beginDraw() {
+    // 绘制canvas
+    return new Promise(resolve => {
+      createCanvas({
+        bgUrl: this.data.posturl,
+        nickname: this.data.userInfo.nickname,
+        num: this.data.num,
+        headicon: this.data.userInfo.avatar_url,
+        qcCode: this.data.qcCode,
+        noteText: this.data.noteText
+      }).then(url => {
+        console.log("canvas图片有了")
+        this.setData({
+          canvasBgUrl: url
+        })
+        resolve()
+      })
     })
 
-
   },
+  // 保存图片封装
   saveImg({
     url,
     _this
   }) {
+    console.log("保存")
     wx.saveImageToPhotosAlbum({
       filePath: url,
       success(res) {
         if (res.errMsg === 'saveImageToPhotosAlbum:ok') {
           if (!_this.data.status) {
-            _this.setData({
-              showDialog: true
+            wx.showToast({
+              title: '保存成功',
+              duration: 3000,
             })
+            setTimeout(() => {
+              wx.hideLoading()
+              _this.setData({
+                showDialog: true
+              })
+            }, 3000)
           } else {
             wx.showToast({
               title: '保存成功',
@@ -197,7 +234,6 @@ Page({
               wx.hideLoading()
             }, 3000)
           }
-
         } else {
           wx.showToast({
             title: '保存失败',
@@ -206,6 +242,14 @@ Page({
           })
         }
       },
+    })
+  },
+  // 获取活动日期文案
+  getActivityTimeData() {
+    getActivityTime().then(res => {
+      this.setData({
+        noteText: "活动截止日期：" + res.data
+      })
     })
   },
   // 获取订阅状态
@@ -229,6 +273,8 @@ Page({
     this.calculate()
     // 随机生成背景图
     this.getImgUrl()
+    // 获取活动日期文案
+    this.getActivityTimeData()
     // 获取小程序二维码
     this.inviteCode()
     // 获取小程序订阅信息
@@ -240,6 +286,7 @@ Page({
       this.setData({
         num: data
       })
+      this.beginDraw()
     })
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight

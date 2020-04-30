@@ -1,5 +1,3 @@
-
-
 import {
     GLOBAL_KEY
 } from "../../lib/config"
@@ -32,9 +30,11 @@ Page({
         checked: false,
         fromAuth: false,
         fromReview: false,
+        fromVipWelfare: false,
         buyRepeat: true,
         bgList: '',
-        roomId: ''
+        roomId: '',
+        buttonText: "立即加入"
     },
     // 选中
     onChange() {
@@ -58,28 +58,45 @@ Page({
             payVip({
                 id: this.data.userId
             }).then(res => {
-                getUserInfo("scene=zhide").then(res1 => {
-                    setLocalStorage(GLOBAL_KEY.accountInfo, res1)
-                    if (res === 0) {
-                        this.setData({
-                            buyRepeat: true
-                        })
-                    } else {
-                        if (this.data.fromAuth) {
-                            wx.navigateTo({
-                                url: '/mine/joinSchool/joinSchool',
-                            })
-                        } else if (this.data.fromReview) {
-                            wx.navigateTo({
-                                url: `/subLive/review/review?zhiboRoomId=${this.data.roomId}`,
-                            })
-                        } else {
-                            wx.switchTab({
-                                url: '/pages/index/index',
+                let tmplId = 'vsh0jfKYs0-yM2q7ACUo-NjwNmTHEi7Caz60JCW30Bk'
+                wx.requestSubscribeMessage({
+                    tmplIds: [tmplId],
+                    success: (res) => {
+                        if (res.errMsg === "requestSubscribeMessage:ok") {
+                            getUserInfo("scene=zhide").then(res1 => {
+                                setLocalStorage(GLOBAL_KEY.accountInfo, res1)
+                                if (res === 0) {
+                                    this.setData({
+                                        buyRepeat: true
+                                    })
+                                } else {
+                                    if (this.data.fromAuth) {
+                                        wx.navigateTo({
+                                            url: '/mine/joinSchool/joinSchool',
+                                        })
+                                    } else if (this.data.fromReview) {
+                                        wx.navigateTo({
+                                            url: `/subLive/review/review?zhiboRoomId=${this.data.roomId}`,
+                                        })
+                                    } else if (this.data.fromVipWelfare) {
+                                        wx.navigateTo({
+                                            url: "/mine/vipWelfare/vipWelfare",
+                                        })
+                                    } else {
+                                        setLocalStorage(GLOBAL_KEY.vipBack,true)
+                                        wx.switchTab({
+                                            url: '/pages/index/index',
+                                        })
+                                        // wx.navigateTo({
+                                        //     url: '/mine/contact/contact',
+                                        // })
+                                    }
+                                }
                             })
                         }
                     }
                 })
+
 
             }).catch(() => {
                 this.setData({
@@ -104,12 +121,30 @@ Page({
                         showBindPhoneButton: true
                     })
                 } else {
+                    setLocalStorage(GLOBAL_KEY.accountInfo, res)
                     this.setData({
                         userInfo: res || {}
                     })
                 }
                 wx.hideLoading()
-                console.log(res)
+                if (res.is_zhide_vip) {
+                    wx.showModal({
+                        title: "提示",
+                        cancelText: "返回首页",
+                        confirmText: "继续购买",
+                        content: "你已是尊贵的花样汇超级会员",
+                        success(res) {
+                            if (res.cancel) {
+                                wx.switchTab({
+                                    url: "/pages/index/index"
+                                })
+                            }
+                        }
+                    })
+                    this.setData({
+                        buttonText: "立即续费",
+                    })
+                }
             })
         } else {
             setTimeout(() => {
@@ -159,31 +194,19 @@ Page({
         }
     },
     // 打点路径来源
-    pointFrom(e){
-        pointjoinVipFrom({from:e})
+    pointFrom(e) {
+        pointjoinVipFrom({
+            from: e
+        })
     },
     // 获取背景图
     getVipBgData() {
         getVipBg().then(({
             data
         }) => {
-            let arr = []
-            let _this = this
-            for (let i in data) {
-                wx.getImageInfo({
-                    src: data[i],
-                    success(res) {
-                        let obj = {
-                            src: res.path,
-                            height: res.height
-                        }
-                        arr.push(obj)
-                        _this.setData({
-                            bgList: arr
-                        })
-                    }
-                })
-            }
+            this.setData({
+                bgList: data
+            })
         })
     },
     /**
@@ -210,12 +233,16 @@ Page({
                     fromReview: true,
                     roomId: options.zhiboRoomId
                 })
+            } else if (options.from === "vipWelfare") {
+                this.setData({
+                    fromVipWelfare: true
+                })
             }
             this.setData({
                 userId: userId, //分享跳转过来de
                 statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
             })
-            if(options.from){
+            if (options.from) {
                 this.pointFrom(options.from)
             }
             this.getUserInfoData()

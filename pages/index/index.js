@@ -1,14 +1,7 @@
 // pages/live/live.js
 import { getLiveBannerList, getLiveList, setPoint, updateLiveStatus } from "../../api/live/index"
 import { GLOBAL_KEY, SHARE_PARAMS, WeChatLiveStatus } from '../../lib/config'
-import {
-	$notNull,
-	checkIdentity,
-	dotByUserClick,
-	getLocalStorage,
-	getSchedule,
-	setLocalStorage
-} from '../../utils/util'
+import { $notNull, checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from '../../utils/util'
 import { statisticsWatchNo } from "../../api/live/course"
 import { bindWxPhoneNumber } from "../../api/auth/index"
 import { checkAuth } from "../../utils/auth"
@@ -299,15 +292,32 @@ Page({
 			url: '/mine/invite/invite'
 		})
 	},
+	// 检查是否第一次成为会员
+	checkBecomeVipData() {
+		// GLOBAL_KEY.vip为true代表已经请求过接口不再请求接口了
+		if (getLocalStorage(GLOBAL_KEY.vip)) {
+			checkBecomeVip(`user_id=${getLocalStorage(GLOBAL_KEY.userId)}`).then(res => {
+				setLocalStorage(GLOBAL_KEY.vip, false)
+				if (res) {
+					this.setData({
+						showSuccess: res
+					})
+				}
+			})
+		}
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
-	onLoad: function (options) {},
+	onLoad: function (options) {
+
+	},
 
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
+
 		this.getBanner()
 		this.queryLiveList()
 		if (this.liveStatusIntervalTimer == null) {
@@ -323,24 +333,30 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
+		if (getLocalStorage(GLOBAL_KEY.vipBack)) {
+			setLocalStorage(GLOBAL_KEY.vipBack, false)
+			wx.redirectTo({
+				url: '/mine/contact/contact',
+			})
+		} else {
+			if (getLocalStorage(GLOBAL_KEY.userId)) {
+				this.checkBecomeVipData()
+			}
+		}
 		// 检查本地账户信息
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 		if ($notNull(accountInfo)) {
 			getUserInfo("scene=zhide").then(info => {
 				setLocalStorage(GLOBAL_KEY.accountInfo, info)
-				this.setData({didVip: info.is_zhide_vip})
+				this.setData({
+					didVip: info.is_zhide_vip
+				})
 			})
 		}
 
-		checkAuth({listenable: true})
-
-		// 检查是否会员开通成功
-		if (getLocalStorage(GLOBAL_KEY.vip) === true) {
-			this.setData({
-				showSuccess: true
-			})
-			wx.removeStorageSync(GLOBAL_KEY.vip)
-		}
+		checkAuth({
+			listenable: true
+		})
 	},
 
 	/**

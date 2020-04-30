@@ -1,6 +1,6 @@
 @import "../../assets/css/common.wxss";
 .custom-tab-class {
-  flex-basis: 20% !important;
+  flex-basis: 28% !important;
   padding: 0 !important;
   font-size: 36rpx !important;
   font-weight: 500 !important;

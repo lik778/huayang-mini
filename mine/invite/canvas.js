@@ -3,15 +3,13 @@ export const createCanvas = ({
   nickname,
   num,
   headicon,
-  qcCode
+  qcCode,
+  noteText
 }) => {
   return new Promise(resolve => {
     // 获取上下文
     let ctx = wx.createCanvasContext('posterCanvas')
     // 计算设备比
-    // let systemInfo = wx.getSystemInfoSync()
-    // let width = systemInfo.screenWidth
-    // let height = systemInfo.screenHeight
     ctx.scale(3.37, 3.37)
     wx.downloadFile({
       url: bgUrl,
@@ -33,16 +31,18 @@ export const createCanvas = ({
             // 绘制价格
             dramName(ctx, "原价199元", 12, 12, 297, "#fff")
             drawLine(ctx, "#fff", 1, 12, 302, 68, 302)
-            dramName(ctx, "限时99", 24, 12, 314, "#EE0000")
+            dramName(ctx, "限时99", 24, 12, 314, "#FFCC88")
             let textWidth2 = measureTextWidth(`限时99`, ctx)
-            dramName(ctx, "元/年", 12, textWidth2 + 12, 324, "#EE0000")
-            dramName(ctx, "长按识别", 9, 205, 312, "#DDDDDD")
-            dramName(ctx, "前往“花样值得买”", 9, 186, 325, "#DDDDDD")
+            dramName(ctx, "元/年", 12, textWidth2 + 12, 324, "#FFCC88")
+            dramName(ctx, "长按识别", 9, 205, 328, "#DDDDDD")
+            dramName(ctx, "了解更多会员权益", 9, 187, 339, "#DDDDDD")
+            // 绘制活动日期
+            dramName(ctx, noteText, 6, 4, 346, "#fff")
             //绘制小程序二维码
             wx.downloadFile({
               url: qcCode,
               success: function (res1) {
-                drawBorderCircle(ctx, res1.tempFilePath, 222, 273, 33)
+                drawBorderCircle(ctx, res1.tempFilePath, 222, 283, 33)
                 // 绘制完成开成开始导出
                 ctx.draw(false, () => {
                   wx.canvasToTempFilePath({
