@@ -99,7 +99,7 @@ Page({
             posterHeigt: info.width * 1.33,
             radio: (info.width - 32) / 267,
             // bannerSrc: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587884183ZLKsxQ.jpg",
-            bannerSrc:"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1588149332gxwlOK.jpg"
+            bannerSrc: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1588149332gxwlOK.jpg"
           })
         }
         console.log(this.data.radio)
@@ -108,7 +108,7 @@ Page({
   },
   // getImgUrl
   getImgUrl() {
-    let arr = ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1588225875dHdZPH.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1588225906sguvUa.jpg"];
+    let arr = ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1588225906sguvUa.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1588477793UZQsFZ.jpg"];
     let index = Math.floor((Math.random() * arr.length))
     this.setData({
       posturl: arr[index]
