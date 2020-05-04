@@ -14,7 +14,9 @@ Page({
    * Lifecycle function--Called when page load
    */
   onLoad: function (options) {
-
+    this.setData({
+      h5Url: `${request.baseUrl}/#/fashionWeek`
+    })
   },
 
   /**
@@ -27,11 +29,7 @@ Page({
   /**
    * Lifecycle function--Called when page show
    */
-  onShow: function () {
-    this.setData({
-      h5Url: `${request.baseUrl}/#/fashionWeek`
-    })
-  },
+  onShow: function () {},
 
   /**
    * Lifecycle function--Called when page hide

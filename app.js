@@ -30,5 +30,11 @@ App({
 		})
 	},
 	onUnload() {},
-	globalData: {}
+	onHide() {
+		// 小程序退出前清除提醒弹窗记录
+		// this.globalData.didPopupInCurrentLifeCircle = false
+	},
+	globalData: {
+		// didPopupInCurrentLifeCircle: false
+	}
 })

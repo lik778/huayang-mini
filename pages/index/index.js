@@ -343,6 +343,14 @@ Page({
 				this.checkBecomeVipData()
 			}
 		}
+
+		// if (getApp().globalData.didPopupInCurrentLifeCircle) {
+		// 	// TODO 今天已经弹过窗
+		// } else {
+		// 	// TODO 今天还未弹过窗
+		// 	getApp().globalData.didPopupInCurrentLifeCircle = true
+		// }
+
 		// 检查本地账户信息
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 		if ($notNull(accountInfo)) {
