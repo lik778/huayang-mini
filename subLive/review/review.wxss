@@ -1,9 +1,10 @@
 .review {
     position: relative;
+    background: black;
 }
 .review .btn {
     position: absolute;
-    bottom: 120rpx;
+    bottom: 186rpx;
     right: 20rpx;
     color: white;
     padding: 20rpx;
@@ -14,4 +15,9 @@
 .video-container {
     height: 100vh;
     width: 100vw;
+    background: black;
+}
+.adapter{
+    height: calc(100vh - 66rpx);
+    margin-bottom: 66rpx;
 }

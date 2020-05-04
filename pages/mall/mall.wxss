@@ -6,7 +6,7 @@
 .banner {
     overflow: hidden;
     width: 688rpx;
-    height: 344rpx;
+    /*height: 344rpx;*/
     margin: 32rpx auto;
     border-radius: 16rpx;
 }
@@ -51,12 +51,14 @@
 .category {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    padding: 0 46rpx;
+    margin-top: 70rpx;
+    padding-bottom: 70rpx;
 }
 .category-item {
     display: flex;
+    flex-basis: 25%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -77,6 +79,31 @@
 }
 .preview-image {
     overflow: hidden;
+}
+.multiple-mode {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0;
+}
+.multiple-mode-left {
+    overflow: hidden;
+    width: 452rpx;
+    height: 452rpx;
+    border-radius: 16rpx 6rpx 6rpx 6rpx;
+}
+.multiple-mode-right {
+    height: 452rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.multiple-mode-right image {
+    overflow: hidden;
+    width: 218rpx;
+    height: 218rpx;
+    border-radius: 6rpx 16rpx 6rpx 6rpx;
 }
 .normal-mode {
     width: 688rpx;

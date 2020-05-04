@@ -22,17 +22,27 @@ Page({
     height: 0,
     radio: 0,
     bottom: 0,
-    showSuccess: true
+    showSuccess: false,
+    isFirst: false
+  },
+  // 添加班主任
+  addTeacher() {
+    if (this.data.isFirst) {
+      this.setData({
+        showSuccess: true,
+        isFirst:false
+      })
+    }
   },
   // 获取用户信息
   getUserInfoData() {
     getUserInfo("scene=zhide").then(res => {
       if (res.code !== -2) {
         res.zhide_start_time = res.zhide_start_time.replace(/-/g, ".").split(" ")[0]
+        setLocalStorage(GLOBAL_KEY.accountInfo,res)
         this.setData({
           userInfo: res || {}
         })
-        console.log(res)
       }
     })
   },
@@ -59,7 +69,11 @@ Page({
       width: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth,
       height: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenHeight,
     }
-    if (info.width - 40 < (info.height - 183) / 1.5) {
+    if(info.height<667){
+      this.setData({
+        bottom:-1
+      })
+    }else if (info.width - 40 < (info.height - 183) / 1.5) {
       this.setData({
         width: info.width - 40,
         height: (info.width - 40) * 1.5,
@@ -75,7 +89,6 @@ Page({
       })
     }
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
@@ -86,10 +99,11 @@ Page({
     })
     if (!getLocalStorage(GLOBAL_KEY.addTeacher)) {
       this.setData({
-        showSuccess: true
+        isFirst: true
       })
       setLocalStorage(GLOBAL_KEY.addTeacher, "false")
     }
+    setLocalStorage(GLOBAL_KEY.updateAccountInfo, "true")
   },
 
   /**
@@ -132,13 +146,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
 
   }
 })

@@ -1,11 +1,12 @@
 import md5 from 'md5'
-import { GLOBAL_KEY, WeChatLiveStatus } from '../lib/config'
+import { GLOBAL_KEY, ROOT_URL, WeChatLiveStatus } from '../lib/config'
 import { createOrder } from "../api/mine/payVip"
 import { getWatchLiveAuth, statisticsWatchNo } from "../api/live/course"
+import request from "../lib/request"
 
 const livePlayer = requirePlugin('live-player-plugin')
 
-const formatTime = date => {
+export const formatTime = date => {
 	const year = date.getFullYear()
 	const month = date.getMonth() + 1
 	const day = date.getDate()
@@ -18,7 +19,7 @@ const formatTime = date => {
 
 // 查询token
 export const queryToken = () => {
-	let token = getLocalStorage(GLOBAL_KEY.token) ?  getLocalStorage(GLOBAL_KEY.token) : ""
+	let token = getLocalStorage(GLOBAL_KEY.token) ? getLocalStorage(GLOBAL_KEY.token) : ""
 	return token || ''
 }
 
@@ -31,53 +32,57 @@ export const formatNumber = n => {
  * 购买会员
  * @returns
  */
-export const payVip = function (params) {
+export const payVip = function ({id}) {
 	let createOrderParmas = {
 		scene: "zhide_vip",
-		recommend_user_id:params||"",
-		product_id: 36,
+		recommend_user_id: id || "",
+		product_id: request.baseUrl === ROOT_URL.dev ? 36 : 5,
 		count: 1,
 		open_id: getLocalStorage(GLOBAL_KEY.openId),
 	}
-	return new Promise(resolve => {
-		createOrder(createOrderParmas).then(res => {
-			// resolve(res)
-			let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo"; //商户key
-			requestPayment({
-				prepay_id: res,
-				key: mallKey
+	return new Promise((resolve,reject) => {
+			createOrder(createOrderParmas).then(res1 => {
+				if(res1===0){
+					// 库存不足
+					resolve(res1)
+				}else{
+					let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo" //商户key
+					requestPayment({
+						prepay_id: res1,
+						key: mallKey
+					}).then(res => {
+						resolve(res)
+					}).catch(err=>{
+						reject(err)
+					})
+				}
 			})
-		})
 	})
 }
 // 唤起微信支付
 export const requestPayment = (paramsData) => {
-	let params = getSign({
-		prepay_id: paramsData.prepay_id,
-		key: paramsData.key
-	})
-	wx.requestPayment({
-		timeStamp: params.timeStamp,
-		nonceStr: params.nonceStr,
-		package: params.package,
-		signType: params.signType,
-		paySign: params.paySign,
-		success(res) {
-			if (res.errMsg === "requestPayment:ok") {
-				// let vipData = {
-				// 	agoDay: 1,
-				// 	nowTime: Date.parse(new Date())
-				// }
-				setLocalStorage(GLOBAL_KEY.vip,true)
-				// setLocalStorage(GLOBAL_KEY.vip, JSON.stringify(vipData))
-				wx.switchTab({
-					url: '/pages/index/index',
-				})
+	return new Promise((resolve,reject) => {
+		let params = getSign({
+			prepay_id: paramsData.prepay_id,
+			key: paramsData.key
+		})
+		wx.requestPayment({
+			timeStamp: params.timeStamp,
+			nonceStr: params.nonceStr,
+			package: params.package,
+			signType: params.signType,
+			paySign: params.paySign,
+			success(res) {
+				if (res.errMsg === "requestPayment:ok") {
+					setLocalStorage(GLOBAL_KEY.vip, true)
+					setLocalStorage(GLOBAL_KEY.vipupdateAccountInfo, true)
+					resolve(res)
+				}
+			},
+			fail(err) {
+				reject(err)
 			}
-		},
-		fail(err) {
-			console.log(err)
-		}
+		})
 	})
 }
 // 生成支付的一系列数据sign
@@ -232,7 +237,6 @@ export const getSchedule = async function (roomIds = []) {
 		// 1. globalData中无值
 		if (!target) {
 			let {liveStatus = 0} = await queryLiveStatus(roomId) || {}
-			console.log(liveStatus);
 			scheduleData.push({
 				roomId: roomId,
 				liveStatus: WeChatLiveStatus[liveStatus],
@@ -247,7 +251,7 @@ export const getSchedule = async function (roomIds = []) {
 			} else {
 				// 2.2 timestamp过期
 				let {liveStatus} = await queryLiveStatus(targetRoomId)
-				console.log(liveStatus);
+				
 				target.liveStatus = WeChatLiveStatus[liveStatus]
 				target.timestamp = +new Date() + 5 * 60 * 1000
 			}
@@ -258,13 +262,12 @@ export const getSchedule = async function (roomIds = []) {
 }
 
 // 判断是否是会员/是否入学
-export const checkIdentity = function({roomId, link, zhiboRoomId, customParams = {}}) {
+export const checkIdentity = function ({roomId, link, zhiboRoomId, customParams = {}}) {
 	const userId = getLocalStorage(GLOBAL_KEY.userId)
 	return new Promise((resolve, reject) => {
 		if (userId == null) {
 			resolve('no-phone-auth')
-		}
-		else {
+		} else {
 			// 获取直播权限
 			getWatchLiveAuth({
 				room_id: zhiboRoomId,
@@ -279,9 +282,6 @@ export const checkIdentity = function({roomId, link, zhiboRoomId, customParams =
 					} else if (res === 'daxue') {
 						// 未加入花样大学,跳往入学申请页
 						resolve('no-auth-daxue')
-						// wx.navigateTo({
-						// 	url: '/mine/joinSchool/joinSchool',
-						// })
 					} else {
 						// 反之，有权限查看
 						// 优先统计观看人数
@@ -324,5 +324,48 @@ function queryLiveStatus(roomId) {
 				console.error(error)
 				reject(error)
 			})
+	})
+}
+
+/**
+ * 保留2位小数
+ * @param x
+ * @returns {string|boolean}
+ */
+export function changeTwoDecimal_f(x) {
+	var f_x = parseFloat(x)
+	if (isNaN(f_x)) {
+		console.error('f_x is not a number.')
+		return false
+	}
+	var f_x = Math.round(x * 100) / 100
+	let s_x = f_x.toString()
+	let pos_decimal = s_x.indexOf('.')
+	if (pos_decimal < 0) {
+		pos_decimal = s_x.length
+		s_x += '.'
+	}
+	while (s_x.length <= pos_decimal + 2) {
+		s_x += '0'
+	}
+	return s_x
+}
+
+/**
+ * 获取网络图片信息
+ * @param src
+ * @returns {Promise<unknown>}
+ */
+export function queryImageInfo(src) {
+	return new Promise((resolve, reject) => {
+		wx.getImageInfo({
+			src,
+			success(response) {
+				resolve(response)
+			},
+			fail(error) {
+				reject(error)
+			}
+		})
 	})
 }

@@ -1,27 +1,4 @@
 <!--mine/joinSchool/joinSchool.wxml-->
 <view>
-	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
-		<naviBar title="入学申请"></naviBar>
-	</view>
-	<web-view src="https://huayang.baixing.cn/#/home/zhideJoinSchool?data={{webViewData}}"></web-view>
+	<web-view src="{{baseUrl}}/#/home/zhideJoinSchool?data={{webViewData}}" style="height:100vh;"></web-view>
 </view>
-<!-- <view class="join-school">
-	<view>
-		<text>性别</text>
-		<van-radio-group value="{{ radio }}" bind:change="changeSex">
-			<van-radio name="1">男</van-radio>
-			<van-radio name="2">女</van-radio>
-		</van-radio-group>
-	</view>
-	<view>
-		<text>城市</text>
-		<view class="section">
-			<view class="section__title">省市区选择器</view>
-			<picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
-				<view class="picker">
-					当前选择：{{region[0]}}，{{region[1]}}，{{region[2]}}
-				</view>
-			</picker>
-		</view>
-	</view>
-</view> -->

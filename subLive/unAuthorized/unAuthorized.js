@@ -22,7 +22,7 @@ Page({
   },
   joinVip() {
     wx.navigateTo({
-      url: '/mine/joinVip/joinVip'
+      url: '/mine/joinVip/joinVip?from=unAuthorized'
     })
   },
 
@@ -72,13 +72,6 @@ Page({
    * Called when page reach bottom
    */
   onReachBottom: function () {
-
-  },
-
-  /**
-   * Called when user click on the top right corner to share
-   */
-  onShareAppMessage: function () {
 
   }
 })

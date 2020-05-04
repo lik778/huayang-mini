@@ -1,2 +1,3 @@
-<!--subLive/officialChannel/officialChannel.wxml-->
-<text>subLive/officialChannel/officialChannel.wxml</text>
+<view class="official-channel">
+  <web-view src="{{h5Url}}"></web-view>
+</view>

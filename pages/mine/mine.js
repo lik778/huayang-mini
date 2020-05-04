@@ -1,10 +1,9 @@
 // pages/mine/mine.js
 import {
-    createStoreBindings
-} from 'mobx-miniprogram-bindings'
-import {
+    getScene,
+    getUniversityCode,
     getUserInfo,
-    getScene
+    getVipShow
 } from "../../api/mine/index"
 import {
     bindWxPhoneNumber
@@ -16,10 +15,6 @@ import {
     getLocalStorage,
     setLocalStorage
 } from "../../utils/util"
-
-import {
-    store
-} from '../../store'
 import {
     checkAuth
 } from "../../utils/auth"
@@ -30,16 +25,34 @@ Page({
      * 页面的初始数据
      */
     data: {
-        userInfo: {},
+        userInfo: "",
         width: 200,
         showBindPhoneButton: true,
+        showVipEnter:false,//是否展示会员权益入口
+    },
+    // 跳往会员权益介绍
+    toVipWelfare() {
+        wx.navigateTo({
+            url: '/mine/vipWelfare/vipWelfare',
+        })
+    },
+    // 查询我的订单
+    toMineOrder() {
+        if (!this.data.showBindPhoneButton) {
+            wx.navigateTo({
+                url: '/mine/mineOrder/mineOrder',
+            })
+        }
+
     },
     // 跳转至课程列表
     toCourseList() {
-        let officialRoomId = 207
-        wx.navigateTo({
-            url: `/subLive/courseList/courseList?id=${officialRoomId}`,
+        getUniversityCode(`user_key=daxue`).then(res => {
+            wx.navigateTo({
+                url: `/subLive/courseList/courseList?id=${res.data.id}`,
+            })
         })
+
     },
     // 跳往邀请会员页
     toInvite() {
@@ -50,7 +63,7 @@ Page({
     // 跳往我的钱包
     toWallet() {
         let wolletData = {
-            balance: this.data.userInfo.amount / 100 || 0, //余额
+            balance: this.data.userInfo.amount, //余额
             point: this.data.userInfo.zhide_point, //花豆
             isVip: this.data.userInfo.is_zhide_vip, //是否为vip
         }
@@ -67,9 +80,17 @@ Page({
             })
         } else {
             wx.navigateTo({
-                url: '/mine/joinVip/joinVip',
+                url: '/mine/joinVip/joinVip?from=mine',
             })
         }
+    },
+    // 获取会员权益开关
+    getVipShowData(){
+        getVipShow().then(res=>{
+            this.setData({
+                showVipEnter:res.data
+            })
+        })
     },
     // 申请入学
     applyJoinSchool() {
@@ -104,9 +125,9 @@ Page({
     },
     // 加入会员群
     changeScene(e) {
-        let params={
-            scene:"vip",
-            open_id:getLocalStorage(GLOBAL_KEY.openId)
+        let params = {
+            scene: "vip",
+            open_id: getLocalStorage(GLOBAL_KEY.openId)
         }
         getScene(params)
     },
@@ -119,13 +140,16 @@ Page({
     // 跳往会员权益页
     toVip() {
         wx.navigateTo({
-            url: '/mine/joinVip/joinVip',
+            url: '/mine/joinVip/joinVip?from=mine',
         })
     },
     // 获取用户信息
     getUserInfoData() {
         // 判断是否手机号登录，控制显示授权手机号按钮
         let showBindPhoneButton = getLocalStorage(GLOBAL_KEY.accountInfo) === undefined ? true : false
+        this.setData({
+            showBindPhoneButton: showBindPhoneButton
+        })
         if (!showBindPhoneButton) {
             getUserInfo("scene=zhide").then(res => {
                 if (res.code === -2) {
@@ -134,10 +158,17 @@ Page({
                         userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo))
                     })
                 } else {
-                    res.mobile = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).mobile
+                    if (Number.isInteger(res.amount / 100)) {
+                        res.amount = res.amount / 100 + ".00"
+                    } else {
+                        res.amount = res.amount / 100
+                    }
+                    res.mobile = res.mobile.substr(0, 3) + "****" + res.mobile.substr(7)//手机号中间四位数*
+                    res.zhide_end_time = res.zhide_end_time === '' ? '' : res.zhide_end_time.split(' ')[0]//处理会员到期时间到分
+                    setLocalStorage(GLOBAL_KEY.accountInfo, res)
                     this.setData({
                         showBindPhoneButton: false,
-                        userInfo: res || {}
+                        userInfo: res
                     })
                 }
             })
@@ -151,42 +182,23 @@ Page({
                 })
             }, 500)
         }
-        this.setData({
-            showBindPhoneButton: showBindPhoneButton
-        })
+
     },
     // 生命周期函数--监听页面加载
     onLoad: function (options) {
-        this.storeBindings = createStoreBindings(this, {
-            store,
-            fields: ['numA', 'numB', 'sum'],
-            actions: ['update'],
-        })
+        this.getVipShowData()
     },
     // 生命周期函数--监听页面初次渲染完成
-    onReady: function () {
-
-    },
+    onReady: function () {},
     // 生命周期函数--监听页面显示
     onShow: function () {
-        if (getLocalStorage(GLOBAL_KEY.userInfo)) {
-            if (getLocalStorage(GLOBAL_KEY.accountInfo)) {
-                this.setData({
-                    userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-                })
-            } else {
-                this.setData({
-                    userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo))
-                })
-            }
+        checkAuth({
+            listenable: true,
+            ignoreFocusLogin: true
+        }).then(() => {
             this.getUserInfoData()
-        } else {
-            wx.navigateTo({
-                url: '/pages/auth/auth',
-            })
-        }
-        this.changeScene()
-        checkAuth()
+            this.changeScene()
+        })
     },
     // 生命周期函数--监听页面隐藏
     onHide: function () {
@@ -211,9 +223,7 @@ Page({
     onShareAppMessage: function () {
         return {
             title: "花样值得买",
-            desc: "花样",
-            path: '/pages/mine/mine',
-            imgUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586870905SEwHoX.jpg"
+            path: '/pages/index/index',
         }
     }
 })

@@ -26,7 +26,7 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.10.4",
+	"libVersion": "2.10.1",
 	"appid": "wx85d130227f745fc5",
 	"projectname": "list",
 	"debugOptions": {
@@ -63,14 +63,14 @@
 					"id": 0,
 					"name": "mine/joinVip/joinVip",
 					"pathName": "mine/joinVip/joinVip",
-					"query": "scene=217",
+					"query": "",
 					"scene": null
 				},
 				{
 					"id": 1,
 					"name": "subLive/courseList/courseList",
 					"pathName": "subLive/courseList/courseList",
-					"query": "id=207",
+					"query": "id=551",
 					"scene": null
 				},
 				{
@@ -81,10 +81,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 3,
 					"name": "pages/auth/auth",
 					"pathName": "pages/auth/auth",
-					"query": "",
+					"query": "from=article",
 					"scene": null
 				},
 				{
@@ -99,6 +99,83 @@
 					"name": "subMall/detail/detail",
 					"pathName": "subMall/detail/detail",
 					"query": "prdId=37",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/mine/mine",
+					"pathName": "pages/mine/mine",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 7,
+					"name": "mine/joinSchool/joinSchool",
+					"pathName": "mine/joinSchool/joinSchool",
+					"query": "from=article",
+					"scene": null
+				},
+				{
+					"id": 8,
+					"name": "subLive/review/review",
+					"pathName": "subLive/review/review",
+					"query": "zhiboRoomId=87",
+					"scene": null
+				},
+				{
+					"id": 9,
+					"name": "subLive/officialChannel/officialChannel",
+					"pathName": "subLive/officialChannel/officialChannel",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 9,
+					"name": "subLive/officialChannel/officialChannel",
+					"pathName": "subLive/officialChannel/officialChannel",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "mine/joinVip/joinVip",
+					"pathName": "mine/joinVip/joinVip",
+					"query": "prdId=37",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "mine/withdrawResult/withdrawResult",
+					"pathName": "mine/withdrawResult/withdrawResult",
+					"query": "money=212",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "mine/contact/contact",
+					"pathName": "mine/contact/contact",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 14,
+					"name": "mine/vipWelfare/vipWelfare",
+					"pathName": "mine/vipWelfare/vipWelfare",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 15,
+					"name": "mine/withdraw/withdraw",
+					"pathName": "mine/withdraw/withdraw",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 16,
+					"name": "mine/invite/invite",
+					"pathName": "mine/invite/invite",
+					"query": "",
 					"scene": null
 				}
 			]

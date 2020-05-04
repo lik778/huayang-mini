@@ -1,10 +1,10 @@
 // mine/joinSchool/joinSchool.js
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  getLocalStorage
-} from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
+import { getLocalStorage, setLocalStorage } from "../../utils/util"
+import request from "../../lib/request"
+import { getUniversityCode } from "../../api/mine/index"
+import { checkAuth } from "../../utils/auth"
+
 Page({
 
   /**
@@ -13,6 +13,7 @@ Page({
   data: {
     radio: '0',
     webViewData: 0,
+    baseUrl: "",
     statusHeight: ""
   },
   // 切换性别
@@ -29,17 +30,35 @@ Page({
         open_id: wx.getStorageSync(GLOBAL_KEY.openId),
       })
     })
-    console.log(this.data.webViewData)
+
+  },
+  checkUserAuth({is_zhide_vip, student_num}) {
+    if (is_zhide_vip) {
+      if (student_num) {
+        getUniversityCode(`user_key=daxue`).then(res => {
+          wx.navigateTo({
+            url: `/subLive/courseList/courseList?id=${res.data.id}`,
+          })
+        })
+      } else {
+        // 继续填写大学入学申请
+        if (!getLocalStorage(GLOBAL_KEY.repeatView)) {
+          setLocalStorage(GLOBAL_KEY.repeatView, true)
+          wx.navigateTo({
+            url: '/mine/joinSchool/joinSchool',
+          })
+        }
+      }
+    } else {
+      wx.navigateTo({
+        url: `/mine/joinVip/joinVip?from=joinSchool`,
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    this.getWebViewData()
-    this.setData({
-      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
-    })
-  },
+  onLoad: function (options) {},
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -52,7 +71,21 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    checkAuth({listenable: true}).then(() => {
+      let userId = getLocalStorage(GLOBAL_KEY.userId)
+      let { is_zhide_vip, student_num } = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
+      if (userId == null) {
+        wx.navigateTo({url: '/pages/auth/auth'})
+      } else {
+        this.getWebViewData()
+        // 如果是从公众号来的需要二次检查用户VIP、学籍号
+        this.checkUserAuth({is_zhide_vip, student_num})
+      }
+      this.setData({
+        statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
+        baseUrl: request.baseUrl
+      })
+    })
   },
 
   /**
@@ -87,6 +120,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+			title: '花样大学入学申请',
+			path: `/mine/joinSchool/joinSchool`
+		}
   }
 })

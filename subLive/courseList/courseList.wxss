@@ -1,5 +1,6 @@
+@import "../../assets/css/common.wxss";
 .custom-tab-class {
-  flex-basis: 20% !important;
+  flex-basis: 28% !important;
   padding: 0 !important;
   font-size: 36rpx !important;
   font-weight: 500 !important;
@@ -9,11 +10,6 @@
   font-size: 48rpx !important;
   font-weight: 500 !important;
   color: rgb(0,0,0) !important;
-}
-.van-tabs__line {
-  /*width: 48rpx !important;*/
-  /*height: 8rpx !important;*/
-  /*border-radius: 915rpx !important;*/
 }
 .course-list {
   font-size: 0;
@@ -132,7 +128,6 @@
   padding: 10rpx 0 10rpx 24rpx;
 }
 .item-right-top {
-  line-height: 40rpx;
   font-size: 38rpx;
   font-weight: 500;
 }

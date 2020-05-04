@@ -5,7 +5,7 @@ import { $notNull } from "../../utils/util"
 // 获取课程列表
 export function getCourseList(params) {
 	return new Promise(resolve => {
-		request._get(URL.getCourseList + params).then(({data}) => {
+		request._get(URL.getCourseList, params).then(({data}) => {
 			data = data || []
 			resolve(data)
 		})
@@ -91,6 +91,15 @@ export function queryUserInfo(params) {
 export function getLiveInfo(params) {
 	return new Promise(resolve => {
 		request._get(URL.getLiveInfo, params).then(({data}) => {
+			resolve(data)
+		})
+	})
+}
+
+// 获取课程详情
+export function getCourseInfo(params) {
+	return new Promise(resolve => {
+		request._get(URL.getCourseInfo, params).then(({ data }) => {
 			resolve(data)
 		})
 	})

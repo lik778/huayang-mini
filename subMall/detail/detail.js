@@ -1,13 +1,14 @@
 // subMall/detail/detail.js
-import { getProductInfo } from "../../api/mall/index"
-import { THIRD_APPLETS_SOURCE } from "../../lib/config"
+import { getProductInfo, getYouZanAppId } from "../../api/mall/index"
 import { checkAuth } from "../../utils/auth"
+import { changeTwoDecimal_f } from "../../utils/util"
 
 Page({
 	/**
 	 * 页面的初始数据
 	 */
 	data: {
+		appId: '',
 		prdId: 0,
 		indicatorDots: true,
 		vertical: false,
@@ -27,7 +28,7 @@ Page({
 	},
 	navigateToMiniProgram() {
 		wx.navigateToMiniProgram({
-			appId: THIRD_APPLETS_SOURCE.youZan.appId,
+			appId: this.data.appId,
 			path: this.data.productInfo.third_link,
 			success() {
 				console.log('success');
@@ -42,6 +43,7 @@ Page({
 	},
 	getProductInfo(productId) {
 		getProductInfo({product_id: productId}).then(({media_list, product}) => {
+			product.discount_price = changeTwoDecimal_f(product.discount_price / 100)
 			this.setData({
 				bannerList: [...media_list],
 				productInfo: {...product},
@@ -49,18 +51,27 @@ Page({
 			})
 		})
 	},
+	getMiniProgramAppId() {
+		getYouZanAppId().then(appId => {
+			this.setData({appId})
+		})
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function ({prdId}) {
 		if (prdId) {
-			this.prdId = prdId
+			this.setData({
+				prdId
+			})
 			this.getProductInfo(prdId)
 		} else {
 			wx.switchTab({
 				url: '/pages/mall/mall'
 			})
 		}
+		// 获取有赞商城小程序appId
+		this.getMiniProgramAppId()
 	},
 
 	/**
@@ -109,6 +120,9 @@ Page({
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
-
+		return {
+			title: "花样值得买",
+			path: '/subMall/detail/detail?prdId=' + this.data.prdId
+		}
 	}
 })

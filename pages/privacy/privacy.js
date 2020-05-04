@@ -1,3 +1,4 @@
+import request from "../../lib/request"
 // pages/privacy/privacy.js
 Page({
 
@@ -5,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    h5Url: ''
   },
 
   /**
@@ -26,7 +27,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      h5Url: `${request.baseUrl}/#/zhide/privacy`
+    })
   },
 
   /**

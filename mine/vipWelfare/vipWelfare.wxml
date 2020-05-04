@@ -1,0 +1,4 @@
+<!--mine/vipWelfare/vipWelfare.wxml-->
+<view>
+  <web-view src="{{baseUrl}}/#/home/vipWelfare"></web-view>
+</view>

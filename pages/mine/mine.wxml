@@ -1,7 +1,7 @@
 <!--pages/mine/mine.wxml-->
-<view class="mine">
+<view class="mine" wx:if="{{userInfo!==''}}">
 	<view class="banner">
-		<image src="../../assets/images/mine/pic-1.png" class="banner-image"></image>
+		<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368049ZbJKPz.jpg" class="banner-image"></image>
 		<view class="userinfo">
 			<view class="userinfo-left">
 				<image src="{{userInfo.avatar_url}}"></image>
@@ -13,10 +13,10 @@
 		</view>
 		<view class="{{userInfo.is_zhide_vip?'vip-module':'vip-module notvip-module'}}">
 			<view class="vip-postion">
-				<image src="../../assets/images/mine/pic-10.png" class="vip-bg" wx:if="{{userInfo.is_zhide_vip}}"></image>
+				<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368431osxPZF.jpg" class="vip-bg" wx:if="{{userInfo.is_zhide_vip}}"></image>
 				<view class="vip-main">
 					<view class="vip-title" wx:if="{{userInfo.is_zhide_vip}}">
-						<image src="../../assets/images/mine/pic-4.png" class="vip-icon"></image>
+						<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368190vKRlDg.jpg" class="vip-icon"></image>
 						<text>超级会员</text>
 					</view>
 					<view class="validity-date" wx:if="{{userInfo.is_zhide_vip}}">有效期至 {{userInfo.zhide_end_time}}</view>
@@ -25,25 +25,25 @@
 						<view class="wollet-bottom">
 							<view class="wollet-one">
 								<view class="wollet-left" wx:if="{{!showBindPhoneButton}}">
-									<image src="../../assets/images/mine/pic-2.png" class="bean"></image>
+									<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368076KOQTuY.jpg" class="bean"></image>
 									<text>{{userInfo.zhide_point}} 花豆</text>
 								</view>
-								<view class="wollet-left" wx:else>
+								<view class="wollet-left no-msg" wx:else>
 									<text class="no-wollet">暂无信息</text>
 								</view>
 								<view class="woller-middle" wx:if="{{!showBindPhoneButton}}"></view>
 								<view class="woller-right" wx:if="{{!showBindPhoneButton}}">
-									<image src="../../assets/images/mine/pic-8.png" class="vip-money"></image>
-									<text wx:if="{{userInfo.amount}}">{{userInfo.amount/100}}</text>
-									<text wx:else>{{0}}</text>
+									<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368357mBYwJU.jpg" class="vip-money"></image>
+									<text wx:if="{{userInfo.amount}}" style="padding-left:16rpx;">{{userInfo.amount}}</text>
+									<text wx:else style="padding-left:16rpx;">0.00</text>
 								</view>
-								<view class="woller-right" wx:else>
+								<view class="woller-right wollet-right-data" wx:else>
 									<text class="bindmobile">绑定手机查看</text>
-									<button type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="bindmobile-botton"></button>
+									<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="bindmobile-botton"></button>
 								</view>
 							</view>
 							<view class="wollet-two">
-								<image src="../../assets/images/mine/pic-7.png" class="vip-arrow"></image>
+								<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368318iSMbqC.jpg" class="vip-arrow"></image>
 							</view>
 						</view>
 					</view>
@@ -57,18 +57,38 @@
 							</view>
 						</view>
 						<view class="join-vip-right">
-							<view class="join-button" bindtap="joinVip">立即加入</view>
+							<view class="join-button" bindtap="joinVip" wx:if="{{!showBindPhoneButton}}">立即加入</view>
+							<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" wx:else class="join-button">立即加入</button>
 						</view>
 					</view>
+				</view>
+				<view class="vip-num-module" wx:if="{{userInfo.is_zhide_vip}}">
+					<view>会员号</view>
+					<view>{{userInfo.zhide_num}}</view>
 				</view>
 			</view>
 
 		</view>
 	</view>
 	<view class="list">
+		<!-- 会员权益介绍 -->
+		<view class="list-common" bindtap="toVipWelfare" wx:if='{{showVipEnter&&userInfo.is_zhide_vip}}'>
+			<view class="common-left">
+				<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587639616RLhIcb.jpg" class="common-icon-five"></image>
+			</view>
+			<view class="common-right">
+				<view class="common-desc">
+					<view class="common-desc-top">我的权益</view>
+					<view class="common-desc-bottom">3大专享权益</view>
+				</view>
+				<view class="common-arrow">
+					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368318iSMbqC.jpg"></image>
+				</view>
+			</view>
+		</view>
 		<view class="list-common" wx:if="{{userInfo.is_zhide_vip}}" bindtap="{{userInfo.student_num!==''?'toCourseList':''}}">
 			<view class="common-left">
-				<image src="../../assets/images/mine/pic-3.png" class="common-icon-one"></image>
+				<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368155WoPSBc.jpg" class="common-icon-one"></image>
 			</view>
 			<view class="common-right">
 				<view class="common-desc">
@@ -77,14 +97,14 @@
 					<view class="common-desc-bottom" wx:else>5大系列课程免费学</view>
 				</view>
 				<view class="common-arrow">
-					<image src="../../assets/images/mine/pic-7.png" wx:if="{{userInfo.student_num!==''}}"></image>
+					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368318iSMbqC.jpg" wx:if="{{userInfo.student_num!==''}}"></image>
 					<view class="joinschool-button" wx:else bindtap="applyJoinSchool">申请入学</view>
 				</view>
 			</view>
 		</view>
 		<view class="list-common" bindtap="toInvite" wx:if="{{userInfo.is_zhide_vip}}">
 			<view class="common-left">
-				<image src="../../assets/images/mine/pic-11.png" class="common-icon-two"></image>
+				<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368457SloykC.jpg" class="common-icon-two"></image>
 			</view>
 			<view class="common-right">
 				<view class="common-desc">
@@ -92,13 +112,13 @@
 					<view class="common-desc-bottom">邀请还能获取惊喜好礼</view>
 				</view>
 				<view class="common-arrow">
-					<image src="../../assets/images/mine/pic-7.png"></image>
+					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368318iSMbqC.jpg"></image>
 				</view>
 			</view>
 		</view>
-		<view class="list-common" wx:if="{{false}}">
+		<view class="list-common" bindtap="toMineOrder">
 			<view class="common-left">
-				<image src="../../assets/images/mine/pic-9.png" class="common-icon-three"></image>
+				<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368400GVlHle.jpg" class="common-icon-three"></image>
 			</view>
 			<view class="common-right">
 				<view class="common-desc">
@@ -106,14 +126,15 @@
 					<view class="common-desc-bottom">查询订单信息</view>
 				</view>
 				<view class="common-arrow">
-					<image src="../../assets/images/mine/pic-7.png"></image>
+					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368318iSMbqC.jpg"></image>
 				</view>
 			</view>
+			<button style="height: 100%;" type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="bindmobile-botton" wx:if="{{showBindPhoneButton}}"></button>
 		</view>
 		<view class="list-common" wx:if="{{userInfo.is_zhide_vip}}">
-			<button open-type="contact" bindcontact="joinVipGroup" send-message-path="/pages/mine/mine" show-message-card="true" class="join-vip-group"></button>
+			<button open-type="contact" bindcontact="joinVipGroup" send-message-path="/pages/mine/mine" show-message-card="true" class="join-vip-group" send-message-img="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587032983Vfcurw.jpg" send-message-title="长按识别下方二维码，添加客服"></button>
 			<view class="common-left">
-				<image src="../../assets/images/mine/pic-5.png" class="common-icon-four"></image>
+				<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368241JkNXNY.jpg" class="common-icon-four"></image>
 			</view>
 			<view class="common-right">
 				<view class="common-desc">
@@ -121,24 +142,24 @@
 					<view class="common-desc-bottom">群内定期发放专享好礼</view>
 				</view>
 				<view class="common-arrow">
-					<image src="../../assets/images/mine/pic-7.png"></image>
+					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368318iSMbqC.jpg"></image>
 				</view>
 			</view>
 		</view>
-		<view class="list-common" data-mobile="021-31279777" bindtap="callPhone">
+		<view class="list-common" data-mobile="021-31279158" bindtap="callPhone">
 			<view class="common-left">
-				<image src="../../assets/images/mine/pic-6.png" class="common-icon-five"></image>
+				<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368282YcibfN.jpg" class="common-icon-five"></image>
 			</view>
 			<view class="common-right">
 				<view class="common-desc">
 					<view class="common-desc-top">联系客服</view>
-					<view class="common-desc-bottom">021-31279777 工作日9:00-18:00</view>
+					<view class="common-desc-bottom">021-31279158 工作日9:00-18:00</view>
 				</view>
 				<view class="common-arrow">
-					<image src="../../assets/images/mine/pic-7.png"></image>
+					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368318iSMbqC.jpg"></image>
 				</view>
 			</view>
 		</view>
-	</view>
 
+	</view>
 </view>

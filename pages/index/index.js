@@ -2,6 +2,7 @@
 import {
 	getLiveBannerList,
 	getLiveList,
+	setPoint,
 	updateLiveStatus
 } from "../../api/live/index"
 import {
@@ -19,12 +20,17 @@ import {
 	statisticsWatchNo
 } from "../../api/live/course"
 import {
-	bindWxPhoneNumber
+	bindWxPhoneNumber,
+	checkBecomeVip
 } from "../../api/auth/index"
 import {
 	checkAuth
 } from "../../utils/auth"
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog'
+import {
+	getUserInfo,
+
+} from "../../api/mine/index"
 
 Page({
 	/**
@@ -43,12 +49,30 @@ Page({
 		didNoMore: false,
 		didVip: false,
 		liveStatusIntervalTimer: null,
-		showSuccess:false,//成为超级会员弹窗
+		showSuccess: false, //成为超级会员弹窗
+		indicatorDots: false,
+		vertical: false,
+		autoplay: false,
+		interval: 2000,
+		duration: 500,
+	},
+	// 处理swiper点击回调
+	handleSwiperTap(e) {
+		let {
+			bannerId
+		} = e.currentTarget.dataset.item
+		// 打点
+		setPoint({
+			banner_id: bannerId
+		})
+		wx.navigateTo({
+			url: this.data.bannerPictureObject.link
+		})
 	},
 	// 关闭立即邀请
-	onClickHide(){
+	onClickHide() {
 		this.setData({
-			showSuccess:false
+			showSuccess: false
 		})
 	},
 	/**
@@ -79,71 +103,82 @@ Page({
 	 * @param e
 	 */
 	navigateToLive(e) {
-		// console.log(e.currentTarget.dataset.item)
-		let {
-			zhiboRoomId,
-			roomId,
-			link,
-			vipOnly
-		} = e.currentTarget.dataset.item
-		// 当前课程是否仅限VIP用户学习
-		if (vipOnly === 1) {
-			// 判断是否是会员/是否入学
-			checkIdentity({
+		checkAuth({
+			listenable: true,
+			ignoreFocusLogin: true
+		}).then(() => {
+			let {
+				zhiboRoomId,
 				roomId,
 				link,
-				zhiboRoomId
-			}).then((callbackString) => {
-				if (callbackString === 'no-phone-auth') {
-					this.setData({
-						show: true
-					})
-				} else if (callbackString === 'no-auth-daxue') {
-					Dialog.confirm({
-						title: '申请入学立即观看',
-						message: '完成入学信息登记，观看课程'
-					}).then(() => {
-						wx.navigateTo({
-							url: '/mine/joinSchool/joinSchool',
+				vipOnly
+			} = e.currentTarget.dataset.item
+			// 当前课程是否仅限VIP用户学习
+			if (vipOnly === 1) {
+				// 判断是否是会员/是否入学
+				checkIdentity({
+					roomId,
+					link,
+					zhiboRoomId
+				}).then((callbackString) => {
+					if (callbackString === 'no-phone-auth') {
+						this.setData({
+							show: true
 						})
-					}).catch(() => {})
-				}
-			})
-		} else {
-			statisticsWatchNo({
-				zhibo_room_id: zhiboRoomId, // 运营后台配置的课程ID
-				open_id: getLocalStorage(GLOBAL_KEY.openId)
-			}).then(() => {
-				// link存在去跳转回看页
-				if (link) {
-					wx.navigateTo({
-						url: `/subLive/review/review?zhiboRoomId=` + zhiboRoomId,
-					})
-				} else {
-					wx.navigateTo({
-						url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${roomId}&custom_params=${encodeURIComponent(JSON.stringify(this.data.customParams))}`
-					})
-				}
-				setTimeout(() => {
-					// 更新直播间观看次数
-					let list = [...this.data.liveList]
-					list.forEach(_ => {
-						if (_.zhiboRoomId === zhiboRoomId) {
-							_.visitCount += 1
-						}
-					})
-					this.setData({
-						liveList: [...list]
-					})
-				}, 1000)
-			})
-		}
+					} else if (callbackString === 'no-auth-daxue') {
+						Dialog.confirm({
+							title: '申请入学立即观看',
+							message: '完成入学信息登记，观看课程'
+						}).then(() => {
+							wx.navigateTo({
+								url: '/mine/joinSchool/joinSchool',
+							})
+						}).catch(() => {})
+					}
+				})
+			} else {
+				statisticsWatchNo({
+					zhibo_room_id: zhiboRoomId, // 运营后台配置的课程ID
+					open_id: getLocalStorage(GLOBAL_KEY.openId)
+				}).then(() => {
+					// link存在去跳转回看页
+					if (link) {
+						wx.navigateTo({
+							url: `/subLive/review/review?zhiboRoomId=` + zhiboRoomId,
+						})
+					} else {
+						wx.navigateTo({
+							url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${roomId}&custom_params=${encodeURIComponent(JSON.stringify(this.data.customParams))}`
+						})
+					}
+					setTimeout(() => {
+						// 更新直播间观看次数
+						let list = [...this.data.liveList]
+						list.forEach(_ => {
+							if (_.zhiboRoomId === zhiboRoomId) {
+								_.visitCount += 1
+							}
+						})
+						this.setData({
+							liveList: [...list]
+						})
+					}, 1000)
+				})
+			}
+		})
 	},
 	/**
 	 * 跳转至课程列表
 	 */
 	navigateToCourse(e) {
-		let officialRoomId = e.currentTarget.dataset.item.officialRoomId
+		let {
+			officialRoomId,
+			bannerId
+		} = e.currentTarget.dataset.item
+		// 打点
+		setPoint({
+			banner_id: bannerId
+		})
 		wx.navigateTo({
 			url: `/subLive/courseList/courseList?id=${officialRoomId}`,
 		})
@@ -172,7 +207,7 @@ Page({
 					coverPicture: item.zhibo_room.cover_pic,
 					sharePicture: item.zhibo_room.share_pic,
 					status: item.zhibo_room.status,
-					liveStatus: 0,
+					liveStatus: '',
 					link: item.zhibo_room.link,
 					vipOnly: item.zhibo_room.vip_only,
 					avatar: item.user && item.user.avatar_url ? item.user.avatar_url : 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586332410GvsWnF.jpg',
@@ -229,18 +264,32 @@ Page({
 	getBanner() {
 		getLiveBannerList().then((banner) => {
 			let bannerList = banner.map(b => {
-				return {
-					zhiboRoomId: b.zhibo_room.id,
-					officialRoomId: b.kecheng.user_id,
-					roomId: b.zhibo_room.num,
-					roomType: b.zhibo_room.room_type,
-					author: b.user.nick_name,
-					name: b.banner.title ? b.banner.title.split('\\n').join('\n') : '',
-					bannerPicture: b.banner.pic_url,
-					color: b.banner.bg_color,
-					visitCount: b.zhibo_room.visit_count,
-					status: b.zhibo_room.status
+				if (b.zhibo_room && b.kecheng && b.user) {
+					return {
+						bannerId: b.banner.id,
+						zhiboRoomId: b.zhibo_room.id,
+						officialRoomId: b.kecheng.user_id,
+						roomId: b.zhibo_room.num,
+						roomType: b.zhibo_room.room_type,
+						author: b.user.nick_name,
+						name: b.banner.title ? b.banner.title.split('\\n').join('\n') : '',
+						bannerPicture: b.banner.pic_url,
+						color: b.banner.bg_color,
+						link: b.banner.link,
+						visitCount: b.zhibo_room.visit_count,
+						status: b.zhibo_room.status,
+					}
+				} else {
+					return {
+						bannerId: b.banner.id,
+						bannerPicture: b.banner.pic_url,
+						link: b.banner.link
+					}
 				}
+			})
+			this.setData({
+				bannerList,
+				bannerPictureObject: bannerList.length > 0 ? bannerList[0] : null
 			})
 			// 筛选出直播间状态不是"回看"的房间号[0:'默认',1:'直播中',2:'回看']
 			let courseRoomIds = bannerList.filter(_ => _.roomId && _.status !== 2).map(t => t.roomId)
@@ -266,12 +315,12 @@ Page({
 							}
 						}
 					})
-				}
-			})
 
-			this.setData({
-				bannerList,
-				bannerPictureObject: bannerList.length > 0 ? bannerList[0] : null
+					this.setData({
+						bannerList,
+						bannerPictureObject: bannerList.length > 0 ? bannerList[0] : null
+					})
+				}
 			})
 		})
 	},
@@ -280,22 +329,32 @@ Page({
 			url: '/mine/invite/invite'
 		})
 	},
+	// 检查是否第一次成为会员
+	checkBecomeVipData() {
+		// GLOBAL_KEY.vip为true代表已经请求过接口不再请求接口了
+		if (getLocalStorage(GLOBAL_KEY.vip)) {
+			checkBecomeVip(`user_id=${getLocalStorage(GLOBAL_KEY.userId)}`).then(res => {
+				setLocalStorage(GLOBAL_KEY.vip, false)
+				if (res) {
+					this.setData({
+						showSuccess: res
+					})
+				}
+			})
+		}
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
-		if ($notNull(accountInfo)) {
-			this.setData({
-				didVip: accountInfo.is_zhide_vip
-			})
-		}
+
 	},
 
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
+
 		this.getBanner()
 		this.queryLiveList()
 		if (this.liveStatusIntervalTimer == null) {
@@ -311,17 +370,38 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		checkAuth()
-		// 检查是否会员开通成功
-		if(getLocalStorage(GLOBAL_KEY.vip)===true){
-			this.setData({
-				showSuccess:true
+		if (getLocalStorage(GLOBAL_KEY.vipBack)) {
+			setLocalStorage(GLOBAL_KEY.vipBack, false)
+			wx.redirectTo({
+				url: '/mine/contact/contact',
 			})
-			wx.removeStorageSync(GLOBAL_KEY.vip)
+		} else {
+			if (getLocalStorage(GLOBAL_KEY.userId)) {
+				this.checkBecomeVipData()
+			}
 		}
-		// wx.navigateTo({
-		// 	url: '/mine/joinResult/joinResult',
-		// })
+
+		// if (getApp().globalData.didPopupInCurrentLifeCircle) {
+		// 	// TODO 今天已经弹过窗
+		// } else {
+		// 	// TODO 今天还未弹过窗
+		// 	getApp().globalData.didPopupInCurrentLifeCircle = true
+		// }
+
+		// 检查本地账户信息
+		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
+		if ($notNull(accountInfo)) {
+			getUserInfo("scene=zhide").then(info => {
+				setLocalStorage(GLOBAL_KEY.accountInfo, info)
+				this.setData({
+					didVip: info.is_zhide_vip
+				})
+			})
+		}
+
+		checkAuth({
+			listenable: true
+		})
 	},
 
 	/**
@@ -360,10 +440,8 @@ Page({
 	 */
 	onShareAppMessage: function () {
 		return {
-			title: "花样值得买",
-			desc: "花样",
+			title: "花样直播",
 			path: '/pages/index/index',
-			imgUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586870905SEwHoX.jpg"
 		}
 	},
 })

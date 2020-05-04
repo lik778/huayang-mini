@@ -7,7 +7,7 @@
 		<view class="success-box">
 			<view class="main">
 				<view class="logo">
-					<image src="../../assets/images/mine/pic-14.png" class="logo-icon"></image>
+					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368558CSpfQu.jpg" class="logo-icon"></image>
 				</view>
 				<view class="title">
 					<view class="title-line"></view>
@@ -30,12 +30,13 @@
 				</view>
 			</view>
 			<view class="bg-img">
-				<image src="../../assets/images/mine/pic-13.png"></image>
+				<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368536dZYkHm.jpg"></image>
 			</view>
 		</view>
 	</view>
-	<view class="add-button" style="bottom:{{bottom*2}}rpx;">
-		<button open-type="contact" bindcontact="joinVipGroup" send-message-path="/pages/mine/mine" show-message-card="true" type="primary">添加您的班主任</button>
+	<view class=" {{bottom===-1?'add-button-desc':'add-button'}}" style="bottom:{{bottom*2}}rpx;">
+		<button wx:if="{{isFirst}}" bindtap="addTeacher">添加您的班主任</button>
+		<button open-type="contact" send-message-img="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587032983Vfcurw.jpg" bindcontact="joinVipGroup" send-message-title="长按识别下方二维码，添加班主任" send-message-path="/pages/mine/mine" show-message-card="true"  wx:else>添加您的班主任</button>
 	</view>
 	<view class="pupup">
 		<van-overlay show="{{ showSuccess }}">
@@ -43,9 +44,9 @@
 				<view class="box-title">提示</view>
 				<view class="box-desc">点击右下角卡片，继续完成操作</view>
 				<view>
-					<image src="../../assets/images/mine/pic-31.png"></image>
+					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587370022yyUjWT.jpg"></image>
 				</view>
-				<view bindtap="onClickHide" data-index="1">确定</view>
+				<view bindtap="onClickHide" data-index="1">确定<button open-type="contact" bindcontact="joinVipGroup" send-message-path="/pages/mine/mine" send-message-img="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587032983Vfcurw.jpg"  send-message-title="长按识别下方二维码，添加班主任" show-message-card="true">添加您的班主任</button></view>
 			</view>
 		</van-overlay>
 	</view>

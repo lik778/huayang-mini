@@ -9,18 +9,18 @@
 				<view class="title-left">我的钱包</view>
 				<view class="title-right" bindtap="explain">
 					<text>了解花豆</text>
-					<image src="../../assets/images/mine/pic-7.png"></image>
+					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368318iSMbqC.jpg"></image>
 				</view>
 			</view>
 			<view class="money-line">
 				<view class="money-left">
-					<image src="../../assets/images/mine/pic-2.png"></image>
+					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368076KOQTuY.jpg"></image>
 					<text>{{wolletData.point}} 花豆</text>
 				</view>
 				<view class="money-middle"></view>
 				<view class="money-right">
-					<image src="../../assets/images/mine/pic-8.png"></image>
-					<text>{{wolletData.balance}}</text>
+					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368357mBYwJU.jpg"></image>
+					<text>{{wolletData.balance||'0.00'}}</text>
 				</view>
 			</view>
 			<view class="button-line">
@@ -28,7 +28,7 @@
 				<view class="button-line-right" bindtap="withdraw">提现</view>
 			</view>
 		</view>
-		<image wx:if="{{wolletData.isVip}}" src="../../assets/images/mine/pic-10.png" class="vip-icon"></image>
+		<image wx:if="{{wolletData.isVip}}" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368431osxPZF.jpg" class="vip-icon"></image>
 	</view>
 	<view class="invite-list">
 		<view class="invite-item" wx:for="{{inviteList}}" wx:key="index">

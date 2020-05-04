@@ -1,9 +1,10 @@
 {
-  "navigationBarTitleText": "加入会员",
+  "navigationBarTitleText": "加入花样会员",
   "navigationStyle": "custom",
   "usingComponents": {
     "naviBar": "../../components/navibar/navibar",
     "van-checkbox": "../../miniprogram_npm/@vant/weapp/checkbox/index",
     "van-checkbox-group": "../../miniprogram_npm/@vant/weapp/checkbox-group/index"
-  }
+  },
+  "navigationBarTextStyle": "white"
 }

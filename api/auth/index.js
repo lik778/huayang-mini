@@ -83,3 +83,31 @@ export async function getPhoneNumber(e) {
 		return 1
 	}
 }
+
+/**
+ * 校验是否强制登陆
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export function checkFocusLogin(params) {
+	return new Promise((resolve) => {
+		request._get(URL.checkFocusLogin, params).then(({ data, code }) => {
+			if (code === 0) {
+				resolve(data)
+			}
+		})
+	})
+}
+
+
+// 检查是否刚成为会员需要弹窗
+export const checkBecomeVip=(params)=>{
+	return new Promise((resolve) => {
+		request._get(URL.checkBecomeVip+"?"+params).then(({ data, code }) => {
+			if (code === 0) {
+				resolve(data)
+			}
+		})
+	})
+}
+

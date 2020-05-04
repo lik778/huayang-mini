@@ -1,12 +1,13 @@
 /* mine/joinVip/joinVip.wxss */
 .join-vip {
     background: #161616;
+    min-height: 100vh;
 }
 
 .banner {
     position: relative;
     width: 100vw;
-    height: 564rpx;
+    height: 392rpx;
 }
 
 .bg {
@@ -26,7 +27,7 @@
 
 .banner-main {
     position: absolute;
-    top: 208rpx;
+    bottom: 112rpx;
     z-index: 20;
     padding: 0 64rpx;
     display: flex;
@@ -210,7 +211,7 @@
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: rgba(238, 187, 136, 1);
-    line-height: 16px;
+    line-height: 22px;
     padding-left: 28rpx;
 }
 
@@ -298,11 +299,17 @@
     color: rgba(238, 187, 136, 1);
     line-height: 18px;
     padding-top: 80rpx;
-    padding-bottom: 102rpx;
+    padding-bottom: 360rpx;
 }
 
 .button-line {
     padding: 0 60rpx;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 50;
+    width: calc(100% - 120rpx);
+    background: #161616;
 }
 
 .button {
@@ -314,6 +321,10 @@
     justify-content: center;
     flex-direction: column;
     position: relative;
+}
+
+.button-active {
+    background: linear-gradient(90deg, #DDAA77 0%, rgba(221, 170, 119, 1) 100%);
 }
 
 .button view {
@@ -373,4 +384,8 @@
     border: none;
     border-radius: 2px;
     background: #fff;
+}
+
+.images image:last-child {
+    padding-bottom: 300rpx;
 }

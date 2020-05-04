@@ -1,7 +1,7 @@
 {
   "plugins": {
     "live-player-plugin": {
-      "version": "1.0.7",
+      "version": "1.0.8",
       "provider": "wx2b03c6e691cd7370"
     }
   },
@@ -9,18 +9,19 @@
     "van-dialog": "../miniprogram_npm/@vant/weapp/dialog/index"
   },
   "navigateToMiniProgramAppIdList": [
-    "wx95fb6b5dbe8739b7"
+    "wx95fb6b5dbe8739b7",
+    "wx6593cf087b7686dd",
+    "wx85d130227f745fc5"
   ],
   "pages": [
     "pages/index/index",
+    "pages/mine/mine",
     "pages/mall/mall",
     "pages/auth/auth",
-    "pages/mine/mine",
     "pages/privacy/privacy",
     "pages/service/service"
   ],
-  "subpackages": [
-    {
+  "subpackages": [{
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -29,7 +30,12 @@
         "wallet/wallet",
         "joinResult/joinResult",
         "buyAgreement/buyAgreement",
-        "beanExplain/beanExplain"
+        "beanExplain/beanExplain",
+        "mineOrder/mineOrder",
+        "vipWelfare/vipWelfare",
+        "withdrawResult/withdrawResult",
+        "contact/contact",
+        "withdraw/withdraw"
       ]
     },
     {
@@ -52,7 +58,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "花样小程序",
+    "navigationBarTitleText": "花样值得买",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
@@ -60,17 +66,22 @@
     "color": "#999",
     "selectedColor": "#000",
     "backgroundColor": "#fff",
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/index/index",
+        "selectedIconPath": "assets/images/common/liveActive.png",
+        "iconPath": "assets/images/common/live.png",
         "text": "直播"
       },
       {
         "pagePath": "pages/mall/mall",
-        "text": "商城"
+        "selectedIconPath": "assets/images/common/mallActive.png",
+        "iconPath": "assets/images/common/mall.png",
+        "text": "值得买"
       },
       {
         "pagePath": "pages/mine/mine",
+        "selectedIconPath": "assets/images/common/mineActive.png",
+        "iconPath": "assets/images/common/mine.png",
         "text": "我的"
       }
     ]

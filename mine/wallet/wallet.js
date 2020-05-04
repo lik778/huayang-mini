@@ -20,18 +20,29 @@ Page({
     offset: 0
   },
   // 花豆介绍
-  explain(){
+  explain() {
     wx.navigateTo({
       url: '/mine/beanExplain/beanExplain',
     })
   },
   // 提现
   withdraw() {
-    wx.showToast({
+    wx.showModal({
       title: '提示',
-      duration: 5000,
-      icon: "none"
+      content: " 提现功能将在5月中旬开放，敬请期待哦！",
+      showCancel: false,
     })
+    // if (this.data.wolletData.balance < 20) {
+    //   wx.showModal({
+    //     title: '提示',
+    //     content: " 最低可提现金额为 20.00",
+    //     showCancel: false,
+    //   })
+    // } else {
+    //   wx.navigateTo({
+    //     url: `/mine/withdraw/withdraw?money=${this.data.wolletData.balance}`,
+    //   })
+    // }
   },
   // 获取小程序邀请列表
   inviteListData() {
@@ -40,7 +51,6 @@ Page({
       if (res.length !== 0) {
         for (let i in res) {
           if (Number.isInteger(res[i].amount / 100)) {
-            console.log(res[i].amount / 100 + ".00")
             res[i].amount = res[i].amount / 100 + ".00"
           } else {
             res[i].amount = res[i].amount / 100
@@ -103,13 +113,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
 
   }
 })

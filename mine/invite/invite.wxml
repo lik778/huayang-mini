@@ -1,10 +1,10 @@
 <!--mine/invite/invite.wxml-->
-<view class="invite" wx:if="{{posturl!==''}}">
-	<view class="navigation">
-		<naviBar title="邀请有礼"></naviBar>
+<view class="invite" wx:if="{{qcCode!==''}}">
+	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+		<naviBar title="邀请有礼" color="rgba(170, 0, 0, 1)" titleColor="#FFFFFF"></naviBar>
 	</view>
 	<view class="banner">
-		<image src="../../assets/images/mine/pic-12.png"></image>
+		<image src="{{bannerSrc}}"></image>
 		<!-- <image src="{{canvasUrl}}"></image> -->
 	</view>
 	<view class="canvas">
@@ -12,7 +12,7 @@
 	</view>
 	<view class="canvas-html" style="width:{{posterWidth}}px;height:{{posterHeigt}}px;">
 		<view class="canvas-img">
-			<image src="{{posturl}}" class="bg-img"></image>
+			<image src="{{posturl}}" class="bg-img" style="border-radius:{{4*radio}}px;"></image>
 			<view class="head-icon-line" style="left:{{12*radio}}px;top:{{18*radio}}px;">
 				<view class="head-icon-img">
 					<image src="{{userInfo.avatar_url}}" style="width:{{34*radio}}px;height:{{34*radio}}px;"></image>
@@ -27,14 +27,17 @@
 			</view>
 			<view class="price" style="left:{{12*radio}}px;bottom:{{18*radio}}px;">
 				<view class="old-price" style="font-size:{{12*radio}}px; line-height:{{12*radio}}px;">原价199元</view>
-				<view class="new-price" style="font-size:{{24*radio}}px; line-height:{{24*radio}}px;padding-top:{{5*radio}}px;">
+				<view class="new-price" style="font-size:{{24*radio}}px; line-height:{{18*radio}}px;padding-top:{{5*radio}}px;">
 					<text>限时99</text>
 					<text style="font-size:{{12*radio}}px;">元/年</text>
 				</view>
 			</view>
-			<view class="erweima" style="right:{{14*radio}}px;bottom:{{52*radio}}px;">
-				<image src="{{posturl}}" style="width:{{64*radio}}px;height:{{64*radio}}px;"></image>
+			<view class="erweima" style="right:{{12*radio}}px;bottom:{{8*radio}}px;text-align: center;font-size:9px;font-family:PingFangSC-Regular,PingFang SC;font-weight:400;color:rgba(221,221,221,1);line-height:13px;">
+				<image src="{{qcCode}}" style="width:{{64*radio}}px;height:{{64*radio}}px;background:#fff;"></image>
+				<view style="padding-top:{{6*radio}}px;">长按识别</view>
+				<view>了解更多会员权益</view>
 			</view>
+			<view class="note-line">{{noteText}}</view>
 		</view>
 	</view>
 	<view class="button-line">

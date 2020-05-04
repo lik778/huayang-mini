@@ -45,3 +45,18 @@ export function getBannerList(params) {
 		})
 	})
 }
+
+export function getYouZanAppId() {
+	return new Promise(resolve => {
+		request._get(URL.getYouZanAppId).then(({ data }) => {
+			data = data || {}
+			let validAppId = ""
+			Object.entries(data).forEach(([key, value]) => {
+				if (+value === 1) {
+					validAppId = key
+				}
+			})
+			resolve(validAppId)
+		})
+	})
+}

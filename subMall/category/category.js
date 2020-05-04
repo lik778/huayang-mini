@@ -34,7 +34,7 @@ Page({
     })
   },
   queryCategory(categoryId) {
-    getCategory({ level: 1 }).then(list => {
+    getCategory({ level: 1, category_type: 0 }).then(list => {
       list.forEach((item, index) => {
         if (item.id == categoryId) {
           // 更新标签
@@ -128,6 +128,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: '花样值得买',
+      path: '/subMall/category/category?categoryId=' + this.data.categoryId
+    }
   }
 })

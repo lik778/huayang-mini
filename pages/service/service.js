@@ -1,4 +1,5 @@
-// pages/service/service.js
+import request from "../../lib/request"
+
 Page({
 
   /**
@@ -26,7 +27,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      h5Url: `${request.baseUrl}/#/zhide/service`
+    })
   },
 
   /**

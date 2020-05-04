@@ -2,97 +2,71 @@ export const createCanvas = ({
   bgUrl,
   nickname,
   num,
-  headicon
+  headicon,
+  qcCode,
+  noteText
 }) => {
   return new Promise(resolve => {
     // 获取上下文
     let ctx = wx.createCanvasContext('posterCanvas')
     // 计算设备比
-    let systemInfo = wx.getSystemInfoSync()
-    let width = systemInfo.screenWidth
-    let height = systemInfo.screenHeight
-    let radio = 1
     ctx.scale(3.37, 3.37)
-    // // 绘制背景图
-    // ctx.drawImage(bgUrl, 0, 0, 267, 356)
-    // // 绘制圆形头像
-    // drawCircular(ctx, 34, 34, 12, 18, headicon, radio)
-    // // 绘制名字
-    // dramName(ctx, `您的好友 ${nickname}`, 14, 57, 18, "#fff")
-    // dramName(ctx, "我刚刚成为花样汇俱乐部第 ", 9, 57, 39, "#DDDDDD")
-    // dramName(ctx, ` ${num} `, 18, 168, 33, "#DDDDDD")
-    // dramName(ctx, "位会员", 9, 200, 39, "#DDDDDD")
-    // dramName(ctx, "邀您一起成为时尚达人", 9, 57, 52, "#DDDDDD")
-    // // 绘制价格
-    // dramName(ctx, "原价199元", 12, 12, 297, "#fff")
-    // drawLine(ctx, "#fff", 1, 12, 302, 68, 302)
-    // dramName(ctx, "限时99", 24, 12, 316, "#EE0000")
-    // dramName(ctx, "元/年", 12, 108, 324, "#EE0000")
-    // //绘制小程序二维码
-    // drawHeadImg(ctx, 64, 64, 191, 242, headicon, radio)
-    // // 绘制完成开成开始导出
-    // ctx.draw()
-    // setTimeout(()=>{
-    //   wx.canvasToTempFilePath({
-    //     canvasId: 'posterCanvas',
-    //     success: function (res) {
-    //       let tempFilePath = res.tempFilePath;
-    //       console.log(tempFilePath)
-    //       resolve(tempFilePath)
-    //     },
-    //     fail: function (res) {
-    //       console.log(res);
-    //     }
-    //   });
-    // },3000)
-    wx.getImageInfo({
-      src: bgUrl,
+    wx.downloadFile({
+      url: bgUrl,
       success: function (bg) {
-        ctx.drawImage(bg.path, 0, 0, 267, 356)
-        wx.getImageInfo({
-          src: headicon,
+        ctx.drawImage(bg.tempFilePath, 0, 0, 267, 356)
+        wx.downloadFile({
+          url: headicon,
           success: function (res) {
             // 绘制圆形头像
-            drawCircular(ctx, 34, 34, 12, 18, res.path, radio)
+            drawBorderCircle(ctx, res.tempFilePath, 30, 36, 17)
             // 绘制名字
             dramName(ctx, `您的好友 ${nickname}`, 14, 57, 18, "#fff")
             dramName(ctx, "我刚刚成为花样汇俱乐部第 ", 9, 57, 39, "#DDDDDD")
-            dramName(ctx, ` ${num} `, 18, 168, 33, "#DDDDDD")
-            dramName(ctx, "位会员", 9, 200, 39, "#DDDDDD")
+            let textWidth = measureTextWidth("我刚刚成为花样汇俱乐部第 ", ctx)
+            dramName(ctx, ` ${num} `, 18, 57 + textWidth, 33, "#DDDDDD")
+            let textWidth1 = measureTextWidth(` ${num} `, ctx)
+            dramName(ctx, "位会员", 9, textWidth1 + 57 + textWidth, 39, "#DDDDDD")
             dramName(ctx, "邀您一起成为时尚达人", 9, 57, 52, "#DDDDDD")
             // 绘制价格
             dramName(ctx, "原价199元", 12, 12, 297, "#fff")
             drawLine(ctx, "#fff", 1, 12, 302, 68, 302)
-            dramName(ctx, "限时99", 24, 12, 316, "#EE0000")
-            dramName(ctx, "元/年", 12, 108, 324, "#EE0000")
+            dramName(ctx, "限时99", 24, 12, 314, "#FFCC88")
+            let textWidth2 = measureTextWidth(`限时99`, ctx)
+            dramName(ctx, "元/年", 12, textWidth2 + 12, 324, "#FFCC88")
+            dramName(ctx, "长按识别", 9, 205, 328, "#DDDDDD")
+            dramName(ctx, "了解更多会员权益", 9, 187, 339, "#DDDDDD")
+            // 绘制活动日期
+            dramName(ctx, noteText, 6, 4, 346, "#fff")
             //绘制小程序二维码
-            wx.getImageInfo({
-              src: headicon,
+            wx.downloadFile({
+              url: qcCode,
               success: function (res1) {
-                drawHeadImg(ctx, 64, 64, 191, 242, res1.path, radio)
+                drawBorderCircle(ctx, res1.tempFilePath, 222, 283, 33)
                 // 绘制完成开成开始导出
                 ctx.draw(false, () => {
                   wx.canvasToTempFilePath({
                     canvasId: 'posterCanvas',
                     success: function (res2) {
                       let tempFilePath = res2.tempFilePath;
-                      console.log(tempFilePath)
                       resolve(tempFilePath)
                     },
                     fail: function (res) {
                       console.log(res);
                     }
-                  });
+                  }, this);
                 })
               }
             })
           }
         })
+      },
+      fail: (err) => {
+        console.log(err)
       }
     })
   })
 }
-
 
 // 绘制直线
 function drawLine(context, color, height, beginX, beginY, endX, endY) {
@@ -109,6 +83,7 @@ function drawLine(context, color, height, beginX, beginY, endX, endY) {
   context.closePath();
   context.stroke();
 }
+
 // 绘制名字
 function dramName(ctx, text, fontSize, x, y, color) {
   ctx.setTextBaseline('top')
@@ -116,42 +91,31 @@ function dramName(ctx, text, fontSize, x, y, color) {
   ctx.setFontSize(fontSize)
   ctx.fillText(text, x, y)
 }
-// 绘制图片
-function drawImage(ctx, url, width, height, x, y) {
-  ctx.save();
-  ctx.drawImage(url, x, y, width, height);
-  ctx.restore();
+
+// 计算字体宽度
+function measureTextWidth(text, ctx) {
+  return ctx.measureText(text).width
 }
-// 绘制含有边框的圆形头像
-function drawCircular(ctx, width, height, x, y, url, radio) {
-  //第一个参数：创建的画布对象//第二个参数：矩形的宽//第三个参数：矩形的高
-  //第四个参数：矩形左上角x轴坐标点，//第五个参数：矩形左上角y轴坐标点，//第六个参数：绘制的图片的URL
-  let avatarurl_width = width;
-  let avatarurl_heigth = height;
-  let avatarurl_x = x;
-  let avatarurl_y = y;
-  ctx.save();
-  ctx.arc(avatarurl_width / 2 + avatarurl_x, avatarurl_heigth / 2 + avatarurl_y, avatarurl_width / 2 + 2 * radio, 0, Math.PI * 2, false);
+
+// 绘制边框圆形头像
+function drawBorderCircle(ctx, url, x, y, r) {
+  // ctx: 上下文;url: 图片地址;x: 圆中心x位置;y: 圆中心y位置;r: 圆半径
+  // 保存上下文
+  ctx.save()
+  //画圆   前两个参数确定了圆心 （x,y） 坐标  第三个参数是圆的半径  四参数是绘图方向  默认是false，即顺时针
+  ctx.beginPath()
+  // 先画个大圆，为了能有圆环
+  ctx.arc(x, y, r + 2, 0, Math.PI * 2, false)
   ctx.setFillStyle('#fff')
   ctx.fill()
-  ctx.clip();
-  ctx.beginPath();
-  ctx.arc(avatarurl_width / 2 + avatarurl_x, avatarurl_heigth / 2 + avatarurl_y, avatarurl_width / 2, 0, Math.PI * 2, false);
-  ctx.clip();
-  ctx.drawImage(url, avatarurl_x, avatarurl_y, avatarurl_width, avatarurl_heigth);
-  ctx.restore();
-}
-// 绘制圆形头像
-function drawHeadImg(ctx, width, height, x, y, url, radio) {
-  //第一个参数：创建的画布对象//第二个参数：矩形的宽//第三个参数：矩形的高
-  //第四个参数：矩形左上角x轴坐标点，//第五个参数：矩形左上角y轴坐标点，//第六个参数：绘制的图片的URL
-  let avatarurl_width = width;
-  let avatarurl_heigth = height;
-  let avatarurl_x = x;
-  let avatarurl_y = y;
-  ctx.save();
-  ctx.arc(avatarurl_width / 2 + avatarurl_x, avatarurl_heigth / 2 + avatarurl_y, avatarurl_width / 2, 0, Math.PI * 2, false);
-  ctx.clip();
-  ctx.drawImage(url, avatarurl_x, avatarurl_y, avatarurl_width, avatarurl_heigth);
-  ctx.restore();
+  ctx.save()
+  // 画小圆
+  ctx.beginPath()
+  ctx.arc(x, y, r, 0, Math.PI * 2, false)
+  ctx.setFillStyle('#fff')
+  ctx.fill()
+  ctx.clip()
+  ctx.drawImage(url, x - r, y - r, r * 2, r * 2)
+  // 恢复画布
+  ctx.restore()
 }

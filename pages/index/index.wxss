@@ -19,6 +19,7 @@
     bottom: 0;
     height: 100%;
     width: 100%;
+    border-radius: 16rpx;
 }
 
 .swiper-image {
@@ -30,7 +31,17 @@
     background-blend-mode: multiply;
     color: white;
 }
-
+.swiper {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    border-radius: 16rpx;
+}
+.swiper image {
+    width: inherit;
+    height: inherit;
+    border-radius: 16rpx;
+}
 .status {
     position: absolute;
     left: 0;
@@ -87,6 +98,7 @@
     align-items: center;
     padding: 0 24rpx 26rpx;
     font-weight: 300;
+    z-index: 10;
 }
 
 .swiper-image .course-info .author {
@@ -111,14 +123,13 @@
 .recommend {
     margin-left: 14rpx;
     font-size: 48rpx;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .live-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin: 32rpx 0;
 }
 
 .live-list .status .status-dot {
@@ -137,6 +148,7 @@
 
 .live-cover {
     position: relative;
+    overflow: hidden;
     height: 420rpx;
     background-position: center;
     background-size: cover;
@@ -163,7 +175,7 @@
 }
 
 .live-title {
-    margin: 24rpx 0 20rpx;
+    margin: 24rpx 0 16rpx;
     font-size: 36rpx;
     font-weight: 500;
 }
@@ -228,6 +240,7 @@
     background: #161616;
     margin: 0 auto;
     margin-top: 260rpx;
+    position: relative;
 }
 
 .box-img {
@@ -255,4 +268,20 @@
     color: rgba(37, 32, 24, 1);
     margin: 0 auto;
     margin-top: 76rpx;
+}
+
+.close-icon {
+    position: absolute;
+    bottom: -136rpx;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.close-icon image {
+    width: 96rpx;
+    height: 96rpx;
+    vertical-align: bottom;
+}
+.live .van-transition{
+    z-index: 50!important;
 }

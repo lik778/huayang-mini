@@ -186,6 +186,8 @@
 .wollet-one {
     display: flex;
     align-items: center;
+    width: 100%;
+    z-index: 10;
 }
 
 .woller-middle {
@@ -208,15 +210,22 @@
     display: flex;
     align-items: flex-end;
     position: relative;
+
 }
 
+.wollet-right-data {
+    width: calc(100% - 76px);
+}
+.no-msg{
+    width: 76px;
+}
 .wollet-left {
     display: flex;
-    align-items:center;
+    align-items: center;
+    
 }
 
 .woller-right text {
-    padding-left: 16rpx;
     font-size: 20px;
     font-family: PingFangSC-Semibold, PingFang SC;
     font-weight: 600;
@@ -262,17 +271,24 @@
 }
 
 .join-button {
-    width: 196rpx;
-    height: 72rpx;
+    width: 188rpx;
+    height: 64rpx;
     border-radius: 36rpx;
     opacity: 0.8;
     border: 2px solid rgba(0, 0, 0, 1);
     text-align: center;
-    line-height: 72rpx;
+    line-height: 64rpx;
     font-size: 16px;
     font-family: PingFangSC-Semibold, PingFang SC;
     font-weight: 600;
     color: rgba(0, 0, 0, 0.8);
+    background: transparent;
+    box-sizing: content-box;
+    padding: 0;
+}
+
+.join-button::after {
+    display: none;
 }
 
 /* 列表 */
@@ -334,9 +350,11 @@
     padding-left: 34rpx;
     padding-right: 24rpx;
 }
-.common-arrow{
+
+.common-arrow {
     padding-right: 32rpx;
 }
+
 .common-left image {
     vertical-align: bottom;
 }
@@ -345,7 +363,7 @@
 .common-arrow image {
     width: 16rpx;
     height: 28rpx;
-    
+
 }
 
 .common-right {
@@ -383,4 +401,17 @@
     color: rgba(0, 0, 0, 0.8);
     line-height: 72rpx;
     text-align: center;
+}
+
+.vip-num-module {
+    position: absolute;
+    right: 24rpx;
+    top: 22rpx;
+    font-size: 12px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(153, 102, 68, 1);
+    line-height: 17px;
+    z-index: 50;
+    text-align: right;
 }

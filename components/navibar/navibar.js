@@ -10,9 +10,17 @@ Component({
     title: {
       type: String
     },
+    titleColor: {
+      type: String,
+      default: "black"
+    },
     share:{
       type:Boolean,
       default:true
+    },
+    color:{
+      type:String,
+      default:""
     }
   },
 
@@ -20,7 +28,8 @@ Component({
    * 组件的初始数据
    */
   data: {
-    statusBarHeight: 0
+    statusBarHeight: 0,
+    color:""
   },
 
   /**
@@ -29,6 +38,7 @@ Component({
   methods: {
     // 返回
     back() {
+      console.log(this.data.share)
       if (this.data.share) {
         wx.switchTab({
           url: '/pages/index/index',

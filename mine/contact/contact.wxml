@@ -1,0 +1,12 @@
+<!--mine/contact/contact.wxml-->
+<view class="contact">
+	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+		<naviBar title="领取福利" color="rgba(250,250,250,0)" share="true"></naviBar>
+	</view>
+	<view class="main">
+		<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1588053408WCMzSn.jpg"></image>
+		<view class="main-text-one">点击下方“联系客服”</view>
+		<view>加入会员群，领取会员福利</view>
+	</view>
+	<button open-type="contact" show-message-card="true" send-message-img="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587032983Vfcurw.jpg" send-message-path="/pages/index/index" send-message-title="长按识别下方二维码，添加客服" class="contact-button">联系客服</button>
+</view>

@@ -13,12 +13,14 @@ import { checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from "..
 import { checkAuth } from "../../utils/auth"
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast'
 import Dialog from "../../miniprogram_npm/@vant/weapp/dialog/dialog"
+import { getUniversityCode } from "../../api/mine/index"
 
 Page({
 	/**
 	 * 页面的初始数据
 	 */
 	data: {
+		daxueId: 0,
 		show: false,
 		didVisibleSubscribeBtn: true,
 		courseId: 0,
@@ -111,38 +113,40 @@ Page({
 	// 跳转去直播间
 	jumpToLive(e) {
 		let item = e.currentTarget.dataset.item // 直播间信息
-		// 判断是否是会员/是否入学
-		checkIdentity({roomId: item.num, link: item.link, zhiboRoomId: item.id})
-			.then((callbackString) => {
-				if (callbackString === 'updateWatchNo') {
-					setTimeout(() => {
-						// 更新直播间观看次数
-						let list = [...this.data.categoryList]
-						list.forEach(_ => {
-							if (_.zhibo_room.id === item.id) {
-								_.zhibo_room.visitCount += 1
-							}
-						})
+		checkAuth({listenable: true, ignoreFocusLogin: true}).then(() => {
+			// 判断是否是会员/是否入学
+			checkIdentity({roomId: item.num, link: item.link, zhiboRoomId: item.id})
+				.then((callbackString) => {
+					if (callbackString === 'updateWatchNo') {
+						setTimeout(() => {
+							// 更新直播间观看次数
+							let list = [...this.data.courseList]
+							list.forEach(_ => {
+								if (_.zhibo_room.id === item.id) {
+									_.zhibo_room.visit_count += 1
+								}
+							})
+							this.setData({
+								courseList: [...list]
+							})
+						}, 1000)
+					} else if (callbackString === 'no-phone-auth') {
 						this.setData({
-							categoryList: [ ...list ]
+							show: true
 						})
-					}, 1000)
-				} else if (callbackString === 'no-phone-auth') {
-					this.setData({
-						show: true
-					})
-				} else if (callbackString === 'no-auth-daxue') {
-					Dialog.confirm({
-						title: '申请入学立即观看',
-						message: '完成入学信息登记，观看课程'
-					}).then(() => {
-						wx.navigateTo({
-							url: '/mine/joinSchool/joinSchool',
+					} else if (callbackString === 'no-auth-daxue') {
+						Dialog.confirm({
+							title: '申请入学立即观看',
+							message: '完成入学信息登记，观看课程'
+						}).then(() => {
+							wx.navigateTo({
+								url: '/mine/joinSchool/joinSchool',
+							})
+						}).catch(() => {
 						})
-					}).catch(() => {
-					})
-				}
-			})
+					}
+				})
+		})
 	},
 	/**
 	 * 一键获取微信手机号
@@ -177,12 +181,19 @@ Page({
 	},
 	// 获取课程列表
 	getList(categoryId) {
-		if (categoryId) {
+		if (categoryId != null) {
 			this.setData({categoryId})
 		} else {
 			categoryId = this.data.categoryId
 		}
-		getCourseList(`?limit=${this.data.limit}&offset=${this.data.offset}&category_id=${categoryId}`)
+		let params = {
+			limit: this.data.limit,
+			offset: this.data.offset,
+		}
+		if (categoryId) {
+			params['category_id'] = categoryId
+		}
+		getCourseList(params)
 			.then(({list, count}) => {
 				list = list || []
 				// 筛选出直播间状态不是"回看"的房间号
@@ -226,14 +237,17 @@ Page({
 		// 获取分类列表
 		getCourseTypeList().then(categoryList => {
 			if (categoryList.length > 0) {
-				this.setData({
-					categoryList: categoryList
-				})
+				categoryList = [{id: 0, name: '全部'}, ...categoryList]
+				this.setData({categoryList})
 				this.getList(categoryList[0].id)
 			}
 		})
 		// 获取订阅状态
 		this.getStatus()
+		// 获取花样大学id，用于分享配置
+		getUniversityCode(`user_key=daxue`).then(res => {
+			this.setData({daxueId: res.data.id})
+		})
 	},
 
 	/**
@@ -246,7 +260,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		checkAuth()
+		checkAuth({listenable: true})
 	},
 
 	/**
@@ -283,9 +297,7 @@ Page({
 	onShareAppMessage: function () {
 		return {
 			title: "花样大学",
-			desc: "学习分享健康自信快乐的美",
-			path: '/pages/courseList/courseList',
-			imgUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586870905SEwHoX.jpg"
+			path: '/subLive/courseList/courseList?id=' + this.data.daxueId,
 		}
 	}
 })

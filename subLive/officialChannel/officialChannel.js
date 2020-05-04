@@ -1,18 +1,22 @@
 // subLive/officialChannel/officialChannel.js
+import request from "../../lib/request"
+
 Page({
 
   /**
    * Page initial data
    */
   data: {
-
+    h5Url: ''
   },
 
   /**
    * Lifecycle function--Called when page load
    */
   onLoad: function (options) {
-
+    this.setData({
+      h5Url: `${request.baseUrl}/#/fashionWeek`
+    })
   },
 
   /**
@@ -25,9 +29,7 @@ Page({
   /**
    * Lifecycle function--Called when page show
    */
-  onShow: function () {
-
-  },
+  onShow: function () {},
 
   /**
    * Lifecycle function--Called when page hide
