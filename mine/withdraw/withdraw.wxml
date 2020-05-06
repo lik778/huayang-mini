@@ -11,7 +11,8 @@
 			<text>¥</text>
 		</view>
 		<view class="input-note">
-			<view class="input-note-left">当前可提现金额 {{canWithdrawPrice}}（元）</view>
+			<view class="input-note-left" wx:if="{{exceed}}">当前可提现金额 {{canWithdrawPrice}}（元）</view>
+			<view class="input-note-left" wx:else style="color:rgb(255, 68, 51);">输入金额超过余额</view>
 			<view class="input-note-right" bindtap="allWithdraw">全部提现</view>
 		</view>
 	</view>

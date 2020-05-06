@@ -22,19 +22,49 @@ Page({
     statusHeight: 0,
     specialHeight: 0,
     repeatLock: true,
+    exceed:true
   },
   // 检查提现金额
   checkMoneyNum(e) {
-    let regNum = new RegExp(/^\d+\.{0,1}\d*$/, 'g');
-    let rsNum = regNum.exec(e.detail.value);
-    if (!rsNum) {
+    let value=e.detail.value
+      value = value.replace(/[^\d.]/g, "");  //清除“数字”和“.”以外的字符   
+      value = value.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的   
+      value = value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+      value = value.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');//只能输入两个小数   
+      if (value.indexOf(".") < 0 && value != "") {
+        //以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额  
+          value = parseFloat(value);
+      }
       this.setData({
-        inputValue: ""
+        inputValue: value
       })
-      return false
-    } else {
-      return true
-    }
+      if(parseFloat(value)>parseFloat(this.data.canWithdrawPrice)){
+        this.setData({
+          exceed:false,
+          changeCss: true
+        })
+      }else if(value===""){
+        this.setData({
+          exceed:true,
+          changeCss: true
+        })
+      }else{
+        this.setData({
+          exceed:true,
+          changeCss: false
+        })
+      }
+      console.log(value)
+    // let regNum = new RegExp(/^\d+\.{0,1}\d*$/, 'g');
+    // let rsNum = regNum.exec(e.detail.value);
+    // if (!rsNum) {
+    //   this.setData({
+    //     inputValue: ""
+    //   })
+    //   return false
+    // } else {
+    //   return true
+    // }
   },
   // 输入框改变输入
   changeInputValue(e) {
@@ -77,7 +107,8 @@ Page({
   allWithdraw() {
     this.setData({
       inputValue: this.data.canWithdrawPrice || 0,
-      changeCss: true
+      changeCss: false,
+      exceed:false
     })
   },
   // 提现
