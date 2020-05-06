@@ -38,7 +38,12 @@ Page({
       this.setData({
         inputValue: value
       })
-      if(parseFloat(value)>parseFloat(this.data.canWithdrawPrice)){
+      if(parseFloat(value)<20){
+        this.setData({
+          changeCss: true,
+          exceed:true
+        }) 
+      }else if(parseFloat(value)>parseFloat(this.data.canWithdrawPrice)){
         this.setData({
           exceed:false,
           changeCss: true
@@ -54,17 +59,6 @@ Page({
           changeCss: false
         })
       }
-      console.log(value)
-    // let regNum = new RegExp(/^\d+\.{0,1}\d*$/, 'g');
-    // let rsNum = regNum.exec(e.detail.value);
-    // if (!rsNum) {
-    //   this.setData({
-    //     inputValue: ""
-    //   })
-    //   return false
-    // } else {
-    //   return true
-    // }
   },
   // 输入框改变输入
   changeInputValue(e) {
@@ -108,7 +102,7 @@ Page({
     this.setData({
       inputValue: this.data.canWithdrawPrice || 0,
       changeCss: false,
-      exceed:false
+      exceed:true
     })
   },
   // 提现
@@ -121,17 +115,25 @@ Page({
         amount: this.data.inputValue * 100,
         open_id: getLocalStorage(GLOBAL_KEY.openId)
       }
+      wx.showLoading({
+        title: '加载中',
+        mask:true
+      })
       withDrawFun(requestParams).then(res => {
         if (res.code === 0) {
           // 提现后线更新本地缓存
           getUserInfoData().then(() => {
+            this.setData({
+              repeatLock: true
+            })
+            wx.hideLoading()
             wx.navigateTo({
               url: '/mine/withdrawResult/withdrawResult?money=' + this.data.inputValue,
             })
           })
         } else {
           this.setData({
-            repeatLock: false
+            repeatLock: true
           })
         }
       }).catch(({
@@ -153,7 +155,7 @@ Page({
     this.getPosition()
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
-      canWithdrawPrice: options.money
+      // canWithdrawPrice: options.money
     })
   },
 
@@ -168,7 +170,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      canWithdrawPrice:JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).amount
+    })
   },
 
   /**

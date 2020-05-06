@@ -400,6 +400,11 @@ export function queryImageInfo(src) {
 export function getUserInfoData() {
 	return new Promise(resolve => {
 		getUserInfo("scene=zhide").then(res => {
+			if (Number.isInteger(res.amount / 100)) {
+				res.amount = res.amount / 100 + ".00"
+			} else {
+				res.amount = res.amount / 100
+			}
 			setLocalStorage(GLOBAL_KEY.accountInfo, res)
 			resolve(res)
 		})
