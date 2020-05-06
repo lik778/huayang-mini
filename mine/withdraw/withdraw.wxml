@@ -7,7 +7,7 @@
 	<view class="input-module" style="paddig-top:{{64+specialHeight}}rpx;">
 		<view class="input-module-title">提现金额</view>
 		<view class="input-box">
-			<input type="idcard" value="{{inputValue}}" bindinput="changeInputValue"></input>
+			<input type="digit" value="{{inputValue}}" bindinput="changeInputValue"></input>
 			<text>¥</text>
 		</view>
 		<view class="input-note">

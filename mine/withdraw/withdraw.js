@@ -1,9 +1,10 @@
 // mine/withdraw/withdraw.js
 import {
-  getLocalStorage
+  getLocalStorage,
+  getUserInfoData
 } from "../../utils/util"
 import {
-  withDraw
+  withDrawFun
 } from "../../api/mine/index"
 import {
   GLOBAL_KEY
@@ -86,21 +87,31 @@ Page({
         repeatLock: false
       })
       let requestParams = {
-        amount: this.data.inputValue,
+        amount: this.data.inputValue * 100,
         open_id: getLocalStorage(GLOBAL_KEY.openId)
       }
-      withDraw(requestParams).then(res => {
+      withDrawFun(requestParams).then(res => {
         if (res.code === 0) {
-          console.log(res)
-          // wx.navigateTo({
-          //   url: '/mine/withdrawResult/withdrawResult?money=' + this.data.inputValue,
-          // })
+          // 提现后线更新本地缓存
+          getUserInfoData().then(() => {
+            wx.navigateTo({
+              url: '/mine/withdrawResult/withdrawResult?money=' + this.data.inputValue,
+            })
+          })
         } else {
           this.setData({
             repeatLock: false
           })
         }
-
+      }).catch(({
+        message
+      }) => {
+        wx.showToast({
+          title: message,
+          icon: "none",
+          mask: true,
+          duration: 2500
+        })
       })
     }
   },

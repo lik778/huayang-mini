@@ -1,8 +1,20 @@
 import md5 from 'md5'
-import { GLOBAL_KEY, ROOT_URL, WeChatLiveStatus } from '../lib/config'
-import { createOrder } from "../api/mine/payVip"
-import { getWatchLiveAuth, statisticsWatchNo } from "../api/live/course"
+import {
+	GLOBAL_KEY,
+	ROOT_URL,
+	WeChatLiveStatus
+} from '../lib/config'
+import {
+	createOrder
+} from "../api/mine/payVip"
+import {
+	getWatchLiveAuth,
+	statisticsWatchNo
+} from "../api/live/course"
 import request from "../lib/request"
+import {
+	getUserInfo
+} from "../api/mine/index"
 
 const livePlayer = requirePlugin('live-player-plugin')
 
@@ -32,7 +44,9 @@ export const formatNumber = n => {
  * 购买会员
  * @returns
  */
-export const payVip = function ({id}) {
+export const payVip = function ({
+	id
+}) {
 	let createOrderParmas = {
 		scene: "zhide_vip",
 		recommend_user_id: id || "",
@@ -40,28 +54,28 @@ export const payVip = function ({id}) {
 		count: 1,
 		open_id: getLocalStorage(GLOBAL_KEY.openId),
 	}
-	return new Promise((resolve,reject) => {
-			createOrder(createOrderParmas).then(res1 => {
-				if(res1===0){
-					// 库存不足
-					resolve(res1)
-				}else{
-					let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo" //商户key
-					requestPayment({
-						prepay_id: res1,
-						key: mallKey
-					}).then(res => {
-						resolve(res)
-					}).catch(err=>{
-						reject(err)
-					})
-				}
-			})
+	return new Promise((resolve, reject) => {
+		createOrder(createOrderParmas).then(res1 => {
+			if (res1 === 0) {
+				// 库存不足
+				resolve(res1)
+			} else {
+				let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo" //商户key
+				requestPayment({
+					prepay_id: res1,
+					key: mallKey
+				}).then(res => {
+					resolve(res)
+				}).catch(err => {
+					reject(err)
+				})
+			}
+		})
 	})
 }
 // 唤起微信支付
 export const requestPayment = (paramsData) => {
-	return new Promise((resolve,reject) => {
+	return new Promise((resolve, reject) => {
 		let params = getSign({
 			prepay_id: paramsData.prepay_id,
 			key: paramsData.key
@@ -236,7 +250,9 @@ export const getSchedule = async function (roomIds = []) {
 		let target = scheduleData.find(_ => _.roomId === roomId)
 		// 1. globalData中无值
 		if (!target) {
-			let {liveStatus = 0} = await queryLiveStatus(roomId) || {}
+			let {
+				liveStatus = 0
+			} = await queryLiveStatus(roomId) || {}
 			scheduleData.push({
 				roomId: roomId,
 				liveStatus: WeChatLiveStatus[liveStatus],
@@ -250,8 +266,10 @@ export const getSchedule = async function (roomIds = []) {
 				// 2.1 timestamp没过期
 			} else {
 				// 2.2 timestamp过期
-				let {liveStatus} = await queryLiveStatus(targetRoomId)
-				
+				let {
+					liveStatus
+				} = await queryLiveStatus(targetRoomId)
+
 				target.liveStatus = WeChatLiveStatus[liveStatus]
 				target.timestamp = +new Date() + 5 * 60 * 1000
 			}
@@ -262,7 +280,12 @@ export const getSchedule = async function (roomIds = []) {
 }
 
 // 判断是否是会员/是否入学
-export const checkIdentity = function ({roomId, link, zhiboRoomId, customParams = {}}) {
+export const checkIdentity = function ({
+	roomId,
+	link,
+	zhiboRoomId,
+	customParams = {}
+}) {
 	const userId = getLocalStorage(GLOBAL_KEY.userId)
 	return new Promise((resolve, reject) => {
 		if (userId == null) {
@@ -270,9 +293,9 @@ export const checkIdentity = function ({roomId, link, zhiboRoomId, customParams 
 		} else {
 			// 获取直播权限
 			getWatchLiveAuth({
-				room_id: zhiboRoomId,
-				user_id: userId
-			})
+					room_id: zhiboRoomId,
+					user_id: userId
+				})
 				.then(res => {
 					if (res === 'vip') {
 						// 非会员，跳往花样汇
@@ -316,7 +339,9 @@ export const checkIdentity = function ({roomId, link, zhiboRoomId, customParams 
  */
 function queryLiveStatus(roomId) {
 	return new Promise((resolve, reject) => {
-		livePlayer.getLiveStatus({room_id: roomId})
+		livePlayer.getLiveStatus({
+				room_id: roomId
+			})
 			.then(response => {
 				resolve(response)
 			})
@@ -366,6 +391,17 @@ export function queryImageInfo(src) {
 			fail(error) {
 				reject(error)
 			}
+		})
+	})
+}
+
+
+//获取用户信息,更新本地缓存
+export function getUserInfoData() {
+	return new Promise(resolve => {
+		getUserInfo("scene=zhide").then(res => {
+			setLocalStorage(GLOBAL_KEY.accountInfo, res)
+			resolve(res)
 		})
 	})
 }

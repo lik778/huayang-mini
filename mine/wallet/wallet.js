@@ -27,22 +27,22 @@ Page({
   },
   // 提现
   withdraw() {
-    wx.showModal({
-      title: '提示',
-      content: " 提现功能将在5月中旬开放，敬请期待哦！",
-      showCancel: false,
-    })
-    // if (this.data.wolletData.balance < 20) {
-    //   wx.showModal({
-    //     title: '提示',
-    //     content: " 最低可提现金额为 20.00",
-    //     showCancel: false,
-    //   })
-    // } else {
-    //   wx.navigateTo({
-    //     url: `/mine/withdraw/withdraw?money=${this.data.wolletData.balance}`,
-    //   })
-    // }
+    // wx.showModal({
+    //   title: '提示',
+    //   content: " 提现功能将在5月中旬开放，敬请期待哦！",
+    //   showCancel: false,
+    // })
+    if (this.data.wolletData.balance < 20) {
+      wx.showModal({
+        title: '提示',
+        content: " 最低可提现金额为 20.00",
+        showCancel: false,
+      })
+    } else {
+      wx.navigateTo({
+        url: `/mine/withdraw/withdraw?money=${this.data.wolletData.balance}`,
+      })
+    }
   },
   // 获取小程序邀请列表
   inviteListData() {

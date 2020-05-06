@@ -126,11 +126,13 @@ export const getActivityTime = (params) => {
 
 
 // 提现
-export const withDraw = (params) => {
-  return new Promise(resolve => {
+export const withDrawFun = (params) => {
+  return new Promise((resolve,reject) => {
     request._post(URL.withDraw,params).then(res => {
       if (res.code === 0) {
         resolve(res)
+      }else{
+        reject(res)
       }
     })
   })
