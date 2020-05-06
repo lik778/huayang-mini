@@ -1,7 +1,8 @@
 // mine/withdraw/withdraw.js
 import {
   getLocalStorage,
-  getUserInfoData
+  getUserInfoData,
+  parseNumber
 } from "../../utils/util"
 import {
   withDrawFun
@@ -59,6 +60,7 @@ Page({
         changeCss: false
       })
     }
+   
   },
   // 输入框改变输入
   changeInputValue(e) {
@@ -112,7 +114,7 @@ Page({
         repeatLock: false
       })
       let requestParams = {
-        amount: this.data.inputValue * 100,
+        amount:parseNumber(this.data.inputValue),
         open_id: getLocalStorage(GLOBAL_KEY.openId)
       }
       wx.showLoading({
@@ -144,6 +146,9 @@ Page({
           icon: "none",
           mask: true,
           duration: 2500
+        })
+        this.setData({
+          repeatLock: true
         })
       })
     }

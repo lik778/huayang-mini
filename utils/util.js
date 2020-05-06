@@ -410,3 +410,8 @@ export function getUserInfoData() {
 		})
 	})
 }
+
+// 处理js   37.5 *100=3970.0000000000005
+export const parseNumber = (number, multiply = 100) => {
+  return parseFloat((number * multiply).toFixed(2));
+};
