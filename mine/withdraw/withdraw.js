@@ -49,7 +49,7 @@ Page({
         exceed: false,
         changeCss: true
       })
-    } else if (value === "") {
+    } else if (value === ""||value===".") {
       this.setData({
         exceed: true,
         changeCss: true
@@ -60,7 +60,6 @@ Page({
         changeCss: false
       })
     }
-   
   },
   // 输入框改变输入
   changeInputValue(e) {
@@ -101,11 +100,20 @@ Page({
   },
   // 全部提现
   allWithdraw() {
-    this.setData({
-      inputValue: this.data.canWithdrawPrice || 0,
-      changeCss: false,
-      exceed: true
-    })
+    if(parseFloat(this.data.canWithdrawPrice)<20){
+      this.setData({
+        inputValue: this.data.canWithdrawPrice || 0,
+        changeCss: true,
+        exceed: true
+      })
+    }else{
+      this.setData({
+        inputValue: this.data.canWithdrawPrice || 0,
+        changeCss: false,
+        exceed: true
+      })
+    }
+ 
   },
   // 提现
   withdraw() {
@@ -129,8 +137,14 @@ Page({
               repeatLock: true
             })
             wx.hideLoading()
+            let money=0
+            if (Number.isInteger(this.data.inputValue / 100)) {
+              money = this.data.inputValue / 100 + ".00"
+            } else {
+              money = this.data.inputValue / 100
+            }
             wx.navigateTo({
-              url: '/mine/withdrawResult/withdrawResult?money=' + this.data.inputValue,
+              url: '/mine/withdrawResult/withdrawResult?money=' + money,
             })
           })
         } else {
@@ -141,14 +155,14 @@ Page({
       }).catch(({
         message
       }) => {
+        this.setData({
+          repeatLock: true
+        })
         wx.showToast({
           title: message,
           icon: "none",
           mask: true,
           duration: 2500
-        })
-        this.setData({
-          repeatLock: true
         })
       })
     }
@@ -159,8 +173,7 @@ Page({
   onLoad: function (options) {
     this.getPosition()
     this.setData({
-      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
-      // canWithdrawPrice: options.money
+      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
   },
 
