@@ -22,43 +22,43 @@ Page({
     statusHeight: 0,
     specialHeight: 0,
     repeatLock: true,
-    exceed:true
+    exceed: true
   },
   // 检查提现金额
   checkMoneyNum(e) {
-    let value=e.detail.value
-      value = value.replace(/[^\d.]/g, "");  //清除“数字”和“.”以外的字符   
-      value = value.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的   
-      value = value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
-      value = value.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');//只能输入两个小数   
-      if (value.indexOf(".") < 0 && value != "") {
-        //以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额  
-          value = parseFloat(value);
-      }
+    let value = e.detail.value
+    value = value.replace(/[^\d.]/g, ""); //清除“数字”和“.”以外的字符   
+    value = value.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的   
+    value = value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+    value = value.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3'); //只能输入两个小数   
+    if (value.indexOf(".") < 0 && value != "") {
+      //以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额  
+      value = parseFloat(value);
+    }
+    this.setData({
+      inputValue: value
+    })
+    if (parseFloat(value) < 20) {
       this.setData({
-        inputValue: value
+        changeCss: true,
+        exceed: true
       })
-      if(parseFloat(value)<20){
-        this.setData({
-          changeCss: true,
-          exceed:true
-        }) 
-      }else if(parseFloat(value)>parseFloat(this.data.canWithdrawPrice)){
-        this.setData({
-          exceed:false,
-          changeCss: true
-        })
-      }else if(value===""){
-        this.setData({
-          exceed:true,
-          changeCss: true
-        })
-      }else{
-        this.setData({
-          exceed:true,
-          changeCss: false
-        })
-      }
+    } else if (parseFloat(value) > parseFloat(this.data.canWithdrawPrice)) {
+      this.setData({
+        exceed: false,
+        changeCss: true
+      })
+    } else if (value === "") {
+      this.setData({
+        exceed: true,
+        changeCss: true
+      })
+    } else {
+      this.setData({
+        exceed: true,
+        changeCss: false
+      })
+    }
   },
   // 输入框改变输入
   changeInputValue(e) {
@@ -102,7 +102,7 @@ Page({
     this.setData({
       inputValue: this.data.canWithdrawPrice || 0,
       changeCss: false,
-      exceed:true
+      exceed: true
     })
   },
   // 提现
@@ -117,7 +117,7 @@ Page({
       }
       wx.showLoading({
         title: '加载中',
-        mask:true
+        mask: true
       })
       withDrawFun(requestParams).then(res => {
         if (res.code === 0) {
@@ -171,7 +171,8 @@ Page({
    */
   onShow: function () {
     this.setData({
-      canWithdrawPrice:JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).amount
+      canWithdrawPrice: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).amount,
+      inputValue: ""
     })
   },
 
