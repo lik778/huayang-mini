@@ -1,7 +1,7 @@
 //app.js
 import { getLocalStorage, setLocalStorage } from './utils/util'
 import { GLOBAL_KEY } from './lib/config'
-import { BxTracker } from './anka-tracker.min'
+import { BxTracker } from './anka-tracker.min.js'
 import trackerConfig from './anka.config'
 const Tracker = BxTracker.generateTrackerInstance(trackerConfig)
 
@@ -32,9 +32,11 @@ App({
 	onUnload() {},
 	onHide() {
 		// 小程序退出前清除提醒弹窗记录
-		// this.globalData.didPopupInCurrentLifeCircle = false
+		this.globalData.didSendRemindWithUserId = false
+		this.globalData.didPopupInCurrentLifeCircle = false
 	},
 	globalData: {
-		// didPopupInCurrentLifeCircle: false
+		didSendRemindWithUserId: false, // 是否携带userId调用过弹窗接口
+		didPopupInCurrentLifeCircle: false
 	}
 })

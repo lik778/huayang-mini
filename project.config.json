@@ -130,13 +130,6 @@
 					"scene": null
 				},
 				{
-					"id": 9,
-					"name": "subLive/officialChannel/officialChannel",
-					"pathName": "subLive/officialChannel/officialChannel",
-					"query": "",
-					"scene": null
-				},
-				{
 					"id": -1,
 					"name": "mine/joinVip/joinVip",
 					"pathName": "mine/joinVip/joinVip",
@@ -176,6 +169,20 @@
 					"name": "mine/invite/invite",
 					"pathName": "mine/invite/invite",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": 16,
+					"name": "subLive/attempt/attempt",
+					"pathName": "subLive/attempt/attempt",
+					"query": "prdId=37",
+					"scene": null
+				},
+				{
+					"id": 17,
+					"name": "mine/contact/contact",
+					"pathName": "mine/contact/contact",
+					"query": "prdId=37",
 					"scene": null
 				}
 			]

@@ -44,3 +44,50 @@ export function setPoint(params) {
 		})
 	})
 }
+
+/**
+ * 查询弹窗内容
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export function getRemind(params) {
+	return new Promise((resolve, reject) => {
+		request._get(URL.getRemind, params).then(({ data }) => {
+			resolve(data)
+		}).catch(() => {
+			reject()
+		})
+	})
+}
+
+/**
+ * 获取试用会员天数
+ * @returns {Promise<unknown>}
+ */
+export function getAttemptTimes() {
+	return new Promise((resolve, reject) => {
+		request._get(URL.queryAttemptTimes).then(({data}) => {
+			resolve(data)
+		}).catch(() => {
+			reject()
+		})
+	})
+}
+
+/**
+ * 领取试用会员
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export function getAttempt(params) {
+	return new Promise((resolve, reject) => {
+		request._post(URL.getAttempt, params).then(({code}) => {
+			if (code === 0) {
+				resolve()
+			}
+			reject()
+		}).catch(() => {
+			reject()
+		})
+	})
+}

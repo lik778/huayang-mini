@@ -1,5 +1,5 @@
 // pages/live/live.js
-import { getLiveBannerList, getLiveList, setPoint, updateLiveStatus } from "../../api/live/index"
+import { getLiveBannerList, getLiveList, getRemind, setPoint, updateLiveStatus } from "../../api/live/index"
 import { GLOBAL_KEY, SHARE_PARAMS, WeChatLiveStatus } from '../../lib/config'
 import { $notNull, checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from '../../utils/util'
 import { statisticsWatchNo } from "../../api/live/course"
@@ -31,6 +31,7 @@ Page({
 		didNoMore: false,
 		didVip: false,
 		liveStatusIntervalTimer: null,
+		alertInfo: null,
 		showSuccess: false, //成为超级会员弹窗
 		indicatorDots: false,
 		vertical: false,
@@ -287,10 +288,42 @@ Page({
 		})
 	},
 	invite() {
-		dotByUserClick({component: SHARE_PARAMS.component.btn, click_type: SHARE_PARAMS.clickType.url})
-		wx.navigateTo({
-			url: '/mine/invite/invite'
-		})
+		// dotByUserClick({component: SHARE_PARAMS.component.btn, click_type: SHARE_PARAMS.clickType.url})
+		let { link } = this.data.alertInfo
+		if (link) {
+			wx.navigateTo({
+				url: link
+			})
+		}
+
+		this.onClickHide()
+	},
+	/**
+	 * 获取消息弹窗
+	 */
+	queryRemind() {
+		let openId = getLocalStorage(GLOBAL_KEY.openId)
+		let userId = getLocalStorage(GLOBAL_KEY.userId)
+		let { didPopupInCurrentLifeCircle = false } = getApp().globalData
+		if (openId) {
+			let params = { open_id: openId }
+			params['normal_send'] = +didPopupInCurrentLifeCircle
+			if (userId) {
+				params['user_id'] = userId
+				getApp().globalData.didSendRemindWithUserId = true
+			}
+			getRemind(params).then((data) => {
+				if (data && $notNull(data)) {
+					if (getApp().globalData.didSendRemindWithUserId) {
+						getApp().globalData.didPopupInCurrentLifeCircle = true
+					}
+					this.setData({
+						alertInfo: { ...data },
+						showSuccess: true
+					})
+				}
+			})
+		}
 	},
 	// 检查是否第一次成为会员
 	checkBecomeVipData() {
@@ -339,18 +372,9 @@ Page({
 				url: '/mine/contact/contact',
 			})
 		} else {
-			if (getLocalStorage(GLOBAL_KEY.userId)) {
-				this.checkBecomeVipData()
-			}
+			// 请求弹窗
+			this.queryRemind()
 		}
-
-		// if (getApp().globalData.didPopupInCurrentLifeCircle) {
-		// 	// TODO 今天已经弹过窗
-		// } else {
-		// 	// TODO 今天还未弹过窗
-		// 	getApp().globalData.didPopupInCurrentLifeCircle = true
-		// }
-
 		// 检查本地账户信息
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 		if ($notNull(accountInfo)) {
