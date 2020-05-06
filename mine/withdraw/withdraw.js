@@ -25,7 +25,7 @@ Page({
   },
   // 检查提现金额
   checkMoneyNum(e) {
-    let regNum = new RegExp('[0-9]', 'g');
+    let regNum = new RegExp(/^\d+\.{0,1}\d*$/, 'g');
     let rsNum = regNum.exec(e.detail.value);
     if (!rsNum) {
       this.setData({
