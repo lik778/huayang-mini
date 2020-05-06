@@ -172,7 +172,8 @@ Page({
   onShow: function () {
     this.setData({
       canWithdrawPrice: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).amount,
-      inputValue: ""
+      inputValue: "",
+      changeCss:true
     })
   },
 

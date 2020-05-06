@@ -67,9 +67,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.inviteListData()
     this.setData({
-      wolletData: JSON.parse(options.wolletData),
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
   },
@@ -85,7 +83,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let wolletData = {
+      balance: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).amount, //余额
+      point: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).zhide_point, //花豆
+      isVip: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).is_zhide_vip, //是否为vip
+    }
+    this.inviteListData()
+    this.setData({
+      wolletData: wolletData,
+    })
   },
 
   /**
