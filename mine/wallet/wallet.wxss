@@ -134,7 +134,7 @@
 .button-line-right {
   width: 160rpx;
   height: 72rpx;
-  border-radius: 36rpx;
+  border-radius: 40rpx;
   opacity: 0.8;
   border: 2px solid rgba(0, 0, 0, 1);
   font-size: 16px;

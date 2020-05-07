@@ -27,22 +27,22 @@ Page({
   },
   // 提现
   withdraw() {
-    wx.showModal({
-      title: '提示',
-      content: " 提现功能将在5月中旬开放，敬请期待哦！",
-      showCancel: false,
-    })
-    // if (this.data.wolletData.balance < 20) {
-    //   wx.showModal({
-    //     title: '提示',
-    //     content: " 最低可提现金额为 20.00",
-    //     showCancel: false,
-    //   })
-    // } else {
-    //   wx.navigateTo({
-    //     url: `/mine/withdraw/withdraw?money=${this.data.wolletData.balance}`,
-    //   })
-    // }
+    // wx.showModal({
+    //   title: '提示',
+    //   content: " 提现功能将在5月中旬开放，敬请期待哦！",
+    //   showCancel: false,
+    // })
+    if (this.data.wolletData.balance < 20) {
+      wx.showModal({
+        title: '提示',
+        content: " 最低可提现金额为 20.00",
+        showCancel: false,
+      })
+    } else {
+      wx.navigateTo({
+        url: `/mine/withdraw/withdraw?money=${this.data.wolletData.balance}`,
+      })
+    }
   },
   // 获取小程序邀请列表
   inviteListData() {
@@ -67,9 +67,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.inviteListData()
     this.setData({
-      wolletData: JSON.parse(options.wolletData),
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
   },
@@ -85,7 +83,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let wolletData = {
+      balance: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).amount, //余额
+      point: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).zhide_point, //花豆
+      isVip: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).is_zhide_vip, //是否为vip
+    }
+    this.inviteListData()
+    this.setData({
+      wolletData: wolletData,
+    })
   },
 
   /**

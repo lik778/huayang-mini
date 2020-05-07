@@ -21,8 +21,8 @@
 
 .input-box input {
   width: calc(100% - 108rpx);
-  height: 132rpx;
-  line-height: 132rpx;
+  height: 66px;
+  line-height: 66px;
   font-size: 48px;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
@@ -35,11 +35,12 @@
 .input-box text {
   position: absolute;
   left: 32rpx;
-  bottom: 24rpx;
+  bottom: 12px;
   font-size: 36px;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: rgba(0, 0, 0, 0.4);
+  line-height: 36px;
 }
 
 .input-note {
@@ -47,7 +48,7 @@
   align-items: center;
   justify-content: space-between;
   padding-bottom: 104rpx;
-  padding-top: 24rpx;
+  padding-top: 48rpx;
 }
 
 .input-note-left {

@@ -1,8 +1,21 @@
 import md5 from 'md5'
-import { GLOBAL_KEY, ROOT_URL, WeChatLiveStatus } from '../lib/config'
-import { createOrder } from "../api/mine/payVip"
-import { getWatchLiveAuth, statisticsWatchNo } from "../api/live/course"
+import {
+	GLOBAL_KEY,
+	ROOT_URL,
+	SHARE_PARAMS,
+	WeChatLiveStatus
+} from '../lib/config'
+import {
+	createOrder
+} from "../api/mine/payVip"
+import {
+	getWatchLiveAuth,
+	statisticsWatchNo
+} from "../api/live/course"
 import request from "../lib/request"
+import {
+	getUserInfo
+} from "../api/mine/index"
 
 const livePlayer = requirePlugin('live-player-plugin')
 
@@ -32,7 +45,9 @@ export const formatNumber = n => {
  * 购买会员
  * @returns
  */
-export const payVip = function ({id}) {
+export const payVip = function ({
+	id
+}) {
 	let createOrderParmas = {
 		scene: "zhide_vip",
 		recommend_user_id: id || "",
@@ -40,28 +55,28 @@ export const payVip = function ({id}) {
 		count: 1,
 		open_id: getLocalStorage(GLOBAL_KEY.openId),
 	}
-	return new Promise((resolve,reject) => {
-			createOrder(createOrderParmas).then(res1 => {
-				if(res1===0){
-					// 库存不足
-					resolve(res1)
-				}else{
-					let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo" //商户key
-					requestPayment({
-						prepay_id: res1,
-						key: mallKey
-					}).then(res => {
-						resolve(res)
-					}).catch(err=>{
-						reject(err)
-					})
-				}
-			})
+	return new Promise((resolve, reject) => {
+		createOrder(createOrderParmas).then(res1 => {
+			if (res1 === 0) {
+				// 库存不足
+				resolve(res1)
+			} else {
+				let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo" //商户key
+				requestPayment({
+					prepay_id: res1,
+					key: mallKey
+				}).then(res => {
+					resolve(res)
+				}).catch(err => {
+					reject(err)
+				})
+			}
+		})
 	})
 }
 // 唤起微信支付
 export const requestPayment = (paramsData) => {
-	return new Promise((resolve,reject) => {
+	return new Promise((resolve, reject) => {
 		let params = getSign({
 			prepay_id: paramsData.prepay_id,
 			key: paramsData.key
@@ -236,7 +251,9 @@ export const getSchedule = async function (roomIds = []) {
 		let target = scheduleData.find(_ => _.roomId === roomId)
 		// 1. globalData中无值
 		if (!target) {
-			let {liveStatus = 0} = await queryLiveStatus(roomId) || {}
+			let {
+				liveStatus = 0
+			} = await queryLiveStatus(roomId) || {}
 			scheduleData.push({
 				roomId: roomId,
 				liveStatus: WeChatLiveStatus[liveStatus],
@@ -250,8 +267,10 @@ export const getSchedule = async function (roomIds = []) {
 				// 2.1 timestamp没过期
 			} else {
 				// 2.2 timestamp过期
-				let {liveStatus} = await queryLiveStatus(targetRoomId)
-				
+				let {
+					liveStatus
+				} = await queryLiveStatus(targetRoomId)
+
 				target.liveStatus = WeChatLiveStatus[liveStatus]
 				target.timestamp = +new Date() + 5 * 60 * 1000
 			}
@@ -262,7 +281,12 @@ export const getSchedule = async function (roomIds = []) {
 }
 
 // 判断是否是会员/是否入学
-export const checkIdentity = function ({roomId, link, zhiboRoomId, customParams = {}}) {
+export const checkIdentity = function ({
+	roomId,
+	link,
+	zhiboRoomId,
+	customParams = {}
+}) {
 	const userId = getLocalStorage(GLOBAL_KEY.userId)
 	return new Promise((resolve, reject) => {
 		if (userId == null) {
@@ -270,9 +294,9 @@ export const checkIdentity = function ({roomId, link, zhiboRoomId, customParams 
 		} else {
 			// 获取直播权限
 			getWatchLiveAuth({
-				room_id: zhiboRoomId,
-				user_id: userId
-			})
+					room_id: zhiboRoomId,
+					user_id: userId
+				})
 				.then(res => {
 					if (res === 'vip') {
 						// 非会员，跳往花样汇
@@ -316,7 +340,9 @@ export const checkIdentity = function ({roomId, link, zhiboRoomId, customParams 
  */
 function queryLiveStatus(roomId) {
 	return new Promise((resolve, reject) => {
-		livePlayer.getLiveStatus({room_id: roomId})
+		livePlayer.getLiveStatus({
+				room_id: roomId
+			})
 			.then(response => {
 				resolve(response)
 			})
@@ -369,3 +395,128 @@ export function queryImageInfo(src) {
 		})
 	})
 }
+
+//获取用户信息,更新本地缓存
+export function getUserInfoData() {
+	return new Promise(resolve => {
+		getUserInfo("scene=zhide").then(res => {
+			if (Number.isInteger(res.amount / 100)) {
+				res.amount = res.amount / 100 + ".00"
+			} else {
+				res.amount = res.amount / 100
+			}
+			setLocalStorage(GLOBAL_KEY.accountInfo, res)
+			resolve(res)
+		})
+	})
+}
+
+// 处理js   37.5 *100=3970.0000000000005
+export const parseNumber = (number, multiply = 100) => {
+	return parseFloat((number * multiply).toFixed(2));
+};
+
+
+// 补0操作
+export const returnFloat = (values) => {
+	let value = Math.round(parseFloat(values) * 100) / 100;
+	let xsd = value.toString().split(".");
+	if (xsd.length == 1) {
+		value = value.toString() + ".00";
+		return value;
+	}
+	if (xsd.length > 1) {
+		if (xsd[1].length < 2) {
+			value = value.toString() + "0";
+		}
+		return value;
+	}}
+
+/**
+ * 打点 - 用户点击事件
+ * @param component 交互组件名称
+ * @param click_type 跳转类型
+ */
+export function dotByUserClick({component, click_type}) {
+	getApp().tracker.evt('user_click', {
+		tracktype: SHARE_PARAMS.trackType.event,
+		component,
+		click_type
+	})
+}
+
+/**
+ * 打点 - 用户分享
+ * @param method 分享的途径
+ */
+export function dotByShare({method}) {
+	getApp().tracker.evt('app_share', {
+		tracktype: SHARE_PARAMS.trackType.event,
+		method
+	})
+}
+
+/**
+ * 打点 - 用户分享结果
+ * @param method 分享的途径
+ * @param status 分享行为的结果
+ */
+export function dotByShareResult({method, status}) {
+	getApp().tracker.evt('app_share_result', {
+		tracktype: SHARE_PARAMS.trackType.event,
+		method,
+		status
+	})
+}
+
+/**
+ * 打点 - 通过其他人分享进入
+ * @param share_from 邀请者的 OpenID
+ */
+export function dotByShareEnter({share_from}) {
+	getApp().tracker.evt('share_enter', {
+		tracktype: SHARE_PARAMS.trackType.event,
+		share_from,
+	})
+}
+
+/**
+ * 打点 - 频道打点
+ */
+export function dotByChannel() {
+	getApp().tracker.evt('channel', {
+		tracktype: SHARE_PARAMS.trackType.event
+	})
+}
+
+/**
+ * 打点 - 用户输入
+ * @param input_form_type 输入input的名称
+ */
+export function dotByUserInputCollect({input_form_type}) {
+	getApp().tracker.evt('user_input_collect', {
+		tracktype: SHARE_PARAMS.trackType.event,
+		input_form_type
+	})
+}
+
+/**
+ * 打点 - 小程序启动打点
+ */
+export function dotByAppStart() {
+	getApp().tracker.evt('app_start')
+}
+
+/**
+ * 打点 - 用户微信基础信息授权
+ * @param sex
+ * @param age
+ * @param province
+ * @param city
+ */
+export function dotByUserWxAuth({sex, age, province, city}) {
+	getApp().tracker.evt('user_info', {
+		sex, age, province, city
+	})
+}
+

@@ -1,9 +1,12 @@
 // mine/withdraw/withdraw.js
 import {
-  getLocalStorage
+  getLocalStorage,
+  getUserInfoData,
+  parseNumber,
+  returnFloat
 } from "../../utils/util"
 import {
-  withDraw
+  withDrawFun
 } from "../../api/mine/index"
 import {
   GLOBAL_KEY
@@ -21,18 +24,42 @@ Page({
     statusHeight: 0,
     specialHeight: 0,
     repeatLock: true,
+    exceed: true
   },
   // 检查提现金额
   checkMoneyNum(e) {
-    let regNum = new RegExp('[0-9]', 'g');
-    let rsNum = regNum.exec(e.detail.value);
-    if (!rsNum) {
+    let value = e.detail.value
+    value = value.replace(/[^\d.]/g, ""); //清除“数字”和“.”以外的字符   
+    value = value.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的   
+    value = value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+    value = value.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3'); //只能输入两个小数   
+    if (value.indexOf(".") < 0 && value != "") {
+      //以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额  
+      value = parseFloat(value);
+    }
+    this.setData({
+      inputValue: value
+    })
+    if (parseFloat(value) < 20) {
       this.setData({
-        inputValue: ""
+        changeCss: true,
+        exceed: true
       })
-      return false
+    } else if (parseFloat(value) > parseFloat(this.data.canWithdrawPrice)) {
+      this.setData({
+        exceed: false,
+        changeCss: true
+      })
+    } else if (value === ""||value===".") {
+      this.setData({
+        exceed: true,
+        changeCss: true
+      })
     } else {
-      return true
+      this.setData({
+        exceed: true,
+        changeCss: false
+      })
     }
   },
   // 输入框改变输入
@@ -74,10 +101,20 @@ Page({
   },
   // 全部提现
   allWithdraw() {
-    this.setData({
-      inputValue: this.data.canWithdrawPrice || 0,
-      changeCss: true
-    })
+    if(parseFloat(this.data.canWithdrawPrice)<20){
+      this.setData({
+        inputValue: this.data.canWithdrawPrice || 0,
+        changeCss: true,
+        exceed: true
+      })
+    }else{
+      this.setData({
+        inputValue: this.data.canWithdrawPrice || 0,
+        changeCss: false,
+        exceed: true
+      })
+    }
+ 
   },
   // 提现
   withdraw() {
@@ -86,21 +123,43 @@ Page({
         repeatLock: false
       })
       let requestParams = {
-        amount: this.data.inputValue,
+        amount:parseNumber(this.data.inputValue),
         open_id: getLocalStorage(GLOBAL_KEY.openId)
       }
-      withDraw(requestParams).then(res => {
+      wx.showLoading({
+        title: '加载中',
+        mask: true
+      })
+      withDrawFun(requestParams).then(res => {
         if (res.code === 0) {
-          console.log(res)
-          // wx.navigateTo({
-          //   url: '/mine/withdrawResult/withdrawResult?money=' + this.data.inputValue,
-          // })
+          // 提现后线更新本地缓存
+          getUserInfoData().then(() => {
+            this.setData({
+              repeatLock: true
+            })
+            wx.hideLoading()
+            this.data.inputValue=returnFloat(this.data.inputValue)
+            wx.navigateTo({
+              url: '/mine/withdrawResult/withdrawResult?money=' + this.data.inputValue,
+            })
+          })
         } else {
           this.setData({
-            repeatLock: false
+            repeatLock: true
           })
         }
-
+      }).catch(({
+        message
+      }) => {
+        this.setData({
+          repeatLock: true
+        })
+        wx.showToast({
+          title: message,
+          icon: "none",
+          mask: true,
+          duration: 2500
+        })
       })
     }
   },
@@ -110,8 +169,7 @@ Page({
   onLoad: function (options) {
     this.getPosition()
     this.setData({
-      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
-      canWithdrawPrice: options.money
+      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
   },
 
@@ -126,7 +184,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      canWithdrawPrice: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).amount,
+      inputValue: "",
+      changeCss:true
+    })
   },
 
   /**

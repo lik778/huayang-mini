@@ -7,11 +7,12 @@
 	<view class="input-module" style="paddig-top:{{64+specialHeight}}rpx;">
 		<view class="input-module-title">提现金额</view>
 		<view class="input-box">
-			<input type="idcard" value="{{inputValue}}" bindinput="changeInputValue"></input>
+			<input type="digit" value="{{inputValue}}" bindinput="changeInputValue"></input>
 			<text>¥</text>
 		</view>
 		<view class="input-note">
-			<view class="input-note-left">当前可提现金额 {{canWithdrawPrice}}（元）</view>
+			<view class="input-note-left" wx:if="{{exceed}}">当前可提现金额 {{canWithdrawPrice}}（元）</view>
+			<view class="input-note-left" wx:else style="color:rgb(255, 68, 51);">输入金额超过余额</view>
 			<view class="input-note-right" bindtap="allWithdraw">全部提现</view>
 		</view>
 	</view>
