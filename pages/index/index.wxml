@@ -54,12 +54,13 @@
 	</view>
 
 	<van-dialog title="提示" message="授权登录查看直播内容" show="{{ show }}" show-cancel-button confirmButtonText="立即授权" confirm-button-open-type="getPhoneNumber" bind:getphonenumber="getPhoneNumber"></van-dialog>
-	<van-overlay show="{{ showSuccess }}">
+	<van-overlay show="{{ showSuccess }}" bind:click="onClickHide">
 		<view class="box">
-			<view class="box-img" bindtap="invite">
-				<image src="{{alertInfo.pic_url}}"></image>
+			<view class="box-img">
+				<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587367667DlJmRa.jpg"></image>
 			</view>
-			<view class="close-icon" bindtap="onClickHide">
+			<view class="button" bindtap="invite">立即邀请</view>
+			<view class="close-icon">
 				<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587370098gwYTkb.jpg"></image>
 			</view>
 		</view>

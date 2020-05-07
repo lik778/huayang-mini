@@ -1,14 +1,7 @@
 // pages/live/live.js
-import { getLiveBannerList, getLiveList, getRemind, setPoint, updateLiveStatus } from "../../api/live/index"
+import { getLiveBannerList, getLiveList, setPoint, updateLiveStatus } from "../../api/live/index"
 import { GLOBAL_KEY, SHARE_PARAMS, WeChatLiveStatus } from '../../lib/config'
-import {
-	$notNull,
-	checkIdentity,
-	getLocalStorage,
-	getSchedule,
-	removeLocalStorage,
-	setLocalStorage
-} from '../../utils/util'
+import { $notNull, checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from '../../utils/util'
 import { statisticsWatchNo } from "../../api/live/course"
 import { bindWxPhoneNumber } from "../../api/auth/index"
 import { checkAuth } from "../../utils/auth"
@@ -296,50 +289,9 @@ Page({
 	},
 	invite() {
 		// dotByUserClick({component: SHARE_PARAMS.component.btn, click_type: SHARE_PARAMS.clickType.url})
-		let { link } = this.data.alertInfo
-		if (link) {
-			wx.navigateTo({
-				url: link
-			})
-		}
-
-		this.onClickHide()
-	},
-	/**
-	 * 获取消息弹窗
-	 */
-	queryRemind() {
-		let openId = getLocalStorage(GLOBAL_KEY.openId)
-		let userId = getLocalStorage(GLOBAL_KEY.userId)
-		let popupTimestamp = getLocalStorage(GLOBAL_KEY.popupTimestamp) || 0
-		let todayEndTimestamp = new Date(new Date().setHours(0, 0, 0, 0))
-		// 当天是否弹过非特殊类型的弹窗
-		let diffTimestamp = +popupTimestamp - +todayEndTimestamp
-		let didPopupInCurrentLifeCircle = popupTimestamp && (diffTimestamp >= 0 && diffTimestamp <= 86400000)
-		if (!didPopupInCurrentLifeCircle) {
-			removeLocalStorage(GLOBAL_KEY.popupTimestamp)
-		}
-		if (openId) {
-			let params = { open_id: openId }
-			params['normal_send'] = +didPopupInCurrentLifeCircle
-			if (userId) {
-				params['user_id'] = userId
-				getApp().globalData.didSendRemindWithUserId = true
-			}
-			getRemind(params).then((data) => {
-				if (data && $notNull(data)) {
-					if (getApp().globalData.didSendRemindWithUserId) {
-						if (data.is_special == 0) {
-							setLocalStorage(GLOBAL_KEY.popupTimestamp, +new Date)
-						}
-					}
-					this.setData({
-						alertInfo: { ...data },
-						showSuccess: true
-					})
-				}
-			})
-		}
+		wx.navigateTo({
+			url: '/mine/invite/invite'
+		})
 	},
 	// 检查是否第一次成为会员
 	checkBecomeVipData() {
@@ -388,8 +340,9 @@ Page({
 				url: '/mine/contact/contact',
 			})
 		} else {
-			// 请求弹窗
-			this.queryRemind()
+			if (getLocalStorage(GLOBAL_KEY.userId)) {
+				this.checkBecomeVipData()
+			}
 		}
 		// 检查本地账户信息
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
