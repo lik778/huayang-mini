@@ -1,7 +1,14 @@
 // pages/live/live.js
 import { getLiveBannerList, getLiveList, getRemind, setPoint, updateLiveStatus } from "../../api/live/index"
 import { GLOBAL_KEY, SHARE_PARAMS, WeChatLiveStatus } from '../../lib/config'
-import { $notNull, checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from '../../utils/util'
+import {
+	$notNull,
+	checkIdentity,
+	getLocalStorage,
+	getSchedule,
+	removeLocalStorage,
+	setLocalStorage
+} from '../../utils/util'
 import { statisticsWatchNo } from "../../api/live/course"
 import { bindWxPhoneNumber } from "../../api/auth/index"
 import { checkAuth } from "../../utils/auth"
@@ -304,7 +311,14 @@ Page({
 	queryRemind() {
 		let openId = getLocalStorage(GLOBAL_KEY.openId)
 		let userId = getLocalStorage(GLOBAL_KEY.userId)
-		let { didPopupInCurrentLifeCircle = false } = getApp().globalData
+		let popupTimestamp = getLocalStorage(GLOBAL_KEY.popupTimestamp) || 0
+		let todayEndTimestamp = new Date(new Date().setHours(23, 59, 59, 0))
+		// 当天是否弹过非特殊类型的弹窗
+		let didPopupInCurrentLifeCircle = popupTimestamp && (+popupTimestamp - +todayEndTimestamp < 0)
+		console.error('didPopupInCurrentLifeCircle', didPopupInCurrentLifeCircle)
+		if (!didPopupInCurrentLifeCircle) {
+			removeLocalStorage(GLOBAL_KEY.popupTimestamp)
+		}
 		if (openId) {
 			let params = { open_id: openId }
 			params['normal_send'] = +didPopupInCurrentLifeCircle
@@ -315,7 +329,9 @@ Page({
 			getRemind(params).then((data) => {
 				if (data && $notNull(data)) {
 					if (getApp().globalData.didSendRemindWithUserId) {
-						getApp().globalData.didPopupInCurrentLifeCircle = true
+						if (data.is_special == 0) {
+							setLocalStorage(GLOBAL_KEY.popupTimestamp, +new Date)
+						}
 					}
 					this.setData({
 						alertInfo: { ...data },

@@ -33,10 +33,8 @@ App({
 	onHide() {
 		// 小程序退出前清除提醒弹窗记录
 		this.globalData.didSendRemindWithUserId = false
-		this.globalData.didPopupInCurrentLifeCircle = false
 	},
 	globalData: {
 		didSendRemindWithUserId: false, // 是否携带userId调用过弹窗接口
-		didPopupInCurrentLifeCircle: false
 	}
 })
