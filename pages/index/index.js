@@ -315,7 +315,6 @@ Page({
 		let todayEndTimestamp = new Date(new Date().setHours(23, 59, 59, 0))
 		// 当天是否弹过非特殊类型的弹窗
 		let didPopupInCurrentLifeCircle = popupTimestamp && (+popupTimestamp - +todayEndTimestamp < 0)
-		console.error('didPopupInCurrentLifeCircle', didPopupInCurrentLifeCircle)
 		if (!didPopupInCurrentLifeCircle) {
 			removeLocalStorage(GLOBAL_KEY.popupTimestamp)
 		}
