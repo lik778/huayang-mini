@@ -15,7 +15,12 @@ Page({
     titleText: "提现成功",
     statusHeight: 0
   },
-
+  // 返回
+  backMine(){
+    wx.switchTab({
+      url: '/pages/mine/mine',
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

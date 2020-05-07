@@ -40,6 +40,7 @@
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: rgba(0, 0, 0, 0.4);
+  line-height: 36px;
 }
 
 .input-note {
