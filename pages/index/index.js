@@ -1,42 +1,24 @@
 // pages/live/live.js
-import {
-	getLiveBannerList,
-	getLiveList,
-	setPoint,
-	updateLiveStatus
-} from "../../api/live/index"
-import {
-	GLOBAL_KEY,
-	WeChatLiveStatus
-} from '../../lib/config'
-import {
-	$notNull,
-	checkIdentity,
-	getLocalStorage,
-	getSchedule,
-	setLocalStorage
-} from '../../utils/util'
-import {
-	statisticsWatchNo
-} from "../../api/live/course"
-import {
-	bindWxPhoneNumber,
-	checkBecomeVip
-} from "../../api/auth/index"
-import {
-	checkAuth
-} from "../../utils/auth"
+import { getLiveBannerList, getLiveList, getRemind, setPoint, updateLiveStatus } from "../../api/live/index"
+import { GLOBAL_KEY, SHARE_PARAMS, WeChatLiveStatus } from '../../lib/config'
+import { $notNull, checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from '../../utils/util'
+import { statisticsWatchNo } from "../../api/live/course"
+import { bindWxPhoneNumber } from "../../api/auth/index"
+import { checkAuth } from "../../utils/auth"
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog'
-import {
-	getUserInfo,
-
-} from "../../api/mine/index"
+import { getUserInfo } from "../../api/mine/index"
 
 Page({
 	/**
 	 * 页面的初始数据
 	 */
 	data: {
+		// 页面打点参数，用于打点sdk劫持onshow钩子时自动PV打点
+		__shareParams: {
+			page_type: SHARE_PARAMS.pageType.common,
+			page_level: SHARE_PARAMS.pageLevel.tabBarPage,
+			page_title: "直播首页"
+		},
 		show: false,
 		WeChatLiveStatus,
 		schedule: [],
@@ -49,6 +31,7 @@ Page({
 		didNoMore: false,
 		didVip: false,
 		liveStatusIntervalTimer: null,
+		alertInfo: null,
 		showSuccess: false, //成为超级会员弹窗
 		indicatorDots: false,
 		vertical: false,
@@ -58,16 +41,10 @@ Page({
 	},
 	// 处理swiper点击回调
 	handleSwiperTap(e) {
-		let {
-			bannerId
-		} = e.currentTarget.dataset.item
+		let {bannerId} = e.currentTarget.dataset.item
 		// 打点
-		setPoint({
-			banner_id: bannerId
-		})
-		wx.navigateTo({
-			url: this.data.bannerPictureObject.link
-		})
+		setPoint({banner_id: bannerId})
+		wx.navigateTo({url: this.data.bannerPictureObject.link})
 	},
 	// 关闭立即邀请
 	onClickHide() {
@@ -103,16 +80,8 @@ Page({
 	 * @param e
 	 */
 	navigateToLive(e) {
-		checkAuth({
-			listenable: true,
-			ignoreFocusLogin: true
-		}).then(() => {
-			let {
-				zhiboRoomId,
-				roomId,
-				link,
-				vipOnly
-			} = e.currentTarget.dataset.item
+		checkAuth({listenable: true, ignoreFocusLogin: true}).then(() => {
+			let {zhiboRoomId, roomId, link, vipOnly} = e.currentTarget.dataset.item
 			// 当前课程是否仅限VIP用户学习
 			if (vipOnly === 1) {
 				// 判断是否是会员/是否入学
@@ -122,9 +91,7 @@ Page({
 					zhiboRoomId
 				}).then((callbackString) => {
 					if (callbackString === 'no-phone-auth') {
-						this.setData({
-							show: true
-						})
+						this.setData({show: true})
 					} else if (callbackString === 'no-auth-daxue') {
 						Dialog.confirm({
 							title: '申请入学立即观看',
@@ -136,7 +103,8 @@ Page({
 						}).catch(() => {})
 					}
 				})
-			} else {
+			}
+			else {
 				statisticsWatchNo({
 					zhibo_room_id: zhiboRoomId, // 运营后台配置的课程ID
 					open_id: getLocalStorage(GLOBAL_KEY.openId)
@@ -171,14 +139,9 @@ Page({
 	 * 跳转至课程列表
 	 */
 	navigateToCourse(e) {
-		let {
-			officialRoomId,
-			bannerId
-		} = e.currentTarget.dataset.item
+		let {officialRoomId,bannerId} = e.currentTarget.dataset.item
 		// 打点
-		setPoint({
-			banner_id: bannerId
-		})
+		setPoint({banner_id: bannerId})
 		wx.navigateTo({
 			url: `/subLive/courseList/courseList?id=${officialRoomId}`,
 		})
@@ -325,9 +288,42 @@ Page({
 		})
 	},
 	invite() {
-		wx.navigateTo({
-			url: '/mine/invite/invite'
-		})
+		// dotByUserClick({component: SHARE_PARAMS.component.btn, click_type: SHARE_PARAMS.clickType.url})
+		let { link } = this.data.alertInfo
+		if (link) {
+			wx.navigateTo({
+				url: link
+			})
+		}
+
+		this.onClickHide()
+	},
+	/**
+	 * 获取消息弹窗
+	 */
+	queryRemind() {
+		let openId = getLocalStorage(GLOBAL_KEY.openId)
+		let userId = getLocalStorage(GLOBAL_KEY.userId)
+		let { didPopupInCurrentLifeCircle = false } = getApp().globalData
+		if (openId) {
+			let params = { open_id: openId }
+			params['normal_send'] = +didPopupInCurrentLifeCircle
+			if (userId) {
+				params['user_id'] = userId
+				getApp().globalData.didSendRemindWithUserId = true
+			}
+			getRemind(params).then((data) => {
+				if (data && $notNull(data)) {
+					if (getApp().globalData.didSendRemindWithUserId) {
+						getApp().globalData.didPopupInCurrentLifeCircle = true
+					}
+					this.setData({
+						alertInfo: { ...data },
+						showSuccess: true
+					})
+				}
+			})
+		}
 	},
 	// 检查是否第一次成为会员
 	checkBecomeVipData() {
@@ -376,18 +372,9 @@ Page({
 				url: '/mine/contact/contact',
 			})
 		} else {
-			if (getLocalStorage(GLOBAL_KEY.userId)) {
-				this.checkBecomeVipData()
-			}
+			// 请求弹窗
+			this.queryRemind()
 		}
-
-		// if (getApp().globalData.didPopupInCurrentLifeCircle) {
-		// 	// TODO 今天已经弹过窗
-		// } else {
-		// 	// TODO 今天还未弹过窗
-		// 	getApp().globalData.didPopupInCurrentLifeCircle = true
-		// }
-
 		// 检查本地账户信息
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 		if ($notNull(accountInfo)) {

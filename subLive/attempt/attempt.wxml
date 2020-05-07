@@ -1,8 +1,11 @@
-<view class="un-authorized">
-  <image class="un-auth" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586397005SnhqHS.jpg"></image>
+<view class="attempt">
+  <view class="navigation">
+    <naviBar title="领取会员试用资格" titleColor="white" color="transparent"></naviBar>
+  </view>
+  <image class="un-auth" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1588736592QhUoLY.jpg"></image>
   <view class="tips">
-    <text>很遗憾，该直播仅对“花样汇”超级会员开放</text>
-    <text>请前往加入会员</text>
+    <text>恭喜您获得</text>
+    <text>{{ no }}天花样汇超级会员试用资格</text>
   </view>
   <image class="logo" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586397268DFTsYe.jpg"></image>
   <view class="divider">专属福利</view>
@@ -14,5 +17,5 @@
       <text>{{item.name}}</text>
     </view>
   </view>
-  <view class="join-now" bindtap="joinVip">立即加入</view>
+  <view class="join-now" bindtap="draw">立即领取</view>
 </view>
