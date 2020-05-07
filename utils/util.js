@@ -413,5 +413,21 @@ export function getUserInfoData() {
 
 // 处理js   37.5 *100=3970.0000000000005
 export const parseNumber = (number, multiply = 100) => {
-  return parseFloat((number * multiply).toFixed(2));
+	return parseFloat((number * multiply).toFixed(2));
 };
+
+
+// 补0操作
+export const returnFloat = (values) => {
+	let value = Math.round(parseFloat(values) * 100) / 100;
+	let xsd = value.toString().split(".");
+	if (xsd.length == 1) {
+		value = value.toString() + ".00";
+		return value;
+	}
+	if (xsd.length > 1) {
+		if (xsd[1].length < 2) {
+			value = value.toString() + "0";
+		}
+		return value;
+	}}

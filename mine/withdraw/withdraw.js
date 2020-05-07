@@ -2,7 +2,8 @@
 import {
   getLocalStorage,
   getUserInfoData,
-  parseNumber
+  parseNumber,
+  returnFloat
 } from "../../utils/util"
 import {
   withDrawFun
@@ -137,14 +138,9 @@ Page({
               repeatLock: true
             })
             wx.hideLoading()
-            let money=0
-            if (Number.isInteger(this.data.inputValue / 100)) {
-              money = this.data.inputValue / 100 + ".00"
-            } else {
-              money = this.data.inputValue / 100
-            }
+            this.data.inputValue=returnFloat(this.data.inputValue)
             wx.navigateTo({
-              url: '/mine/withdrawResult/withdrawResult?money=' + money,
+              url: '/mine/withdrawResult/withdrawResult?money=' + this.data.inputValue,
             })
           })
         } else {
