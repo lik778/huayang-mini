@@ -39,3 +39,17 @@
   line-height: 18px;
   padding-top: 40rpx;
 }
+
+.backMine {
+  width: 252px;
+  height: 47px;
+  border-radius: 48rpx;
+  border: 2px solid rgba(255, 68, 51, 1);
+  text-align: center;
+  line-height: 47px;
+  font-size: 18px;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgba(255, 68, 51, 1);
+  margin-top: 60rpx;
+}

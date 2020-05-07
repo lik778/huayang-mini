@@ -1,7 +1,9 @@
 // mine/withdraw/withdraw.js
 import {
   getLocalStorage,
-  getUserInfoData
+  getUserInfoData,
+  parseNumber,
+  returnFloat
 } from "../../utils/util"
 import {
   withDrawFun
@@ -48,7 +50,7 @@ Page({
         exceed: false,
         changeCss: true
       })
-    } else if (value === "") {
+    } else if (value === ""||value===".") {
       this.setData({
         exceed: true,
         changeCss: true
@@ -99,11 +101,20 @@ Page({
   },
   // 全部提现
   allWithdraw() {
-    this.setData({
-      inputValue: this.data.canWithdrawPrice || 0,
-      changeCss: false,
-      exceed: true
-    })
+    if(parseFloat(this.data.canWithdrawPrice)<20){
+      this.setData({
+        inputValue: this.data.canWithdrawPrice || 0,
+        changeCss: true,
+        exceed: true
+      })
+    }else{
+      this.setData({
+        inputValue: this.data.canWithdrawPrice || 0,
+        changeCss: false,
+        exceed: true
+      })
+    }
+ 
   },
   // 提现
   withdraw() {
@@ -112,7 +123,7 @@ Page({
         repeatLock: false
       })
       let requestParams = {
-        amount: this.data.inputValue * 100,
+        amount:parseNumber(this.data.inputValue),
         open_id: getLocalStorage(GLOBAL_KEY.openId)
       }
       wx.showLoading({
@@ -127,6 +138,7 @@ Page({
               repeatLock: true
             })
             wx.hideLoading()
+            this.data.inputValue=returnFloat(this.data.inputValue)
             wx.navigateTo({
               url: '/mine/withdrawResult/withdrawResult?money=' + this.data.inputValue,
             })
@@ -139,6 +151,9 @@ Page({
       }).catch(({
         message
       }) => {
+        this.setData({
+          repeatLock: true
+        })
         wx.showToast({
           title: message,
           icon: "none",
@@ -154,8 +169,7 @@ Page({
   onLoad: function (options) {
     this.getPosition()
     this.setData({
-      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
-      // canWithdrawPrice: options.money
+      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
   },
 

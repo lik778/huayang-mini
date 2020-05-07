@@ -134,6 +134,8 @@ export const withDrawFun = (params) => {
       }else{
         reject(res)
       }
+    }).catch(err=>{
+      reject(err)
     })
   })
 }

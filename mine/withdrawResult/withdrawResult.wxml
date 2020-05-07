@@ -10,5 +10,6 @@
 			<text>¥{{money}}</text>
 		</view>
 		<view class="note">请留意您的微信账户资金变动</view>
+		<view class="backMine" bindtap="backMine">返回</view>
 	</view>
 </view>
