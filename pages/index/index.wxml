@@ -55,8 +55,8 @@
 
 	<van-dialog title="提示" message="授权登录查看直播内容" show="{{ show }}" show-cancel-button confirmButtonText="立即授权" confirm-button-open-type="getPhoneNumber" bind:getphonenumber="getPhoneNumber"></van-dialog>
 	<van-overlay show="{{ showSuccess }}">
-		<view class="box" bindtap="invite">
-			<view class="box-img">
+		<view class="box">
+			<view class="box-img" bindtap="invite">
 				<image src="{{alertInfo.pic_url}}"></image>
 			</view>
 			<view class="close-icon" bindtap="onClickHide">
