@@ -3,7 +3,7 @@ import { getLiveBannerList, getLiveList, setPoint, updateLiveStatus } from "../.
 import { GLOBAL_KEY, SHARE_PARAMS, WeChatLiveStatus } from '../../lib/config'
 import { $notNull, checkIdentity, getLocalStorage, getSchedule, setLocalStorage } from '../../utils/util'
 import { statisticsWatchNo } from "../../api/live/course"
-import { bindWxPhoneNumber } from "../../api/auth/index"
+import { bindWxPhoneNumber, checkBecomeVip } from "../../api/auth/index"
 import { checkAuth } from "../../utils/auth"
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog'
 import { getUserInfo } from "../../api/mine/index"
