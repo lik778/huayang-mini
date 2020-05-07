@@ -312,9 +312,10 @@ Page({
 		let openId = getLocalStorage(GLOBAL_KEY.openId)
 		let userId = getLocalStorage(GLOBAL_KEY.userId)
 		let popupTimestamp = getLocalStorage(GLOBAL_KEY.popupTimestamp) || 0
-		let todayEndTimestamp = new Date(new Date().setHours(23, 59, 59, 0))
+		let todayEndTimestamp = new Date(new Date().setHours(0, 0, 0, 0))
 		// 当天是否弹过非特殊类型的弹窗
-		let didPopupInCurrentLifeCircle = popupTimestamp && (+popupTimestamp - +todayEndTimestamp < 0)
+		let diffTimestamp = +popupTimestamp - +todayEndTimestamp
+		let didPopupInCurrentLifeCircle = popupTimestamp && (diffTimestamp >= 0 && diffTimestamp <= 86400000)
 		if (!didPopupInCurrentLifeCircle) {
 			removeLocalStorage(GLOBAL_KEY.popupTimestamp)
 		}
