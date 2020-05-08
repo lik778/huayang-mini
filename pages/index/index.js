@@ -295,6 +295,11 @@ Page({
 		})
 	},
 	invite() {
+		wx.navigateTo({
+			url: '/mine/invite/invite'
+		})
+	},
+	openPopup() {
 		// dotByUserClick({component: SHARE_PARAMS.component.btn, click_type: SHARE_PARAMS.clickType.url})
 		let { link } = this.data.alertInfo
 		if (link) {
@@ -302,7 +307,6 @@ Page({
 				url: link
 			})
 		}
-
 		this.onClickHide()
 	},
 	/**
