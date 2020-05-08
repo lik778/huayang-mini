@@ -1,6 +1,6 @@
 <view class="mall">
 	<view class="banner" style="height: {{swiperHeight}}" wx:if="{{bannerList.length > 0}}">
-		<swiper class="swiper" indicator-dots="{{indicatorDots}}" bindchange="currentHandle"
+		<swiper class="swiper" indicator-dots="{{indicatorDots}}" bindchange="currentHandle" circular="{{circular}}"
 						autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
 			<swiper-item wx:for="{{bannerList}}" wx:key="index">
 				<view class="swiper-image" bindtap="jumpToLink" data-item="{{item}}" style="background: url('{{item.pic_url}}') no-repeat center;background-size: cover;"></view>

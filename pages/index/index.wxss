@@ -244,15 +244,13 @@
 }
 
 .box-img {
-    display: flex;
-    justify-content: center;
+    font-size: 0;
 }
 
 .box-img image {
-    width: 392rpx;
-    height: 300rpx;
-    padding-top: 82rpx;
-    vertical-align: bottom;
+    width: 600rpx;
+    height: 600rpx;
+    object-fit: cover;
 }
 
 .button {
