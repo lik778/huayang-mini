@@ -26,10 +26,10 @@ Page({
 		no: 0
 	},
 	draw() {
-		getAttempt({days: this.data.no, user_id: getLocalStorage(GLOBAL_KEY.userId)}).then(() => {
+		getAttempt({days: this.data.no, user_id: getLocalStorage(GLOBAL_KEY.userId)}).then(({code, message}) => {
 			wx.showModal({
 				title: "提示",
-				content: "领取成功",
+				content: code == 0 ? "领取成功" : message,
 				confirmText: "确定",
 				success() {
 					wx.switchTab({url: '/pages/index/index'})

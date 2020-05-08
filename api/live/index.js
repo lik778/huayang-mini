@@ -81,11 +81,8 @@ export function getAttemptTimes() {
  */
 export function getAttempt(params) {
 	return new Promise((resolve, reject) => {
-		request._post(URL.getAttempt, params).then(({code}) => {
-			if (code === 0) {
-				resolve()
-			}
-			reject()
+		request._post(URL.getAttempt, params).then((response) => {
+			resolve(response)
 		}).catch(() => {
 			reject()
 		})
