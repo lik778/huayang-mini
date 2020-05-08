@@ -345,20 +345,6 @@ Page({
 			})
 		}
 	},
-	// 检查是否第一次成为会员
-	checkBecomeVipData() {
-		// GLOBAL_KEY.vip为true代表已经请求过接口不再请求接口了
-		if (getLocalStorage(GLOBAL_KEY.vip)) {
-			checkBecomeVip(`user_id=${getLocalStorage(GLOBAL_KEY.userId)}`).then(res => {
-				setLocalStorage(GLOBAL_KEY.vip, false)
-				if (res) {
-					this.setData({
-						showSuccess: res
-					})
-				}
-			})
-		}
-	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
