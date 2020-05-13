@@ -18,8 +18,7 @@ Page({
 		adapter: false
 	},
 	haveMore() {
-		const type = this.data.zhiboRoomInfo.zhibo_room.room_type
-		const officialRoomId = this.data.zhiboRoomInfo.zhibo_room.user_id
+		const {zhibo_room: {room_type: type = "", user_id: officialRoomId = 0} = {}} = this.data.zhiboRoomInfo
 		if (type === 'kecheng') {
 			wx.redirectTo({
 				url: `/subLive/courseList/courseList?id=${officialRoomId}`,

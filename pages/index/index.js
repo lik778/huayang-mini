@@ -146,7 +146,28 @@ Page({
 	 * 跳转至课程列表
 	 */
 	navigateToCourse(e) {
-		let {officialRoomId,bannerId} = e.currentTarget.dataset.item
+		let {officialRoomId, bannerId, vipOnly} = e.currentTarget.dataset.item
+		if (vipOnly == 1) {
+			let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
+			if (!$notNull(accountInfo)) {
+				// 手机号鉴权
+				this.setData({show: true})
+				return false
+			}
+
+			if (!accountInfo.is_zhide_vip) {
+				Dialog.confirm({
+					title: '提示',
+					message: '立即加入“花样汇”享专属活动优惠'
+				})
+					.then(() => {
+						wx.navigateTo({
+							url: '/mine/joinVip/joinVip',
+						})
+					}).catch(() => {})
+				return false
+			}
+		}
 		// 打点
 		setPoint({banner_id: bannerId})
 		wx.navigateTo({
@@ -248,6 +269,7 @@ Page({
 						link: b.banner.link,
 						visitCount: b.zhibo_room.visit_count,
 						status: b.zhibo_room.status,
+						vipOnly: b.zhibo_room.vip_only
 					}
 				} else {
 					return {

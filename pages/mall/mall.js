@@ -47,7 +47,7 @@ Page({
 						wx.navigateTo({
 							url: '/mine/joinVip/joinVip',
 						})
-					})
+					}).catch(() => {})
 				return false
 			}
 		}
