@@ -146,7 +146,7 @@ Page({
 	 * 跳转至课程列表
 	 */
 	navigateToCourse(e) {
-		let {officialRoomId, bannerId, vipOnly, link} = e.currentTarget.dataset.item
+		let {zhiboRoomId, roomId, bannerId, vipOnly, status} = e.currentTarget.dataset.item
 		if (vipOnly == 1) {
 			let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 			if (!$notNull(accountInfo)) {
@@ -170,9 +170,17 @@ Page({
 		}
 		// 打点
 		setPoint({banner_id: bannerId})
-		wx.navigateTo({
-			url: link || `/subLive/courseList/courseList?id=${officialRoomId}`,
-		})
+		// 课程类型是回看&存在回看链接
+		if (status == 2) {
+			wx.navigateTo({
+				url: `/subLive/review/review?zhiboRoomId=` + zhiboRoomId,
+			})
+		} else {
+			// 跳转到微信直播间
+			wx.navigateTo({
+				url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${roomId}`,
+			})
+		}
 	},
 	/**
 	 * 请求直播间列表
