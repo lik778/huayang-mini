@@ -146,7 +146,7 @@ Page({
 	 * 跳转至课程列表
 	 */
 	navigateToCourse(e) {
-		let {officialRoomId, bannerId, vipOnly} = e.currentTarget.dataset.item
+		let {officialRoomId, bannerId, vipOnly, link} = e.currentTarget.dataset.item
 		if (vipOnly == 1) {
 			let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 			if (!$notNull(accountInfo)) {
@@ -158,7 +158,7 @@ Page({
 			if (!accountInfo.is_zhide_vip) {
 				Dialog.confirm({
 					title: '提示',
-					message: '立即加入“花样汇”享专属活动优惠'
+					message: '该课程仅限会员观看，立即成为“花样汇”超级会员。'
 				})
 					.then(() => {
 						wx.navigateTo({
@@ -171,7 +171,7 @@ Page({
 		// 打点
 		setPoint({banner_id: bannerId})
 		wx.navigateTo({
-			url: `/subLive/courseList/courseList?id=${officialRoomId}`,
+			url: link || `/subLive/courseList/courseList?id=${officialRoomId}`,
 		})
 	},
 	/**
