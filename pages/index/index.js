@@ -146,12 +146,41 @@ Page({
 	 * 跳转至课程列表
 	 */
 	navigateToCourse(e) {
-		let {officialRoomId,bannerId} = e.currentTarget.dataset.item
+		let {zhiboRoomId, roomId, bannerId, vipOnly, status} = e.currentTarget.dataset.item
+		if (vipOnly == 1) {
+			let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
+			if (!$notNull(accountInfo)) {
+				// 手机号鉴权
+				this.setData({show: true})
+				return false
+			}
+
+			if (!accountInfo.is_zhide_vip) {
+				Dialog.confirm({
+					title: '提示',
+					message: '该课程仅限会员观看，立即成为“花样汇”超级会员。'
+				})
+					.then(() => {
+						wx.navigateTo({
+							url: '/mine/joinVip/joinVip',
+						})
+					}).catch(() => {})
+				return false
+			}
+		}
 		// 打点
 		setPoint({banner_id: bannerId})
-		wx.navigateTo({
-			url: `/subLive/courseList/courseList?id=${officialRoomId}`,
-		})
+		// 课程类型是回看&存在回看链接
+		if (status == 2) {
+			wx.navigateTo({
+				url: `/subLive/review/review?zhiboRoomId=` + zhiboRoomId,
+			})
+		} else {
+			// 跳转到微信直播间
+			wx.navigateTo({
+				url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${roomId}`,
+			})
+		}
 	},
 	/**
 	 * 请求直播间列表
@@ -248,6 +277,7 @@ Page({
 						link: b.banner.link,
 						visitCount: b.zhibo_room.visit_count,
 						status: b.zhibo_room.status,
+						vipOnly: b.zhibo_room.vip_only
 					}
 				} else {
 					return {
