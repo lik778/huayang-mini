@@ -274,7 +274,7 @@ Page({
 						name: b.banner.title ? b.banner.title.split('\\n').join('\n') : '',
 						bannerPicture: b.banner.pic_url,
 						color: b.banner.bg_color,
-						link: b.banner.link,
+						link: b.kecheng.link,
 						visitCount: b.zhibo_room.visit_count,
 						status: b.zhibo_room.status,
 						vipOnly: b.zhibo_room.vip_only
@@ -283,7 +283,7 @@ Page({
 					return {
 						bannerId: b.banner.id,
 						bannerPicture: b.banner.pic_url,
-						link: b.banner.link
+						link: b.kecheng.link
 					}
 				}
 			})
