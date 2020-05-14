@@ -146,7 +146,7 @@ Page({
 	 * 跳转至课程列表
 	 */
 	navigateToCourse(e) {
-		let {zhiboRoomId, roomId, bannerId, vipOnly, status} = e.currentTarget.dataset.item
+		let {zhiboRoomId, roomId, bannerId, vipOnly, status, link} = e.currentTarget.dataset.item
 		if (vipOnly == 1) {
 			let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 			if (!$notNull(accountInfo)) {
@@ -171,7 +171,7 @@ Page({
 		// 打点
 		setPoint({banner_id: bannerId})
 		// 课程类型是回看&存在回看链接
-		if (status == 2) {
+		if (status == 2 && link) {
 			wx.navigateTo({
 				url: `/subLive/review/review?zhiboRoomId=` + zhiboRoomId,
 			})
