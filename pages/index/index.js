@@ -51,7 +51,7 @@ Page({
 		let {bannerId} = e.currentTarget.dataset.item
 		// 打点
 		setPoint({banner_id: bannerId})
-		wx.navigateTo({url: this.data.bannerPictureObject.link})
+		wx.navigateTo({url: this.data.bannerPictureObject.bannerLink})
 	},
 	// 关闭立即邀请
 	onClickHide() {
@@ -88,7 +88,7 @@ Page({
 	 */
 	navigateToLive(e) {
 		checkAuth({listenable: true, ignoreFocusLogin: true}).then(() => {
-			let {zhiboRoomId, roomId, link, vipOnly} = e.currentTarget.dataset.item
+			let {zhiboRoomId, roomId, link, status, vipOnly} = e.currentTarget.dataset.item
 			// 当前课程是否仅限VIP用户学习
 			if (vipOnly === 1) {
 				// 判断是否是会员/是否入学
@@ -117,7 +117,7 @@ Page({
 					open_id: getLocalStorage(GLOBAL_KEY.openId)
 				}).then(() => {
 					// link存在去跳转回看页
-					if (link) {
+					if (status == 2 && link) {
 						wx.navigateTo({
 							url: `/subLive/review/review?zhiboRoomId=` + zhiboRoomId,
 						})
@@ -275,6 +275,7 @@ Page({
 						bannerPicture: b.banner.pic_url,
 						color: b.banner.bg_color,
 						link: b.kecheng.link,
+						bannerLink: b.banner.link,
 						visitCount: b.zhibo_room.visit_count,
 						status: b.zhibo_room.status,
 						vipOnly: b.zhibo_room.vip_only
@@ -283,7 +284,7 @@ Page({
 					return {
 						bannerId: b.banner.id,
 						bannerPicture: b.banner.pic_url,
-						link: b.kecheng.link
+						bannerLink: b.banner.link
 					}
 				}
 			})
