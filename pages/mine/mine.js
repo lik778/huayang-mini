@@ -28,7 +28,8 @@ Page({
         userInfo: "",
         width: 200,
         showBindPhoneButton: true,
-        showVipEnter:false,//是否展示会员权益入口
+        showInviteLine: true,
+        showVipEnter: false, //是否展示会员权益入口
     },
     // 跳往会员权益介绍
     toVipWelfare() {
@@ -85,10 +86,10 @@ Page({
         }
     },
     // 获取会员权益开关
-    getVipShowData(){
-        getVipShow().then(res=>{
+    getVipShowData() {
+        getVipShow().then(res => {
             this.setData({
-                showVipEnter:res.data
+                showVipEnter: res.data
             })
         })
     },
@@ -163,8 +164,8 @@ Page({
                     } else {
                         res.amount = res.amount / 100
                     }
-                    res.mobile = res.mobile.substr(0, 3) + "****" + res.mobile.substr(7)//手机号中间四位数*
-                    res.zhide_end_time = res.zhide_end_time === '' ? '' : res.zhide_end_time.split(' ')[0]//处理会员到期时间到分
+                    res.mobile = res.mobile.substr(0, 3) + "****" + res.mobile.substr(7) //手机号中间四位数*
+                    res.zhide_end_time = res.zhide_end_time === '' ? '' : res.zhide_end_time.split(' ')[0] //处理会员到期时间到分
                     setLocalStorage(GLOBAL_KEY.accountInfo, res)
                     this.setData({
                         showBindPhoneButton: false,
@@ -182,11 +183,25 @@ Page({
                 })
             }, 500)
         }
-
+    },
+    // 初始化时间
+    initDate() {
+        let soldOutTime = 1590940800000 //2020.06.01时间戳（毫秒）
+        let nowTime = Math.round(new Date())
+        if (nowTime >= soldOutTime) {
+            this.setData({
+                showInviteLine: false
+            })
+        } else {
+            this.setData({
+                showInviteLine: true
+            })
+        }
     },
     // 生命周期函数--监听页面加载
     onLoad: function (options) {
         this.getVipShowData()
+        this.initDate()
     },
     // 生命周期函数--监听页面初次渲染完成
     onReady: function () {},

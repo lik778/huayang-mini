@@ -48,7 +48,7 @@
 		</view>
 	</view>
 	<view class="no-more" wx:if="{{didNoMore}}">到底啦～</view>
-	<view class="invite-box" wx:if="{{didVip}}">
+	<view class="invite-box" wx:if="{{didVip&&showInviteLine}}">
 		<image class="gift" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586332094NWPXTg.jpg"></image>
 		<text class="gift-text" bindtap="invite">邀请有礼</text>
 	</view>

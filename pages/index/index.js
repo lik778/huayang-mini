@@ -45,13 +45,15 @@ Page({
 		autoplay: false,
 		interval: 2000,
 		duration: 500,
+		showInviteLine:true		
+
 	},
 	// 处理swiper点击回调
 	handleSwiperTap(e) {
 		let {bannerId} = e.currentTarget.dataset.item
 		// 打点
 		setPoint({banner_id: bannerId})
-		wx.navigateTo({url: this.data.bannerPictureObject.link})
+		wx.navigateTo({url: this.data.bannerPictureObject.bannerLink})
 	},
 	// 关闭立即邀请
 	onClickHide() {
@@ -88,7 +90,7 @@ Page({
 	 */
 	navigateToLive(e) {
 		checkAuth({listenable: true, ignoreFocusLogin: true}).then(() => {
-			let {zhiboRoomId, roomId, link, vipOnly} = e.currentTarget.dataset.item
+			let {zhiboRoomId, roomId, link, status, vipOnly} = e.currentTarget.dataset.item
 			// 当前课程是否仅限VIP用户学习
 			if (vipOnly === 1) {
 				// 判断是否是会员/是否入学
@@ -117,7 +119,7 @@ Page({
 					open_id: getLocalStorage(GLOBAL_KEY.openId)
 				}).then(() => {
 					// link存在去跳转回看页
-					if (link) {
+					if (status == 2 && link) {
 						wx.navigateTo({
 							url: `/subLive/review/review?zhiboRoomId=` + zhiboRoomId,
 						})
@@ -146,7 +148,7 @@ Page({
 	 * 跳转至课程列表
 	 */
 	navigateToCourse(e) {
-		let {zhiboRoomId, roomId, bannerId, vipOnly, status} = e.currentTarget.dataset.item
+		let {zhiboRoomId, roomId, bannerId, vipOnly, status, link} = e.currentTarget.dataset.item
 		if (vipOnly == 1) {
 			let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 			if (!$notNull(accountInfo)) {
@@ -171,7 +173,7 @@ Page({
 		// 打点
 		setPoint({banner_id: bannerId})
 		// 课程类型是回看&存在回看链接
-		if (status == 2) {
+		if (status == 2 && link) {
 			wx.navigateTo({
 				url: `/subLive/review/review?zhiboRoomId=` + zhiboRoomId,
 			})
@@ -274,7 +276,8 @@ Page({
 						name: b.banner.title ? b.banner.title.split('\\n').join('\n') : '',
 						bannerPicture: b.banner.pic_url,
 						color: b.banner.bg_color,
-						link: b.banner.link,
+						link: b.kecheng.link,
+						bannerLink: b.banner.link,
 						visitCount: b.zhibo_room.visit_count,
 						status: b.zhibo_room.status,
 						vipOnly: b.zhibo_room.vip_only
@@ -283,7 +286,7 @@ Page({
 					return {
 						bannerId: b.banner.id,
 						bannerPicture: b.banner.pic_url,
-						link: b.banner.link
+						bannerLink: b.banner.link
 					}
 				}
 			})
@@ -375,11 +378,25 @@ Page({
 			})
 		}
 	},
+	// 初始化邀请有礼浮窗
+	initInvite(){
+		let soldOutTime = 1590940800000 //2020.06.01时间戳（毫秒）
+		let nowTime = Math.round(new Date())
+		if (nowTime >= soldOutTime) {
+				this.setData({
+						showInviteLine: false
+				})
+		} else {
+				this.setData({
+						showInviteLine: true
+				})
+		}
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-
+		this.initInvite()
 	},
 
 	/**

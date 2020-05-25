@@ -102,7 +102,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="list-common" bindtap="toInvite" wx:if="{{userInfo.is_zhide_vip}}">
+		<view class="list-common" bindtap="toInvite" wx:if="{{userInfo.is_zhide_vip&&showInviteLine}}">
 			<view class="common-left">
 				<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587368457SloykC.jpg" class="common-icon-two"></image>
 			</view>
