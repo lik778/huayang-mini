@@ -50,14 +50,21 @@ Page({
     },
     // 购买会员
     buyVip() {
-        let soldOutTime = 1590940800000//2020.06.01时间戳（毫秒）
+        let soldOutTime = 1590940800000 //2020.06.01时间戳（毫秒）
         let nowTime = Math.round(new Date())
         if (nowTime >= soldOutTime) {
             // 活动已过期
             wx.showModal({
                 title: '提示',
                 content: '第一期会员招募已结束',
-                showCancel:false
+                showCancel: false,
+                success: (res) => {
+                    if (res.confirm) {
+                        wx.switchTab({
+                            url: '/pages/index/index',
+                        })
+                    }
+                }
             })
             return
         }
