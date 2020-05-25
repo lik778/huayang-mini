@@ -45,6 +45,8 @@ Page({
 		autoplay: false,
 		interval: 2000,
 		duration: 500,
+		showInviteLine:true		
+
 	},
 	// 处理swiper点击回调
 	handleSwiperTap(e) {
@@ -376,11 +378,25 @@ Page({
 			})
 		}
 	},
+	// 初始化邀请有礼浮窗
+	initInvite(){
+		let soldOutTime = 1590940800000 //2020.06.01时间戳（毫秒）
+		let nowTime = Math.round(new Date())
+		if (nowTime >= soldOutTime) {
+				this.setData({
+						showInviteLine: false
+				})
+		} else {
+				this.setData({
+						showInviteLine: true
+				})
+		}
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-
+		this.initInvite()
 	},
 
 	/**

@@ -50,6 +50,18 @@ Page({
     },
     // 购买会员
     buyVip() {
+        let soldOutTime = 1590940800000//2020.06.01时间戳（毫秒）
+        let nowTime = Math.round(new Date())
+        if (nowTime >= soldOutTime) {
+            // 活动已过期
+            wx.showModal({
+                title: '提示',
+                content: '第一期会员招募已结束',
+                showCancel:false
+            })
+            return
+        }
+
         if (this.data.showBindPhoneButton) return
         if (this.data.checked && this.data.buyRepeat) {
             this.setData({
@@ -83,7 +95,7 @@ Page({
                                             url: "/mine/vipWelfare/vipWelfare",
                                         })
                                     } else {
-                                        setLocalStorage(GLOBAL_KEY.vipBack,true)
+                                        setLocalStorage(GLOBAL_KEY.vipBack, true)
                                         wx.switchTab({
                                             url: '/pages/index/index',
                                         })
