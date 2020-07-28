@@ -46,8 +46,8 @@ export const formatNumber = n => {
  * @returns
  */
 export const payVip = function ({
-	id
-}) {
+																	id
+																}) {
 	let createOrderParmas = {
 		scene: "zhide_vip",
 		recommend_user_id: id || "",
@@ -282,11 +282,11 @@ export const getSchedule = async function (roomIds = []) {
 
 // 判断是否是会员/是否入学
 export const checkIdentity = function ({
-	roomId,
-	link,
-	zhiboRoomId,
-	customParams = {}
-}) {
+																				 roomId,
+																				 link,
+																				 zhiboRoomId,
+																				 customParams = {}
+																			 }) {
 	const userId = getLocalStorage(GLOBAL_KEY.userId)
 	return new Promise((resolve, reject) => {
 		if (userId == null) {
@@ -294,9 +294,9 @@ export const checkIdentity = function ({
 		} else {
 			// 获取直播权限
 			getWatchLiveAuth({
-					room_id: zhiboRoomId,
-					user_id: userId
-				})
+				room_id: zhiboRoomId,
+				user_id: userId
+			})
 				.then(res => {
 					if (res === 'vip') {
 						// 非会员，跳往花样汇
@@ -341,8 +341,8 @@ export const checkIdentity = function ({
 function queryLiveStatus(roomId) {
 	return new Promise((resolve, reject) => {
 		livePlayer.getLiveStatus({
-				room_id: roomId
-			})
+			room_id: roomId
+		})
 			.then(response => {
 				resolve(response)
 			})
@@ -413,110 +413,57 @@ export function getUserInfoData() {
 
 // 处理js   37.5 *100=3970.0000000000005
 export const parseNumber = (number, multiply = 100) => {
-	return parseFloat((number * multiply).toFixed(2));
-};
+	return parseFloat((number * multiply).toFixed(2))
+}
 
 
 // 补0操作
 export const returnFloat = (values) => {
-	let value = Math.round(parseFloat(values) * 100) / 100;
-	let xsd = value.toString().split(".");
+	let value = Math.round(parseFloat(values) * 100) / 100
+	let xsd = value.toString().split(".")
 	if (xsd.length == 1) {
-		value = value.toString() + ".00";
-		return value;
+		value = value.toString() + ".00"
+		return value
 	}
 	if (xsd.length > 1) {
 		if (xsd[1].length < 2) {
-			value = value.toString() + "0";
+			value = value.toString() + "0"
 		}
-		return value;
-	}}
+		return value
+	}
+}
 
-/**
- * 打点 - 用户点击事件
- * @param component 交互组件名称
- * @param click_type 跳转类型
- */
-export function dotByUserClick({component, click_type}) {
-	getApp().tracker.evt('user_click', {
-		tracktype: SHARE_PARAMS.trackType.event,
-		component,
-		click_type
+// 批量下载文件
+export const batchDownloadFiles = function(downloadUrls) {
+	let downloadPromiseAry = []
+	downloadUrls.map(url => {
+		downloadPromiseAry.push(
+			new Promise((resolve, reject) => {
+				wx.downloadFile({
+					url,
+					success(res) {
+						if (res.statusCode === 200) {
+							resolve(res.tempFilePath)
+						}
+					},
+					fail() {
+						reject()
+					}
+				})
+			})
+		)
+	})
+	return Promise.all(downloadPromiseAry)
+}
+
+// 批量保存临时文件到本地缓存文件
+export const batchSaveFiles = function (tempFiles) {
+	tempFiles.map((tempFilePath) => {
+		return new Promise((resolve, reject) => {
+			wx.saveFile({
+				tempFilePath,
+				success() {}
+			})
+		})
 	})
 }
-
-/**
- * 打点 - 用户分享
- * @param method 分享的途径
- */
-export function dotByShare({method}) {
-	getApp().tracker.evt('app_share', {
-		tracktype: SHARE_PARAMS.trackType.event,
-		method
-	})
-}
-
-/**
- * 打点 - 用户分享结果
- * @param method 分享的途径
- * @param status 分享行为的结果
- */
-export function dotByShareResult({method, status}) {
-	getApp().tracker.evt('app_share_result', {
-		tracktype: SHARE_PARAMS.trackType.event,
-		method,
-		status
-	})
-}
-
-/**
- * 打点 - 通过其他人分享进入
- * @param share_from 邀请者的 OpenID
- */
-export function dotByShareEnter({share_from}) {
-	getApp().tracker.evt('share_enter', {
-		tracktype: SHARE_PARAMS.trackType.event,
-		share_from,
-	})
-}
-
-/**
- * 打点 - 频道打点
- */
-export function dotByChannel() {
-	getApp().tracker.evt('channel', {
-		tracktype: SHARE_PARAMS.trackType.event
-	})
-}
-
-/**
- * 打点 - 用户输入
- * @param input_form_type 输入input的名称
- */
-export function dotByUserInputCollect({input_form_type}) {
-	getApp().tracker.evt('user_input_collect', {
-		tracktype: SHARE_PARAMS.trackType.event,
-		input_form_type
-	})
-}
-
-/**
- * 打点 - 小程序启动打点
- */
-export function dotByAppStart() {
-	getApp().tracker.evt('app_start')
-}
-
-/**
- * 打点 - 用户微信基础信息授权
- * @param sex
- * @param age
- * @param province
- * @param city
- */
-export function dotByUserWxAuth({sex, age, province, city}) {
-	getApp().tracker.evt('user_info', {
-		sex, age, province, city
-	})
-}
-

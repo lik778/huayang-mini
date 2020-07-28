@@ -19,14 +19,18 @@
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
+		"compileHotReLoad": false,
 		"babelSetting": {
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
-		}
+		},
+		"useIsolateContext": true,
+		"useCompilerModule": false,
+		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.11.0",
+	"libVersion": "2.12.0",
 	"appid": "wx85d130227f745fc5",
 	"projectname": "list",
 	"debugOptions": {
@@ -60,13 +64,6 @@
 			"current": -1,
 			"list": [
 				{
-					"id": 0,
-					"name": "mine/joinVip/joinVip",
-					"pathName": "mine/joinVip/joinVip",
-					"query": "",
-					"scene": null
-				},
-				{
 					"id": 1,
 					"name": "subLive/courseList/courseList",
 					"pathName": "subLive/courseList/courseList",
@@ -89,37 +86,9 @@
 				},
 				{
 					"id": -1,
-					"name": "pages/mall/mall",
-					"pathName": "pages/mall/mall",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "subMall/detail/detail",
-					"pathName": "subMall/detail/detail",
-					"query": "prdId=37",
-					"scene": null
-				},
-				{
-					"id": -1,
 					"name": "pages/mine/mine",
 					"pathName": "pages/mine/mine",
 					"query": "",
-					"scene": null
-				},
-				{
-					"id": 7,
-					"name": "mine/joinSchool/joinSchool",
-					"pathName": "mine/joinSchool/joinSchool",
-					"query": "from=article",
-					"scene": null
-				},
-				{
-					"id": 8,
-					"name": "subLive/review/review",
-					"pathName": "subLive/review/review",
-					"query": "zhiboRoomId=87",
 					"scene": null
 				},
 				{
@@ -138,51 +107,23 @@
 				},
 				{
 					"id": -1,
-					"name": "mine/withdrawResult/withdrawResult",
-					"pathName": "mine/withdrawResult/withdrawResult",
-					"query": "money=212",
+					"name": "pages/test/test",
+					"pathName": "pages/test/test",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 7,
+					"name": "subCourse/actionPage/actionPage",
+					"pathName": "subCourse/actionPage/actionPage",
+					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "mine/contact/contact",
-					"pathName": "mine/contact/contact",
+					"name": "subCourse/practiceDetail/practiceDetail",
+					"pathName": "subCourse/practiceDetail/practiceDetail",
 					"query": "",
-					"scene": null
-				},
-				{
-					"id": 14,
-					"name": "mine/vipWelfare/vipWelfare",
-					"pathName": "mine/vipWelfare/vipWelfare",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 15,
-					"name": "mine/withdraw/withdraw",
-					"pathName": "mine/withdraw/withdraw",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 16,
-					"name": "mine/invite/invite",
-					"pathName": "mine/invite/invite",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 16,
-					"name": "subLive/attempt/attempt",
-					"pathName": "subLive/attempt/attempt",
-					"query": "prdId=37",
-					"scene": null
-				},
-				{
-					"id": 17,
-					"name": "mine/contact/contact",
-					"pathName": "mine/contact/contact",
-					"query": "prdId=37",
 					"scene": null
 				}
 			]

@@ -1,0 +1,4 @@
+<view>
+  训练营详情页
+  <button bind:tap="startPractice">开始练习</button>
+</view>

@@ -1,0 +1,33 @@
+<view class="action-page">
+  <cover-view class="navigation" style="padding-top:{{statusHeight+43}}px;">
+    <naviBar title="动作演示"></naviBar>
+  </cover-view>
+
+  <view class="content" style="height:{{screenHeight-statusHeight-43}}px">
+    <cover-view class="cycle-time"><cover-view class="main-cycle-time">{{targetActionIndex}}/{{targetActionObj.cycleTime}}</cover-view><cover-view class="sub-cycle-time">次</cover-view></cover-view>
+
+    <cover-view class="operate">
+      <cover-image class="arrow-left" src="../../assets/images/common/arrow-left.png"></cover-image>
+      <cover-image class="pause" src="../../assets/images/common/pause.png"></cover-image>
+      <cover-image class="arrow-right" src="../../assets/images/common/arrow-right.png"></cover-image>
+    </cover-view>
+
+    <cover-view class="progress">
+      <cover-view class="duration"><cover-view>训练时长</cover-view><cover-view>12:00</cover-view></cover-view>
+      <cover-view class="bar"></cover-view>
+    </cover-view>
+    <video
+      id="actionVideo"
+      controls="{{false}}"
+      custom-cache="{{false}}"
+      object-fit="contain"
+      enable-play-gesture="{{false}}"
+      enable-auto-rotation="{{true}}"
+      play-btn-position="top"
+      show-play-btn="{{false}}"
+      autoplay="{{false}}"
+      loop="{{true}}"
+      src="{{targetActionObj.link}}"></video>
+  </view>
+
+</view>

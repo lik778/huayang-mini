@@ -60,6 +60,5 @@ Component({
     this.setData({
       statusBarHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
-    console.log(this.data.statusBarHeight)
   }
 })

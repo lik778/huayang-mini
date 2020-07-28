@@ -1,4 +1,4 @@
-// subMall/category/category.js
+// subCourse/category/category.js
 import { getCategory, getProductListByCategory } from "../../api/mall/index"
 import { checkAuth } from "../../utils/auth"
 
@@ -76,7 +76,7 @@ Page({
   buy(e) {
     let target = e.currentTarget.dataset.item
     wx.navigateTo({
-      url: '/subMall/detail/detail?prdId=' + target.product.id
+      url: '/subCourse/detail/detail?prdId=' + target.product.id
     })
   },
   /**
@@ -130,7 +130,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: '花样值得买',
-      path: '/subMall/category/category?categoryId=' + this.data.categoryId
+      path: '/subCourse/category/category?categoryId=' + this.data.categoryId
     }
   }
 })

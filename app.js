@@ -1,9 +1,7 @@
 //app.js
-import { getLocalStorage, setLocalStorage } from './utils/util'
+import { batchDownloadFiles, getLocalStorage, setLocalStorage } from './utils/util'
 import { GLOBAL_KEY } from './lib/config'
-import { BxTracker } from './anka-tracker.min.js'
-import trackerConfig from './anka.config'
-const Tracker = BxTracker.generateTrackerInstance(trackerConfig)
+import { v48 } from "./lib/voices"
 
 App({
 	onLaunch: function () {},
@@ -16,17 +14,21 @@ App({
 				},
 			})
 		}
-	},
-	// 初始化打点sdk
-	initialPointMachine() {
-		let openId = getLocalStorage(GLOBAL_KEY.openId)
-		if (!openId || this.initialize) return false
-		Tracker.asyncInitWithCommonData({
-			open_id: openId,
-			union_id: ''
-		}).then(() => {
-			this.initialize = true
-			console.log('初始化成功，开始执行打点任务')
+
+		// 将"口令"包文件至本地缓存文件
+		wx.getSavedFileList({
+			success(res) {
+				if (res.errMsg === "getSavedFileList:ok") {
+					console.log(res.fileList);
+					if (res.fileList.length === 0) {
+						return ;
+						// 批量下载"口令"包
+						batchDownloadFiles(v48).then((response) => {
+
+						})
+					}
+				}
+			}
 		})
 	},
 	onUnload() {},

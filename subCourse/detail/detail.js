@@ -1,4 +1,4 @@
-// subMall/detail/detail.js
+// subCourse/detail/detail.js
 import { getProductInfo, getYouZanAppId } from "../../api/mall/index"
 import { checkAuth } from "../../utils/auth"
 import { changeTwoDecimal_f } from "../../utils/util"
@@ -122,7 +122,7 @@ Page({
 	onShareAppMessage: function () {
 		return {
 			title: "花样值得买",
-			path: '/subMall/detail/detail?prdId=' + this.data.prdId
+			path: '/subCourse/detail/detail?prdId=' + this.data.prdId
 		}
 	}
 })

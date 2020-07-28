@@ -1,7 +1,7 @@
 {
   "plugins": {
     "live-player-plugin": {
-      "version": "1.0.9",
+      "version": "1.1.3",
       "provider": "wx2b03c6e691cd7370"
     }
   },
@@ -19,9 +19,12 @@
     "pages/mall/mall",
     "pages/auth/auth",
     "pages/privacy/privacy",
-    "pages/service/service"
+    "pages/service/service",
+    "pages/test/test",
+    "pages/practice/practice"
   ],
-  "subpackages": [{
+  "subpackages": [
+    {
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -49,10 +52,12 @@
       ]
     },
     {
-      "root": "subMall",
+      "root": "subCourse",
       "pages": [
         "detail/detail",
-        "category/category"
+        "category/category",
+        "practiceDetail/practiceDetail",
+        "actionPage/actionPage"
       ]
     }
   ],
@@ -63,27 +68,16 @@
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "custom": false,
-    "color": "#999",
-    "selectedColor": "#000",
-    "backgroundColor": "#fff",
-    "list": [{
-        "pagePath": "pages/index/index",
-        "selectedIconPath": "assets/images/common/liveActive.png",
-        "iconPath": "assets/images/common/live.png",
-        "text": "直播"
+    "custom": true,
+    "list": [
+      {
+        "pagePath": "pages/index/index"
       },
       {
-        "pagePath": "pages/mall/mall",
-        "selectedIconPath": "assets/images/common/mallActive.png",
-        "iconPath": "assets/images/common/mall.png",
-        "text": "值得买"
+        "pagePath": "pages/mall/mall"
       },
       {
-        "pagePath": "pages/mine/mine",
-        "selectedIconPath": "assets/images/common/mineActive.png",
-        "iconPath": "assets/images/common/mine.png",
-        "text": "我的"
+        "pagePath": "pages/mine/mine"
       }
     ]
   },

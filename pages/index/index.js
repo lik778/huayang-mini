@@ -45,14 +45,12 @@ Page({
 		autoplay: false,
 		interval: 2000,
 		duration: 500,
-		showInviteLine:true		
+		showInviteLine:true
 
 	},
 	// 处理swiper点击回调
 	handleSwiperTap(e) {
 		let {bannerId} = e.currentTarget.dataset.item
-		// 打点
-		setPoint({banner_id: bannerId})
 		wx.navigateTo({url: this.data.bannerPictureObject.bannerLink})
 	},
 	// 关闭立即邀请
@@ -170,8 +168,6 @@ Page({
 				return false
 			}
 		}
-		// 打点
-		setPoint({banner_id: bannerId})
 		// 课程类型是回看&存在回看链接
 		if (status == 2 && link) {
 			wx.navigateTo({
@@ -333,7 +329,6 @@ Page({
 		})
 	},
 	openPopup() {
-		// dotByUserClick({component: SHARE_PARAMS.component.btn, click_type: SHARE_PARAMS.clickType.url})
 		let { link } = this.data.alertInfo
 		if (link) {
 			wx.navigateTo({
@@ -419,6 +414,12 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
+		if (typeof this.getTabBar === 'function' &&
+			this.getTabBar()) {
+			this.getTabBar().setData({
+				selected: 0
+			})
+		}
 		if (getLocalStorage(GLOBAL_KEY.vipBack)) {
 			setLocalStorage(GLOBAL_KEY.vipBack, false)
 			wx.redirectTo({
