@@ -84,7 +84,7 @@ Page({
     this.data.isTInnerAudioPlaying = true;
     this.data.tAudio = wx.createInnerAudioContext()
     this.data.tAudio.volume = 1;
-    this.data.tAudio.src = 'https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2d368763-1735c0f61bd/2d368763-1735c0f61bd.mp3'
+    this.data.tAudio.src = "http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.duJ3h6EbpPYBbc7474bc5a573431793328013aca9e04.mp3"
     this.data.tAudio.play()
   },
   stopTeacherAudio() {
@@ -96,7 +96,8 @@ Page({
     if (this.data.isInnerAudioPlaying) return;
     this.data.isInnerAudioPlaying = true;
     this.data.audio = wx.createInnerAudioContext()
-    this.data.audio.src = "https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/3c054136-17380170bcc/3c054136-17380170bcc.mp3"
+    this.data.audio.loop = true
+    this.data.audio.src = "https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/18984d13-1739038b539/18984d13-1739038b539.mp3"
     this.data.audio.play()
   },
   stopNo() {
@@ -117,18 +118,18 @@ Page({
 
   startGame() {
     this.data.video.play();
-    this.playBgAudio()
+    // this.playBgAudio()
     this.playNo()
     setTimeout(() => {
       // this.data.audio.volume = 0.2;
       // this.data.bgAudio.volume = 0.2;
-      this.playTeacherAudio()
+      // this.playTeacherAudio()
     }, 5000)
   },
   stopGame() {
     this.data.video.stop();
-    this.pauseBgAudio()
+    // this.pauseBgAudio()
     this.stopNo()
-    this.stopTeacherAudio()
+    // this.stopTeacherAudio()
   }
 })

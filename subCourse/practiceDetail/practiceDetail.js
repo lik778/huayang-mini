@@ -17,6 +17,7 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
+		// ?courseId=xxx
 		this.initial()
 	},
 
@@ -123,7 +124,6 @@ Page({
 			wx.navigateTo({
 				url: "/subCourse/actionPage/actionPage",
 				success(res) {
-					res.eventChannel.emit('transmitCourseDuration', self.data.courseInfoObj.duration)
 					res.eventChannel.emit('transmitCourseMeta', JSON.stringify(cookedCourseMetaData))
 				}
 			})

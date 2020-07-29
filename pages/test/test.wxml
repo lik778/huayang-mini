@@ -2,7 +2,7 @@
   <!--  <web-view src="http://huayang.baixing.cn/#/v100/live"></web-view>-->
   <video
     id="myVideo"
-    controls="{{false}}"
+    controls="{{true}}"
     custom-cache="{{false}}"
     object-fit="contain"
     enable-play-gesture="{{false}}"
@@ -12,7 +12,7 @@
     autoplay="{{false}}"
     loop="{{true}}"
     class="video-container {{adapter ? 'adapter' : ''}}"
-    src="https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/36a5673d-1735ae899ad/36a5673d-1735ae899ad.mp4"></video>
+    src="http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.X0uSsReW9JCj0df30a4e33d11fa17538eef929df6954.mp4"></video>
 
   <view style="display: flex;justify-content: space-around;">
     <button size="mini" bind:tap="playVideo">开始视频教学</button>
