@@ -2,6 +2,7 @@
 import { $notNull, getLocalStorage } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
 import { voices_ary, voices_key, voices_number, LocaleVoice } from "../../lib/voices"
+import { recordPracticeBehavior } from "../../api/course/index"
 
 Page({
 	/**
@@ -11,8 +12,89 @@ Page({
 		statusHeight: 0, // 状态栏高度
 		screenHeight: 0, // 设备高度
 		screenWidth: 0, // 设备宽度
+		courseInfo: {}, // 课程信息
 		currentActionIndex: 0, // 当前动作索引
-		actionData: [{"id":8,"name":"引体向上","desc":"","meta_type":2,"teacher_id":14,"category":"fitness","link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.u0QwXWSzueXc0df30a4e33d11fa17538eef929df6954.mp4","voice_link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.ja1i95SmWTabbc7474bc5a573431793328013aca9e04.mp3","name_voice_link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3","cover":"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg","duration":2,"rank":3,"calories":10,"voice_type":"2_2","created_at":"2020-07-23","updated_at":"2020-07-29","deleted_at":null,"cycleTime":"2","restTime":"10"},{"id":8,"name":"引体向上","desc":"","meta_type":2,"teacher_id":14,"category":"fitness","link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.LAc5uuWAp5ks0df30a4e33d11fa17538eef929df6954.mp4","voice_link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.M5gJBhwRysBNbc7474bc5a573431793328013aca9e04.mp3","name_voice_link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3","cover":"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg","duration":2,"rank":3,"calories":10,"voice_type":"2_2","created_at":"2020-07-23","updated_at":"2020-07-29","deleted_at":null,"cycleTime":"2","restTime":"10"},{"id":8,"name":"引体向上","desc":"","meta_type":2,"teacher_id":14,"category":"fitness","link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.RZJ74n6mSqx30df30a4e33d11fa17538eef929df6954.mp4","voice_link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.HBh2g6KHpL11bc7474bc5a573431793328013aca9e04.mp3","name_voice_link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3","cover":"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg","duration":2,"rank":3,"calories":10,"voice_type":"2_2","created_at":"2020-07-23","updated_at":"2020-07-29","deleted_at":null,"cycleTime":"2","restTime":"10"},{"id":8,"name":"引体向上","desc":"","meta_type":2,"teacher_id":14,"category":"fitness","link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.944ebmDPF07v0df30a4e33d11fa17538eef929df6954.mp4","voice_link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.r87lRM7zgvMkbc7474bc5a573431793328013aca9e04.mp3","name_voice_link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3","cover":"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg","duration":2,"rank":3,"calories":10,"voice_type":"2_2","created_at":"2020-07-23","updated_at":"2020-07-29","deleted_at":null,"cycleTime":"2","restTime":"10"}], // 动作数据
+		actionData: [{
+			"id": 8,
+			"name": "引体向上",
+			"desc": "",
+			"meta_type": 2,
+			"teacher_id": 14,
+			"category": "fitness",
+			"link": "http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.u0QwXWSzueXc0df30a4e33d11fa17538eef929df6954.mp4",
+			"voice_link": "http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.ja1i95SmWTabbc7474bc5a573431793328013aca9e04.mp3",
+			"name_voice_link": "https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3",
+			"cover": "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg",
+			"duration": 2,
+			"rank": 3,
+			"calories": 10,
+			"voice_type": "2_2",
+			"created_at": "2020-07-23",
+			"updated_at": "2020-07-29",
+			"deleted_at": null,
+			"cycleTime": "2",
+			"restTime": "10"
+		}, {
+			"id": 8,
+			"name": "引体向上",
+			"desc": "",
+			"meta_type": 2,
+			"teacher_id": 14,
+			"category": "fitness",
+			"link": "http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.LAc5uuWAp5ks0df30a4e33d11fa17538eef929df6954.mp4",
+			"voice_link": "http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.M5gJBhwRysBNbc7474bc5a573431793328013aca9e04.mp3",
+			"name_voice_link": "https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3",
+			"cover": "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg",
+			"duration": 2,
+			"rank": 3,
+			"calories": 10,
+			"voice_type": "2_2",
+			"created_at": "2020-07-23",
+			"updated_at": "2020-07-29",
+			"deleted_at": null,
+			"cycleTime": "2",
+			"restTime": "10"
+		}, {
+			"id": 8,
+			"name": "引体向上",
+			"desc": "",
+			"meta_type": 2,
+			"teacher_id": 14,
+			"category": "fitness",
+			"link": "http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.RZJ74n6mSqx30df30a4e33d11fa17538eef929df6954.mp4",
+			"voice_link": "http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.HBh2g6KHpL11bc7474bc5a573431793328013aca9e04.mp3",
+			"name_voice_link": "https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3",
+			"cover": "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg",
+			"duration": 2,
+			"rank": 3,
+			"calories": 10,
+			"voice_type": "2_2",
+			"created_at": "2020-07-23",
+			"updated_at": "2020-07-29",
+			"deleted_at": null,
+			"cycleTime": "2",
+			"restTime": "10"
+		}, {
+			"id": 8,
+			"name": "引体向上",
+			"desc": "",
+			"meta_type": 2,
+			"teacher_id": 14,
+			"category": "fitness",
+			"link": "http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.944ebmDPF07v0df30a4e33d11fa17538eef929df6954.mp4",
+			"voice_link": "http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.r87lRM7zgvMkbc7474bc5a573431793328013aca9e04.mp3",
+			"name_voice_link": "https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3",
+			"cover": "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg",
+			"duration": 2,
+			"rank": 3,
+			"calories": 10,
+			"voice_type": "2_2",
+			"created_at": "2020-07-23",
+			"updated_at": "2020-07-29",
+			"deleted_at": null,
+			"cycleTime": "2",
+			"restTime": "10"
+		}], // 动作数据 TODO
 		currentDuration: 0, // 整个课程已播放的时长
 
 		targetActionObj: null, // 正在执行的动作
@@ -29,6 +111,7 @@ Page({
 		countDownAudioEventMounted: false,
 
 		mainPointAudio: null, // 要领播放器
+		mainPointAudioEventMounted: false,
 		didPlayMainPointAudioInCurrentTargetAction: false, // 是否在当前动作生命周期中播放过要领语音
 
 		isRunning: true, // 动作是否正在进行
@@ -44,6 +127,8 @@ Page({
 		globalRecordTimer: null, // 全局训练时长计时器
 		globalRecordTiming: 0, // 整个课程时长
 		globalRecordTimeText: "00:00", // 训练时长
+
+		didShowResultLayer: false, // 结果层
 	},
 
 	/**
@@ -68,11 +153,24 @@ Page({
 		}
 
 		eventChannel.on("transmitCourseMeta", function (data) {
-			console.log(data)
+			// console.log(data)
 			let actionData = JSON.parse(data)
 			self.setData({
 				actionData,
 				targetActionObj: actionData[0] // 默认设置第一项
+			})
+		})
+
+		eventChannel.on("transmitCourseInfo", function (data) {
+			let courseInfo = JSON.parse(data)
+			self.setData({
+				courseInfo
+			})
+
+			// 记录训练行为
+			recordPracticeBehavior({
+				kecheng_id: courseInfo.id,
+				user_id: getLocalStorage(GLOBAL_KEY.userId)
 			})
 		})
 	},
@@ -86,13 +184,13 @@ Page({
 		// 练习开始前的旁白
 		this.data.beforeSportAudio = wx.createInnerAudioContext()
 		// 要领
-		this.data.mainPointAudio = wx.createInnerAudioContext()
+		// this.data.mainPointAudio = wx.createInnerAudioContext()
 		// 口令
 		this.data.commandAudio = wx.createInnerAudioContext()
 		// 时间口令
 		this.data.countDownAudio = wx.createInnerAudioContext()
 
-		// TODO 暂时开发设计稿
+		// 启动
 		this.start()
 	},
 
@@ -138,6 +236,12 @@ Page({
 
 	},
 	/**
+	 * 秀一下
+	 */
+	show() {
+		console.log('秀一下')
+	},
+	/**
 	 * 在休息层切换上一个动作
 	 */
 	switchPrevActionInRestTime() {
@@ -163,15 +267,20 @@ Page({
 			title: "提示",
 			content: "是否立即推出训练",
 			confirmText: "确定",
-			success() {
-				// TODO 干点什么...
-				console.log("回到某一页");
+			success(res) {
+				if (res.confirm) {
+					wx.redirectTo({
+						url: "/subCourse/practiceDetail/practiceDetail"
+					})
+				} else if (res.cancel) {
+					console.log('取消')
+				}
 			}
 		})
 	},
 	// 主动暂停休息阶段
 	pauseRestTime() {
-		this.setData({ didPauseRest: !this.data.didPauseRest })
+		this.setData({didPauseRest: !this.data.didPauseRest})
 	},
 	// 修改休息阶段的休息时间
 	modifyRestTimeTest(time) {
@@ -196,6 +305,9 @@ Page({
 	 * @private
 	 */
 	async _playActionNameAndStartTraining() {
+		this.setData({
+			didPlayMainPointAudioInCurrentTargetAction: false
+		})
 		// 「动作名称」「N次/秒」
 		await this.playTempAudio(this.data.targetActionObj.name_voice_link)
 		await this.playTempAudio(voices_number(this.data.targetActionObj.cycleTime))
@@ -218,7 +330,7 @@ Page({
 			this.stopAllAction()
 			this.checkoutNextAction(true)
 			// 显示预备页
-			this.setData({ didShowPrepareLayer: true })
+			this.setData({didShowPrepareLayer: true})
 			// 下一个动作
 			await this.playTempAudio(LocaleVoice.lv15)
 			// 播报动作名称，并开始训练
@@ -234,7 +346,7 @@ Page({
 			this.stopAllAction()
 			this.checkoutNextAction()
 			// 显示预备页
-			this.setData({ didShowPrepareLayer: true })
+			this.setData({didShowPrepareLayer: true})
 			if (this.data.currentActionIndex === this.data.actionData.length - 1) {
 				// 最后一个动作
 				await this.playTempAudio(LocaleVoice.lv16)
@@ -252,7 +364,7 @@ Page({
 	pauseAction() {
 		if (this.data.isRunning) {
 			this.data.video.pause()
-			this.data.mainPointAudio.pause()
+			this.data.mainPointAudio && this.data.mainPointAudio.pause()
 			if (this.data.targetActionObj.meta_type == 2) {
 				this.data.commandAudio.pause()
 			} else {
@@ -260,7 +372,7 @@ Page({
 			}
 		} else {
 			this.data.video.play()
-			this.data.mainPointAudio.play()
+			this.data.mainPointAudio && this.data.mainPointAudio.play()
 			if (this.data.targetActionObj.meta_type == 2) {
 				this.data.commandAudio.play()
 			} else {
@@ -274,7 +386,7 @@ Page({
 	 */
 	stopAllAction() {
 		this.data.video.stop()
-		this.data.mainPointAudio.stop()
+		this.data.mainPointAudio && this.data.mainPointAudio.stop()
 		this.data.commandAudio.stop()
 		this.data.countDownAudio.stop()
 	},
@@ -321,13 +433,22 @@ Page({
 	 */
 	playMainPoint(voiceLink) {
 		const self = this
+		this.data.mainPointAudio = wx.createInnerAudioContext()
 		this.data.mainPointAudio.src = voiceLink
 		this.data.mainPointAudio.play()
+
+		if (this.data.mainPointAudioEventMounted) return
+		this.setData({mainPointAudioEventMounted: true})
 
 		this.data.mainPointAudio.onEnded(function () {
 			// 还原口令音量
 			self.data.commandAudio.volume = 1
 			self.data.countDownAudio.volume = 1
+			// 标示当前动作已经播放过要领
+			self.setData({
+				didPlayMainPointAudioInCurrentTargetAction: true,
+				mainPointAudio: null
+			})
 		})
 	},
 	/**
@@ -349,7 +470,6 @@ Page({
 				self.data.countDownAudio.volume = 0.3
 				// 5次滴后开始播放"要领"
 				self.playMainPoint(self.data.targetActionObj.voice_link)
-				self.setData({didPlayMainPointAudioInCurrentTargetAction: true})
 			}
 
 			// 判断：当前动作倒计时是否结束
@@ -383,8 +503,6 @@ Page({
 				self.data.commandAudio.volume = 0.3
 				// 第一段"口令"结束开始播放"要领"
 				self.playMainPoint(self.data.targetActionObj.voice_link)
-
-				self.setData({didPlayMainPointAudioInCurrentTargetAction: true})
 			}
 
 			// 判断：当前动作是否结束
@@ -462,6 +580,7 @@ Page({
 			// 「恭喜你完成训练」
 			this.playTempAudio(LocaleVoice.lv6)
 			// 训练结束
+			this.setData({didShowResultLayer: true})
 			// 停止全局记时器
 			clearInterval(this.data.globalRecordTimer)
 		}
@@ -474,7 +593,6 @@ Page({
 			currentActionIndex: nextIndex,
 			targetActionObj: nextActionObj,
 			targetActionIndex: 0,
-			didPlayMainPointAudioInCurrentTargetAction: false
 		})
 	},
 	// 开始课程演示
@@ -486,7 +604,6 @@ Page({
 		})
 		// 视频开始播放
 		this.data.video.play()
-		console.log(data)
 		let {name, voice_link, voice_type, restTime} = data
 
 		// 设置当前动作的休息时间
@@ -508,7 +625,7 @@ Page({
 		// 全局计时器
 		this.data.globalRecordTimer = setInterval(() => {
 			let nextTiming = this.data.globalRecordTiming + 1
-				this.setData({
+			this.setData({
 				globalRecordTiming: nextTiming,
 				globalRecordTimeText: this.calcRemainingTime(nextTiming)
 			})

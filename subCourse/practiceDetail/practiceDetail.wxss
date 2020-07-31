@@ -1,1 +1,120 @@
-/* subCourse/practiceDetail/practiceDetail.wxss */
+.practice-detail {
+    padding: 50rpx 30rpx 0;
+}
+/*intro*/
+.intro {
+    margin-bottom: 70rpx;
+}
+.course-name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0;
+}
+.name {
+    font: bold 56rpx/80rpx PingFang SC;
+}
+.share-icon {
+    width: 150rpx;
+    height: 64rpx;
+}
+.share-icon:active {
+    opacity: 0.8;
+}
+.course-level {
+    margin: 20rpx 0 40rpx;
+    font: 36rpx/50rpx PingFang SC;
+}
+.course-desc {
+    font: 28rpx/44rpx PingFang SC;
+    color: #222;
+}
+.dot {
+    margin: 0 10rpx;
+}
+/*preview*/
+.layer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.preview-layer-01 {
+    font: 52rpx/74rpx PingFang SC;
+}
+.preview-layer-02 {
+    font: 28rpx/40rpx PingFang SC;
+}
+.scroller {
+    white-space: nowrap;
+    width: 100%;
+    padding: 30rpx 0 20rpx;
+    box-sizing: border-box;
+}
+.scroll-item {
+    display: inline-block;
+    width: 280rpx;
+    height: 280rpx;
+    margin-right: 20rpx;
+}
+.scroll-item:last-child {
+    margin-right: 0;
+}
+/*recent*/
+.recent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.avatar {
+    width: 60rpx;
+    height: 60rpx;
+    margin-right: 12rpx;
+    border-radius: 999rpx;
+}
+.avatar:last-child {
+    margin-right: 0;
+}
+.recent-count {
+    font: 28rpx/40rpx PingFang SC;
+    color: #444;
+}
+.btn-container {
+    overflow: hidden;
+    position: fixed;
+    bottom: 12rpx;
+    left: 0;
+    right: 0;
+    margin: 0 30rpx;
+    height: 96rpx;
+    font: 500 40rpx/96rpx PingFang SC;
+    color: white;
+    text-align: center;
+    border-radius: 999rpx;
+}
+.btn {
+    height: inherit;
+    width: inherit;
+    background: #CC0000;
+}
+.btn.downloading {
+    background: #222;
+}
+.btn:active {
+    opacity: 0.8;
+}
+.process {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    height: 96rpx;
+    background: #CC0000;
+    z-index: 1;
+}
+.btn-text {
+    position: fixed;
+    bottom: 12rpx;
+    left: 0;
+    right: 0;
+    z-index: 10;
+}

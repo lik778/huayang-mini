@@ -12,7 +12,7 @@ Component({
         isDIY: false
       },
       {
-        "pagePath": "/pages/mall/mall",
+        "pagePath": "/pages/practice/practice",
         "selectedIconPath": "../assets/images/common/mallActive.png",
         "iconPath": "../assets/images/common/mall.png",
         "text": "",

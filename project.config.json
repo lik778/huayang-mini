@@ -120,10 +120,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 8,
 					"name": "subCourse/practiceDetail/practiceDetail",
 					"pathName": "subCourse/practiceDetail/practiceDetail",
-					"query": "",
+					"query": "courseId=118",
 					"scene": null
 				}
 			]

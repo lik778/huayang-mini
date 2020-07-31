@@ -14,14 +14,14 @@
     "wx85d130227f745fc5"
   ],
   "pages": [
+    "pages/practice/practice",
     "pages/index/index",
     "pages/mine/mine",
     "pages/mall/mall",
     "pages/auth/auth",
     "pages/privacy/privacy",
     "pages/service/service",
-    "pages/test/test",
-    "pages/practice/practice"
+    "pages/test/test"
   ],
   "subpackages": [
     {
@@ -74,7 +74,7 @@
         "pagePath": "pages/index/index"
       },
       {
-        "pagePath": "pages/mall/mall"
+        "pagePath": "pages/practice/practice"
       },
       {
         "pagePath": "pages/mine/mine"
