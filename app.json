@@ -21,7 +21,7 @@
     "pages/auth/auth",
     "pages/privacy/privacy",
     "pages/service/service",
-    "pages/test/test"
+    "pages/coopen/coopen"
   ],
   "subpackages": [
     {

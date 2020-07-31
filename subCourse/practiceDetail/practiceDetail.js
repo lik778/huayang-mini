@@ -1,11 +1,8 @@
 import { getBootCampCourseInfo, getRecentVisitorList } from "../../api/course/index"
 import { batchDownloadFiles, getLocalStorage } from "../../utils/util"
-import { GLOBAL_KEY } from "../../lib/config"
-
-const CourseLevels = ["", "初级", "中级", "高级"]
+import { GLOBAL_KEY, CourseLevels } from "../../lib/config"
 
 Page({
-
 	/**
 	 * 页面的初始数据
 	 */
