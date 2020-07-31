@@ -19,7 +19,6 @@ App({
 		wx.getSavedFileList({
 			success(res) {
 				if (res.errMsg === "getSavedFileList:ok") {
-					console.log(res.fileList);
 					if (res.fileList.length === 0) {
 						return ;
 						// 批量下载"口令"包

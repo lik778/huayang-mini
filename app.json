@@ -14,6 +14,7 @@
     "wx85d130227f745fc5"
   ],
   "pages": [
+    "pages/discovery/discovery",
     "pages/index/index",
     "pages/mine/mine",
     "pages/mall/mall",
@@ -57,7 +58,9 @@
         "detail/detail",
         "category/category",
         "practiceDetail/practiceDetail",
-        "actionPage/actionPage"
+        "actionPage/actionPage",
+        "campDetail/campDetail",
+        "joinCamp/joinCamp"
       ]
     }
   ],

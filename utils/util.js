@@ -2,6 +2,7 @@ import md5 from 'md5'
 import {
 	GLOBAL_KEY,
 	ROOT_URL,
+	URL,
 	SHARE_PARAMS,
 	WeChatLiveStatus
 } from '../lib/config'
@@ -40,14 +41,46 @@ export const formatNumber = n => {
 	n = n.toString()
 	return n[1] ? n : '0' + n
 }
+// 购买训练营课程
+export const payCourse = function ({
+	id,
+	name
+}) {
+	// 调用获取支付凭证
+	let getPaySignParams = {
+		open_id: getLocalStorage(GLOBAL_KEY.openId),
+		product_title: name,
+		order_id: id,
+		app_id: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)).app_id
+		// app_id:"wx5705fece1e1cdc1e"
+	}
+	let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo" //商户key
+	return new Promise((resolve, reject) => {
+		request._post(URL.getPaySign, getPaySignParams).then(({
+			data,
+			code
+		}) => {
+			if (code === 0) {
+				requestPayment({
+					prepay_id: data,
+					key: mallKey
+				}).then(res => {
+					resolve(res)
+				}).catch(err => {
+					reject(err)
+				})
+			}
+		})
+	})
+}
 
 /**
  * 购买会员
  * @returns
  */
 export const payVip = function ({
-																	id
-																}) {
+	id
+}) {
 	let createOrderParmas = {
 		scene: "zhide_vip",
 		recommend_user_id: id || "",
@@ -282,11 +315,11 @@ export const getSchedule = async function (roomIds = []) {
 
 // 判断是否是会员/是否入学
 export const checkIdentity = function ({
-																				 roomId,
-																				 link,
-																				 zhiboRoomId,
-																				 customParams = {}
-																			 }) {
+	roomId,
+	link,
+	zhiboRoomId,
+	customParams = {}
+}) {
 	const userId = getLocalStorage(GLOBAL_KEY.userId)
 	return new Promise((resolve, reject) => {
 		if (userId == null) {
@@ -294,9 +327,9 @@ export const checkIdentity = function ({
 		} else {
 			// 获取直播权限
 			getWatchLiveAuth({
-				room_id: zhiboRoomId,
-				user_id: userId
-			})
+					room_id: zhiboRoomId,
+					user_id: userId
+				})
 				.then(res => {
 					if (res === 'vip') {
 						// 非会员，跳往花样汇
@@ -341,8 +374,8 @@ export const checkIdentity = function ({
 function queryLiveStatus(roomId) {
 	return new Promise((resolve, reject) => {
 		livePlayer.getLiveStatus({
-			room_id: roomId
-		})
+				room_id: roomId
+			})
 			.then(response => {
 				resolve(response)
 			})
@@ -434,7 +467,7 @@ export const returnFloat = (values) => {
 }
 
 // 批量下载文件
-export const batchDownloadFiles = function(downloadUrls) {
+export const batchDownloadFiles = function (downloadUrls) {
 	let downloadPromiseAry = []
 	downloadUrls.map(url => {
 		downloadPromiseAry.push(
@@ -466,4 +499,60 @@ export const batchSaveFiles = function (tempFiles) {
 			})
 		})
 	})
+}
+
+// 处理日历显示
+export const getTodayDate = () => {
+	let currentDate = new Date()
+	let timesStamp = currentDate.getTime();
+	let currenDay = currentDate.getDay();
+	let dates = [];
+	let dateArr = []
+	for (let i = 0; i < 7; i++) {
+		dates.push(new Date(timesStamp + 24 * 60 * 60 * 1000 * (i - (currenDay + 6) % 7)).toLocaleDateString().replace(/\//g, '-'));
+	}
+	for (let i in dates) {
+		dateArr.push(dates[i].split("-")[2])
+	}
+	// changeArrIndex(dateArr, 0, dateArr.length-1)
+	return dateArr
+}
+// 处理日期
+export const manageWeek = () => {
+	let nowDate = new Date()
+	let week = nowDate.getDay() === 0 ? 7 : nowDate.getDay()
+	let weekList = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+	if (week === 7) {
+		week = '周日'
+	} else if (week === 1) {
+		week = '周一'
+	} else if (week === 2) {
+		week = '周二'
+	} else if (week === 3) {
+		week = '周三'
+	} else if (week === 4) {
+		week = '周四'
+	} else if (week === 5) {
+		week = '周五'
+	} else if (week === 6) {
+		week = '周六'
+	}
+	for (let i in weekList) {
+		if (weekList[i] == week) {
+			weekList[i] = '今天'
+		}
+	}
+	return weekList
+}
+
+// 计算两个日期相差xx天
+export const countDay = (nowDate, totalDate) => {
+	let endTime = parseInt(nowDate.getTime() / 1000) - new Date(totalDate).getTime() / 1000;
+	let date = parseInt(endTime / 60 / 60 / 24); //相差天数
+	return date
+}
+// 调换数组两个位置
+export const changeArrIndex = (arr, index1, index2) => {
+	arr[index1] = arr.splice(index2, 1, arr[index1])[0];
+	return arr;
 }

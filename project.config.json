@@ -19,15 +19,15 @@
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
-		"compileHotReLoad": false,
 		"babelSetting": {
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
 		},
-		"useIsolateContext": true,
 		"useCompilerModule": false,
-		"userConfirmedUseCompilerModuleSwitch": false
+		"userConfirmedUseCompilerModuleSwitch": false,
+		"compileHotReLoad": false,
+		"useIsolateContext": true
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.12.0",
@@ -64,27 +64,6 @@
 			"current": -1,
 			"list": [
 				{
-					"id": 1,
-					"name": "subLive/courseList/courseList",
-					"pathName": "subLive/courseList/courseList",
-					"query": "id=551",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "subLive/unAuthorized/unAuthorized",
-					"pathName": "subLive/unAuthorized/unAuthorized",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 3,
-					"name": "pages/auth/auth",
-					"pathName": "pages/auth/auth",
-					"query": "from=article",
-					"scene": null
-				},
-				{
 					"id": -1,
 					"name": "pages/mine/mine",
 					"pathName": "pages/mine/mine",
@@ -92,38 +71,17 @@
 					"scene": null
 				},
 				{
-					"id": 9,
-					"name": "subLive/officialChannel/officialChannel",
-					"pathName": "subLive/officialChannel/officialChannel",
-					"query": "",
+					"id": 1,
+					"name": "训练营详情",
+					"pathName": "subCourse/campDetail/campDetail",
+					"query": "id=56",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "mine/joinVip/joinVip",
-					"pathName": "mine/joinVip/joinVip",
-					"query": "prdId=37",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/test/test",
-					"pathName": "pages/test/test",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 7,
-					"name": "subCourse/actionPage/actionPage",
-					"pathName": "subCourse/actionPage/actionPage",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "subCourse/practiceDetail/practiceDetail",
-					"pathName": "subCourse/practiceDetail/practiceDetail",
-					"query": "",
+					"name": "pages/mall/mall",
+					"pathName": "pages/mall/mall",
+					"query": "id=26",
 					"scene": null
 				}
 			]

@@ -1,0 +1,67 @@
+<!--subCourse/campDetail/campDetail.wxml-->
+<view class="campdetail">
+	<!-- navibar栏 -->
+	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+		<naviBar title="" color="#5F5F5F" titleColor="#000000"></naviBar>
+	</view>
+	<!-- 背景层 -->
+	<view class="bg">
+		<view class="bg-title">{{campDetailData.name}}</view>
+		<view class="bg-subtitle">第 {{campDetailData.nowDay}}/{{campDetailData.period}} 天</view>
+	</view>
+	<!-- 主体-->
+	<view class="main">
+		<!-- 日期栏 -->
+		<view class="date">
+			<view class="week-line">
+				<text wx:for="{{dateObj.weekList}}" wx:key="index">{{item}}</text>
+			</view>
+			<view class="date-line">
+				<text wx:for="{{dateObj.dateList}}" wx:key="index" style="{{cureentDay==item?styleObj.all:''}}">{{item}}</text>
+			</view>
+		</view>
+		<!-- 课程内容 -->
+		<view class="camp-container">
+			<view class="video">
+				<view class="video-cover" bindtap="playVideo" wx-if="{{showVideoCover}}">
+					<image src="/assets/images/common/play.png"></image>
+				</view>
+				<video id="myVideo" src="{{videoSrc}}" style="{{videoHeight}}" controls="{{false}}" show-center-play-btn="{{false}}" bindtap="pauseVideo" bindended="initVideo"></video>
+			</view>
+			<view class="course-list">
+				<view class="course-item" wx:for="{{courseList}}" wx:key="index" bindtap="toDetail" data-type="{{item}}">
+					<view class="course-item-left">
+						<image src="/assets/images/common/live.png"></image>
+					</view>
+					<view class="course-item-right">
+						<view class="course-item-right-left">
+							<text>{{item.name?item.name:item.title}}</text>
+						</view>
+						<view class="course-item-right-right">
+							<text>20分钟</text>
+							<image src="/assets/images/common/arrow-right-one.png"></image>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<!-- 按钮层 -->
+	<view class="bottom">
+		<view class="button">
+			<image src='/assets/images/common/wechat.png'></image>
+			<text>加入互动交流群</text>
+		</view>
+	</view>
+	<!-- 遮罩层 -->
+	<view class="cover-bg" wx:if="{{showCover}}" bindtap="closeCover">
+		<view class="cover-bg-box">
+			<view class="cover-text">
+				<view>点击下方按钮</view>
+				<view>专属客服服务</view>
+			</view>
+			<image src="/assets/images/common/long-down-arrow.png"></image>
+		</view>
+
+	</view>
+</view>

@@ -1,0 +1,38 @@
+/* subCourse/joinCamp/joinCamp.wxss */
+.detail image {
+  width: 100%;
+  vertical-align: bottom;
+}
+
+.button-line {
+  width: calc(100% - 60rpx);
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 36rpx;
+}
+
+.join {
+  background: #FF4433;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1);
+  line-height: 96rpx;
+  border-radius: 48rpx;
+}
+
+.join text {
+  font-size: 32rpx;
+  line-height: 40rpx;
+}
+
+.pay {
+  background: #08C063;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1);
+  line-height: 96rpx;
+  border-radius: 48rpx;
+}
