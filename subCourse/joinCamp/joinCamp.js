@@ -20,6 +20,7 @@ Page({
   data: {
     statusHeight: 0,
     campId: 0,
+    joinTime:"",
     campDetailData: {},
   },
   // 获取训练营详情
@@ -93,7 +94,8 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      campId: options.id
+      campId: options.id,
+      joinTime: options.time
     })
     this.getCampDetail(options.id)
   },

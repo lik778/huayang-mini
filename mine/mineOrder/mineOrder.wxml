@@ -4,6 +4,11 @@
 		<naviBar title="我的订单"></naviBar>
 	</view>
 	<view class="main" style="padding-top:{{statusHeight+44}}px;">
+		<view class="main-title">
+			<view class="{{curentIndex===index?'main-title-item active':'main-title-item'}}" wx:for="{{titleList}}" wx:key="index" bindtap="changeTab" data-index="{{index}}">
+				{{item}}
+			</view>
+		</view>
 		<view class="main-item" wx:for="{{orderData}}" wx:key="index" bindtap="toOrder">
 			<view class="main-item-top">
 				<view class="main-item-left">

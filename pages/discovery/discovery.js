@@ -1,6 +1,7 @@
 // pages/ discovery/discovery.js
 import {
-  getLocalStorage
+  getLocalStorage,
+  simpleDurationSimple
 } from "../../utils/util"
 import {
   getHasJoinCamp,
@@ -22,7 +23,13 @@ Page({
     campList: [],
     bannerList: [],
     courseList: [],
-    activityList:[]
+    activityList: []
+  },
+  // 加入课程
+  toCourse(e) {
+    wx.navigateTo({
+      url: `/subCourse/practiceDetail/practiceDetail?courseId=${e.currentTarget.dataset.item}`,
+    })
   },
   // swiper切换
   changeSwiperIndex(e) {
@@ -38,7 +45,7 @@ Page({
       status: 1
     }).then(res => {
       this.setData({
-        activityList:res.list
+        activityList: res.list
       })
       console.log(res)
     })
@@ -48,12 +55,15 @@ Page({
     getShowCourseList({
       offset: 0,
       limit: 2,
-      kecheng_type: 3
     }).then(res => {
+      for (let i in res) {
+        res[i].duration = simpleDurationSimple(res[i].duration)
+
+        res[i].listNum = res[i].link.split("##").length
+      }
       this.setData({
         courseList: res
       })
-      console.log(res)
     })
   },
   // 获取banner列表
@@ -82,12 +92,27 @@ Page({
   },
   // 跳转到训练营详情
   joinCamp(e) {
+    let endTime = ''
+    let pushTime = ''
+    let data = e.target.dataset.index.start_date.split(",")
+    for (let i in data) {
+      if (endTime === '') {
+        endTime = data[i]
+      } else {
+        if (Math.round(new Date(endTime) / 1000) > Math.round(new Date(data[i]) / 1000)) {
+          endTime = data[i]
+        }
+      }
+    }
+    pushTime = endTime.split("-")[1] + "月" + endTime.split("-")[2] + "日"
     getHasJoinCamp({
-      traincamp_id: e.target.dataset.index
+      open_id: getLocalStorage(GLOBAL_KEY.openId),
+      date: endTime,
+      traincamp_id: e.target.dataset.index.id
     }).then(res => {
       if (res.length === 0) {
         wx.navigateTo({
-          url: `/subCourse/joinCamp/joinCamp?id=${e.target.dataset.index}`,
+          url: `/subCourse/joinCamp/joinCamp?id=${e.target.dataset.index.id}&time=${pushTime}`,
         })
       } else {
         wx.navigateTo({

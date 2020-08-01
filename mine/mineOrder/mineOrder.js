@@ -1,8 +1,16 @@
 // mine/mineOrder/mineOrder.js
-import { getLocalStorage } from "../../utils/util"
-import { getMineOrder } from "../../api/mine/index"
-import { GLOBAL_KEY } from "../../lib/config.js"
-import { getYouZanAppId } from "../../api/mall/index"
+import {
+  getLocalStorage
+} from "../../utils/util"
+import {
+  getMineOrder
+} from "../../api/mine/index"
+import {
+  GLOBAL_KEY
+} from "../../lib/config.js"
+import {
+  getYouZanAppId
+} from "../../api/mall/index"
 
 Page({
 
@@ -11,8 +19,16 @@ Page({
    */
   data: {
     appId: "",
+    curentIndex: 0,
     statusHeight: 0,
+    titleList: ['全部', '课程', '商品'],
     orderData: []
+  },
+  // 切换tab
+  changeTab(e) {
+    this.setData({
+      curentIndex: e.currentTarget.dataset.index
+    })
   },
   // 获取订单列表
   getMineOrderData(e) {
@@ -46,7 +62,9 @@ Page({
   getMiniProgramAppId() {
     getYouZanAppId().then(appId => {
       console.log(appId)
-      this.setData({appId})
+      this.setData({
+        appId
+      })
     })
   },
   /**
@@ -59,7 +77,7 @@ Page({
     // 获取订单列表
     this.getMineOrderData()
     // 获取有赞id
-   this.getMiniProgramAppId()
+    this.getMiniProgramAppId()
   },
 
   /**

@@ -110,3 +110,34 @@ export function getCurentDayData(params) {
 		})
 	})
 }
+// 获取任务列表
+export function getTaskList(params) {
+	return new Promise(resolve => {
+		request._get(URL.getTaskList, params).then(({
+			data
+		}) => {
+			data = data || []
+			resolve(data)
+		})
+	})
+}
+// 任务签到
+export function taskCheckIn(params) {
+	return new Promise(resolve => {
+		request._post(URL.taskCheckIn, params).then(({
+			data
+		}) => {
+			data = data || []
+			resolve(data)
+		})
+	})
+}
+// 获取任务签到信息
+export function getSignData(params){
+	return new Promise(resolve=>{
+		request._get(URL.getSignData,params).then(({data})=>{
+			data=data||[]
+			resolve(data)
+		})
+	})
+}

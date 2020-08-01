@@ -9,6 +9,6 @@
 	</view>
 	<view class="button-line">
 		<button bindtap="joinCamp" wx-if="{{campDetailData.discount_price>0}}" class="pay">立即支付 ¥{{campDetailData.discount_price/100}}</button>
-		<button bindtap="joinCamp" wx:else class="join">立即加入 <text>(7月21日开营)</text></button>
+		<button bindtap="joinCamp" wx:else class="join">立即加入 <text>({{joinTime}}开营)</text></button>
 	</view>
 </view>

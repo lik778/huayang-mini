@@ -556,3 +556,41 @@ export const changeArrIndex = (arr, index1, index2) => {
 	arr[index1] = arr.splice(index2, 1, arr[index1])[0];
 	return arr;
 }
+// 设置时间显示一分钟之内显示秒，一小时以内显示分，
+export const simpleDurationSimple = (duration) => {
+	let date = ''
+	if (duration < 60) {
+		date = duration
+	} else {
+		date = Math.floor(duration / 60)
+	}
+	return date + "分钟"
+}
+// 设置时间显示一分钟之内显示秒，一小时以内显示分，
+export const simpleDuration = (duration, type) => {
+	if (type === 's') {
+		duration = duration * 1000
+	}
+	let str = ''
+	let days = '',
+		hours = '',
+		minutes = '',
+		seconds = ''
+	let day = 24 * 60 * 60 * 1000,
+		hour = 60 * 60 * 1000,
+		minute = 60 * 1000,
+		second = 1000
+	if (duration >= day) {
+		days = Math.floor(duration / day) + '天'
+		hours = Math.floor(duration % day / hour) + '小时'
+	} else if (duration >= hour && duration < day) {
+		hours = Math.floor(duration / hour) + '小时'
+		minutes = Math.floor(duration % hour / minute) + '分钟'
+	} else if (duration > minute && duration < hour) {
+		minutes = Math.floor(duration / minute) + '分钟'
+		seconds = Math.floor(duration % minute / second) + '秒'
+	} else if (duration < minute) {
+		seconds = Math.floor(duration / second) + '秒'
+	}
+	return days + hours + minutes + seconds
+}

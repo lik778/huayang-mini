@@ -24,7 +24,7 @@
 						<view class="camp-item-title">{{item.name}}</view>
 						<view class="camp-subtitle">{{item.summary}}</view>
 					</view>
-					<view class="camp-button" bindtap="joinCamp" data-index="{{item.id}}">立即参加</view>
+					<view class="camp-button" bindtap="joinCamp" data-index="{{item}}">立即参加</view>
 				</view>
 			</view>
 		</view>
@@ -32,10 +32,16 @@
 		<view class="catwalk">
 			<view class="catwalk-title">走秀课</view>
 			<view class="catwalk-list">
-				<view class="catwalk-item" wx:for="{{courseList}}" wx:key="index">
+				<view class="catwalk-item" wx:for="{{courseList}}" wx:key="index" bindtap="toCourse" data-item="{{item}}">
 					<image src="{{item.cover_pic}}"></image>
 					<view class="catwalk-item-title">{{item.name}}</view>
-					<view class="catwalk-item-subtitle">{{item.desc}}</view>
+					<view class="catwalk-item-subtitle">
+						<text wx:if="{{item.level===1}}">初级</text>
+						<text wx:if="{{item.level===2}}">中级</text>
+						<text wx:if="{{item.level===3}}">高级</text>
+						<text>{{item.duration}}</text>
+						<text>{{item.listNum}}个动作</text>
+					</view>
 					<view class="catwalk-item-button">立即参加</view>
 				</view>
 			</view>

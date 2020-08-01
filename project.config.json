@@ -83,6 +83,20 @@
 					"pathName": "pages/mall/mall",
 					"query": "id=26",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "个人中心",
+					"pathName": "pages/userCenter/userCenter",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 4,
+					"name": "我的订单",
+					"pathName": "mine/mineOrder/mineOrder",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

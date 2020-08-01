@@ -15,6 +15,7 @@
   ],
   "pages": [
     "pages/discovery/discovery",
+    "pages/userCenter/userCenter",
     "pages/index/index",
     "pages/mine/mine",
     "pages/mall/mall",
@@ -23,9 +24,9 @@
     "pages/service/service",
     "pages/test/test",
     "pages/practice/practice"
+
   ],
-  "subpackages": [
-    {
+  "subpackages": [{
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -72,8 +73,7 @@
   },
   "tabBar": {
     "custom": true,
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/index/index"
       },
       {
