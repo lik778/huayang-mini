@@ -11,10 +11,10 @@
 			<view class="experience-title">
 				<view class="experience-title-left">
 					<text class="experience-title-left-one">我的等级</text>
-					<text class="experience-title-left-two">Lv 2</text>
+					<text class="experience-title-left-two">Lv {{userInfo.user_grade}}</text>
 				</view>
 				<view class="experience-title-right">
-					<text>成长值：90/200</text>
+					<text>成长值：{{userInfo.user_experience}}/{{userInfo.next_level_experience}}</text>
 				</view>
 			</view>
 			<view class="experience-process">
@@ -23,7 +23,7 @@
 		</view>
 	</view>
 	<!-- 完善个人资料 -->
-	<view class="full-message">
+	<view class="full-message" wx:if="{{showMessage}}">
 		<view class="full-message-cover-one"></view>
 		<view class="full-message-cover"></view>
 		<view class="full-message-left">

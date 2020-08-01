@@ -141,3 +141,13 @@ export function getSignData(params){
 		})
 	})
 }
+// 个人中心是否需要填写资料
+export function needUpdateUserInfo(params){
+	return new Promise(resolve=>{
+		request._get(URL.needUpdateUserInfo,params).then(({data})=>{
+			data=data||[]
+			resolve(data)
+		})
+	})
+}
+

@@ -82,7 +82,7 @@ Page({
   getCampList() {
     getCampList({
       offset: 0,
-      limit: 2
+      limit: 4
     }).then(res => {
       this.setData({
         campList: res.list
@@ -112,11 +112,11 @@ Page({
     }).then(res => {
       if (res.length === 0) {
         wx.navigateTo({
-          url: `/subCourse/joinCamp/joinCamp?id=${e.target.dataset.index.id}&time=${pushTime}`,
+          url: `/subCourse/joinCamp/joinCamp?id=${e.target.dataset.index.id}&time=${pushTime}&endtime=${endTime}`,
         })
       } else {
         wx.navigateTo({
-          url: '/subCourse/campDetail/campDetail',
+          url: `/subCourse/campDetail/campDetail?id=${ e.target.dataset.index.id}`,
         })
       }
       console.log(res)

@@ -502,8 +502,9 @@ export const batchSaveFiles = function (tempFiles) {
 }
 
 // 处理日历显示
-export const getTodayDate = () => {
-	let currentDate = new Date()
+export const getTodayDate = (date) => {
+	// console.log(date)
+	let currentDate = date?new Date(date):new Date()
 	let timesStamp = currentDate.getTime();
 	let currenDay = currentDate.getDay();
 	let dates = [];

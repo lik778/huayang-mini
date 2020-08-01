@@ -5,10 +5,15 @@ import {
 import {
   getTaskList,
   taskCheckIn,
-  getSignData
+  getSignData,
+  needUpdateUserInfo
 } from "../../api/course/index"
 import {
-  getLocalStorage
+  getUserInfo
+} from "../../api/mine/index"
+import {
+  getLocalStorage,
+  setLocalStorage
 } from "../../utils/util"
 Page({
 
@@ -20,6 +25,28 @@ Page({
     taskList: [],
     processStyle: "width:30%;",
     hasCheckIn: false,
+    showMessage: false
+  },
+  // 获取用户信息
+  getUserSingerInfo() {
+    getUserInfo('scene=zhide').then(res => {
+      setLocalStorage(GLOBAL_KEY.accountInfo, res)
+      this.setData({
+        userInfo: res
+      })
+    })
+  },
+  // 判断是否需要填写用户资料
+  needUpdateUserInfo() {
+    needUpdateUserInfo({
+      user_id: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id
+    }).then(res => {
+      if (res) {
+        this.setData({
+          showMessage: res
+        })
+      }
+    })
   },
   // 完善个人资料
   fullSelfMsg() {
@@ -110,6 +137,8 @@ Page({
   onLoad: function (options) {
     this.getUserInfo()
     this.getSignData()
+    this.needUpdateUserInfo()
+
   },
 
   /**
@@ -124,6 +153,7 @@ Page({
    */
   onShow: function () {
     this.getTaskList()
+    this.getUserSingerInfo()
   },
 
   /**

@@ -21,6 +21,7 @@ Page({
     statusHeight: 0,
     campId: 0,
     joinTime:"",
+    endTime:"",
     campDetailData: {},
   },
   // 获取训练营详情
@@ -38,6 +39,8 @@ Page({
   joinCamp() {
     joinCamp({
       open_id: getLocalStorage(GLOBAL_KEY.openId),
+      // open_id:'oG8Rd5Zxr7cjV6tUdraUDdsOSS8w',
+      date:this.data.endTime,
       traincamp_id: this.data.campId
     }).then((res) => {
       if (res.id) {
@@ -95,7 +98,8 @@ Page({
   onLoad: function (options) {
     this.setData({
       campId: options.id,
-      joinTime: options.time
+      joinTime: options.time,
+      endTime:options.endtime
     })
     this.getCampDetail(options.id)
   },

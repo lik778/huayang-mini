@@ -21,7 +21,7 @@ Page({
     appId: "",
     curentIndex: 0,
     statusHeight: 0,
-    titleList: ['全部', '课程', '商品'],
+    titleList: ['训练营', '商品'],
     orderData: []
   },
   // 切换tab

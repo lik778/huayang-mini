@@ -33,7 +33,7 @@ Page({
       notAll: "color:#000000;background:#F4F4F4"
     },
     dateObj: {
-      weekList: ['周一', '周二', '周三', '周四', '周五', '周六','周日'],
+      weekList: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
       dateList: []
     }
   },
@@ -71,12 +71,12 @@ Page({
     })
   },
   // 获取日历信息
-  getTodayDate() {
-    console.log(getTodayDate())
+  getTodayDate(e) {
+
     this.setData({
       dateObj: {
         weekList: manageWeek(),
-        dateList: getTodayDate()
+        dateList: e ? getTodayDate(e) : getTodayDate()
       }
     })
   },
@@ -101,13 +101,13 @@ Page({
   },
   // 获取单日课程内容
   getCurentDayData(e) {
-
     let nowTime = Date.parse(new Date()); //当前日期
     let totalTime = Date.parse(new Date(e)) //目标日期
     let dayNum = ''
     if (nowTime < totalTime) {
       // 还未开始
       dayNum = 1
+      this.getTodayDate('2020-08-20')
     } else {
       dayNum = this.campDetailData.nowDay
     }
@@ -146,9 +146,7 @@ Page({
   onLoad: function (options) {
     let currenDay = new Date().getDay();
     this.getCampDetail(options.id)
-    this.getTodayDate()
     this.initCoverShow(options.id)
-
     this.setData({
       campId: options.id
     })
