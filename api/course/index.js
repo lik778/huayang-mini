@@ -19,19 +19,10 @@ export function recordPracticeBehavior(params) {
 	})
 }
 
-// 获取某课程的最近的训练用户列表
+// 获取某节课程最近的训练行为列表
 export function getRecentVisitorList(params) {
 	return new Promise(resolve => {
 		request._get(URL.getRecentVisitor, params).then(({data}) => {
-			resolve(data)
-		})
-	})
-}
-
-// 在引导阶段获取推荐课程列表
-export function queryBootCampCourseList(params) {
-	return new Promise(resolve => {
-		request._get(URL.getBootCampCourseList, params).then(({data}) => {
 			resolve(data)
 		})
 	})
@@ -46,7 +37,16 @@ export function checkUserDidNeedCoopen(params) {
 	})
 }
 
-// 在引导阶段 - 加入推荐课程
+// [在引导阶段] - 获取推荐课程列表
+export function queryBootCampCourseList(params) {
+	return new Promise(resolve => {
+		request._get(URL.getBootCampCourseList, params).then(({data}) => {
+			resolve(data)
+		})
+	})
+}
+
+// [在引导阶段] - 加入推荐课程
 export function joinCourseInGuide(params) {
 	return new Promise(resolve => {
 		request._post(URL.joinCourse, params).then(({data}) => {
@@ -77,6 +77,51 @@ export function queryUserJoinedClasses(params) {
 export function queryRecommendCourseList(params) {
 	return new Promise(resolve => {
 		request._get(URL.getRecommendCourseList, params).then(({data}) => {
+			resolve(data)
+		})
+	})
+}
+
+// 创建当日练习记录
+export function createPracticeRecordInToday(params) {
+	return new Promise(resolve => {
+		request._post(URL.recordPracticeInToday, params).then(({data}) => {
+			resolve(data)
+		})
+	})
+}
+
+// 获取用户练习打卡记录
+export function queryUserRecentPracticeLog(params) {
+	return new Promise(resolve => {
+		request._get(URL.getUserRecentPracticeLog, params).then(({data}) => {
+			resolve(data)
+		})
+	})
+}
+
+// 完成训练
+export function completePractice(params) {
+	return new Promise(resolve => {
+		request._post(URL.donePractice, params).then(({data}) => {
+			resolve(data)
+		})
+	})
+}
+
+// 获取用户已经加入的训练营
+export function queryUserJoinedBootCamp(params) {
+	return new Promise(resolve => {
+		request._get(URL.getUserJoinedBootCamp, params).then(({data}) => {
+			resolve(data)
+		})
+	})
+}
+
+// 获取当日训练营内容
+export function queryBootCampContentInToday(params) {
+	return new Promise(resolve => {
+		request._get(URL.getBootCampDetail, params).then(({data}) => {
 			resolve(data)
 		})
 	})

@@ -1,1 +1,105 @@
-/* pages/practice/practice.wxss */
+@import "../../assets/css/common.wxss";
+
+.practice {
+    padding: 15rpx 30rpx;
+}
+/*banner*/
+.banner {
+    overflow: hidden;
+    width: 100%;
+    margin-bottom: 80rpx;
+    border-radius: 8rpx;
+}
+.banner image {
+    width: inherit;
+    height: inherit;
+}
+/*support-layer*/
+.support-layer {
+    font: 52rpx/52rpx PingFang SC;
+}
+.title {
+    display: flex;
+    justify-content: space-between;
+}
+.manage {
+    font: 32rpx/44rpx PingFang SC;
+    color: #748BBE;
+}
+.manage:active {
+    opacity: 0.8;
+}
+.exercise-time {
+    margin: 40rpx 0 80rpx;
+}
+.time {
+    font: 96rpx/72rpx Condensed;
+}
+.unit {
+    margin-left: 20rpx;
+    font: 32rpx/72rpx PingFang SC;
+}
+/*week line*/
+.week-line {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40rpx 0 50rpx;
+}
+.week-line::after {
+    position: absolute;
+    bottom: 15rpx;
+    left: 30rpx;
+    right: 30rpx;
+    content: "";
+    box-sizing: border-box;
+    height: 2rpx;
+    border-bottom: 2rpx dashed #d5d5d5;
+    z-index: 1;
+}
+.day-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font: 28rpx/28rpx PingFang SC;
+    color: #666;
+}
+.day-icon {
+    margin-top: 22rpx;
+    width: 30rpx;
+    height: 30rpx;
+    z-index: 2;
+}
+/*today-boot-camp-plan*/
+
+/*today-practice-list*/
+.today-practice-list {
+    display: flex;
+    flex-direction: column;
+}
+.practice-item {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 200rpx;
+    padding: 30rpx;
+    margin-bottom: 20rpx;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 8rpx;
+    color: white;
+}
+.practice-item:last-child {
+    margin-bottom: 0;
+}
+.practice-item:active {
+    opacity: 0.8;
+}
+.practice-name {
+
+}

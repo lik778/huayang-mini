@@ -2,7 +2,7 @@
 import { $notNull, getLocalStorage } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
 import { voices_ary, voices_key, voices_number, LocaleVoice } from "../../lib/voices"
-import { recordPracticeBehavior } from "../../api/course/index"
+import { completePractice, recordPracticeBehavior } from "../../api/course/index"
 
 Page({
 	/**
@@ -14,87 +14,7 @@ Page({
 		screenWidth: 0, // 设备宽度
 		courseInfo: {}, // 课程信息
 		currentActionIndex: 0, // 当前动作索引
-		actionData: [{
-			"id": 8,
-			"name": "引体向上",
-			"desc": "",
-			"meta_type": 2,
-			"teacher_id": 14,
-			"category": "fitness",
-			"link": "http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.u0QwXWSzueXc0df30a4e33d11fa17538eef929df6954.mp4",
-			"voice_link": "http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.ja1i95SmWTabbc7474bc5a573431793328013aca9e04.mp3",
-			"name_voice_link": "https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3",
-			"cover": "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg",
-			"duration": 2,
-			"rank": 3,
-			"calories": 10,
-			"voice_type": "2_2",
-			"created_at": "2020-07-23",
-			"updated_at": "2020-07-29",
-			"deleted_at": null,
-			"cycleTime": "2",
-			"restTime": "10"
-		}, {
-			"id": 8,
-			"name": "引体向上",
-			"desc": "",
-			"meta_type": 2,
-			"teacher_id": 14,
-			"category": "fitness",
-			"link": "http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.LAc5uuWAp5ks0df30a4e33d11fa17538eef929df6954.mp4",
-			"voice_link": "http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.M5gJBhwRysBNbc7474bc5a573431793328013aca9e04.mp3",
-			"name_voice_link": "https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3",
-			"cover": "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg",
-			"duration": 2,
-			"rank": 3,
-			"calories": 10,
-			"voice_type": "2_2",
-			"created_at": "2020-07-23",
-			"updated_at": "2020-07-29",
-			"deleted_at": null,
-			"cycleTime": "2",
-			"restTime": "10"
-		}, {
-			"id": 8,
-			"name": "引体向上",
-			"desc": "",
-			"meta_type": 2,
-			"teacher_id": 14,
-			"category": "fitness",
-			"link": "http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.RZJ74n6mSqx30df30a4e33d11fa17538eef929df6954.mp4",
-			"voice_link": "http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.HBh2g6KHpL11bc7474bc5a573431793328013aca9e04.mp3",
-			"name_voice_link": "https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3",
-			"cover": "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg",
-			"duration": 2,
-			"rank": 3,
-			"calories": 10,
-			"voice_type": "2_2",
-			"created_at": "2020-07-23",
-			"updated_at": "2020-07-29",
-			"deleted_at": null,
-			"cycleTime": "2",
-			"restTime": "10"
-		}, {
-			"id": 8,
-			"name": "引体向上",
-			"desc": "",
-			"meta_type": 2,
-			"teacher_id": 14,
-			"category": "fitness",
-			"link": "http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.944ebmDPF07v0df30a4e33d11fa17538eef929df6954.mp4",
-			"voice_link": "http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.r87lRM7zgvMkbc7474bc5a573431793328013aca9e04.mp3",
-			"name_voice_link": "https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3",
-			"cover": "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg",
-			"duration": 2,
-			"rank": 3,
-			"calories": 10,
-			"voice_type": "2_2",
-			"created_at": "2020-07-23",
-			"updated_at": "2020-07-29",
-			"deleted_at": null,
-			"cycleTime": "2",
-			"restTime": "10"
-		}], // 动作数据 TODO
+		actionData: [], // 动作数据
 		currentDuration: 0, // 整个课程已播放的时长
 
 		targetActionObj: null, // 正在执行的动作
@@ -127,6 +47,7 @@ Page({
 		globalRecordTimer: null, // 全局训练时长计时器
 		globalRecordTiming: 0, // 整个课程时长
 		globalRecordTimeText: "00:00", // 训练时长
+		didPauseRecordGlobalTime: false, // 是否停止全局计时器
 
 		didShowResultLayer: false, // 结果层
 	},
@@ -280,7 +201,10 @@ Page({
 	},
 	// 主动暂停休息阶段
 	pauseRestTime() {
-		this.setData({didPauseRest: !this.data.didPauseRest})
+		this.setData({
+			didPauseRest: !this.data.didPauseRest,
+			didPauseRecordGlobalTime: !this.data.didPauseRest
+		})
 	},
 	// 修改休息阶段的休息时间
 	modifyRestTimeTest(time) {
@@ -363,6 +287,7 @@ Page({
 	 */
 	pauseAction() {
 		if (this.data.isRunning) {
+			this.setData({ didPauseRecordGlobalTime: true })
 			this.data.video.pause()
 			this.data.mainPointAudio && this.data.mainPointAudio.pause()
 			if (this.data.targetActionObj.meta_type == 2) {
@@ -371,6 +296,7 @@ Page({
 				this.data.countDownAudio.pause()
 			}
 		} else {
+			this.setData({ didPauseRecordGlobalTime: false })
 			this.data.video.play()
 			this.data.mainPointAudio && this.data.mainPointAudio.play()
 			if (this.data.targetActionObj.meta_type == 2) {
@@ -533,15 +459,15 @@ Page({
 				let restPromise = new Promise(resolve => {
 					let timer = null
 					let delayTime = this.data.targetActionObj.restTime
-					let doneTome = 1
+					let doneTime = 1
 					timer = setInterval(() => {
-						this.modifyRestTimeTest(delayTime - doneTome)
 						// 用户是否暂停休息时间
 						if (!this.data.didPauseRest) {
-							doneTome += 1
+							this.modifyRestTimeTest(delayTime - doneTime)
+							doneTime += 1
 						}
 						// 立即结束休息阶段 ｜｜ 休息时间大于规定休息时间
-						if (this.data.didLeaveRestImmediate || doneTome > delayTime) {
+						if (this.data.didLeaveRestImmediate || doneTime > delayTime) {
 							clearInterval(timer)
 							resolve()
 						}
@@ -583,6 +509,13 @@ Page({
 			this.setData({didShowResultLayer: true})
 			// 停止全局记时器
 			clearInterval(this.data.globalRecordTimer)
+			// 上传训练记录
+			completePractice({
+				open_id: getLocalStorage(GLOBAL_KEY.openId),
+				user_id: getLocalStorage(GLOBAL_KEY.userId),
+				kecheng_id: this.data.courseInfo.id,
+				duation: this.data.globalRecordTiming
+			})
 		}
 	},
 	// 切换下个动作
@@ -624,11 +557,14 @@ Page({
 	async start() {
 		// 全局计时器
 		this.data.globalRecordTimer = setInterval(() => {
-			let nextTiming = this.data.globalRecordTiming + 1
-			this.setData({
-				globalRecordTiming: nextTiming,
-				globalRecordTimeText: this.calcRemainingTime(nextTiming)
-			})
+			// 是否暂停全局计时
+			if (!this.data.didPauseRecordGlobalTime) {
+				let nextTiming = this.data.globalRecordTiming + 1
+				this.setData({
+					globalRecordTiming: nextTiming,
+					globalRecordTimeText: this.calcRemainingTime(nextTiming)
+				})
+			}
 		}, 1000)
 
 		this.setData({isRunning: true})
