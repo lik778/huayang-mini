@@ -133,21 +133,48 @@ export function taskCheckIn(params) {
 	})
 }
 // 获取任务签到信息
-export function getSignData(params){
-	return new Promise(resolve=>{
-		request._get(URL.getSignData,params).then(({data})=>{
-			data=data||[]
+export function getSignData(params) {
+	return new Promise(resolve => {
+		request._get(URL.getSignData, params).then(({
+			data
+		}) => {
+			data = data || []
 			resolve(data)
 		})
 	})
 }
 // 个人中心是否需要填写资料
-export function needUpdateUserInfo(params){
-	return new Promise(resolve=>{
-		request._get(URL.needUpdateUserInfo,params).then(({data})=>{
-			data=data||[]
+export function needUpdateUserInfo(params) {
+	return new Promise(resolve => {
+		request._get(URL.needUpdateUserInfo, params).then(({
+			data
+		}) => {
+			data = data || []
 			resolve(data)
 		})
 	})
 }
 
+
+// 批量获取训练营课程内容
+export function getMenyCourseList(params) {
+	return new Promise(resolve => {
+		request._get(URL.getMenyCourseList, params).then(({
+			data
+		}) => {
+			data = data || []
+			resolve(data)
+		})
+	})
+}
+// 获取课程信息
+export function getCourseData(params) {
+	return new Promise(resolve => {
+		request._get(URL.getCourseData, params).then(({
+			data
+		}) => {
+			data = data || []
+			resolve(data)
+		})
+	})
+}

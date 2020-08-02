@@ -504,19 +504,27 @@ export const batchSaveFiles = function (tempFiles) {
 // 处理日历显示
 export const getTodayDate = (date) => {
 	// console.log(date)
-	let currentDate = date?new Date(date):new Date()
+	let currentDate = date ? new Date(date) : new Date()
 	let timesStamp = currentDate.getTime();
 	let currenDay = currentDate.getDay();
 	let dates = [];
 	let dateArr = []
+	let dateArr1 = []
 	for (let i = 0; i < 7; i++) {
 		dates.push(new Date(timesStamp + 24 * 60 * 60 * 1000 * (i - (currenDay + 6) % 7)).toLocaleDateString().replace(/\//g, '-'));
 	}
 	for (let i in dates) {
-		dateArr.push(dates[i].split("-")[2])
+		dateArr.push({
+			id: dates[i].split("-")[2],
+			dataNum: 0
+		})
+		dateArr1.push(dates[i])
 	}
 	// changeArrIndex(dateArr, 0, dateArr.length-1)
-	return dateArr
+	return {
+		one: dateArr,
+		two: dateArr1
+	}
 }
 // 处理日期
 export const manageWeek = () => {
@@ -548,10 +556,21 @@ export const manageWeek = () => {
 
 // 计算两个日期相差xx天
 export const countDay = (nowDate, totalDate) => {
+	// nowDate当前日期，totalDate目标日期
 	let endTime = parseInt(nowDate.getTime() / 1000) - new Date(totalDate).getTime() / 1000;
 	let date = parseInt(endTime / 60 / 60 / 24); //相差天数
 	return date
 }
+
+// 计算两个日期相差xx天
+export const countDayOne = (nowDate, totalDate) => {
+	// nowDate当前日期，totalDate目标日期
+	var date1 = new Date(totalDate);
+	var date2 = new Date(nowDate);
+	var date = (date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24); /*不用考虑闰年否*/
+	return Math.ceil(date + 1) === -0 ? 0 : Math.ceil(date + 1)
+}
+
 // 调换数组两个位置
 export const changeArrIndex = (arr, index1, index2) => {
 	arr[index1] = arr.splice(index2, 1, arr[index1])[0];

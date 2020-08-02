@@ -4,14 +4,17 @@ import {
 } from "../../lib/config"
 import {
   getCampDetail,
-  getCurentDayData
+  getCurentDayData,
+  getMenyCourseList,
+  getCourseData
 } from "../../api/course/index"
 import {
   getLocalStorage,
   getTodayDate,
   manageWeek,
   setLocalStorage,
-  countDay
+  countDay,
+  countDayOne
 } from "../../utils/util"
 Page({
 
@@ -20,112 +23,144 @@ Page({
    */
   data: {
     statusHeight: 0,
-    cureentDay: new Date().getDate(),
-    campId: 0,
-    showCover: false,
-    showVideoCover: true,
-    videoHeight: 0,
-    campDetailData: {},
-    courseList: [],
-    videoSrc: "http://video.699pic.com/videos/46/49/94/a_IEHicAfXgsM41594464994.mp4",
+    cureentDay: '', //当前日期
+    campId: 0, //训练营id
+    showCover: false, //显示引导私欲弹窗
+    showVideoCover: true, //显示视频播放按钮
+    videoHeight: 0, //视频高度
+    campDetailData: {}, //训练营详情
+    courseList: [], //课程列表
+    startDay: "", //训练营开始时间
+    videoSrc: "http://video.699pic.com/videos/46/49/94/a_IEHicAfXgsM41594464994.mp4", //视频地址
     styleObj: {
-      all: "color:#000000;font-family:PingFang-SC-Bold,PingFang-SC,font-weight:bold;background:#F4F4F4",
+      all: "color:#000000;font-family:PingFang-SC-Bold,PingFang-SC;font-weight:bold;background:#F4F4F4",
       notAll: "color:#000000;background:#F4F4F4"
-    },
+    }, //日历的不同样式
     dateObj: {
       weekList: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
-      dateList: []
-    }
+      dateList: [],
+    } //日历时间存储
   },
-  // 播放/暂停视频
-  playVideo() {
-    this.videoContext.play()
-    this.setData({
-      showVideoCover: false
-    })
-  },
-  // 暂停视频
-  pauseVideo() {
-    this.videoContext.pause()
-    this.setData({
-      showVideoCover: true
-    })
-  },
-  // 播放结束初始化
-  initVideo() {
-    console.log(11)
-    this.setData({
-      showVideoCover: true
-    })
-  },
-  // 获取训练营详情
-  getCampDetail(id) {
+
+  // 获取训练营信息
+  getCampDetailData(id) {
     getCampDetail({
       traincamp_id: id
     }).then(res => {
       res.nowDay = countDay(new Date(), res.start_date) < 0 ? 0 : countDay(new Date(), res.start_date)
-      this.getCurentDayData(res.start_date)
+      let onlyDayList = getTodayDate().one //只有日的日期列表
+      let realList = getTodayDate().two //实际一周日期列表
+      let campDateList = [] //当周对应训练营日期列表
+      let cureentDay = ''
+      if (new Date(res.start_date) > new Date()) {
+        // 未开营
+        onlyDayList = getTodayDate(res.start_date).one //只有日的日期列表
+        realList = getTodayDate(res.start_date).two //实际一周日期列表
+        cureentDay = new Date(res.start_date).getDate()
+      } else {
+        cureentDay = new Date().getDate()
+      }
+      for (let i in realList) {
+        let differDay = countDayOne(realList[i], res.start_date)
+        differDay = differDay < 0 ? 0 : differDay
+        campDateList.push(differDay)
+      }
+      // 批量获取多日课程内容
+      this.batchGetCourse(campDateList)
+      // 获取当日课程
+      this.toCureentDay(res)
       this.setData({
-        campDetailData: res
+        campDetailData: res,
+        cureentDay: cureentDay,
+        dateObj: {
+          weekList: manageWeek(),
+          dateList: {
+            date: onlyDayList,
+            realDate: realList
+          }
+        }
       })
     })
   },
-  // 获取日历信息
-  getTodayDate(e) {
-
-    this.setData({
-      dateObj: {
-        weekList: manageWeek(),
-        dateList: e ? getTodayDate(e) : getTodayDate()
+  // 批量获取多日课程内容
+  batchGetCourse(e) {
+    getMenyCourseList({
+      day_num_str: e.join(","),
+      traincamp_id: this.data.campId
+    }).then(res => {
+      let hasCourseList = []
+      let hasNoCourseList = []
+      let dataObj = this.data.dateObj.dateList.date
+      for (let i in res) {
+        res[i].content = JSON.parse(res[i].content)
+        for (let j in e) {
+          if (e[j] === res[i].day_num) {
+            dataObj[j].dataNum = 1
+          } else {
+            dataObj[j].dataNum = 0
+          }
+        }
       }
+      this.setData({
+        dateObj: this.data.dateObj
+      })
     })
   },
-  // 关闭遮罩层
-  closeCover() {
-    this.setData({
-      showCover: false
-    })
-  },
-  // 跳转详情页
-  toDetail(e) {
-    if (e.type === 'kecheng') {
-      // 课程
-    } else if (e.type === 'video') {
-      // 视频
-    } else if (e.type === 'product') {
-      // 商品
-    } else if (e.type === 'url') {
-      // url
-    }
-    console.log(e.currentTarget.dataset.type)
-  },
-  // 获取单日课程内容
-  getCurentDayData(e) {
-    let nowTime = Date.parse(new Date()); //当前日期
-    let totalTime = Date.parse(new Date(e)) //目标日期
+  // 获取当前天的课程
+  toCureentDay(e) {
     let dayNum = ''
-    if (nowTime < totalTime) {
-      // 还未开始
-      dayNum = 1
-      this.getTodayDate('2020-08-20')
+
+    if (e.currentTarget) {
+      dayNum = e.currentTarget.dataset.item.dataNum
+      this.setData({
+        cureentDay: e.currentTarget.dataset.item.id
+      })
     } else {
-      dayNum = this.campDetailData.nowDay
+      if (new Date(e.start_date) > new Date()) {
+        // 未开营
+        dayNum = 0
+      } else {
+        // 已开营
+        dayNum = 0
+      }
     }
     getCurentDayData({
       day_num: dayNum,
       traincamp_id: this.data.campId
     }).then(res => {
+      if (res.length !== 0) {
+        res.content = JSON.parse(res.content)
+        for (let i in res.content) {
+          if (res.content[i].type === 'kecheng') {
+            getCourseData({
+              kecheng_id: res.content[i].kecheng_id
+            }).then(res1 => {
+              res.content[i].duration = res1.duration
+              this.setData({
+                courseList: res
+              })
+            })
+          }
+        }
+        this.setData({
+          courseList: res
+        })
+      } else {
+        this.setData({
+          courseList: []
+        })
+      }
+    }).catch(() => {
       this.setData({
-        courseList: JSON.parse(res.content)
+        courseList: []
       })
-      console.log(this.data.courseList)
     })
   },
+
   // 控制是否显示遮罩层
   initCoverShow(id) {
     let showIdList = getLocalStorage(GLOBAL_KEY.campHasShowList) === undefined ? undefined : JSON.parse(getLocalStorage(GLOBAL_KEY.campHasShowList))
     let showCover = true
-    console.log(showIdList)
     if (showIdList === undefined) {
       setLocalStorage(GLOBAL_KEY.campHasShowList, [id])
       showCover = true
@@ -140,12 +175,56 @@ Page({
       showCover: showCover
     })
   },
+
+  // 播放/暂停视频
+  playVideo() {
+    this.videoContext.play()
+    this.setData({
+      showVideoCover: false
+    })
+  },
+
+  // 暂停视频
+  pauseVideo() {
+    this.videoContext.pause()
+    this.setData({
+      showVideoCover: true
+    })
+  },
+
+  // 播放结束初始化
+  initVideo() {
+    this.setData({
+      showVideoCover: true
+    })
+  },
+
+  // 关闭遮罩层
+  closeCover() {
+    this.setData({
+      showCover: false
+    })
+  },
+
+  // 跳转详情页
+  toDetail(e) {
+    if (e.type === 'kecheng') {
+      // 课程
+    } else if (e.type === 'video') {
+      // 视频
+    } else if (e.type === 'product') {
+      // 商品
+    } else if (e.type === 'url') {
+      // url
+    }
+    console.log(e.currentTarget.dataset.type)
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     let currenDay = new Date().getDay();
-    this.getCampDetail(options.id)
+    this.getCampDetailData(options.id)
     this.initCoverShow(options.id)
     this.setData({
       campId: options.id
