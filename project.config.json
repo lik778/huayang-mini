@@ -130,6 +130,21 @@
 					"id": -1,
 					"name": "pages/auth/auth",
 					"pathName": "pages/auth/auth",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/practiceManage/practiceManage",
+					"pathName": "pages/practiceManage/practiceManage",
+					"query": "prdId=37",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "subCourse/practiceManage/practiceManage",
+					"pathName": "subCourse/practiceManage/practiceManage",
+					"query": "",
 					"scene": null
 				}
 			]

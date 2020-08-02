@@ -126,3 +126,21 @@ export function queryBootCampContentInToday(params) {
 		})
 	})
 }
+
+// 放弃训练营
+export function exitBootCamp(params) {
+	return new Promise(resolve => {
+		request._post(URL.quitBootCamp, params).then(() => {
+			resolve()
+		})
+	})
+}
+
+// 放弃课程
+export function exitCourse(params) {
+	return new Promise(resolve => {
+		request._post(URL.quitCourse, params).then(() => {
+			resolve()
+		})
+	})
+}

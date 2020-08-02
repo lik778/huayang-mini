@@ -57,7 +57,8 @@
         "detail/detail",
         "category/category",
         "practiceDetail/practiceDetail",
-        "actionPage/actionPage"
+        "actionPage/actionPage",
+        "practiceManage/practiceManage"
       ]
     }
   ],

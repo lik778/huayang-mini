@@ -1,6 +1,6 @@
 import { getBannerList } from "../../api/mall/index"
 import {
-	createPracticeRecordInToday,
+	createPracticeRecordInToday, queryBootCampContentInToday,
 	queryRecommendCourseList,
 	queryUserHaveClassesInfo, queryUserJoinedBootCamp,
 	queryUserJoinedClasses,
@@ -21,6 +21,13 @@ const TagImageUrls = {
 	forget: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596262406bSNcQC.jpg"
 }
 
+const CourseTypeImage = {
+	kecheng: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596352654quOqYe.jpg",
+	video: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596352666EUnLUw.jpg",
+	url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596352721XfdrJj.jpg",
+	product: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596352734UhOOIu.jpg"
+}
+
 Page({
 
 	/**
@@ -29,11 +36,13 @@ Page({
 	data: {
 		TagImageUrls,
 		CourseLevels,
+		CourseTypeImage,
 		bannerList: [],
 		userHaveClassesInfo: {}, // 用户的学习数据统计
 		userJoinedClassesList: [], // 用户加入的课程列表
 		recommendList: [], // 推荐课程列表
 		weeklyLog: [], // 本周打卡记录
+		bootCampList: [], // 训练营
 	},
 
 	/**
@@ -95,16 +104,24 @@ Page({
 	onShareAppMessage: function () {
 
 	},
+	// 查看所有训练营
+	goToBootCamp(e) {
+		console.log('打开训练营详情页', e.currentTarget.dataset.bootCampId);
+	},
+	// 去发现页
+	findMoreBootCamp() {
+		console.log('打开发现页');
+	},
 	// 生成本周打卡日志
 	generateWeeklyLog() {
 		let now = dayjs()
 		let todayDate = now.date()
-		let mondayDateInThisWeek = now.day(1)
+		let mondayDateInThisWeek = now.day(0)
 		return new Array(7).fill("").map((item, index) => {
 			let date = mondayDateInThisWeek.add(index, 'day').date()
 			return {
 				date,
-				dateText: date === todayDate ? '今天' : "周" + "一二三四五六日".charAt(index),
+				dateText: date === todayDate ? '今天' : "周" + "日一二三四五六".charAt(index),
 				status: date === todayDate ? 'none' : 'forget'
 			}
 		})
@@ -141,8 +158,22 @@ Page({
 
 		// 获取训练营列表
 		let bootCampList = await queryUserJoinedBootCamp()
-		bootCampList = bootCampList.map(boot => {
-			console.log(boot);
-		})
+		let handlerBootCampList = []
+		for (const {kecheng_traincamp_id, date, kecheng_traincamp: {name}} of bootCampList) {
+			// 根据训练营查找对应的课程
+
+			let bootCampInfo = await queryBootCampContentInToday({
+				traincamp_id: kecheng_traincamp_id,
+				day_num: dayjs().diff(dayjs(date), 'day')
+			})
+
+			handlerBootCampList.push({
+				bootCampId: kecheng_traincamp_id,
+				name,
+				content: bootCampInfo && bootCampInfo.content ? JSON.parse(bootCampInfo.content) : []
+			})
+		}
+		this.setData({bootCampList: handlerBootCampList})
+		// this.setData({bootCampList: []})
 	}
 })

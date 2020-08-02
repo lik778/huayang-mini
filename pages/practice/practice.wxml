@@ -29,7 +29,35 @@
 
     <!--  今日练习计划  -->
     <view class="today-boot-camp-plan">
+        <view class="boot-camp" style="display: {{bootCampList.length > 0 ? '' : 'none'}};" wx:for="{{bootCampList}}" wx:key="index" style="display: {{item.content.length === 0 ? 'none' : ''}}">
+            <view class="boot-camp-name" bind:tap="goToBootCamp" data-bootCampId="{{item.bootCampId}}">
+                <text>{{item.name}}</text>
+                <view class="all-boot-camp">全部</view>
+            </view>
+            <view class="segmentation"></view>
+            <view class="boot-camp-content">
+                <view class="boot-camp-course" wx:for="{{item.content}}" wx:for-item="contentItem" wx:for-index="contentIndex" wx:key="contentIndex">
+                    <view class="boot-camp-info">
+                        <view class="icon-box">
+                            <image mode="aspectFit" class="icon-{{contentItem.type}}" src="{{CourseTypeImage[contentItem.type]}}"></image>
+                        </view>
+                        <view>{{contentItem.name}}</view>
+                    </view>
+                    <view class="boot-camp-start">练习</view>
+                </view>
+            </view>
+        </view>
+        <view class="boot-camp">
+            <view class="no-camp">
+                <text>快去挑选感兴趣的课程吧</text>
+                <text class="find-camp-btn" bind:tap="findMoreBootCamp">去挑选</text>
+            </view>
+        </view>
+    </view>
 
+    <!--  推荐课程  -->
+    <view class="support-layer">
+        <view class="title recommend-title">推荐课程</view>
     </view>
 
     <!--  课程练习列表  -->
@@ -45,11 +73,5 @@
                 <view class="join-now">立即参加</view>
             </view>
         </view>
-    </view>
-
-    <!--  推荐课程  -->
-    <view class="support-layer">
-        <view class="title">推荐课程</view>
-        <view class="recommend"></view>
     </view>
 </view>
