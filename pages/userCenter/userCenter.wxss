@@ -17,6 +17,7 @@
   padding: 0 30rpx;
   display: flex;
   align-items: center;
+  top: 120rpx;
 }
 
 .message image {
@@ -40,6 +41,7 @@
   width: calc(100% - 100rpx);
   position: absolute;
   padding: 0 50rpx;
+  top: 254rpx;
 }
 
 .experience-title {
