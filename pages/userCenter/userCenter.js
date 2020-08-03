@@ -16,6 +16,9 @@ import {
   getLocalStorage,
   setLocalStorage
 } from "../../utils/util"
+import {
+  checkAuth
+} from "../../utils/auth"
 Page({
 
   /**
@@ -150,10 +153,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getUserInfo()
-    this.getSignData()
-    this.needUpdateUserInfo()
-
+    console.log(111)
+    checkAuth({
+      listenable: true,
+      ignoreFocusLogin: true
+    }).then(() => {
+      this.getUserInfo()
+      this.getSignData()
+      this.needUpdateUserInfo()
+    })
   },
 
   /**

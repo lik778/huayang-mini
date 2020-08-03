@@ -53,7 +53,23 @@ Page({
     getCampDetail({
       traincamp_id: id
     }).then(res => {
-      res.nowDay = countDay(new Date(), res.start_date) < 0 ? 0 : countDay(new Date(), res.start_date)
+      let endTime = ''
+      let dateList = res.start_date.split(',')
+      if (dateList.length > 1) {
+        // 多个开营日期
+        for (let i in dateList) {
+          if (endTime === '') {
+            endTime = dateList[i]
+          } else {
+            if (Math.round(new Date(endTime) / 1000) > Math.round(new Date(dateList[i]) / 1000) || Math.round(new Date(dateList[i]) / 1000) > Math.round(new Date() / 1000)) {
+              endTime = dateList[i]
+            }
+          }
+        }
+        res.nowDay = countDay(new Date(), endTime) < 0 ? 0 : countDay(new Date(), endTime)
+      } else {
+        res.nowDay = countDay(new Date(), res.start_date) < 0 ? 0 : countDay(new Date(), res.start_date)
+      }
       let onlyDayList = getTodayDate().one //只有日的日期列表
       let realList = getTodayDate().two //实际一周日期列表
       let campDateList = [] //当周对应训练营日期列表
