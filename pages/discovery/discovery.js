@@ -68,10 +68,19 @@ Page({
       })
     })
   },
+
+  // 点击banner，跳转训练营
+  joinCampFrombanner(e) {
+    let data = e.currentTarget.dataset.item
+    wx.navigateTo({
+      url: data.link,
+    })
+  },
+
   // 获取banner列表
   getBanner() {
     getFindBanner({
-      scene: 8,
+      scene: 7,
       is_all: 0
     }).then(res => {
       this.setData({
