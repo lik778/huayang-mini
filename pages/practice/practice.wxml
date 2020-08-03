@@ -41,7 +41,7 @@
                         <view class="icon-box">
                             <image mode="aspectFit" class="icon-{{contentItem.type}}" src="{{CourseTypeImage[contentItem.type]}}"></image>
                         </view>
-                        <view>{{contentItem.name}}</view>
+                        <view>{{contentItem.name || contentItem.title}}</view>
                     </view>
                     <view class="boot-camp-start" bind:tap="handleExerciseBtnTap" data-item="{{contentItem}}">练习</view>
                 </view>
@@ -56,13 +56,13 @@
     </view>
 
     <!--  推荐课程  -->
-    <view class="support-layer">
+    <view class="support-layer" style="display: {{userJoinedClassesList.length <= 0?'':'none'}};">
         <view class="title recommend-title">推荐课程</view>
     </view>
 
     <!--  课程练习列表  -->
     <view class="today-practice-list">
-        <view class="practice-item" wx:for="{{userJoinedClassesList}}" wx:key="index" style="background-image:url('{{item.kecheng.cover_pic}}')">
+        <view class="practice-item" wx:for="{{userJoinedClassesList.length > 0 ? userJoinedClassesList : recommendList}}" wx:key="index" style="background-image:url('{{item.kecheng.cover_pic}}')">
             <view class="practice-name limit-one-line">{{item.kecheng.name}}</view>
             <view class="practice-sub">
                 <view class="practice-desc">

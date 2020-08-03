@@ -2,6 +2,12 @@ import { APP_LET_ID, GLOBAL_KEY, Version } from "../lib/config"
 import { $notNull, hasUserInfo, setLocalStorage } from "./util"
 import { checkFocusLogin, getWxInfo } from "../api/auth/index"
 
+/**
+ * 鉴权
+ * @param listenable
+ * @param ignoreFocusLogin 是否忽略强制授权校验
+ * @returns {Promise<unknown>}
+ */
 const checkAuth = async ({listenable = false, ignoreFocusLogin = false} = {}) => {
 	let didFocusLogin = await checkFocusLogin({app_version: Version})
 

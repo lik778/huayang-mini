@@ -29,13 +29,13 @@
 }
 
 .tab-bar-item cover-image {
-  width: 40rpx;
-  height: 40rpx;
+  width: 52rpx;
+  height: 52rpx;
+  margin-bottom: 4rpx;
 }
 
 .tab-bar-item cover-view {
-  font-weight: bold;
-  font-size: 24rpx;
+  font-size: 32rpx;
 }
 
 .tab-bar-item cover-image.image-diy {

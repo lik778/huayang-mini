@@ -1,20 +1,20 @@
 Component({
   data: {
     selected: 0,
-    color: "#7A7E83",
-    selectedColor: "#3cc51f",
+    color: "#666666",
+    selectedColor: "#CC0000",
     list: [
       {
         "pagePath": "/pages/discovery/discovery",
-        "selectedIconPath": "../assets/images/common/liveActive.png",
-        "iconPath": "../assets/images/common/live.png",
+        "selectedIconPath": "../assets/images/common/homeActive.png",
+        "iconPath": "../assets/images/common/home.png",
         "text": "发现",
         isDIY: false
       },
       {
         "pagePath": "/pages/practice/practice",
-        "selectedIconPath": "../assets/images/common/mallActive.png",
-        "iconPath": "../assets/images/common/mall.png",
+        "selectedIconPath": "../assets/images/common/practiceActive.png",
+        "iconPath": "../assets/images/common/practice.png",
         "text": "练习",
         isDIY: false
       },

@@ -1,6 +1,6 @@
 import { getBannerList } from "../../api/mall/index"
 import {
-	createPracticeRecordInToday,
+	createPracticeRecordInToday, getCourseData,
 	queryBootCampContentInToday,
 	queryRecommendCourseList,
 	queryUserHaveClassesInfo, queryUserJoinedBootCamp,
@@ -10,6 +10,7 @@ import {
 import { CourseLevels } from "../../lib/config"
 import dayjs from "dayjs"
 import { $notNull } from "../../utils/util"
+import { checkAuth } from "../../utils/auth"
 
 const TagImageUrls = {
 	// done 今日完成
@@ -63,6 +64,8 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
+		checkAuth()
+
 		if (typeof this.getTabBar === 'function' &&
 			this.getTabBar()) {
 			this.getTabBar().setData({
@@ -111,20 +114,25 @@ Page({
 		// 创建用户当日练习记录
 		createPracticeRecordInToday()
 		console.log(item)
-		switch (item.type) {
-			case "kecheng": {
+			switch (item.kecheng_type) {
+			case 0: {
+				// 直播
+				wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${item.room_id}`})
+				return
+			}
+			case 1: {
+				// 回看
+				wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${item.room_id}`})
+				return
+			}
+			case 2: {
+				// 小鹅通
+				// TODO
+				return
+			}
+			case 3: {
+				// 结构化课程
 				wx.navigateTo({url: `/subCourse/practiceDetail/practiceDetail?courseId=${item.kecheng_id}`})
-				return
-			}
-			case "video": {
-				// wx.navigateTo({url: `/subLive/review/review?zhiboRoomId=${}`})
-				return
-			}
-			case "product": {
-				wx.navigateTo({url: `/subCourse/detail/detail?prdId=${item.product_id}`})
-				return
-			}
-			case "url": {
 				return
 			}
 		}
@@ -162,11 +170,14 @@ Page({
 		})
 		// 用户加入的课程
 		queryUserJoinedClasses().then((userJoinedClassesList) => {
-			this.setData({userJoinedClassesList})
-		})
-		// 推荐课程
-		queryRecommendCourseList({scene: 'zhide_kecheng_pratice'}).then((recommendList) => {
-			this.setData({recommendList})
+			if (userJoinedClassesList.length > 0) {
+				this.setData({userJoinedClassesList})
+			} else {
+				// 推荐课程
+				queryRecommendCourseList({scene: 'zhide_kecheng_pratice'}).then((recommendList) => {
+					this.setData({recommendList})
+				})
+			}
 		})
 
 		// 用户最近7天的打卡记录
@@ -184,21 +195,32 @@ Page({
 		// 获取训练营列表
 		let bootCampList = await queryUserJoinedBootCamp()
 		let handlerBootCampList = []
-		for (const {kecheng_traincamp_id, date, kecheng_traincamp: {name}} of bootCampList) {
+		for (const {kecheng_traincamp_id, kecheng_traincamp: {name, start_date}} of bootCampList) {
 			// 根据训练营查找对应的课程
-
+			let dayNum = dayjs().diff(dayjs(start_date), 'day')
 			let bootCampInfo = await queryBootCampContentInToday({
 				traincamp_id: kecheng_traincamp_id,
-				day_num: dayjs().diff(dayjs(date), 'day')
+				day_num: dayNum < 0 ? 0 : dayNum
 			})
+
+			let content = bootCampInfo && bootCampInfo.content ? JSON.parse(bootCampInfo.content) : []
+
+			// 解析课程详情
+			for (let index = 0; index < content.length; index++) {
+				let c = content[index]
+				if (c.kecheng_id) {
+					let kechengInfo = await getCourseData({kecheng_id: c.kecheng_id})
+					c.kecheng_type = kechengInfo.kecheng_type
+					c.room_id = kechengInfo.room_id
+				}
+			}
 
 			handlerBootCampList.push({
 				bootCampId: kecheng_traincamp_id,
-				name,
-				content: bootCampInfo && bootCampInfo.content ? JSON.parse(bootCampInfo.content) : []
+				name: name,
+				content
 			})
 		}
-		this.setData({bootCampList: handlerBootCampList})
-		// this.setData({bootCampList: []})
+		this.setData({bootCampList: handlerBootCampList.slice()})
 	}
 })
