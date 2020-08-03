@@ -22,7 +22,7 @@
                          src="../../assets/images/common/arrow-left.png"></cover-image>
             <cover-image class="pause" bind:tap="pauseAction"
                          src="{{isRunning ? '../../assets/images/common/pause.png': '../../assets/images/common/start.png'}}"></cover-image>
-            <cover-image class="stop" style="display: {{isRunning ? 'none' : ''}};" bind:tap="exit"
+            <cover-image class="stop" wx:if="{{!isRunning}}" bind:tap="exit"
                          src="../../assets/images/common/stop.png"></cover-image>
             <cover-image class="arrow-right {{currentActionIndex < actionData.length - 1 ? '': 'disabled'}}" bind:tap="switchNextAction"
                          src="../../assets/images/common/arrow-right.png"></cover-image>
@@ -79,7 +79,7 @@
                              src="../../assets/images/common/arrow-left.png"></cover-image>
                 <cover-image class="pause" bind:tap="pauseRestTime"
                              src="{{didPauseRest ? '../../assets/images/common/start.png': '../../assets/images/common/pause.png'}}"></cover-image>
-                <cover-image class="stop" style="display: {{didPauseRest ? '' : 'none'}};" bind:tap="exit"
+                <cover-image class="stop" wx:if="{{didPauseRest}}" bind:tap="exit"
                              src="../../assets/images/common/stop.png"></cover-image>
                 <cover-image class="arrow-right" bind:tap="switchNextActionInRestTime"
                              src="../../assets/images/common/arrow-right.png"></cover-image>

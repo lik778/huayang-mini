@@ -522,11 +522,13 @@ Page({
 			// 经验值提升弹窗
 			increaseExp({task_type: "task_pratice_playbill"}).then((data) => {
 				// 升级信息
-				this.setData({
-					didShowLevelAlert: true,
-					hasGrade: data.has_grade,
-					levelNumber: data.has_grade ? data.level : data.experience
-				})
+				if ($notNull(data)) {
+					this.setData({
+						didShowLevelAlert: true,
+						hasGrade: data.has_grade,
+						levelNumber: data.has_grade ? data.level : data.experience
+					})
+				}
 			})
 		}
 	},

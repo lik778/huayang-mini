@@ -84,7 +84,10 @@ Page({
 							url: "/pages/coopen/coopen"
 						})
 					} else {
-						wx.navigateBack()
+						// wx.navigateBack()
+						wx.switchTab({
+							url: "/pages/practice/practice"
+						})
 					}
 				})
 			}
