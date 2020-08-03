@@ -76,7 +76,6 @@ Page({
 					iv
 				})
 				setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
-				// wx.navigateBack()
 				// 判断用户是否需要引导加课程
 				checkUserDidNeedCoopen({ user_id: originAccountInfo.id }).then((data) => {
 					// 1=>需要引导，2=>不需要引导
@@ -85,9 +84,7 @@ Page({
 							url: "/pages/coopen/coopen"
 						})
 					} else {
-						wx.switchTab({
-							url: "/pages/practice/practice"
-						})
+						wx.navigateBack()
 					}
 				})
 			}

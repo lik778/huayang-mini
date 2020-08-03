@@ -160,6 +160,12 @@
 					"pathName": "subCourse/campDetail/campDetail",
 					"query": "id=60",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "subLive/videoPage/videoPage",
+					"pathName": "subLive/videoPage/videoPage",
+					"scene": null
 				}
 			]
 		}

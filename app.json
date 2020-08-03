@@ -52,6 +52,7 @@
         "unAuthorized/unAuthorized",
         "courseList/courseList",
         "review/review",
+        "videoPage/videoPage",
         "attempt/attempt"
       ]
     },

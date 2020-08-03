@@ -16,11 +16,11 @@ const TagImageUrls = {
 	// done 今日完成
 	done: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596262295sLZtTc.jpg",
 	// none 今日未完成
-	none: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596262357uoBywC.jpg",
+	none: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596446506oAldMH.jpg",
 	// gone 之前完成
 	gone: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596262385rBoLOO.jpg",
 	// forget 未完成
-	forget: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596262406bSNcQC.jpg"
+	forget: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596446539AZlUwr.jpg"
 }
 
 const CourseTypeImage = {
@@ -114,25 +114,44 @@ Page({
 		// 创建用户当日练习记录
 		createPracticeRecordInToday()
 		console.log(item)
-			switch (item.kecheng_type) {
-			case 0: {
-				// 直播
-				wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${item.room_id}`})
+		switch (item.type) {
+			case 'kecheng': {
+				switch (item.kecheng_type) {
+					case 0: {
+						// 直播
+						wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${item.room_id}`})
+						return
+					}
+					case 1: {
+						// 回看
+						wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${item.room_id}`})
+						return
+					}
+					case 2: {
+						// 小鹅通
+						wx.navigateTo({url:`/pages/webViewCommon/webViewCommon?link=${item.url}`})
+						return
+					}
+					case 3: {
+						// 结构化课程
+						wx.navigateTo({url: `/subCourse/practiceDetail/practiceDetail?courseId=${item.kecheng_id}`})
+						return
+					}
+				}
 				return
 			}
-			case 1: {
-				// 回看
-				wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${item.room_id}`})
+			case 'url': {
+				wx.navigateTo({url:`/pages/webViewCommon/webViewCommon?link=${item.url}`})
 				return
 			}
-			case 2: {
-				// 小鹅通
-				// TODO
+			case 'product': {
+				wx.navigateTo({
+					url: '/subCourse/detail/detail?prdId=' + item.product_id
+				})
 				return
 			}
-			case 3: {
-				// 结构化课程
-				wx.navigateTo({url: `/subCourse/practiceDetail/practiceDetail?courseId=${item.kecheng_id}`})
+			case 'video': {
+				// TODO video预览页面 item.video
 				return
 			}
 		}
