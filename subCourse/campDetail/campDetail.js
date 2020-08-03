@@ -241,6 +241,10 @@ Page({
           path: res.product.third_link
         })
       })
+    } else {
+      wx.navigateTo({
+        url: `/pages/webViewCommon/webViewCommon?link=${data.url}`,
+      })
     }
   },
 
@@ -252,7 +256,35 @@ Page({
       getCourseData({
         kecheng_id: data.kecheng_id
       }).then(res => {
-        console.log(res)
+        if (res.id) {
+          if (res.kecheng_type === 0) {
+            // 直播
+            wx.navigateTo({
+              url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${res.room_id}`,
+            })
+          } else if (res.kecheng_type === 1) {
+            // 回看
+            wx.navigateTo({
+              url: `/subLive/review/review?zhiboRoomId=${res.room_id}`,
+            })
+          } else if (res.kecheng_type === 2) {
+            // 小额通
+            wx.navigateTo({
+              url: `/pages/webViewCommon/webViewCommon?link=${res.xiaoetong_url}`,
+            })
+          } else {
+            // 结构化
+            wx.navigateTo({
+              url: `/subCourse/practiceDetail/practiceDetail?courseId=${res.id}`,
+            })
+          }
+        } else {
+          wx.showToast({
+            title: '课程不存在',
+            icon: "none",
+            duration: 3000
+          })
+        }
       })
     } else {
       // 直接播放视频
@@ -261,17 +293,6 @@ Page({
       })
       this.playVideo()
     }
-    // console.log(e.currentTarget.dataset.item)
-    // if (e.type === 'kecheng') {
-    //   // 课程
-    // } else if (e.type === 'video') {
-    //   // 视频
-    // } else if (e.type === 'product') {
-    //   // 商品
-    // } else if (e.type === 'url') {
-    //   // url
-    // }
-    // console.log(e.currentTarget.dataset.type)
   },
   // 获取有赞id
   getAppId() {

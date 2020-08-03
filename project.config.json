@@ -146,6 +146,20 @@
 					"pathName": "subCourse/practiceManage/practiceManage",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "个人中心",
+					"pathName": "pages/userCenter/userCenter",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "训练营详情",
+					"pathName": "subCourse/campDetail/campDetail",
+					"query": "id=60",
+					"scene": null
 				}
 			]
 		}
