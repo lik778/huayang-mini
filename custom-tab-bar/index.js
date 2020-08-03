@@ -5,7 +5,7 @@ Component({
     selectedColor: "#3cc51f",
     list: [
       {
-        "pagePath": "/pages/index/index",
+        "pagePath": "/pages/discovery/discovery",
         "selectedIconPath": "../assets/images/common/liveActive.png",
         "iconPath": "../assets/images/common/live.png",
         "text": "发现",

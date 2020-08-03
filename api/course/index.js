@@ -1,11 +1,20 @@
 import request from "../../lib/request"
-import { GLOBAL_KEY, URL } from "../../lib/config"
-import { getLocalStorage, setLocalStorage, toast } from "../../utils/util"
+import {
+	GLOBAL_KEY,
+	URL
+} from "../../lib/config"
+import {
+	getLocalStorage,
+	setLocalStorage,
+	toast
+} from "../../utils/util"
 
 // 获取训练营课程详情
 export function getBootCampCourseInfo(params) {
 	return new Promise(resolve => {
-		request._get(URL.getBootCampCourseInfo, params).then(({data}) => {
+		request._get(URL.getBootCampCourseInfo, params).then(({
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})
@@ -22,7 +31,9 @@ export function recordPracticeBehavior(params) {
 // 获取某节课程最近的训练行为列表
 export function getRecentVisitorList(params) {
 	return new Promise(resolve => {
-		request._get(URL.getRecentVisitor, params).then(({data}) => {
+		request._get(URL.getRecentVisitor, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -31,7 +42,9 @@ export function getRecentVisitorList(params) {
 // 检查用户是否需要课程引导页动画
 export function checkUserDidNeedCoopen(params) {
 	return new Promise(resolve => {
-		request._get(URL.didUserNeedCoopen, params).then(({data}) => {
+		request._get(URL.didUserNeedCoopen, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -40,7 +53,9 @@ export function checkUserDidNeedCoopen(params) {
 // [在引导阶段] - 获取推荐课程列表
 export function queryBootCampCourseList(params) {
 	return new Promise(resolve => {
-		request._get(URL.getBootCampCourseList, params).then(({data}) => {
+		request._get(URL.getBootCampCourseList, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -49,7 +64,9 @@ export function queryBootCampCourseList(params) {
 // [在引导阶段] - 加入推荐课程
 export function joinCourseInGuide(params) {
 	return new Promise(resolve => {
-		request._post(URL.joinCourse, params).then(({data}) => {
+		request._post(URL.joinCourse, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -58,7 +75,9 @@ export function joinCourseInGuide(params) {
 // 获取用户上课的信息
 export function queryUserHaveClassesInfo(params) {
 	return new Promise(resolve => {
-		request._get(URL.getUserHaveClassesInfo, params).then(({data}) => {
+		request._get(URL.getUserHaveClassesInfo, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -67,7 +86,9 @@ export function queryUserHaveClassesInfo(params) {
 // 获取用户已加入的课程
 export function queryUserJoinedClasses(params) {
 	return new Promise(resolve => {
-		request._get(URL.getUserJoinedClasses, params).then(({data}) => {
+		request._get(URL.getUserJoinedClasses, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -76,7 +97,9 @@ export function queryUserJoinedClasses(params) {
 // 在个人课程页 - 获取推荐课程
 export function queryRecommendCourseList(params) {
 	return new Promise(resolve => {
-		request._get(URL.getRecommendCourseList, params).then(({data}) => {
+		request._get(URL.getRecommendCourseList, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -85,7 +108,9 @@ export function queryRecommendCourseList(params) {
 // 创建当日练习记录
 export function createPracticeRecordInToday(params) {
 	return new Promise(resolve => {
-		request._post(URL.recordPracticeInToday, params).then(({data}) => {
+		request._post(URL.recordPracticeInToday, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -94,7 +119,9 @@ export function createPracticeRecordInToday(params) {
 // 获取用户练习打卡记录
 export function queryUserRecentPracticeLog(params) {
 	return new Promise(resolve => {
-		request._get(URL.getUserRecentPracticeLog, params).then(({data}) => {
+		request._get(URL.getUserRecentPracticeLog, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -103,7 +130,9 @@ export function queryUserRecentPracticeLog(params) {
 // 完成训练
 export function completePractice(params) {
 	return new Promise(resolve => {
-		request._post(URL.donePractice, params).then(({data}) => {
+		request._post(URL.donePractice, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -112,7 +141,9 @@ export function completePractice(params) {
 // 获取用户已经加入的训练营
 export function queryUserJoinedBootCamp(params) {
 	return new Promise(resolve => {
-		request._get(URL.getUserJoinedBootCamp, params).then(({data}) => {
+		request._get(URL.getUserJoinedBootCamp, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -121,7 +152,9 @@ export function queryUserJoinedBootCamp(params) {
 // 获取当日训练营内容
 export function queryBootCampContentInToday(params) {
 	return new Promise(resolve => {
-		request._get(URL.getBootCampDetail, params).then(({data}) => {
+		request._get(URL.getBootCampDetail, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -149,8 +182,8 @@ export function exitCourse(params) {
 export function joinCamp(params) {
 	return new Promise(resolve => {
 		request._post(URL.joinCamp, params).then(({
-																								data
-																							}) => {
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})
@@ -161,8 +194,8 @@ export function joinCamp(params) {
 export function getCampDetail(params) {
 	return new Promise(resolve => {
 		request._get(URL.getCampDetail, params).then(({
-																										data
-																									}) => {
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})
@@ -173,8 +206,8 @@ export function getCampDetail(params) {
 export function getHasJoinCamp(params) {
 	return new Promise(resolve => {
 		request._get(URL.getHasJoinCamp, params).then(({
-																										 data
-																									 }) => {
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})
@@ -186,8 +219,8 @@ export function getHasJoinCamp(params) {
 export function getCampList(params) {
 	return new Promise(resolve => {
 		request._get(URL.getCampList, params).then(({
-																									data
-																								}) => {
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})
@@ -198,8 +231,8 @@ export function getCampList(params) {
 export function getFindBanner(params) {
 	return new Promise(resolve => {
 		request._get(URL.getFindBanner, params).then(({
-																										data
-																									}) => {
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})
@@ -210,8 +243,8 @@ export function getFindBanner(params) {
 export function getShowCourseList(params) {
 	return new Promise(resolve => {
 		request._get(URL.getShowCourseList, params).then(({
-																												data
-																											}) => {
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})
@@ -222,8 +255,8 @@ export function getShowCourseList(params) {
 export function getActivityList(params) {
 	return new Promise(resolve => {
 		request._get(URL.getActivityList, params).then(({
-																											data
-																										}) => {
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})
@@ -234,8 +267,8 @@ export function getActivityList(params) {
 export function getCurentDayData(params) {
 	return new Promise(resolve => {
 		request._get(URL.getCurentDayData, params).then(({
-																											 data
-																										 }) => {
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})
@@ -246,8 +279,8 @@ export function getCurentDayData(params) {
 export function getTaskList(params) {
 	return new Promise(resolve => {
 		request._get(URL.getTaskList, params).then(({
-																									data
-																								}) => {
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})
@@ -258,8 +291,8 @@ export function getTaskList(params) {
 export function taskCheckIn(params) {
 	return new Promise(resolve => {
 		request._post(URL.taskCheckIn, params).then(({
-																									 data
-																								 }) => {
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})
@@ -270,8 +303,8 @@ export function taskCheckIn(params) {
 export function getSignData(params) {
 	return new Promise(resolve => {
 		request._get(URL.getSignData, params).then(({
-																									data
-																								}) => {
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})
@@ -282,8 +315,8 @@ export function getSignData(params) {
 export function needUpdateUserInfo(params) {
 	return new Promise(resolve => {
 		request._get(URL.needUpdateUserInfo, params).then(({
-																												 data
-																											 }) => {
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})
@@ -295,8 +328,8 @@ export function needUpdateUserInfo(params) {
 export function getMenyCourseList(params) {
 	return new Promise(resolve => {
 		request._get(URL.getMenyCourseList, params).then(({
-																												data
-																											}) => {
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})
@@ -307,8 +340,8 @@ export function getMenyCourseList(params) {
 export function getCourseData(params) {
 	return new Promise(resolve => {
 		request._get(URL.getCourseData, params).then(({
-																										data
-																									}) => {
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})

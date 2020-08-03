@@ -74,7 +74,7 @@
   "tabBar": {
     "custom": true,
     "list": [{
-        "pagePath": "pages/index/index"
+        "pagePath": "pages/discovery/discovery"
       },
       {
         "pagePath": "pages/practice/practice"
