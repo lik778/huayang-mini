@@ -245,7 +245,7 @@ Page({
   toDetail(e) {
     let data = e.currentTarget.dataset.item
     if (data.type === 'kecheng') {
-      // 跳往结构化联系
+      // 跳往结构化练习
     } else {
       // 直接播放视频
       this.setData({

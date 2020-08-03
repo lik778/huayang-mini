@@ -19,7 +19,7 @@ Component({
         isDIY: true
       },
       {
-        "pagePath": "/pages/mine/mine",
+        "pagePath": "/pages/userCenter/userCenter",
         "selectedIconPath": "../assets/images/common/mineActive.png",
         "iconPath": "../assets/images/common/mine.png",
         "text": "我的",

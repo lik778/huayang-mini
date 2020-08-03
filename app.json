@@ -80,7 +80,7 @@
         "pagePath": "pages/practice/practice"
       },
       {
-        "pagePath": "pages/mine/mine"
+        "pagePath": "pages/userCenter/userCenter"
       }
     ]
   },
