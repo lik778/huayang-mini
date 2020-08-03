@@ -80,7 +80,7 @@ Page({
   // 获取banner列表
   getBanner() {
     getFindBanner({
-      scene: 7,
+      scene: 8,
       is_all: 0
     }).then(res => {
       this.setData({
