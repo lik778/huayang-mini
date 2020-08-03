@@ -144,3 +144,12 @@ export function exitCourse(params) {
 		})
 	})
 }
+
+// 提升经验
+export function increaseExp(params) {
+	return new Promise(resolve => {
+		request._post(URL.increaseExperience, params).then(({data}) => {
+			resolve(data)
+		})
+	})
+}
