@@ -9,19 +9,25 @@
 				{{item}}
 			</view>
 		</view>
-		<view class="main-item" wx:for="{{orderData}}" wx:key="index" bindtap="toOrder">
-			<view class="main-item-top">
-				<view class="main-item-left">
-					<image src="{{item.product_pic}}"></image>
-				</view>
-				<view class="main-item-right">
-					<view class="item-top">{{item.product_title}}</view>
-					<view class="item-bottom">
-						<view class="order-price">订单金额：<text style="font-size:18px;font-weight:600;color:rgba(0, 0, 0, 1);">¥{{item.total_fee}}</text></view>
-						<view class="order-time">订单时间：{{item.order_create_time}}</view>
+		<view class="main-box">
+			<view class="main-item" wx:for="{{orderData}}" wx:key="index" bindtap="toOrder">
+				<view class="main-item-top">
+					<view class="main-item-left">
+						<image src="{{item.product_pic}}"></image>
 					</view>
-					<view class="main-item-bottom">
-						<view class="button">查看订单</view>
+					<view class="main-item-right">
+						<view class="item-top">{{item.product_title}}</view>
+						<view class="item-bottom">
+							<view class="order-price">
+								订单金额：<text style="font-size:18px;font-weight:600;color:rgba(0, 0, 0, 1);" wx:if="{{curentIndex==0}}">¥{{item.real_price/100}}</text>
+								<text style="font-size:18px;font-weight:600;color:rgba(0, 0, 0, 1);" wx:if="{{curentIndex==1}}">¥{{item.total_fee}}</text>
+							</view>
+							<view class="order-time" wx:if="{{curentIndex==0}}">订单时间：{{item.created_at}}</view>
+							<view class="order-time" wx:if="{{curentIndex==1}}">订单时间：{{item.order_create_time}}</view>
+						</view>
+						<view class="main-item-bottom">
+							<view class="button">查看订单</view>
+						</view>
 					</view>
 				</view>
 			</view>
