@@ -64,9 +64,14 @@ Page({
     })
   },
   // 查看订单
-  toOrder() {
+  toOrder(e) {
     if (this.data.curentIndex == 0) {
       // 眺望训练营
+      let data = e.currentTarget.dataset.item.order_item_list[0]
+      wx.navigateTo({
+        url: `/subCourse/campDetail/campDetail?id=${data.product_id}`,
+      })
+      console.log(e)
       console.log("去训练营")
     } else {
       wx.navigateToMiniProgram({

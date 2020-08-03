@@ -20,8 +20,8 @@ Page({
   data: {
     statusHeight: 0,
     campId: 0,
-    joinTime:"",
-    endTime:"",
+    joinTime: "",
+    endTime: "",
     campDetailData: {},
   },
   // 获取训练营详情
@@ -40,13 +40,13 @@ Page({
     joinCamp({
       open_id: getLocalStorage(GLOBAL_KEY.openId),
       // open_id:'oG8Rd5Zxr7cjV6tUdraUDdsOSS8w',
-      date:this.data.endTime,
+      date: this.data.endTime,
       traincamp_id: this.data.campId
     }).then((res) => {
       if (res.id) {
         payCourse({
           id: res.id,
-          name: '测试'
+          name: '加入训练营'
         }).then(res => {
           if (res.errMsg === "requestPayment:ok") {
             this.backFun({
@@ -99,7 +99,7 @@ Page({
     this.setData({
       campId: options.id,
       joinTime: options.time,
-      endTime:options.endtime
+      endTime: options.endtime
     })
     this.getCampDetail(options.id)
   },

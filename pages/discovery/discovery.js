@@ -4,6 +4,9 @@ import {
   simpleDurationSimple
 } from "../../utils/util"
 import {
+  checkAuth
+} from "../../utils/auth"
+import {
   getHasJoinCamp,
   getCampList,
   getFindBanner,
@@ -115,7 +118,7 @@ Page({
         })
       } else {
         wx.navigateTo({
-          url: `/subCourse/campDetail/campDetail?id=${ e.target.dataset.index.id}`,
+          url: `/subCourse/campDetail/campDetail?id=${e.target.dataset.index.id}`,
         })
       }
     })
@@ -124,9 +127,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getCampList()
-    this.getBanner()
-    this.getCourseList()
+    checkAuth({
+      listenable: true,
+      ignoreFocusLogin: true
+    }).then(() => {
+      this.getCampList()
+      this.getBanner()
+      this.getCourseList()
+    })
     // this.getActivityList()
   },
   /**
