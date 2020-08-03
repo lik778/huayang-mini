@@ -1,0 +1,7 @@
+<view class="level-alert" style="display:{{didShow?'':'none'}};" bind:tap="toggle">
+    <view class="box">
+        <image mode="aspectFit" class="{{hasGrade ? 'champion' : ''}}" src="{{iconImage}}"></image>
+        <view class="text-01">{{text01}}</view>
+        <view class="text-02">{{text02}}</view>
+    </view>
+</view>

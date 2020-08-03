@@ -94,7 +94,7 @@
     margin-top: 32rpx;
     padding: 20rpx 56rpx;
     font: 500 36rpx/36rpx PingFanf SC;
-    color: white;
+    color: #030302;
     border-radius: 999rpx;
     background: #c00;
 }

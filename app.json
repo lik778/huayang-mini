@@ -14,6 +14,7 @@
     "wx85d130227f745fc5"
   ],
   "pages": [
+    "pages/practice/practice",
     "pages/discovery/discovery",
     "pages/userCenter/userCenter",
     "pages/index/index",
@@ -23,9 +24,10 @@
     "pages/privacy/privacy",
     "pages/service/service",
     "pages/coopen/coopen",
-    "pages/practice/practice"
+    "components/levelAlert/levelAlert"
   ],
-  "subpackages": [{
+  "subpackages": [
+    {
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -73,7 +75,8 @@
   },
   "tabBar": {
     "custom": true,
-    "list": [{
+    "list": [
+      {
         "pagePath": "pages/discovery/discovery"
       },
       {

@@ -1,0 +1,42 @@
+.level-alert {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .5);
+    z-index: 20;
+}
+.box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    border-radius: 16rpx;
+    box-sizing: border-box;
+    padding: 70rpx 70rpx 50rpx;
+    background: white;
+}
+.box image {
+    position: absolute;
+    left: 50%;
+    top: -50rpx;
+    transform: translateX(-50%);
+    width: 96rpx;
+    height: 108rpx;
+}
+.box image.champion {
+    width: 136rpx;
+    height: 126rpx;
+}
+.text-01 {
+    margin-bottom: 20rpx;
+    font: 44rpx/74rpx PingFang SC;
+}
+.text-02 {
+    font: 32rpx/44rpx PingFang SC;
+}

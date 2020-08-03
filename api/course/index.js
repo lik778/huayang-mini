@@ -148,9 +148,7 @@ export function exitCourse(params) {
 // 加入训练营
 export function joinCamp(params) {
 	return new Promise(resolve => {
-		request._post(URL.joinCamp, params).then(({
-			data
-		}) => {
+		request._post(URL.joinCamp, params).then(({data}) => {
 			data = data || []
 			resolve(data)
 		})

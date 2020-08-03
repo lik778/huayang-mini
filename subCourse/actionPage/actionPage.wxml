@@ -102,4 +102,6 @@
         </view>
         <view class="result-btn" bind:tap="show">秀一下</view>
     </view>
+
+    <levelAlert didShow="{{didShowLevelAlert}}" hasGrade="{{hasGrade}}" number="{{levelNumber}}"></levelAlert>
 </view>

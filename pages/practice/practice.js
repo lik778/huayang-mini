@@ -1,6 +1,6 @@
 import { getBannerList } from "../../api/mall/index"
 import {
-	createPracticeRecordInToday, queryBootCampContentInToday,
+	queryBootCampContentInToday,
 	queryRecommendCourseList,
 	queryUserHaveClassesInfo, queryUserJoinedBootCamp,
 	queryUserJoinedClasses,

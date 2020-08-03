@@ -2,7 +2,7 @@
 import { $notNull, getLocalStorage } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
 import { voices_ary, voices_key, voices_number, LocaleVoice } from "../../lib/voices"
-import { completePractice, recordPracticeBehavior } from "../../api/course/index"
+import { completePractice, increaseExp, recordPracticeBehavior } from "../../api/course/index"
 
 Page({
 	/**
@@ -50,6 +50,10 @@ Page({
 		didPauseRecordGlobalTime: false, // 是否停止全局计时器
 
 		didShowResultLayer: false, // 结果层
+
+		didShowLevelAlert: false, // 等级经验弹窗
+		hasGrade: false, // 是否升级
+		levelNumber: 0, // 升级等级/经验
 	},
 
 	/**
@@ -515,6 +519,15 @@ Page({
 				user_id: getLocalStorage(GLOBAL_KEY.userId),
 				kecheng_id: this.data.courseInfo.id,
 				duation: this.data.globalRecordTiming
+			})
+			// 经验值提升弹窗
+			increaseExp({task_type: "task_pratice_playbill"}).then((data) => {
+				// 升级信息
+				this.setData({
+					didShowLevelAlert: true,
+					hasGrade: data.has_grade,
+					levelNumber: data.has_grade ? data.level : data.experience
+				})
 			})
 		}
 	},
