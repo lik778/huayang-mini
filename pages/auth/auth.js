@@ -1,12 +1,10 @@
-// pages/auth/auth.js
 import { wxGetUserInfoPromise } from '../../utils/auth.js'
 import { GLOBAL_KEY } from '../../lib/config.js'
 import { bindUserInfo, bindWxPhoneNumber, getWxInfo } from "../../api/auth/index"
 import { $notNull, getLocalStorage, setLocalStorage } from "../../utils/util"
-import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog'
-import { getUniversityCode } from "../../api/mine/index"
 import { APP_LET_ID } from "../../lib/config"
 import { wxLoginPromise } from "../../utils/auth"
+import { checkUserDidNeedCoopen } from "../../api/course/index"
 
 Page({
 
@@ -26,41 +24,6 @@ Page({
 		wx.navigateTo({
 			url: '/pages/service/service'
 		})
-	},
-	checkUserAuth({is_zhide_vip, student_num}) {
-		if (is_zhide_vip) {
-			if (student_num) {
-				Dialog.confirm({
-					title: '提示',
-					message: '您已是花样大学学员',
-					confirmButtonText: '查看课程',
-					showCancelButton: false
-				}).then(() => {
-					getUniversityCode(`user_key=daxue`).then(res => {
-						wx.navigateTo({
-							url: `/subLive/courseList/courseList?id=${res.data.id}`,
-						})
-					})
-				}).catch(() => {
-				})
-			} else {
-				wx.navigateTo({
-					url: '/mine/joinSchool/joinSchool',
-				})
-			}
-		} else {
-			Dialog.confirm({
-				title: '提示',
-				message: '花样大学为花样汇超级会员专属权益，您暂无权限申请',
-				confirmButtonText: '立即加入“花样汇”',
-				showCancelButton: false
-			}).then(() => {
-				wx.navigateTo({
-					url: `/mine/joinVip/joinVip?from=${this.data.fromPath}`,
-				})
-			}).catch(() => {
-			})
-		}
 	},
 	/**
 	 * 一键微信授权
@@ -113,11 +76,24 @@ Page({
 					iv
 				})
 				setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
-				wx.navigateBack()
+				// wx.navigateBack()
+				// 判断用户是否需要引导加课程
+				checkUserDidNeedCoopen({ user_id: originAccountInfo.id }).then((data) => {
+					// 1=>需要引导，2=>不需要引导
+					if (+data === 1) {
+						wx.navigateTo({
+							url: "/pages/coopen/coopen"
+						})
+					} else {
+						wx.switchTab({
+							url: "/pages/practice/practice"
+						})
+					}
+				})
 			}
 		} else {
 			console.error('用户拒绝手机号授权')
-			wx.navigateBack()
+			// wx.navigateBack()
 		}
 	},
 	/**

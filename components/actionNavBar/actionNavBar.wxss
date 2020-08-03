@@ -1,9 +1,8 @@
-.navibar {
+.action-nav-bar {
   display: flex;
   align-items: center;
   height: 44px;
   line-height: 44px;
-  position: relative;
   position: fixed;
   width: 100vw;
   left: 0;
@@ -15,10 +14,14 @@
   display: flex;
   align-items: center;
   height: 30px;
-  border: 0.5px solid #DDDDDD;
-  border-radius: 999rpx;
+  /*border: 0.5px solid #DDDDDD;*/
+  /*border-radius: 999rpx;*/
   margin-left: 8px;
   background: rgba(255, 255, 255, 0.6);
+}
+
+.back-module:active {
+  opacity: 0.8;
 }
 
 .back-icon {
@@ -29,36 +32,14 @@
 }
 
 .back-icon image {
-  width: 18rpx;
-  height: 32rpx;
-}
-
-.line-icon {
-  width: 1px;
-  height: 18.5px;
-  background: rgba(0, 0, 0, 0.2);
-}
-
-.back-index {
-  display: flex;
-  align-items: center;
-  padding: 0 26rpx;
-  height: 100%;
-
-}
-
-.back-index image {
-  width: 32rpx;
-  height: 32rpx;
+  width: 60rpx;
+  height: 60rpx;
 }
 
 .title {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 17px;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 600;
+  font: 500 34rpx/38rpx PingFangSC-Medium, PingFang SC;
   color: rgba(0, 0, 0, 1);
-  line-height: 19px;
 }

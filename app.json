@@ -22,9 +22,8 @@
     "pages/auth/auth",
     "pages/privacy/privacy",
     "pages/service/service",
-    "pages/test/test",
+    "pages/coopen/coopen",
     "pages/practice/practice"
-
   ],
   "subpackages": [{
       "root": "mine",
@@ -60,6 +59,7 @@
         "category/category",
         "practiceDetail/practiceDetail",
         "actionPage/actionPage",
+        "practiceManage/practiceManage",
         "campDetail/campDetail",
         "joinCamp/joinCamp"
       ]
@@ -77,7 +77,7 @@
         "pagePath": "pages/index/index"
       },
       {
-        "pagePath": "pages/mall/mall"
+        "pagePath": "pages/practice/practice"
       },
       {
         "pagePath": "pages/mine/mine"

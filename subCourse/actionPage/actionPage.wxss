@@ -1,66 +1,68 @@
-/* subCourse/actionPage/actionPage.wxss */
+@import "../../assets/css/common.wxss";
 .content {
     position: relative;
 }
 
 .content .cycle-time {
     position: absolute;
-    top: 68rpx;
+    top: 46rpx;
     width: 100vw;
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    color: white;
     z-index: 1;
 }
 .content .main-cycle-time {
-    font-size: 84rpx;
-    font-family: "DIN Condensed Bold";
-    line-height: 84rpx;
+    font: 700 84rpx/100rpx Condensed;
 }
 .content .sub-cycle-time {
-    font-size: 48rpx;
-    font-family: "苹方-简 中黑体";
-    line-height: 48rpx;
+    font: 700 48rpx/100rpx PingFang SC;
     margin-left: 10rpx;
 }
 .content .operate {
     position: absolute;
     bottom: 92rpx;
     width: 100vw;
+    box-sizing: border-box;
+    padding: 0 100rpx;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    background: white;
     z-index: 1;
 }
-.operate .arrow-left, .operate .arrow-right {
+.arrow-left, .arrow-right {
     width: 28rpx;
     height: 44rpx;
     margin: 40rpx;
 }
-.operate .pause {
+.arrow-left:active, .arrow-right:active {
+    opacity: 0.8;
+}
+.pause, .stop {
     width: 130rpx;
     height: 130rpx;
-    margin: 0 56rpx;
+}
+.pause:active, .stop:active {
+    opacity: 0.8;
 }
 .progress {
     position: absolute;
     bottom: 0;
     right: 0;
     left: 0;
+    font: 32rpx/44rpx PingFang SC;
+    z-index: 10;
 }
 .progress .duration {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 30rpx;
-    color: white;
 }
 .progress .bar {
     height: 14rpx;
     margin-top: 12rpx;
-    background: white;
+    background: #CC0000;
 }
 #actionVideo {
     position: absolute;
@@ -71,4 +73,121 @@
     height: 100%;
     width: 100%;
     z-index: -1;
+}
+.prepare-layer, .rest-layer, .pause-layer, .result-layer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background: white;
+    z-index: 5;
+}
+.prepare-layer.hide-prepare-layer, .rest-layer.hide-rest-layer, .pause-layer.hide-pause-layer, .result-layer.hide-result-layer {
+    display: none;
+}
+/*prepare-layer*/
+.action-count-down {
+    margin: 198rpx 0 90rpx;
+    font: bold 372rpx/446rpx Condensed;
+}
+.action-name, .action-cycle-time {
+    margin-bottom: 30rpx;
+    font: 52rpx/74rpx PingFang SC;
+}
+.action-cycle-time {
+    color:rgba(102,102,102,1);
+}
+/*rest-layer*/
+.rest-time {
+    margin: 198rpx 0 240rpx;
+    font: bold 130rpx/156rpx Condensed;
+}
+.next-action-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20rpx;
+}
+.next-cover {
+    width: 248rpx;
+    height: 284rpx;
+    padding: 0 15rpx;
+}
+.next-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.next-action-name {
+    width: 200rpx;
+
+}
+.next-action-cycle-time {
+    width: 200rpx;
+    text-align: left;
+}
+.operate-lay {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 70rpx;
+    margin-top: 108rpx;
+}
+/*pause-layer*/
+.pause-layer {
+    background: rgba(0,0,0,.55);
+    z-index: 0;
+}
+/*result-layer*/
+.result-layer {
+    color: white;
+    background: #990000;
+    z-index: 15;
+}
+.result-text-01 {
+    margin: 96rpx 0 14rpx;
+    font: 42rpx/58rpx PingFang SC;
+}
+.result-text-02 {
+    margin-bottom: 98rpx;
+    font: 56rpx/80rpx PingFang SC;
+}
+.global-record-time-text {
+    font: bold 108rpx/130rpx Condensed;
+}
+.result-text-03 {
+    margin-bottom: 126rpx;
+    font: 44rpx/60rpx PingFang SC;
+}
+.action-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0 120rpx;
+    font: 32rpx/70rpx PingFang SC;
+}
+.action-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.result-btn {
+    position: fixed;
+    bottom: 12rpx;
+    left: 0;
+    right: 0;
+    width: 690rpx;
+    height: 96rpx;
+    margin: 0 auto;
+    border-radius: 999rpx;
+    color: #990000;
+    font: 500 40rpx/96rpx PingFang SC;
+    background: white;
+}
+.result-btn:active {
+    opacity: 0.8;
 }

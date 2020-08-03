@@ -1,7 +1,13 @@
 //app.js
-import { batchDownloadFiles, getLocalStorage, setLocalStorage } from './utils/util'
+import {
+	batchDownloadFiles,
+	batchRemoveSavedFiles,
+	batchSaveFiles,
+	getLocalStorage,
+	setLocalStorage
+} from './utils/util'
 import { GLOBAL_KEY } from './lib/config'
-import { v48 } from "./lib/voices"
+import { voices_ary } from "./lib/voices"
 
 App({
 	onLaunch: function () {},
@@ -19,11 +25,17 @@ App({
 		wx.getSavedFileList({
 			success(res) {
 				if (res.errMsg === "getSavedFileList:ok") {
-					if (res.fileList.length === 0) {
-						return ;
-						// 批量下载"口令"包
-						batchDownloadFiles(v48).then((response) => {
-
+					console.log('savedFilesSize = ' + res.fileList.length);
+					// return
+					if (res.fileList.length !== 26) {
+						// 清理所有本地缓存文件
+						batchRemoveSavedFiles(res.fileList).then(() => {
+							// 批量下载"口令"包
+							batchDownloadFiles(voices_ary).then((response) => {
+								batchSaveFiles(response).then((ary) => {
+									console.log(ary);
+								})
+							})
 						})
 					}
 				}

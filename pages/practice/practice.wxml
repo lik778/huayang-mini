@@ -1,2 +1,77 @@
-<!--pages/practice/practice.wxml-->
-<text>pages/practice/practice.wxml</text>
+<view class="practice">
+    <swiper class="banner">
+        <swiper-item wx:for="{{bannerList}}" wx:key="index">
+            <image mode="aspectFill" src="{{item.pic_url}}"></image>
+        </swiper-item>
+    </swiper>
+
+    <view class="support-layer">
+        <view class="title">练习时长</view>
+        <view class="exercise-time">
+            <text class="time">{{userHaveClassesInfo.study_time}}</text>
+            <text class="unit">分钟</text>
+        </view>
+    </view>
+
+    <!--  本周练习进度  -->
+    <view class="support-layer">
+        <view class="title">
+            <text>本周练习</text>
+            <text class="manage">课程管理</text>
+        </view>
+        <view class="week-line">
+            <view class="day-container" wx:for="{{weeklyLog}}" wx:key="index">
+                <view>{{item.dateText}}</view>
+                <image class="day-icon" mode="aspectFit" src="{{TagImageUrls[item.status]}}"></image>
+            </view>
+        </view>
+    </view>
+
+    <!--  今日练习计划  -->
+    <view class="today-boot-camp-plan">
+        <view class="boot-camp" style="display: {{bootCampList.length > 0 ? '' : 'none'}};" wx:for="{{bootCampList}}" wx:key="index" style="display: {{item.content.length === 0 ? 'none' : ''}}">
+            <view class="boot-camp-name" bind:tap="goToBootCamp" data-bootCampId="{{item.bootCampId}}">
+                <text>{{item.name}}</text>
+                <view class="all-boot-camp">全部</view>
+            </view>
+            <view class="segmentation"></view>
+            <view class="boot-camp-content">
+                <view class="boot-camp-course" wx:for="{{item.content}}" wx:for-item="contentItem" wx:for-index="contentIndex" wx:key="contentIndex">
+                    <view class="boot-camp-info">
+                        <view class="icon-box">
+                            <image mode="aspectFit" class="icon-{{contentItem.type}}" src="{{CourseTypeImage[contentItem.type]}}"></image>
+                        </view>
+                        <view>{{contentItem.name}}</view>
+                    </view>
+                    <view class="boot-camp-start" bind:tap="handleExerciseBtnTap" data-item="{{contentItem}}">练习</view>
+                </view>
+            </view>
+        </view>
+        <view class="boot-camp" style="display: {{bootCampList.length > 0 ? 'none' : ''}};">
+            <view class="no-camp">
+                <text>快去挑选感兴趣的课程吧</text>
+                <text class="find-camp-btn" bind:tap="findMoreBootCamp">去挑选</text>
+            </view>
+        </view>
+    </view>
+
+    <!--  推荐课程  -->
+    <view class="support-layer">
+        <view class="title recommend-title">推荐课程</view>
+    </view>
+
+    <!--  课程练习列表  -->
+    <view class="today-practice-list">
+        <view class="practice-item" wx:for="{{userJoinedClassesList}}" wx:key="index" style="background-image:url('{{item.kecheng.cover_pic}}')">
+            <view class="practice-name limit-one-line">{{item.kecheng.name}}</view>
+            <view class="practice-sub">
+                <view class="practice-desc">
+                    <text>{{CourseLevels[item.kecheng.level]}}</text>
+                    <text>{{item.kecheng.duration}}分钟</text>
+                    <text>{{item.kecheng.meta_count}}个动作</text>
+                </view>
+                <view class="join-now">立即参加</view>
+            </view>
+        </view>
+    </view>
+</view>

@@ -469,7 +469,7 @@ export const returnFloat = (values) => {
 // 批量下载文件
 export const batchDownloadFiles = function (downloadUrls) {
 	let downloadPromiseAry = []
-	downloadUrls.map(url => {
+	downloadUrls.forEach(url => {
 		downloadPromiseAry.push(
 			new Promise((resolve, reject) => {
 				wx.downloadFile({
@@ -491,14 +491,42 @@ export const batchDownloadFiles = function (downloadUrls) {
 
 // 批量保存临时文件到本地缓存文件
 export const batchSaveFiles = function (tempFiles) {
-	tempFiles.map((tempFilePath) => {
-		return new Promise((resolve, reject) => {
+	let cachedFiles = []
+	tempFiles.forEach((tempFilePath) => {
+		cachedFiles.push(new Promise((resolve, reject) => {
 			wx.saveFile({
 				tempFilePath,
-				success() {}
+				success(res) {
+					resolve(res.savedFilePath)
+				},
+				fail() {
+					reject()
+				}
 			})
-		})
+		}))
 	})
+
+	return Promise.all(cachedFiles)
+}
+
+// 清空本地缓存文件
+export const batchRemoveSavedFiles = function (localFiles) {
+	let removedFiles = []
+	localFiles.forEach(filePath => {
+		removedFiles.push(new Promise((resolve, reject) => {
+			wx.removeSavedFile({
+				filePath: filePath.filePath,
+				success() {
+					resolve()
+				},
+				fail() {
+					reject()
+				}
+			})
+		}))
+	})
+
+	return Promise.all(removedFiles)
 }
 
 // 处理日历显示
