@@ -127,7 +127,6 @@ Page({
 		getRecentVisitorList({kecheng_id: this.data.courseId, limit: 6}).then((data) => {
 			data = data || []
 			let avatarAry = data.map(info => info.avatar_url)
-			avatarAry = new Array(6).fill(avatarAry[0]) // TODO 测试代码记得删除
 			this.setData({ avatarAry })
 		})
 	},

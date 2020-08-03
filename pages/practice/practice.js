@@ -63,15 +63,32 @@ Page({
 	/**
 	 * 生命周期函数--监听页面显示
 	 */
-	onShow: function () {
-		checkAuth()
-
+	onShow: async function () {
 		if (typeof this.getTabBar === 'function' &&
 			this.getTabBar()) {
 			this.getTabBar().setData({
 				selected: 1
 			})
 		}
+
+		checkAuth()
+
+		// 用户学习数据统计
+		queryUserHaveClassesInfo().then((userHaveClassesInfo) => {
+			this.setData({userHaveClassesInfo})
+		})
+
+		// 用户最近7天的打卡记录
+		let userRecentPracticeLog = await queryUserRecentPracticeLog({limit: 7})
+		let weeklyLog = this.generateWeeklyLog()
+		let now = dayjs()
+		weeklyLog.forEach((dayItem, index) => {
+			let target = userRecentPracticeLog.find(n => Number(String(n.date).slice(-2)) === dayItem.date)
+			if ($notNull(target)) {
+				dayItem.status = Number(String(target.date).slice(-2)) === now.date() ? 'done' : 'gone'
+			}
+		})
+		this.setData({weeklyLog})
 	},
 
 	/**
@@ -108,6 +125,12 @@ Page({
 	onShareAppMessage: function () {
 
 	},
+	// 处理点击课程事件
+	handleCourseTap(e) {
+		wx.navigateTo({
+			url: "/subCourse/practiceDetail/practiceDetail?courseId=" + e.currentTarget.dataset.item.id
+		})
+	},
 	// 处理练习按钮事件
 	handleExerciseBtnTap(e) {
 		let item = e.currentTarget.dataset.item
@@ -129,7 +152,7 @@ Page({
 					}
 					case 2: {
 						// 小鹅通
-						wx.navigateTo({url:`/pages/webViewCommon/webViewCommon?link=${item.url}`})
+						wx.navigateTo({url: `/pages/webViewCommon/webViewCommon?link=${item.url}`})
 						return
 					}
 					case 3: {
@@ -141,7 +164,7 @@ Page({
 				return
 			}
 			case 'url': {
-				wx.navigateTo({url:`/pages/webViewCommon/webViewCommon?link=${item.url}`})
+				wx.navigateTo({url: `/pages/webViewCommon/webViewCommon?link=${item.url}`})
 				return
 			}
 			case 'product': {
@@ -156,13 +179,23 @@ Page({
 			}
 		}
 	},
-	// 查看所有训练营
-	goToBootCamp(e) {
-		console.log('打开训练营详情页', e.currentTarget.dataset.bootCampId)
+	// 课程管理
+	goToPracticeManage() {
+		wx.navigateTo({
+			url: "/subCourse/practiceManage/practiceManage"
+		})
 	},
-	// 去发现页
-	findMoreBootCamp() {
-		console.log('打开发现页')
+	// 查看训练营详情
+	goToBootCamp(e) {
+		wx.navigateTo({
+			url: "/subCourse/campDetail/campDetail?id=" + e.currentTarget.dataset.bootCampId
+		})
+	},
+	// 发现页
+	goToDiscovery() {
+		wx.switchTab({
+			url: '/pages/discovery/discovery'
+		})
 	},
 	// 生成本周打卡日志
 	generateWeeklyLog() {
@@ -183,10 +216,7 @@ Page({
 		getBannerList({scene: 7}).then((bannerList) => {
 			this.setData({bannerList})
 		})
-		// 用户学习数据统计
-		queryUserHaveClassesInfo().then((userHaveClassesInfo) => {
-			this.setData({userHaveClassesInfo})
-		})
+
 		// 用户加入的课程
 		queryUserJoinedClasses().then((userJoinedClassesList) => {
 			if (userJoinedClassesList.length > 0) {
@@ -198,18 +228,6 @@ Page({
 				})
 			}
 		})
-
-		// 用户最近7天的打卡记录
-		let userRecentPracticeLog = await queryUserRecentPracticeLog({limit: 7})
-		let weeklyLog = this.generateWeeklyLog()
-		let now = dayjs()
-		weeklyLog.forEach((dayItem, index) => {
-			let target = userRecentPracticeLog.find(n => Number(String(n.date).slice(-2)) === dayItem.date)
-			if ($notNull(target)) {
-				dayItem.status = Number(String(target.date).slice(-2)) === now.date() ? 'done' : 'gone'
-			}
-		})
-		this.setData({weeklyLog})
 
 		// 获取训练营列表
 		let bootCampList = await queryUserJoinedBootCamp()

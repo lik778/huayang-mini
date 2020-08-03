@@ -13,7 +13,7 @@
     z-index: 1;
 }
 .content .main-cycle-time {
-    font: 700 84rpx/100rpx Condensed;
+    font: 700 84rpx/100rpx "Condensed";
 }
 .content .sub-cycle-time {
     font: 700 48rpx/100rpx PingFang SC;
@@ -95,7 +95,7 @@
 /*prepare-layer*/
 .action-count-down {
     margin: 198rpx 0 90rpx;
-    font: bold 372rpx/446rpx Condensed;
+    font: bold 372rpx/446rpx "Condensed";
 }
 .action-name, .action-cycle-time {
     margin-bottom: 30rpx;
@@ -107,7 +107,7 @@
 /*rest-layer*/
 .rest-time {
     margin: 198rpx 0 240rpx;
-    font: bold 130rpx/156rpx Condensed;
+    font: bold 130rpx/156rpx "Condensed";
 }
 .next-action-info {
     display: flex;
@@ -161,7 +161,7 @@
     font: 56rpx/80rpx PingFang SC;
 }
 .global-record-time-text {
-    font: bold 108rpx/130rpx Condensed;
+    font: bold 108rpx/130rpx "Condensed";
 }
 .result-text-03 {
     margin-bottom: 126rpx;

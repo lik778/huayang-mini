@@ -109,6 +109,8 @@ Page({
 		this.data.video = wx.createVideoContext("actionVideo", this)
 		// 练习开始前的旁白
 		this.data.beforeSportAudio = wx.createInnerAudioContext()
+		// 要领
+		this.data.mainPointAudio = wx.createInnerAudioContext()
 		// 口令
 		this.data.commandAudio = wx.createInnerAudioContext()
 		// 时间口令
@@ -129,14 +131,19 @@ Page({
 	 * 生命周期函数--监听页面隐藏
 	 */
 	onHide: function () {
-
+		this.pauseAction()
 	},
 
 	/**
 	 * 生命周期函数--监听页面卸载
 	 */
 	onUnload: function () {
-
+		this.stopAllAction()
+		// 销毁所有音视频
+		this.data.beforeSportAudio.destroy()
+		this.data.mainPointAudio.destroy()
+		this.data.commandAudio.destroy()
+		this.data.countDownAudio.destroy()
 	},
 
 	/**
@@ -362,7 +369,6 @@ Page({
 	 */
 	playMainPoint(voiceLink) {
 		const self = this
-		this.data.mainPointAudio = wx.createInnerAudioContext()
 		this.data.mainPointAudio.src = voiceLink
 		this.data.mainPointAudio.play()
 
@@ -522,11 +528,13 @@ Page({
 			// 经验值提升弹窗
 			increaseExp({task_type: "task_pratice_playbill"}).then((data) => {
 				// 升级信息
-				this.setData({
-					didShowLevelAlert: true,
-					hasGrade: data.has_grade,
-					levelNumber: data.has_grade ? data.level : data.experience
-				})
+				if ($notNull(data)) {
+					this.setData({
+						didShowLevelAlert: true,
+						hasGrade: data.has_grade,
+						levelNumber: data.has_grade ? data.level : data.experience
+					})
+				}
 			})
 		}
 	},
