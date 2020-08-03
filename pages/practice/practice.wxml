@@ -43,11 +43,11 @@
                         </view>
                         <view>{{contentItem.name}}</view>
                     </view>
-                    <view class="boot-camp-start">练习</view>
+                    <view class="boot-camp-start" bind:tap="handleExerciseBtnTap" data-item="{{contentItem}}">练习</view>
                 </view>
             </view>
         </view>
-        <view class="boot-camp">
+        <view class="boot-camp" style="display: {{bootCampList.length > 0 ? 'none' : ''}};">
             <view class="no-camp">
                 <text>快去挑选感兴趣的课程吧</text>
                 <text class="find-camp-btn" bind:tap="findMoreBootCamp">去挑选</text>

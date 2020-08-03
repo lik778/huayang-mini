@@ -104,13 +104,35 @@ Page({
 	onShareAppMessage: function () {
 
 	},
+	// 处理练习按钮事件
+	handleExerciseBtnTap(e) {
+		let item = e.currentTarget.dataset.item
+		console.log(item)
+		switch (item.type) {
+			case "kecheng": {
+				wx.navigateTo({url: `/subCourse/practiceDetail/practiceDetail?courseId=${item.kecheng_id}`})
+				return
+			}
+			case "video": {
+				// wx.navigateTo({url: `/subLive/review/review?zhiboRoomId=${}`})
+				return
+			}
+			case "product": {
+				wx.navigateTo({url: `/subCourse/detail/detail?prdId=${item.product_id}`})
+				return
+			}
+			case "url": {
+				return
+			}
+		}
+	},
 	// 查看所有训练营
 	goToBootCamp(e) {
-		console.log('打开训练营详情页', e.currentTarget.dataset.bootCampId);
+		console.log('打开训练营详情页', e.currentTarget.dataset.bootCampId)
 	},
 	// 去发现页
 	findMoreBootCamp() {
-		console.log('打开发现页');
+		console.log('打开发现页')
 	},
 	// 生成本周打卡日志
 	generateWeeklyLog() {
