@@ -1,7 +1,7 @@
 @import "../../assets/css/common.wxss";
 
 .practice {
-    padding: 15rpx 30rpx 120rpx;
+    padding: 15rpx 30rpx 150rpx;
 }
 /*banner*/
 .banner {

@@ -2,7 +2,7 @@
 .discovery {
   background: #F9F9F9;
   /* background: red; */
-  padding-bottom: 130rpx;
+  padding-bottom: 160rpx;
 }
 
 .module-one,
