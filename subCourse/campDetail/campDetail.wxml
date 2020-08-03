@@ -49,7 +49,7 @@
 	</view>
 	<!-- 按钮层 -->
 	<view class="bottom">
-		<view class="button">
+		<view class="button" bindtap="toTeam">
 			<image src='/assets/images/common/wechat.png'></image>
 			<text>加入互动交流群</text>
 		</view>
