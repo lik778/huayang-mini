@@ -113,10 +113,10 @@
 					"scene": null
 				},
 				{
-					"id": 8,
+					"id": 7,
 					"name": "subCourse/practiceDetail/practiceDetail",
 					"pathName": "subCourse/practiceDetail/practiceDetail",
-					"query": "courseId=118",
+					"query": "courseId=1",
 					"scene": null
 				},
 				{
@@ -165,6 +165,7 @@
 					"id": -1,
 					"name": "subLive/videoPage/videoPage",
 					"pathName": "subLive/videoPage/videoPage",
+					"query": "",
 					"scene": null
 				}
 			]

@@ -10,7 +10,13 @@ import { GLOBAL_KEY } from './lib/config'
 import { voices_ary } from "./lib/voices"
 
 App({
-	onLaunch: function () {},
+	onLaunch: function () {
+		wx.loadFontFace({
+			global: true,
+			family: 'Condensed',
+			source: 'url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/font/DIN%20Condensed%20Bold.ttf")',
+		})
+	},
 	onShow(options) {
 		// 记录设备信息，保证进入详情页时可以获取到statusHeight自定义navibar
 		if (!getLocalStorage(GLOBAL_KEY.systemParams)) {
