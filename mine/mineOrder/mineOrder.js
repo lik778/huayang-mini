@@ -22,17 +22,39 @@ Page({
     curentIndex: 0,
     statusHeight: 0,
     titleList: ['训练营', '商品'],
-    orderData: []
+    orderData: [],
+    pageData: {
+      offset: 0,
+      current: 1,
+      limit: 10
+    }
   },
   // 切换tab
   changeTab(e) {
     this.setData({
       curentIndex: e.currentTarget.dataset.index
     })
+    this.getMineOrderData()
   },
   // 获取订单列表
-  getMineOrderData(e) {
-    getMineOrder(`user_id=${getLocalStorage(GLOBAL_KEY.userId)}`).then(res => {
+  getMineOrderData() {
+    let params = {}
+    if (this.data.curentIndex == 0) {
+      // 训练营
+      params = {
+        user_id: getLocalStorage(GLOBAL_KEY.userId),
+        order_type: 'traincamp',
+        offset: (this.data.pageData.current - 1) * this.data.pageData.limit,
+        limit: this.data.pageData.limit
+      }
+    } else {
+      // 商品
+      params = {
+        user_id: getLocalStorage(GLOBAL_KEY.userId),
+        order_type: 'product'
+      }
+    }
+    getMineOrder(params).then(res => {
       console.log(res)
       if (res.code === 0) {
         this.setData({
@@ -43,20 +65,16 @@ Page({
   },
   // 查看订单
   toOrder() {
-    console.log(1)
-    wx.navigateToMiniProgram({
-      appId: this.data.appId,
-      path: "/pages/usercenter/dashboard/index",
-      success() {
-        console.log('success');
-      },
-      fail(e) {
-        console.error(e);
-      },
-      complete() {
-        console.log('complete');
-      }
-    })
+    if (this.data.curentIndex == 0) {
+      // 眺望训练营
+      console.log("去训练营")
+    } else {
+      wx.navigateToMiniProgram({
+        appId: this.data.appId,
+        path: "/pages/usercenter/dashboard/index"
+      })
+    }
+
   },
   // 获取有赞aooId
   getMiniProgramAppId() {

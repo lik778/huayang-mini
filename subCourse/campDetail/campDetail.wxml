@@ -31,7 +31,7 @@
 			<view class="course-list">
 				<view class="course-item" wx:for="{{courseList.content}}" wx:key="index">
 					<view class="course-item-left">
-						<image src="/assets/images/common/live.png"></image>
+						<image src="{{item}}"></image>
 					</view>
 					<view class="course-item-right">
 						<view class="course-item-right-left">
