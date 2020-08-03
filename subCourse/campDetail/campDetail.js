@@ -94,20 +94,18 @@ Page({
       })
     })
   },
-  
+
   // 批量获取多日课程内容
   batchGetCourse(e) {
     getMenyCourseList({
       day_num_str: e.join(","),
       traincamp_id: this.data.campId
     }).then(res => {
-      let hasCourseList = []
-      let hasNoCourseList = []
       let dataObj = this.data.dateObj.dateList.date
       for (let i in res) {
         res[i].content = JSON.parse(res[i].content)
         for (let j in e) {
-          if (e[j] === res[i].day_num) {
+          if (e[j] === res[i].day_num + 1) {
             dataObj[j].dataNum = 1
           } else {
             dataObj[j].dataNum = 0
@@ -124,6 +122,7 @@ Page({
   toCureentDay(e) {
     let dayNum = ''
     if (e.currentTarget) {
+      if (e.currentTarget.dataset.item.dataNum === 0) return
       dayNum = e.currentTarget.dataset.item.dataNum
       this.setData({
         cureentDay: e.currentTarget.dataset.item.id
@@ -148,7 +147,11 @@ Page({
             getCourseData({
               kecheng_id: res.content[i].kecheng_id
             }).then(res1 => {
-              res.content[i].duration = simpleDurationSimple(res1.duration)
+              if (res1.length === 0) {
+                res.content[i].duration = 0 + "分钟"
+              } else {
+                res.content[i].duration = simpleDurationSimple(res1.duration)
+              }
               this.setData({
                 courseList: res
               })
@@ -246,6 +249,11 @@ Page({
     let data = e.currentTarget.dataset.item
     if (data.type === 'kecheng') {
       // 跳往结构化练习
+      getCourseData({
+        kecheng_id: data.kecheng_id
+      }).then(res => {
+        console.log(res)
+      })
     } else {
       // 直接播放视频
       this.setData({
@@ -253,7 +261,7 @@ Page({
       })
       this.playVideo()
     }
-    console.log(e.currentTarget.dataset.item)
+    // console.log(e.currentTarget.dataset.item)
     // if (e.type === 'kecheng') {
     //   // 课程
     // } else if (e.type === 'video') {
@@ -277,7 +285,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let currenDay = new Date().getDay();
     this.getCampDetailData(options.id)
     this.initCoverShow(options.id)
     this.getAppId()

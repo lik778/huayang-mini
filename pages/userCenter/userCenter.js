@@ -6,7 +6,8 @@ import {
   getTaskList,
   taskCheckIn,
   getSignData,
-  needUpdateUserInfo
+  needUpdateUserInfo,
+  increaseExp
 } from "../../api/course/index"
 import {
   getUserInfo
@@ -72,10 +73,17 @@ Page({
       open_id: getLocalStorage(GLOBAL_KEY.openId),
       scene: 'zhide_center'
     }).then(res => {
-      
       wx.showToast({
         title: '签到成功',
         icon: "success"
+      })
+      this.setData({
+        hasCheckIn: true
+      })
+      increaseExp({
+        task_type: 'task_checkin'
+      }).then(res => {
+        this.getUserSingerInfo()
       })
     })
   },
@@ -87,7 +95,13 @@ Page({
     })
   },
   // 邀请
-  invite() {},
+  invite() {
+    increaseExp({
+      task_type: 'task_invite'
+    }).then(res => {
+      this.getUserSingerInfo()
+    })
+  },
   // 获取个人信息
   getUserInfo() {
     this.setData({
@@ -161,6 +175,7 @@ Page({
     }
     this.getTaskList()
     this.getUserSingerInfo()
+
   },
 
   /**
