@@ -1,5 +1,6 @@
 import { getBannerList } from "../../api/mall/index"
 import {
+	createPracticeRecordInToday,
 	queryBootCampContentInToday,
 	queryRecommendCourseList,
 	queryUserHaveClassesInfo, queryUserJoinedBootCamp,
@@ -107,6 +108,8 @@ Page({
 	// 处理练习按钮事件
 	handleExerciseBtnTap(e) {
 		let item = e.currentTarget.dataset.item
+		// 创建用户当日练习记录
+		createPracticeRecordInToday()
 		console.log(item)
 		switch (item.type) {
 			case "kecheng": {

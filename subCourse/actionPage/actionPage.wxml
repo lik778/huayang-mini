@@ -18,13 +18,13 @@
         <cover-view class="pause-layer {{isRunning && 'hide-pause-layer'}}"></cover-view>
 
         <cover-view class="operate">
-            <cover-image class="arrow-left" bind:tap="switchPrevAction"
+            <cover-image class="arrow-left {{currentActionIndex > 0 ? '': 'disabled'}}" bind:tap="switchPrevAction"
                          src="../../assets/images/common/arrow-left.png"></cover-image>
             <cover-image class="pause" bind:tap="pauseAction"
                          src="{{isRunning ? '../../assets/images/common/pause.png': '../../assets/images/common/start.png'}}"></cover-image>
             <cover-image class="stop" style="display: {{isRunning ? 'none' : ''}};" bind:tap="exit"
                          src="../../assets/images/common/stop.png"></cover-image>
-            <cover-image class="arrow-right" bind:tap="switchNextAction"
+            <cover-image class="arrow-right {{currentActionIndex < actionData.length - 1 ? '': 'disabled'}}" bind:tap="switchNextAction"
                          src="../../assets/images/common/arrow-right.png"></cover-image>
         </cover-view>
 

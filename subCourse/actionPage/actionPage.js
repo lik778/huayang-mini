@@ -12,9 +12,9 @@ Page({
 		statusHeight: 0, // 状态栏高度
 		screenHeight: 0, // 设备高度
 		screenWidth: 0, // 设备宽度
-		courseInfo: {}, // 课程信息
+		courseInfo: {"id":118,"name":"引体向上","desc":"引体向上是人体手臂抓握力、上肢力量、背部力量和腰腹肌力量的美与力量的综合体现，这一动作练习对提高上肢悬垂力量、握力以及有着十分关键的作用。","share_desc":"","user_id":0,"level":2,"teacher_id":0,"category_id":0,"cover_pic":"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595574059gokZCn.jpg","kecheng_type":3,"status":0,"rank":1,"vip_only":0,"link":"8,2,10##8,2,10##8,2,10##8,2,10","link_type":0,"room_id":0,"show_time":"","xiaoetong_url":"","price":0,"discount_price":0,"series_id":0,"duration":56,"calories":80,"cycle_count":1,"kecheng_meta":[{"id":8,"name":"引体向上","desc":"","meta_type":2,"teacher_id":14,"category":"fitness","link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/110d6ab9-173945b24ed/110d6ab9-173945b24ed.mp4","voice_link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/558e3a7d-173956a1808/558e3a7d-173956a1808.mp3","name_voice_link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3","cover":"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg","duration":2,"rank":3,"calories":10,"voice_type":"2_2","created_at":"2020-07-23","updated_at":"2020-07-29","deleted_at":null}],"visit_count":21,"meta_count":0,"user_grade":0,"created_at":"2020-07-24","updated_at":"2020-08-03","deleted_at":null}, // 课程信息 TODO
 		currentActionIndex: 0, // 当前动作索引
-		actionData: [], // 动作数据
+		actionData: [{"id":8,"name":"引体向上","desc":"","meta_type":2,"teacher_id":14,"category":"fitness","link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.j0pHZ6apVxln0df30a4e33d11fa17538eef929df6954.mp4","voice_link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.umJQ9GCKJTeDbc7474bc5a573431793328013aca9e04.mp3","name_voice_link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3","cover":"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg","duration":2,"rank":3,"calories":10,"voice_type":"2_2","created_at":"2020-07-23","updated_at":"2020-07-29","deleted_at":null,"cycleTime":"2","restTime":"10"},{"id":8,"name":"引体向上","desc":"","meta_type":2,"teacher_id":14,"category":"fitness","link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.a96VqDUu1z9c0df30a4e33d11fa17538eef929df6954.mp4","voice_link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.OX2WgrmoUqbhbc7474bc5a573431793328013aca9e04.mp3","name_voice_link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3","cover":"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg","duration":2,"rank":3,"calories":10,"voice_type":"2_2","created_at":"2020-07-23","updated_at":"2020-07-29","deleted_at":null,"cycleTime":"2","restTime":"10"},{"id":8,"name":"引体向上","desc":"","meta_type":2,"teacher_id":14,"category":"fitness","link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.wSpiVhNf3Bu60df30a4e33d11fa17538eef929df6954.mp4","voice_link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.7jtDma06VI4abc7474bc5a573431793328013aca9e04.mp3","name_voice_link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3","cover":"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg","duration":2,"rank":3,"calories":10,"voice_type":"2_2","created_at":"2020-07-23","updated_at":"2020-07-29","deleted_at":null,"cycleTime":"2","restTime":"10"},{"id":8,"name":"引体向上","desc":"","meta_type":2,"teacher_id":14,"category":"fitness","link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.pGMfzkaENCiG0df30a4e33d11fa17538eef929df6954.mp4","voice_link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.AukZ1l9R4sBnbc7474bc5a573431793328013aca9e04.mp3","name_voice_link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3","cover":"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg","duration":2,"rank":3,"calories":10,"voice_type":"2_2","created_at":"2020-07-23","updated_at":"2020-07-29","deleted_at":null,"cycleTime":"2","restTime":"10"}], // 动作数据 TODO
 		currentDuration: 0, // 整个课程已播放的时长
 
 		targetActionObj: null, // 正在执行的动作
@@ -87,6 +87,7 @@ Page({
 		})
 
 		eventChannel.on("transmitCourseInfo", function (data) {
+			// console.log(data)
 			let courseInfo = JSON.parse(data)
 			self.setData({
 				courseInfo
@@ -108,8 +109,6 @@ Page({
 		this.data.video = wx.createVideoContext("actionVideo", this)
 		// 练习开始前的旁白
 		this.data.beforeSportAudio = wx.createInnerAudioContext()
-		// 要领
-		// this.data.mainPointAudio = wx.createInnerAudioContext()
 		// 口令
 		this.data.commandAudio = wx.createInnerAudioContext()
 		// 时间口令
@@ -269,7 +268,7 @@ Page({
 	 * 切换下一个动作
 	 */
 	async switchNextAction() {
-		if (this.data.currentActionIndex <= this.data.actionData.length - 1) {
+		if (this.data.currentActionIndex < this.data.actionData.length - 1) {
 			console.log('下一个动作')
 			this.stopAllAction()
 			this.checkoutNextAction()

@@ -35,6 +35,9 @@
     height: 44rpx;
     margin: 40rpx;
 }
+.arrow-left.disabled, .arrow-right.disabled {
+    opacity: 0.5;
+}
 .arrow-left:active, .arrow-right:active {
     opacity: 0.8;
 }

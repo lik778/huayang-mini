@@ -15,8 +15,8 @@ Component({
         "pagePath": "/pages/practice/practice",
         "selectedIconPath": "../assets/images/common/mallActive.png",
         "iconPath": "../assets/images/common/mall.png",
-        "text": "",
-        isDIY: true
+        "text": "练习",
+        isDIY: false
       },
       {
         "pagePath": "/pages/userCenter/userCenter",
