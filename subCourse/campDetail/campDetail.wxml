@@ -22,14 +22,14 @@
 		</view>
 		<!-- 课程内容 -->
 		<view class="camp-container">
-			<view class="video">
+			<view class="video" wx:if="{{videoSrc!==''}}">
 				<view class="video-cover" bindtap="playVideo" wx-if="{{showVideoCover}}">
 					<image src="/assets/images/common/play.png"></image>
 				</view>
 				<video id="myVideo" src="{{videoSrc}}" style="{{videoHeight}}" controls="{{false}}" show-center-play-btn="{{false}}" bindtap="pauseVideo" bindended="initVideo"></video>
 			</view>
 			<view class="course-list">
-				<view class="course-item" wx:for="{{courseList.content}}" wx:key="index" bindtap="toDetail" data-type="{{item}}">
+				<view class="course-item" wx:for="{{courseList.content}}" wx:key="index">
 					<view class="course-item-left">
 						<image src="/assets/images/common/live.png"></image>
 					</view>
@@ -39,8 +39,8 @@
 							<text wx:if="{{item.type==='kecheng'}}" class="course-time">{{item.duration}}</text>
 						</view>
 						<view class="course-item-right-right">
-							<text wx:if="{{item.type==='kecheng'}}">练习</text>
-							<text wx:else>前往</text>
+							<text wx:if="{{item.type==='kecheng'||item.type==='video'}}" bindtap="toDetail" data-item="{{item}}">练习</text>
+							<text wx:else bindtap="toProduct" data-item="{{item}}">前往</text>
 						</view>
 					</view>
 				</view>

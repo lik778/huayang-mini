@@ -3,6 +3,10 @@ import {
   GLOBAL_KEY
 } from "../../lib/config"
 import {
+  getProductInfo,
+  getYouZanAppId
+} from '../../api/mall/index'
+import {
   getCampDetail,
   getCurentDayData,
   getMenyCourseList,
@@ -14,7 +18,8 @@ import {
   manageWeek,
   setLocalStorage,
   countDay,
-  countDayOne
+  countDayOne,
+  simpleDurationSimple
 } from "../../utils/util"
 Page({
 
@@ -22,6 +27,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    appId: "",
     statusHeight: 0,
     cureentDay: '', //当前日期
     campId: 0, //训练营id
@@ -31,7 +37,7 @@ Page({
     campDetailData: {}, //训练营详情
     courseList: [], //课程列表
     startDay: "", //训练营开始时间
-    videoSrc: "http://video.699pic.com/videos/46/49/94/a_IEHicAfXgsM41594464994.mp4", //视频地址
+    videoSrc: "", //视频地址
     styleObj: {
       all: "color:#000000;font-family:PingFang-SC-Bold,PingFang-SC;font-weight:bold;background:#F4F4F4",
       notAll: "color:#000000;background:#F4F4F4"
@@ -52,6 +58,7 @@ Page({
       let realList = getTodayDate().two //实际一周日期列表
       let campDateList = [] //当周对应训练营日期列表
       let cureentDay = ''
+      let weekData = manageWeek()
       if (new Date(res.start_date) > new Date()) {
         // 未开营
         onlyDayList = getTodayDate(res.start_date).one //只有日的日期列表
@@ -65,6 +72,11 @@ Page({
         differDay = differDay < 0 ? 0 : differDay
         campDateList.push(differDay)
       }
+      for (let i in realList) {
+        if (new Date(realList[i]).toLocaleDateString() === new Date().toLocaleDateString()) {
+          weekData[i] = '今天'
+        }
+      }
       // 批量获取多日课程内容
       this.batchGetCourse(campDateList)
       // 获取当日课程
@@ -73,7 +85,7 @@ Page({
         campDetailData: res,
         cureentDay: cureentDay,
         dateObj: {
-          weekList: manageWeek(),
+          weekList: weekData,
           dateList: {
             date: onlyDayList,
             realDate: realList
@@ -82,6 +94,7 @@ Page({
       })
     })
   },
+  
   // 批量获取多日课程内容
   batchGetCourse(e) {
     getMenyCourseList({
@@ -106,10 +119,10 @@ Page({
       })
     })
   },
+
   // 获取当前天的课程
   toCureentDay(e) {
     let dayNum = ''
-
     if (e.currentTarget) {
       dayNum = e.currentTarget.dataset.item.dataNum
       this.setData({
@@ -135,10 +148,15 @@ Page({
             getCourseData({
               kecheng_id: res.content[i].kecheng_id
             }).then(res1 => {
-              res.content[i].duration = res1.duration
+              res.content[i].duration = simpleDurationSimple(res1.duration)
               this.setData({
                 courseList: res
               })
+            })
+          }
+          if (res.content[i].type === 'video' && this.data.videoSrc === '') {
+            this.setData({
+              videoSrc: res.content[i].video
             })
           }
         }
@@ -206,18 +224,54 @@ Page({
     })
   },
 
+  // 跳往商品详情
+  toProduct(e) {
+    let data = e.currentTarget.dataset.item
+    if (data.type === 'product') {
+      // 商品
+      getProductInfo({
+        product_id: data.product_id
+        // product_id: 37
+      }).then((res) => {
+        wx.navigateToMiniProgram({
+          appId: this.data.appId,
+          path: res.product.third_link
+        })
+      })
+    }
+  },
+
   // 跳转详情页
   toDetail(e) {
-    if (e.type === 'kecheng') {
-      // 课程
-    } else if (e.type === 'video') {
-      // 视频
-    } else if (e.type === 'product') {
-      // 商品
-    } else if (e.type === 'url') {
-      // url
+    let data = e.currentTarget.dataset.item
+    if (data.type === 'kecheng') {
+      // 跳往结构化联系
+    } else {
+      // 直接播放视频
+      this.setData({
+        videoSrc: data.video
+      })
+      this.playVideo()
     }
-    console.log(e.currentTarget.dataset.type)
+    console.log(e.currentTarget.dataset.item)
+    // if (e.type === 'kecheng') {
+    //   // 课程
+    // } else if (e.type === 'video') {
+    //   // 视频
+    // } else if (e.type === 'product') {
+    //   // 商品
+    // } else if (e.type === 'url') {
+    //   // url
+    // }
+    // console.log(e.currentTarget.dataset.type)
+  },
+  // 获取有赞id
+  getAppId() {
+    getYouZanAppId().then(appId => {
+      this.setData({
+        appId
+      })
+    })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -226,6 +280,7 @@ Page({
     let currenDay = new Date().getDay();
     this.getCampDetailData(options.id)
     this.initCoverShow(options.id)
+    this.getAppId()
     this.setData({
       campId: options.id
     })

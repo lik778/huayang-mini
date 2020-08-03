@@ -546,11 +546,6 @@ export const manageWeek = () => {
 	} else if (week === 6) {
 		week = '周六'
 	}
-	for (let i in weekList) {
-		if (weekList[i] == week) {
-			weekList[i] = '今天'
-		}
-	}
 	return weekList
 }
 

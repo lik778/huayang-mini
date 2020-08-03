@@ -47,14 +47,13 @@ Page({
       this.setData({
         activityList: res.list
       })
-      console.log(res)
     })
   },
   // 获取课程列表
   getCourseList() {
     getShowCourseList({
       offset: 0,
-      limit: 2,
+      limit: 50,
     }).then(res => {
       for (let i in res) {
         res[i].duration = simpleDurationSimple(res[i].duration)
@@ -75,19 +74,17 @@ Page({
       this.setData({
         bannerList: res
       })
-      console.log(res)
     })
   },
   // 获取训练营列表
   getCampList() {
     getCampList({
       offset: 0,
-      limit: 4
+      limit: 50
     }).then(res => {
       this.setData({
         campList: res.list
       })
-      console.log(res)
     })
   },
   // 跳转到训练营详情
@@ -97,9 +94,11 @@ Page({
     let data = e.target.dataset.index.start_date.split(",")
     for (let i in data) {
       if (endTime === '') {
+        // 说明只有一个开营日期
         endTime = data[i]
       } else {
-        if (Math.round(new Date(endTime) / 1000) > Math.round(new Date(data[i]) / 1000)) {
+        // 多个开营日期
+        if (Math.round(new Date(endTime) / 1000) > Math.round(new Date(data[i]) / 1000) || Math.round(new Date(data[i]) / 1000) > Math.round(new Date() / 1000)) {
           endTime = data[i]
         }
       }
@@ -119,7 +118,6 @@ Page({
           url: `/subCourse/campDetail/campDetail?id=${ e.target.dataset.index.id}`,
         })
       }
-      console.log(res)
     })
   },
   /**
