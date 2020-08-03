@@ -1,6 +1,10 @@
 // components/navibar.js
-import { getLocalStorage } from "../../utils/util"
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  getLocalStorage
+} from "../../utils/util"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 
 Component({
   /**
@@ -14,13 +18,13 @@ Component({
       type: String,
       default: "black"
     },
-    share:{
-      type:Boolean,
-      default:true
+    share: {
+      type: Boolean,
+      default: true
     },
-    color:{
-      type:String,
-      default:""
+    color: {
+      type: String,
+      default: ""
     }
   },
 
@@ -29,7 +33,7 @@ Component({
    */
   data: {
     statusBarHeight: 0,
-    color:""
+    color: ""
   },
 
   /**
@@ -52,7 +56,7 @@ Component({
     // 返回首页
     backIndex() {
       wx.switchTab({
-        url: '/pages/index/index',
+        url: '/pages/discovery/discovery',
       })
     }
   },

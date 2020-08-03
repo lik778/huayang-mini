@@ -48,6 +48,14 @@ Page({
     } //日历时间存储
   },
 
+  // 加入交流群
+  toTeam() {
+    let link = 'https://mp.weixin.qq.com/s/qvNnbFv3OFATevcqidgmww'
+    wx.navigateTo({
+      url: `/pages/webViewCommon/webViewCommon?link=${link}`,
+    })
+  },
+
   // 获取训练营信息
   getCampDetailData(id) {
     getCampDetail({
@@ -195,6 +203,7 @@ Page({
   },
 
   // 控制是否显示遮罩层
+  
   initCoverShow(id) {
     let showIdList = getLocalStorage(GLOBAL_KEY.campHasShowList) === undefined ? undefined : JSON.parse(getLocalStorage(GLOBAL_KEY.campHasShowList))
     let showCover = true

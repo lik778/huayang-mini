@@ -4,6 +4,7 @@ import {
 } from "../../lib/config"
 import {
   joinCamp,
+  getHasJoinCamp,
   getCampDetail
 } from "../../api/course/index"
 import {
@@ -30,8 +31,26 @@ Page({
       traincamp_id: id
     }).then(res => {
       res.desc = res.desc.split(",")
+      let endTime = ''
+      let pushTime = ''
+      let data = res.start_date.split(",")
+      for (let i in data) {
+        if (endTime === '') {
+          // 说明只有一个开营日期
+          endTime = data[i]
+        } else {
+          // 多个开营日期
+          if (Math.round(new Date(endTime) / 1000) > Math.round(new Date(data[i]) / 1000) || Math.round(new Date(data[i]) / 1000) > Math.round(new Date() / 1000)) {
+            endTime = data[i]
+          }
+        }
+      }
+      pushTime = endTime.split("-")[1] + "月" + endTime.split("-")[2] + "日"
       this.setData({
-        campDetailData: res
+        campDetailData: res,
+        joinTime: pushTime,
+        endTime: endTime,
+        campId: id
       })
     })
   },
@@ -92,16 +111,45 @@ Page({
       }, 2000)
     }
   },
+
+  // 跳转到训练营详情
+  checkCamp(id) {
+    getHasJoinCamp({
+      traincamp_id: id
+    }).then(res => {
+      if (res.length === 0) {
+        this.getCampDetail(id)
+      } else {
+        wx.navigateTo({
+          url: `/subCourse/campDetail/campDetail?id=${id}`,
+        })
+      }
+    })
+    // let endTime = ''
+    // let pushTime = ''
+    // let data = e.start_date.split(",")
+    // for (let i in data) {
+    //   if (endTime === '') {
+    //     // 说明只有一个开营日期
+    //     endTime = data[i]
+    //   } else {
+    //     // 多个开营日期
+    //     if (Math.round(new Date(endTime) / 1000) > Math.round(new Date(data[i]) / 1000) || Math.round(new Date(data[i]) / 1000) > Math.round(new Date() / 1000)) {
+    //       endTime = data[i]
+    //     }
+    //   }
+    // }
+    // pushTime = endTime.split("-")[1] + "月" + endTime.split("-")[2] + "日"
+
+
+
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      campId: options.id,
-      joinTime: options.time,
-      endTime: options.endtime
-    })
-    this.getCampDetail(options.id)
+    // id代表训练营ID
+    this.checkCamp(options.id)
   },
 
   /**

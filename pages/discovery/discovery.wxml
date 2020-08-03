@@ -1,5 +1,5 @@
 <!--发现主页-->
-<view class="discovery">
+<view class="discovery" wx:if="{{campList!==null&&bannerList!==null&&courseList!==null}}">
 	<!--  模块一 -->
 	<view class="module-one">
 		<!-- banner 滚动区域 -->
@@ -15,7 +15,7 @@
 			</view>
 		</view>
 		<!-- 训练营 -->
-		<view class="camp">
+		<view class="camp" wx:if="{{campList.length!==0}}">
 			<view class="camp-title">训练营</view>
 			<view class="camp-list">
 				<view class="camp-item" wx:for="{{campList}}" wx:key="index">
@@ -29,7 +29,7 @@
 			</view>
 		</view>
 		<!-- 走秀课 -->
-		<view class="catwalk">
+		<view class="catwalk" wx:if="{{courseList.length!==0}}">
 			<view class="catwalk-title">走秀课</view>
 			<view class="catwalk-list">
 				<view class="catwalk-item" wx:for="{{courseList}}" wx:key="index" bindtap="toCourse" data-item="{{item}}">
@@ -77,7 +77,7 @@
 			</view>
 		</view>
 		<!-- 活动 -->
-		<view class="activity" wx:if="{{activityList.length>0}}">
+		<view class="activity" wx:if="{{activityList.length!==0&&activityList!==null}}">
 			<view class="activity-title">活动</view>
 			<view class="activity-list">
 				<view class="activity-item" wx:for="{{activityList}}" wx:key="index">

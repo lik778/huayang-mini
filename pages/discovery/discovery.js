@@ -23,15 +23,15 @@ Page({
    */
   data: {
     cureent: 0,
-    campList: [],
-    bannerList: [],
-    courseList: [],
-    activityList: []
+    campList: null,
+    bannerList: null,
+    courseList: null,
+    activityList: null
   },
   // 加入课程
   toCourse(e) {
     wx.navigateTo({
-      url: `/subCourse/practiceDetail/practiceDetail?courseId=${e.currentTarget.dataset.item}`,
+      url: `/subCourse/practiceDetail/practiceDetail?courseId=${e.currentTarget.dataset.item.id}`,
     })
   },
   // swiper切换
@@ -71,7 +71,7 @@ Page({
   // 获取banner列表
   getBanner() {
     getFindBanner({
-      scene: 7,
+      scene: 8,
       is_all: 0
     }).then(res => {
       this.setData({
@@ -92,6 +92,10 @@ Page({
   },
   // 跳转到训练营详情
   joinCamp(e) {
+    wx.navigateTo({
+      url: `/subCourse/joinCamp/joinCamp?id=${e.currentTarget.dataset.index.id}`,
+    })
+    return
     let endTime = ''
     let pushTime = ''
     let data = e.target.dataset.index.start_date.split(",")
@@ -134,8 +138,9 @@ Page({
       this.getCampList()
       this.getBanner()
       this.getCourseList()
+      // this.getActivityList()
     })
-    // this.getActivityList()
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -154,6 +159,9 @@ Page({
         selected: 0
       })
     }
+    setTimeout(() => {
+      console.log(this.data)
+    }, 5000)
   },
 
   /**

@@ -1,5 +1,5 @@
 <!--加入训练营-->
-<view class="join-camp">
+<view class="join-camp" wx:if="{{campDetailData.id}}">
 	<!-- navibar栏 -->
 	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
 		<naviBar title="花样展览馆" color="#fff" titleColor="#000000"></naviBar>

@@ -26,8 +26,9 @@ Page({
    */
   data: {
     userInfo: null,
+    statusHeight: 0,
     taskList: [],
-    processStyle: "width:30%;",
+    processStyle: "width:0%;",
     hasCheckIn: false,
     showMessage: false
   },
@@ -153,7 +154,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(111)
+    let data = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
+    this.setData({
+      statusHeight: data,
+    })
     checkAuth({
       listenable: true,
       ignoreFocusLogin: true
@@ -161,6 +165,7 @@ Page({
       this.getUserInfo()
       this.getSignData()
       this.needUpdateUserInfo()
+
     })
   },
 
