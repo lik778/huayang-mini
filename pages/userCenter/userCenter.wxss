@@ -1,7 +1,7 @@
 /* pages/userCenter/userCenter.wxss */
 .user-center {
   background: #F9F9F9;
-  padding-bottom: 34rpx;
+  padding-bottom: 154rpx;
 }
 
 /* 个人信息  */
