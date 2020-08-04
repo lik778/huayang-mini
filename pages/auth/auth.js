@@ -12,6 +12,7 @@ Page({
 	 * Page initial data
 	 */
 	data: {
+		invite_user_id: 0,
 		didGetPhoneNumber: false,
 		show: false
 	},
@@ -77,7 +78,8 @@ Page({
 				let originAccountInfo = await bindWxPhoneNumber({
 					open_id,
 					encrypted_data,
-					iv
+					iv,
+					invite_user_id: this.data.invite_user_id
 				})
 				setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
 				// 判断用户是否需要引导加课程
@@ -110,6 +112,9 @@ Page({
 	 * Lifecycle function--Called when page load
 	 */
 	onLoad: function (options) {
+		this.setData({
+			invite_user_id: options.invite_user_id
+		})
 	},
 
 	/**
