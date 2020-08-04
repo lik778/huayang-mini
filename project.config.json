@@ -78,10 +78,10 @@
 					"scene": null
 				},
 				{
-					"id": 3,
+					"id": 2,
 					"name": "pages/auth/auth",
 					"pathName": "pages/auth/auth",
-					"query": "from=article",
+					"query": "invite_user_id=5",
 					"scene": null
 				},
 				{
