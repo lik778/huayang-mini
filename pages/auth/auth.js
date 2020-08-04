@@ -141,6 +141,13 @@ Page({
 	 * Lifecycle function--Called when page load
 	 */
 	onLoad: function (options) {
+		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
+		if ($notNull(accountInfo)) {
+			wx.switchTab({
+				url: '/pages/practice/practice'
+			})
+			return
+		}
 		this.setData({
 			invite_user_id: options.invite_user_id
 		})
