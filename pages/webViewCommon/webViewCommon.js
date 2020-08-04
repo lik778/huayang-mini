@@ -12,8 +12,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let link = options.link
+    if (options.type === 'link') {
+      link = decodeURIComponent(link)
+    }
+    console.log(link)
     this.setData({
-      link: options.link
+      link: link
     })
   },
 
