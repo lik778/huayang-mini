@@ -2,6 +2,7 @@
 import {
   GLOBAL_KEY
 } from "../../lib/config"
+import request from "../../lib/request"
 import {
   getTaskList,
   taskCheckIn,
@@ -34,6 +35,7 @@ Page({
     processStyle: "width:0%;",
     hasCheckIn: false,
     showMessage: false,
+    baseUrl: '',
     gradeData: {
       experNum: 0,
       upgrade: false,
@@ -65,7 +67,14 @@ Page({
   },
   // 完善个人资料
   fullSelfMsg() {
-    console.log("完善个人资料")
+    let webViewData = JSON.stringify({
+      userId: getLocalStorage(GLOBAL_KEY.userId),
+      open_id: getLocalStorage(GLOBAL_KEY.openId),
+    })
+    let data = `${request.baseUrl}/#/home/zhidefillSelfInfo?data=${webViewData}`
+    wx.navigateTo({
+      url: `/pages/webViewCommon/webViewCommon?link=${data}`,
+    })
   },
   // 获取签到信息
   getSignData() {
@@ -84,7 +93,6 @@ Page({
   // 签到
   checkin(e) {
     let experNumData = Number(e.currentTarget.dataset.type.textData2.split("+")[1])
-    console.log(experNumData)
     taskCheckIn({
       open_id: getLocalStorage(GLOBAL_KEY.openId),
       scene: 'zhide_center'
@@ -171,7 +179,6 @@ Page({
       this.setData({
         taskList: res
       })
-      // console.log(res)
     })
   },
   // 我的订单
@@ -180,6 +187,8 @@ Page({
       url: '/mine/mineOrder/mineOrder',
     })
   },
+
+
   // 联系客服
   callPhone(e) {
     wx.makePhoneCall({
@@ -259,13 +268,14 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (res) {
+    let data = getLocalStorage(GLOBAL_KEY.userId)
     if (res.from === 'button') {
       // 来自页面内转发按钮
       console.log(res.target)
     }
     return {
       title: '测试标题',
-      path: '/page/userCenter/userCenter?id=123'
+      path: `/page/auth/auth?invite_user_id=${data}`
     }
   }
 })
