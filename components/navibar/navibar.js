@@ -12,15 +12,16 @@ Component({
    */
   properties: {
     title: {
-      type: String
+      type: String,
+
     },
     titleColor: {
       type: String,
-      default: "black"
+      value: "black"
     },
     share: {
       type: Boolean,
-      default: true
+      value: false
     },
     color: {
       type: String,
@@ -42,10 +43,9 @@ Component({
   methods: {
     // 返回
     back() {
-      console.log(this.data.share)
       if (this.data.share) {
         wx.switchTab({
-          url: '/pages/index/index',
+          url: '/pages/discovery/discovery',
         })
       } else {
         wx.navigateBack({
