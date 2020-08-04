@@ -28,24 +28,34 @@
     </view>
 
     <!--  今日练习计划  -->
-    <view class="today-boot-camp-plan" wx:if="{{bootCampList.length > 0}}">
-        <view class="boot-camp" wx:for="{{bootCampList}}" wx:key="index" wx:if="{{item.content.length > 0}}">
-            <view class="boot-camp-name" bind:tap="goToBootCamp" data-bootCampId="{{item.bootCampId}}">
-                <text>{{item.name}}</text>
-                <view class="all-boot-camp">全部</view>
-            </view>
-            <view class="segmentation"></view>
-            <view class="boot-camp-content">
-                <view class="boot-camp-course" wx:for="{{item.content}}" wx:for-item="contentItem" wx:for-index="contentIndex" wx:key="contentIndex">
-                    <view class="boot-camp-info">
-                        <view class="icon-box">
-                            <image mode="aspectFit" class="icon-{{contentItem.type}}" src="{{CourseTypeImage[contentItem.type]}}"></image>
-                        </view>
-                        <view>{{contentItem.name || contentItem.title}}</view>
-                    </view>
-                    <view class="boot-camp-start" bind:tap="handleExerciseBtnTap" data-item="{{contentItem}}">{{contentItem.type==='kecheng'?'练习':'前往'}}</view>
+    <view class="today-boot-camp-plan">
+        <view class="boot-camp" wx:for="{{bootCampList}}" wx:key="index">
+            <block wx:if="{{item.content.length > 0}}">
+                <view class="boot-camp-name" bind:tap="goToBootCamp" data-bootCampId="{{item.bootCampId}}">
+                    <text>{{item.name}}</text>
+                    <view class="all-boot-camp">全部</view>
                 </view>
-            </view>
+                <view class="segmentation"></view>
+                <view class="boot-camp-content">
+                    <view class="boot-camp-course" wx:for="{{item.content}}" wx:for-item="contentItem" wx:for-index="contentIndex" wx:key="contentIndex">
+                        <view class="boot-camp-info">
+                            <view class="icon-box">
+                                <image mode="aspectFit" class="icon-{{contentItem.type}}" src="{{CourseTypeImage[contentItem.type]}}"></image>
+                            </view>
+                            <view>{{contentItem.name || contentItem.title}}</view>
+                        </view>
+                        <view class="boot-camp-start" bind:tap="handleExerciseBtnTap" data-item="{{contentItem}}">{{contentItem.type==='kecheng'?'练习':'前往'}}</view>
+                    </view>
+                </view>
+            </block>
+            <block wx:if="{{item.content.length === 0}}">
+                <view class="boot-camp-name" bind:tap="goToBootCamp" data-bootCampId="{{item.bootCampId}}">
+                    <text>{{item.name}}</text>
+                    <view class="all-boot-camp">全部</view>
+                </view>
+                <view class="segmentation"></view>
+                <view class="no-exercise">今日暂无训练</view>
+            </block>
         </view>
         <view class="boot-camp" wx:if="{{bootCampList.length === 0}}">
             <view class="no-camp">
