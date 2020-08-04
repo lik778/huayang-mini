@@ -21,7 +21,7 @@
     padding: 70rpx 70rpx 50rpx;
     background: white;
 }
-.box image {
+.box cover-image {
     position: absolute;
     left: 50%;
     top: -50rpx;
@@ -29,7 +29,7 @@
     width: 96rpx;
     height: 108rpx;
 }
-.box image.champion {
+.box cover-image.champion {
     width: 136rpx;
     height: 126rpx;
 }

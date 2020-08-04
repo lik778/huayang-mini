@@ -15,7 +15,7 @@
         </cover-view>
 
         <!--  暂停层  -->
-        <cover-view class="pause-layer {{isRunning && 'hide-pause-layer'}}"></cover-view>
+        <cover-view class="pause-layer" wx:if="{{!didPracticeDone && !isRunning}}"></cover-view>
 
         <cover-view class="operate">
             <cover-image class="arrow-left {{currentActionIndex > 0 ? '': 'disabled'}}" bind:tap="switchPrevAction"
@@ -89,19 +89,19 @@
     </view>
 
     <!-- 结果层 -->
-    <view class="result-layer {{!didShowResultLayer && 'hide-result-layer'}}" style="padding-top:{{statusHeight+43}}px;">
-        <view class="result-text-01">恭喜您完成</view>
-        <view class="result-text-02">{{courseInfo.name}}</view>
-        <view class="global-record-time-text">{{globalRecordTimeText}}</view>
-        <view class="result-text-03">训练时长</view>
-        <view class="action-list">
-            <view class="action-item" wx:for="{{actionData}}" wx:key="index">
-                <text >{{ item.name }}</text>
-                <text >x{{ item.cycleTime }}{{ item.meta_type == 2 ? '次' : '秒' }}</text>
-            </view>
-        </view>
-        <view class="result-btn" bind:tap="show">秀一下</view>
-    </view>
+    <cover-view class="result-layer {{!didShowResultLayer && 'hide-result-layer'}}" style="padding-top:{{statusHeight+43}}px;">
+        <cover-view class="result-text-01">恭喜您完成</cover-view>
+        <cover-view class="result-text-02">{{courseInfo.name}}</cover-view>
+        <cover-view class="global-record-time-text">{{globalRecordTimeText}}</cover-view>
+        <cover-view class="result-text-03">训练时长</cover-view>
+        <cover-view class="action-list">
+            <cover-view class="action-item" wx:for="{{actionData}}" wx:key="index">
+                <cover-view class="action-item-text">{{ item.name }}</cover-view>
+                <cover-view class="action-item-text">x{{ item.cycleTime }}{{ item.meta_type == 2 ? '次' : '秒' }}</cover-view>
+            </cover-view>
+        </cover-view>
+        <cover-view class="result-btn" bind:tap="show">秀一下</cover-view>
+    </cover-view>
 
     <levelAlert didShow="{{didShowLevelAlert}}" hasGrade="{{hasGrade}}" number="{{levelNumber}}"></levelAlert>
 </view>

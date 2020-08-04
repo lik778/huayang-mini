@@ -74,10 +74,10 @@ Component({
 		this.setData({
 			statusBarHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
 		})
-		// 开启bgm
-		this.initBGM()
+		// 开启bgm TODO
+		// this.initBGM()
 	},
 	detached() {
-		this.data.bgmAudio.destroy()
+		this.data.bgmAudio && this.data.bgmAudio.destroy()
 	}
 })

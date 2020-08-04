@@ -53,7 +53,6 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		this.initial()
 	},
 
 	/**
@@ -78,22 +77,7 @@ Page({
 			ignoreFocusLogin: true
 		})
 
-		// 用户学习数据统计
-		queryUserHaveClassesInfo().then((userHaveClassesInfo) => {
-			this.setData({userHaveClassesInfo})
-		})
-
-		// 用户最近7天的打卡记录
-		let userRecentPracticeLog = await queryUserRecentPracticeLog({limit: 7})
-		let weeklyLog = this.generateWeeklyLog()
-		let now = dayjs()
-		weeklyLog.forEach((dayItem, index) => {
-			let target = userRecentPracticeLog.find(n => Number(String(n.date).slice(-2)) === dayItem.date)
-			if ($notNull(target)) {
-				dayItem.status = Number(String(target.date).slice(-2)) === now.date() ? 'done' : 'gone'
-			}
-		})
-		this.setData({weeklyLog})
+		this.initial()
 	},
 
 	/**
@@ -233,6 +217,23 @@ Page({
 				})
 			}
 		})
+
+		// 用户学习数据统计
+		queryUserHaveClassesInfo().then((userHaveClassesInfo) => {
+			this.setData({userHaveClassesInfo})
+		})
+
+		// 用户最近7天的打卡记录
+		let userRecentPracticeLog = await queryUserRecentPracticeLog({limit: 7})
+		let weeklyLog = this.generateWeeklyLog()
+		let now = dayjs()
+		weeklyLog.forEach((dayItem, index) => {
+			let target = userRecentPracticeLog.find(n => Number(String(n.date).slice(-2)) === dayItem.date)
+			if ($notNull(target)) {
+				dayItem.status = Number(String(target.date).slice(-2)) === now.date() ? 'done' : 'gone'
+			}
+		})
+		this.setData({weeklyLog})
 
 		// 获取训练营列表
 		let bootCampList = await queryUserJoinedBootCamp()

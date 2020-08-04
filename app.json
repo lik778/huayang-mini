@@ -27,6 +27,7 @@
     "components/levelAlert/levelAlert",
     "pages/webViewCommon/webViewCommon"
   ],
+  "requiredBackgroundModes": ["audio"],
   "subpackages": [
     {
       "root": "mine",

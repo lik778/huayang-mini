@@ -20,9 +20,6 @@ Page({
 		targetActionObj: null, // 正在执行的动作
 		targetActionIndex: 0, // 正在执行的动作索引
 
-		beforeSportAudio: null, // 动作开始前的旁白播放器
-		beforeSportAsideAudioEventMounted: false, // 动作开始前的旁白播放器结束事件是否结束
-
 		commandAudio: null, // 口令播放器
 		commandAudioEventMounted: false, // 口令播放结束事件是否结束
 		commandTimer: null, // 口令timer
@@ -54,6 +51,8 @@ Page({
 		didShowLevelAlert: false, // 等级经验弹窗
 		hasGrade: false, // 是否升级
 		levelNumber: 0, // 升级等级/经验
+
+		didPracticeDone: false // 整个练习是否结束
 	},
 
 	/**
@@ -107,14 +106,14 @@ Page({
 	onReady: function () {
 		// 视频实例
 		this.data.video = wx.createVideoContext("actionVideo", this)
-		// 练习开始前的旁白
-		this.data.beforeSportAudio = wx.createInnerAudioContext()
 		// 要领
 		this.data.mainPointAudio = wx.createInnerAudioContext()
 		// 口令
-		this.data.commandAudio = wx.createInnerAudioContext()
+		this.data.commandAudio = wx.getBackgroundAudioManager()
+		this.data.commandAudio.title = 'command'
 		// 时间口令
-		this.data.countDownAudio = wx.createInnerAudioContext()
+		this.data.countDownAudio = wx.getBackgroundAudioManager()
+		this.data.countDownAudio.title = 'countDown'
 
 		// 启动
 		this.start()
@@ -140,10 +139,15 @@ Page({
 	onUnload: function () {
 		this.stopAllAction()
 		// 销毁所有音视频
-		this.data.beforeSportAudio.destroy()
-		this.data.mainPointAudio.destroy()
-		this.data.commandAudio.destroy()
-		this.data.countDownAudio.destroy()
+		this.data.mainPointAudio && this.data.mainPointAudio.destroy()
+
+		this.data.commandAudio.url = undefined
+		this.data.commandAudio.paused = true
+		this.data.commandAudio.currentTime = 0
+
+		this.data.countDownAudio.url = undefined
+		this.data.countDownAudio.paused = true
+		this.data.commandAudiocountDownAudio = 0
 	},
 
 	/**
@@ -170,7 +174,10 @@ Page({
 	 * 秀一下
 	 */
 	show() {
-		console.log('秀一下')
+		wx.navigateBack()
+		// wx.redirectTo({
+		// 	url: "/subCourse/practiceDetail/practiceDetail?courseId=" + this.data.courseInfo.id
+		// })
 	},
 	/**
 	 * 在休息层切换上一个动作
@@ -253,7 +260,8 @@ Page({
 		this.setData({PrepareNumber: 1})
 		await this.playTempAudio(LocaleVoice.lv20)
 		this.setData({PrepareNumber: "GO!"})
-		this.playBeforeSportAside(LocaleVoice.lv21)
+		await this.playTempAudio(LocaleVoice.lv21)
+		this.startCourse(this.data.targetActionObj)
 	},
 	/**
 	 * 切换上一个动作
@@ -323,43 +331,33 @@ Page({
 	stopAllAction() {
 		this.data.video.stop()
 		this.data.mainPointAudio && this.data.mainPointAudio.stop()
-		this.data.commandAudio.stop()
-		this.data.countDownAudio.stop()
+		this.data.commandAudio && this.data.commandAudio.stop()
+		this.data.countDownAudio && this.data.countDownAudio.stop()
 	},
 	/**
 	 * 临时播放器 播放音频
 	 * @param params
-	 * @returns {Promise<unknown>}
+	 * @returns {Promise}
 	 */
 	playTempAudio(params) {
 		let audio = wx.createInnerAudioContext()
 		return new Promise(resolve => {
-			let callback = function () {
-				audio.offEnded(callback)
+			let canPlayCallback = function () {
+				audio.play()
+			}
+			let endCallback = function () {
+				audio.offCanplay(canPlayCallback)
+				audio.offEnded(endCallback)
 				audio.destroy()
 				resolve()
 			}
-			audio.src = params
-			audio.play()
-			audio.onEnded(callback)
-		})
-	},
-
-	/**
-	 * 播放动作前的旁白
-	 * @param link
-	 */
-	playBeforeSportAside(link) {
-		const self = this
-		this.data.beforeSportAudio.src = link
-		this.data.beforeSportAudio.play()
-
-		if (this.data.beforeSportAsideAudioEventMounted) return
-		this.setData({beforeSportAsideAudioEventMounted: true})
-
-		this.data.beforeSportAudio.onEnded(function () {
-			// 课程演示
-			self.startCourse(self.data.targetActionObj)
+			if (audio.src === params) {
+				audio.play()
+			} else {
+				audio.src = params
+				audio.onCanplay(canPlayCallback)
+			}
+			audio.onEnded(endCallback)
 		})
 	},
 
@@ -381,18 +379,19 @@ Page({
 			self.data.countDownAudio.volume = 1
 			// 标示当前动作已经播放过要领
 			self.setData({
-				didPlayMainPointAudioInCurrentTargetAction: true,
-				mainPointAudio: null
+				didPlayMainPointAudioInCurrentTargetAction: true
 			})
 		})
 	},
+
 	/**
 	 * 播放时间口令
 	 */
 	playCountDown() {
 		const self = this
+
 		this.data.countDownAudio.src = LocaleVoice.lv10
-		this.data.countDownAudio.play()
+
 		this.setData({targetActionIndex: this.data.targetActionIndex + 1})
 
 		if (this.data.countDownAudioEventMounted) return
@@ -421,8 +420,9 @@ Page({
 	 */
 	playCommand(commands) {
 		const self = this
-		this.data.commandAudio.src = commands[this.data.targetActionIndex]
-		this.data.commandAudio.play()
+
+		this.data.commandAudio.src = commands[this.data.targetActionIndex % commands.length]
+
 		this.setData({targetActionIndex: this.data.targetActionIndex + 1})
 
 
@@ -484,12 +484,6 @@ Page({
 				})
 
 				restPromise.then(async () => {
-					// 准备！滴滴滴
-					// await this.playTempAudio(LocaleVoice.lv14)
-					// await this.playTempAudio(LocaleVoice.lv10)
-					// await this.playTempAudio(LocaleVoice.lv10)
-					// await this.playTempAudio(LocaleVoice.lv10)
-
 					// 隐藏休息层 && 还原立即结束休息字段
 					this.setData({
 						didShowRestLayer: false,
@@ -511,7 +505,10 @@ Page({
 				})
 			})
 		} else {
-			this.setData({isRunning: false})
+			this.setData({
+				isRunning: false,
+				didPracticeDone: true
+			})
 			// 「恭喜你完成训练」
 			this.playTempAudio(LocaleVoice.lv6)
 			// 训练结束
