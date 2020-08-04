@@ -29,6 +29,7 @@ Page({
   data: {
     appId: "",
     statusHeight: 0,
+    backIndex: false,
     cureentDay: '', //当前日期
     campId: 0, //训练营id
     showCover: false, //显示引导私欲弹窗
@@ -203,7 +204,7 @@ Page({
   },
 
   // 控制是否显示遮罩层
-  
+
   initCoverShow(id) {
     let showIdList = getLocalStorage(GLOBAL_KEY.campHasShowList) === undefined ? undefined : JSON.parse(getLocalStorage(GLOBAL_KEY.campHasShowList))
     let showCover = true
@@ -331,6 +332,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if (options.share) {
+      this.setData({
+        backIndex: true
+      })
+    }
     this.getCampDetailData(options.id)
     this.initCoverShow(options.id)
     this.getAppId()

@@ -121,7 +121,7 @@ Page({
         this.getCampDetail(id)
       } else {
         wx.navigateTo({
-          url: `/subCourse/campDetail/campDetail?id=${id}`,
+          url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
         })
       }
     })

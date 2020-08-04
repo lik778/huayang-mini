@@ -1,8 +1,21 @@
 // pages/ discovery/discovery.js
-import { getLocalStorage, simpleDurationSimple } from "../../utils/util"
-import { checkAuth } from "../../utils/auth"
-import { getActivityList, getCampList, getFindBanner, getHasJoinCamp, getShowCourseList } from "../../api/course/index"
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  getLocalStorage,
+  simpleDurationSimple
+} from "../../utils/util"
+import {
+  checkAuth
+} from "../../utils/auth"
+import {
+  getActivityList,
+  getCampList,
+  getFindBanner,
+  getHasJoinCamp,
+  getShowCourseList
+} from "../../api/course/index"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 
 Page({
 
@@ -48,7 +61,6 @@ Page({
     }).then(res => {
       for (let i in res) {
         res[i].duration = simpleDurationSimple(res[i].duration)
-
         res[i].listNum = res[i].link.split("##").length
       }
       this.setData({
@@ -91,37 +103,6 @@ Page({
   joinCamp(e) {
     wx.navigateTo({
       url: `/subCourse/joinCamp/joinCamp?id=${e.currentTarget.dataset.index.id}`,
-    })
-    return
-    let endTime = ''
-    let pushTime = ''
-    let data = e.target.dataset.index.start_date.split(",")
-    for (let i in data) {
-      if (endTime === '') {
-        // 说明只有一个开营日期
-        endTime = data[i]
-      } else {
-        // 多个开营日期
-        if (Math.round(new Date(endTime) / 1000) > Math.round(new Date(data[i]) / 1000) || Math.round(new Date(data[i]) / 1000) > Math.round(new Date() / 1000)) {
-          endTime = data[i]
-        }
-      }
-    }
-    pushTime = endTime.split("-")[1] + "月" + endTime.split("-")[2] + "日"
-    getHasJoinCamp({
-      open_id: getLocalStorage(GLOBAL_KEY.openId),
-      date: endTime,
-      traincamp_id: e.target.dataset.index.id
-    }).then(res => {
-      if (res.length === 0) {
-        wx.navigateTo({
-          url: `/subCourse/joinCamp/joinCamp?id=${e.target.dataset.index.id}&time=${pushTime}&endtime=${endTime}`,
-        })
-      } else {
-        wx.navigateTo({
-          url: `/subCourse/campDetail/campDetail?id=${e.target.dataset.index.id}`,
-        })
-      }
     })
   },
   /**

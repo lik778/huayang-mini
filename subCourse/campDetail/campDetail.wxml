@@ -2,7 +2,7 @@
 <view class="campdetail">
 	<!-- navibar栏 -->
 	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
-		<naviBar title="" color="#5F5F5F" titleColor="#000000" share="{{true}}"></naviBar>
+		<naviBar title="" color="#5F5F5F" titleColor="#000000" share="{{backIndex}}"></naviBar>
 	</view>
 	<!-- 背景层 -->
 	<view class="bg">
