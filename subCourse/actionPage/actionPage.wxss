@@ -36,7 +36,7 @@
     margin: 40rpx;
 }
 .arrow-left.disabled, .arrow-right.disabled {
-    opacity: 0.5;
+    opacity: 0.3;
 }
 .arrow-left:active, .arrow-right:active {
     opacity: 0.8;
@@ -89,7 +89,7 @@
     background: white;
     z-index: 5;
 }
-.prepare-layer.hide-prepare-layer, .rest-layer.hide-rest-layer, .pause-layer.hide-pause-layer, .result-layer.hide-result-layer {
+.prepare-layer.hide-prepare-layer, .rest-layer.hide-rest-layer, .result-layer.hide-result-layer {
     display: none;
 }
 /*prepare-layer*/
@@ -171,12 +171,14 @@
     display: flex;
     flex-direction: column;
     padding: 0 120rpx;
-    font: 32rpx/70rpx PingFang SC;
 }
 .action-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.action-item-text {
+    font: 32rpx/70rpx PingFang SC;
 }
 .result-btn {
     position: fixed;

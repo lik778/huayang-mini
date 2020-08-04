@@ -1,10 +1,6 @@
 // components/navibar.js
-import {
-  getLocalStorage
-} from "../../utils/util"
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { getLocalStorage } from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
 
 Component({
   /**
@@ -12,20 +8,19 @@ Component({
    */
   properties: {
     title: {
-      type: String,
-
+      type: String
     },
     titleColor: {
       type: String,
-      value: "black"
-    },
-    share: {
-      type: Boolean,
-      value: false
+      default: "black"
     },
     color: {
       type: String,
       default: ""
+    },
+    forceGoBackIndex: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -43,10 +38,8 @@ Component({
   methods: {
     // 返回
     back() {
-      if (this.data.share) {
-        wx.switchTab({
-          url: '/pages/discovery/discovery',
-        })
+      if (this.data.forceGoBackIndex) {
+        this.backIndex()
       } else {
         wx.navigateBack({
           delta: 1

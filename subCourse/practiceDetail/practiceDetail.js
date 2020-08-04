@@ -1,4 +1,4 @@
-import { getBootCampCourseInfo, getRecentVisitorList } from "../../api/course/index"
+import { getBootCampCourseInfo, getRecentVisitorList, joinCourseInGuide } from "../../api/course/index"
 import { $notNull, getLocalStorage } from "../../utils/util"
 import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 
@@ -216,6 +216,9 @@ Page({
 				btnText: "开始练习"
 			})
 
+			// 加入课程
+			joinCourseInGuide({kecheng_id_str: this.data.courseId})
+			
 			wx.navigateTo({
 				url: "/subCourse/actionPage/actionPage",
 				success(res) {

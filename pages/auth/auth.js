@@ -113,6 +113,7 @@ Page({
 	 */
 	onLoad: function (options) {
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
+		return // TODO 测试代码
 		if ($notNull(accountInfo) && hasUserInfo()) {
 			wx.switchTab({
 				url: '/pages/practice/practice'
