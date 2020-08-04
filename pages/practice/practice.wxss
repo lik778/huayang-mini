@@ -115,6 +115,9 @@
     background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596350238OjvKBn.jpg") no-repeat center;
     background-size: contain;
 }
+.no-exercise {
+    padding: 20rpx 30rpx;
+}
 .all-boot-camp {
     position: relative;
     margin-right: 20rpx;
