@@ -135,7 +135,7 @@ Page({
       })
     })
   },
-  // 
+  //
   // 训练/打卡
   pratice() {
     wx.switchTab({
@@ -203,15 +203,6 @@ Page({
     this.setData({
       statusHeight: data,
     })
-    checkAuth({
-      listenable: true,
-      ignoreFocusLogin: true
-    }).then(() => {
-      this.getUserInfo()
-      this.getSignData()
-      this.needUpdateUserInfo()
-
-    })
   },
 
   /**
@@ -231,6 +222,17 @@ Page({
         selected: 2
       })
     }
+
+    checkAuth({
+      listenable: true,
+      ignoreFocusLogin: true
+    }).then(() => {
+      this.getUserInfo()
+      this.getSignData()
+      this.needUpdateUserInfo()
+
+    })
+
     this.getTaskList()
     this.getUserSingerInfo()
 
@@ -279,3 +281,4 @@ Page({
     }
   }
 })
+

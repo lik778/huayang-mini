@@ -167,6 +167,34 @@
 					"pathName": "subLive/videoPage/videoPage",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/discovery/discovery",
+					"pathName": "pages/practice/practice",
+					"query": "courseId=1",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/discovery/discovery",
+					"pathName": "pages/discovery/discovery",
+					"query": "courseId=1",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/discovery/discovery",
+					"pathName": "pages/discovery/discovery",
+					"query": "courseId=1",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/practice/practice",
+					"pathName": "pages/practice/practice",
+					"query": "courseId=1",
+					"scene": null
 				}
 			]
 		}

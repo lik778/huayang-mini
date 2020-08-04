@@ -73,7 +73,10 @@ Page({
 			})
 		}
 
-		checkAuth()
+		checkAuth({
+			listenable: true,
+			ignoreFocusLogin: true
+		})
 
 		// 用户学习数据统计
 		queryUserHaveClassesInfo().then((userHaveClassesInfo) => {

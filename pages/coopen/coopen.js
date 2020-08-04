@@ -1,5 +1,5 @@
 import { getLocalStorage } from "../../utils/util"
-import { GLOBAL_KEY, CourseLevels } from "../../lib/config"
+import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import { joinCourseInGuide, queryBootCampCourseList } from "../../api/course/index"
 
 Page({
@@ -105,8 +105,8 @@ Page({
 	 * 跳过动画
 	 */
 	skip() {
-		this.setData({
-			didSkip: true
+		wx.switchTab({
+			url: "/pages/discovery/discovery"
 		})
 	},
 	// 初始化

@@ -1,5 +1,5 @@
 import { APP_LET_ID, GLOBAL_KEY, Version } from "../lib/config"
-import { $notNull, hasUserInfo, setLocalStorage } from "./util"
+import { $notNull, getLocalStorage, hasUserInfo, setLocalStorage } from "./util"
 import { checkFocusLogin, getWxInfo } from "../api/auth/index"
 
 /**
@@ -9,6 +9,7 @@ import { checkFocusLogin, getWxInfo } from "../api/auth/index"
  * @returns {Promise<unknown>}
  */
 const checkAuth = async ({listenable = false, ignoreFocusLogin = false} = {}) => {
+	// 是否强制手机号授权
 	let didFocusLogin = await checkFocusLogin({app_version: Version})
 
 	if (ignoreFocusLogin || didFocusLogin) {
@@ -41,10 +42,27 @@ const wxLogin = () => {
 		// 获取最新 res.code 到后台换取 微信用户信息
 		wxLoginPromise()
 			.then(async (code) => {
+				// 是否强制手机号授权
+				let didFocusLogin = await checkFocusLogin({app_version: Version})
 				// 用code查询服务端是否有该用户信息，如果有更新本地用户信息，反之从微信获取用户信息保存到服务端
 				let originUserInfo = await getWxInfo({code, app_id: APP_LET_ID.tx})
 				// 缓存openId
 				setLocalStorage(GLOBAL_KEY.openId, originUserInfo.openid)
+
+				if (didFocusLogin) {
+					// 获取用户手机号授权信息
+					let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
+					if ($notNull(accountInfo)) {
+
+					} else {
+						// 跳转到授权页面
+						wx.navigateTo({
+							url: '/pages/auth/auth'
+						})
+						reject()
+					}
+				}
+
 				if ($notNull(originUserInfo) && originUserInfo.nickname) {
 					// 服务端返回用户信息包含username，缓存在本地
 					setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
