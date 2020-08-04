@@ -3,6 +3,9 @@ import {
   GLOBAL_KEY
 } from "../../lib/config"
 import {
+  checkAuth
+} from "../../utils/auth"
+import {
   joinCamp,
   getHasJoinCamp,
   getCampDetail
@@ -130,11 +133,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      campId: options.id
+    checkAuth({
+      listenable: true,
+      ignoreFocusLogin: true
+    }).then(() => {
+      this.setData({
+        campId: options.id
+      })
+      // id代表训练营ID
+      this.checkCamp(this.data.campId)
     })
-    // id代表训练营ID
-    this.checkCamp(this.data.campId)
   },
 
   /**
