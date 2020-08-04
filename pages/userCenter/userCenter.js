@@ -277,7 +277,7 @@ Page({
     }
     return {
       title: '测试标题',
-      path: `/page/auth/auth?invite_user_id=${data}`
+      path: `/pages/auth/auth?invite_user_id=${data}`
     }
   }
 })
