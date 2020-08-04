@@ -1,5 +1,5 @@
 <!--pages/userCenter/userCenter.wxml-->
-<view class="user-center" wx:if="{{taskList.length!==0}}">
+<view class="user-center" wx:if="{{taskList.length!==0&&canShow&&showAll}}">
 	<view class="banner">
 		<!-- 个人信息 -->
 		<view class="message">

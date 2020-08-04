@@ -1,5 +1,6 @@
 {
   "navigationStyle": "custom",
+  "navigationBarTitleText": "训练营名称",
   "usingComponents": {
     "naviBar": "../../components/navibar/navibar"
   }

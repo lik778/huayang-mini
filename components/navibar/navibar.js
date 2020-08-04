@@ -12,15 +12,15 @@ Component({
     },
     titleColor: {
       type: String,
-      default: "black"
+      value: "black"
     },
     color: {
       type: String,
-      default: ""
+      value: ""
     },
     forceGoBackIndex: {
       type: Boolean,
-      default: false
+      value: false
     }
   },
 

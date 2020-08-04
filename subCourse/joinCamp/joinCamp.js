@@ -106,7 +106,7 @@ Page({
       })
       setTimeout(() => {
         wx.navigateTo({
-          url: `/subCourse/campDetail/campDetail?id=${this.data.campId}`,
+          url: `/subCourse/campDetail/campDetail?id=${this.data.campId}&share=true`,
         })
       }, 2000)
     }
@@ -133,6 +133,8 @@ Page({
     this.setData({
       campId: options.id
     })
+    // id代表训练营ID
+    this.checkCamp(this.data.campId)
   },
 
   /**
@@ -149,8 +151,7 @@ Page({
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
-    // id代表训练营ID
-    this.checkCamp(this.data.campId)
+
   },
 
   /**

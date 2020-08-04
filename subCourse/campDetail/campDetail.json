@@ -1,6 +1,7 @@
 {
   "navigationStyle": "custom",
   "navigationBarTextStyle": "white",
+  "navigationBarTitleText": "我的课程表",
   "usingComponents": {
     "naviBar": "../../components/navibar/navibar"
   }

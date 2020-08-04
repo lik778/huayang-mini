@@ -32,9 +32,11 @@ Page({
     userInfo: null,
     statusHeight: 0,
     taskList: [],
+    canShow: false,
     processStyle: "width:0%;",
     hasCheckIn: false,
     showMessage: false,
+    showAll:false,
     baseUrl: '',
     gradeData: {
       experNum: 0,
@@ -60,7 +62,8 @@ Page({
     }).then(res => {
       if (res) {
         this.setData({
-          showMessage: res
+          showMessage: res,
+          showAll:true
         })
       }
     })
@@ -84,6 +87,9 @@ Page({
       time: Math.round(new Date() / 1000),
       scene: "zhide_center"
     }).then(res => {
+      this.setData({
+        canShow: true
+      })
       if (res.id) {
         this.setData({
           hasCheckIn: true
@@ -99,7 +105,8 @@ Page({
       scene: 'zhide_center'
     }).then(res => {
       this.setData({
-        hasCheckIn: true
+        hasCheckIn: true,
+
       })
       increaseExp({
         task_type: 'task_checkin'

@@ -603,11 +603,11 @@ export const changeArrIndex = (arr, index1, index2) => {
 export const simpleDurationSimple = (duration) => {
 	let date = ''
 	if (duration < 60) {
-		date = duration
+		date = duration + "秒"
 	} else {
-		date = Math.floor(duration / 60)
+		date = Math.floor(duration / 60) + "分钟"
 	}
-	return date + "分钟"
+	return date
 }
 // 设置时间显示一分钟之内显示秒，一小时以内显示分，
 export const simpleDuration = (duration, type) => {
