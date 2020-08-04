@@ -19,6 +19,9 @@ import {
 import {
   checkAuth
 } from "../../utils/auth"
+import {
+  set
+} from "mobx-miniprogram"
 Page({
 
   /**
@@ -30,14 +33,21 @@ Page({
     taskList: [],
     processStyle: "width:0%;",
     hasCheckIn: false,
-    showMessage: false
+    showMessage: false,
+    gradeData: {
+      experNum: 0,
+      upgrade: false,
+      showLevelAlert: false
+    }
   },
   // 获取用户信息
   getUserSingerInfo() {
     getUserInfo('scene=zhide').then(res => {
       setLocalStorage(GLOBAL_KEY.accountInfo, res)
+      let data = parseInt((res.user_experience / res.next_level_experience) * 100)
       this.setData({
-        userInfo: res
+        userInfo: res,
+        processStyle: `width:${data}%;`,
       })
     })
   },
@@ -72,15 +82,13 @@ Page({
     })
   },
   // 签到
-  checkin() {
+  checkin(e) {
+    let experNumData = Number(e.currentTarget.dataset.type.textData2.split("+")[1])
+    console.log(experNumData)
     taskCheckIn({
       open_id: getLocalStorage(GLOBAL_KEY.openId),
       scene: 'zhide_center'
     }).then(res => {
-      wx.showToast({
-        title: '签到成功',
-        icon: "success"
-      })
       this.setData({
         hasCheckIn: true
       })
@@ -88,6 +96,34 @@ Page({
         task_type: 'task_checkin'
       }).then(res => {
         this.getUserSingerInfo()
+        if (res.has_grade) {
+          // 升级了
+          this.setData({
+            gradeData: {
+              experNum: experNumData,
+              upgrade: true,
+              showLevelAlert: true
+            }
+          })
+        } else {
+          // 未升级
+          this.setData({
+            gradeData: {
+              experNum: experNumData,
+              upgrade: false,
+              showLevelAlert: true
+            }
+          })
+        }
+        setTimeout(() => {
+          this.setData({
+            gradeData: {
+              experNum: experNumData,
+              upgrade: false,
+              showLevelAlert: false
+            }
+          })
+        }, 1500)
       })
     })
   },

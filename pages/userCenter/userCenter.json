@@ -1,5 +1,7 @@
 {
   "navigationStyle": "custom",
   "navigationBarTextStyle": "white",
-  "usingComponents": {}
+  "usingComponents": {
+    "levelAlert":"../../components/levelAlert/levelAlert"
+  }
 }
