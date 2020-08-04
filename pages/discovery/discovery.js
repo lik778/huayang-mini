@@ -1,21 +1,9 @@
 // pages/ discovery/discovery.js
-import {
-  getLocalStorage,
-  simpleDurationSimple
-} from "../../utils/util"
-import {
-  checkAuth
-} from "../../utils/auth"
-import {
-  getHasJoinCamp,
-  getCampList,
-  getFindBanner,
-  getShowCourseList,
-  getActivityList
-} from "../../api/course/index"
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { getLocalStorage, simpleDurationSimple } from "../../utils/util"
+import { checkAuth } from "../../utils/auth"
+import { getActivityList, getCampList, getFindBanner, getHasJoinCamp, getShowCourseList } from "../../api/course/index"
+import { GLOBAL_KEY } from "../../lib/config"
+
 Page({
 
   /**
@@ -140,15 +128,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    checkAuth({
-      listenable: true,
-      ignoreFocusLogin: true
-    }).then(() => {
-      this.getCampList()
-      this.getBanner()
-      this.getCourseList()
-      // this.getActivityList()
-    })
 
   },
   /**
@@ -168,9 +147,15 @@ Page({
         selected: 0
       })
     }
-    setTimeout(() => {
-      console.log(this.data)
-    }, 5000)
+
+    checkAuth({
+      listenable: false,
+      ignoreFocusLogin: true
+    }).then(() => {
+      this.getCampList()
+      this.getBanner()
+      this.getCourseList()
+    })
   },
 
   /**

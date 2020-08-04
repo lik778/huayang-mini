@@ -1,24 +1,10 @@
 // pages/userCenter/userCenter.js
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  getTaskList,
-  taskCheckIn,
-  getSignData,
-  needUpdateUserInfo,
-  increaseExp
-} from "../../api/course/index"
-import {
-  getUserInfo
-} from "../../api/mine/index"
-import {
-  getLocalStorage,
-  setLocalStorage
-} from "../../utils/util"
-import {
-  checkAuth
-} from "../../utils/auth"
+import { GLOBAL_KEY } from "../../lib/config"
+import { getSignData, getTaskList, increaseExp, needUpdateUserInfo, taskCheckIn } from "../../api/course/index"
+import { getUserInfo } from "../../api/mine/index"
+import { getLocalStorage, setLocalStorage } from "../../utils/util"
+import { checkAuth } from "../../utils/auth"
+
 Page({
 
   /**
@@ -91,7 +77,7 @@ Page({
       })
     })
   },
-  // 
+  //
   // 训练/打卡
   pratice() {
     wx.switchTab({
@@ -158,15 +144,6 @@ Page({
     this.setData({
       statusHeight: data,
     })
-    checkAuth({
-      listenable: true,
-      ignoreFocusLogin: true
-    }).then(() => {
-      this.getUserInfo()
-      this.getSignData()
-      this.needUpdateUserInfo()
-
-    })
   },
 
   /**
@@ -186,6 +163,16 @@ Page({
         selected: 2
       })
     }
+
+    checkAuth({
+      listenable: true,
+      ignoreFocusLogin: true
+    }).then(() => {
+      this.getUserInfo()
+      this.getSignData()
+      this.needUpdateUserInfo()
+    })
+
     this.getTaskList()
     this.getUserSingerInfo()
 

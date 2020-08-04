@@ -1,5 +1,5 @@
 <view class="coopen">
-    <view class="page-01 bg-animate" style="display: {{didSkip ? 'none' : ''}};padding-top:{{statusHeight+44}}px;">
+    <view class="page-01 bg-animate" wx:if="{{!didSkip}}" style="padding-top:{{statusHeight+44}}px;">
         <view class="prospect">
             <text class="move-animate delay1">朋友您好，很高兴与您相遇</text>
             <text class="move-animate delay2">我们是花样百姓</text>

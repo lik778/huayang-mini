@@ -1,6 +1,6 @@
 import { wxGetUserInfoPromise } from '../../utils/auth.js'
-import { GLOBAL_KEY } from '../../lib/config.js'
-import { bindUserInfo, bindWxPhoneNumber, getWxInfo } from "../../api/auth/index"
+import { GLOBAL_KEY, Version } from '../../lib/config.js'
+import { bindUserInfo, bindWxPhoneNumber, checkFocusLogin, getWxInfo } from "../../api/auth/index"
 import { $notNull, getLocalStorage, setLocalStorage } from "../../utils/util"
 import { APP_LET_ID } from "../../lib/config"
 import { wxLoginPromise } from "../../utils/auth"
@@ -67,6 +67,10 @@ Page({
 		let {
 			errMsg = '', encryptedData: encrypted_data = '', iv = ''
 		} = e.detail
+
+		// 是否强制手机号授权
+		let didFocusLogin = await checkFocusLogin({app_version: Version})
+
 		if (errMsg.includes('ok')) {
 			let open_id = getLocalStorage(GLOBAL_KEY.openId)
 			if (encrypted_data && iv) {
@@ -84,7 +88,6 @@ Page({
 							url: "/pages/coopen/coopen"
 						})
 					} else {
-						// wx.navigateBack()
 						wx.switchTab({
 							url: "/pages/practice/practice"
 						})
@@ -92,8 +95,15 @@ Page({
 				})
 			}
 		} else {
-			console.error('用户拒绝手机号授权')
-			// wx.navigateBack()
+			if (didFocusLogin) {
+				// 审核人员的拒绝
+				wx.switchTab({
+					url: "/pages/discovery/discovery"
+				})
+			} else {
+				// 用户的拒绝，对不起请继续授权
+				console.error('用户拒绝手机号授权')
+			}
 		}
 	},
 	/**
@@ -138,7 +148,6 @@ Page({
 	 * Lifecycle function--Called when page unload
 	 */
 	onUnload: function () {
-
 	},
 
 	/**
