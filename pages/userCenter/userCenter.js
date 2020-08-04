@@ -71,9 +71,10 @@ Page({
       userId: getLocalStorage(GLOBAL_KEY.userId),
       open_id: getLocalStorage(GLOBAL_KEY.openId),
     })
-    let data = `${request.baseUrl}/#/home/zhidefillSelfInfo?data=${webViewData}`
+    let data = `${request.baseUrl}/#/home/zhideFillSelfInfo?data=${webViewData}`
+    data = encodeURIComponent(data)
     wx.navigateTo({
-      url: `/pages/webViewCommon/webViewCommon?link=${data}`,
+      url: `/pages/webViewCommon/webViewCommon?link=${data}&type=link`,
     })
   },
   // 获取签到信息
@@ -281,4 +282,3 @@ Page({
     }
   }
 })
-

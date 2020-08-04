@@ -125,31 +125,14 @@ Page({
         })
       }
     })
-    // let endTime = ''
-    // let pushTime = ''
-    // let data = e.start_date.split(",")
-    // for (let i in data) {
-    //   if (endTime === '') {
-    //     // 说明只有一个开营日期
-    //     endTime = data[i]
-    //   } else {
-    //     // 多个开营日期
-    //     if (Math.round(new Date(endTime) / 1000) > Math.round(new Date(data[i]) / 1000) || Math.round(new Date(data[i]) / 1000) > Math.round(new Date() / 1000)) {
-    //       endTime = data[i]
-    //     }
-    //   }
-    // }
-    // pushTime = endTime.split("-")[1] + "月" + endTime.split("-")[2] + "日"
-
-
-
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // id代表训练营ID
-    this.checkCamp(options.id)
+    this.setData({
+      campId: options.id
+    })
   },
 
   /**
@@ -166,6 +149,8 @@ Page({
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
+    // id代表训练营ID
+    this.checkCamp(this.data.campId)
   },
 
   /**
