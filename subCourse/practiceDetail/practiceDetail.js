@@ -1,6 +1,6 @@
 import { getBootCampCourseInfo, getRecentVisitorList } from "../../api/course/index"
-import { batchDownloadFiles, getLocalStorage } from "../../utils/util"
-import { GLOBAL_KEY, CourseLevels } from "../../lib/config"
+import { $notNull, getLocalStorage } from "../../utils/util"
+import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 
 Page({
 	/**
@@ -8,6 +8,7 @@ Page({
 	 */
 	data: {
 		screenWidth: 0,
+		accountInfo: {},
 		CourseLevels,
 		courseId: 0, // 课程ID
 		courseInfoObj: {}, // 课程详情
@@ -18,15 +19,18 @@ Page({
 		btnText: "开始练习", // 按钮文案
 		isDownloading: false, // 是否正在下载
 		hasDoneFilePercent: 0, // 已经下载完的文件数量
+		didShowAlert: false
 	},
 
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
+		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 		this.setData({
 			courseId: options.courseId,
-			screenWidth: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth
+			screenWidth: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth,
+			accountInfo
 		})
 	},
 
@@ -79,6 +83,12 @@ Page({
 
 	},
 
+	goToTask() {
+		wx.switchTab({
+			url: "/pages/userCenter/userCenter"
+		})
+	},
+
 	/**
 	 * 有进度的批量下载文件
 	 * @param files
@@ -117,6 +127,13 @@ Page({
 	initial() {
 		// 获取训练营课程详情
 		getBootCampCourseInfo({kecheng_id: this.data.courseId}).then((response) => {
+			// 检查用户等级
+			if (response.level > (this.data.accountInfo.user_grade || 0)) {
+				this.setData({
+					btnText: `Lv ${response.level} 等级开启`,
+					isDownloading: true // 禁止用户点击按钮
+				})
+			}
 			this.setData({
 				courseInfoObj: {...response},
 				actionQueue: this.cookCourseMeta(response)
@@ -157,6 +174,22 @@ Page({
 
 	// 开始练习
 	startPractice() {
+		// 检查权限
+		if (!$notNull(this.data.accountInfo)) {
+			wx.navigateTo({
+				url: "/pages/auth/auth"
+			})
+			return
+		}
+
+		// 检查用户等级
+		if (this.data.courseInfoObj.level > this.data.accountInfo.user_grade) {
+			this.setData({
+				didShowAlert: true
+			})
+			return
+		}
+
 		const self = this
 		let cookedCourseMetaData = this.data.actionQueue.slice()
 
