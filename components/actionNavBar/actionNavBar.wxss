@@ -31,7 +31,7 @@
   padding: 0 34rpx;
 }
 
-.back-icon image {
+.back-icon cover-image {
   width: 60rpx;
   height: 60rpx;
 }

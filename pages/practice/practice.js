@@ -1,9 +1,11 @@
 import { getBannerList } from "../../api/mall/index"
 import {
-	createPracticeRecordInToday, getCourseData,
+	createPracticeRecordInToday,
+	getCourseData,
 	queryBootCampContentInToday,
 	queryRecommendCourseList,
-	queryUserHaveClassesInfo, queryUserJoinedBootCamp,
+	queryUserHaveClassesInfo,
+	queryUserJoinedBootCamp,
 	queryUserJoinedClasses,
 	queryUserRecentPracticeLog
 } from "../../api/course/index"
@@ -188,7 +190,7 @@ Page({
 	// 查看训练营详情
 	goToBootCamp(e) {
 		wx.navigateTo({
-			url: "/subCourse/campDetail/campDetail?id=" + e.currentTarget.dataset.bootCampId
+			url: "/subCourse/campDetail/campDetail?id=" + e.currentTarget.dataset.bootcampid
 		})
 	},
 	// 发现页
