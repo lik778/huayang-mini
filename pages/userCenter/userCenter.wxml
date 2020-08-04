@@ -51,7 +51,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="task-item-right" wx:if="{{item.TaskType==='task_checkin'&&!hasCheckIn}}" bindtap="checkin">
+				<view class="task-item-right" wx:if="{{item.TaskType==='task_checkin'&&!hasCheckIn}}" bindtap="checkin" data-type="{{item}}">
 					签到
 				</view>
 				<view class="task-item-right-one" wx:if="{{item.TaskType==='task_checkin'&&hasCheckIn}}">
@@ -83,7 +83,7 @@
 				</view>
 				<image src="/assets/images/common/arrow.png"></image>
 			</view>
-			<view class="function-item" data-mobile="021-31279158" bindtap="callPhone">
+			<view class="function-item" data-mobile="021-31279777" bindtap="callPhone">
 				<view class="function-item-left">
 					<image src="/assets/images/common/order.png"></image>
 					<view class="function-item-box">
@@ -95,4 +95,6 @@
 			</view>
 		</view>
 	</view>
+	<!-- 提升经验值弹窗 -->
+	<levelAlert number="{{gradeData.experNum}}" hasGrade="{{gradeData.upgrade}}" didShow="{{gradeData.showLevelAlert}}" wx:if="{{gradeData.showLevelAlert}}"></levelAlert>
 </view>
