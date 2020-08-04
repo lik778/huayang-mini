@@ -1,7 +1,7 @@
 import { wxGetUserInfoPromise } from '../../utils/auth.js'
 import { GLOBAL_KEY, Version } from '../../lib/config.js'
 import { bindUserInfo, bindWxPhoneNumber, checkFocusLogin, getWxInfo } from "../../api/auth/index"
-import { $notNull, getLocalStorage, setLocalStorage } from "../../utils/util"
+import { $notNull, getLocalStorage, hasUserInfo, setLocalStorage } from "../../utils/util"
 import { APP_LET_ID } from "../../lib/config"
 import { wxLoginPromise } from "../../utils/auth"
 import { checkUserDidNeedCoopen } from "../../api/course/index"
@@ -113,7 +113,7 @@ Page({
 	 */
 	onLoad: function (options) {
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
-		if ($notNull(accountInfo)) {
+		if ($notNull(accountInfo) && hasUserInfo()) {
 			wx.switchTab({
 				url: '/pages/practice/practice'
 			})
