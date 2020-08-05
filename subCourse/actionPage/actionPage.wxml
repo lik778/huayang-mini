@@ -20,7 +20,7 @@
         <cover-view class="operate">
             <cover-image class="arrow-left {{currentActionIndex > 0 ? '': 'disabled'}}" bind:tap="switchPrevAction"
                          src="../../assets/images/common/arrow-left.png"></cover-image>
-            <cover-image class="pause" bind:tap="pauseAction"
+            <cover-image class="pause" bind:tap="checkoutPracticeStatus"
                          src="{{isRunning ? '../../assets/images/common/pause.png': '../../assets/images/common/start.png'}}"></cover-image>
             <cover-image class="stop" wx:if="{{!isRunning}}" bind:tap="exit"
                          src="../../assets/images/common/stop.png"></cover-image>

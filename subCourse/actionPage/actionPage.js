@@ -20,13 +20,6 @@ Page({
 		targetActionObj: null, // 正在执行的动作
 		targetActionIndex: 0, // 正在执行的动作索引
 
-		commandAudio: null, // 口令播放器
-		commandAudioEventMounted: false, // 口令播放结束事件是否结束
-		commandTimer: null, // 口令timer
-
-		countDownAudio: null, // 时间口令播放器
-		countDownAudioEventMounted: false,
-
 		mainPointAudio: null, // 要领播放器
 		mainPointAudioEventMounted: false,
 		isPlayMainPointAudioPlaying: false, // 要领语音是否正在播放
@@ -53,13 +46,15 @@ Page({
 		hasGrade: false, // 是否升级
 		levelNumber: 0, // 升级等级/经验
 
-		didPracticeDone: false // 整个练习是否结束
+		didPracticeDone: false, // 整个练习是否结束
+
+		bgAudio: null // 背景音乐播放器
 	},
 
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
-	onLoad: function (options) {
+	onLoad: async function (options) {
 		const self = this
 		const eventChannel = this.getOpenerEventChannel()
 
@@ -68,14 +63,6 @@ Page({
 			screenHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenHeight,
 			screenWidth: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth
 		})
-
-		if (!$notNull(eventChannel)) {
-			// TODO 调试代码记得删除
-			// this.setData({
-			// 	targetActionObj: this.data.actionData[0]
-			// })
-			return
-		}
 
 		eventChannel.on("transmitCourseMeta", function (data) {
 			// console.log(data)
@@ -99,28 +86,24 @@ Page({
 				user_id: getLocalStorage(GLOBAL_KEY.userId)
 			})
 		})
+
+
+		// 视频实例
+		this.data.video = wx.createVideoContext("actionVideo", this)
+
+		// 要领
+		this.data.mainPointAudio = wx.createInnerAudioContext()
+
+		this.data.bgAudio = wx.getBackgroundAudioManager()
+
+		// 启动
+		this.start()
 	},
 
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
-		// 视频实例
-		this.data.video = wx.createVideoContext("actionVideo", this)
-		// 要领
-		this.data.mainPointAudio = wx.createInnerAudioContext()
-		// 口令
-		// this.data.commandAudio = wx.getBackgroundAudioManager()
-		// this.data.commandAudio.title = 'command'
-		this.data.commandAudio = wx.createInnerAudioContext()
-
-		// 时间口令
-		// this.data.countDownAudio = wx.getBackgroundAudioManager()
-		// this.data.countDownAudio.title = 'countDown'
-		this.data.countDownAudio = wx.createInnerAudioContext()
-
-		// 启动
-		this.start()
 	},
 
 	/**
@@ -134,9 +117,7 @@ Page({
 	 * 生命周期函数--监听页面隐藏
 	 */
 	onHide: function () {
-		if (this.data.isRunning) {
-			this.pauseAction()
-		}
+		this.toggleAction("pause")
 	},
 
 	/**
@@ -146,16 +127,6 @@ Page({
 		console.error("onUnload")
 		// 销毁所有音视频
 		this.data.mainPointAudio && this.data.mainPointAudio.destroy()
-		this.data.commandAudio && this.data.commandAudio.destroy()
-		this.data.countDownAudio && this.data.countDownAudio.destroy()
-
-		// this.data.commandAudio.url = undefined
-		// this.data.commandAudio.paused = true
-		// this.data.commandAudio.currentTime = 0
-		//
-		// this.data.countDownAudio.url = undefined
-		// this.data.countDownAudio.paused = true
-		// this.data.commandAudiocountDownAudio = 0
 	},
 
 	/**
@@ -201,6 +172,13 @@ Page({
 			didPauseRest: false,
 		})
 
+	},
+	checkoutPracticeStatus() {
+		if (this.data.isRunning) {
+			this.toggleAction("pause")
+		} else {
+			this.toggleAction("play")
+		}
 	},
 	/**
 	 * 退出练习
@@ -257,17 +235,17 @@ Page({
 			didPlayMainPointAudioInCurrentTargetAction: false
 		})
 		// 「动作名称」「N次/秒」
-		await this.playTempAudio(this.data.targetActionObj.name_voice_link)
-		await this.playTempAudio(voices_number(this.data.targetActionObj.cycleTime))
-		await this.playTempAudio(this.data.targetActionObj.meta_type == 2 ? LocaleVoice.lv13 : LocaleVoice.lv7)
+		await this.playTempBgAudio(this.data.targetActionObj.name_voice_link)
+		await this.playTempBgAudio(voices_number(this.data.targetActionObj.cycleTime))
+		await this.playTempBgAudio(+this.data.targetActionObj.meta_type === 2 ? LocaleVoice.lv13 : LocaleVoice.lv7)
 		//  321GO!
-		await this.playTempAudio(LocaleVoice.lv18)
+		await this.playTempBgAudio(LocaleVoice.lv18)
 		this.setData({PrepareNumber: 2})
-		await this.playTempAudio(LocaleVoice.lv19)
+		await this.playTempBgAudio(LocaleVoice.lv19)
 		this.setData({PrepareNumber: 1})
-		await this.playTempAudio(LocaleVoice.lv20)
+		await this.playTempBgAudio(LocaleVoice.lv20)
 		this.setData({PrepareNumber: "GO!"})
-		await this.playTempAudio(LocaleVoice.lv21)
+		await this.playTempBgAudio(LocaleVoice.lv21)
 		this.startCourse(this.data.targetActionObj)
 	},
 	/**
@@ -281,7 +259,7 @@ Page({
 			// 显示预备页
 			this.setData({didShowPrepareLayer: true})
 			// 下一个动作
-			await this.playTempAudio(LocaleVoice.lv15)
+			await this.playTempBgAudio(LocaleVoice.lv15)
 			// 播报动作名称，并开始训练
 			this._playActionNameAndStartTraining()
 		}
@@ -298,79 +276,74 @@ Page({
 			this.setData({didShowPrepareLayer: true})
 			if (this.data.currentActionIndex === this.data.actionData.length - 1) {
 				// 最后一个动作
-				await this.playTempAudio(LocaleVoice.lv16)
+				await this.playTempBgAudio(LocaleVoice.lv16)
 			} else {
 				// 下一个动作
-				await this.playTempAudio(LocaleVoice.lv15)
+				await this.playTempBgAudio(LocaleVoice.lv15)
 			}
 			// 播报动作名称，并开始训练
 			this._playActionNameAndStartTraining()
 		}
 	},
 	/**
-	 * 暂停动作
+	 * 切换练习状态
+	 * @param status ['pause' || 'play']
 	 */
-	pauseAction() {
-		if (this.data.isRunning) {
-			this.setData({ didPauseRecordGlobalTime: true })
+	toggleAction(status) {
+		if (status === "pause") {
+			// 全局计时器
+			this.setData({didPauseRecordGlobalTime: true})
 			this.data.video.pause()
 			// [要领播放中]&当前动作未播放过[要领]，则暂停
 			if (this.data.isPlayMainPointAudioPlaying && !this.data.didPlayMainPointAudioInCurrentTargetAction) {
 				this.data.mainPointAudio && this.data.mainPointAudio.pause()
 			}
-			if (this.data.targetActionObj.meta_type == 2) {
-				this.data.commandAudio.pause()
-			} else {
-				this.data.countDownAudio.pause()
-			}
+			this.data.bgAudio.pause()
 		} else {
-			this.setData({ didPauseRecordGlobalTime: false })
+			// 全局计时器
+			this.setData({didPauseRecordGlobalTime: false})
 			this.data.video.play()
 			// [要领播放中]&当前动作未播放过[要领]，则继续播放
 			if (this.data.isPlayMainPointAudioPlaying && !this.data.didPlayMainPointAudioInCurrentTargetAction) {
 				this.data.mainPointAudio && this.data.mainPointAudio.play()
 			}
-			if (this.data.targetActionObj.meta_type == 2) {
-				this.data.commandAudio.play()
-			} else {
-				this.data.countDownAudio.play()
-			}
+			this.data.bgAudio.play()
 		}
-		this.setData({isRunning: !this.data.isRunning})
+
+		this.setData({isRunning: status !== "pause"})
 	},
 	/**
 	 * 停止动作
 	 */
 	stopAllAction() {
 		this.data.video.stop()
-		this.data.mainPointAudio && this.data.mainPointAudio.stop()
-		this.data.commandAudio && this.data.commandAudio.stop()
-		this.data.countDownAudio && this.data.countDownAudio.stop()
+		this.data.mainPointAudio.stop()
+		this.data.bgAudio.stop()
 	},
 	/**
 	 * 临时播放器 播放音频
-	 * @param params
+	 * @param link
 	 * @returns {Promise}
 	 */
-	playTempAudio(params) {
-		let audio = wx.createInnerAudioContext()
+	playTempBgAudio(link) {
+		let audio = this.data.bgAudio
+		audio.title = "旁白"
 		return new Promise(resolve => {
-			let canPlayCallback = function () {
-				audio.play()
-			}
-			let endCallback = function () {
-				audio.offCanplay(canPlayCallback)
-				audio.offEnded(endCallback)
-				audio.destroy()
-				resolve()
-			}
-			if (audio.src === params) {
+			if (audio.src === link) {
 				audio.play()
 			} else {
-				audio.src = params
-				audio.onCanplay(canPlayCallback)
+				audio.src = link
+				audio.onCanplay(() => {
+					audio.play()
+				})
 			}
-			audio.onEnded(endCallback)
+			audio.onEnded(() => {
+				resolve()
+			})
+			audio.onPause(() => {
+				console.error('暂停')
+				this.toggleAction("pause")
+			})
 		})
 	},
 
@@ -391,82 +364,41 @@ Page({
 
 		this.data.mainPointAudio.onEnded(function () {
 			// 还原口令音量
-			self.data.commandAudio.volume = 1
-			self.data.countDownAudio.volume = 1
+			self.data.bgAudio.volume = 1
 			self.setData({
 				didPlayMainPointAudioInCurrentTargetAction: true, // 标示当前动作已经播放过要领
 				isPlayMainPointAudioPlaying: false // 释放要领正在播放中的状态
 			})
 		})
 	},
-
-	/**
-	 * 播放时间口令
-	 */
-	playCountDown() {
-		const self = this
-
-		this.data.countDownAudio.src = LocaleVoice.lv10
-		this.data.countDownAudio.play()
-
-		this.setData({targetActionIndex: this.data.targetActionIndex + 1})
-
-		if (this.data.countDownAudioEventMounted) return
-		this.setData({countDownAudioEventMounted: true})
-
-		this.data.countDownAudio.onEnded(function () {
-			// 判断：当前动作的"要领"语音是否已播放
-			if (!self.data.didPlayMainPointAudioInCurrentTargetAction) {
-				// 降低口令音量
-				self.data.countDownAudio.volume = 0.3
-				// 5次滴后开始播放"要领"
-				self.playMainPoint(self.data.targetActionObj.voice_link)
-			}
-
-			// 判断：当前动作倒计时是否结束
-			if (self.data.targetActionIndex < self.data.targetActionObj.cycleTime) {
-				self.playCountDown()
-			} else {
-				self.prepareNextAction()
-			}
-		})
-	},
 	/**
 	 * 播放节奏口令
 	 * @param commands
 	 */
-	playCommand(commands) {
-		const self = this
-
-		this.data.commandAudio.src = commands[this.data.targetActionIndex % commands.length]
-		this.data.commandAudio.play()
-
+	async playCommand(commands) {
+		let link = ""
+		if (+this.data.targetActionObj.meta_type === 2) {
+			link = commands[this.data.targetActionIndex % commands.length]
+		} else {
+			link = LocaleVoice.lv10
+		}
 		this.setData({targetActionIndex: this.data.targetActionIndex + 1})
+		await this.playTempBgAudio(link)
+		// 判断：当前动作的"要领"语音是否已播放
+		if (!this.data.didPlayMainPointAudioInCurrentTargetAction) {
+			// 降低口令音量
+			this.data.bgAudio.volume = 0.3
+			// 第一段"口令"结束开始播放"要领"
+			this.playMainPoint(this.data.targetActionObj.voice_link)
+		}
 
-
-		if (this.data.commandAudioEventMounted) return
-		this.setData({commandAudioEventMounted: true})
-
-		this.data.commandAudio.onEnded(function () {
-			// 一拍口令结束
-
-			// 判断：当前动作的"要领"语音是否已播放
-			if (!self.data.didPlayMainPointAudioInCurrentTargetAction) {
-				// 降低口令音量
-				self.data.commandAudio.volume = 0.3
-				// 第一段"口令"结束开始播放"要领"
-				self.playMainPoint(self.data.targetActionObj.voice_link)
-			}
-
-			// 判断：当前动作是否结束
-			if (self.data.targetActionIndex < self.data.targetActionObj.cycleTime) {
-				// 再次播放口令
-				self.playCommand(commands)
-			} else {
-				self.prepareNextAction()
-			}
-
-		})
+		// 判断：当前动作是否结束
+		if (this.data.targetActionIndex < this.data.targetActionObj.cycleTime) {
+			// 再次播放口令
+			this.playCommand(commands)
+		} else {
+			this.prepareNextAction()
+		}
 	},
 	/**
 	 * 筹备下个动作
@@ -481,7 +413,7 @@ Page({
 			// 显示休息层
 			this.setData({didShowRestLayer: true})
 			// 6. 「休息一下吧」
-			this.playTempAudio(LocaleVoice.lv5).then(() => {
+			this.playTempBgAudio(LocaleVoice.lv5).then(() => {
 				// 休息完开始下一个动作
 				let restPromise = new Promise(resolve => {
 					let timer = null
@@ -511,12 +443,12 @@ Page({
 
 					if (this.data.currentActionIndex === this.data.actionData.length - 1) {
 						// 休息结束
-						await this.playTempAudio(LocaleVoice.lv17)
+						await this.playTempBgAudio(LocaleVoice.lv17)
 						// 最后一个动作
-						await this.playTempAudio(LocaleVoice.lv16)
+						await this.playTempBgAudio(LocaleVoice.lv16)
 					} else {
 						// 休息结束，下一个动作
-						await this.playTempAudio(LocaleVoice.lv3)
+						await this.playTempBgAudio(LocaleVoice.lv3)
 					}
 					// 播报动作名称，并开始训练
 					this._playActionNameAndStartTraining()
@@ -528,7 +460,7 @@ Page({
 				didPracticeDone: true
 			})
 			// 「恭喜你完成训练」
-			this.playTempAudio(LocaleVoice.lv6)
+			this.playTempBgAudio(LocaleVoice.lv6)
 			// 训练结束
 			this.setData({didShowResultLayer: true})
 			// 停止全局记时器
@@ -580,13 +512,7 @@ Page({
 		let splitSizeAry = voices_key[voice_type].split(",")
 		let voices = voices_ary.slice(+splitSizeAry[0], +splitSizeAry[1])
 
-		if (this.data.targetActionObj.meta_type == 2) {
-			// 节奏口令动作
-			this.playCommand(voices)
-		} else {
-			// 时间口令动作
-			this.playCountDown(voices)
-		}
+		this.playCommand(voices)
 	},
 
 	async start() {
@@ -604,7 +530,7 @@ Page({
 
 		this.setData({isRunning: true})
 		// 1.「准备好了吗 第一个动作」
-		await this.playTempAudio(LocaleVoice.lv1)
+		await this.playTempBgAudio(LocaleVoice.lv1)
 		// 播报动作名称，并开始训练
 		this._playActionNameAndStartTraining()
 	}
