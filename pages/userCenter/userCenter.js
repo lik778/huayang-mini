@@ -101,8 +101,8 @@ Page({
         task_type: 'task_checkin'
       }).then(res => {
         this.getUserSingerInfo()
-        // if (res.has_grade) {
-        if (false) {
+        if (res.has_grade) {
+        // if (false) {
           // 升级了
           this.setData({
             gradeData: {
