@@ -131,6 +131,7 @@ Page({
 
   // 批量获取多日课程内容
   batchGetCourse(e) {
+    console.log(e, 221112)
     getMenyCourseList({
       day_num_str: e.join(","),
       traincamp_id: this.data.campId
@@ -146,8 +147,12 @@ Page({
             let days = Number(res[i].day_num)
             dataObj[days].dataNum = 0
           }
-          dataObj[j].day_num = e[j]
         }
+      }
+
+      for (let i in e) {
+        console.log(e[i], "测试")
+        dataObj[i].day_num = e[i]
       }
       this.setData({
         dateObj: this.data.dateObj
@@ -369,6 +374,9 @@ Page({
     this.setData({
       campId: options.id
     })
+    setTimeout(() => {
+      console.log(this.data.dateObj)
+    }, 5000)
   },
 
   /**

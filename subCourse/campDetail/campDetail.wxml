@@ -18,8 +18,8 @@
 			</view>
 			<view class="date-line">
 				<view bindtap="toCureentDay" data-item='{{item}}' wx:for="{{dateObj.dateList.date}}" wx:key="index" class="{{item.dataNum===0?'':'sub-active'}}">
-					<text style="{{cureentDay==item.id||startDay==item?styleObj.all:''}}">{{item.id}}</text>
-					<image wx:if="{{cureentDay==item.id||startDay==item}}" src="/assets/images/common/current-arrow.png"></image>
+					<text style="{{cureentDay==item.id?styleObj.all:''}}">{{item.id}}</text>
+					<image wx:if="{{cureentDay==item.id}}" src="/assets/images/common/current-arrow.png"></image>
 				</view>
 			</view>
 		</view>
