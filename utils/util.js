@@ -1,9 +1,21 @@
 import md5 from 'md5'
-import { GLOBAL_KEY, ROOT_URL, URL, WeChatLiveStatus } from '../lib/config'
-import { createOrder } from "../api/mine/payVip"
-import { getWatchLiveAuth, statisticsWatchNo } from "../api/live/course"
+import {
+	GLOBAL_KEY,
+	ROOT_URL,
+	URL,
+	WeChatLiveStatus
+} from '../lib/config'
+import {
+	createOrder
+} from "../api/mine/payVip"
+import {
+	getWatchLiveAuth,
+	statisticsWatchNo
+} from "../api/live/course"
 import request from "../lib/request"
-import { getUserInfo } from "../api/mine/index"
+import {
+	getUserInfo
+} from "../api/mine/index"
 
 const livePlayer = requirePlugin('live-player-plugin')
 
@@ -575,9 +587,11 @@ export const countDay = (nowDate, totalDate) => {
 // 计算两个日期相差xx天
 export const countDayOne = (nowDate, totalDate) => {
 	// nowDate当前日期，totalDate目标日期
+	nowDate = nowDate.replace(/-/g, "/")
+	totalDate = totalDate.replace(/-/g, "/")
 	var date1 = new Date(totalDate);
 	var date2 = new Date(nowDate);
-	var date = (date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24); /*不用考虑闰年否*/
+	var date = date2 - date1 < 0 ? 0 : (date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24); /*不用考虑闰年否*/
 	return Math.ceil(date + 1) === -0 ? 0 : Math.ceil(date + 1)
 }
 
@@ -645,7 +659,7 @@ export const calculateExerciseTime = (times) => {
  * @param authKey
  * @returns {Promise<unknown>}
  */
-export const queryWxAuth = function(authKey = WX_AUTH_TYPE.userInfo) {
+export const queryWxAuth = function (authKey = WX_AUTH_TYPE.userInfo) {
 	return new Promise((resolve, reject) => {
 		wxGetSetting(authKey).then((authResult = {}) => {
 			if (!authResult[authKey]) {
@@ -668,10 +682,12 @@ export const queryWxAuth = function(authKey = WX_AUTH_TYPE.userInfo) {
 /**
  * 微信授权记录检查
  */
-export const wxGetSetting = function(authKey) {
+export const wxGetSetting = function (authKey) {
 	return new Promise((resolve, reject) => {
 		wx.getSetting({
-			success({ authSetting }) {
+			success({
+				authSetting
+			}) {
 				resolve(authSetting[authKey]);
 			},
 			fail(e) {

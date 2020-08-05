@@ -105,8 +105,6 @@ Page({
         let differDay = countDayOne(realList[i], res.start_date)
         differDay = differDay < 0 ? 0 : differDay
         campDateList.push(differDay)
-      }
-      for (let i in realList) {
         if (new Date(realList[i]).toLocaleDateString() === new Date().toLocaleDateString()) {
           weekData[i] = '今天'
         }
@@ -131,7 +129,6 @@ Page({
 
   // 批量获取多日课程内容
   batchGetCourse(e) {
-    console.log(e, 221112)
     getMenyCourseList({
       day_num_str: e.join(","),
       traincamp_id: this.data.campId
@@ -149,9 +146,7 @@ Page({
           }
         }
       }
-
       for (let i in e) {
-        console.log(e[i], "测试")
         dataObj[i].day_num = e[i]
       }
       this.setData({
@@ -165,7 +160,6 @@ Page({
     let dayNum = ''
     if (e.currentTarget) {
       let event = e.currentTarget.dataset.item.day_num
-      console.log(e)
       if (event - 1 < 0) return
       if (event - 1 >= 0) {
         dayNum = event - 1
@@ -182,7 +176,6 @@ Page({
         dayNum = 0
       }
     }
-    console.log(dayNum)
     if (dayNum == 0) {
       this.setData({
         showLock: false
@@ -374,9 +367,6 @@ Page({
     this.setData({
       campId: options.id
     })
-    setTimeout(() => {
-      console.log(this.data.dateObj)
-    }, 5000)
   },
 
   /**
