@@ -1,15 +1,19 @@
 /* pages/userCenter/userCenter.wxss */
 .user-center {
   background: #F9F9F9;
-  padding-bottom: 184rpx;
+  padding-bottom: 200rpx;
 }
 
 /* 个人信息  */
 .banner {
-  background: black;
   width: 100%;
-  height: 500rpx;
+  height: 494rpx;
   position: relative;
+}
+
+.banner>image {
+  width: 100%;
+  height: 494rpx;
 }
 
 .message {
@@ -54,28 +58,28 @@
 .experience-title-left {}
 
 .experience-title-left-one {
-  font-size: 28rpx;
+  font-size: 32rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: rgba(255, 236, 213, 1);
-  line-height: 28rpx;
+  line-height: 32rpx;
   margin-right: 20rpx;
 }
 
 .experience-title-left-two {
-  font-size: 64rpx;
+  font-size: 68rpx;
   font-family: DINCondensed-Bold, DINCondensed;
   font-weight: bold;
   color: rgba(255, 236, 213, 1);
-  line-height: 76rpx;
+  line-height: 82rpx;
 }
 
 .experience-title-right {
-  font-size: 24rpx;
+  font-size: 32rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: rgba(255, 236, 213, 1);
-  line-height: 24rpx;
+  line-height: 32rpx;
 }
 
 .experience-process {
@@ -126,7 +130,7 @@
   height: 100%;
   background: rgba(249, 227, 227, 1) linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0%, rgba(255, 255, 255, 0.5) 100%);
   z-index: 5;
-  mix-blend-mode: soft-light;
+  background-blend-mode: soft-light;
 }
 
 .full-message-left {
@@ -174,7 +178,8 @@
   box-shadow: 0px 0px 12rpx 0px rgba(0, 0, 0, 0.05);
   border-radius: 8rpx;
   margin-bottom: 20rpx;
-  margin-top: -52rpx;
+  position: relative;
+  top: -50rpx;
 }
 
 .task-title {
@@ -193,7 +198,7 @@
   padding: 0 40rpx;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 20rpx;
+  padding-bottom: 50rpx;
 }
 
 .task-item-left {
@@ -212,28 +217,29 @@
 }
 
 .task-item-middle view:first-child {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  line-height: 32rpx;
+}
+
+.task-item-middle view:nth-child(2) {
+  font-size: 36rpx;
+  font-family: PingFang-SC-Bold, PingFang-SC;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 1);
+  line-height: 36rpx;
+  padding-top: 20rpx;
+}
+
+.task-item-middle view:last-child {
   font-size: 28rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: rgba(0, 0, 0, 1);
-  line-height: 40rpx;
-}
-
-.task-item-middle view:nth-child(2) {
-  font-size: 32rpx;
-  font-family: PingFang-SC-Bold, PingFang-SC;
-  font-weight: bold;
-  color: rgba(0, 0, 0, 1);
-  line-height: 44rpx;
-  padding-top: 8rpx;
-}
-
-.task-item-middle view:last-child {
-  font-size: 12px;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: rgba(0, 0, 0, 1);
-  line-height: 17px;
+  line-height: 28rpx;
+  padding-top: 10rpx;
 }
 
 .task-item-middle view:last-child text:nth-child(2) {
@@ -284,6 +290,8 @@
   background: #fff;
   border-radius: 8rpx;
   box-shadow: 0px 0px 12rpx 0px rgba(0, 0, 0, 0.05);
+  position: relative;
+  top: -50rpx;
 }
 
 .function-item {
@@ -334,4 +342,11 @@
   color: rgba(102, 102, 102, 1);
   line-height: 40rpx;
   padding-top: 8rpx;
+}
+
+.function-item-left .contact-image {
+  width: 46rpx;
+  height: 40rpx;
+  vertical-align: bottom;
+  margin-left: -4rpx;
 }

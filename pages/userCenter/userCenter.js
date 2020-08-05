@@ -34,9 +34,11 @@ Page({
     taskList: [],
     canShow: false,
     processStyle: "width:0%;",
+    taskStyle: "",
+    functionStyle: "",
     hasCheckIn: false,
     showMessage: false,
-    showAll:false,
+    showAll: false,
     baseUrl: '',
     gradeData: {
       experNum: 0,
@@ -60,12 +62,17 @@ Page({
     needUpdateUserInfo({
       user_id: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id
     }).then(res => {
-      if (res) {
+      // res=true
+      if (!res) {
         this.setData({
-          showMessage: res,
-          showAll:true
+          taskStyle: "top:-74rpx",
+          functionStyle: "top:-74rpx"
         })
       }
+      this.setData({
+        showMessage: res,
+        showAll: true
+      })
     })
   },
   // 完善个人资料
@@ -105,14 +112,14 @@ Page({
       scene: 'zhide_center'
     }).then(res => {
       this.setData({
-        hasCheckIn: true,
-
+        hasCheckIn: true
       })
       increaseExp({
         task_type: 'task_checkin'
       }).then(res => {
         this.getUserSingerInfo()
-        if (res.has_grade) {
+        // if (res.has_grade) {
+        if (false) {
           // 升级了
           this.setData({
             gradeData: {
