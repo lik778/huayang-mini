@@ -142,12 +142,21 @@ Page({
             dataObj[days].dataNum = 1
           } else {
             let days = Number(res[i].day_num)
-            dataObj[days].dataNum = 0
+            dataObj[days].dataNum = -1
           }
         }
       }
-      for (let i in e) {
-        dataObj[i].day_num = e[i]
+      e = e.map(n => n - 1)
+      for (let i in dataObj) {
+        if (Number(dataObj[i].id) === this.data.cureentDay) {
+          dataObj[i].dataNum = 0
+          dataObj[i].day_num = 0
+        } else {
+          dataObj[i].day_num = e[i]
+        }
+        if (dataObj[i].dataNum < 0) {
+          dataObj[i].day_num = -1
+        }
       }
       this.setData({
         dateObj: this.data.dateObj
@@ -160,9 +169,9 @@ Page({
     let dayNum = ''
     if (e.currentTarget) {
       let event = e.currentTarget.dataset.item.day_num
-      if (event - 1 < 0) return
-      if (event - 1 >= 0) {
-        dayNum = event - 1
+      if (event < 0 || event === undefined) return
+      if (event >= 0) {
+        dayNum = event
       }
       this.setData({
         cureentDay: e.currentTarget.dataset.item.id
@@ -228,7 +237,6 @@ Page({
   },
 
   // 控制是否显示遮罩层
-
   initCoverShow(id) {
     let showIdList = getLocalStorage(GLOBAL_KEY.campHasShowList) === undefined ? undefined : JSON.parse(getLocalStorage(GLOBAL_KEY.campHasShowList))
     let showCover = true
@@ -344,6 +352,7 @@ Page({
       this.playVideo()
     }
   },
+
   // 获取有赞id
   getAppId() {
     getYouZanAppId().then(appId => {

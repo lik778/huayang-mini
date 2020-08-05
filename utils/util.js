@@ -543,7 +543,7 @@ export const getTodayDate = (date) => {
 	for (let i in dates) {
 		dateArr.push({
 			id: dates[i].split("-")[2],
-			dataNum: 0
+			dataNum: -1
 		})
 		dateArr1.push(dates[i])
 	}

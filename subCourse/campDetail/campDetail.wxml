@@ -17,7 +17,7 @@
 				<text wx:for="{{dateObj.weekList}}" wx:key="index">{{item}}</text>
 			</view>
 			<view class="date-line">
-				<view bindtap="toCureentDay" data-item='{{item}}' wx:for="{{dateObj.dateList.date}}" wx:key="index" class="{{item.dataNum===0?'':'sub-active'}}">
+				<view bindtap="toCureentDay" data-item='{{item}}' wx:for="{{dateObj.dateList.date}}" wx:key="index" class="{{item.dataNum<0?'':'sub-active'}}">
 					<text style="{{cureentDay==item.id?styleObj.all:''}}">{{item.id}}</text>
 					<image wx:if="{{cureentDay==item.id}}" src="/assets/images/common/current-arrow.png"></image>
 				</view>
