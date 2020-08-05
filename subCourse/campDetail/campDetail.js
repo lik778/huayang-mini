@@ -28,7 +28,9 @@ Page({
    */
   data: {
     appId: "",
+    showLock: false,
     statusHeight: 0,
+    realNowDay: "",
     backIndex: false,
     cureentDay: '', //当前日期
     campId: 0, //训练营id
@@ -39,6 +41,13 @@ Page({
     courseList: [], //课程列表
     startDay: "", //训练营开始时间
     videoSrc: "", //视频地址
+    srcObj: {
+      course: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596592012ePAuNo.jpg",
+      video: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596592012extlpo.jpg",
+      product: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596592012KEkZvd.jpg",
+      url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596592012prmJUG.jpg",
+      lock: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596613255fHAzmw.jpg"
+    },
     styleObj: {
       all: "color:#000000;font-family:PingFang-SC-Bold,PingFang-SC;font-weight:bold;background:#F4F4F4",
       notAll: "color:#000000;background:#F4F4F4"
@@ -159,6 +168,23 @@ Page({
       } else {
         // 已开营
         dayNum = 0
+      }
+    }
+    if (dayNum === 0) {
+      this.setData({
+        showLock: false
+      })
+    } else {
+      if (new Date().getTime() < new Date(this.data.campDetailData.start_date).getTime()) {
+        // 未开营
+        this.setData({
+          showLock: true
+        })
+      } else {
+        // 已开营
+        this.setData({
+          showLock: true
+        })
       }
     }
     getCurentDayData({

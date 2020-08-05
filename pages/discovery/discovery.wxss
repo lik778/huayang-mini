@@ -2,13 +2,16 @@
 .discovery {
   background: #F9F9F9;
   /* background: red; */
-  padding-bottom: 160rpx;
 }
 
 .module-one,
 .module-two {
   padding: 0 30rpx;
   background: #fff;
+}
+
+.module-two {
+  padding-bottom: 180rpx;
 }
 
 /* banner */

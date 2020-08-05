@@ -2,7 +2,7 @@
 <view class="campdetail">
 	<!-- navibar栏 -->
 	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
-		<naviBar title="" color="#5F5F5F" titleColor="#000000" forceGoBackIndex="{{backIndex}}"></naviBar>
+		<naviBar title="我的课程表" color="#5F5F5F" titleColor="#fff" forceGoBackIndex="{{backIndex}}"></naviBar>
 	</view>
 	<!-- 背景层 -->
 	<view class="bg">
@@ -17,9 +17,13 @@
 				<text wx:for="{{dateObj.weekList}}" wx:key="index">{{item}}</text>
 			</view>
 			<view class="date-line">
-				<text bindtap="toCureentDay" data-item='{{item}}' wx:for="{{dateObj.dateList.date}}" wx:key="index" style="{{cureentDay==item.id||startDay==item?styleObj.all:''}}" class="{{item.dataNum===0?'':'sub-active'}}">{{item.id}}</text>
+				<view bindtap="toCureentDay" data-item='{{item}}' wx:for="{{dateObj.dateList.date}}" wx:key="index" style="{{cureentDay==item.id||startDay==item?styleObj.all:''}}" class="{{item.dataNum===0?'':'sub-active'}}">
+					<text class="">{{item.id}}</text>
+					<image wx:if="{{cureentDay==item.id||startDay==item}}" src="/assets/images/common/current-arrow.png"></image>
+				</view>
 			</view>
 		</view>
+		<view class="bg-color"></view>
 		<!-- 课程内容 -->
 		<view class="camp-container">
 			<view class="video" wx:if="{{videoSrc!==''}}">
@@ -28,19 +32,28 @@
 				</view>
 				<video id="myVideo" src="{{videoSrc}}" style="{{videoHeight}}" controls="{{false}}" show-center-play-btn="{{false}}" bindtap="pauseVideo" bindended="initVideo"></video>
 			</view>
-			<view class="course-list">
+			<view class="course-list" wx:if="{{courseList.content.length>0}}">
 				<view class="course-item" wx:for="{{courseList.content}}" wx:key="index">
-					<view class="course-item-left">
-						<image src="{{item}}"></image>
+					<view class="course-item-left" wx:if="{{!showLock}}">
+						<image src="{{srcObj.course}}" wx:if="{{item.type==='kecheng'}}"></image>
+						<image src="{{srcObj.video}}" wx:if="{{item.type==='video'}}"></image>
+						<image src="{{srcObj.product}}" wx:if="{{item.type==='product'}}"></image>
+						<image src="{{srcObj.url}}" wx:if="{{item.type==='url'}}"></image>
+					</view>
+					<view class="course-item-left" wx:else>
+						<image src="{{srcObj.lock}}"></image>
 					</view>
 					<view class="course-item-right">
 						<view class="course-item-right-left">
 							<text>{{item.name?item.name:item.title}}</text>
 							<text wx:if="{{item.type==='kecheng'}}" class="course-time">{{item.duration}}</text>
 						</view>
-						<view class="course-item-right-right">
+						<view class="course-item-right-right" wx:if="{{!showLock}}">
 							<text wx:if="{{item.type==='kecheng'||item.type==='video'}}" bindtap="toDetail" data-item="{{item}}">练习</text>
 							<text wx:else bindtap="toProduct" data-item="{{item}}">前往</text>
+						</view>
+						<view class="course-item-right-right" wx:else>
+							<text class="canshow">练习</text>
 						</view>
 					</view>
 				</view>
