@@ -34,7 +34,7 @@
     margin: 40rpx 0 80rpx;
 }
 .time {
-    font: 96rpx/72rpx "Condensed";
+    font: 96rpx/72rpx DIN Alternate,Roboto-Condensed;
 }
 .unit {
     margin-left: 20rpx;

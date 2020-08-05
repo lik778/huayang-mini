@@ -118,7 +118,7 @@ Page({
 	// 处理点击课程事件
 	handleCourseTap(e) {
 		wx.navigateTo({
-			url: "/subCourse/practiceDetail/practiceDetail?courseId=" + e.currentTarget.dataset.item.id
+			url: "/subCourse/practiceDetail/practiceDetail?courseId=" + e.currentTarget.dataset.item.kecheng.id
 		})
 	},
 	// 处理练习按钮事件

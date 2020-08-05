@@ -26,7 +26,7 @@
 			"outputPath": ""
 		},
 		"useIsolateContext": true,
-		"useCompilerModule": false,
+		"useCompilerModule": true,
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
@@ -123,97 +123,6 @@
 					"id": -1,
 					"name": "pages/coopen/coopen",
 					"pathName": "pages/coopen/coopen",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/auth/auth",
-					"pathName": "pages/auth/auth",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/practiceManage/practiceManage",
-					"pathName": "pages/practiceManage/practiceManage",
-					"query": "prdId=37",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "subCourse/practiceManage/practiceManage",
-					"pathName": "subCourse/practiceManage/practiceManage",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "个人中心",
-					"pathName": "pages/userCenter/userCenter",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "训练营详情",
-					"pathName": "subCourse/campDetail/campDetail",
-					"query": "id=60",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "subLive/videoPage/videoPage",
-					"pathName": "subLive/videoPage/videoPage",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/discovery/discovery",
-					"pathName": "pages/practice/practice",
-					"query": "courseId=1",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/discovery/discovery",
-					"pathName": "pages/discovery/discovery",
-					"query": "courseId=1",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/discovery/discovery",
-					"pathName": "pages/discovery/discovery",
-					"query": "courseId=1",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/practice/practice",
-					"pathName": "pages/practice/practice",
-					"query": "courseId=1",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "subCourse/actionPost/actionPost",
-					"pathName": "subCourse/actionPost/actionPost",
-					"query": "invite_user_id=5",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "subCourse/actionPost/actionPost",
-					"pathName": "subCourse/actionPost/actionPost",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "subCourse/actionPost/actionPost",
-					"pathName": "subCourse/actionPost/actionPost",
 					"query": "",
 					"scene": null
 				}
