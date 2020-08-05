@@ -150,7 +150,7 @@ Page({
 	},
 
 	// 转化课程动作为可执行的数据结构
-	cookCourseMeta({kecheng_meta, link}) {
+	cookCourseMeta({kecheng_meta, link, cycle_count}) {
 		let voiceUrlQueue = []
 		let videoUrlQueue = []
 		const actionAry = link.split("##").map(actionItem => {
@@ -165,7 +165,8 @@ Page({
 			return {
 				...targetAction,
 				cycleTime,
-				restTime
+				restTime,
+				loopCount: cycle_count
 			}
 		})
 		this.data.voiceUrlQueue = voiceUrlQueue

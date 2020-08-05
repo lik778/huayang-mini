@@ -10,8 +10,10 @@
 
     <view class="content" style="height:{{screenHeight-statusHeight-43}}px">
         <cover-view class="cycle-time">
-            <cover-view class="main-cycle-time">{{targetActionIndex}} / {{targetActionObj.cycleTime}}</cover-view>
-            <cover-view class="sub-cycle-time">{{targetActionObj.meta_type == 2 ? '次' : '秒'}}</cover-view>
+            <cover-view class="main-cycle-time">
+                {{targetActionIndex}} / {{targetActionObj.cycleTime}}
+                <cover-view class="sub-cycle-time">{{targetActionObj.meta_type == 2 ? '次' : '秒'}}</cover-view>
+            </cover-view>
         </cover-view>
 
         <!--  暂停层  -->
@@ -95,7 +97,7 @@
         <cover-view class="global-record-time-text">{{globalRecordTimeText}}</cover-view>
         <cover-view class="result-text-03">训练时长</cover-view>
         <cover-view class="action-list">
-            <cover-view class="action-item" wx:for="{{actionData}}" wx:key="index">
+            <cover-view class="action-item" wx:for="{{originData}}" wx:key="index">
                 <cover-view class="action-item-text">{{ item.name }}</cover-view>
                 <cover-view class="action-item-text">x{{ item.cycleTime }}{{ item.meta_type == 2 ? '次' : '秒' }}</cover-view>
             </cover-view>

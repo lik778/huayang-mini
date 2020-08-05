@@ -9,9 +9,10 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    number: { type: Number, default: 0 }, // 经验值 || 等级数字
-    hasGrade: { type: Number, default: false }, // false=>提升经验 true=>提升等级
-    didShow: { type: Boolean, default: false }
+    number: { type: Number, value: 0 }, // 经验值 || 等级数字
+    hasGrade: { type: Number, value: false }, // false=>提升经验 true=>提升等级
+    didShow: { type: Boolean, value: false },
+    text02: { type:String, value: "" }, // 自定义底部文案
   },
 
   /**
@@ -45,7 +46,7 @@ Component({
       this.setData({
         iconImage: ICON[1],
         text01: `成长值 +${this.data.number}`,
-        text02: '完成训练',
+        text02: this.data.text02 ? this.data.text02 : '完成训练',
       })
     }
   }

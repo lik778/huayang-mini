@@ -14,11 +14,13 @@ Page({
 		screenWidth: 0, // 设备宽度
 		courseInfo: null, // 课程信息
 		currentActionIndex: 0, // 当前动作索引
+		originData: null,
 		actionData: null, // 动作数据
 		currentDuration: 0, // 整个课程已播放的时长
 
 		targetActionObj: null, // 正在执行的动作
 		targetActionIndex: 0, // 正在执行的动作索引
+		targetLoopCount: 1, // 正在执行的动作的循环次数
 
 		mainPointAudio: null, // 要领播放器
 		mainPointAudioEventMounted: false,
@@ -67,9 +69,19 @@ Page({
 		eventChannel.on("transmitCourseMeta", function (data) {
 			// console.log(data)
 			let actionData = JSON.parse(data)
+
+			let completedCourseMetaData = []
+			for (let i = 0; i < actionData.length; i++) {
+				let item = actionData[i]
+				for (let j = 1; j <= item.loopCount; j++) {
+					completedCourseMetaData.push(item)
+				}
+			}
+
 			self.setData({
-				actionData,
-				targetActionObj: actionData[0] // 默认设置第一项
+				originData: actionData,
+				actionData: completedCourseMetaData,
+				targetActionObj: completedCourseMetaData[0] // 默认设置第一项
 			})
 		})
 
@@ -110,7 +122,6 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		console.error('------ on show ------')
 	},
 
 	/**
@@ -124,9 +135,15 @@ Page({
 	 * 生命周期函数--监听页面卸载
 	 */
 	onUnload: function () {
-		console.error("onUnload")
 		// 销毁所有音视频
-		this.data.mainPointAudio && this.data.mainPointAudio.destroy()
+		if (this.data.mainPointAudio) {
+			this.data.mainPointAudio.destroy()
+		}
+
+		if (this.data.bgAudio) {
+			this.data.bgAudio.stop()
+			// this.data.bgAudio.src = ""
+		}
 	},
 
 	/**
@@ -327,7 +344,7 @@ Page({
 	 */
 	playTempBgAudio(link) {
 		let audio = this.data.bgAudio
-		audio.title = "旁白"
+		audio.title = "花样百姓"
 		return new Promise(resolve => {
 			if (audio.src === link) {
 				audio.play()
@@ -512,7 +529,7 @@ Page({
 		let splitSizeAry = voices_key[voice_type].split(",")
 		let voices = voices_ary.slice(+splitSizeAry[0], +splitSizeAry[1])
 
-		this.playCommand(voices)
+		this.playCommand(voices, data)
 	},
 
 	async start() {

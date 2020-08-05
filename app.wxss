@@ -1,5 +1,5 @@
 @font-face {
-  font-family: "Condensed";
+  font-family: Condensed;
   src: url('https://huayang-img.oss-cn-shanghai.aliyuncs.com/font/DIN%20Condensed%20Bold.ttf'), url('https://huayang-img.oss-cn-shanghai.aliyuncs.com/font/DIN%20Condensed%20Bold.otf'), url('https://huayang-img.oss-cn-shanghai.aliyuncs.com/font/DIN%20Condensed%20Bold.woff');
 }
 
