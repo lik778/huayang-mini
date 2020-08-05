@@ -1,10 +1,25 @@
 // pages/userCenter/userCenter.js
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 import request from "../../lib/request"
-import { getSignData, getTaskList, increaseExp, needUpdateUserInfo, taskCheckIn } from "../../api/course/index"
-import { getUserInfo } from "../../api/mine/index"
-import { getLocalStorage, setLocalStorage } from "../../utils/util"
-import { checkAuth } from "../../utils/auth"
+import {
+  getSignData,
+  getTaskList,
+  increaseExp,
+  needUpdateUserInfo,
+  taskCheckIn
+} from "../../api/course/index"
+import {
+  getUserInfo
+} from "../../api/mine/index"
+import {
+  getLocalStorage,
+  setLocalStorage
+} from "../../utils/util"
+import {
+  checkAuth
+} from "../../utils/auth"
 
 Page({
 
@@ -89,7 +104,8 @@ Page({
   },
   // 签到
   checkin(e) {
-    let experNumData = Number(e.currentTarget.dataset.type.textData2.split("+")[1])
+    console.log(e)
+    let experNumData = Number(e.currentTarget.dataset.type.textData1.split("+")[1].split("成长值")[0])
     taskCheckIn({
       open_id: getLocalStorage(GLOBAL_KEY.openId),
       scene: 'zhide_center'
@@ -102,7 +118,7 @@ Page({
       }).then(res => {
         this.getUserSingerInfo()
         if (res.has_grade) {
-        // if (false) {
+          // if (false) {
           // 升级了
           this.setData({
             gradeData: {

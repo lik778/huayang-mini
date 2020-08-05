@@ -140,10 +140,13 @@ Page({
         res[i].content = JSON.parse(res[i].content)
         for (let j in e) {
           if (e[j] === res[i].day_num + 1) {
-            dataObj[j].dataNum = 1
+            let days = Number(j)
+            dataObj[days].dataNum = 1
           } else {
-            dataObj[j].dataNum = 0
+            let days = Number(res[i].day_num)
+            dataObj[days].dataNum = 0
           }
+          dataObj[j].day_num = e[j]
         }
       }
       this.setData({
@@ -156,8 +159,12 @@ Page({
   toCureentDay(e) {
     let dayNum = ''
     if (e.currentTarget) {
-      if (e.currentTarget.dataset.item.dataNum === 0) return
-      dayNum = e.currentTarget.dataset.item.dataNum
+      let event = e.currentTarget.dataset.item.day_num
+      console.log(e)
+      if (event - 1 < 0) return
+      if (event - 1 >= 0) {
+        dayNum = event - 1
+      }
       this.setData({
         cureentDay: e.currentTarget.dataset.item.id
       })
@@ -170,22 +177,15 @@ Page({
         dayNum = 0
       }
     }
-    if (dayNum === 0) {
+    console.log(dayNum)
+    if (dayNum == 0) {
       this.setData({
         showLock: false
       })
     } else {
-      if (new Date().getTime() < new Date(this.data.campDetailData.start_date).getTime()) {
-        // 未开营
-        this.setData({
-          showLock: true
-        })
-      } else {
-        // 已开营
-        this.setData({
-          showLock: true
-        })
-      }
+      this.setData({
+        showLock: true
+      })
     }
     getCurentDayData({
       day_num: dayNum,
