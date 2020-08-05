@@ -153,7 +153,7 @@ Page({
 	 * 秀一下
 	 */
 	show() {
-		// wx.navigateBack()
+		wx.navigateBack()
 	},
 	/**
 	 * 在休息层切换上一个动作
