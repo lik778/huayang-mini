@@ -1,0 +1,36 @@
+<view class="action-post">
+    <view class="post">
+        <view class="top-lay" style="background-image: url('{{}}');">
+            <view class="date">
+                <text>2020</text>
+                <text>08/04</text>
+            </view>
+            <view class="slogan">为自己而活</view>
+            <view class="action-name">引体向上</view>
+        </view>
+        <view class="bottom-lay">
+            <view class="left-top">
+                <image class="avatar" mode="aspectFill" src="{{}}"></image>
+                <text class="nickname">derisfe</text>
+            </view>
+            <view class="left-bottom">
+                <view class="practice-no">
+                    <text class="no">15:40</text>
+                    <text class="tip">训练时长</text>
+                </view>
+                <view class="practice-no">
+                    <text class="no">6</text>
+                    <text class="tip">个动作</text>
+                </view>
+            </view>
+            <view class="right">
+                <image class="qr-code" mode="aspectFill" src="{{}}"></image>
+                <text class="tip">长按扫码</text>
+            </view>
+        </view>
+    </view>
+    <view class="operate">
+        <view class="share-btn">分享到群内打卡</view>
+        <view class="save">保存海报到相册</view>
+    </view>
+</view>

@@ -11,7 +11,7 @@ import {
 } from "../../api/course/index"
 import { CourseLevels } from "../../lib/config"
 import dayjs from "dayjs"
-import { $notNull } from "../../utils/util"
+import { $notNull, calculateExerciseTime } from "../../utils/util"
 import { checkAuth } from "../../utils/auth"
 
 const TagImageUrls = {
@@ -47,6 +47,7 @@ Page({
 		recommendList: [], // 推荐课程列表
 		weeklyLog: [], // 本周打卡记录
 		bootCampList: [], // 训练营
+		exerciseTime: 0 // 训练时间
 	},
 
 	/**
@@ -208,11 +209,17 @@ Page({
 
 		// 用户加入的课程
 		queryUserJoinedClasses().then((userJoinedClassesList) => {
+			userJoinedClassesList.forEach(classItem => {
+				classItem.kecheng.exerciseTime = calculateExerciseTime(classItem.kecheng.duration)
+			})
 			if (userJoinedClassesList.length > 0) {
 				this.setData({userJoinedClassesList})
 			} else {
 				// 推荐课程
 				queryRecommendCourseList({scene: 'zhide_kecheng_pratice'}).then((recommendList) => {
+					recommendList.forEach(recommendList => {
+						recommendList.exerciseTime = calculateExerciseTime(recommendList.duration)
+					})
 					this.setData({recommendList})
 				})
 			}
@@ -220,7 +227,10 @@ Page({
 
 		// 用户学习数据统计
 		queryUserHaveClassesInfo().then((userHaveClassesInfo) => {
-			this.setData({userHaveClassesInfo})
+			this.setData({
+				userHaveClassesInfo,
+				exerciseTime: calculateExerciseTime(userHaveClassesInfo.study_time)
+			})
 		})
 
 		// 用户最近7天的打卡记录

@@ -12,9 +12,9 @@ Page({
 		statusHeight: 0, // 状态栏高度
 		screenHeight: 0, // 设备高度
 		screenWidth: 0, // 设备宽度
-		courseInfo: {"id":1,"name":"引体向上","desc":"引体向上","share_desc":"","user_id":0,"level":1,"teacher_id":0,"category_id":0,"cover_pic":"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596451849ifkqsm.jpg","kecheng_type":3,"status":0,"rank":1,"vip_only":0,"link":"8,4,10##8,4,10##8,4,10","link_type":0,"room_id":0,"show_time":"","xiaoetong_url":"","price":0,"discount_price":0,"series_id":0,"duration":54,"calories":120,"cycle_count":1,"kecheng_meta":[{"id":8,"name":"引体向上","desc":"","meta_type":2,"teacher_id":14,"category":"fitness","link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/110d6ab9-173945b24ed/110d6ab9-173945b24ed.mp4","voice_link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/558e3a7d-173956a1808/558e3a7d-173956a1808.mp3","name_voice_link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3","cover":"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg","duration":2,"rank":3,"calories":10,"voice_type":"2_2","created_at":"2020-07-23","updated_at":"2020-07-29","deleted_at":null}],"visit_count":43,"meta_count":3,"user_grade":0,"created_at":"2020-08-03","updated_at":"2020-08-03","deleted_at":null}, // 课程信息 TODO
+		courseInfo: null, // 课程信息
 		currentActionIndex: 0, // 当前动作索引
-		actionData: [{"id":8,"name":"引体向上","desc":"","meta_type":2,"teacher_id":14,"category":"fitness","link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.qrlIxYGCmARp0df30a4e33d11fa17538eef929df6954.mp4","voice_link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.mvLw2R1aZBd6bc7474bc5a573431793328013aca9e04.mp3","name_voice_link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3","cover":"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg","duration":2,"rank":3,"calories":10,"voice_type":"2_2","created_at":"2020-07-23","updated_at":"2020-07-29","deleted_at":null,"cycleTime":"4","restTime":"10"},{"id":8,"name":"引体向上","desc":"","meta_type":2,"teacher_id":14,"category":"fitness","link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.Tdf6l99MzjHt0df30a4e33d11fa17538eef929df6954.mp4","voice_link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.dSaULQjTs7dRbc7474bc5a573431793328013aca9e04.mp3","name_voice_link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3","cover":"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg","duration":2,"rank":3,"calories":10,"voice_type":"2_2","created_at":"2020-07-23","updated_at":"2020-07-29","deleted_at":null,"cycleTime":"4","restTime":"10"},{"id":8,"name":"引体向上","desc":"","meta_type":2,"teacher_id":14,"category":"fitness","link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.fzxOXGPwghNK0df30a4e33d11fa17538eef929df6954.mp4","voice_link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.8xzdkDmG97PYbc7474bc5a573431793328013aca9e04.mp3","name_voice_link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3","cover":"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg","duration":2,"rank":3,"calories":10,"voice_type":"2_2","created_at":"2020-07-23","updated_at":"2020-07-29","deleted_at":null,"cycleTime":"4","restTime":"10"}], // 动作数据 TODO
+		actionData: null, // 动作数据
 		currentDuration: 0, // 整个课程已播放的时长
 
 		targetActionObj: null, // 正在执行的动作
@@ -29,6 +29,7 @@ Page({
 
 		mainPointAudio: null, // 要领播放器
 		mainPointAudioEventMounted: false,
+		isPlayMainPointAudioPlaying: false, // 要领语音是否正在播放
 		didPlayMainPointAudioInCurrentTargetAction: false, // 是否在当前动作生命周期中播放过要领语音
 
 		isRunning: true, // 动作是否正在进行
@@ -70,9 +71,9 @@ Page({
 
 		if (!$notNull(eventChannel)) {
 			// TODO 调试代码记得删除
-			this.setData({
-				targetActionObj: this.data.actionData[0]
-			})
+			// this.setData({
+			// 	targetActionObj: this.data.actionData[0]
+			// })
 			return
 		}
 
@@ -109,11 +110,14 @@ Page({
 		// 要领
 		this.data.mainPointAudio = wx.createInnerAudioContext()
 		// 口令
-		this.data.commandAudio = wx.getBackgroundAudioManager()
-		this.data.commandAudio.title = 'command'
+		// this.data.commandAudio = wx.getBackgroundAudioManager()
+		// this.data.commandAudio.title = 'command'
+		this.data.commandAudio = wx.createInnerAudioContext()
+
 		// 时间口令
-		this.data.countDownAudio = wx.getBackgroundAudioManager()
-		this.data.countDownAudio.title = 'countDown'
+		// this.data.countDownAudio = wx.getBackgroundAudioManager()
+		// this.data.countDownAudio.title = 'countDown'
+		this.data.countDownAudio = wx.createInnerAudioContext()
 
 		// 启动
 		this.start()
@@ -123,31 +127,35 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-
+		console.error('------ on show ------')
 	},
 
 	/**
 	 * 生命周期函数--监听页面隐藏
 	 */
 	onHide: function () {
-		this.pauseAction()
+		if (this.data.isRunning) {
+			this.pauseAction()
+		}
 	},
 
 	/**
 	 * 生命周期函数--监听页面卸载
 	 */
 	onUnload: function () {
-		this.stopAllAction()
+		console.error("onUnload")
 		// 销毁所有音视频
 		this.data.mainPointAudio && this.data.mainPointAudio.destroy()
+		this.data.commandAudio && this.data.commandAudio.destroy()
+		this.data.countDownAudio && this.data.countDownAudio.destroy()
 
-		this.data.commandAudio.url = undefined
-		this.data.commandAudio.paused = true
-		this.data.commandAudio.currentTime = 0
-
-		this.data.countDownAudio.url = undefined
-		this.data.countDownAudio.paused = true
-		this.data.commandAudiocountDownAudio = 0
+		// this.data.commandAudio.url = undefined
+		// this.data.commandAudio.paused = true
+		// this.data.commandAudio.currentTime = 0
+		//
+		// this.data.countDownAudio.url = undefined
+		// this.data.countDownAudio.paused = true
+		// this.data.commandAudiocountDownAudio = 0
 	},
 
 	/**
@@ -174,10 +182,7 @@ Page({
 	 * 秀一下
 	 */
 	show() {
-		wx.navigateBack()
-		// wx.redirectTo({
-		// 	url: "/subCourse/practiceDetail/practiceDetail?courseId=" + this.data.courseInfo.id
-		// })
+		// wx.navigateBack()
 	},
 	/**
 	 * 在休息层切换上一个动作
@@ -201,15 +206,17 @@ Page({
 	 * 退出练习
 	 */
 	exit() {
+		let self = this
 		wx.showModal({
 			title: "提示",
 			content: "是否立即推出训练",
 			confirmText: "确定",
 			success(res) {
 				if (res.confirm) {
-					wx.redirectTo({
-						url: "/subCourse/practiceDetail/practiceDetail?courseId=" + this.data.courseInfo.id
-					})
+					wx.navigateBack()
+					// wx.redirectTo({
+					// 	url: "/subCourse/practiceDetail/practiceDetail?courseId=" + self.data.courseInfo.id
+					// })
 				} else if (res.cancel) {
 					console.log('取消')
 				}
@@ -307,7 +314,10 @@ Page({
 		if (this.data.isRunning) {
 			this.setData({ didPauseRecordGlobalTime: true })
 			this.data.video.pause()
-			this.data.mainPointAudio && this.data.mainPointAudio.pause()
+			// [要领播放中]&当前动作未播放过[要领]，则暂停
+			if (this.data.isPlayMainPointAudioPlaying && !this.data.didPlayMainPointAudioInCurrentTargetAction) {
+				this.data.mainPointAudio && this.data.mainPointAudio.pause()
+			}
 			if (this.data.targetActionObj.meta_type == 2) {
 				this.data.commandAudio.pause()
 			} else {
@@ -316,7 +326,10 @@ Page({
 		} else {
 			this.setData({ didPauseRecordGlobalTime: false })
 			this.data.video.play()
-			this.data.mainPointAudio && this.data.mainPointAudio.play()
+			// [要领播放中]&当前动作未播放过[要领]，则继续播放
+			if (this.data.isPlayMainPointAudioPlaying && !this.data.didPlayMainPointAudioInCurrentTargetAction) {
+				this.data.mainPointAudio && this.data.mainPointAudio.play()
+			}
 			if (this.data.targetActionObj.meta_type == 2) {
 				this.data.commandAudio.play()
 			} else {
@@ -370,6 +383,9 @@ Page({
 		this.data.mainPointAudio.src = voiceLink
 		this.data.mainPointAudio.play()
 
+		// 正在播放要领
+		this.setData({isPlayMainPointAudioPlaying: true})
+
 		if (this.data.mainPointAudioEventMounted) return
 		this.setData({mainPointAudioEventMounted: true})
 
@@ -377,9 +393,9 @@ Page({
 			// 还原口令音量
 			self.data.commandAudio.volume = 1
 			self.data.countDownAudio.volume = 1
-			// 标示当前动作已经播放过要领
 			self.setData({
-				didPlayMainPointAudioInCurrentTargetAction: true
+				didPlayMainPointAudioInCurrentTargetAction: true, // 标示当前动作已经播放过要领
+				isPlayMainPointAudioPlaying: false // 释放要领正在播放中的状态
 			})
 		})
 	},
@@ -391,6 +407,7 @@ Page({
 		const self = this
 
 		this.data.countDownAudio.src = LocaleVoice.lv10
+		this.data.countDownAudio.play()
 
 		this.setData({targetActionIndex: this.data.targetActionIndex + 1})
 
@@ -422,6 +439,7 @@ Page({
 		const self = this
 
 		this.data.commandAudio.src = commands[this.data.targetActionIndex % commands.length]
+		this.data.commandAudio.play()
 
 		this.setData({targetActionIndex: this.data.targetActionIndex + 1})
 

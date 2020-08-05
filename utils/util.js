@@ -1,22 +1,9 @@
 import md5 from 'md5'
-import {
-	GLOBAL_KEY,
-	ROOT_URL,
-	URL,
-	SHARE_PARAMS,
-	WeChatLiveStatus
-} from '../lib/config'
-import {
-	createOrder
-} from "../api/mine/payVip"
-import {
-	getWatchLiveAuth,
-	statisticsWatchNo
-} from "../api/live/course"
+import { GLOBAL_KEY, ROOT_URL, URL, WeChatLiveStatus } from '../lib/config'
+import { createOrder } from "../api/mine/payVip"
+import { getWatchLiveAuth, statisticsWatchNo } from "../api/live/course"
 import request from "../lib/request"
-import {
-	getUserInfo
-} from "../api/mine/index"
+import { getUserInfo } from "../api/mine/index"
 
 const livePlayer = requirePlugin('live-player-plugin')
 
@@ -637,3 +624,59 @@ export const simpleDuration = (duration, type) => {
 	}
 	return days + hours + minutes + seconds
 }
+
+/**
+ * 计算训练时长
+ * @param times
+ */
+export const calculateExerciseTime = (times) => {
+	times = +times
+	let minutes = times / 60 | 0
+	let seconds = times % 60
+	if (times >= 60) {
+		return minutes
+	} else {
+		return seconds
+	}
+}
+
+/**
+ * 查询微信授权状态
+ * @param authKey
+ * @returns {Promise<unknown>}
+ */
+export const queryWxAuth = function(authKey = WX_AUTH_TYPE.userInfo) {
+	return new Promise((resolve, reject) => {
+		wxGetSetting(authKey).then((authResult = {}) => {
+			if (!authResult[authKey]) {
+				wx.authorize({
+					scope: authKey,
+					success() {
+						// 已同意
+						resolve();
+					},
+					fail() {
+						// 未同意
+						reject();
+					}
+				});
+			}
+		});
+	});
+};
+
+/**
+ * 微信授权记录检查
+ */
+export const wxGetSetting = function(authKey) {
+	return new Promise((resolve, reject) => {
+		wx.getSetting({
+			success({ authSetting }) {
+				resolve(authSetting[authKey]);
+			},
+			fail(e) {
+				reject(e);
+			}
+		});
+	});
+};

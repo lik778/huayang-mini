@@ -26,7 +26,7 @@
 			"outputPath": ""
 		},
 		"useIsolateContext": true,
-		"useCompilerModule": true,
+		"useCompilerModule": false,
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
@@ -194,6 +194,27 @@
 					"name": "pages/practice/practice",
 					"pathName": "pages/practice/practice",
 					"query": "courseId=1",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "subCourse/actionPost/actionPost",
+					"pathName": "subCourse/actionPost/actionPost",
+					"query": "invite_user_id=5",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "subCourse/actionPost/actionPost",
+					"pathName": "subCourse/actionPost/actionPost",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "subCourse/actionPost/actionPost",
+					"pathName": "subCourse/actionPost/actionPost",
+					"query": "",
 					"scene": null
 				}
 			]

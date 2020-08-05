@@ -9,7 +9,7 @@
         <view class="course-level">
             <text>{{CourseLevels[courseInfoObj.level]}}</text>
             <text class="dot">·</text>
-            <text>{{courseInfoObj.duration}}秒</text>
+            <text>{{courseInfoObj.exerciseTime}}{{courseInfoObj.duration >= 60 ? "分钟" : "秒"}}</text>
             <text class="dot">·</text>
             <text>{{actionQueue.length}}个动作</text>
         </view>
