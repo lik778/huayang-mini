@@ -128,9 +128,9 @@ Page({
 		// 获取训练营课程详情
 		getBootCampCourseInfo({kecheng_id: this.data.courseId}).then((response) => {
 			// 检查用户等级
-			if (response.level > (this.data.accountInfo.user_grade || 0)) {
+			if (response.user_grade > (this.data.accountInfo.user_grade || 0)) {
 				this.setData({
-					btnText: `Lv ${response.level} 等级开启`,
+					btnText: `Lv ${response.user_grade} 等级开启`,
 					isDownloading: true // 禁止用户点击按钮
 				})
 			}
@@ -184,7 +184,7 @@ Page({
 		}
 
 		// 检查用户等级
-		if (this.data.courseInfoObj.level > this.data.accountInfo.user_grade) {
+		if (this.data.courseInfoObj.user_grade > this.data.accountInfo.user_grade) {
 			this.setData({
 				didShowAlert: true
 			})
