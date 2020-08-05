@@ -98,5 +98,5 @@
 		</view>
 	</view>
 	<!-- 提升经验值弹窗 -->
-	<levelAlert number="{{gradeData.experNum}}" hasGrade="{{gradeData.upgrade}}" didShow="{{gradeData.showLevelAlert}}" wx:if="{{gradeData.showLevelAlert}}"></levelAlert>
+	<levelAlert text02="签到成功" number="{{gradeData.experNum}}" hasGrade="{{gradeData.upgrade}}" didShow="{{gradeData.showLevelAlert}}" wx:if="{{gradeData.showLevelAlert}}"></levelAlert>
 </view>
