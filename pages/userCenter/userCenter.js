@@ -1,28 +1,11 @@
 // pages/userCenter/userCenter.js
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { GLOBAL_KEY } from "../../lib/config"
 import request from "../../lib/request"
-import {
-  getTaskList,
-  taskCheckIn,
-  getSignData,
-  needUpdateUserInfo,
-  increaseExp
-} from "../../api/course/index"
-import {
-  getUserInfo
-} from "../../api/mine/index"
-import {
-  getLocalStorage,
-  setLocalStorage
-} from "../../utils/util"
-import {
-  checkAuth
-} from "../../utils/auth"
-import {
-  set
-} from "mobx-miniprogram"
+import { getSignData, getTaskList, increaseExp, needUpdateUserInfo, taskCheckIn } from "../../api/course/index"
+import { getUserInfo } from "../../api/mine/index"
+import { getLocalStorage, setLocalStorage } from "../../utils/util"
+import { checkAuth } from "../../utils/auth"
+
 Page({
 
   /**
@@ -238,7 +221,6 @@ Page({
       this.getUserInfo()
       this.getSignData()
       this.needUpdateUserInfo()
-
     })
 
     this.getTaskList()

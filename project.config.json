@@ -19,15 +19,15 @@
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
+		"compileHotReLoad": false,
 		"babelSetting": {
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
 		},
+		"useIsolateContext": true,
 		"useCompilerModule": false,
-		"userConfirmedUseCompilerModuleSwitch": false,
-		"compileHotReLoad": false,
-		"useIsolateContext": true
+		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.12.0",
@@ -194,6 +194,27 @@
 					"name": "pages/practice/practice",
 					"pathName": "pages/practice/practice",
 					"query": "courseId=1",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "subCourse/actionPost/actionPost",
+					"pathName": "subCourse/actionPost/actionPost",
+					"query": "invite_user_id=5",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "subCourse/actionPost/actionPost",
+					"pathName": "subCourse/actionPost/actionPost",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "subCourse/actionPost/actionPost",
+					"pathName": "subCourse/actionPost/actionPost",
+					"query": "",
 					"scene": null
 				}
 			]

@@ -27,7 +27,9 @@
     "components/levelAlert/levelAlert",
     "pages/webViewCommon/webViewCommon"
   ],
-  "requiredBackgroundModes": ["audio"],
+  "requiredBackgroundModes": [
+    "audio"
+  ],
   "subpackages": [
     {
       "root": "mine",
@@ -66,7 +68,8 @@
         "actionPage/actionPage",
         "practiceManage/practiceManage",
         "campDetail/campDetail",
-        "joinCamp/joinCamp"
+        "joinCamp/joinCamp",
+        "actionPost/actionPost"
       ]
     }
   ],

@@ -1,5 +1,5 @@
 import { getBootCampCourseInfo, getRecentVisitorList, joinCourseInGuide } from "../../api/course/index"
-import { $notNull, getLocalStorage } from "../../utils/util"
+import { $notNull, calculateExerciseTime, getLocalStorage } from "../../utils/util"
 import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 
 Page({
@@ -134,6 +134,7 @@ Page({
 					isDownloading: true // 禁止用户点击按钮
 				})
 			}
+			response.exerciseTime = calculateExerciseTime(response.duration)
 			this.setData({
 				courseInfoObj: {...response},
 				actionQueue: this.cookCourseMeta(response)
@@ -218,7 +219,7 @@ Page({
 
 			// 加入课程
 			joinCourseInGuide({kecheng_id_str: this.data.courseId})
-			
+
 			wx.navigateTo({
 				url: "/subCourse/actionPage/actionPage",
 				success(res) {

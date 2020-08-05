@@ -1,7 +1,7 @@
 <view class="action-nav-bar" style="padding-top:{{statusBarHeight}}px;background:{{color === '' ? '#fff' : color}};">
     <view class="back-module" bind:tap="checkoutMute">
         <view class="back-icon" wx:if="{{!hideIcon}}">
-            <!-- <cover-image src="{{didMute ? '../../assets/images/common/mute.png' : '../../assets/images/common/music.png'}}"></cover-image>-->
+            <!--<cover-image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596548523dZPMSN.jpg"></cover-image>-->
         </view>
     </view>
     <cover-view class="title" style="color:{{titleColor}}">{{title}}</cover-view>
