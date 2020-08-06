@@ -104,7 +104,6 @@ Page({
   },
   // 签到
   checkin(e) {
-    console.log(e)
     let experNumData = Number(e.currentTarget.dataset.type.textData1.split("+")[1].split("成长值")[0])
     taskCheckIn({
       open_id: getLocalStorage(GLOBAL_KEY.openId),

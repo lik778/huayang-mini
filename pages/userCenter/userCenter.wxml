@@ -56,7 +56,7 @@
 				<view class="task-item-right" wx:if="{{item.TaskType==='task_checkin'&&!hasCheckIn}}" bindtap="checkin" data-type="{{item}}">
 					签到
 				</view>
-				<view class="task-item-right-one" wx:if="{{item.TaskType==='task_checkin'&&hasCheckIn}}" bindtap="checkin" data-type="{{item}}">
+				<view class="task-item-right-one" wx:if="{{item.TaskType==='task_checkin'&&hasCheckIn}}">
 					已签到
 				</view>
 				<view class="task-item-right" wx:if="{{item.TaskType==='task_pratice'}}" bindtap="pratice">
