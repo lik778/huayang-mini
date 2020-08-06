@@ -345,8 +345,11 @@ Page({
 	playTempBgAudio(link) {
 		let audio = this.data.bgAudio
 		audio.title = "花样百姓"
+		// 解决华为P30处理音频地址完全相同时无法正常播放问题
+		link = link + '?' + +new Date()
 		return new Promise(resolve => {
 			if (audio.src === link) {
+				audio.seek(0)
 				audio.play()
 			} else {
 				audio.src = link
