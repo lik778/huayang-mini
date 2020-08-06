@@ -125,6 +125,13 @@
 					"pathName": "pages/coopen/coopen",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "subCourse/actionPost/actionPost",
+					"pathName": "subCourse/actionPost/actionPost",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

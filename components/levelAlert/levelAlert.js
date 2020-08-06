@@ -9,7 +9,7 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    number: { type: Number, value: 0 }, // 经验值 || 等级数字
+    number: { type: Number }, // 经验值 || 等级数字
     hasGrade: { type: Number, value: false }, // false=>提升经验 true=>提升等级
     didShow: { type: Boolean, value: false },
     text02: { type:String, value: "" }, // 自定义底部文案

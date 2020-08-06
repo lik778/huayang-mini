@@ -170,7 +170,26 @@ Page({
 	 * 秀一下
 	 */
 	show() {
-		wx.navigateBack()
+		let now = new Date()
+		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
+		// 分享海报数据 TODO 先用假数据
+		let data = {
+			date: `${now.getFullYear()} ${String(now.getMonth()+1).padStart(2, "2")}/${String(now.getDate()).padStart(2, "0")}`,
+			recordNo: 120,
+			actionName: this.data.courseInfo.name,
+			avatar: accountInfo.avatar_url,
+			nickname: accountInfo.nick_name,
+			duration: this.data.globalRecordTimeText,
+			actionNo: this.data.originData.length,
+			qrCode: accountInfo.avatar_url,
+			cover: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596685775eBdlPc.jpg"
+		}
+		wx.navigateTo({
+			url: '/subCourse/actionPost/actionPost',
+			success(res) {
+				res.eventChannel.emit('transmitPracticeData', JSON.stringify(data))
+			}
+		})
 	},
 	/**
 	 * 在休息层切换上一个动作
@@ -499,7 +518,7 @@ Page({
 					this.setData({
 						didShowLevelAlert: true,
 						hasGrade: data.has_grade,
-						levelNumber: data.has_grade ? data.level : data.experience
+						levelNumber: data.has_grade ? data.level : 10
 					})
 				}
 			})
