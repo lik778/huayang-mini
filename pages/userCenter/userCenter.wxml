@@ -25,7 +25,7 @@
 		</view>
 	</view>
 	<!-- 完善个人资料 -->
-	<view class="full-message" wx:if="{{showMessage}}">
+	<view class="full-message" wx:if="{{!showMessage}}">
 		<view class="full-message-cover-one"></view>
 		<view class="full-message-cover"></view>
 		<view class="full-message-left">

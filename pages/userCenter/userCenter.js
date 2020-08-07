@@ -143,15 +143,6 @@ Page({
       url: '/pages/practice/practice',
     })
   },
-  // 邀请
-  invite() {
-    bxPoint("mine_task", {task_type: "toInvite"}, false)
-    increaseExp({
-      task_type: 'task_invite'
-    }).then(res => {
-      this.getUserSingerInfo()
-    })
-  },
   // 获取个人信息
   getUserInfo() {
     this.setData({
