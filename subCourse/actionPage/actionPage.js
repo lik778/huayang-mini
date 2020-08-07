@@ -195,7 +195,8 @@ Page({
 			duration: this.data.globalRecordTimeText,
 			actionNo: this.data.originData.length,
 			qrCode,
-			cover
+			cover,
+			keChengId: this.data.courseInfo.id
 		}
 		wx.navigateTo({
 			url: '/subCourse/actionPost/actionPost',

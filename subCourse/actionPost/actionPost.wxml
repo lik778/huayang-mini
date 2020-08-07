@@ -1,4 +1,7 @@
 <view class="action-post">
+    <view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+        <naviBar title="" color="#37383B" forceGoBackIndex="{{true}}" forceGoBackPath="{{backPath}}"></naviBar>
+    </view>
     <view class="post">
         <view class="top-lay" style="background-image: url('{{postData.cover}}');">
             <view class="date">

@@ -9,6 +9,8 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
+		backPath: "",
+		statusHeight: 0,
 		postData: null,
 		_invokeSaveToLocalAction: false, // 用户是否已经点击保存图片到本地
 		_didDrawCanvasDone: false // 绘制canvas是否已经结束
@@ -19,11 +21,15 @@ Page({
 	 */
 	onLoad: function (options) {
 		const self = this
+		this.setData({
+			statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
+		})
 		const eventChannel = this.getOpenerEventChannel()
 		if ($notNull(eventChannel)) {
 			eventChannel.on('transmitPracticeData', function (data) {
 				self.setData({
-					postData: JSON.parse(data)
+					postData: JSON.parse(data),
+					backPath: `/pages/practice/practice`
 				})
 				let timer = setTimeout(() => {
 					self.initial()

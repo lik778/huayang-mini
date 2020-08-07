@@ -21,6 +21,10 @@ Component({
     forceGoBackIndex: {
       type: Boolean,
       value: false
+    },
+    forceGoBackPath: {
+      type: String,
+      value: ""
     }
   },
 
@@ -48,9 +52,15 @@ Component({
     },
     // 返回首页
     backIndex() {
-      wx.switchTab({
-        url: '/pages/discovery/discovery',
-      })
+      if (this.data.forceGoBackPath) {
+        wx.switchTab({
+          url: this.data.forceGoBackPath
+        })
+      } else {
+        wx.switchTab({
+          url: '/pages/discovery/discovery',
+        })
+      }
     }
   },
   attached() {
