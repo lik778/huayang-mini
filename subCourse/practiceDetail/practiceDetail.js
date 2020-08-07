@@ -1,4 +1,9 @@
-import { getBootCampCourseInfo, getRecentVisitorList, joinCourseInGuide } from "../../api/course/index"
+import {
+	createPracticeRecordInToday,
+	getBootCampCourseInfo,
+	getRecentVisitorList,
+	joinCourseInGuide
+} from "../../api/course/index"
 import { $notNull, calculateExerciseTime, getLocalStorage } from "../../utils/util"
 import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
@@ -190,6 +195,7 @@ Page({
 	// 开始练习
 	startPractice() {
 		bxPoint("practice_begin", {}, false)
+		createPracticeRecordInToday()
 		// 检查权限
 		if (!$notNull(this.data.accountInfo)) {
 			wx.navigateTo({
