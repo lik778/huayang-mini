@@ -1,6 +1,7 @@
 // subCourse/actionPost/actionPost.js
-import { $notNull, queryWxAuth, toast } from "../../utils/util"
-import { WX_AUTH_TYPE } from "../../lib/config"
+import { $notNull, getLocalStorage, queryWxAuth, toast } from "../../utils/util"
+import { GLOBAL_KEY, WX_AUTH_TYPE } from "../../lib/config"
+import bxPoint from "../../utils/bxPoint"
 
 Page({
 
@@ -8,18 +9,7 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
-		// TODO
-		postData: {
-			"date": "2020 08/06",
-			"recordNo": 120,
-			"actionName": "引体向上",
-			"avatar": "https://wx.qlogo.cn/mmopen/vi_32/Fprqptuz5nQ2ht960UVF06F69SicsmMicJiaAo9lCYPD9meq7jpXlzuEylxaO3iatztw4UL9CstpKkJicCqE1pcCnicA/132",
-			"nickname": "Derisfe",
-			"duration": "01:28",
-			"actionNo": 3,
-			"qrCode": "https://wx.qlogo.cn/mmopen/vi_32/Fprqptuz5nQ2ht960UVF06F69SicsmMicJiaAo9lCYPD9meq7jpXlzuEylxaO3iatztw4UL9CstpKkJicCqE1pcCnicA/132",
-			cover: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596685775eBdlPc.jpg"
-		},
+		postData: null,
 		_invokeSaveToLocalAction: false, // 用户是否已经点击保存图片到本地
 		_didDrawCanvasDone: false // 绘制canvas是否已经结束
 	},
@@ -32,14 +22,15 @@ Page({
 		const eventChannel = this.getOpenerEventChannel()
 		if ($notNull(eventChannel)) {
 			eventChannel.on('transmitPracticeData', function (data) {
-				self.postData = data
+				self.setData({
+					postData: JSON.parse(data)
+				})
+				let timer = setTimeout(() => {
+					self.initial()
+					clearTimeout(timer)
+				}, 20)
 			})
 		}
-
-		// TODO 移动到 eventChannel cb中
-		setTimeout(() => {
-			this.initial()
-		}, 20)
 	},
 
 	/**
@@ -87,16 +78,12 @@ Page({
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
+		bxPoint("course_clock", {type: "clock"}, false)
+		let data = getLocalStorage(GLOBAL_KEY.userId)
 		return {
 			title: "跟着花样一起变美，变自信",
-			path: "/pages/practice/practice",
-			success(res) {
-				toast('恭喜您，分享成功～');
-			},
-			fail() {
-				toast('分享失败');
-			}
-		};
+			path: `/pages/auth/auth?invite_user_id=${data}`
+		}
 	},
 	// 绘制直线
 	drawLine(context, color, height, beginX, beginY, endX, endY) {
@@ -162,7 +149,7 @@ Page({
 		ctx.save()
 		ctx.rect(0, 0, 300, 480)
 		ctx.setFillStyle('#fff')
-		ctx.fill();
+		ctx.fill()
 		ctx.restore()
 		// 背景
 		ctx.drawImage(coverImage, 0, 0, canvasWidth, canvasHeight)
@@ -243,6 +230,7 @@ Page({
 		this.drawCanvas()
 	},
 	saveToLocal() {
+		bxPoint("course_clock", {type: "hold"}, false)
 		if (!this.data._didDrawCanvasDone) {
 			wx.showLoading({
 				title: '海报生成中...',

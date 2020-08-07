@@ -1,6 +1,23 @@
 import request from "../../lib/request"
-import { GLOBAL_KEY, URL } from "../../lib/config"
-import { getLocalStorage, setLocalStorage, toast } from "../../utils/util"
+import { URL } from "../../lib/config"
+
+// 获取结构化练习海报背景图
+export function queryPunchCardBg() {
+	return new Promise(resolve => {
+		request._get(URL.punchCardBgImage).then(({data}) => {
+			resolve(data)
+		})
+	})
+}
+
+// 获取结构化练习海报二维码
+export function queryPunchCardQrCode(params) {
+	return new Promise(resolve => {
+		request._get(URL.punchCardQrCode, params).then(({data}) => {
+			resolve(data)
+		})
+	})
+}
 
 // 获取训练营课程详情
 export function getBootCampCourseInfo(params) {
@@ -321,7 +338,6 @@ export function increaseExp(params) {
 		})
 	})
 }
-
 
 
 

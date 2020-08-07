@@ -1,16 +1,9 @@
 // mine/mineOrder/mineOrder.js
-import {
-  getLocalStorage
-} from "../../utils/util"
-import {
-  getMineOrder
-} from "../../api/mine/index"
-import {
-  GLOBAL_KEY
-} from "../../lib/config.js"
-import {
-  getYouZanAppId
-} from "../../api/mall/index"
+import { getLocalStorage } from "../../utils/util"
+import { getMineOrder } from "../../api/mine/index"
+import { GLOBAL_KEY } from "../../lib/config.js"
+import { getYouZanAppId } from "../../api/mall/index"
+import bxPoint from "../../utils/bxPoint"
 
 Page({
 
@@ -31,6 +24,7 @@ Page({
   },
   // 切换tab
   changeTab(e) {
+    bxPoint("order_tab", {tab: e.currentTarget.dataset.index == 1 ? "goods" : "camp"}, false)
     this.setData({
       curentIndex: e.currentTarget.dataset.index
     })
@@ -95,6 +89,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    bxPoint("applets_order", {from_uid: options.invite_user_id})
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })

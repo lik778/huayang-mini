@@ -13,6 +13,7 @@ import { CourseLevels } from "../../lib/config"
 import dayjs from "dayjs"
 import { $notNull, calculateExerciseTime } from "../../utils/util"
 import { checkAuth } from "../../utils/auth"
+import bxPoint from "../../utils/bxPoint"
 
 const TagImageUrls = {
 	// done 今日完成
@@ -47,6 +48,7 @@ Page({
 		recommendList: [], // 推荐课程列表
 		weeklyLog: [], // 本周打卡记录
 		bootCampList: [], // 训练营
+		currentBannerItem: 0,
 		exerciseTime: 0 // 训练时间
 	},
 
@@ -54,6 +56,7 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
+		bxPoint("applets_practice", {from_uid: options.invite_user_id})
 	},
 
 	/**
@@ -115,6 +118,17 @@ Page({
 	onShareAppMessage: function () {
 
 	},
+	// 处理轮播点击事件
+	handleSwiperTap(e) {
+		// console.log(e)
+		bxPoint("applets_banner", {position: 'page/practice/practice'}, false)
+	},
+	// swiper切换
+	changeSwiperIndex(e) {
+		this.setData({
+			currentBannerItem: e.detail.current
+		})
+	},
 	// 处理点击课程事件
 	handleCourseTap(e) {
 		wx.navigateTo({
@@ -126,6 +140,7 @@ Page({
 		let item = e.currentTarget.dataset.item
 		// 创建用户当日练习记录
 		createPracticeRecordInToday()
+		bxPoint("practice_start", {}, false)
 		console.log(item)
 		switch (item.type) {
 			case 'kecheng': {
@@ -183,6 +198,7 @@ Page({
 	},
 	// 发现页
 	goToDiscovery() {
+		bxPoint("parctice_choose", {}, false)
 		wx.switchTab({
 			url: '/pages/discovery/discovery'
 		})

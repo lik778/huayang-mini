@@ -1,14 +1,38 @@
 @import "../../assets/css/common.wxss";
 
 .practice {
+    position: relative;
     padding: 15rpx 30rpx 150rpx;
 }
 /*banner*/
 .banner {
     overflow: hidden;
     width: 100%;
-    margin-bottom: 80rpx;
+    height: 320rpx;
+    margin-bottom: 100rpx;
     border-radius: 8rpx;
+}
+.swiper-item {
+    height: inherit;
+}
+.swiper-dot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 356rpx;
+    left: 0;
+    right: 0;
+}
+.swiper-dot-item {
+    width: 22rpx;
+    height: 8rpx;
+    border-radius: 4rpx;
+    background: rgba(216, 216, 216, 1);
+    margin-right: 8rpx;
+}
+.active {
+    background: #3A3C48;
 }
 .banner image {
     width: inherit;

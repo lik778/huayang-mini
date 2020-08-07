@@ -1,18 +1,9 @@
 // 加入训练营
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  joinCamp,
-  getHasJoinCamp,
-  getCampDetail
-} from "../../api/course/index"
-import {
-  getLocalStorage,
-  getTodayDate,
-  payCourse,
-  manageWeek
-} from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
+import { getCampDetail, getHasJoinCamp, joinCamp } from "../../api/course/index"
+import { getLocalStorage, payCourse } from "../../utils/util"
+import bxPoint from "../../utils/bxPoint"
+
 Page({
 
   /**
@@ -56,6 +47,7 @@ Page({
   },
   // 加入训练营
   joinCamp() {
+    bxPoint("camp_join", {}, false)
     joinCamp({
       open_id: getLocalStorage(GLOBAL_KEY.openId),
       // open_id:'oG8Rd5Zxr7cjV6tUdraUDdsOSS8w',
@@ -89,9 +81,7 @@ Page({
     })
   },
   // 集中处理支付回调
-  backFun({
-    type
-  }) {
+  backFun({ type }) {
     if (type === 'fail') {
       wx.showToast({
         title: '支付失败',
@@ -140,9 +130,6 @@ Page({
     //   }
     // }
     // pushTime = endTime.split("-")[1] + "月" + endTime.split("-")[2] + "日"
-
-
-
   },
   /**
    * 生命周期函数--监听页面加载
@@ -150,6 +137,8 @@ Page({
   onLoad: function (options) {
     // id代表训练营ID
     this.checkCamp(options.id)
+
+    bxPoint("camp_introduce", {from_uid: options.from_uid})
   },
 
   /**

@@ -1,6 +1,7 @@
 import { getBootCampCourseInfo, getRecentVisitorList, joinCourseInGuide } from "../../api/course/index"
 import { $notNull, calculateExerciseTime, getLocalStorage } from "../../utils/util"
 import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
+import bxPoint from "../../utils/bxPoint"
 
 Page({
 	/**
@@ -32,6 +33,8 @@ Page({
 			screenWidth: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth,
 			accountInfo
 		})
+
+		bxPoint("course_details", {from_uid: options.invite_user_id})
 	},
 
 	/**
@@ -80,7 +83,11 @@ Page({
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
-
+		let data = getLocalStorage(GLOBAL_KEY.userId)
+		return {
+			title: "跟着花样一起变美，变自信",
+			path: `/pages/auth/auth?invite_user_id=${data}`
+		}
 	},
 
 	goToTask() {
@@ -174,8 +181,15 @@ Page({
 		return actionAry
 	},
 
+	// 处理分享按钮点击事件
+	handleShareTap() {
+		console.log("分享给好友");
+		bxPoint("course_share", {}, false)
+	},
+
 	// 开始练习
 	startPractice() {
+		bxPoint("practice_begin", {}, false)
 		// 检查权限
 		if (!$notNull(this.data.accountInfo)) {
 			wx.navigateTo({

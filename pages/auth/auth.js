@@ -87,7 +87,7 @@ Page({
 					// 1=>需要引导，2=>不需要引导
 					if (+data === 1) {
 						wx.navigateTo({
-							url: "/pages/coopen/coopen"
+							url: "/pages/coopen/coopen?invite_user_id=" + this.data.invite_user_id
 						})
 					} else {
 						wx.switchTab({
@@ -174,5 +174,12 @@ Page({
 	 */
 	onReachBottom: function () {
 
+	},
+	onShareAppMessage: function () {
+		let data = getLocalStorage(GLOBAL_KEY.userId)
+		return {
+			title: "跟着花样一起变美，变自信",
+			path: `/pages/auth/auth?invite_user_id=${data}`
+		}
 	}
 })

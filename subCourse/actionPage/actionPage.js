@@ -2,7 +2,15 @@
 import { $notNull, getLocalStorage } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
 import { LocaleVoice, voices_ary, voices_key, voices_number } from "../../lib/voices"
-import { completePractice, increaseExp, recordPracticeBehavior } from "../../api/course/index"
+import {
+	completePractice,
+	increaseExp,
+	queryPunchCardBg,
+	queryPunchCardQrCode,
+	queryUserHaveClassesInfo,
+	recordPracticeBehavior
+} from "../../api/course/index"
+import bxPoint from "../../utils/bxPoint"
 
 Page({
 	/**
@@ -57,6 +65,8 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: async function (options) {
+		bxPoint("course_play", {from_uid: options.invite_user_id})
+
 		const self = this
 		const eventChannel = this.getOpenerEventChannel()
 
@@ -98,7 +108,6 @@ Page({
 				user_id: getLocalStorage(GLOBAL_KEY.userId)
 			})
 		})
-
 
 		// 视频实例
 		this.data.video = wx.createVideoContext("actionVideo", this)
@@ -169,20 +178,24 @@ Page({
 	/**
 	 * 秀一下
 	 */
-	show() {
+	async show() {
+		bxPoint("course_show", {practice_time: this.data.globalRecordTiming}, false)
 		let now = new Date()
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
-		// 分享海报数据 TODO 先用假数据
+		let cover = await queryPunchCardBg()
+		let qrCode = await queryPunchCardQrCode({kecheng_id: this.data.courseInfo.id})
+		let userHaveClassesInfo = await queryUserHaveClassesInfo()
+		// 分享海报数据
 		let data = {
-			date: `${now.getFullYear()} ${String(now.getMonth()+1).padStart(2, "2")}/${String(now.getDate()).padStart(2, "0")}`,
-			recordNo: 120,
+			date: `${now.getFullYear()} ${String(now.getMonth() + 1).padStart(2, "2")}/${String(now.getDate()).padStart(2, "0")}`,
+			recordNo: userHaveClassesInfo.kecheng_date_count,
 			actionName: this.data.courseInfo.name,
 			avatar: accountInfo.avatar_url,
 			nickname: accountInfo.nick_name,
 			duration: this.data.globalRecordTimeText,
 			actionNo: this.data.originData.length,
-			qrCode: accountInfo.avatar_url,
-			cover: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596685775eBdlPc.jpg"
+			qrCode,
+			cover
 		}
 		wx.navigateTo({
 			url: '/subCourse/actionPost/actionPost',
@@ -223,7 +236,7 @@ Page({
 		let self = this
 		wx.showModal({
 			title: "提示",
-			content: "是否立即推出训练",
+			content: "是否立即退出训练",
 			confirmText: "确定",
 			success(res) {
 				if (res.confirm) {
@@ -533,6 +546,9 @@ Page({
 			targetActionObj: nextActionObj,
 			targetActionIndex: 0,
 		})
+		if ($notNull(nextActionObj)) {
+			bxPoint("course_operation", {event: isPrevious ? "previous" : "next", action_num: nextActionObj.name}, false)
+		}
 	},
 	// 开始课程演示
 	startCourse(data) {

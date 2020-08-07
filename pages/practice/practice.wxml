@@ -1,14 +1,17 @@
 <view class="practice">
     <swiper class="banner">
-        <swiper-item wx:for="{{bannerList}}" wx:key="index">
+        <swiper-item class="swiper-item" current="{{cureent}}" bindchange="changeSwiperIndex" bind:tap="handleSwiperTap" wx:for="{{bannerList}}" wx:key="index">
             <image mode="aspectFill" src="{{item.pic_url}}"></image>
         </swiper-item>
     </swiper>
+    <view class="swiper-dot">
+        <view wx:for="{{bannerList}}" wx:key="index" class="{{currentBannerItem===index?'active swiper-dot-item':'swiper-dot-item'}}"></view>
+    </view>
 
     <view class="support-layer">
         <view class="title">练习时长</view>
         <view class="exercise-time">
-            <text class="time">{{exerciseTime}}</text>
+            <text class="time">{{exerciseTime || 0}}</text>
             <text class="unit">{{userHaveClassesInfo.study_time >= 60 ? "分钟" : "秒"}}</text>
         </view>
     </view>
