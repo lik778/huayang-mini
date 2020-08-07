@@ -9,10 +9,11 @@ import {
 	queryUserJoinedClasses,
 	queryUserRecentPracticeLog
 } from "../../api/course/index"
-import { CourseLevels } from "../../lib/config"
+import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
-import { $notNull, calculateExerciseTime } from "../../utils/util"
+import { $notNull, calculateExerciseTime, getLocalStorage } from "../../utils/util"
 import { checkAuth } from "../../utils/auth"
+import bxPoint from "../../utils/bxPoint"
 
 const TagImageUrls = {
 	// done 今日完成
@@ -47,6 +48,7 @@ Page({
 		recommendList: [], // 推荐课程列表
 		weeklyLog: [], // 本周打卡记录
 		bootCampList: [], // 训练营
+		currentBannerItem: 0,
 		exerciseTime: 0 // 训练时间
 	},
 
@@ -54,6 +56,7 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
+		bxPoint("applets_practice", {from_uid: options.invite_user_id})
 	},
 
 	/**
@@ -65,7 +68,7 @@ Page({
 	/**
 	 * 生命周期函数--监听页面显示
 	 */
-	onShow: async function () {
+	onShow: function () {
 		if (typeof this.getTabBar === 'function' &&
 			this.getTabBar()) {
 			this.getTabBar().setData({
@@ -113,7 +116,23 @@ Page({
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
+		let data = getLocalStorage(GLOBAL_KEY.userId)
 
+		return {
+			title: '跟着花样一起变美，变自信',
+			path: `/pages/auth/auth?invite_user_id=${data}`
+		}
+	},
+	// 处理轮播点击事件
+	handleSwiperTap(e) {
+		// console.log(e)
+		bxPoint("applets_banner", {position: 'page/practice/practice'}, false)
+	},
+	// swiper切换
+	changeSwiperIndex(e) {
+		this.setData({
+			currentBannerItem: e.detail.current
+		})
 	},
 	// 处理点击课程事件
 	handleCourseTap(e) {
@@ -124,8 +143,11 @@ Page({
 	// 处理练习按钮事件
 	handleExerciseBtnTap(e) {
 		let item = e.currentTarget.dataset.item
-		// 创建用户当日练习记录
-		createPracticeRecordInToday()
+		if (item.type !== "kecheng" && item.kecheng_type !== 3) {
+			// 创建用户当日练习记录
+			createPracticeRecordInToday()
+		}
+		bxPoint("practice_start", {}, false)
 		console.log(item)
 		switch (item.type) {
 			case 'kecheng': {
@@ -183,6 +205,7 @@ Page({
 	},
 	// 发现页
 	goToDiscovery() {
+		bxPoint("parctice_choose", {}, false)
 		wx.switchTab({
 			url: '/pages/discovery/discovery'
 		})

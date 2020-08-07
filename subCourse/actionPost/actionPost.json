@@ -1,4 +1,7 @@
 {
   "navigationStyle": "custom",
-  "usingComponents": {}
+  "usingComponents": {
+    "naviBar": "../../components/navibar/navibar",
+    "levelAlert": "../../components/levelAlert/levelAlert"
+  }
 }

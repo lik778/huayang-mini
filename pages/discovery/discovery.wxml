@@ -4,7 +4,7 @@
 	<view class="module-one">
 		<!-- banner 滚动区域 -->
 		<view class="swiper-box" wx:if="{{bannerList.length!==0}}">
-			<swiper class="swiper-item-box" current="{{cureent}}" bindchange="changeSwiperIndex" circular autoplay interval="3000">
+			<swiper class="swiper-item-box" bindchange="changeSwiperIndex" bind:tap="handleSwiperTap" circular autoplay interval="{{3000}}" duration="{{500}}">
 				<swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="joinCampFrombanner" data-item="{{item}}">
 					<view class="swiper-cover"></view>
 					<image src="{{item.pic_url}}"></image>
@@ -18,13 +18,13 @@
 		<view class="camp" wx:if="{{campList.length!==0}}">
 			<view class="camp-title">训练营</view>
 			<view class="camp-list">
-				<view class="camp-item" wx:for="{{campList}}" wx:key="index">
+				<view class="camp-item" wx:for="{{campList}}" wx:key="index" bindtap="joinCamp" data-index="{{item}}">
 					<image src="{{item.cover_pic}}"></image>
 					<view class="camp-item-main">
 						<view class="camp-item-title">{{item.name}}</view>
 						<view class="camp-subtitle">{{item.summary}}</view>
 					</view>
-					<view class="camp-button" bindtap="joinCamp" data-index="{{item}}">立即参加</view>
+					<view class="camp-button">立即参加</view>
 				</view>
 			</view>
 		</view>

@@ -1,6 +1,13 @@
-import { getBootCampCourseInfo, getRecentVisitorList, joinCourseInGuide } from "../../api/course/index"
+import {
+	createPracticeRecordInToday,
+	getBootCampCourseInfo,
+	getRecentVisitorList,
+	joinCourseInGuide
+} from "../../api/course/index"
 import { $notNull, calculateExerciseTime, getLocalStorage } from "../../utils/util"
 import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
+import bxPoint from "../../utils/bxPoint"
+import { checkAuth } from "../../utils/auth"
 
 Page({
 	/**
@@ -26,12 +33,19 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
+		checkAuth({
+			listenable: true,
+			ignoreFocusLogin: true
+		})
+
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 		this.setData({
 			courseId: options.courseId,
 			screenWidth: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth,
 			accountInfo
 		})
+
+		bxPoint("course_details", {from_uid: options.invite_user_id})
 	},
 
 	/**
@@ -80,7 +94,10 @@ Page({
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
-
+		return {
+			title: `我正在学习${this.data.courseInfoObj.name}，每天都有看的见的变化，快来试试`,
+			path: `/subCourse/practiceDetail/practiceDetail?courseId=${this.data.courseId}`
+		}
 	},
 
 	goToTask() {
@@ -174,8 +191,16 @@ Page({
 		return actionAry
 	},
 
+	// 处理分享按钮点击事件
+	handleShareTap() {
+		console.log("分享给好友");
+		bxPoint("course_share", {}, false)
+	},
+
 	// 开始练习
 	startPractice() {
+		bxPoint("practice_begin", {}, false)
+		createPracticeRecordInToday()
 		// 检查权限
 		if (!$notNull(this.data.accountInfo)) {
 			wx.navigateTo({

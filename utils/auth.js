@@ -4,7 +4,7 @@ import { checkFocusLogin, getWxInfo } from "../api/auth/index"
 
 /**
  * 鉴权
- * @param listenable
+ * @param listenable 是否检查session有效性
  * @param ignoreFocusLogin 是否忽略强制授权校验
  * @returns {Promise<unknown>}
  */

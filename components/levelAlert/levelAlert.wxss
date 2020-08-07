@@ -10,6 +10,10 @@
     background: rgba(0, 0, 0, .5);
     z-index: 20;
 }
+.wrap {
+    position: relative;
+    padding-top: 100rpx;
+}
 .box {
     overflow: initial;
     display: flex;
@@ -22,15 +26,16 @@
     padding: 70rpx 70rpx 50rpx;
     background: white;
 }
-.box cover-image {
+.alert-icon {
     position: absolute;
+    top: 45rpx;
     left: 50%;
-    top: -50rpx;
-    transform: translateX(-50%);
+    transform: translate(-50%);
     width: 96rpx;
     height: 108rpx;
+    z-index: 10;
 }
-.box cover-image.champion {
+.alert-icon.champion {
     width: 136rpx;
     height: 126rpx;
 }

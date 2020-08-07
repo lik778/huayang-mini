@@ -21,6 +21,10 @@ Component({
     forceGoBackIndex: {
       type: Boolean,
       value: false
+    },
+    forceGoBackPath: {
+      type: String,
+      value: ""
     }
   },
 
@@ -38,6 +42,7 @@ Component({
   methods: {
     // 返回
     back() {
+      console.error('this.data.forceGoBackIndex = ', this.data.forceGoBackIndex)
       if (this.data.forceGoBackIndex) {
         this.backIndex()
       } else {
@@ -48,9 +53,15 @@ Component({
     },
     // 返回首页
     backIndex() {
-      wx.switchTab({
-        url: '/pages/discovery/discovery',
-      })
+      if (this.data.forceGoBackPath) {
+        wx.switchTab({
+          url: this.data.forceGoBackPath
+        })
+      } else {
+        wx.switchTab({
+          url: '/pages/discovery/discovery',
+        })
+      }
     }
   },
   attached() {

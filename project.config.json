@@ -16,6 +16,7 @@
 		"autoAudits": false,
 		"showShadowRootInWxmlPanel": true,
 		"scopeDataCheck": false,
+		"uglifyFileName": false,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
@@ -24,10 +25,9 @@
 			"disablePlugins": [],
 			"outputPath": ""
 		},
+		"useIsolateContext": true,
 		"useCompilerModule": false,
-		"userConfirmedUseCompilerModuleSwitch": false,
-		"compileHotReLoad": false,
-		"useIsolateContext": true
+		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.12.0",
@@ -123,6 +123,13 @@
 					"id": -1,
 					"name": "pages/coopen/coopen",
 					"pathName": "pages/coopen/coopen",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "subCourse/actionPost/actionPost",
+					"pathName": "subCourse/actionPost/actionPost",
 					"query": "",
 					"scene": null
 				}

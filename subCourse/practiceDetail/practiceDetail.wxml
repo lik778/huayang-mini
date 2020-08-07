@@ -3,8 +3,11 @@
     <view class="intro">
         <view class="course-name">
             <text class="name">{{courseInfoObj.name}}</text>
-            <image class="share-icon" mode="aspectFit"
-                   src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596088034GMJhzX.jpg"></image>
+            <view class="share-box">
+                <image class="share-icon" mode="aspectFit" bind:tap="handleShareTap"
+                       src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596088034GMJhzX.jpg"></image>
+                <button open-type="share" class="share-btn"></button>
+            </view>
         </view>
         <view class="course-level">
             <text>{{CourseLevels[courseInfoObj.level]}}</text>

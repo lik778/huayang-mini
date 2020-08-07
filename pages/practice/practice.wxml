@@ -1,14 +1,17 @@
 <view class="practice">
-    <swiper class="banner">
-        <swiper-item wx:for="{{bannerList}}" wx:key="index">
+    <swiper class="banner" indicator-dots="{{false}}" circular autoplay bindchange="changeSwiperIndex" interval="{{3000}}" duration="{{500}}">
+        <swiper-item class="swiper-item" bind:tap="handleSwiperTap" wx:for="{{bannerList}}" wx:key="index">
             <image mode="aspectFill" src="{{item.pic_url}}"></image>
         </swiper-item>
     </swiper>
+    <view class="swiper-dot">
+        <view wx:for="{{bannerList}}" wx:key="index" class="{{currentBannerItem===index?'active swiper-dot-item':'swiper-dot-item'}}"></view>
+    </view>
 
     <view class="support-layer">
         <view class="title">练习时长</view>
         <view class="exercise-time">
-            <text class="time">{{exerciseTime}}</text>
+            <text class="time">{{exerciseTime || 0}}</text>
             <text class="unit">{{userHaveClassesInfo.study_time >= 60 ? "分钟" : "秒"}}</text>
         </view>
     </view>
@@ -17,7 +20,7 @@
     <view class="support-layer">
         <view class="title">
             <text>本周练习</text>
-            <text class="manage" bind:tap="goToPracticeManage">课程管理</text>
+            <text class="manage" wx:if="{{userJoinedClassesList.length > 0 && bootCampList.length > 0}}" bind:tap="goToPracticeManage">课程管理</text>
         </view>
         <view class="week-line">
             <view class="day-container" wx:for="{{weeklyLog}}" wx:key="index">
@@ -54,12 +57,15 @@
                     <view class="all-boot-camp">全部</view>
                 </view>
                 <view class="segmentation"></view>
-                <view class="no-exercise">今日暂无训练</view>
+                <view class="no-exercise">
+                    <image mode="aspectFit" class="no-exercise-image" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596786073iGFqSK.jpg"></image>
+                    <text>今天没课，好好放松一下吧！</text>
+                </view>
             </block>
         </view>
         <view class="boot-camp" wx:if="{{bootCampList.length === 0}}">
             <view class="no-camp">
-                <text>快去挑选感兴趣的课程吧</text>
+                <text>快去挑选感兴趣的训练营吧</text>
                 <text class="find-camp-btn" bind:tap="goToDiscovery">去挑选</text>
             </view>
         </view>
@@ -80,7 +86,7 @@
                     <text>{{item.kecheng.exerciseTime}}{{item.kecheng.duration >= 60 ? "分钟" : "秒"}}</text>
                     <text>{{item.kecheng.meta_count}}个动作</text>
                 </view>
-                <view class="join-now">立即参加</view>
+                <view class="join-now">立即练习</view>
             </view>
         </view>
         <view class="practice-item" wx:if="{{userJoinedClassesList.length===0}}" wx:for="{{recommendList}}" wx:key="index" bind:tap="handleCourseTap" data-item="{{item}}" style="background-image:url('{{item.cover_pic}}')">
@@ -91,7 +97,7 @@
                     <text>{{item.exerciseTime}}{{item.duration >= 60 ? "分钟" : "秒"}}</text>
                     <text>{{item.meta_count}}个动作</text>
                 </view>
-                <view class="join-now">立即参加</view>
+                <view class="join-now">立即练习</view>
             </view>
         </view>
     </view>

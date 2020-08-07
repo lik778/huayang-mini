@@ -121,7 +121,7 @@ Page({
 	 */
 	onShareAppMessage: function () {
 		return {
-			title: "花样值得买",
+			title: "花样百姓+",
 			path: '/subCourse/detail/detail?prdId=' + this.data.prdId
 		}
 	}

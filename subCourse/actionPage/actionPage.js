@@ -2,7 +2,15 @@
 import { $notNull, getLocalStorage } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
 import { LocaleVoice, voices_ary, voices_key, voices_number } from "../../lib/voices"
-import { completePractice, increaseExp, recordPracticeBehavior } from "../../api/course/index"
+import {
+	completePractice,
+	increaseExp,
+	queryPunchCardBg,
+	queryPunchCardQrCode,
+	queryUserHaveClassesInfo,
+	recordPracticeBehavior
+} from "../../api/course/index"
+import bxPoint from "../../utils/bxPoint"
 
 Page({
 	/**
@@ -57,6 +65,8 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: async function (options) {
+		bxPoint("course_play", {from_uid: options.invite_user_id})
+
 		const self = this
 		const eventChannel = this.getOpenerEventChannel()
 
@@ -99,13 +109,13 @@ Page({
 			})
 		})
 
-
 		// 视频实例
 		this.data.video = wx.createVideoContext("actionVideo", this)
 
-		// 要领
+		// 要领实例
 		this.data.mainPointAudio = wx.createInnerAudioContext()
 
+		// 背景音频实例
 		this.data.bgAudio = wx.getBackgroundAudioManager()
 
 		// 启动
@@ -122,6 +132,11 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
+		// 暂停状态是自动播放
+		console.error('onShow', !this.data.isRunning)
+		if (!this.data.isRunning) {
+			this.toggleAction("play")
+		}
 	},
 
 	/**
@@ -169,8 +184,32 @@ Page({
 	/**
 	 * 秀一下
 	 */
-	show() {
-		wx.navigateBack()
+	async show() {
+		bxPoint("course_show", {practice_time: this.data.globalRecordTiming}, false)
+		let now = new Date()
+		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
+		let cover = await queryPunchCardBg()
+		let qrCode = await queryPunchCardQrCode({kecheng_id: this.data.courseInfo.id})
+		let userHaveClassesInfo = await queryUserHaveClassesInfo()
+		// 分享海报数据
+		let data = {
+			date: `${now.getFullYear()} ${String(now.getMonth() + 1).padStart(2, "0")}/${String(now.getDate()).padStart(2, "0")}`,
+			recordNo: userHaveClassesInfo.kecheng_date_count,
+			actionName: this.data.courseInfo.name,
+			avatar: accountInfo.avatar_url,
+			nickname: accountInfo.nick_name,
+			duration: this.data.globalRecordTimeText,
+			actionNo: this.data.originData.length,
+			qrCode,
+			cover,
+			keChengId: this.data.courseInfo.id
+		}
+		wx.navigateTo({
+			url: '/subCourse/actionPost/actionPost',
+			success(res) {
+				res.eventChannel.emit('transmitPracticeData', JSON.stringify(data))
+			}
+		})
 	},
 	/**
 	 * 在休息层切换上一个动作
@@ -204,7 +243,7 @@ Page({
 		let self = this
 		wx.showModal({
 			title: "提示",
-			content: "是否立即推出训练",
+			content: "是否立即退出训练",
 			confirmText: "确定",
 			success(res) {
 				if (res.confirm) {
@@ -345,8 +384,11 @@ Page({
 	playTempBgAudio(link) {
 		let audio = this.data.bgAudio
 		audio.title = "花样百姓"
+		// 解决华为P30处理音频地址完全相同时无法正常播放问题
+		link = link + '?' + +new Date()
 		return new Promise(resolve => {
 			if (audio.src === link) {
+				audio.seek(0)
 				audio.play()
 			} else {
 				audio.src = link
@@ -490,13 +532,13 @@ Page({
 				duation: this.data.globalRecordTiming
 			})
 			// 经验值提升弹窗
-			increaseExp({task_type: "task_pratice_playbill"}).then((data) => {
+			increaseExp({task_type: "task_pratice"}).then((data) => {
 				// 升级信息
 				if ($notNull(data)) {
 					this.setData({
 						didShowLevelAlert: true,
 						hasGrade: data.has_grade,
-						levelNumber: data.has_grade ? data.level : data.experience
+						levelNumber: data.has_grade ? data.level : 10
 					})
 				}
 			})
@@ -511,6 +553,9 @@ Page({
 			targetActionObj: nextActionObj,
 			targetActionIndex: 0,
 		})
+		if ($notNull(nextActionObj)) {
+			bxPoint("course_operation", {event: isPrevious ? "previous" : "next", action_num: nextActionObj.name}, false)
+		}
 	},
 	// 开始课程演示
 	startCourse(data) {
