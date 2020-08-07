@@ -71,6 +71,8 @@ Page({
     wx.showModal({
       title: '提示',
       content: '是否从我的练习中删除该练习',
+      confirmText: "删除",
+      cancelText: "再想想",
       success: (res) => {
         if (res.confirm) {
           exitCourse({kecheng_id: e.currentTarget.dataset.index}).then(() => {
@@ -85,6 +87,8 @@ Page({
     wx.showModal({
       title: '提示',
       content: '是否从我的练习中删除该练习',
+      confirmText: "删除",
+      cancelText: "再想想",
       success: (res) => {
         if (res.confirm) {
           exitBootCamp({traincamp_id: e.currentTarget.dataset.index}).then(() => {

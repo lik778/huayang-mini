@@ -132,6 +132,11 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
+		// 暂停状态是自动播放
+		console.error('onShow', !this.data.isRunning)
+		if (!this.data.isRunning) {
+			this.toggleAction("play")
+		}
 	},
 
 	/**

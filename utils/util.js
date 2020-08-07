@@ -1,21 +1,9 @@
 import md5 from 'md5'
-import {
-	GLOBAL_KEY,
-	ROOT_URL,
-	URL,
-	WeChatLiveStatus
-} from '../lib/config'
-import {
-	createOrder
-} from "../api/mine/payVip"
-import {
-	getWatchLiveAuth,
-	statisticsWatchNo
-} from "../api/live/course"
+import { GLOBAL_KEY, ROOT_URL, URL, WeChatLiveStatus } from '../lib/config'
+import { createOrder } from "../api/mine/payVip"
+import { getWatchLiveAuth, statisticsWatchNo } from "../api/live/course"
 import request from "../lib/request"
-import {
-	getUserInfo
-} from "../api/mine/index"
+import { getUserInfo } from "../api/mine/index"
 
 const livePlayer = requirePlugin('live-player-plugin')
 
@@ -538,7 +526,8 @@ export const getTodayDate = (date) => {
 	let dateArr = []
 	let dateArr1 = []
 	for (let i = 0; i < 7; i++) {
-		dates.push(new Date(timesStamp + 24 * 60 * 60 * 1000 * (i - (currenDay + 6) % 7)).toLocaleDateString().replace(/\//g, '-'));
+		let newDate = new Date(timesStamp + 24 * 60 * 60 * 1000 * (i - (currenDay + 6) % 7))
+		dates.push(`${newDate.getFullYear()}-${String(newDate.getMonth()+1).padStart(2, "0")}-${String(newDate.getDate()).padStart(2, "0")}`);
 	}
 	for (let i in dates) {
 		dateArr.push({

@@ -16,6 +16,7 @@ Page({
 		_invokeSaveToLocalAction: false, // 用户是否已经点击保存图片到本地
 		_didDrawCanvasDone: false, // 绘制canvas是否已经结束
 
+		didPunchedCard: false, // 当前页面生命周期内是否打过卡
 		didShowLevelAlert: false, // 等级经验弹窗
 		hasGrade: false, // 是否升级
 		levelNumber: 0, // 升级等级/经验
@@ -98,6 +99,8 @@ Page({
 	},
 	// 打卡
 	punchCard() {
+		if (this.data.didPunchedCard) return
+		this.setData({didPunchedCard: true})
 		// 经验值提升弹窗
 		increaseExp({task_type: "task_pratice_playbill"}).then((data) => {
 			// 升级信息
