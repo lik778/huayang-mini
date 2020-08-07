@@ -112,7 +112,7 @@ Page({
 	 * @returns {Promise<[]>}
 	 */
 	async downloadFilesByProcess(files) {
-		this.setData({ hasDoneFilePercent: 0 })
+		this.setData({hasDoneFilePercent: 0})
 		let result = []
 		for (let index = 0; index < files.length; index++) {
 			let task = function () {
@@ -162,7 +162,7 @@ Page({
 		getRecentVisitorList({kecheng_id: this.data.courseId, limit: 6}).then((data) => {
 			data = data || []
 			let avatarAry = data.map(info => info.avatar_url)
-			this.setData({ avatarAry })
+			this.setData({avatarAry})
 		})
 	},
 
@@ -193,7 +193,7 @@ Page({
 
 	// 处理分享按钮点击事件
 	handleShareTap() {
-		console.log("分享给好友");
+		console.log("分享给好友")
 		bxPoint("course_share", {}, false)
 	},
 

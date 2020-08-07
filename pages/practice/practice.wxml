@@ -101,4 +101,15 @@
             </view>
         </view>
     </view>
+
+    <!--  提示  -->
+    <view class="tip-mask" wx:if="{{didShowTipsLay}}" bind:tap="hiddenTipMask">
+        <view class="tip-line">
+            <text>点击</text>
+            <image mode="aspectFit" class="tip-dot" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596799557wCpyax.jpg"></image>
+            <text>选择“浮窗”</text>
+            <image mode="aspectFit" class="tip-arrow" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596799587Ftwaoq.jpg"></image>
+        </view>
+        <view class="tip-line tip-text-02">收藏好课，每日练习找得到</view>
+    </view>
 </view>

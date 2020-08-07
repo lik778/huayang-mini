@@ -11,7 +11,7 @@ import {
 } from "../../api/course/index"
 import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
-import { $notNull, calculateExerciseTime, getLocalStorage } from "../../utils/util"
+import { $notNull, calculateExerciseTime, getLocalStorage, setLocalStorage } from "../../utils/util"
 import { checkAuth } from "../../utils/auth"
 import bxPoint from "../../utils/bxPoint"
 
@@ -48,6 +48,7 @@ Page({
 		recommendList: [], // 推荐课程列表
 		weeklyLog: [], // 本周打卡记录
 		bootCampList: [], // 训练营
+		didShowTipsLay: false, // 显示提示收藏蒙层
 		currentBannerItem: 0,
 		exerciseTime: 0 // 训练时间
 	},
@@ -57,6 +58,8 @@ Page({
 	 */
 	onLoad: function (options) {
 		bxPoint("applets_practice", {from_uid: options.invite_user_id})
+		// 检查是否需要展示提示层
+		this.checkTipsLay()
 	},
 
 	/**
@@ -121,6 +124,19 @@ Page({
 		return {
 			title: '跟着花样一起变美，变自信',
 			path: `/pages/auth/auth?invite_user_id=${data}`
+		}
+	},
+	hiddenTipMask() {
+		this.setData({didShowTipsLay: false})
+	},
+	checkTipsLay() {
+		const key = "hua_yang_practice_tip_mask_time"
+		let markTime = getLocalStorage(key)
+		let now = +new Date()/1000|0
+		let buf = 7*24*60*60
+		if (!markTime || markTime < now) {
+			this.setData({didShowTipsLay: true})
+			setLocalStorage(key, now + buf)
 		}
 	},
 	// 处理轮播点击事件
