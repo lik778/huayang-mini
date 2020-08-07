@@ -1,4 +1,5 @@
 import { exitBootCamp, exitCourse, queryUserJoinedBootCamp, queryUserJoinedClasses } from "../../api/course/index"
+import bxPoint from "../../utils/bxPoint"
 
 Page({
 
@@ -14,7 +15,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    bxPoint("parctice_manage", {from_uid: options.invite_user_id})
   },
 
   /**
@@ -66,6 +67,7 @@ Page({
 
   },
   quitCourse(e) {
+    bxPoint("parctice_give_up", {course_type: "kecheng", course_id: e.currentTarget.dataset.index}, false)
     wx.showModal({
       title: '提示',
       content: '是否从我的练习中删除该练习',
@@ -79,6 +81,7 @@ Page({
     })
   },
   quitBootCamp(e) {
+    bxPoint("parctice_give_up", {course_type: "bootcamp", course_id: e.currentTarget.dataset.index}, false)
     wx.showModal({
       title: '提示',
       content: '是否从我的练习中删除该练习',

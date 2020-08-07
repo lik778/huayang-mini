@@ -102,7 +102,7 @@
                 <cover-view class="action-item-text">x{{ item.cycleTime }}{{ item.meta_type == 2 ? '次' : '秒' }}</cover-view>
             </cover-view>
         </cover-view>
-        <cover-view class="result-btn" bind:tap="show">秀一下</cover-view>
+        <cover-view class="result-btn" bind:tap="show">打卡</cover-view>
     </cover-view>
 
     <levelAlert didShow="{{didShowLevelAlert}}" hasGrade="{{hasGrade}}" number="{{levelNumber}}"></levelAlert>

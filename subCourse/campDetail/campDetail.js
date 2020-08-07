@@ -1,26 +1,18 @@
 // subCourse/campDetail/campDetail.js
+import { GLOBAL_KEY } from "../../lib/config"
+import { getProductInfo, getYouZanAppId } from '../../api/mall/index'
+import { getCampDetail, getCourseData, getCurentDayData, getMenyCourseList } from "../../api/course/index"
 import {
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  getProductInfo,
-  getYouZanAppId
-} from '../../api/mall/index'
-import {
-  getCampDetail,
-  getCurentDayData,
-  getMenyCourseList,
-  getCourseData
-} from "../../api/course/index"
-import {
-  getLocalStorage,
-  getTodayDate,
-  manageWeek,
-  setLocalStorage,
-  countDay,
-  countDayOne,
-  simpleDurationSimple
+	countDay,
+	countDayOne,
+	getLocalStorage,
+	getTodayDate,
+	manageWeek,
+	setLocalStorage,
+	simpleDurationSimple
 } from "../../utils/util"
+import bxPoint from "../../utils/bxPoint"
+
 Page({
 
   /**
@@ -60,6 +52,7 @@ Page({
 
   // 加入交流群
   toTeam() {
+    bxPoint("guide_wx", {}, false)
     let link = 'https://mp.weixin.qq.com/s/qvNnbFv3OFATevcqidgmww'
     wx.navigateTo({
       url: `/pages/webViewCommon/webViewCommon?link=${link}`,
@@ -365,6 +358,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    bxPoint("camp_calendar", {from_uid: options.invite_user_id})
     if (options.share) {
       this.setData({
         backIndex: true
@@ -428,6 +422,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: `我正在参加${this.data.campDetailData.name}，每天都有看的见的变化，快来试试`,
+      path: "/subCourse/campDetail/campDetail?id=" + this.data.campId
+    }
   }
 })

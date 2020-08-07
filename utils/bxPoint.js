@@ -2,14 +2,19 @@
  * 注意事项⚠️⚠️⚠️
    1. url地址需要encodeURIComponet编译，避免接口get请求参数被截断问题
  */
+import { getLocalStorage } from "./util"
+import { GLOBAL_KEY } from "../lib/config"
+import request from "../lib/request"
+
 
 const collectKeyAry = [
   ['user', 'id'],
-  ['nick', 'name'],
   ['open', 'id'],
+  ['mobile'],
+  ['nick', 'name'],
   ['union', 'id'],
-  ['sex'],
-  ['city']
+  ['gender'],
+  ['city'],
 ]
 
 function stringify(object) {
@@ -52,39 +57,33 @@ function getKeyValue(keyAry = [], targetObject = {}) {
  * @param userInfoLocalStorageKey 对应localStorage的用户信息keyName，类似"window.localStorage.getItem("xxx")中的xxx"
  * @returns {Promise<unknown>}
  */
-const bxPoint = function(params, userInfoLocalStorageKey = '') {
-  const commonParmas = {}
-  if (userInfoLocalStorageKey) {
-    let userInfo = window.localStorage.getItem(userInfoLocalStorageKey)
-    if (userInfo) {
-      userInfo = JSON.parse(userInfo)
-      collectKeyAry.forEach((collectKeyAry) => {
-        commonParmas[collectKeyAry.join('_')] = getKeyValue(
-          collectKeyAry,
-          userInfo
-        )
-      })
-    }
+const bxPoint = function(siteId, params, ispv = true) {
+  return
+  const commonParams = {}
+  let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo))
+  let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+  userInfo = {...userInfo, ...accountInfo}
+  if (userInfo) {
+    collectKeyAry.forEach((collectKeyAry) => {
+      commonParams[collectKeyAry.join('_')] = getKeyValue(
+        collectKeyAry,
+        userInfo
+      )
+    })
   }
   params = {
-    ...commonParmas,
+    ...commonParams,
     ...params,
-    site_id: 'huayang_morning',
-    event_type: 'huayang',
+    __debug: "1", // TODO 测试打点数据，上线时记得去除
+    site_id: siteId,
+    tracktype: ispv ? "pageview" : "event",
+    event_type: 'huayang'
   }
-  return new Promise((resolve) => {
-    let xhr = new XMLHttpRequest()
-    xhr.open(
-      'get',
-      'https://www.baixing.com/c/ev/huayang?' + stringify(params),
-      true
-    )
-    xhr.send()
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState == 4 && xhr.status == 200) {
-        resolve()
-      }
-    }
+  // console.log(params);
+  return new Promise(resolve => {
+    request._get('https://www.baixing.com/c/ev/huayang', params).then(() => {
+      resolve()
+    })
   })
 }
 

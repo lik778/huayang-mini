@@ -1,25 +1,11 @@
 // pages/userCenter/userCenter.js
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { GLOBAL_KEY } from "../../lib/config"
 import request from "../../lib/request"
-import {
-  getSignData,
-  getTaskList,
-  increaseExp,
-  needUpdateUserInfo,
-  taskCheckIn
-} from "../../api/course/index"
-import {
-  getUserInfo
-} from "../../api/mine/index"
-import {
-  getLocalStorage,
-  setLocalStorage
-} from "../../utils/util"
-import {
-  checkAuth
-} from "../../utils/auth"
+import { getSignData, getTaskList, increaseExp, needUpdateUserInfo, taskCheckIn } from "../../api/course/index"
+import { getUserInfo } from "../../api/mine/index"
+import { getLocalStorage, setLocalStorage } from "../../utils/util"
+import { checkAuth } from "../../utils/auth"
+import bxPoint from "../../utils/bxPoint"
 
 Page({
 
@@ -81,6 +67,7 @@ Page({
     })
     let data = `${request.baseUrl}/#/home/zhideFillSelfInfo?data=${webViewData}`
     data = encodeURIComponent(data)
+    bxPoint("mine_data", {})
     wx.navigateTo({
       url: `/pages/webViewCommon/webViewCommon?link=${data}&type=link`,
     })
@@ -104,6 +91,7 @@ Page({
   },
   // 签到
   checkin(e) {
+    bxPoint("mine_task", {task_type: "signIn"}, false)
     let experNumData = Number(e.currentTarget.dataset.type.textData1.split("+")[1].split("成长值")[0])
     taskCheckIn({
       open_id: getLocalStorage(GLOBAL_KEY.openId),
@@ -117,7 +105,6 @@ Page({
       }).then(res => {
         this.getUserSingerInfo()
         if (res.has_grade) {
-          // if (false) {
           // 升级了
           this.setData({
             gradeData: {
@@ -151,12 +138,14 @@ Page({
   //
   // 训练/打卡
   pratice() {
+    bxPoint("mine_task", {task_type: "toTrain"}, false)
     wx.switchTab({
       url: '/pages/practice/practice',
     })
   },
   // 邀请
   invite() {
+    bxPoint("mine_task", {task_type: "toInvite"}, false)
     increaseExp({
       task_type: 'task_invite'
     }).then(res => {
@@ -212,6 +201,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    bxPoint("applets_mine", {from_uid: options.invite_user_id})
     let data = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     this.setData({
       statusHeight: data,
@@ -288,7 +278,7 @@ Page({
       console.log(res.target)
     }
     return {
-      title: '测试标题',
+      title: '跟着花样一起变美，变自信',
       path: `/pages/auth/auth?invite_user_id=${data}`
     }
   }

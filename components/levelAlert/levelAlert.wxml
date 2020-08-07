@@ -1,7 +1,9 @@
 <cover-view class="level-alert" wx:if="{{didShow}}" bind:tap="toggle">
-    <cover-view class="box">
-        <cover-image mode="aspectFit" class="{{hasGrade ? 'champion' : ''}}" src="{{iconImage}}"></cover-image>
-        <cover-view class="text-01">{{text01}}</cover-view>
-        <cover-view class="text-02">{{text02}}</cover-view>
+    <cover-view class="wrap">
+        <cover-view class="box">
+            <cover-view class="text-01">{{text01}}</cover-view>
+            <cover-view class="text-02">{{text02}}</cover-view>
+        </cover-view>
+        <cover-image mode="aspectFit" class="alert-icon {{hasGrade ? 'champion' : ''}}" src="{{iconImage}}"></cover-image>
     </cover-view>
 </cover-view>

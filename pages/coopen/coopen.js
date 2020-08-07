@@ -1,6 +1,7 @@
 import { getLocalStorage } from "../../utils/util"
 import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import { joinCourseInGuide, queryBootCampCourseList } from "../../api/course/index"
+import bxPoint from "../../utils/bxPoint"
 
 Page({
 
@@ -23,6 +24,8 @@ Page({
 		})
 
 		this.initial()
+
+		bxPoint("applets_guide", {from_uid: options.invite_user_id})
 	},
 
 	/**
@@ -73,11 +76,18 @@ Page({
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
-
+		let data = getLocalStorage(GLOBAL_KEY.userId)
+		return {
+			title: "跟着花样一起变美，变自信",
+			path: `/pages/auth/auth?invite_user_id=${data}`
+		}
 	},
 	// 查看更多课程
 	moreCourse() {
-		console.log("查看更多课程");
+		bxPoint("applets_more", {}, false)
+		wx.switchTab({
+			url: '/pages/discovery/discovery'
+		})
 	},
 	/**
 	 * 加入课程，跳转至个人课程页
@@ -86,6 +96,9 @@ Page({
 		let selectedCourseIds = this.data.recommendCourseList.filter(n => n.selected === 1).map(c => c.id)
 		if (selectedCourseIds.length > 0) {
 			joinCourseInGuide({kecheng_id_str: selectedCourseIds.join(",")})
+			this.data.recommendCourseList.forEach(item => {
+				bxPoint("applets_join", {check: item.kecheng_type, check_name: item.name, isSelected: selectedCourseIds.indexOf(item.id) !== -1}, false)
+			})
 		}
 		wx.switchTab({
 			url: '/pages/practice/practice',
@@ -105,6 +118,7 @@ Page({
 	 * 跳过动画
 	 */
 	skip() {
+		bxPoint("applets_skip", {}, false)
 		wx.switchTab({
 			url: "/pages/discovery/discovery"
 		})

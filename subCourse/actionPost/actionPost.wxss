@@ -1,12 +1,14 @@
 .action-post {
+    position: relative;
     width: 100vw;
     height: 100vh;
     background: #37383B;
 }
 .post {
     position: fixed;
-    bottom: 186rpx;
-    left: 75rpx;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 600rpx;
     height: 960rpx;
     background: #aaa;
@@ -28,6 +30,12 @@
     margin: 30rpx 0 0 30rpx;
     font: bold 64rpx/74rpx DIN Alternate,Roboto-Condensed;
 }
+.record-no {
+    font: bold 36rpx/50rpx PingFang SC;
+}
+.record-no-text {
+    font: bold 54rpx/50rpx DIN Alternate,Roboto-Condensed;
+}
 .slogan {
     font: 500 40rpx/56rpx PingFang SC;
     text-align: center;
@@ -42,7 +50,7 @@
     left: 0;
     right: 0;
     height: 230rpx;
-    background: #cbbd82;
+    background: white;
 }
 .left-top {
     position: absolute;
@@ -86,6 +94,9 @@
 .tip {
     font: 28rpx/28rpx PingFang SC;
 }
+.small-tip {
+    font: 20rpx/28rpx PingFang SC;
+}
 .right {
     display: flex;
     flex-direction: column;
@@ -93,14 +104,13 @@
     align-items: center;
     position: absolute;
     right: 38rpx;
-    bottom: 32rpx;
+    bottom: 14rpx;
 }
 .qr-code {
     width: 136rpx;
     height: 136rpx;
-    margin-bottom: 20rpx;
+    margin-bottom: 2rpx;
     border-radius: 999rpx;
-    background: #b0e3b0;
 }
 .operate {
     position: fixed;
@@ -128,4 +138,10 @@
 .share-btn {
     color: #CC0000;
     background: white;
+}
+#canvas-order {
+    position: absolute;
+    left: 300%;
+    width: 300px;
+    height: 480px;
 }

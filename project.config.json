@@ -16,6 +16,7 @@
 		"autoAudits": false,
 		"showShadowRootInWxmlPanel": true,
 		"scopeDataCheck": false,
+		"uglifyFileName": false,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
@@ -123,6 +124,13 @@
 					"id": -1,
 					"name": "pages/coopen/coopen",
 					"pathName": "pages/coopen/coopen",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "subCourse/actionPost/actionPost",
+					"pathName": "subCourse/actionPost/actionPost",
 					"query": "",
 					"scene": null
 				}
