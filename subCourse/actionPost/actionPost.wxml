@@ -6,7 +6,7 @@
         <view class="top-lay" style="background-image: url('{{postData.cover}}');">
             <view class="date">
                 <text>{{postData.date}}</text>
-                <view class="record-no">第 <text class="record-no-text">{{postData.recordNo}}</text> 次打卡</view>
+                <view class="record-no">第 <text class="record-no-text">{{postData.recordNo}}</text> 天打卡</view>
             </view>
             <view class="action-name">{{postData.actionName}}</view>
         </view>
@@ -33,9 +33,11 @@
         </view>
     </view>
     <view class="operate">
-        <button open-type="share" class="share-btn">分享到群内打卡</button>
+        <button open-type="share" class="share-btn" bind:tap="punchCard">分享到群内打卡</button>
         <view class="save" bind:tap="saveToLocal">保存海报到相册</view>
     </view>
     <canvas canvas-id="order" id="canvas-order"></canvas>
+
+    <levelAlert didShow="{{didShowLevelAlert}}" hasGrade="{{hasGrade}}" number="{{levelNumber}}"></levelAlert>
 </view>
 

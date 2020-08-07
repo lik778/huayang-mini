@@ -92,7 +92,7 @@
 			</view>
 			<view class="common-right">
 				<view class="common-desc">
-					<view class="common-desc-top">花样大学</view>
+					<view class="common-desc-top">花样百姓+</view>
 					<view class="common-desc-bottom" wx:if="{{userInfo.student_num!==''}}">学籍号：{{userInfo.student_num}}</view>
 					<view class="common-desc-bottom" wx:else>5大系列课程免费学</view>
 				</view>

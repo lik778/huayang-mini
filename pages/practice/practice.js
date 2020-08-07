@@ -138,8 +138,10 @@ Page({
 	// 处理练习按钮事件
 	handleExerciseBtnTap(e) {
 		let item = e.currentTarget.dataset.item
-		// 创建用户当日练习记录
-		createPracticeRecordInToday()
+		if (item.type !== "kecheng" && item.kecheng_type !== 3) {
+			// 创建用户当日练习记录
+			createPracticeRecordInToday()
+		}
 		bxPoint("practice_start", {}, false)
 		console.log(item)
 		switch (item.type) {

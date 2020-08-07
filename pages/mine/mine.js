@@ -229,7 +229,7 @@ Page({
     // 用户点击右上角分享
     onShareAppMessage: function () {
         return {
-            title: "花样大学",
+            title: "花样百姓+",
             path: '/pages/index/index',
         }
     }

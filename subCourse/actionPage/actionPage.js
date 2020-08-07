@@ -112,9 +112,10 @@ Page({
 		// 视频实例
 		this.data.video = wx.createVideoContext("actionVideo", this)
 
-		// 要领
+		// 要领实例
 		this.data.mainPointAudio = wx.createInnerAudioContext()
 
+		// 背景音频实例
 		this.data.bgAudio = wx.getBackgroundAudioManager()
 
 		// 启动
@@ -187,7 +188,7 @@ Page({
 		let userHaveClassesInfo = await queryUserHaveClassesInfo()
 		// 分享海报数据
 		let data = {
-			date: `${now.getFullYear()} ${String(now.getMonth() + 1).padStart(2, "2")}/${String(now.getDate()).padStart(2, "0")}`,
+			date: `${now.getFullYear()} ${String(now.getMonth() + 1).padStart(2, "0")}/${String(now.getDate()).padStart(2, "0")}`,
 			recordNo: userHaveClassesInfo.kecheng_date_count,
 			actionName: this.data.courseInfo.name,
 			avatar: accountInfo.avatar_url,
@@ -526,7 +527,7 @@ Page({
 				duation: this.data.globalRecordTiming
 			})
 			// 经验值提升弹窗
-			increaseExp({task_type: "task_pratice_playbill"}).then((data) => {
+			increaseExp({task_type: "task_pratice"}).then((data) => {
 				// 升级信息
 				if ($notNull(data)) {
 					this.setData({

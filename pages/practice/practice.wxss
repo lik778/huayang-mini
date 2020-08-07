@@ -140,7 +140,17 @@
     background-size: contain;
 }
 .no-exercise {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 20rpx 30rpx;
+    font: 28rpx/28rpx PingFang SC;
+    color: #666;
+}
+.no-exercise .no-exercise-image {
+    width: 442rpx;
+    height: 198rpx;
 }
 .all-boot-camp {
     position: relative;

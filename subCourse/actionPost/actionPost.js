@@ -2,6 +2,7 @@
 import { $notNull, getLocalStorage, queryWxAuth, toast } from "../../utils/util"
 import { GLOBAL_KEY, WX_AUTH_TYPE } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
+import { increaseExp } from "../../api/course/index"
 
 Page({
 
@@ -13,7 +14,11 @@ Page({
 		statusHeight: 0,
 		postData: null,
 		_invokeSaveToLocalAction: false, // 用户是否已经点击保存图片到本地
-		_didDrawCanvasDone: false // 绘制canvas是否已经结束
+		_didDrawCanvasDone: false, // 绘制canvas是否已经结束
+
+		didShowLevelAlert: false, // 等级经验弹窗
+		hasGrade: false, // 是否升级
+		levelNumber: 0, // 升级等级/经验
 	},
 
 	/**
@@ -90,6 +95,20 @@ Page({
 			title: "跟着花样一起变美，变自信",
 			path: `/pages/auth/auth?invite_user_id=${data}`
 		}
+	},
+	// 打卡
+	punchCard() {
+		// 经验值提升弹窗
+		increaseExp({task_type: "task_pratice_playbill"}).then((data) => {
+			// 升级信息
+			if ($notNull(data)) {
+				this.setData({
+					didShowLevelAlert: true,
+					hasGrade: data.has_grade,
+					levelNumber: data.has_grade ? data.level : 10
+				})
+			}
+		})
 	},
 	// 绘制直线
 	drawLine(context, color, height, beginX, beginY, endX, endY) {
@@ -169,17 +188,19 @@ Page({
 		this.drawName(ctx, "第", 18, 15, 69, 'white')
 		ctx.save()
 		ctx.font = `bold ${27}px DIN Alternate,Roboto-Condensed`
+		let recordNoWidth = this.measureTextWidth(this.data.postData.recordNo, ctx)
 		this.drawName(ctx, this.data.postData.recordNo, 27, 36, 62, 'white')
 		ctx.restore()
-		this.drawName(ctx, "次打卡", 18, 85, 69, 'white')
+		this.drawName(ctx, "天打卡", 18, 54 + recordNoWidth, 69, 'white')
 		// 训练名称
 		let actionName = this.data.postData.actionName.length > 10 ? `${this.data.postData.actionName.slice(0, 10)}..` : this.data.postData.actionName
 		this.drawName(ctx, actionName, 18, 94, 338, 'white')
 		// 头像
 		this.drawBorderCircle(ctx, avatarImage, 49, 366, 30)
 		// 昵称
+		let nickname = this.data.postData.nickname.length > 7 ? `${this.data.postData.nickname.slice(0, 7)}..` : this.data.postData.nickname
 		ctx.font = `${18}px PingFang SC`
-		this.drawName(ctx, this.data.postData.nickname, 18, 94, 376, "black")
+		this.drawName(ctx, nickname, 18, 94, 376, "black")
 		// 训练参数
 		ctx.save()
 		ctx.font = `bold ${30}px DIN Alternate,Roboto-Condensed`
@@ -237,6 +258,7 @@ Page({
 	},
 	saveToLocal() {
 		bxPoint("course_clock", {type: "hold"}, false)
+		this.punchCard()
 		if (!this.data._didDrawCanvasDone) {
 			wx.showLoading({
 				title: '海报生成中...',
