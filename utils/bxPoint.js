@@ -58,7 +58,6 @@ function getKeyValue(keyAry = [], targetObject = {}) {
  * @returns {Promise<unknown>}
  */
 const bxPoint = function(siteId, params, ispv = true) {
-  return
   const commonParams = {}
   let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo))
   let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))

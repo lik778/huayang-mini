@@ -207,7 +207,7 @@ Page({
 	 */
 	onShareAppMessage: function () {
 		return {
-			title: '花样值得买',
+			title: '花样大学',
 			path: '/pages/mall/mall'
 		}
 	}

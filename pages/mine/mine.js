@@ -1,23 +1,9 @@
 // pages/mine/mine.js
-import {
-    getScene,
-    getUniversityCode,
-    getUserInfo,
-    getVipShow
-} from "../../api/mine/index"
-import {
-    bindWxPhoneNumber
-} from "../../api/auth/index"
-import {
-    GLOBAL_KEY
-} from '../../lib/config'
-import {
-    getLocalStorage,
-    setLocalStorage
-} from "../../utils/util"
-import {
-    checkAuth
-} from "../../utils/auth"
+import { getScene, getUniversityCode, getUserInfo, getVipShow } from "../../api/mine/index"
+import { bindWxPhoneNumber } from "../../api/auth/index"
+import { GLOBAL_KEY } from '../../lib/config'
+import { getLocalStorage, setLocalStorage } from "../../utils/util"
+import { checkAuth } from "../../utils/auth"
 
 Page({
 
@@ -243,7 +229,7 @@ Page({
     // 用户点击右上角分享
     onShareAppMessage: function () {
         return {
-            title: "花样值得买",
+            title: "花样大学",
             path: '/pages/index/index',
         }
     }
