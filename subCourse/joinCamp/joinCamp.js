@@ -70,6 +70,7 @@ Page({
           id: res.id,
           name: '加入训练营'
         }).then(res => {
+          console.log(res,"测试支付")
           if (res.errMsg === "requestPayment:ok") {
             this.backFun({
               type: "success"
@@ -108,7 +109,7 @@ Page({
         duration: 2000
       })
       setTimeout(() => {
-        wx.navigateTo({
+        wx.redirectTo({
           url: `/subCourse/campDetail/campDetail?id=${this.data.campId}&share=true`,
         })
       }, 2000)
@@ -123,7 +124,7 @@ Page({
       if (res.length === 0) {
         this.getCampDetail(id)
       } else {
-        wx.navigateTo({
+        wx.redirectTo({
           url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
         })
       }
