@@ -9,9 +9,9 @@ import {
 	queryUserJoinedClasses,
 	queryUserRecentPracticeLog
 } from "../../api/course/index"
-import { CourseLevels } from "../../lib/config"
+import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
-import { $notNull, calculateExerciseTime } from "../../utils/util"
+import { $notNull, calculateExerciseTime, getLocalStorage } from "../../utils/util"
 import { checkAuth } from "../../utils/auth"
 import bxPoint from "../../utils/bxPoint"
 
@@ -116,7 +116,12 @@ Page({
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
+		let data = getLocalStorage(GLOBAL_KEY.userId)
 
+		return {
+			title: '跟着花样一起变美，变自信',
+			path: `/pages/auth/auth?invite_user_id=${data}`
+		}
 	},
 	// 处理轮播点击事件
 	handleSwiperTap(e) {

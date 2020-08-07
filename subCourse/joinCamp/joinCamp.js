@@ -1,8 +1,8 @@
 // 加入训练营
 import { GLOBAL_KEY } from "../../lib/config"
 import { checkAuth } from "../../utils/auth"
-import { joinCamp, getHasJoinCamp, getCampDetail } from "../../api/course/index"
-import { getLocalStorage, getTodayDate, payCourse, manageWeek } from "../../utils/util"
+import { getCampDetail, getHasJoinCamp, joinCamp } from "../../api/course/index"
+import { getLocalStorage, payCourse } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -183,6 +183,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: `我正在参加${this.data.campDetailData.name}，每天都有看的见的变化，快来试试`,
+      path: "/subCourse/joinCamp/joinCamp?id=" + this.data.campId
+    }
   }
 })

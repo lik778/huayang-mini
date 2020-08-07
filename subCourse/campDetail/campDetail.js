@@ -3,13 +3,13 @@ import { GLOBAL_KEY } from "../../lib/config"
 import { getProductInfo, getYouZanAppId } from '../../api/mall/index'
 import { getCampDetail, getCourseData, getCurentDayData, getMenyCourseList } from "../../api/course/index"
 import {
-	countDay,
-	countDayOne,
-	getLocalStorage,
-	getTodayDate,
-	manageWeek,
-	setLocalStorage,
-	simpleDurationSimple
+  countDay,
+  countDayOne,
+  getLocalStorage,
+  getTodayDate,
+  manageWeek,
+  setLocalStorage,
+  simpleDurationSimple
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
@@ -424,7 +424,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: `我正在参加${this.data.campDetailData.name}，每天都有看的见的变化，快来试试`,
-      path: "/subCourse/campDetail/campDetail?id=" + this.data.campId
+      path: "/subCourse/joinCamp/joinCamp?id=" + this.data.campId
     }
   }
 })

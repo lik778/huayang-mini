@@ -7,6 +7,7 @@ import {
 import { $notNull, calculateExerciseTime, getLocalStorage } from "../../utils/util"
 import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
+import { checkAuth } from "../../utils/auth"
 
 Page({
 	/**
@@ -32,6 +33,11 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
+		checkAuth({
+			listenable: true,
+			ignoreFocusLogin: true
+		})
+
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 		this.setData({
 			courseId: options.courseId,
@@ -88,10 +94,9 @@ Page({
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
-		let data = getLocalStorage(GLOBAL_KEY.userId)
 		return {
-			title: "跟着花样一起变美，变自信",
-			path: `/pages/auth/auth?invite_user_id=${data}`
+			title: `我正在学习${this.data.courseInfoObj.name}，每天都有看的见的变化，快来试试`,
+			path: `/subCourse/practiceDetail/practiceDetail?courseId=${this.data.courseId}`
 		}
 	},
 
