@@ -63,7 +63,7 @@
 	<!-- 模块二 -->
 	<view class="module-two">
 		<!-- 大赛 -->
-		<view class="competition">
+		<view class="competition" wx:if="{{false}}">
 			<view class="competition-title">大赛</view>
 			<view class="competition-list">
 				<view class="competition-item" bindtap="toModelCompetition">
