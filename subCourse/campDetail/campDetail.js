@@ -233,6 +233,7 @@ Page({
   initCoverShow(id) {
     let showIdList = getLocalStorage(GLOBAL_KEY.campHasShowList) === undefined ? undefined : JSON.parse(getLocalStorage(GLOBAL_KEY.campHasShowList))
     let showCover = true
+    console.log(showIdList)
     if (showIdList === undefined) {
       setLocalStorage(GLOBAL_KEY.campHasShowList, [id])
       showCover = true
@@ -240,6 +241,8 @@ Page({
       if (showIdList.indexOf(id) !== -1) {
         showCover = false
       } else {
+        showIdList.push(id)
+        setLocalStorage(GLOBAL_KEY.campHasShowList,showIdList)
         showCover = true
       }
     }
@@ -326,7 +329,7 @@ Page({
           } else {
             // 结构化
             wx.navigateTo({
-              url: `/subCourse/practiceDetail/practiceDetail?courseId=${res.id}`,
+              url: `/subCourse/practiceDetail/practiceDetail?courseId=${res.id}&formCampDetail=true`,
             })
           }
         } else {
