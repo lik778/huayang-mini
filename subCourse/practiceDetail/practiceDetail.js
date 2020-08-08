@@ -26,13 +26,17 @@ Page({
 		btnText: "开始练习", // 按钮文案
 		isDownloading: false, // 是否正在下载
 		hasDoneFilePercent: 0, // 已经下载完的文件数量
-		didShowAlert: false
+		didShowAlert: false,
+		didPayUser: false, // 是否是付费用户
 	},
 
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
+		if (options.formCampDetail === "payUser") {
+			this.setData({didPayUser: true})
+		}
 		checkAuth({
 			listenable: true,
 			ignoreFocusLogin: true
@@ -144,12 +148,15 @@ Page({
 	initial() {
 		// 获取训练营课程详情
 		getBootCampCourseInfo({kecheng_id: this.data.courseId}).then((response) => {
-			// 检查用户等级
-			if (response.user_grade > (this.data.accountInfo.user_grade || 0)) {
-				this.setData({
-					btnText: `Lv ${response.user_grade} 等级开启`,
-					isDownloading: true // 禁止用户点击按钮
-				})
+			// 检查是否付费用户
+			if (!this.data.didPayUser) {
+				// 检查用户等级
+				if (response.user_grade > (this.data.accountInfo.user_grade || 0)) {
+					this.setData({
+						btnText: `Lv ${response.user_grade} 等级开启`,
+						isDownloading: true // 禁止用户点击按钮
+					})
+				}
 			}
 			response.exerciseTime = calculateExerciseTime(response.duration)
 			this.setData({
@@ -209,12 +216,15 @@ Page({
 			return
 		}
 
-		// 检查用户等级
-		if (this.data.courseInfoObj.user_grade > this.data.accountInfo.user_grade) {
-			this.setData({
-				didShowAlert: true
-			})
-			return
+		// 检查是否是付费用户，是=>跳过用户等级检查，否=>检查用户等级
+		if (!this.data.didPayUser) {
+			// 检查用户等级
+			if (this.data.courseInfoObj.user_grade > this.data.accountInfo.user_grade) {
+				this.setData({
+					didShowAlert: true
+				})
+				return
+			}
 		}
 
 		const self = this
