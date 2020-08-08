@@ -20,7 +20,6 @@
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
-		"compileHotReLoad": false,
 		"babelSetting": {
 			"ignore": [],
 			"disablePlugins": [],
@@ -28,6 +27,7 @@
 		},
 		"useCompilerModule": false,
 		"userConfirmedUseCompilerModuleSwitch": false,
+		"compileHotReLoad": false,
 		"useIsolateContext": true
 	},
 	"compileType": "miniprogram",
