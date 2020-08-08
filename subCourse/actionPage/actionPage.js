@@ -80,7 +80,7 @@ Page({
 		})
 
 		eventChannel.on("transmitCourseMeta", function (data) {
-			// console.log(data)
+			console.log(data)
 			let actionData = JSON.parse(data)
 
 			let completedCourseMetaData = []
@@ -99,7 +99,7 @@ Page({
 		})
 
 		eventChannel.on("transmitCourseInfo", function (data) {
-			// console.log(data)
+			console.log(data)
 			let courseInfo = JSON.parse(data)
 			self.setData({
 				courseInfo

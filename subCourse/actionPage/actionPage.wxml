@@ -67,11 +67,11 @@
         <cover-view class="rest-layer {{!didShowRestLayer && 'hide-rest-layer'}}">
             <cover-view class="rest-time">{{restTimeText}}</cover-view>
             <cover-view class="next-action-info">
-                <cover-view class="next-action-cycle-time" style="text-align: right;">下一个动作</cover-view>
+                <cover-view class="next-action-cycle-time">下一个动作</cover-view>
                 <cover-image class="next-cover" src="{{targetActionObj.cover}}"></cover-image>
                 <cover-view class="next-info">
                     <cover-view class="next-action-name limit-two-line">{{targetActionObj.name}}</cover-view>
-                    <cover-view class="next-action-cycle-time" style="margin-top: 6px;color: #666;">
+                    <cover-view class="next-action-cycle-time">
                         {{targetActionObj.cycleTime}}{{targetActionObj.meta_type == 2 ? '次' : '秒'}}
                     </cover-view>
                 </cover-view>

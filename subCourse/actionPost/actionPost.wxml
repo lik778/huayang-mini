@@ -13,7 +13,7 @@
         <view class="bottom-lay">
             <view class="left-top">
                 <image class="avatar" mode="aspectFill" src="{{postData.avatar}}"></image>
-                <text class="nickname">derisfe</text>
+                <text class="nickname">{{postData.nickname}}</text>
             </view>
             <view class="left-bottom">
                 <view class="practice-no">
