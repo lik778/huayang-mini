@@ -79,7 +79,7 @@
             <cover-view class="operate-lay">
                 <cover-image class="arrow-left" bind:tap="switchPrevActionInRestTime"
                              src="../../assets/images/common/arrow-left.png"></cover-image>
-                <cover-image class="pause" bind:tap="pauseRestTime"
+                <cover-image class="pause" bind:tap="checkoutRestStatus"
                              src="{{didPauseRest ? '../../assets/images/common/start.png': '../../assets/images/common/pause.png'}}"></cover-image>
                 <cover-image class="stop" wx:if="{{didPauseRest}}" bind:tap="exit"
                              src="../../assets/images/common/stop.png"></cover-image>
