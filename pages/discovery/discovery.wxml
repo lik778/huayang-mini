@@ -66,11 +66,11 @@
 		<view class="competition">
 			<view class="competition-title">大赛</view>
 			<view class="competition-list">
-				<view class="competition-item">
+				<view class="competition-item" bindtap="toModelCompetition">
 					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596007833DKzGtL.jpg"></image>
 					<view class="competition-item-title">2020花样时尚模特大赛</view>
 				</view>
-				<view class="competition-item" style="margin-top:40rpx">
+				<view class="competition-item" style="margin-top:40rpx" bindtap="toModelCompetition">
 					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596007833DKzGtL.jpg"></image>
 					<view class="competition-item-title">2020花样时尚模特大赛</view>
 				</view>

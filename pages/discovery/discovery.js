@@ -1,9 +1,22 @@
 // pages/ discovery/discovery.js
-import { getLocalStorage, simpleDurationSimple } from "../../utils/util"
-import { checkAuth } from "../../utils/auth"
-import { getActivityList, getCampList, getFindBanner, getShowCourseList } from "../../api/course/index"
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  getLocalStorage,
+  simpleDurationSimple
+} from "../../utils/util"
+import {
+  checkAuth
+} from "../../utils/auth"
+import {
+  getActivityList,
+  getCampList,
+  getFindBanner,
+  getShowCourseList
+} from "../../api/course/index"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
+import request from "../../lib/request"
 
 Page({
 
@@ -19,11 +32,15 @@ Page({
   },
   handleSwiperTap(e) {
     // console.log(e)
-    bxPoint("applets_banner", {position: 'page/discovery/discovery'}, false)
+    bxPoint("applets_banner", {
+      position: 'page/discovery/discovery'
+    }, false)
   },
   // 加入课程
   toCourse(e) {
-    bxPoint("find_join", {join_type: "kecheg"}, false)
+    bxPoint("find_join", {
+      join_type: "kecheg"
+    }, false)
     wx.navigateTo({
       url: `/subCourse/practiceDetail/practiceDetail?courseId=${e.currentTarget.dataset.item.id}`,
     })
@@ -44,6 +61,18 @@ Page({
       this.setData({
         activityList: res.list
       })
+    })
+  },
+  // 跳转到模特大赛
+  toModelCompetition() {
+    let data = JSON.stringify({
+      activity_id: 29,
+      user_id: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id
+    })
+    let baseUrl = `${request.baseUrl}/#/modelCompetition/introduce?data=${data}`
+    baseUrl = encodeURIComponent(baseUrl)
+    wx.navigateTo({
+      url: `/pages/webViewCommon/webViewCommon?link=${baseUrl}&type=link`,
     })
   },
   // 获取课程列表
@@ -94,7 +123,9 @@ Page({
   },
   // 跳转到训练营详情
   joinCamp(e) {
-    bxPoint("find_join", {join_type: "bootcamp"}, false)
+    bxPoint("find_join", {
+      join_type: "bootcamp"
+    }, false)
     wx.navigateTo({
       url: `/subCourse/joinCamp/joinCamp?id=${e.currentTarget.dataset.index.id}`,
     })
@@ -103,7 +134,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    bxPoint("applets_find", {from_uid: options.invite_user_id})
+    bxPoint("applets_find", {
+      from_uid: options.invite_user_id
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
