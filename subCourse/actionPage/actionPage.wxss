@@ -5,7 +5,7 @@
 
 .content .cycle-time {
     position: absolute;
-    top: 46rpx;
+    top: 30rpx;
     width: 100vw;
     display: flex;
     justify-content: center;
@@ -13,11 +13,11 @@
     z-index: 1;
 }
 .content .main-cycle-time {
-    font: 700 84rpx/100rpx DIN Alternate,Roboto-Condensed;
+    font: 700 104rpx/124rpx DIN Alternate,Roboto-Condensed;
 }
 .content .sub-cycle-time {
     display: inline-block;
-    font: 700 48rpx/100rpx PingFang SC;
+    font: 700 56rpx/124rpx PingFang SC;
     margin-left: 10rpx;
 }
 .content .operate {
@@ -54,7 +54,7 @@
     bottom: 0;
     right: 0;
     left: 0;
-    font: 32rpx/44rpx PingFang SC;
+    font: 36rpx/36rpx PingFang SC;
     z-index: 10;
 }
 .progress .duration {
@@ -100,26 +100,28 @@
 }
 .action-name, .action-cycle-time {
     margin-bottom: 30rpx;
-    font: 52rpx/74rpx PingFang SC;
+    font: 64rpx/90rpx PingFang SC;
 }
 .action-cycle-time {
     color:rgba(102,102,102,1);
 }
 /*rest-layer*/
 .rest-time {
-    margin: 198rpx 0 240rpx;
-    font: bold 130rpx/156rpx DIN Alternate,Roboto-Condensed;
+    margin: 96rpx 0 40rpx;
+    font: bold 142rpx/170rpx DIN Alternate,Roboto-Condensed;
 }
 .next-action-info {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     padding: 0 20rpx;
+    font: 36rpx/36rpx PingFang SC;
 }
 .next-cover {
-    width: 248rpx;
-    height: 284rpx;
-    padding: 0 15rpx;
+    width: 390rpx;
+    height: 448rpx;
+    margin: 20rpx 0;
 }
 .next-info {
     display: flex;
@@ -128,19 +130,18 @@
     align-items: center;
 }
 .next-action-name {
-    width: 200rpx;
-
+    width: 400rpx;
 }
 .next-action-cycle-time {
-    width: 200rpx;
-    text-align: left;
+    margin-top: 6px;
+    color: #666;
 }
 .operate-lay {
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding: 0 70rpx;
-    margin-top: 108rpx;
+    margin-top: 50rpx;
 }
 /*pause-layer*/
 .pause-layer {
@@ -155,18 +156,18 @@
 }
 .result-text-01 {
     margin: 96rpx 0 14rpx;
-    font: 42rpx/58rpx PingFang SC;
+    font: 40rpx/56rpx PingFang SC;
 }
 .result-text-02 {
     margin-bottom: 98rpx;
-    font: 56rpx/80rpx PingFang SC;
+    font: bold 56rpx/80rpx PingFang SC;
 }
 .global-record-time-text {
-    font: bold 108rpx/130rpx DIN Alternate,Roboto-Condensed;
+    font: bold 128rpx/154rpx DIN Alternate,Roboto-Condensed;
 }
 .result-text-03 {
     margin-bottom: 126rpx;
-    font: 44rpx/60rpx PingFang SC;
+    font: 48rpx/48rpx PingFang SC;
 }
 .action-list {
     display: flex;
