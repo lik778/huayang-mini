@@ -1,25 +1,10 @@
 // pages/userCenter/userCenter.js
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { GLOBAL_KEY } from "../../lib/config"
 import request from "../../lib/request"
-import {
-  getSignData,
-  getTaskList,
-  increaseExp,
-  needUpdateUserInfo,
-  taskCheckIn
-} from "../../api/course/index"
-import {
-  getUserInfo
-} from "../../api/mine/index"
-import {
-  getLocalStorage,
-  setLocalStorage
-} from "../../utils/util"
-import {
-  checkAuth
-} from "../../utils/auth"
+import { getSignData, getTaskList, increaseExp, needUpdateUserInfo, taskCheckIn } from "../../api/course/index"
+import { getUserInfo } from "../../api/mine/index"
+import { getLocalStorage, setLocalStorage } from "../../utils/util"
+import { checkAuth } from "../../utils/auth"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -207,7 +192,7 @@ Page({
   // 获取个人信息
   getUserInfo() {
     this.setData({
-      userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+      userInfo: getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
     })
   },
   // 获取任务列表
@@ -281,7 +266,7 @@ Page({
     }
     checkAuth({
       listenable: true,
-      ignoreFocusLogin: true
+      ignoreFocusLogin: false
     }).then(() => {
       this.getUserInfo()
       this.getSignData()

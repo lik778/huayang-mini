@@ -59,8 +59,8 @@ function getKeyValue(keyAry = [], targetObject = {}) {
  */
 const bxPoint = function(siteId, params, ispv = true) {
   const commonParams = {}
-  let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo))
-  let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+  let userInfo = getLocalStorage(GLOBAL_KEY.userInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)) : {}
+  let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
   userInfo = {...userInfo, ...accountInfo}
   if (userInfo) {
     collectKeyAry.forEach((collectKeyAry) => {

@@ -98,13 +98,13 @@ Page({
 			}
 		} else {
 			if (didFocusLogin) {
+				// 用户的拒绝，对不起请继续授权
+				console.error('用户拒绝手机号授权')
+			} else {
 				// 审核人员的拒绝
 				wx.switchTab({
 					url: "/pages/discovery/discovery"
 				})
-			} else {
-				// 用户的拒绝，对不起请继续授权
-				console.error('用户拒绝手机号授权')
 			}
 		}
 	},

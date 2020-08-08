@@ -33,7 +33,10 @@ const checkAuth = async ({listenable = false, ignoreFocusLogin = false} = {}) =>
 				}
 			})
 		}
-
+	} else {
+		if (!getLocalStorage(GLOBAL_KEY.accountInfo)) {
+			wx.navigateTo({url: "/pages/auth/auth"})
+		}
 	}
 }
 

@@ -81,7 +81,7 @@ Page({
 
 		checkAuth({
 			listenable: true,
-			ignoreFocusLogin: true
+			ignoreFocusLogin: false
 		})
 
 		this.initial()
