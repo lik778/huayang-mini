@@ -58,8 +58,8 @@ Page({
 	 */
 	onLoad: function (options) {
 		bxPoint("applets_practice", {from_uid: options.invite_user_id})
-		// 检查是否需要展示提示层
-		this.checkTipsLay()
+		// 检查是否需要展示提示层 TODO 暂时关闭，14号开启
+		// this.checkTipsLay()
 	},
 
 	/**
@@ -153,7 +153,7 @@ Page({
 	// 处理点击课程事件
 	handleCourseTap(e) {
 		wx.navigateTo({
-			url: "/subCourse/practiceDetail/practiceDetail?courseId=" + e.currentTarget.dataset.item.kecheng.id
+			url: "/subCourse/practiceDetail/practiceDetail?courseId=" + e.currentTarget.dataset.id
 		})
 	},
 	// 处理练习按钮事件

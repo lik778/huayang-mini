@@ -125,7 +125,7 @@ Page({
 	},
 	// 初始化
 	initial() {
-		queryBootCampCourseList({limit: 4}).then((data) => {
+		queryBootCampCourseList({kecheng_type: 3, limit: 4}).then((data) => {
 			data = data || []
 			data = data.map(item => {
 				return {
