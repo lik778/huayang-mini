@@ -42,23 +42,16 @@ Page({
     gradeData: {
       experNum: 0,
       upgrade: false,
+      text02: "",
+      text03: "",
       showLevelAlert: false
     }
   },
   // 获取用户信息
   getUserSingerInfo() {
     getUserInfo('scene=zhide').then(res => {
-      let userInfoLate = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-      if (userInfoLate.user_grade < res.user_grade) {
-        // 升级了
-        this.setData({
-          gradeData: {
-            experNum: experNumData,
-            upgrade: true,
-            showLevelAlert: true
-          }
-        })
-      }
+
+      this.needUpdateUserInfo(res)
       setLocalStorage(GLOBAL_KEY.accountInfo, res)
       let data = parseInt((res.user_experience / res.next_level_experience) * 100)
       this.setData({
@@ -68,19 +61,53 @@ Page({
     })
   },
   // 判断是否需要填写用户资料
-  needUpdateUserInfo() {
+  needUpdateUserInfo(res) {
     needUpdateUserInfo({
       user_id: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id
-    }).then(res => {
+    }).then(res1 => {
+      // res===false不需要显示完善资料
       // res=true
-      if (!res) {
+      if (!res1) {
+        // false不需要显示完善资料
         this.setData({
           taskStyle: "top:-54rpx",
           functionStyle: "top:-74rpx"
         })
+        if (getLocalStorage(GLOBAL_KEY.showFillMsg) !== undefined) {
+          // 说明刚刚完善资料,弹弹窗
+          let userInfoLate = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+          if (userInfoLate.user_grade < res.user_grade) {
+            // 完善资料升级了
+            this.setData({
+              gradeData: {
+                experNum: res.user_grade,
+                upgrade: true,
+                text02: "",
+                text03: "",
+                showLevelAlert: true
+              }
+            })
+          } else {
+            // 完善资料未升级
+            this.setData({
+              gradeData: {
+                experNum: 100,
+                text02: "完善资料成功",
+                text03: res.user_grade < 3 ? `还差${res.next_level_experience-res.user_experience}升至Lv${res.user_grade+1}` : "",
+                upgrade: false,
+                showLevelAlert: true
+              }
+            })
+          }
+        }
+        wx.removeStorage({
+          key: GLOBAL_KEY.showFillMsg
+        })
+      } else {
+        setLocalStorage(GLOBAL_KEY.showFillMsg, true)
       }
       this.setData({
-        showMessage: res,
+        showMessage: res1,
         showAll: true
       })
     })
@@ -133,11 +160,13 @@ Page({
       }).then(res => {
         this.getUserSingerInfo()
         if (res.has_grade) {
-          // 升级了
+          // 签到升级了
           this.setData({
             gradeData: {
-              experNum: experNumData,
+              experNum: res.level,
               upgrade: true,
+              text02: "",
+              text03: "",
               showLevelAlert: true
             }
           })
@@ -146,6 +175,8 @@ Page({
           this.setData({
             gradeData: {
               experNum: experNumData,
+              text02: "签到成功",
+              text03: res.level < 3 ? `还差${res.next_experience}升至Lv${res.level+1}` : "",
               upgrade: false,
               showLevelAlert: true
             }
@@ -254,7 +285,7 @@ Page({
     }).then(() => {
       this.getUserInfo()
       this.getSignData()
-      this.needUpdateUserInfo()
+
     })
 
     this.getTaskList()
