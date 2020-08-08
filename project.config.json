@@ -117,7 +117,7 @@
 					"id": 7,
 					"name": "subCourse/practiceDetail/practiceDetail",
 					"pathName": "subCourse/practiceDetail/practiceDetail",
-					"query": "courseId=16",
+					"query": "courseId=1",
 					"scene": null
 				},
 				{

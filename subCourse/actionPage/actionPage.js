@@ -59,7 +59,9 @@ Page({
 
 		didPracticeDone: false, // 整个练习是否结束
 
-		bgAudio: null // 背景音乐播放器
+		bgAudio: null, // 背景音乐播放器
+
+		accordPause: false // 用户是否手动暂停
 	},
 
 	/**
@@ -133,9 +135,8 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		// 暂停状态是自动播放
-		console.error('onShow', !this.data.isRunning)
-		if (!this.data.isRunning) {
+		// 用户非手动暂停时自动延续上次播放进度
+		if (!this.data.accordPause && !this.data.isRunning) {
 			this.toggleAction("play")
 		}
 	},
@@ -144,6 +145,11 @@ Page({
 	 * 生命周期函数--监听页面隐藏
 	 */
 	onHide: function () {
+		// 在休息层 & 未暂停休息 => 暂停休息阶段
+		if (this.data.didShowRestLayer && !this.data.didPauseRest) {
+			this.pauseRestTime("pause")
+		}
+
 		this.toggleAction("pause")
 	},
 
@@ -230,11 +236,23 @@ Page({
 		})
 
 	},
+	// 页面切换休息层状态
+	checkoutRestStatus() {
+		if (this.data.didPauseRest) {
+			this.pauseRestTime("play")
+		} else {
+			this.pauseRestTime("pause")
+		}
+	},
+	// 页面切换播放状态
 	checkoutPracticeStatus() {
 		if (this.data.isRunning) {
 			this.toggleAction("pause")
+			// 记录用户手动暂停，onShow时不会自动启动
+			this.setData({accordPause: true})
 		} else {
 			this.toggleAction("play")
+			this.setData({accordPause: false})
 		}
 	},
 	/**
@@ -258,11 +276,14 @@ Page({
 			}
 		})
 	},
-	// 主动暂停休息阶段
-	pauseRestTime() {
+	/**
+	 * 主动暂停休息阶段
+	 * @param status pause 暂停
+	 */
+	pauseRestTime(status) {
 		this.setData({
-			didPauseRest: !this.data.didPauseRest,
-			didPauseRecordGlobalTime: !this.data.didPauseRest
+			didPauseRest: status === 'pause',
+			didPauseRecordGlobalTime: status === 'pause'
 		})
 	},
 	// 修改休息阶段的休息时间
