@@ -45,7 +45,7 @@
                 id="actionVideo"
                 controls="{{false}}"
                 custom-cache="{{false}}"
-                object-fit="contain"
+                object-fit="cover"
                 enable-play-gesture="{{false}}"
                 enable-auto-rotation="{{true}}"
                 play-btn-position="top"
