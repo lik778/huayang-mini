@@ -1,8 +1,19 @@
 // 加入训练营
-import { GLOBAL_KEY } from "../../lib/config"
-import { checkAuth } from "../../utils/auth"
-import { getCampDetail, getHasJoinCamp, joinCamp } from "../../api/course/index"
-import { getLocalStorage, payCourse } from "../../utils/util"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
+import {
+  checkAuth
+} from "../../utils/auth"
+import {
+  getCampDetail,
+  getHasJoinCamp,
+  joinCamp
+} from "../../api/course/index"
+import {
+  getLocalStorage,
+  payCourse
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -13,8 +24,11 @@ Page({
   data: {
     statusHeight: 0,
     campId: 0,
+    titleName: "",
     joinTime: "",
+    hasJoinAll: false,
     endTime: "",
+    userInfo: "",
     campDetailData: {},
   },
   // 获取训练营详情
@@ -23,6 +37,9 @@ Page({
       traincamp_id: id
     }).then(res => {
       res.desc = res.desc.split(",")
+      this.setData({
+        titleName: res.name
+      })
       let endTime = ''
       let pushTime = ''
       let data = res.start_date.split(",")
@@ -38,6 +55,7 @@ Page({
         }
       }
       pushTime = endTime.split("-")[1] + "月" + endTime.split("-")[2] + "日"
+      console.log(res)
       this.setData({
         campDetailData: res,
         joinTime: pushTime,
@@ -60,7 +78,7 @@ Page({
           id: res.id,
           name: '加入训练营'
         }).then(res => {
-          console.log(res,"测试支付")
+          // 设置顶部标题
           if (res.errMsg === "requestPayment:ok") {
             this.backFun({
               type: "success"
@@ -83,7 +101,9 @@ Page({
     })
   },
   // 集中处理支付回调
-  backFun({ type }) {
+  backFun({
+    type
+  }) {
     if (type === 'fail') {
       wx.showToast({
         title: '支付失败',
@@ -109,8 +129,15 @@ Page({
     getHasJoinCamp({
       traincamp_id: id
     }).then(res => {
-      if (res.length === 0) {
+      if (res.length === 0 || res.status === 2) {
         this.getCampDetail(id)
+        if (res.status === 2) {
+          // 代表是已经加入过放弃的
+          this.setData({
+            hasJoinAll: true
+          })
+        }
+
       } else {
         wx.redirectTo({
           url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
@@ -126,13 +153,18 @@ Page({
       listenable: true,
       ignoreFocusLogin: true
     }).then(() => {
+      let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+      console.log(userInfo.is_zhide_vip)
       this.setData({
-        campId: options.id
+        campId: options.id,
+        userInfo: userInfo
       })
       // id代表训练营ID
       this.checkCamp(this.data.campId)
     })
-    bxPoint("camp_introduce", {from_uid: options.from_uid})
+    bxPoint("camp_introduce", {
+      from_uid: options.from_uid
+    })
   },
 
   /**

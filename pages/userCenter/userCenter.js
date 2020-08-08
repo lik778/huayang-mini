@@ -1,10 +1,25 @@
 // pages/userCenter/userCenter.js
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 import request from "../../lib/request"
-import { getSignData, getTaskList, increaseExp, needUpdateUserInfo, taskCheckIn } from "../../api/course/index"
-import { getUserInfo } from "../../api/mine/index"
-import { getLocalStorage, setLocalStorage } from "../../utils/util"
-import { checkAuth } from "../../utils/auth"
+import {
+  getSignData,
+  getTaskList,
+  increaseExp,
+  needUpdateUserInfo,
+  taskCheckIn
+} from "../../api/course/index"
+import {
+  getUserInfo
+} from "../../api/mine/index"
+import {
+  getLocalStorage,
+  setLocalStorage
+} from "../../utils/util"
+import {
+  checkAuth
+} from "../../utils/auth"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -33,6 +48,17 @@ Page({
   // 获取用户信息
   getUserSingerInfo() {
     getUserInfo('scene=zhide').then(res => {
+      let userInfoLate = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+      if (userInfoLate.user_grade < res.user_grade) {
+        // 升级了
+        this.setData({
+          gradeData: {
+            experNum: experNumData,
+            upgrade: true,
+            showLevelAlert: true
+          }
+        })
+      }
       setLocalStorage(GLOBAL_KEY.accountInfo, res)
       let data = parseInt((res.user_experience / res.next_level_experience) * 100)
       this.setData({
@@ -49,7 +75,7 @@ Page({
       // res=true
       if (!res) {
         this.setData({
-          taskStyle: "top:-74rpx",
+          taskStyle: "top:-54rpx",
           functionStyle: "top:-74rpx"
         })
       }
@@ -91,7 +117,9 @@ Page({
   },
   // 签到
   checkin(e) {
-    bxPoint("mine_task", {task_type: "signIn"}, false)
+    bxPoint("mine_task", {
+      task_type: "signIn"
+    }, false)
     let experNumData = Number(e.currentTarget.dataset.type.textData1.split("+")[1].split("成长值")[0])
     taskCheckIn({
       open_id: getLocalStorage(GLOBAL_KEY.openId),
@@ -138,7 +166,9 @@ Page({
   //
   // 训练/打卡
   pratice() {
-    bxPoint("mine_task", {task_type: "toTrain"}, false)
+    bxPoint("mine_task", {
+      task_type: "toTrain"
+    }, false)
     wx.switchTab({
       url: '/pages/practice/practice',
     })
@@ -192,7 +222,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    bxPoint("applets_mine", {from_uid: options.invite_user_id})
+    bxPoint("applets_mine", {
+      from_uid: options.invite_user_id
+    })
     let data = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     this.setData({
       statusHeight: data,
@@ -216,7 +248,6 @@ Page({
         selected: 2
       })
     }
-
     checkAuth({
       listenable: true,
       ignoreFocusLogin: true

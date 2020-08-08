@@ -2,13 +2,13 @@
 <view class="join-camp" wx:if="{{campDetailData.id}}">
 	<!-- navibar栏 -->
 	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
-		<naviBar title="花样展览馆" color="#fff" titleColor="#000000"></naviBar>
+		<naviBar title="{{titleName}}" color="#fff" titleColor="#000000"></naviBar>
 	</view>
 	<view class="detail">
 		<image src="{{item}}" wx:for="{{campDetailData.desc}}" wx:key="index"></image>
 	</view>
 	<view class="button-line">
-		<button bindtap="joinCamp" wx-if="{{campDetailData.discount_price>0}}" class="pay">立即支付 ¥{{campDetailData.discount_price/100}}</button>
+		<button bindtap="joinCamp" wx-if="{{campDetailData.discount_price>0&&!userInfo.is_zhide_vip&&!hasJoinAll}}" class="pay">立即支付 ¥{{campDetailData.discount_price/100}}</button>
 		<button bindtap="joinCamp" wx:else class="join">立即加入 <text>({{joinTime}}开营)</text></button>
 	</view>
 </view>
