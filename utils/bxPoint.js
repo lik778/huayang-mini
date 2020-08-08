@@ -74,6 +74,7 @@ const bxPoint = function(siteId, params, ispv = true) {
     ...commonParams,
     ...params,
     __debug: "1", // TODO 测试打点数据，上线时记得去除
+    time: +new Date(),
     site_id: siteId,
     tracktype: ispv ? "pageview" : "event",
     event_type: 'huayang'

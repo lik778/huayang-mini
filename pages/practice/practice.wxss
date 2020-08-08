@@ -269,3 +269,33 @@
 .recommend-title {
     margin-bottom: 40rpx;
 }
+.tip-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-top: 32rpx;
+    box-sizing: border-box;
+    background: rgba(0,0,0,.7);
+    z-index: 10;
+    color: white;
+    font: 52rpx/52rpx PingFang SC;
+    text-align: right;
+}
+.tip-dot {
+    width: 70rpx;
+    height: 24rpx;
+    margin: 0 20rpx;
+}
+.tip-arrow {
+    width: 52rpx;
+    height: 126rpx;
+    margin-left: 38rpx;
+}
+.tip-line {
+    margin: 0 116rpx 40rpx 0;
+}
+.tip-line.tip-text-02 {
+    margin-right: 62rpx;
+}
