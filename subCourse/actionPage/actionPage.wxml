@@ -98,12 +98,12 @@
         <cover-view class="result-text-03">训练时长</cover-view>
         <cover-view class="action-list">
             <cover-view class="action-item" wx:for="{{originData}}" wx:key="index">
-                <cover-view class="action-item-text">{{ item.name }}</cover-view>
-                <cover-view class="action-item-text">x{{ item.cycleTime }}{{ item.meta_type == 2 ? '次' : '秒' }}</cover-view>
+                <cover-view class="action-item-text action-item-text-left limit-one-line">{{ item.name }}</cover-view>
+                <cover-view class="action-item-text action-item-text-right">x{{ item.cycleTime }}{{ item.meta_type == 2 ? '次' : '秒' }}</cover-view>
             </cover-view>
         </cover-view>
         <cover-view class="result-btn" bind:tap="show">打卡</cover-view>
     </cover-view>
 
-    <levelAlert didShow="{{didShowLevelAlert}}" hasGrade="{{hasGrade}}" number="{{levelNumber}}"></levelAlert>
+    <levelAlert didShow="{{didShowLevelAlert}}" hasGrade="{{hasGrade}}" number="{{levelNumber}}" text03="{{nextLevelText}}"></levelAlert>
 </view>

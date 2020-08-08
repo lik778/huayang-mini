@@ -3,6 +3,8 @@
         <cover-view class="box">
             <cover-view class="text-01">{{text01}}</cover-view>
             <cover-view class="text-02">{{text02}}</cover-view>
+            <cover-view class="text-03" wx:if="{{!hasGrade}}">{{text03}}</cover-view>
+            <cover-view class="text-03" wx:if="{{!hasGrade}}">解锁更多课程</cover-view>
         </cover-view>
         <cover-image mode="aspectFit" class="alert-icon {{hasGrade ? 'champion' : ''}}" src="{{iconImage}}"></cover-image>
     </cover-view>

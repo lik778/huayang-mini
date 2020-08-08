@@ -1,7 +1,7 @@
 const ICON = [
 	"",
-	"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596425986goLNVh.jpg",
-	"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596426003xZXlEe.jpg"
+	"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596425986goLNVh.jpg", // 经验提示钻石icon
+	"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596426003xZXlEe.jpg", // 等级升级皇冠icon
 ]
 
 Component({
@@ -18,7 +18,8 @@ Component({
 		}, // 经验值 || 等级数字
 		hasGrade: {type: Number, value: false}, // false=>提升经验 true=>提升等级
 		didShow: {type: Boolean, value: false},
-		text02: {type: String, value: ""}, // 自定义底部文案
+		text02: {type: String, value: ""},
+		text03: {type: String, value: ""},
 	},
 
 	/**
@@ -29,6 +30,7 @@ Component({
 		iconImage: "",
 		text01: "",
 		text02: "",
+		text03: "",
 		no: 0
 	},
 

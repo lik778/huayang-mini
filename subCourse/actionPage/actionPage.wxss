@@ -180,6 +180,15 @@
 }
 .action-item-text {
     font: 32rpx/70rpx PingFang SC;
+    text-align: left;
+}
+.action-item-text-left {
+    width: 70%;
+    text-align: left;
+}
+.action-item-text-right {
+    width: 30%;
+    text-align: right;
 }
 .result-btn {
     position: fixed;

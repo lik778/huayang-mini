@@ -38,6 +38,6 @@
     </view>
     <canvas canvas-id="order" id="canvas-order"></canvas>
 
-    <levelAlert didShow="{{didShowLevelAlert}}" hasGrade="{{hasGrade}}" number="{{levelNumber}}"></levelAlert>
+    <levelAlert didShow="{{didShowLevelAlert}}" hasGrade="{{hasGrade}}" text02="完成打卡" number="{{levelNumber}}" text03="{{nextLevelText}}"></levelAlert>
 </view>
 

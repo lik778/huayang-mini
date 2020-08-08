@@ -55,6 +55,7 @@ Page({
 		didShowLevelAlert: false, // 等级经验弹窗
 		hasGrade: false, // 是否升级
 		levelNumber: 0, // 升级等级/经验
+		nextLevelText: "", // 升下一级所需经验
 
 		didPracticeDone: false, // 整个练习是否结束
 
@@ -538,7 +539,8 @@ Page({
 					this.setData({
 						didShowLevelAlert: true,
 						hasGrade: data.has_grade,
-						levelNumber: data.has_grade ? data.level : 10
+						levelNumber: data.has_grade ? data.level : 10,
+						nextLevelText: data.level < 3 ? `还差${data.next_experience}升至Lv${data.level+1}` : ""
 					})
 				}
 			})
