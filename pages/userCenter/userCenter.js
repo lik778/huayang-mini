@@ -68,7 +68,7 @@ Page({
         user_id: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id
       }).then(res1 => {
         // res===false不需要显示完善资料
-        res1 = false
+        // res1 = false
         // console.log(res1)
         if (!res1) {
           // false不需要显示完善资料
