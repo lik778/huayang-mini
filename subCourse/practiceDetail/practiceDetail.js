@@ -49,7 +49,7 @@ Page({
 			accountInfo
 		})
 
-		bxPoint("course_details", {from_uid: options.invite_user_id})
+		bxPoint("course_details", {from_uid: getApp().globalData.super_user_id})
 	},
 
 	/**

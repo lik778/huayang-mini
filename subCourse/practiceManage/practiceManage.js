@@ -15,7 +15,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    bxPoint("parctice_manage", {from_uid: options.invite_user_id})
+    bxPoint("parctice_manage", {})
   },
 
   /**

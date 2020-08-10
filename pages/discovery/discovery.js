@@ -1,20 +1,8 @@
 // pages/ discovery/discovery.js
-import {
-  getLocalStorage,
-  simpleDurationSimple
-} from "../../utils/util"
-import {
-  checkAuth
-} from "../../utils/auth"
-import {
-  getActivityList,
-  getCampList,
-  getFindBanner,
-  getShowCourseList
-} from "../../api/course/index"
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { getLocalStorage, simpleDurationSimple } from "../../utils/util"
+import { checkAuth } from "../../utils/auth"
+import { getActivityList, getCampList, getFindBanner, getShowCourseList } from "../../api/course/index"
+import { GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import request from "../../lib/request"
 
@@ -135,7 +123,7 @@ Page({
    */
   onLoad: function (options) {
     bxPoint("applets_find", {
-      from_uid: options.invite_user_id
+      from_uid: getApp().globalData.super_user_id
     })
   },
   /**

@@ -112,6 +112,11 @@ Page({
 	 * Lifecycle function--Called when page load
 	 */
 	onLoad: function (options) {
+		this.setData({
+			invite_user_id: options.invite_user_id
+		})
+		getApp().globalData.super_user_id = options.invite_user_id
+
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 		if ($notNull(accountInfo) && hasUserInfo()) {
 			wx.switchTab({
@@ -119,9 +124,6 @@ Page({
 			})
 			return
 		}
-		this.setData({
-			invite_user_id: options.invite_user_id
-		})
 	},
 
 	/**
