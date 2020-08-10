@@ -146,7 +146,7 @@ Page({
       })
     }
 
-    checkAuth({redirectPath: "/pages/discovery/discovery", redirectType: "redirect"}).then(() => {
+    checkAuth({redirectPath: "/pages/discovery/discovery", redirectType: "switch"}).then(() => {
       this.getCampList()
       this.getBanner()
       this.getCourseList()

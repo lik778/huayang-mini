@@ -87,10 +87,12 @@ Page({
 
 				// 是否需要自定义调整页面
 				if (this.data.redirectPath) {
-					if (this.data.redirectType === "navigate") {
-						wx.navigateTo({url: this.data.redirectPath})
-					} else {
+					if (this.data.redirectType === "redirect") {
 						wx.redirectTo({url: this.data.redirectPath})
+					} else if (this.data.redirectType === "switch") {
+						wx.switchTab({url: this.data.redirectPath})
+					} else {
+						wx.navigateTo({url: this.data.redirectPath})
 					}
 					return
 				}
@@ -124,6 +126,8 @@ Page({
 	 * Lifecycle function--Called when page load
 	 */
 	onLoad: function ({invite_user_id, redirectPath, redirectType}) {
+		redirectPath = redirectPath.replace("$", "?")
+		redirectPath = redirectPath.replaceAll("#", "=")
 		this.setData({
 			invite_user_id: invite_user_id,
 			redirectPath,

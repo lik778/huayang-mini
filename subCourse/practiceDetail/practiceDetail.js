@@ -41,7 +41,8 @@ Page({
 
 		checkAuth({
 			authPhone: true,
-			redirectPath: `/subCourse/practiceDetail/practiceDetail?courseId=${courseId}`
+			redirectPath: `/subCourse/practiceDetail/practiceDetail$courseId#${courseId}`,
+			redirectType: 'redirect'
 		})
 
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}

@@ -1,19 +1,8 @@
 // 加入训练营
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  checkAuth
-} from "../../utils/auth"
-import {
-  getCampDetail,
-  getHasJoinCamp,
-  joinCamp
-} from "../../api/course/index"
-import {
-  getLocalStorage,
-  payCourse
-} from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
+import { checkAuth } from "../../utils/auth"
+import { getCampDetail, getHasJoinCamp, joinCamp } from "../../api/course/index"
+import { getLocalStorage, payCourse } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -178,7 +167,8 @@ Page({
   onLoad: function (options) {
     checkAuth({
       authPhone: true,
-      redirectPath: `/subCourse/joinCamp/joinCamp?id=${options.id}`
+      redirectPath: `/subCourse/joinCamp/joinCamp$id#${options.id}`,
+      redirectType: 'redirect'
     }).then(() => {
       let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
       console.log(userInfo.is_zhide_vip)

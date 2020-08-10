@@ -1,25 +1,10 @@
 // pages/userCenter/userCenter.js
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { GLOBAL_KEY } from "../../lib/config"
 import request from "../../lib/request"
-import {
-  getSignData,
-  getTaskList,
-  increaseExp,
-  needUpdateUserInfo,
-  taskCheckIn
-} from "../../api/course/index"
-import {
-  getUserInfo
-} from "../../api/mine/index"
-import {
-  getLocalStorage,
-  setLocalStorage
-} from "../../utils/util"
-import {
-  checkAuth
-} from "../../utils/auth"
+import { getSignData, getTaskList, increaseExp, needUpdateUserInfo, taskCheckIn } from "../../api/course/index"
+import { getUserInfo } from "../../api/mine/index"
+import { getLocalStorage, setLocalStorage } from "../../utils/util"
+import { checkAuth } from "../../utils/auth"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -291,7 +276,7 @@ Page({
     checkAuth({
       authPhone: true,
       redirectPath: "/pages/practice/practice",
-      redirectType: "redirect"
+      redirectType: "switch"
     }).then(() => {
       this.getUserInfo()
       this.getSignData()
