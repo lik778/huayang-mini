@@ -3,5 +3,6 @@
   "usingComponents": {
     "naviBar": "../../components/actionNavBar/actionNavBar",
     "levelAlert": "../../components/levelAlert/levelAlert"
-  }
+  },
+  "pageOrientation": "portrait"
 }

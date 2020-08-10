@@ -59,7 +59,7 @@ Page({
 	onLoad: function (options) {
 		bxPoint("applets_practice", {from_uid: options.invite_user_id})
 		// 检查是否需要展示提示层 TODO 暂时关闭，14号开启
-		// this.checkTipsLay()
+		this.checkTipsLay()
 	},
 
 	/**
@@ -202,7 +202,9 @@ Page({
 				return
 			}
 			case 'video': {
-				// TODO video预览页面 item.video
+				wx.navigateTo({
+					url: '/subLive/videoPage/videoPage?link=' + item.video
+				})
 				return
 			}
 		}

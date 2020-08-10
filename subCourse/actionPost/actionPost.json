@@ -3,5 +3,7 @@
   "usingComponents": {
     "naviBar": "../../components/navibar/navibar",
     "levelAlert": "../../components/levelAlert/levelAlert"
-  }
+  },
+  "pageOrientation": "portrait",
+  "backgroundColor": "#37383B"
 }

@@ -2,14 +2,7 @@
 import { $notNull, getLocalStorage } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
 import { LocaleVoice, voices_ary, voices_key, voices_number } from "../../lib/voices"
-import {
-	completePractice,
-	increaseExp,
-	queryPunchCardBg,
-	queryPunchCardQrCode,
-	queryUserHaveClassesInfo,
-	recordPracticeBehavior
-} from "../../api/course/index"
+import { completePractice, increaseExp, recordPracticeBehavior } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -31,7 +24,6 @@ Page({
 		targetLoopCount: 1, // 正在执行的动作的循环次数
 
 		mainPointAudio: null, // 要领播放器
-		mainPointAudioEventMounted: false,
 		isPlayMainPointAudioPlaying: false, // 要领语音是否正在播放
 		didPlayMainPointAudioInCurrentTargetAction: false, // 是否在当前动作生命周期中播放过要领语音
 
@@ -80,7 +72,7 @@ Page({
 		})
 
 		eventChannel.on("transmitCourseMeta", function (data) {
-			console.log(data)
+			// console.log(data)
 			let actionData = JSON.parse(data)
 
 			let completedCourseMetaData = []
@@ -99,7 +91,7 @@ Page({
 		})
 
 		eventChannel.on("transmitCourseInfo", function (data) {
-			console.log(data)
+			// console.log(data)
 			let courseInfo = JSON.parse(data)
 			self.setData({
 				courseInfo
@@ -123,6 +115,16 @@ Page({
 
 		// 启动
 		this.start()
+
+
+		// 设置"要领"音频播放结束监听回调
+		this.data.mainPointAudio.onEnded(function () {
+			// 还原口令音量
+			self.data.bgAudio.volume = 1
+			self.setData({
+				isPlayMainPointAudioPlaying: false // 释放要领正在播放中的状态
+			})
+		})
 	},
 
 	/**
@@ -181,41 +183,14 @@ Page({
 	onReachBottom: function () {
 
 	},
-
-	/**
-	 * 用户点击右上角分享
-	 */
-	onShareAppMessage: function () {
-
-	},
 	/**
 	 * 秀一下
 	 */
 	async show() {
 		bxPoint("course_show", {practice_time: this.data.globalRecordTiming}, false)
-		let now = new Date()
-		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
-		let cover = await queryPunchCardBg()
-		let qrCode = await queryPunchCardQrCode({kecheng_id: this.data.courseInfo.id})
-		let userHaveClassesInfo = await queryUserHaveClassesInfo()
-		// 分享海报数据
-		let data = {
-			date: `${now.getFullYear()} ${String(now.getMonth() + 1).padStart(2, "0")}/${String(now.getDate()).padStart(2, "0")}`,
-			recordNo: userHaveClassesInfo.kecheng_date_count,
-			actionName: this.data.courseInfo.name,
-			avatar: accountInfo.avatar_url,
-			nickname: accountInfo.nick_name,
-			duration: this.data.globalRecordTimeText,
-			actionNo: this.data.originData.length,
-			qrCode,
-			cover,
-			keChengId: this.data.courseInfo.id
-		}
-		wx.navigateTo({
-			url: '/subCourse/actionPost/actionPost',
-			success(res) {
-				res.eventChannel.emit('transmitPracticeData', JSON.stringify(data))
-			}
+
+		wx.redirectTo({
+			url: `/subCourse/actionPost/actionPost?actionName=${this.data.courseInfo.name}&duration=${this.data.globalRecordTimeText}&actionNo=${this.data.originData.length}&keChengId=${this.data.courseInfo.id}`
 		})
 	},
 	/**
@@ -316,7 +291,7 @@ Page({
 		await this.playTempBgAudio(this.data.targetActionObj.name_voice_link)
 		await this.playTempBgAudio(voices_number(this.data.targetActionObj.cycleTime))
 		await this.playTempBgAudio(+this.data.targetActionObj.meta_type === 2 ? LocaleVoice.lv13 : LocaleVoice.lv7)
-		//  321GO!
+		//  321开始!
 		await this.playTempBgAudio(LocaleVoice.lv18)
 		this.setData({PrepareNumber: 2})
 		await this.playTempBgAudio(LocaleVoice.lv19)
@@ -336,7 +311,7 @@ Page({
 			this.checkoutNextAction(true)
 			// 显示预备页
 			this.setData({didShowPrepareLayer: true})
-			// 下一个动作
+			// 下一个练习
 			await this.playTempBgAudio(LocaleVoice.lv15)
 			// 播报动作名称，并开始训练
 			this._playActionNameAndStartTraining()
@@ -347,7 +322,7 @@ Page({
 	 */
 	async switchNextAction() {
 		if (this.data.currentActionIndex < this.data.actionData.length - 1) {
-			console.log('下一个动作')
+			console.log('下一个练习')
 			this.stopAllAction()
 			this.checkoutNextAction()
 			// 显示预备页
@@ -356,7 +331,7 @@ Page({
 				// 最后一个动作
 				await this.playTempBgAudio(LocaleVoice.lv16)
 			} else {
-				// 下一个动作
+				// 下一个练习
 				await this.playTempBgAudio(LocaleVoice.lv15)
 			}
 			// 播报动作名称，并开始训练
@@ -373,7 +348,7 @@ Page({
 			this.setData({didPauseRecordGlobalTime: true})
 			this.data.video.pause()
 			// [要领播放中]&当前动作未播放过[要领]，则暂停
-			if (this.data.isPlayMainPointAudioPlaying && !this.data.didPlayMainPointAudioInCurrentTargetAction) {
+			if (this.data.isPlayMainPointAudioPlaying && this.data.isPlayMainPointAudioPlaying) {
 				this.data.mainPointAudio && this.data.mainPointAudio.pause()
 			}
 			this.data.bgAudio.pause()
@@ -382,7 +357,7 @@ Page({
 			this.setData({didPauseRecordGlobalTime: false})
 			this.data.video.play()
 			// [要领播放中]&当前动作未播放过[要领]，则继续播放
-			if (this.data.isPlayMainPointAudioPlaying && !this.data.didPlayMainPointAudioInCurrentTargetAction) {
+			if (this.data.isPlayMainPointAudioPlaying && this.data.isPlayMainPointAudioPlaying) {
 				this.data.mainPointAudio && this.data.mainPointAudio.play()
 			}
 			this.data.bgAudio.play()
@@ -438,18 +413,9 @@ Page({
 		this.data.mainPointAudio.play()
 
 		// 正在播放要领
-		this.setData({isPlayMainPointAudioPlaying: true})
-
-		if (this.data.mainPointAudioEventMounted) return
-		this.setData({mainPointAudioEventMounted: true})
-
-		this.data.mainPointAudio.onEnded(function () {
-			// 还原口令音量
-			self.data.bgAudio.volume = 1
-			self.setData({
-				didPlayMainPointAudioInCurrentTargetAction: true, // 标示当前动作已经播放过要领
-				isPlayMainPointAudioPlaying: false // 释放要领正在播放中的状态
-			})
+		this.setData({
+			didPlayMainPointAudioInCurrentTargetAction: true, // 标示当前动作已经播放过要领
+			isPlayMainPointAudioPlaying: true
 		})
 	},
 	/**
@@ -461,6 +427,7 @@ Page({
 		if (+this.data.targetActionObj.meta_type === 2) {
 			link = commands[this.data.targetActionIndex % commands.length]
 		} else {
+			// 嘀
 			link = LocaleVoice.lv10
 		}
 		this.setData({targetActionIndex: this.data.targetActionIndex + 1})
@@ -493,7 +460,7 @@ Page({
 		if (this.data.currentActionIndex < this.data.actionData.length) {
 			// 显示休息层
 			this.setData({didShowRestLayer: true})
-			// 6. 「休息一下吧」
+			// 6. 「休息一下」
 			this.playTempBgAudio(LocaleVoice.lv5).then(() => {
 				// 休息完开始下一个动作
 				let restPromise = new Promise(resolve => {
@@ -528,7 +495,7 @@ Page({
 						// 最后一个动作
 						await this.playTempBgAudio(LocaleVoice.lv16)
 					} else {
-						// 休息结束，下一个动作
+						// 休息结束，下一个练习
 						await this.playTempBgAudio(LocaleVoice.lv3)
 					}
 					// 播报动作名称，并开始训练
@@ -540,7 +507,7 @@ Page({
 				isRunning: false,
 				didPracticeDone: true
 			})
-			// 「恭喜你完成训练」
+			// 「恭喜你完成练习」
 			this.playTempBgAudio(LocaleVoice.lv6)
 			// 训练结束
 			this.setData({didShowResultLayer: true})
@@ -561,7 +528,7 @@ Page({
 						didShowLevelAlert: true,
 						hasGrade: data.has_grade,
 						levelNumber: data.has_grade ? data.level : 10,
-						nextLevelText: data.level < 3 ? `还差${data.next_experience}升至Lv${data.level+1}` : ""
+						nextLevelText: data.level < 3 ? `还差${data.next_experience - data.experience}升至Lv${data.level + 1}` : ""
 					})
 				}
 			})
@@ -585,7 +552,8 @@ Page({
 		// 关闭预备遮罩层, 还原PrepareNumber=3
 		this.setData({
 			didShowPrepareLayer: false,
-			PrepareNumber: 3
+			PrepareNumber: 3,
+			isRunning: true
 		})
 		// 视频开始播放
 		this.data.video.play()

@@ -161,7 +161,7 @@ Page({
             gradeData: {
               experNum: experNumData,
               text02: "签到成功",
-              text03: res.level < 3 ? `还差${res.next_experience}升至Lv${res.level+1}` : "",
+              text03: res.level < 3 ? `还差${res.next_experience - res.experience}升至Lv${res.level+1}` : "",
               upgrade: false,
               showLevelAlert: true
             }

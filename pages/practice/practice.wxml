@@ -20,7 +20,7 @@
     <view class="support-layer">
         <view class="title">
             <text>本周练习</text>
-            <text class="manage" wx:if="{{userJoinedClassesList.length > 0 && bootCampList.length > 0}}" bind:tap="goToPracticeManage">课程管理</text>
+            <text class="manage" wx:if="{{userJoinedClassesList.length > 0 || bootCampList.length > 0}}" bind:tap="goToPracticeManage">课程管理</text>
         </view>
         <view class="week-line">
             <view class="day-container" wx:for="{{weeklyLog}}" wx:key="index">

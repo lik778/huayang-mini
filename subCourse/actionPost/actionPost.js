@@ -2,7 +2,7 @@
 import { $notNull, getLocalStorage, queryWxAuth, toast } from "../../utils/util"
 import { GLOBAL_KEY, WX_AUTH_TYPE } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
-import { increaseExp } from "../../api/course/index"
+import { increaseExp, queryPunchCardBg, queryPunchCardQrCode, queryUserHaveClassesInfo } from "../../api/course/index"
 
 Page({
 
@@ -31,19 +31,8 @@ Page({
 		this.setData({
 			statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
 		})
-		const eventChannel = this.getOpenerEventChannel()
-		if ($notNull(eventChannel)) {
-			eventChannel.on('transmitPracticeData', function (data) {
-				self.setData({
-					postData: JSON.parse(data),
-					backPath: `/pages/practice/practice`
-				})
-				let timer = setTimeout(() => {
-					self.initial()
-					clearTimeout(timer)
-				}, 20)
-			})
-		}
+
+		this.cookData(options)
 	},
 
 	/**
@@ -86,7 +75,35 @@ Page({
 	onReachBottom: function () {
 
 	},
+	async cookData({actionName, duration, actionNo, keChengId}) {
+		let now = new Date()
+		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
+		let cover = await queryPunchCardBg()
+		let qrCode = await queryPunchCardQrCode({kecheng_id: keChengId})
+		let userHaveClassesInfo = await queryUserHaveClassesInfo()
 
+		let data = {
+			date: `${now.getFullYear()} ${String(now.getMonth() + 1).padStart(2, "0")}/${String(now.getDate()).padStart(2, "0")}`,
+			recordNo: userHaveClassesInfo.kecheng_date_count,
+			actionName,
+			avatar: accountInfo.avatar_url,
+			nickname: accountInfo.nick_name,
+			duration,
+			actionNo,
+			qrCode,
+			cover,
+			keChengId
+		}
+
+		this.setData({
+			postData: data,
+			backPath: `/pages/practice/practice`
+		})
+		let timer = setTimeout(() => {
+			this.initial()
+			clearTimeout(timer)
+		}, 20)
+	},
 	/**
 	 * 用户点击右上角分享
 	 */
@@ -110,7 +127,7 @@ Page({
 					didShowLevelAlert: true,
 					hasGrade: data.has_grade,
 					levelNumber: data.has_grade ? data.level : 10,
-					nextLevelText: data.level < 3 ? `还差${data.next_experience}升至Lv${data.level+1}` : ""
+					nextLevelText: data.level < 3 ? `还差${data.next_experience - data.experience}升至Lv${data.level+1}` : ""
 				})
 			}
 		})
@@ -120,7 +137,7 @@ Page({
 		// 设置线条的颜色
 		context.strokeStyle = color
 		// 设置线条的宽度
-		context.lineWidth = height
+		context.setLineWidth(height)
 		// 绘制直线
 		context.beginPath()
 		// 起点
@@ -255,6 +272,7 @@ Page({
 			}))
 		})
 		Promise.all(promiseAry).then(([coverImage, avatarImage, qrCodeImage]) => {
+			console.error(coverImage, avatarImage, qrCodeImage)
 			this.drawHiddenCanvas(coverImage, avatarImage, qrCodeImage)
 		})
 	},

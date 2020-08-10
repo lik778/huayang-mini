@@ -30,9 +30,9 @@ export const formatNumber = n => {
 }
 // 购买训练营课程
 export const payCourse = function ({
-	id,
-	name
-}) {
+																		 id,
+																		 name
+																	 }) {
 	// 调用获取支付凭证
 	let getPaySignParams = {
 		open_id: getLocalStorage(GLOBAL_KEY.openId),
@@ -44,9 +44,9 @@ export const payCourse = function ({
 	let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo" //商户key
 	return new Promise((resolve, reject) => {
 		request._post(URL.getPaySign, getPaySignParams).then(({
-			data,
-			code
-		}) => {
+																														data,
+																														code
+																													}) => {
 			if (code === 0) {
 				requestPayment({
 					prepay_id: data,
@@ -66,8 +66,8 @@ export const payCourse = function ({
  * @returns
  */
 export const payVip = function ({
-	id
-}) {
+																	id
+																}) {
 	let createOrderParmas = {
 		scene: "zhide_vip",
 		recommend_user_id: id || "",
@@ -302,11 +302,11 @@ export const getSchedule = async function (roomIds = []) {
 
 // 判断是否是会员/是否入学
 export const checkIdentity = function ({
-	roomId,
-	link,
-	zhiboRoomId,
-	customParams = {}
-}) {
+																				 roomId,
+																				 link,
+																				 zhiboRoomId,
+																				 customParams = {}
+																			 }) {
 	const userId = getLocalStorage(GLOBAL_KEY.userId)
 	return new Promise((resolve, reject) => {
 		if (userId == null) {
@@ -314,9 +314,9 @@ export const checkIdentity = function ({
 		} else {
 			// 获取直播权限
 			getWatchLiveAuth({
-					room_id: zhiboRoomId,
-					user_id: userId
-				})
+				room_id: zhiboRoomId,
+				user_id: userId
+			})
 				.then(res => {
 					if (res === 'vip') {
 						// 非会员，跳往花样汇
@@ -361,8 +361,8 @@ export const checkIdentity = function ({
 function queryLiveStatus(roomId) {
 	return new Promise((resolve, reject) => {
 		livePlayer.getLiveStatus({
-				room_id: roomId
-			})
+			room_id: roomId
+		})
 			.then(response => {
 				resolve(response)
 			})
@@ -520,14 +520,14 @@ export const batchRemoveSavedFiles = function (localFiles) {
 export const getTodayDate = (date) => {
 	// console.log(date)
 	let currentDate = date ? new Date(date) : new Date()
-	let timesStamp = currentDate.getTime();
-	let currenDay = currentDate.getDay();
-	let dates = [];
+	let timesStamp = currentDate.getTime()
+	let currenDay = currentDate.getDay()
+	let dates = []
 	let dateArr = []
 	let dateArr1 = []
 	for (let i = 0; i < 7; i++) {
 		let newDate = new Date(timesStamp + 24 * 60 * 60 * 1000 * (i - (currenDay + 6) % 7))
-		dates.push(`${newDate.getFullYear()}-${String(newDate.getMonth()+1).padStart(2, "0")}-${String(newDate.getDate()).padStart(2, "0")}`);
+		dates.push(`${newDate.getFullYear()}-${String(newDate.getMonth() + 1).padStart(2, "0")}-${String(newDate.getDate()).padStart(2, "0")}`)
 	}
 	for (let i in dates) {
 		dateArr.push({
@@ -568,8 +568,8 @@ export const manageWeek = () => {
 // 计算两个日期相差xx天
 export const countDay = (nowDate, totalDate) => {
 	// nowDate当前日期，totalDate目标日期
-	let endTime = parseInt(nowDate.getTime() / 1000) - new Date(totalDate).getTime() / 1000;
-	let date = parseInt(endTime / 60 / 60 / 24); //相差天数
+	let endTime = parseInt(nowDate.getTime() / 1000) - new Date(totalDate).getTime() / 1000
+	let date = parseInt(endTime / 60 / 60 / 24) //相差天数
 	return date
 }
 
@@ -578,16 +578,16 @@ export const countDayOne = (nowDate, totalDate) => {
 	// nowDate当前日期，totalDate目标日期
 	nowDate = nowDate.replace(/-/g, "/")
 	totalDate = totalDate.replace(/-/g, "/")
-	var date1 = new Date(totalDate);
-	var date2 = new Date(nowDate);
-	var date = date2 - date1 < 0 ? 0 : (date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24); /*不用考虑闰年否*/
+	var date1 = new Date(totalDate)
+	var date2 = new Date(nowDate)
+	var date = date2 - date1 < 0 ? 0 : (date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24) /*不用考虑闰年否*/
 	return Math.ceil(date + 1) === -0 ? 0 : Math.ceil(date + 1)
 }
 
 // 调换数组两个位置
 export const changeArrIndex = (arr, index1, index2) => {
-	arr[index1] = arr.splice(index2, 1, arr[index1])[0];
-	return arr;
+	arr[index1] = arr.splice(index2, 1, arr[index1])[0]
+	return arr
 }
 // 设置时间显示一分钟之内显示秒，一小时以内显示分，
 export const simpleDurationSimple = (duration) => {
@@ -656,17 +656,17 @@ export const queryWxAuth = function (authKey = WX_AUTH_TYPE.userInfo) {
 					scope: authKey,
 					success() {
 						// 已同意
-						resolve();
+						resolve()
 					},
 					fail() {
 						// 未同意
-						reject();
+						reject()
 					}
-				});
+				})
 			}
-		});
-	});
-};
+		})
+	})
+}
 
 /**
  * 微信授权记录检查
@@ -675,13 +675,13 @@ export const wxGetSetting = function (authKey) {
 	return new Promise((resolve, reject) => {
 		wx.getSetting({
 			success({
-				authSetting
-			}) {
-				resolve(authSetting[authKey]);
+								authSetting
+							}) {
+				resolve(authSetting[authKey])
 			},
 			fail(e) {
-				reject(e);
+				reject(e)
 			}
-		});
-	});
-};
+		})
+	})
+}

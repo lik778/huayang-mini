@@ -86,13 +86,6 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "pages/mine/mine",
-					"pathName": "pages/mine/mine",
-					"query": "",
-					"scene": null
-				},
-				{
 					"id": 9,
 					"name": "subLive/officialChannel/officialChannel",
 					"pathName": "subLive/officialChannel/officialChannel",

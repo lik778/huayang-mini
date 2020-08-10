@@ -47,7 +47,6 @@
                 custom-cache="{{false}}"
                 object-fit="cover"
                 enable-play-gesture="{{false}}"
-                enable-auto-rotation="{{true}}"
                 play-btn-position="top"
                 show-center-play-btn="{{false}}"
                 show-play-btn="{{false}}"
@@ -67,7 +66,7 @@
         <cover-view class="rest-layer {{!didShowRestLayer && 'hide-rest-layer'}}">
             <cover-view class="rest-time">{{restTimeText}}</cover-view>
             <cover-view class="next-action-info">
-                <cover-view class="next-action-cycle-time">下一个动作</cover-view>
+                <cover-view class="next-action-cycle-time">下一个练习</cover-view>
                 <cover-image class="next-cover" src="{{targetActionObj.cover}}"></cover-image>
                 <cover-view class="next-info">
                     <cover-view class="next-action-name limit-two-line">{{targetActionObj.name}}</cover-view>

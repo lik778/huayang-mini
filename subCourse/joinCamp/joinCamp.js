@@ -152,7 +152,7 @@ Page({
       this.checkCamp(this.data.campId)
     })
     bxPoint("camp_introduce", {
-      from_uid: options.from_uid
+      from_uid: options.invite_user_id
     })
   },
 
