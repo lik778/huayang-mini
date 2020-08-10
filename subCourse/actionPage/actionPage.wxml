@@ -55,38 +55,38 @@
                 src="{{targetActionObj.link}}"></video>
 
         <!--  预备层  -->
-        <view class="prepare-layer" wx:if="{{didShowPrepareLayer}}">
-            <view class="action-count-down">{{PrepareNumber}}</view>
-            <view class="action-name">{{targetActionObj.name}}</view>
-            <view class="action-cycle-time">
+        <cover-view class="prepare-layer" wx:if="{{didShowPrepareLayer}}">
+            <cover-view class="action-count-down">{{PrepareNumber}}</cover-view>
+            <cover-view class="action-name">{{targetActionObj.name}}</cover-view>
+            <cover-view class="action-cycle-time">
                 {{targetActionObj.cycleTime}}{{targetActionObj.meta_type == 2 ? '次' : '秒'}}
-            </view>
-        </view>
+            </cover-view>
+        </cover-view>
 
         <!--  休息层  -->
-        <view class="rest-layer" wx:if="{{didShowRestLayer}}">
-            <view class="rest-time">{{restTimeText}}</view>
-            <view class="next-action-info">
-                <view class="next-action-cycle-time">下一个练习</view>
-                <image class="next-cover" src="{{targetActionObj.cover}}"></image>
-                <view class="next-info">
-                    <view class="next-action-name limit-two-line">{{targetActionObj.name}}</view>
-                    <view class="next-action-cycle-time">
+        <cover-view class="rest-layer" wx:if="{{didShowRestLayer}}">
+            <cover-view class="rest-time">{{restTimeText}}</cover-view>
+            <cover-view class="next-action-info">
+                <cover-view class="next-action-cycle-time">下一个练习</cover-view>
+                <cover-image class="next-cover" src="{{targetActionObj.cover}}"></cover-image>
+                <cover-view class="next-info">
+                    <cover-view class="next-action-name limit-two-line">{{targetActionObj.name}}</cover-view>
+                    <cover-view class="next-action-cycle-time">
                         {{targetActionObj.cycleTime}}{{targetActionObj.meta_type == 2 ? '次' : '秒'}}
-                    </view>
-                </view>
-            </view>
-            <view class="operate-lay">
-                <image class="arrow-left" bind:tap="switchPrevActionInRestTime"
-                       src="../../assets/images/common/arrow-left.png"></image>
-                <image class="pause" bind:tap="checkoutRestStatus"
-                       src="{{didPauseRest ? '../../assets/images/common/start.png': '../../assets/images/common/pause.png'}}"></image>
-                <image class="stop" wx:if="{{didPauseRest}}" bind:tap="exit"
-                       src="../../assets/images/common/stop.png"></image>
-                <image class="arrow-right" bind:tap="switchNextActionInRestTime"
-                       src="../../assets/images/common/arrow-right.png"></image>
-            </view>
-        </view>
+                    </cover-view>
+                </cover-view>
+            </cover-view>
+            <cover-view class="operate-lay">
+                <cover-image class="arrow-left" bind:tap="switchPrevActionInRestTime"
+                       src="../../assets/images/common/arrow-left.png"></cover-image>
+                <cover-image class="pause" bind:tap="checkoutRestStatus"
+                       src="{{didPauseRest ? '../../assets/images/common/start.png': '../../assets/images/common/pause.png'}}"></cover-image>
+                <cover-image class="stop" wx:if="{{didPauseRest}}" bind:tap="exit"
+                       src="../../assets/images/common/stop.png"></cover-image>
+                <cover-image class="arrow-right" bind:tap="switchNextActionInRestTime"
+                       src="../../assets/images/common/arrow-right.png"></cover-image>
+            </cover-view>
+        </cover-view>
     </view>
 
     <!-- 结果层 -->
