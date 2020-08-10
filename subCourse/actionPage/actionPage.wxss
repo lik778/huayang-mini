@@ -90,9 +90,6 @@
     background: white;
     z-index: 5;
 }
-.prepare-layer.hide-prepare-layer, .rest-layer.hide-rest-layer, .result-layer.hide-result-layer {
-    display: none;
-}
 /*prepare-layer*/
 .action-count-down {
     margin: 198rpx 0 90rpx;
@@ -163,7 +160,7 @@
     font: bold 56rpx/80rpx PingFang SC;
 }
 .global-record-time-text {
-    font: bold 128rpx/154rpx DIN Alternate,Roboto-Condensed;
+    font: bold 128rpx/154rpx Condensed;
 }
 .result-text-03 {
     margin-bottom: 126rpx;
