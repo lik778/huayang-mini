@@ -426,7 +426,7 @@ Page({
 		if (+this.data.targetActionObj.meta_type === 2) {
 			link = commands[this.data.targetActionIndex % commands.length]
 		} else {
-			// 嘀
+			// 哒
 			link = LocaleVoice.lv10
 		}
 		this.setData({targetActionIndex: this.data.targetActionIndex + 1})
