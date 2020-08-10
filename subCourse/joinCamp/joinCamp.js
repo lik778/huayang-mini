@@ -1,8 +1,19 @@
 // 加入训练营
-import { GLOBAL_KEY } from "../../lib/config"
-import { checkAuth } from "../../utils/auth"
-import { getCampDetail, getHasJoinCamp, joinCamp } from "../../api/course/index"
-import { getLocalStorage, payCourse } from "../../utils/util"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
+import {
+  checkAuth
+} from "../../utils/auth"
+import {
+  getCampDetail,
+  getHasJoinCamp,
+  joinCamp
+} from "../../api/course/index"
+import {
+  getLocalStorage,
+  payCourse
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -11,6 +22,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    didShowAlert: false,
     statusHeight: 0,
     campId: 0,
     titleName: "",
@@ -18,6 +30,7 @@ Page({
     hasJoinAll: false,
     endTime: "",
     userInfo: "",
+    buttonType: 1,
     campDetailData: {},
   },
   // 获取训练营详情
@@ -25,6 +38,8 @@ Page({
     getCampDetail({
       traincamp_id: id
     }).then(res => {
+      let userData = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+      let buttonType = 1
       res.desc = res.desc.split(",")
       this.setData({
         titleName: res.name
@@ -44,13 +59,36 @@ Page({
         }
       }
       pushTime = endTime.split("-")[1] + "月" + endTime.split("-")[2] + "日"
-      console.log(res)
+      let datas = endTime.replace(/-/g, "/")
+      if (new Date(datas).getTime() < new Date().getTime()) {
+        // 没有开营日期
+        buttonType = 2
+      }
+      if (res.discount_price === 0) {
+        if (userData.user_grade < res.level) {
+          buttonType = 3
+        }
+      }
+      console.log(userData.user_grade, res.level, pushTime === undefined)
       this.setData({
         campDetailData: res,
         joinTime: pushTime,
+        buttonType: buttonType,
         endTime: endTime,
         campId: id
       })
+    })
+  },
+  // 等级不够
+  openBox() {
+    this.setData({
+      didShowAlert: true
+    })
+  },
+  // 跳往任务页
+  goToTask() {
+    wx.switchTab({
+      url: '/pages/userCenter/userCenter',
     })
   },
   // 加入训练营
