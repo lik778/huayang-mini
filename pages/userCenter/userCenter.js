@@ -1,10 +1,25 @@
 // pages/userCenter/userCenter.js
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 import request from "../../lib/request"
-import { getSignData, getTaskList, increaseExp, needUpdateUserInfo, taskCheckIn } from "../../api/course/index"
-import { getUserInfo } from "../../api/mine/index"
-import { getLocalStorage, setLocalStorage } from "../../utils/util"
-import { checkAuth } from "../../utils/auth"
+import {
+  getSignData,
+  getTaskList,
+  increaseExp,
+  needUpdateUserInfo,
+  taskCheckIn
+} from "../../api/course/index"
+import {
+  getUserInfo
+} from "../../api/mine/index"
+import {
+  getLocalStorage,
+  setLocalStorage
+} from "../../utils/util"
+import {
+  checkAuth
+} from "../../utils/auth"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -35,67 +50,76 @@ Page({
   // 获取用户信息
   getUserSingerInfo() {
     getUserInfo('scene=zhide').then(res => {
-
-      this.needUpdateUserInfo(res)
-      setLocalStorage(GLOBAL_KEY.accountInfo, res)
-      let data = parseInt((res.user_experience / res.next_level_experience) * 100)
-      this.setData({
-        userInfo: res,
-        processStyle: `width:${data}%;`,
+      this.needUpdateUserInfo(res).then(() => {
+        setLocalStorage(GLOBAL_KEY.accountInfo, res)
+        let data = parseInt((res.user_experience / res.next_level_experience) * 100)
+        this.setData({
+          userInfo: res,
+          processStyle: `width:${data}%;`,
+        })
       })
+
     })
   },
   // 判断是否需要填写用户资料
   needUpdateUserInfo(res) {
-    needUpdateUserInfo({
-      user_id: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id
-    }).then(res1 => {
-      // res===false不需要显示完善资料
-      // res=true
-      if (!res1) {
-        // false不需要显示完善资料
-        this.setData({
-          taskStyle: "top:-54rpx",
-          functionStyle: "top:-74rpx"
-        })
-        if (getLocalStorage(GLOBAL_KEY.showFillMsg) !== undefined) {
-          // 说明刚刚完善资料,弹弹窗
-          let userInfoLate = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-          if (userInfoLate.user_grade < res.user_grade) {
-            // 完善资料升级了
-            this.setData({
-              gradeData: {
-                experNum: res.user_grade,
-                upgrade: true,
-                text02: "",
-                text03: "",
-                showLevelAlert: true
-              }
-            })
-          } else {
-            // 完善资料未升级
-            this.setData({
-              gradeData: {
-                experNum: 100,
-                text02: "完善资料成功",
-                text03: res.user_grade < 3 ? `还差${res.next_level_experience-res.user_experience}升至Lv${res.user_grade+1}` : "",
-                upgrade: false,
-                showLevelAlert: true
-              }
-            })
+    return new Promise(resolve => {
+      needUpdateUserInfo({
+        user_id: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id
+      }).then(res1 => {
+        // res===false不需要显示完善资料
+        res1 = false
+        // console.log(res1)
+        if (!res1) {
+          // false不需要显示完善资料
+          this.setData({
+            taskStyle: "top:-54rpx",
+            functionStyle: "top:-74rpx"
+          })
+          if (getLocalStorage(GLOBAL_KEY.showFillMsg) !== undefined) {
+            // 说明刚刚完善资料,弹弹窗
+            let userInfoLate = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+            if (userInfoLate.user_grade < res.user_grade) {
+              // 完善资料升级了
+              this.setData({
+                gradeData: {
+                  experNum: res.user_grade,
+                  upgrade: true,
+                  text02: "",
+                  text03: "",
+                  showLevelAlert: true
+                }
+              })
+              console.log(userInfoLate.user_grade, res.user_grade)
+            } else {
+              // 完善资料未升级
+              this.setData({
+                gradeData: {
+                  experNum: 100,
+                  text02: "完善资料成功",
+                  text03: res.user_grade < 3 ? `还差${res.next_level_experience-res.user_experience}升至Lv${res.user_grade+1}` : "",
+                  upgrade: false,
+                  showLevelAlert: true
+                }
+              })
+            }
           }
+          wx.removeStorage({
+            key: GLOBAL_KEY.showFillMsg
+          })
+        } else {
+          setLocalStorage(GLOBAL_KEY.showFillMsg, true)
         }
-        wx.removeStorage({
-          key: GLOBAL_KEY.showFillMsg
+        this.setData({
+          showMessage: res1,
+          showAll: true
         })
-      } else {
-        setLocalStorage(GLOBAL_KEY.showFillMsg, true)
-      }
-      this.setData({
-        showMessage: res1,
-        showAll: true
+        // console.log(userInfoLate, res.user_grade, 9999)
+        // return
+        resolve()
       })
     })
+
   },
   // 完善个人资料
   fullSelfMsg() {
