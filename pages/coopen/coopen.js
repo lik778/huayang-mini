@@ -25,7 +25,7 @@ Page({
 
 		this.initial()
 
-		bxPoint("applets_guide", {from_uid: options.invite_user_id})
+		bxPoint("applets_guide", {from_uid: getApp().globalData.super_user_id})
 	},
 
 	/**

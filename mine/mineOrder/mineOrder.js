@@ -89,7 +89,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    bxPoint("applets_order", {from_uid: options.invite_user_id})
+    bxPoint("applets_order", {})
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })

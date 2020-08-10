@@ -177,8 +177,8 @@ Page({
    */
   onLoad: function (options) {
     checkAuth({
-      listenable: true,
-      ignoreFocusLogin: true
+      authPhone: true,
+      redirectPath: `/subCourse/joinCamp/joinCamp?id=${options.id}`
     }).then(() => {
       let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
       console.log(userInfo.is_zhide_vip)
@@ -190,7 +190,7 @@ Page({
       this.checkCamp(this.data.campId)
     })
     bxPoint("camp_introduce", {
-      from_uid: options.invite_user_id
+      from_uid: getApp().globalData.super_user_id
     })
   },
 

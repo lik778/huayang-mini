@@ -361,7 +361,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    bxPoint("camp_calendar", {from_uid: options.invite_user_id})
+    bxPoint("camp_calendar", {from_uid: getApp().globalData.super_user_id})
     if (options.share) {
       this.setData({
         backIndex: true
