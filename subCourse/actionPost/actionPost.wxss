@@ -29,13 +29,13 @@
     display: flex;
     flex-direction: column;
     margin: 30rpx 0 0 30rpx;
-    font: bold 64rpx/74rpx DIN Alternate,Roboto-Condensed;
+    font: bold 64rpx/74rpx Condensed;
 }
 .record-no {
     font: bold 36rpx/50rpx PingFang SC;
 }
 .record-no-text {
-    font: bold 54rpx/50rpx DIN Alternate,Roboto-Condensed;
+    font: bold 54rpx/50rpx Condensed;
 }
 .slogan {
     font: 500 40rpx/56rpx PingFang SC;
@@ -90,7 +90,7 @@
     margin-right: 0;
 }
 .no {
-    font: bold 60rpx/72rpx DIN Alternate,Roboto-Condensed;
+    font: bold 60rpx/72rpx Condensed;
 }
 .tip {
     font: 28rpx/28rpx PingFang SC;
@@ -111,7 +111,6 @@
     width: 136rpx;
     height: 136rpx;
     margin-bottom: 2rpx;
-    border-radius: 999rpx;
 }
 .operate {
     position: fixed;

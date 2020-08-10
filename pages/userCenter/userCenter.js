@@ -265,8 +265,9 @@ Page({
       })
     }
     checkAuth({
-      listenable: true,
-      ignoreFocusLogin: false
+      authPhone: true,
+      redirectPath: "/pages/practice/practice",
+      redirectType: "redirect"
     }).then(() => {
       this.getUserInfo()
       this.getSignData()

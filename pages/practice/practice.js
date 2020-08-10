@@ -80,8 +80,7 @@ Page({
 		}
 
 		checkAuth({
-			listenable: true,
-			ignoreFocusLogin: false
+			authPhone: true
 		})
 
 		this.initial()

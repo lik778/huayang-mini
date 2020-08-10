@@ -144,10 +144,7 @@ Page({
       })
     }
 
-    checkAuth({
-      listenable: false,
-      ignoreFocusLogin: true
-    }).then(() => {
+    checkAuth({redirectPath: "/pages/discovery/discovery", redirectType: "redirect"}).then(() => {
       this.getCampList()
       this.getBanner()
       this.getCourseList()

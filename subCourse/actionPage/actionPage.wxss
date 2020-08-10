@@ -13,7 +13,7 @@
     z-index: 1;
 }
 .content .main-cycle-time {
-    font: 700 104rpx/124rpx DIN Alternate,Roboto-Condensed;
+    font: 700 104rpx/124rpx DIN Alternate,DIN Next Pro;
 }
 .content .sub-cycle-time {
     display: inline-block;
@@ -93,7 +93,7 @@
 /*prepare-layer*/
 .action-count-down {
     margin: 198rpx 0 90rpx;
-    font: bold 372rpx/446rpx DIN Alternate,Roboto-Condensed;
+    font: bold 372rpx/446rpx DIN Alternate,DIN Next Pro;
 }
 .action-name, .action-cycle-time {
     margin-bottom: 30rpx;
@@ -105,7 +105,7 @@
 /*rest-layer*/
 .rest-time {
     margin: 96rpx 0 40rpx;
-    font: bold 142rpx/170rpx DIN Alternate,Roboto-Condensed;
+    font: bold 142rpx/170rpx DIN Alternate,DIN Next Pro;
 }
 .next-action-info {
     display: flex;

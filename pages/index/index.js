@@ -1,5 +1,5 @@
 // pages/live/live.js
-import { getLiveBannerList, getLiveList, getRemind, setPoint, updateLiveStatus } from "../../api/live/index"
+import { getLiveBannerList, getLiveList, getRemind, updateLiveStatus } from "../../api/live/index"
 import { GLOBAL_KEY, SHARE_PARAMS, WeChatLiveStatus } from '../../lib/config'
 import {
 	$notNull,
@@ -87,7 +87,7 @@ Page({
 	 * @param e
 	 */
 	navigateToLive(e) {
-		checkAuth({listenable: true, ignoreFocusLogin: true}).then(() => {
+		checkAuth({authPhone: true}).then(() => {
 			let {zhiboRoomId, roomId, link, status, vipOnly} = e.currentTarget.dataset.item
 			// 当前课程是否仅限VIP用户学习
 			if (vipOnly === 1) {
@@ -440,9 +440,7 @@ Page({
 			})
 		}
 
-		checkAuth({
-			listenable: true
-		})
+		checkAuth()
 	},
 
 	/**

@@ -12,6 +12,8 @@ Page({
 	 * Page initial data
 	 */
 	data: {
+		redirectPath: "",
+		redirectType: "",
 		invite_user_id: 0,
 		didGetPhoneNumber: false,
 		show: false
@@ -82,8 +84,19 @@ Page({
 					invite_user_id: this.data.invite_user_id
 				})
 				setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
+
+				// 是否需要自定义调整页面
+				if (this.data.redirectPath) {
+					if (this.data.redirectType === "navigate") {
+						wx.navigateTo({url: this.data.redirectPath})
+					} else {
+						wx.redirectTo({url: this.data.redirectPath})
+					}
+					return
+				}
+
 				// 判断用户是否需要引导加课程
-				checkUserDidNeedCoopen({ user_id: originAccountInfo.id }).then((data) => {
+				checkUserDidNeedCoopen({user_id: originAccountInfo.id}).then((data) => {
 					// 1=>需要引导，2=>不需要引导
 					if (+data === 1) {
 						wx.navigateTo({
@@ -98,10 +111,9 @@ Page({
 			}
 		} else {
 			if (didFocusLogin) {
-				// 用户的拒绝，对不起请继续授权
-				console.error('用户拒绝手机号授权')
+				// 强制授权请继续授权
 			} else {
-				// 审核人员的拒绝
+				// 随缘授权
 				wx.switchTab({
 					url: "/pages/discovery/discovery"
 				})
@@ -111,11 +123,13 @@ Page({
 	/**
 	 * Lifecycle function--Called when page load
 	 */
-	onLoad: function (options) {
+	onLoad: function ({invite_user_id, redirectPath, redirectType}) {
 		this.setData({
-			invite_user_id: options.invite_user_id
+			invite_user_id: invite_user_id,
+			redirectPath,
+			redirectType
 		})
-		getApp().globalData.super_user_id = options.invite_user_id
+		getApp().globalData.super_user_id = invite_user_id
 
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 		if ($notNull(accountInfo) && hasUserInfo()) {
@@ -148,7 +162,9 @@ Page({
 					this.setData({didGetPhoneNumber: true})
 				}
 			})
-			.catch((error) => {console.error(error)})
+			.catch((error) => {
+				console.error(error)
+			})
 	},
 
 	/**
