@@ -61,7 +61,7 @@
 		</view>
 	</view>
 	<!-- 模块二 -->
-	<view class="module-two" wx:if="{{false}}">
+	<view class="module-two" wx:if="{{true}}">
 		<!-- 大赛 -->
 		<view class="competition">
 			<view class="competition-title">大赛</view>

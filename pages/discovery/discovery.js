@@ -67,9 +67,11 @@ Page({
   toModelCompetition() {
     let data = JSON.stringify({
       activity_id: 29,
-      user_id: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id
+      user_id: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id,
+      user_grade: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
     })
     let baseUrl = `${request.baseUrl}/#/modelCompetition/introduce?data=${data}`
+    // let baseUrl = `${request.baseUrl}/#/modelCompetition/detail?id=816`
     baseUrl = encodeURIComponent(baseUrl)
     wx.navigateTo({
       url: `/pages/webViewCommon/webViewCommon?link=${baseUrl}&type=link`,
