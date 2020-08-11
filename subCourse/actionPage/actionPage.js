@@ -242,7 +242,7 @@ Page({
 			confirmText: "确定",
 			success(res) {
 				if (res.confirm) {
-					bxPoint("course_operation", {event: "exit", action_num: this.data.targetActionObj.id}, false)
+					bxPoint("course_operation", {event: "exit", action_num: self.data.targetActionObj.id}, false)
 					wx.navigateBack()
 				} else if (res.cancel) {
 					console.log('取消')
