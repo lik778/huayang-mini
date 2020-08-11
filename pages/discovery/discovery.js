@@ -5,7 +5,7 @@ import { getActivityList, getCampList, getFindBanner, getShowCourseList } from "
 import { GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import request from "../../lib/request"
-import { getYouZanAppId } from "../../api/mall"
+import { getYouZanAppId } from "../../api/mall/index"
 
 Page({
 
