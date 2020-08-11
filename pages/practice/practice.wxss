@@ -137,7 +137,7 @@
     height: 14rpx;
     margin-top: -14rpx;
     background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596350238OjvKBn.jpg") no-repeat center;
-    background-size: contain;
+    background-size: cover;
 }
 .no-exercise {
     display: flex;
