@@ -5,6 +5,7 @@ import { getActivityList, getCampList, getFindBanner, getShowCourseList } from "
 import { GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import request from "../../lib/request"
+import { getYouZanAppId } from "../../api/mall"
 
 Page({
 
@@ -18,11 +19,20 @@ Page({
     courseList: null,
     activityList: null
   },
-  handleSwiperTap(e) {
-    // console.log(e)
-    bxPoint("applets_banner", {
-      position: 'page/discovery/discovery'
-    }, false)
+  // 处理轮播点击事件
+  jumpToLink(e) {
+    let {link, link_type} = e.currentTarget.dataset.item
+    bxPoint("applets_banner", {position: 'page/discovery/discovery'}, false)
+    if (link_type === 'youzan') {
+      getYouZanAppId().then(appId => {
+        wx.navigateToMiniProgram({
+          appId,
+          path: link,
+        })
+      })
+    } else {
+      wx.navigateTo({url: link})
+    }
   },
   // 加入课程
   toCourse(e) {

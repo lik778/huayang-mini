@@ -1,6 +1,6 @@
 <view class="practice">
     <swiper class="banner" wx:if="{{bannerList.length > 0}}" indicator-dots="{{false}}" circular autoplay bindchange="changeSwiperIndex" interval="{{3000}}" duration="{{500}}">
-        <swiper-item class="swiper-item" bind:tap="handleSwiperTap" wx:for="{{bannerList}}" wx:key="index">
+        <swiper-item class="swiper-item" bindtap="jumpToLink" data-item="{{item}}" wx:for="{{bannerList}}" wx:key="index">
             <image mode="aspectFill" src="{{item.pic_url}}"></image>
         </swiper-item>
     </swiper>
