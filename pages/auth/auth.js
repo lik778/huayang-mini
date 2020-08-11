@@ -125,11 +125,11 @@ Page({
 	/**
 	 * Lifecycle function--Called when page load
 	 */
-	onLoad: function ({invite_user_id, redirectPath, redirectType}) {
-		redirectPath = redirectPath.replace("$", "?")
-		redirectPath = redirectPath.replaceAll("#", "=")
+	onLoad: function ({invite_user_id = 0, redirectPath, redirectType}) {
+		redirectPath = redirectPath ? redirectPath.replace("$", "?") : ""
+		redirectPath = redirectPath ? redirectPath.replaceAll("#", "=") : ""
 		this.setData({
-			invite_user_id: invite_user_id,
+			invite_user_id,
 			redirectPath,
 			redirectType
 		})
