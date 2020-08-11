@@ -1,10 +1,25 @@
 // pages/userCenter/userCenter.js
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 import request from "../../lib/request"
-import { getSignData, getTaskList, increaseExp, needUpdateUserInfo, taskCheckIn } from "../../api/course/index"
-import { getUserInfo } from "../../api/mine/index"
-import { getLocalStorage, setLocalStorage } from "../../utils/util"
-import { checkAuth } from "../../utils/auth"
+import {
+  getSignData,
+  getTaskList,
+  increaseExp,
+  needUpdateUserInfo,
+  taskCheckIn
+} from "../../api/course/index"
+import {
+  getUserInfo
+} from "../../api/mine/index"
+import {
+  getLocalStorage,
+  setLocalStorage
+} from "../../utils/util"
+import {
+  checkAuth
+} from "../../utils/auth"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -152,8 +167,10 @@ Page({
       increaseExp({
         task_type: 'task_checkin'
       }).then(res => {
+        // console.log(res, 11)
         this.getUserSingerInfo()
         if (res.has_grade) {
+        // if (false) {
           // 签到升级了
           this.setData({
             gradeData: {
@@ -176,22 +193,24 @@ Page({
             }
           })
         }
-        setTimeout(() => {
-          this.setData({
-            gradeData: {
-              experNum: experNumData,
-              upgrade: false,
-              showLevelAlert: false
-            }
-          })
-        }, 1500)
+        // setTimeout(() => {
+        //   this.setData({
+        //     gradeData: {
+        //       experNum: experNumData,
+        //       upgrade: false,
+        //       showLevelAlert: false
+        //     }
+        //   })
+        // }, 1500)
       })
     })
   },
   //
   // 训练/打卡
   pratice() {
-    bxPoint("mine_task", {task_type: "toTrain"}, false)
+    bxPoint("mine_task", {
+      task_type: "toTrain"
+    }, false)
     wx.switchTab({
       url: '/pages/practice/practice',
     })
@@ -204,7 +223,9 @@ Page({
   },
   // 去邀请
   invite() {
-    bxPoint("mine_task", {task_type: "toInvite"}, false)
+    bxPoint("mine_task", {
+      task_type: "toInvite"
+    }, false)
   },
   // 获取任务列表
   getTaskList() {
