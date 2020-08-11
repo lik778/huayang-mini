@@ -61,6 +61,7 @@
 		</view>
 	</view>
 	<!-- 按钮层 -->
+	<view class="bottom-bg"></view>
 	<view class="bottom">
 		<view class="button" bindtap="toTeam">
 			<image src='/assets/images/common/wechat.png'></image>
@@ -76,6 +77,5 @@
 			</view>
 			<image src="/assets/images/common/long-down-arrow.png"></image>
 		</view>
-
 	</view>
 </view>

@@ -1,7 +1,8 @@
 <!--发现主页-->
 <view class="discovery" wx:if="{{campList!==null&&bannerList!==null&&courseList!==null}}">
 	<!--  模块一 -->
-	<view class="module-one" style="padding-bottom:130px">
+	<!-- <view class="module-one" style="padding-bottom:130px"> -->
+	<view class="module-one">
 		<!-- banner 滚动区域 -->
 		<view class="swiper-box" wx:if="{{bannerList.length!==0}}">
 			<swiper class="swiper-item-box" bindchange="changeSwiperIndex" bind:tap="handleSwiperTap" circular autoplay interval="{{3000}}" duration="{{500}}">
