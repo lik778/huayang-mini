@@ -20,14 +20,16 @@
   bottom: 36rpx;
 }
 
-.button-line-two button {
+.button-line-two .join-button {
   background: #CDCDCD;
   font-size: 40rpx;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
   color: rgba(255, 255, 255, 1);
   line-height: 96rpx;
+  text-align: center;
   border-radius: 48rpx;
+  border: none;
 }
 
 .join {

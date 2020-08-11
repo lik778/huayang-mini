@@ -12,7 +12,7 @@
 		<button bindtap="joinCamp" wx:else class="join">立即加入 <text>({{joinTime}}开营)</text></button>
 	</view>
 	<view class="button-line-two" wx:if="{{buttonType===2}}">
-		<button class="join">即将开营</button>
+		<view class="join-button">即将开营</view>
 	</view>
 	<view class="button-line" wx:if="{{buttonType===3}}">
 		<button bindtap="openBox" class="join">LV {{campDetailData.level}} 等级开启</button>
