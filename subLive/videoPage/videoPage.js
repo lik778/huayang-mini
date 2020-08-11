@@ -17,7 +17,7 @@ Page({
 		this.setData({link: options.link})
 		let res = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
 		this.setData({
-			adapter: res.screenHeight - res.windowHeight - res.statusBarHeight - 32 > 72
+			adapter: /iphone x/i.test(res.model) || /iPhone11/i.test(res.model)
 		})
 	},
 
