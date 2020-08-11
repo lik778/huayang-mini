@@ -78,7 +78,7 @@
     width: 100%;
     z-index: -1;
 }
-.prepare-layer, .rest-layer, .pause-layer, .result-layer {
+.prepare-layer, .rest-layer, .pause-layer {
     position: absolute;
     top: 0;
     right: 0;
@@ -92,7 +92,7 @@
 }
 /*prepare-layer*/
 .action-count-down {
-    margin: 198rpx 0 90rpx;
+    margin: 108rpx 0 90rpx;
     font: bold 372rpx/446rpx DIN Alternate,DIN Next Pro;
 }
 .action-name, .action-cycle-time {
@@ -104,7 +104,7 @@
 }
 /*rest-layer*/
 .rest-time {
-    margin: 96rpx 0 40rpx;
+    margin: 90rpx 0 40rpx;
     font: bold 142rpx/170rpx DIN Alternate,DIN Next Pro;
 }
 .next-action-info {
@@ -137,7 +137,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 0 70rpx;
+    padding: 0 30rpx;
     margin-top: 50rpx;
 }
 /*pause-layer*/
@@ -147,6 +147,14 @@
 }
 /*result-layer*/
 .result-layer {
+    position: absolute;
+    right: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding-bottom: 128rpx;
+    box-sizing: border-box;
     color: white;
     background: #990000;
     z-index: 15;
@@ -156,7 +164,7 @@
     font: 40rpx/56rpx PingFang SC;
 }
 .result-text-02 {
-    margin-bottom: 98rpx;
+    margin-bottom: 88rpx;
     font: bold 56rpx/80rpx PingFang SC;
 }
 .global-record-time-text {

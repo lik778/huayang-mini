@@ -28,18 +28,21 @@
   display: flex;
   align-items: center;
   height: 100%;
-  padding: 0 34rpx;
+  background: #990000;
 }
 
 .back-icon cover-image {
   width: 60rpx;
   height: 60rpx;
+  margin-right: 40rpx;
 }
 
 .title {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  width: 40%;
+  text-align: center;
   font: 500 34rpx/38rpx PingFangSC-Medium, PingFang SC;
   color: rgba(0, 0, 0, 1);
 }

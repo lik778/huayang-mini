@@ -16,7 +16,10 @@ Component({
 		},
 		color: {
 			type: String,
-			default: ""
+			default: "",
+			observer(newVal) {
+				this.setData({navbarColor: newVal})
+			}
 		},
 		hideIcon: {
 			type: Boolean,
@@ -29,20 +32,17 @@ Component({
 	 */
 	data: {
 		statusBarHeight: 0,
+		navbarColor: "",
 		didMute: false, // 是否静音
 		bgmAudio: null
-	},
-	observers: {
-		"hideIcon": function (newValue) {
-			if (newValue && this.data.bgmAudio) {
-				this.stopBGM()
-			}
-		}
 	},
 	/**
 	 * 组件的方法列表
 	 */
 	methods: {
+		goBack() {
+			wx.navigateBack()
+		},
 		checkoutMute() {
 			let currentState = this.data.didMute
 			if (currentState) {
@@ -66,8 +66,10 @@ Component({
 			this.data.bgmAudio.volume = 0.5
 		},
 		stopBGM() {
-			this.data.bgmAudio.stop()
-			this.data.bgmAudio.destroy()
+			if (this.data.bgmAudio) {
+				this.data.bgmAudio.stop()
+				this.data.bgmAudio.destroy()
+			}
 		}
 	},
 	attached() {

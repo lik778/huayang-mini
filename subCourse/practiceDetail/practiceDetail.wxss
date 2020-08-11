@@ -1,5 +1,5 @@
 .practice-detail {
-    padding: 0 30rpx;
+    padding: 0 30rpx 128rpx;
 }
 /*intro*/
 .intro {
@@ -55,10 +55,10 @@
     align-items: center;
 }
 .preview-layer-01 {
-    font: 52rpx/74rpx PingFang SC;
+    font: 52rpx/52rpx PingFang SC;
 }
 .preview-layer-02 {
-    font: 28rpx/40rpx PingFang SC;
+    font: 32rpx/44rpx PingFang SC;
 }
 .scroller {
     white-space: nowrap;
