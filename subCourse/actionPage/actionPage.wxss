@@ -129,6 +129,9 @@
 .next-action-name {
     width: 400rpx;
 }
+.next-action-cycle {
+    margin-top: 6px;
+}
 .next-action-cycle-time {
     margin-top: 6px;
     color: #666;
