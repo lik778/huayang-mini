@@ -19,21 +19,6 @@ Page({
     courseList: null,
     activityList: null
   },
-  // 处理轮播点击事件
-  jumpToLink(e) {
-    let {link, link_type} = e.currentTarget.dataset.item
-    bxPoint("applets_banner", {position: 'page/discovery/discovery'}, false)
-    if (link_type === 'youzan') {
-      getYouZanAppId().then(appId => {
-        wx.navigateToMiniProgram({
-          appId,
-          path: link,
-        })
-      })
-    } else {
-      wx.navigateTo({url: link})
-    }
-  },
   // 加入课程
   toCourse(e) {
     bxPoint("find_join", {
@@ -91,12 +76,20 @@ Page({
     })
   },
 
-  // 点击banner，跳转训练营
+  // 处理轮播点击事件
   joinCampFrombanner(e) {
-    let data = e.currentTarget.dataset.item
-    wx.navigateTo({
-      url: data.link,
-    })
+    let {link, link_type} = e.currentTarget.dataset.item
+    bxPoint("applets_banner", {position: 'page/discovery/discovery'}, false)
+    if (link_type === 'youzan') {
+      getYouZanAppId().then(appId => {
+        wx.navigateToMiniProgram({
+          appId,
+          path: link,
+        })
+      })
+    } else {
+      wx.navigateTo({url: link})
+    }
   },
 
   // 获取banner列表

@@ -76,7 +76,7 @@ Component({
 		this.setData({
 			statusBarHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
 		})
-		// 开启bgm TODO
+		// 开启bgm 暂时不实用该功能
 		// this.initBGM()
 	},
 	detached() {
