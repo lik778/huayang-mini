@@ -2,7 +2,7 @@
 <view class="join-camp" wx:if="{{campDetailData.id}}">
 	<!-- navibar栏 -->
 	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
-		<naviBar title="{{titleName}}" color="#fff" titleColor="#000000"></naviBar>
+		<naviBar title="{{titleName}}" color="#fff" titleColor="#000000" forceGoBackIndex="{{true}}"></naviBar>
 	</view>
 	<view class="detail">
 		<image src="{{item}}" wx:for="{{campDetailData.desc}}" wx:key="index"></image>

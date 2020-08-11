@@ -3,10 +3,10 @@
   align-items: center;
   height: 44px;
   line-height: 44px;
-  position: relative;
   position: fixed;
   width: 100vw;
   left: 0;
+  right: 0;
   top: 0;
   z-index: 2000;
 }

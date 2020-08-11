@@ -1,5 +1,5 @@
 .practice-detail {
-    padding: 50rpx 30rpx 0;
+    padding: 0 30rpx;
 }
 /*intro*/
 .intro {
