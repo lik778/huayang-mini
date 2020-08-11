@@ -195,10 +195,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    let data = getLocalStorage(GLOBAL_KEY.userId)
     return {
       title: "这里有好多好课，快来一起变美，变自信",
-      path: `/pages/discovery/discovery`
+      path: `/pages/discovery/discovery?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
     }
   }
 })

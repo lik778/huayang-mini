@@ -1,25 +1,10 @@
 // pages/userCenter/userCenter.js
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { GLOBAL_KEY } from "../../lib/config"
 import request from "../../lib/request"
-import {
-  getSignData,
-  getTaskList,
-  increaseExp,
-  needUpdateUserInfo,
-  taskCheckIn
-} from "../../api/course/index"
-import {
-  getUserInfo
-} from "../../api/mine/index"
-import {
-  getLocalStorage,
-  setLocalStorage
-} from "../../utils/util"
-import {
-  checkAuth
-} from "../../utils/auth"
+import { getSignData, getTaskList, increaseExp, needUpdateUserInfo, taskCheckIn } from "../../api/course/index"
+import { getUserInfo } from "../../api/mine/index"
+import { getLocalStorage, setLocalStorage } from "../../utils/util"
+import { checkAuth } from "../../utils/auth"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -341,14 +326,13 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (res) {
-    let data = getLocalStorage(GLOBAL_KEY.userId)
     if (res.from === 'button') {
       // 来自页面内转发按钮
       console.log(res.target)
     }
     return {
       title: '跟着花样一起变美，变自信',
-      path: `/pages/auth/auth?invite_user_id=${data}`
+      path: `/pages/auth/auth`
     }
   }
 })

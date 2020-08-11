@@ -107,7 +107,7 @@ Page({
 	onShareAppMessage: function () {
 		return {
 			title: `我正在学习${this.data.courseInfoObj.name}，每天都有看的见的变化，快来试试`,
-			path: `/subCourse/practiceDetail/practiceDetail?courseId=${this.data.courseId}`
+			path: `/subCourse/practiceDetail/practiceDetail?courseId=${this.data.courseId}&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
 		}
 	},
 
