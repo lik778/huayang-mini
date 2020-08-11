@@ -184,7 +184,7 @@ Page({
 					}
 					case 3: {
 						// 结构化课程
-						wx.navigateTo({url: `/subCourse/practiceDetail/practiceDetail?courseId=${item.kecheng_id}`})
+						wx.navigateTo({url: `/subCourse/practiceDetail/practiceDetail?courseId=${item.kecheng_id}&formCampDetail=payUser`})
 						return
 					}
 				}
