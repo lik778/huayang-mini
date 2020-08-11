@@ -1,54 +1,54 @@
-<view class="practice-detail">
-    <view class="navigation" style="padding-top:{{statusHeight+44}}px;">
-        <naviBar title="花样百姓+" color="#fff" titleColor="#000000"></naviBar>
-    </view>
-    <!--  介绍  -->
-    <view class="intro">
-        <view class="course-name">
-            <text class="name">{{courseInfoObj.name}}</text>
-            <view class="share-box">
-                <image class="share-icon" mode="aspectFit" bind:tap="handleShareTap"
-                       src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596088034GMJhzX.jpg"></image>
-                <button open-type="share" class="share-btn"></button>
+<view>
+    <naviBar title="花样百姓+" style="padding-top:{{statusHeight+44}}px;" color="#fff" titleColor="#000000"></naviBar>
+    <view class="practice-detail" style="padding-top:{{statusHeight+44+25}}px;">
+        <!--  介绍  -->
+        <view class="intro">
+            <view class="course-name">
+                <text class="name">{{courseInfoObj.name}}</text>
+                <view class="share-box">
+                    <image class="share-icon" mode="aspectFit"
+                           src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596088034GMJhzX.jpg"></image>
+                    <button open-type="share" bind:tap="handleShareTap" class="share-btn"></button>
+                </view>
+            </view>
+            <view class="course-level">
+                <text>{{CourseLevels[courseInfoObj.level]}}</text>
+                <text class="dot">·</text>
+                <text>{{courseInfoObj.exerciseTime}}{{courseInfoObj.duration >= 60 ? "分钟" : "秒"}}</text>
+                <text class="dot">·</text>
+                <text>{{actionQueue.length}}个动作</text>
+            </view>
+            <view class="course-desc">
+                {{courseInfoObj.desc}}
             </view>
         </view>
-        <view class="course-level">
-            <text>{{CourseLevels[courseInfoObj.level]}}</text>
-            <text class="dot">·</text>
-            <text>{{courseInfoObj.exerciseTime}}{{courseInfoObj.duration >= 60 ? "分钟" : "秒"}}</text>
-            <text class="dot">·</text>
-            <text>{{actionQueue.length}}个动作</text>
-        </view>
-        <view class="course-desc">
-            {{courseInfoObj.desc}}
-        </view>
-    </view>
 
-    <!--  预览  -->
-    <view class="preview">
-        <view class="layer">
-            <text class="preview-layer-01">课程内容</text>
-            <text class="preview-layer-02">{{actionQueue.length}}个动作</text>
+        <!--  预览  -->
+        <view class="preview">
+            <view class="layer">
+                <text class="preview-layer-01">课程内容</text>
+                <text class="preview-layer-02">{{actionQueue.length}}个动作</text>
+            </view>
+            <scroll-view class="scroller" scroll-x="{{true}}">
+                <image class="scroll-item" wx:for="{{actionQueue}}" wx:key="index" mode="aspectFit"
+                       src="{{item.cover}}"></image>
+            </scroll-view>
         </view>
-        <scroll-view class="scroller" scroll-x="{{true}}">
-            <image class="scroll-item" wx:for="{{actionQueue}}" wx:key="index" mode="aspectFit"
-                   src="{{item.cover}}"></image>
-        </scroll-view>
-    </view>
 
-    <!--  最近参与  -->
-    <view class="recent">
-        <view class="recent-person">
-            <image mode="aspectFill" class="avatar" wx:for="{{avatarAry}}" wx:key="index" src="{{item}}"></image>
+        <!--  最近参与  -->
+        <view class="recent">
+            <view class="recent-person">
+                <image mode="aspectFill" class="avatar" wx:for="{{avatarAry}}" wx:key="index" src="{{item}}"></image>
+            </view>
+            <view class="recent-count">共{{courseInfoObj.visit_count}}人参与</view>
         </view>
-        <view class="recent-count">共{{courseInfoObj.visit_count}}人参与</view>
-    </view>
 
-    <!--  练习按钮  -->
-    <view class="btn-container" bind:tap="startPractice">
-        <view class="process" style="width:{{hasDoneFilePercent*screenWidth/100}}px;"></view>
-        <view class="btn {{isDownloading ? 'downloading' : ''}}"></view>
-        <view class="btn-text">{{btnText}}</view>
+        <!--  练习按钮  -->
+        <view class="btn-container" bind:tap="startPractice">
+            <view class="process" style="width:{{hasDoneFilePercent*screenWidth/100}}px;"></view>
+            <view class="btn {{isDownloading ? 'downloading' : ''}}"></view>
+            <view class="btn-text">{{btnText}}</view>
+        </view>
     </view>
 
     <view class="level-alert" wx:if="{{didShowAlert}}">
@@ -59,5 +59,4 @@
             <view class="alert-btn" bindtap="goToTask">去完成</view>
         </view>
     </view>
-
 </view>
