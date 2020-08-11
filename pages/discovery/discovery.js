@@ -5,6 +5,7 @@ import { getActivityList, getCampList, getFindBanner, getShowCourseList } from "
 import { GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import request from "../../lib/request"
+import { getYouZanAppId } from "../../api/mall/index"
 
 Page({
 
@@ -17,12 +18,6 @@ Page({
     bannerList: null,
     courseList: null,
     activityList: null
-  },
-  handleSwiperTap(e) {
-    // console.log(e)
-    bxPoint("applets_banner", {
-      position: 'page/discovery/discovery'
-    }, false)
   },
   // 加入课程
   toCourse(e) {
@@ -81,12 +76,20 @@ Page({
     })
   },
 
-  // 点击banner，跳转训练营
+  // 处理轮播点击事件
   joinCampFrombanner(e) {
-    let data = e.currentTarget.dataset.item
-    wx.navigateTo({
-      url: data.link,
-    })
+    let {link, link_type} = e.currentTarget.dataset.item
+    bxPoint("applets_banner", {position: 'page/discovery/discovery'}, false)
+    if (link_type === 'youzan') {
+      getYouZanAppId().then(appId => {
+        wx.navigateToMiniProgram({
+          appId,
+          path: link,
+        })
+      })
+    } else {
+      wx.navigateTo({url: link})
+    }
   },
 
   // 获取banner列表
@@ -185,10 +188,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    let data = getLocalStorage(GLOBAL_KEY.userId)
     return {
       title: "这里有好多好课，快来一起变美，变自信",
-      path: `/pages/discovery/discovery`
+      path: `/pages/discovery/discovery?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
     }
   }
 })

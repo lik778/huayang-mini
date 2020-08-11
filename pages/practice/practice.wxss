@@ -10,10 +10,10 @@
     width: 100%;
     height: 320rpx;
     margin-bottom: 100rpx;
-    border-radius: 8rpx;
 }
 .swiper-item {
     height: inherit;
+    border-radius: 8rpx;
 }
 .swiper-dot {
     display: flex;
@@ -55,10 +55,10 @@
     opacity: 0.8;
 }
 .exercise-time {
-    margin: 40rpx 0 80rpx;
+    margin: 40rpx 0 90rpx;
 }
 .time {
-    font: 96rpx/72rpx Condensed;
+    font: 96rpx/96rpx Condensed;
 }
 .unit {
     margin-left: 20rpx;
@@ -88,13 +88,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font: 28rpx/28rpx PingFang SC;
+    font: 32rpx/32rpx PingFang SC;
     color: #666;
 }
 .day-icon {
     margin-top: 22rpx;
-    width: 30rpx;
-    height: 30rpx;
+    width: 36rpx;
+    height: 36rpx;
     z-index: 2;
 }
 /*today-boot-camp-plan*/
@@ -115,7 +115,7 @@
     background: #f9f9f9;
 }
 .find-camp-btn {
-    margin-top: 32rpx;
+    margin-top: 40rpx;
     padding: 20rpx 56rpx;
     font: 500 36rpx/36rpx PingFanf SC;
     border-radius: 999rpx;
@@ -130,7 +130,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 40rpx 30rpx;
-    font: 36rpx/36rpx Helvetica;
+    font: bold 36rpx/36rpx PingFang SC;
 }
 .segmentation {
     width: 100%;
@@ -155,7 +155,7 @@
 .all-boot-camp {
     position: relative;
     margin-right: 20rpx;
-    font: 32rpx/44rpx PingFang SC;
+    font: 400 32rpx/44rpx PingFang SC;
 }
 .all-boot-camp:active {
     opacity: 0.8;
@@ -247,7 +247,7 @@
     opacity: 0.8;
 }
 .practice-name {
-    font: 44rpx/52rpx Helvetica;
+    font: bold 44rpx/60rpx Helvetica;
 }
 .practice-sub {
     display: flex;

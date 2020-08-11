@@ -29,6 +29,7 @@ Page({
 		hasDoneFilePercent: 0, // 已经下载完的文件数量
 		didShowAlert: false,
 		didPayUser: false, // 是否是付费用户
+		backPath: "", // 自定义导航栏返回路径
 	},
 
 	/**
@@ -50,8 +51,9 @@ Page({
 		this.setData({
 			courseId,
 			screenWidth: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth,
-			statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusHeight,
-			accountInfo
+			statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
+			accountInfo,
+			backPath: `/subCourse/practiceDetail/practiceDetail?courseId=${courseId}`
 		})
 
 		bxPoint("course_details", {from_uid: getApp().globalData.super_user_id})
@@ -105,7 +107,7 @@ Page({
 	onShareAppMessage: function () {
 		return {
 			title: `我正在学习${this.data.courseInfoObj.name}，每天都有看的见的变化，快来试试`,
-			path: `/subCourse/practiceDetail/practiceDetail?courseId=${this.data.courseId}`
+			path: `/subCourse/practiceDetail/practiceDetail?courseId=${this.data.courseId}&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
 		}
 	},
 

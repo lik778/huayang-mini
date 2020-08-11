@@ -90,7 +90,7 @@
     </view>
 
     <!-- 结果层 -->
-    <view class="result-layer" wx:if="{{didShowResultLayer}}" style="padding-top:{{statusHeight+43}}px;">
+    <view class="result-layer" wx:if="{{didShowResultLayer}}" style="min-height: {{screenHeight-statusHeight-43}}px;">
         <view class="result-text-01">恭喜您完成</view>
         <view class="result-text-02">{{courseInfo.name}}</view>
         <view class="global-record-time-text">{{globalRecordTimeText}}</view>

@@ -126,6 +126,13 @@
 					"pathName": "subCourse/actionPost/actionPost",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "subLive/videoPage/videoPage",
+					"pathName": "subLive/videoPage/videoPage",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

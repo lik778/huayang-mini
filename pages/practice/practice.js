@@ -1,4 +1,4 @@
-import { getBannerList } from "../../api/mall/index"
+import { getBannerList, getYouZanAppId } from "../../api/mall/index"
 import {
 	createPracticeRecordInToday,
 	getCourseData,
@@ -125,6 +125,21 @@ Page({
 			path: `/pages/auth/auth?invite_user_id=${data}`
 		}
 	},
+	// 处理轮播点击事件
+	jumpToLink(e) {
+		let {link, link_type} = e.currentTarget.dataset.item
+		bxPoint("applets_banner", {position: 'page/practice/practice'}, false)
+		if (link_type === 'youzan') {
+			getYouZanAppId().then(appId => {
+				wx.navigateToMiniProgram({
+					appId,
+					path: link,
+				})
+			})
+		} else {
+			wx.navigateTo({url: link})
+		}
+	},
 	hiddenTipMask() {
 		this.setData({didShowTipsLay: false})
 	},
@@ -137,11 +152,6 @@ Page({
 			this.setData({didShowTipsLay: true})
 			setLocalStorage(key, now + buf)
 		}
-	},
-	// 处理轮播点击事件
-	handleSwiperTap(e) {
-		// console.log(e)
-		bxPoint("applets_banner", {position: 'page/practice/practice'}, false)
 	},
 	// swiper切换
 	changeSwiperIndex(e) {
@@ -184,7 +194,7 @@ Page({
 					}
 					case 3: {
 						// 结构化课程
-						wx.navigateTo({url: `/subCourse/practiceDetail/practiceDetail?courseId=${item.kecheng_id}`})
+						wx.navigateTo({url: `/subCourse/practiceDetail/practiceDetail?courseId=${item.kecheng_id}&formCampDetail=payUser`})
 						return
 					}
 				}
