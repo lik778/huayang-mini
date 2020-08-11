@@ -1,7 +1,17 @@
 // subCourse/campDetail/campDetail.js
-import { GLOBAL_KEY } from "../../lib/config"
-import { getProductInfo, getYouZanAppId } from '../../api/mall/index'
-import { getCampDetail, getCourseData, getCurentDayData, getMenyCourseList } from "../../api/course/index"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
+import {
+  getProductInfo,
+  getYouZanAppId
+} from '../../api/mall/index'
+import {
+  getCampDetail,
+  getCourseData,
+  getCurentDayData,
+  getMenyCourseList
+} from "../../api/course/index"
 import {
   countDay,
   countDayOne,
@@ -34,10 +44,10 @@ Page({
     startDay: "", //训练营开始时间
     videoSrc: "", //视频地址
     srcObj: {
-      course: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596592012ePAuNo.jpg",
-      video: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596592012extlpo.jpg",
-      product: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596592012KEkZvd.jpg",
-      url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596592012prmJUG.jpg",
+      course: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925TZrmey.jpg",
+      video: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925iFZICS.jpg",
+      product: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925fmEUmR.jpg",
+      url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925KAfZPv.jpg",
       lock: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596613255fHAzmw.jpg"
     },
     styleObj: {
@@ -90,12 +100,15 @@ Page({
         // 未开营
         onlyDayList = getTodayDate(res.start_date).one //只有日的日期列表
         realList = getTodayDate(res.start_date).two //实际一周日期列表
-        cureentDay = new Date(res.start_date).getDate()
+        cureentDay = new Date(res.start_date).getDate()-1
       } else {
         cureentDay = new Date().getDate()
       }
+      console.log(onlyDayList, realList, cureentDay)
       for (let i in realList) {
         let differDay = countDayOne(realList[i], res.start_date)
+        console.log(differDay)
+        // return
         differDay = differDay < 0 ? 0 : differDay
         campDateList.push(differDay)
         if (new Date(realList[i]).toLocaleDateString() === new Date().toLocaleDateString()) {
@@ -140,6 +153,7 @@ Page({
         }
       }
       e = e.map(n => n - 1)
+      console.log(dataObj,999)
       for (let i in dataObj) {
         if (Number(dataObj[i].id) === this.data.cureentDay) {
           dataObj[i].dataNum = 0
@@ -242,7 +256,7 @@ Page({
         showCover = false
       } else {
         showIdList.push(id)
-        setLocalStorage(GLOBAL_KEY.campHasShowList,showIdList)
+        setLocalStorage(GLOBAL_KEY.campHasShowList, showIdList)
         showCover = true
       }
     }
@@ -361,7 +375,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    bxPoint("camp_calendar", {from_uid: getApp().globalData.super_user_id})
+    bxPoint("camp_calendar", {
+      from_uid: getApp().globalData.super_user_id
+    })
     if (options.share) {
       this.setData({
         backIndex: true
