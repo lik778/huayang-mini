@@ -134,6 +134,10 @@
     color: #666;
 }
 .operate-lay {
+    position: absolute;
+    bottom: 92rpx;
+    width: 100vw;
+    box-sizing: border-box;
     display: flex;
     justify-content: space-around;
     align-items: center;

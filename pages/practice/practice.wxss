@@ -74,14 +74,13 @@
 }
 .week-line::after {
     position: absolute;
-    bottom: 15rpx;
+    bottom: 18rpx;
     left: 30rpx;
     right: 30rpx;
     content: "";
     box-sizing: border-box;
     height: 2rpx;
     border-bottom: 2rpx dashed #d5d5d5;
-    z-index: 1;
 }
 .day-container {
     display: flex;
@@ -267,7 +266,7 @@
     border-radius: 999rpx;
 }
 .recommend-title {
-    margin-bottom: 40rpx;
+    margin: 100rpx 0 40rpx;
 }
 .tip-mask {
     position: fixed;

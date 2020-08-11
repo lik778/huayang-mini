@@ -13,9 +13,9 @@
 .back-module {
   display: flex;
   align-items: center;
-  height: 30px;
+  height: 32px;
   /*border: 0.5px solid #DDDDDD;*/
-  /*border-radius: 999rpx;*/
+  /*border-radius: 999px;*/
   margin-left: 8px;
   background: rgba(255, 255, 255, 0.6);
 }
@@ -43,6 +43,6 @@
   transform: translateX(-50%);
   width: 40%;
   text-align: center;
-  font: 500 34rpx/38rpx PingFangSC-Medium, PingFang SC;
+  font: 500 17px/19px PingFangSC-Medium, PingFang SC;
   color: rgba(0, 0, 0, 1);
 }
