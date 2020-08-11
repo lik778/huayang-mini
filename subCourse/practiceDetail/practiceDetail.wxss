@@ -3,7 +3,7 @@
 }
 /*intro*/
 .intro {
-    margin-bottom: 70rpx;
+    margin-bottom: 100rpx;
 }
 .course-name {
     display: flex;
@@ -38,7 +38,7 @@
     opacity: 0.8;
 }
 .course-level {
-    margin: 20rpx 0 40rpx;
+    margin: 30rpx 0 50rpx;
     font: 36rpx/50rpx PingFang SC;
 }
 .course-desc {
@@ -63,7 +63,7 @@
 .scroller {
     white-space: nowrap;
     width: 100%;
-    padding: 30rpx 0 20rpx;
+    padding: 40rpx 0;
     box-sizing: border-box;
 }
 .scroll-item {

@@ -1,6 +1,6 @@
 <view>
     <naviBar title="花样百姓+" style="padding-top:{{statusHeight+44}}px;" color="#fff" titleColor="#000000"></naviBar>
-    <view class="practice-detail" style="padding-top:{{statusHeight+44+25}}px;">
+    <view class="practice-detail" style="padding-top:{{statusHeight+44+30}}px;">
         <!--  介绍  -->
         <view class="intro">
             <view class="course-name">
