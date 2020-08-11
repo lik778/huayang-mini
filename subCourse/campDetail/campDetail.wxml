@@ -30,7 +30,7 @@
 				<view class="video-cover" bindtap="playVideo" wx-if="{{showVideoCover}}">
 					<image src="/assets/images/common/play.png"></image>
 				</view>
-				<video id="myVideo" src="{{videoSrc}}" style="{{videoHeight}}" controls="{{false}}" show-center-play-btn="{{false}}" bindtap="pauseVideo" bindended="initVideo"></video>
+				<video id="myVideo" src="{{videoSrc}}" style="{{videoHeight}}" controls="{{true}}" show-center-play-btn="{{false}}" bindtap="pauseVideo" bindended="initVideo"></video>
 			</view>
 			<view class="course-list" wx:if="{{courseList.content.length>0}}">
 				<view class="course-item" wx:for="{{courseList.content}}" wx:key="index">
@@ -41,7 +41,7 @@
 						<image src="{{srcObj.url}}" wx:if="{{item.type==='url'}}"></image>
 					</view>
 					<view class="course-item-left" wx:else>
-						<image src="{{srcObj.lock}}"></image>
+						<image src="{{srcObj.lock}}" class="lock-icon"></image>
 					</view>
 					<view class="course-item-right">
 						<view class="course-item-right-left">

@@ -1,8 +1,19 @@
 // 加入训练营
-import { GLOBAL_KEY } from "../../lib/config"
-import { checkAuth } from "../../utils/auth"
-import { getCampDetail, getHasJoinCamp, joinCamp } from "../../api/course/index"
-import { getLocalStorage, payCourse } from "../../utils/util"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
+import {
+  checkAuth
+} from "../../utils/auth"
+import {
+  getCampDetail,
+  getHasJoinCamp,
+  joinCamp
+} from "../../api/course/index"
+import {
+  getLocalStorage,
+  payCourse
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -49,7 +60,7 @@ Page({
       }
       pushTime = endTime.split("-")[1] + "月" + endTime.split("-")[2] + "日"
       let datas = endTime.replace(/-/g, "/")
-      if (new Date(datas).getTime() < new Date().getTime()) {
+      if (new Date(datas + " 23:59:59").getTime() < new Date().getTime()) {
         // 没有开营日期
         buttonType = 2
       }

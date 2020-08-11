@@ -68,13 +68,12 @@ Page({
         user_id: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id
       }).then(res1 => {
         // res===false不需要显示完善资料
-        // res1 = false
-        // console.log(res1)
+        // res1 = true
         if (!res1) {
           // false不需要显示完善资料
           this.setData({
-            taskStyle: "top:-54rpx",
-            functionStyle: "top:-74rpx"
+            taskStyle: "top:-138rpx",
+            functionStyle: "top:-138rpx"
           })
           if (getLocalStorage(GLOBAL_KEY.showFillMsg) !== undefined) {
             // 说明刚刚完善资料,弹弹窗
@@ -114,8 +113,6 @@ Page({
           showMessage: res1,
           showAll: true
         })
-        // console.log(userInfoLate, res.user_grade, 9999)
-        // return
         resolve()
       })
     })
@@ -167,10 +164,9 @@ Page({
       increaseExp({
         task_type: 'task_checkin'
       }).then(res => {
-        // console.log(res, 11)
         this.getUserSingerInfo()
         if (res.has_grade) {
-        // if (false) {
+          // if (false) {
           // 签到升级了
           this.setData({
             gradeData: {
@@ -193,15 +189,6 @@ Page({
             }
           })
         }
-        // setTimeout(() => {
-        //   this.setData({
-        //     gradeData: {
-        //       experNum: experNumData,
-        //       upgrade: false,
-        //       showLevelAlert: false
-        //     }
-        //   })
-        // }, 1500)
       })
     })
   },
@@ -231,19 +218,14 @@ Page({
   getTaskList() {
     getTaskList().then(res => {
       for (let i in res) {
-        let str = res[i].DescExperience.split(" ")
+        let str = res[i].DescExperience.split("+")
         for (let j in str) {
           j = Number(j)
           if (j === 0) {
             res[i].textData1 = str[j]
           } else if (j === 1) {
-            res[i].textData2 = str[j]
-          } else {
-            if (res[i].textData3) {
-              res[i].textData3 += str[j]
-            } else {
-              res[i].textData3 = str[j]
-            }
+            res[i].textData2 = "+" + str[j].split('成长值')[0]
+            res[i].textData3 = "成长值" + str[j].split('成长值')[1]
           }
         }
       }

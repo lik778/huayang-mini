@@ -7,13 +7,13 @@
 /* 个人信息  */
 .banner {
   width: 100%;
-  height: 494rpx;
+  height: 534rpx;
   position: relative;
 }
 
 .banner>image {
   width: 100%;
-  height: 494rpx;
+  height: 534rpx;
 }
 
 .message {
@@ -61,7 +61,7 @@
   font-size: 32rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
-  color: rgba(255, 236, 213, 1);
+  color: rgba(255, 236, 213, 0.8);
   line-height: 32rpx;
   margin-right: 20rpx;
 }
@@ -78,7 +78,7 @@
   font-size: 32rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
-  color: rgba(255, 236, 213, 1);
+  color: rgba(255, 236, 213, 0.8);
   line-height: 32rpx;
 }
 
@@ -87,9 +87,10 @@
   width: 100%;
   height: 12rpx;
   border-radius: 6rpx;
-  background: #333333;
-  opacity: 0.6;
+  background: rgba(51, 51, 51, 0.6);
+  /* opacity: 0.6; */
   position: relative;
+  overflow: hidden;
 }
 
 .experience-process-active {
@@ -108,7 +109,7 @@
   border-radius: 8rpx;
   margin: 0 auto;
   position: relative;
-  top: -72rpx;
+  top: -138rpx;
   overflow: hidden;
 }
 
@@ -179,7 +180,7 @@
   border-radius: 8rpx;
   margin-bottom: 20rpx;
   position: relative;
-  top: -50rpx;
+  top: -118rpx;
 }
 
 .task-title {
@@ -291,7 +292,7 @@
   border-radius: 8rpx;
   box-shadow: 0px 0px 12rpx 0px rgba(0, 0, 0, 0.05);
   position: relative;
-  top: -50rpx;
+  top: -118rpx;
 }
 
 .function-item {
