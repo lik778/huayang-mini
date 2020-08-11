@@ -42,7 +42,7 @@
 		<view class="task-list">
 			<view class="task-item" wx:for="{{taskList}}" wx:key="index">
 				<view class="task-item-left">
-					<image src="/assets/images/common/signIn.png"></image>
+					<image src="{{item.Icon}}"></image>
 					<view class="task-item-middle">
 						<view>{{item.Name}}</view>
 						<view>{{item.Desc}}</view>

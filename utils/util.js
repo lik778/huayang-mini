@@ -1,9 +1,21 @@
 import md5 from 'md5'
-import { GLOBAL_KEY, ROOT_URL, URL, WeChatLiveStatus } from '../lib/config'
-import { createOrder } from "../api/mine/payVip"
-import { getWatchLiveAuth, statisticsWatchNo } from "../api/live/course"
+import {
+	GLOBAL_KEY,
+	ROOT_URL,
+	URL,
+	WeChatLiveStatus
+} from '../lib/config'
+import {
+	createOrder
+} from "../api/mine/payVip"
+import {
+	getWatchLiveAuth,
+	statisticsWatchNo
+} from "../api/live/course"
 import request from "../lib/request"
-import { getUserInfo } from "../api/mine/index"
+import {
+	getUserInfo
+} from "../api/mine/index"
 
 const livePlayer = requirePlugin('live-player-plugin')
 
@@ -30,9 +42,9 @@ export const formatNumber = n => {
 }
 // 购买训练营课程
 export const payCourse = function ({
-																		 id,
-																		 name
-																	 }) {
+	id,
+	name
+}) {
 	// 调用获取支付凭证
 	let getPaySignParams = {
 		open_id: getLocalStorage(GLOBAL_KEY.openId),
@@ -44,9 +56,9 @@ export const payCourse = function ({
 	let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo" //商户key
 	return new Promise((resolve, reject) => {
 		request._post(URL.getPaySign, getPaySignParams).then(({
-																														data,
-																														code
-																													}) => {
+			data,
+			code
+		}) => {
 			if (code === 0) {
 				requestPayment({
 					prepay_id: data,
@@ -66,8 +78,8 @@ export const payCourse = function ({
  * @returns
  */
 export const payVip = function ({
-																	id
-																}) {
+	id
+}) {
 	let createOrderParmas = {
 		scene: "zhide_vip",
 		recommend_user_id: id || "",
@@ -302,11 +314,11 @@ export const getSchedule = async function (roomIds = []) {
 
 // 判断是否是会员/是否入学
 export const checkIdentity = function ({
-																				 roomId,
-																				 link,
-																				 zhiboRoomId,
-																				 customParams = {}
-																			 }) {
+	roomId,
+	link,
+	zhiboRoomId,
+	customParams = {}
+}) {
 	const userId = getLocalStorage(GLOBAL_KEY.userId)
 	return new Promise((resolve, reject) => {
 		if (userId == null) {
@@ -314,9 +326,9 @@ export const checkIdentity = function ({
 		} else {
 			// 获取直播权限
 			getWatchLiveAuth({
-				room_id: zhiboRoomId,
-				user_id: userId
-			})
+					room_id: zhiboRoomId,
+					user_id: userId
+				})
 				.then(res => {
 					if (res === 'vip') {
 						// 非会员，跳往花样汇
@@ -361,8 +373,8 @@ export const checkIdentity = function ({
 function queryLiveStatus(roomId) {
 	return new Promise((resolve, reject) => {
 		livePlayer.getLiveStatus({
-			room_id: roomId
-		})
+				room_id: roomId
+			})
 			.then(response => {
 				resolve(response)
 			})
@@ -578,10 +590,24 @@ export const countDayOne = (nowDate, totalDate) => {
 	// nowDate当前日期，totalDate目标日期
 	nowDate = nowDate.replace(/-/g, "/")
 	totalDate = totalDate.replace(/-/g, "/")
-	var date1 = new Date(totalDate)
-	var date2 = new Date(nowDate)
-	var date = date2 - date1 < 0 ? 0 : (date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24) /*不用考虑闰年否*/
-	return Math.ceil(date + 1) === -0 ? 0 : Math.ceil(date + 1)
+	var date1 = new Date(totalDate).getTime()
+	var date2 = new Date(nowDate).getTime()
+	let date3 = Math.ceil((date2 - date1) / (1000 * 60 * 60 * 24))
+	let date = ''
+	if (date3 === -1) {
+		// 开营前一天
+		date = 0
+	} else if (date3 === 0) {
+		// 开营当天
+		date = 1
+	} else if (date3 > 0) {
+		// 开营后面
+		date = date3 + 1
+	} else {
+		// 开营之前
+		date = -1
+	}
+	return date
 }
 
 // 调换数组两个位置
@@ -675,8 +701,8 @@ export const wxGetSetting = function (authKey) {
 	return new Promise((resolve, reject) => {
 		wx.getSetting({
 			success({
-								authSetting
-							}) {
+				authSetting
+			}) {
 				resolve(authSetting[authKey])
 			},
 			fail(e) {

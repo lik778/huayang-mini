@@ -69,7 +69,6 @@ Page({
           buttonType = 3
         }
       }
-      console.log(userData.user_grade, res.level, pushTime === undefined)
       this.setData({
         campDetailData: res,
         joinTime: pushTime,
@@ -182,7 +181,6 @@ Page({
       redirectType: 'redirect'
     }).then(() => {
       let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
-      console.log(userInfo.is_zhide_vip)
       this.setData({
         campId: options.id,
         userInfo: userInfo

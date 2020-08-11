@@ -100,17 +100,15 @@ Page({
         // 未开营
         onlyDayList = getTodayDate(res.start_date).one //只有日的日期列表
         realList = getTodayDate(res.start_date).two //实际一周日期列表
-        cureentDay = new Date(res.start_date).getDate()-1
+        cureentDay = new Date(res.start_date).getDate() - 1
       } else {
         cureentDay = new Date().getDate()
       }
-      console.log(onlyDayList, realList, cureentDay)
+
       for (let i in realList) {
         let differDay = countDayOne(realList[i], res.start_date)
-        console.log(differDay)
-        // return
-        differDay = differDay < 0 ? 0 : differDay
         campDateList.push(differDay)
+        // console.log(differDay, campDateList, 777)
         if (new Date(realList[i]).toLocaleDateString() === new Date().toLocaleDateString()) {
           weekData[i] = '今天'
         }
@@ -140,29 +138,15 @@ Page({
       traincamp_id: this.data.campId
     }).then(res => {
       let dataObj = this.data.dateObj.dateList.date
-      for (let i in res) {
-        res[i].content = JSON.parse(res[i].content)
-        for (let j in e) {
-          if (e[j] === res[i].day_num + 1) {
-            let days = Number(j)
-            dataObj[days].dataNum = 1
-          } else {
-            let days = Number(res[i].day_num)
-            dataObj[days].dataNum = -1
-          }
-        }
-      }
-      e = e.map(n => n - 1)
-      console.log(dataObj,999)
       for (let i in dataObj) {
-        if (Number(dataObj[i].id) === this.data.cureentDay) {
-          dataObj[i].dataNum = 0
-          dataObj[i].day_num = 0
-        } else {
-          dataObj[i].day_num = e[i]
-        }
-        if (dataObj[i].dataNum < 0) {
-          dataObj[i].day_num = -1
+        dataObj[i].day_num = e[i]
+        for (let j in res) {
+          if (!Array.isArray(res[j].content)) {
+            res[j].content = JSON.parse(res[j].content)
+          }
+          if (res[j].day_num === dataObj[i].day_num) {
+            dataObj[i].dataNum = 1
+          }
         }
       }
       this.setData({
@@ -175,7 +159,7 @@ Page({
   toCureentDay(e) {
     let dayNum = ''
     if (e.currentTarget) {
-      let event = e.currentTarget.dataset.item.day_num
+      let event = e.currentTarget.dataset.item.dataNum
       if (event < 0 || event === undefined) return
       if (event >= 0) {
         dayNum = event
@@ -247,7 +231,6 @@ Page({
   initCoverShow(id) {
     let showIdList = getLocalStorage(GLOBAL_KEY.campHasShowList) === undefined ? undefined : JSON.parse(getLocalStorage(GLOBAL_KEY.campHasShowList))
     let showCover = true
-    console.log(showIdList)
     if (showIdList === undefined) {
       setLocalStorage(GLOBAL_KEY.campHasShowList, [id])
       showCover = true
