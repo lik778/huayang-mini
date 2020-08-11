@@ -189,7 +189,7 @@ Page({
 	 * @param avatarImage
 	 * @param qrCodeImage
 	 */
-	drawHiddenCanvas(coverImage, avatarImage, qrCodeImage) {
+	drawHiddenCanvas(coverImage, avatarImage, qrCodeImage, recordNo) {
 		const canvasWidth = 300
 		const canvasHeight = 366
 		let ctx = wx.createCanvasContext('order')
@@ -210,10 +210,10 @@ Page({
 		this.drawName(ctx, "第", 18, 15, 69, 'white')
 		ctx.save()
 		ctx.font = `bold ${27}px Condensed`
-		let recordNoWidth = this.measureTextWidth(this.data.postData.recordNo, ctx)
-		this.drawName(ctx, this.data.postData.recordNo, 27, 36, 62, 'white')
+		let recordNoWidth = this.measureTextWidth(String(recordNo), ctx)
+		this.drawName(ctx, String(recordNo), 27, 36, 62, 'white')
 		ctx.restore()
-		this.drawName(ctx, "天打卡", 18, 54 + recordNoWidth, 69, 'white')
+		this.drawName(ctx, "天打卡", 18, 37 + recordNoWidth, 69, 'white')
 		// 训练名称
 		let actionName = this.data.postData.actionName.length > 10 ? `${this.data.postData.actionName.slice(0, 10)}..` : this.data.postData.actionName
 		this.drawName(ctx, actionName, 18, 94, 338, 'white')
@@ -272,8 +272,7 @@ Page({
 			}))
 		})
 		Promise.all(promiseAry).then(([coverImage, avatarImage, qrCodeImage]) => {
-			console.error(coverImage, avatarImage, qrCodeImage)
-			this.drawHiddenCanvas(coverImage, avatarImage, qrCodeImage)
+			this.drawHiddenCanvas(coverImage, avatarImage, qrCodeImage, this.data.postData.recordNo)
 		})
 	},
 	initial() {
