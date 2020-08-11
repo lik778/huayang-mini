@@ -14,6 +14,7 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
+		statusHeight: 0,
 		screenWidth: 0,
 		accountInfo: {},
 		CourseLevels,
@@ -49,6 +50,7 @@ Page({
 		this.setData({
 			courseId,
 			screenWidth: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth,
+			statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusHeight,
 			accountInfo
 		})
 
