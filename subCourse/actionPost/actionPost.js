@@ -202,14 +202,14 @@ Page({
 		ctx.drawImage(coverImage, 0, 0, canvasWidth, canvasHeight)
 		// 日期
 		ctx.save()
-		ctx.font = `bold ${32}px DIN Alternate,Roboto-Condensed`
+		ctx.font = `bold ${32}px Condensed`
 		this.drawName(ctx, this.data.postData.date, 32, 15, 20, 'white')
 		ctx.restore()
 		// 打卡次数
 		ctx.font = `bold ${15}px PingFang SC`
 		this.drawName(ctx, "第", 18, 15, 69, 'white')
 		ctx.save()
-		ctx.font = `bold ${27}px DIN Alternate,Roboto-Condensed`
+		ctx.font = `bold ${27}px Condensed`
 		let recordNoWidth = this.measureTextWidth(this.data.postData.recordNo, ctx)
 		this.drawName(ctx, this.data.postData.recordNo, 27, 36, 62, 'white')
 		ctx.restore()
@@ -225,20 +225,20 @@ Page({
 		this.drawName(ctx, nickname, 18, 94, 376, "black")
 		// 训练参数
 		ctx.save()
-		ctx.font = `bold ${30}px DIN Alternate,Roboto-Condensed`
+		ctx.font = `bold ${30}px Condensed`
 		let practiceNo = {x: 23, y: 420}
 		this.drawName(ctx, this.data.postData.duration, 30, practiceNo.x, practiceNo.y, 'black')
 		this.drawName(ctx, this.data.postData.actionNo, 30, practiceNo.x + 110, practiceNo.y, 'black')
 		ctx.restore()
 		// 参数解释
 		ctx.save()
-		ctx.font = `${14}px DIN Alternate,Roboto-Condensed`
+		ctx.font = `${14}px Condensed`
 		let tipsNo = {x: 33, y: 455}
 		this.drawName(ctx, "训练时长", 14, tipsNo.x, tipsNo.y, 'black')
 		this.drawName(ctx, "个动作", 14, this.data.postData.actionNo >= 10 ? tipsNo.x + 95 : tipsNo.x + 89, tipsNo.y, 'black')
 		ctx.restore()
 		// 二维码
-		this.drawBorderCircle(ctx, qrCodeImage, 256, 410, 34)
+		ctx.drawImage(qrCodeImage, 222, 376, 68, 68)
 		// 提示文案
 		let tipNo = {x: 221, y: 448}
 		this.drawName(ctx, "长按识别二维码", 10, tipNo.x, tipNo.y, 'black')

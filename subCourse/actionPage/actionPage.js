@@ -60,7 +60,7 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: async function (options) {
-		bxPoint("course_play", {from_uid: options.invite_user_id})
+		bxPoint("course_play", {})
 
 		const self = this
 		const eventChannel = this.getOpenerEventChannel()
@@ -225,6 +225,7 @@ Page({
 			this.toggleAction("pause")
 			// 记录用户手动暂停，onShow时不会自动启动
 			this.setData({accordPause: true})
+			bxPoint("course_operation", {event: "stop", action_num: this.data.targetActionObj.id}, false)
 		} else {
 			this.toggleAction("play")
 			this.setData({accordPause: false})
@@ -241,10 +242,8 @@ Page({
 			confirmText: "确定",
 			success(res) {
 				if (res.confirm) {
+					bxPoint("course_operation", {event: "exit", action_num: this.data.targetActionObj.id}, false)
 					wx.navigateBack()
-					// wx.redirectTo({
-					// 	url: "/subCourse/practiceDetail/practiceDetail?courseId=" + self.data.courseInfo.id
-					// })
 				} else if (res.cancel) {
 					console.log('取消')
 				}
@@ -427,7 +426,7 @@ Page({
 		if (+this.data.targetActionObj.meta_type === 2) {
 			link = commands[this.data.targetActionIndex % commands.length]
 		} else {
-			// 嘀
+			// 哒
 			link = LocaleVoice.lv10
 		}
 		this.setData({targetActionIndex: this.data.targetActionIndex + 1})
@@ -544,7 +543,7 @@ Page({
 			targetActionIndex: 0,
 		})
 		if ($notNull(nextActionObj)) {
-			bxPoint("course_operation", {event: isPrevious ? "previous" : "next", action_num: nextActionObj.name}, false)
+			bxPoint("course_operation", {event: isPrevious ? "previous" : "next", action_num: nextActionObj.id}, false)
 		}
 	},
 	// 开始课程演示

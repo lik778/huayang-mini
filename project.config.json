@@ -82,7 +82,7 @@
 					"id": 2,
 					"name": "pages/auth/auth",
 					"pathName": "pages/auth/auth",
-					"query": "invite_user_id=5",
+					"query": "invite_user_id=207",
 					"scene": null
 				},
 				{

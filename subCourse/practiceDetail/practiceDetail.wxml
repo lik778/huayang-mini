@@ -1,4 +1,7 @@
 <view class="practice-detail">
+    <view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+        <naviBar title="花样百姓+" color="#fff" titleColor="#000000"></naviBar>
+    </view>
     <!--  介绍  -->
     <view class="intro">
         <view class="course-name">

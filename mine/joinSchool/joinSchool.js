@@ -71,7 +71,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    checkAuth({listenable: true}).then(() => {
+    checkAuth().then(() => {
       let userId = getLocalStorage(GLOBAL_KEY.userId)
       let { is_zhide_vip, student_num } = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
       if (userId == null) {

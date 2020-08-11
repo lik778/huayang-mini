@@ -1,22 +1,8 @@
-import {
-    GLOBAL_KEY
-} from "../../lib/config"
-import {
-    getLocalStorage,
-    payVip,
-    setLocalStorage
-} from "../../utils/util"
-import {
-    bindWxPhoneNumber
-} from "../../api/auth/index"
-import {
-    getUserInfo,
-    getVipBg,
-    pointjoinVipFrom
-} from "../../api/mine/index"
-import {
-    checkAuth
-} from "../../utils/auth"
+import { GLOBAL_KEY } from "../../lib/config"
+import { getLocalStorage, payVip, setLocalStorage } from "../../utils/util"
+import { bindWxPhoneNumber } from "../../api/auth/index"
+import { getUserInfo, getVipBg, pointjoinVipFrom } from "../../api/mine/index"
+import { checkAuth } from "../../utils/auth"
 
 Page({
 
@@ -237,8 +223,7 @@ Page({
             mask: true
         })
         checkAuth({
-            listenable: true,
-            ignoreFocusLogin: true
+            authPhone: true
         }).then(() => {
             let userId = options.scene ? decodeURIComponent(options.scene) : ""
             if (options.from === "joinSchool") {

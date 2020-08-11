@@ -42,7 +42,6 @@ Component({
   methods: {
     // 返回
     back() {
-      console.error('this.data.forceGoBackIndex = ', this.data.forceGoBackIndex)
       if (this.data.forceGoBackIndex) {
         this.backIndex()
       } else {

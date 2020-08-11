@@ -1,25 +1,10 @@
 // pages/userCenter/userCenter.js
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { GLOBAL_KEY } from "../../lib/config"
 import request from "../../lib/request"
-import {
-  getSignData,
-  getTaskList,
-  increaseExp,
-  needUpdateUserInfo,
-  taskCheckIn
-} from "../../api/course/index"
-import {
-  getUserInfo
-} from "../../api/mine/index"
-import {
-  getLocalStorage,
-  setLocalStorage
-} from "../../utils/util"
-import {
-  checkAuth
-} from "../../utils/auth"
+import { getSignData, getTaskList, increaseExp, needUpdateUserInfo, taskCheckIn } from "../../api/course/index"
+import { getUserInfo } from "../../api/mine/index"
+import { getLocalStorage, setLocalStorage } from "../../utils/util"
+import { checkAuth } from "../../utils/auth"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -206,9 +191,7 @@ Page({
   //
   // 训练/打卡
   pratice() {
-    bxPoint("mine_task", {
-      task_type: "toTrain"
-    }, false)
+    bxPoint("mine_task", {task_type: "toTrain"}, false)
     wx.switchTab({
       url: '/pages/practice/practice',
     })
@@ -218,6 +201,10 @@ Page({
     this.setData({
       userInfo: getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
     })
+  },
+  // 去邀请
+  invite() {
+    bxPoint("mine_task", {task_type: "toInvite"}, false)
   },
   // 获取任务列表
   getTaskList() {
@@ -262,9 +249,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    bxPoint("applets_mine", {
-      from_uid: options.invite_user_id
-    })
+    bxPoint("applets_mine", {})
     let data = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     this.setData({
       statusHeight: data,
@@ -289,8 +274,9 @@ Page({
       })
     }
     checkAuth({
-      listenable: true,
-      ignoreFocusLogin: false
+      authPhone: true,
+      redirectPath: "/pages/practice/practice",
+      redirectType: "switch"
     }).then(() => {
       this.getUserInfo()
       this.getSignData()

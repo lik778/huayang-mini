@@ -200,8 +200,7 @@ Page({
             })
         }
         checkAuth({
-            listenable: true,
-            ignoreFocusLogin: true
+            authPhone: true
         }).then(() => {
             this.getUserInfoData()
             this.changeScene()

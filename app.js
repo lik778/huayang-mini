@@ -55,5 +55,6 @@ App({
 	},
 	globalData: {
 		didSendRemindWithUserId: false, // 是否携带userId调用过弹窗接口
+		super_user_id: 0, // 上级邀请人id
 	}
 })

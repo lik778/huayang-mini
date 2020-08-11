@@ -14,6 +14,7 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
+		statusHeight: 0,
 		screenWidth: 0,
 		accountInfo: {},
 		CourseLevels,
@@ -33,23 +34,27 @@ Page({
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
-	onLoad: function (options) {
-		if (options.formCampDetail === "payUser") {
+	onLoad: function ({courseId, formCampDetail}) {
+		// 检查是否是训练营付费会员
+		if (formCampDetail === "payUser") {
 			this.setData({didPayUser: true})
 		}
+
 		checkAuth({
-			listenable: true,
-			ignoreFocusLogin: true
+			authPhone: true,
+			redirectPath: `/subCourse/practiceDetail/practiceDetail$courseId#${courseId}`,
+			redirectType: 'redirect'
 		})
 
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 		this.setData({
-			courseId: options.courseId,
+			courseId,
 			screenWidth: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth,
+			statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusHeight,
 			accountInfo
 		})
 
-		bxPoint("course_details", {from_uid: options.invite_user_id})
+		bxPoint("course_details", {from_uid: getApp().globalData.super_user_id})
 	},
 
 	/**
