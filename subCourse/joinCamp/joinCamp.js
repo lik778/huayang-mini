@@ -31,6 +31,7 @@ Page({
     endTime: "",
     userInfo: "",
     buttonType: 1,
+    lock: true,
     campDetailData: {},
   },
   // 获取训练营详情
@@ -92,45 +93,56 @@ Page({
   },
   // 加入训练营
   joinCamp() {
-    bxPoint("camp_join", {}, false)
-    joinCamp({
-      open_id: getLocalStorage(GLOBAL_KEY.openId),
-      // open_id:'oG8Rd5Zxr7cjV6tUdraUDdsOSS8w',
-      date: this.data.endTime,
-      traincamp_id: this.data.campId
-    }).then((res) => {
-      if (res.id) {
-        payCourse({
-          id: res.id,
-          name: '加入训练营'
-        }).then(res => {
-          // 设置顶部标题
-          if (res.errMsg === "requestPayment:ok") {
-            this.backFun({
-              type: "success"
-            })
-          } else {
+
+    if (this.data.lock) {
+      this.setData({
+        lock: false
+      })
+      bxPoint("camp_join", {}, false)
+      joinCamp({
+        open_id: getLocalStorage(GLOBAL_KEY.openId),
+        // open_id:'oG8Rd5Zxr7cjV6tUdraUDdsOSS8w',
+        date: this.data.endTime,
+        traincamp_id: this.data.campId
+      }).then((res) => {
+        if (res.id) {
+          payCourse({
+            id: res.id,
+            name: '加入训练营'
+          }).then(res => {
+            // 设置顶部标题
+            if (res.errMsg === "requestPayment:ok") {
+              this.backFun({
+                type: "success"
+              })
+            } else {
+
+              this.backFun({
+                type: "fail"
+              })
+            }
+          }).catch(err => {
             this.backFun({
               type: "fail"
             })
-          }
-        }).catch(err => {
-          this.backFun({
-            type: "fail"
           })
-        })
-      } else {
-        this.backFun({
-          type: "success"
-        })
-      }
-    })
+        } else {
+          this.backFun({
+            type: "success"
+          })
+        }
+      })
+    }
+
   },
   // 集中处理支付回调
   backFun({
     type
   }) {
     if (type === 'fail') {
+      this.setData({
+        lock: true
+      })
       wx.showToast({
         title: '支付失败',
         icon: "none",
@@ -208,7 +220,9 @@ Page({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
 
-    bxPoint("camp_introduce", {from_uid: getApp().globalData.super_user_id})
+    bxPoint("camp_introduce", {
+      from_uid: getApp().globalData.super_user_id
+    })
   },
 
   /**
