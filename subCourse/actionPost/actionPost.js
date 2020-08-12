@@ -280,7 +280,6 @@ Page({
 	},
 	saveToLocal() {
 		bxPoint("course_clock", {type: "hold"}, false)
-		this.punchCard()
 		if (!this.data._didDrawCanvasDone) {
 			wx.showLoading({
 				title: '海报生成中...',
@@ -293,12 +292,13 @@ Page({
 		}
 
 		this._saveCanvasImageToLocal('order').then(({tempFilePath}) => {
-			console.log(tempFilePath)
+			// console.log(tempFilePath)
 			queryWxAuth(WX_AUTH_TYPE.writePhotosAlbum).then(() => {
 				wx.saveImageToPhotosAlbum({
 					filePath: tempFilePath,
 					success(res) {
 						toast('图片保存成功', 3000, 'success')
+						this.punchCard()
 					},
 					fail() {
 						toast('图片保存失败')

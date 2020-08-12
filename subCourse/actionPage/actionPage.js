@@ -190,8 +190,8 @@ Page({
 			this.data.mainPointAudio.destroy()
 		}
 		if (this.data.bgAudio) {
-			this.data.bgAudio.pause()
 			this.data.bgAudio.volume = 0
+			this.data.bgAudio = null
 		}
 	},
 	// 监听小程序切前台的回掉函数
@@ -414,15 +414,12 @@ Page({
 		// 解决华为P30处理音频地址完全相同时无法正常播放问题
 		link = link + '?' + +new Date()
 		return new Promise(resolve => {
-			if (audio.src === link) {
-				audio.seek(0)
-				audio.play()
-			} else {
-				audio.src = link
-				audio.onCanplay(() => {
-					audio.play()
-				})
-			}
+			audio.src = link
+			audio.onCanplay(() => {
+				if (!this.data.isRunning) {
+					audio.pause()
+				}
+			})
 			audio.onEnded(() => {
 				resolve()
 			})
@@ -591,7 +588,7 @@ Page({
 		let splitSizeAry = voices_key[voice_type].split(",")
 		let voices = voices_ary.slice(+splitSizeAry[0], +splitSizeAry[1])
 
-		this.playCommand(voices, data)
+		this.playCommand(voices)
 	},
 
 	async start() {
