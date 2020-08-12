@@ -1,4 +1,4 @@
-import { getLocalStorage } from "../../utils/util"
+import { calculateExerciseTime, getLocalStorage } from "../../utils/util"
 import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import { joinCourseInGuide, queryBootCampCourseList } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
@@ -128,6 +128,7 @@ Page({
 			data = data.map(item => {
 				return {
 					...item,
+					duration: calculateExerciseTime(item.duration),
 					selected: 1
 				}
 			})

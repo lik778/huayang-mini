@@ -18,7 +18,7 @@
 .content .sub-cycle-time {
     display: inline-block;
     font: 700 56rpx/124rpx PingFang SC;
-    margin-left: 10rpx;
+    margin-left: 30rpx;
 }
 .content .operate {
     position: absolute;
