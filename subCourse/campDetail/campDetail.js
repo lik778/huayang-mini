@@ -146,11 +146,14 @@ Page({
           if (!Array.isArray(res[j].content)) {
             res[j].content = JSON.parse(res[j].content)
           }
-          if (res[j].day_num === dataObj[i].day_num) {
-            dataObj[i].dataNum = 1
+          if (res[j].content.length > 0) {
+            if (res[j].day_num === dataObj[i].day_num) {
+              dataObj[i].dataNum = 1
+            }
           }
         }
       }
+      console.log(this.data.dateObj)
       this.setData({
         dateObj: this.data.dateObj
       })
@@ -161,12 +164,9 @@ Page({
   toCureentDay(e) {
     let dayNum = ''
     let day = ''
-    this.setData({
-      videoSrc: "",
-      posterSrc: ""
-    })
     if (e.currentTarget) {
       let event = e.currentTarget.dataset.item.dataNum
+      console.log(event)
       if (event < 0 || event === undefined) return
       if (event >= 0) {
         dayNum = e.currentTarget.dataset.item.day_num
@@ -211,6 +211,10 @@ Page({
         }
       }
     }
+    this.setData({
+      videoSrc: "",
+      posterSrc: ""
+    })
     if (dayNum == 0) {
       this.setData({
         showLock: false
