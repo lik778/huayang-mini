@@ -314,9 +314,6 @@ Page({
 	 * @private
 	 */
 	async _playActionNameAndStartTraining() {
-		this.setData({
-			didPlayMainPointAudioInCurrentTargetAction: false
-		})
 		// 「动作名称」「N次/秒」
 		await this.playTempBgAudio(this.data.targetActionObj.name_voice_link)
 		await this.playTempBgAudio(voices_number(this.data.targetActionObj.cycleTime))
@@ -587,6 +584,10 @@ Page({
 
 		let splitSizeAry = voices_key[voice_type].split(",")
 		let voices = voices_ary.slice(+splitSizeAry[0], +splitSizeAry[1])
+
+		this.setData({
+			didPlayMainPointAudioInCurrentTargetAction: false
+		})
 
 		this.playCommand(voices)
 	},
