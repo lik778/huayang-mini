@@ -52,6 +52,7 @@ Page({
       url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925KAfZPv.jpg",
       lock: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596613255fHAzmw.jpg"
     },
+    posterSrc: "",
     styleObj: {
       all: "color:#000000;font-family:PingFang-SC-Bold,PingFang-SC;font-weight:bold;background:#F4F4F4",
       notAll: "color:#000000;background:#F4F4F4"
@@ -161,7 +162,8 @@ Page({
     let dayNum = ''
     let day = ''
     this.setData({
-      videoSrc: ""
+      videoSrc: "",
+      posterSrc: ""
     })
     if (e.currentTarget) {
       let event = e.currentTarget.dataset.item.dataNum
@@ -237,7 +239,8 @@ Page({
           }
           if (res.content[i].type === 'video' && this.data.videoSrc === '') {
             this.setData({
-              videoSrc: res.content[i].video
+              videoSrc: res.content[i].video,
+              posterSrc: res.content[i].cover
             })
           }
         }
@@ -394,7 +397,8 @@ Page({
     } else {
       // 直接播放视频
       this.setData({
-        videoSrc: data.video
+        videoSrc: data.video,
+        posterSrc: data.cover
       })
       this.playVideo()
     }
