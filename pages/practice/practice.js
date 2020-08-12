@@ -57,7 +57,6 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		bxPoint("applets_practice", {from_uid: getApp().globalData.super_user_id})
 		// 检查是否需要展示提示层
 		this.checkTipsLay()
 	},
@@ -84,6 +83,8 @@ Page({
 		})
 
 		this.initial()
+
+		bxPoint("applets_practice", {from_uid: getApp().globalData.super_user_id})
 	},
 
 	/**

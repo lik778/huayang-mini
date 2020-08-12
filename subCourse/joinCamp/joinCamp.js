@@ -180,9 +180,6 @@ Page({
       // id代表训练营ID
       this.checkCamp(this.data.campId)
     })
-    bxPoint("camp_introduce", {
-      from_uid: getApp().globalData.super_user_id
-    })
   },
 
   /**
@@ -200,6 +197,7 @@ Page({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
 
+    bxPoint("camp_introduce", {from_uid: getApp().globalData.super_user_id})
   },
 
   /**
