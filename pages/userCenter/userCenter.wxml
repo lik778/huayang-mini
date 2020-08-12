@@ -25,11 +25,11 @@
 		</view>
 	</view>
 	<!-- 完善个人资料 -->
-	<view class="full-message" wx:if="{{showMessage}}">
+	<view class="full-message" wx:if="{{showMessage}}" bindtap="fullSelfMsg">
 		<view class="full-message-cover-one"></view>
 		<view class="full-message-cover"></view>
 		<view class="full-message-left">
-			<view class="full-message-top" bindtap="fullSelfMsg">完善个人资料 ›</view>
+			<view class="full-message-top">完善个人资料 ›</view>
 			<view class="full-message-bottom">提升等级开启更多课程权益</view>
 		</view>
 		<view class="full-message-right">
