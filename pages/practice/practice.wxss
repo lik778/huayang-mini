@@ -98,12 +98,12 @@
 }
 /*today-boot-camp-plan*/
 .today-boot-camp-plan {
+}
+.boot-camp {
     margin-bottom: 40rpx;
     border-radius: 8rpx;
     overflow: hidden;
     box-shadow: 0 0 12rpx 0 rgba(0,0,0,0.1);
-}
-.boot-camp {
 }
 .no-camp {
     display: flex;
@@ -144,13 +144,48 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20rpx 30rpx;
+    height: 318rpx;
     font: 28rpx/28rpx PingFang SC;
     color: #666;
 }
 .no-exercise .no-exercise-image {
     width: 442rpx;
     height: 198rpx;
+}
+.failure {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 318rpx;
+    font: 32rpx/32rpx PingFang SC;
+    color: #666;
+}
+.failure-btn {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 60rpx;
+}
+.choose-other, .choose-restart {
+    width: 220rpx;
+    height: 72rpx;
+    border-radius: 999rpx;
+    font: 500 36rpx/72rpx PingFang SC;
+    text-align: center;
+    color: white;
+    background: #CC0000;
+}
+.choose-other:active, .choose-restart:active {
+    opacity: 0.8;
+}
+.choose-other {
+    margin-right: 40rpx;
+    box-sizing: border-box;
+    border: 2rpx solid #CC0000;
+    font-weight: 400;
+    color: #CC0000;
+    background: white;
 }
 .all-boot-camp {
     position: relative;
