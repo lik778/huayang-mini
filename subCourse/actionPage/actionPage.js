@@ -117,6 +117,7 @@ Page({
 		})
 		this.data.bgAudio.onStop(() => {
 			console.log('---------停止背景---------')
+			wx.navigateBack()
 			this.destroyResource()
 		})
 
@@ -181,17 +182,17 @@ Page({
 	},
 	// 页面退出前销毁所有实例
 	destroyResource() {
+		wx.offAppHide(this.onAppHideCallback)
+		wx.offAppShow(this.onAppShowCallback)
+
 		// 销毁所有音视频
 		if (this.data.mainPointAudio) {
 			this.data.mainPointAudio.destroy()
 		}
 		if (this.data.bgAudio) {
-			this.data.bgAudio.stop()
-			// this.data.bgAudio.src = ""
+			this.data.bgAudio.pause()
+			this.data.bgAudio.volume = 0
 		}
-
-		wx.offAppHide(this.onAppHideCallback)
-		wx.offAppShow(this.onAppShowCallback)
 	},
 	// 监听小程序切前台的回掉函数
 	onAppShowCallback() {
