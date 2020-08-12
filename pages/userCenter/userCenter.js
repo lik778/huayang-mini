@@ -1,10 +1,25 @@
 // pages/userCenter/userCenter.js
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 import request from "../../lib/request"
-import { getSignData, getTaskList, increaseExp, needUpdateUserInfo, taskCheckIn } from "../../api/course/index"
-import { getUserInfo } from "../../api/mine/index"
-import { getLocalStorage, setLocalStorage } from "../../utils/util"
-import { checkAuth } from "../../utils/auth"
+import {
+  getSignData,
+  getTaskList,
+  increaseExp,
+  needUpdateUserInfo,
+  taskCheckIn
+} from "../../api/course/index"
+import {
+  getUserInfo
+} from "../../api/mine/index"
+import {
+  getLocalStorage,
+  setLocalStorage
+} from "../../utils/util"
+import {
+  checkAuth
+} from "../../utils/auth"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -138,7 +153,9 @@ Page({
     bxPoint("mine_task", {
       task_type: "signIn"
     }, false)
-    let experNumData = Number(e.currentTarget.dataset.type.textData1.split("+")[1].split("成长值")[0])
+    // console.log()
+    // return
+    let experNumData = Number(e.currentTarget.dataset.type.textData2.split("+")[1])
     taskCheckIn({
       open_id: getLocalStorage(GLOBAL_KEY.openId),
       scene: 'zhide_center'
