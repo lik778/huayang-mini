@@ -68,7 +68,7 @@ Page({
       cancelText: "再想想",
       success: (res) => {
         if (res.confirm) {
-          exitCourse({kecheng_id: e.currentTarget.dataset.index}).then(() => {
+          exitCourse({id: e.currentTarget.dataset.index}).then(() => {
             this.initial()
           })
         }
@@ -84,7 +84,7 @@ Page({
       cancelText: "再想想",
       success: (res) => {
         if (res.confirm) {
-          exitBootCamp({traincamp_id: e.currentTarget.dataset.index}).then(() => {
+          exitBootCamp({id: e.currentTarget.dataset.index}).then(() => {
             this.initial()
           })
         }
