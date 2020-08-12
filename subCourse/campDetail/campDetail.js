@@ -251,6 +251,7 @@ Page({
   // 播放/暂停视频
   playVideo() {
     this.videoContext.play()
+    this.videoContext.requestFullScreen()
     this.setData({
       showVideoCover: false
     })
