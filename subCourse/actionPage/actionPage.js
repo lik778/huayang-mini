@@ -111,6 +111,15 @@ Page({
 
 		// 背景音频实例
 		this.data.bgAudio = wx.getBackgroundAudioManager()
+		this.data.bgAudio.onPause(() => {
+			console.log('---------暂停背景---------')
+			this.toggleAction("pause")
+		})
+		this.data.bgAudio.onStop(() => {
+			console.log('---------停止背景---------')
+			this.destroyResource()
+		})
+
 
 		// 启动
 		this.start()
@@ -124,6 +133,11 @@ Page({
 				isPlayMainPointAudioPlaying: false // 释放要领正在播放中的状态
 			})
 		})
+
+		// 监听小程序切后台事件
+		wx.onAppHide(this.onAppHideCallback)
+		// 监听小程序切前台事件
+		wx.onAppShow(this.onAppShowCallback)
 	},
 
 	/**
@@ -136,39 +150,20 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		// 用户非手动暂停时自动延续上次播放进度
-		if (!this.data.accordPause && !this.data.isRunning) {
-			this.toggleAction("play")
-		}
-
-		bxPoint("course_play", {})
 	},
 
 	/**
 	 * 生命周期函数--监听页面隐藏
 	 */
 	onHide: function () {
-		// 在休息层 & 未暂停休息 => 暂停休息阶段
-		if (this.data.didShowRestLayer && !this.data.didPauseRest) {
-			this.pauseRestTime("pause")
-		}
 
-		this.toggleAction("pause")
 	},
 
 	/**
 	 * 生命周期函数--监听页面卸载
 	 */
 	onUnload: function () {
-		// 销毁所有音视频
-		if (this.data.mainPointAudio) {
-			this.data.mainPointAudio.destroy()
-		}
-
-		if (this.data.bgAudio) {
-			this.data.bgAudio.stop()
-			// this.data.bgAudio.src = ""
-		}
+		this.destroyResource()
 	},
 
 	/**
@@ -183,6 +178,40 @@ Page({
 	 */
 	onReachBottom: function () {
 
+	},
+	// 页面退出前销毁所有实例
+	destroyResource() {
+		// 销毁所有音视频
+		if (this.data.mainPointAudio) {
+			this.data.mainPointAudio.destroy()
+		}
+		if (this.data.bgAudio) {
+			this.data.bgAudio.stop()
+			// this.data.bgAudio.src = ""
+		}
+
+		wx.offAppHide(this.onAppHideCallback)
+		wx.offAppShow(this.onAppShowCallback)
+	},
+	// 监听小程序切前台的回掉函数
+	onAppShowCallback() {
+		console.log("------------小程序切 前台 事件------------")
+		// 用户非手动暂停时自动延续上次播放进度
+		if (!this.data.accordPause && !this.data.isRunning) {
+			this.toggleAction("play")
+		}
+
+		bxPoint("course_play", {})
+	},
+	// 监听小程序切后台的回掉函数
+	onAppHideCallback() {
+		console.log("------------小程序切 后台 事件------------")
+		// 在休息层 & 未暂停休息 => 暂停休息阶段
+		if (this.data.didShowRestLayer && !this.data.didPauseRest) {
+			this.pauseRestTime("pause")
+		}
+
+		this.toggleAction("pause")
 	},
 	/**
 	 * 秀一下
@@ -395,10 +424,6 @@ Page({
 			}
 			audio.onEnded(() => {
 				resolve()
-			})
-			audio.onPause(() => {
-				console.error('暂停')
-				this.toggleAction("pause")
 			})
 		})
 	},
