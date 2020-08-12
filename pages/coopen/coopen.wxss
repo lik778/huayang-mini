@@ -39,30 +39,42 @@
 }
 /*page-01*/
 .move-animate {
-    animation: fadeIn 1s;
+    animation: fadeIn 1s forwards;
+    -webkit-animation: fadeIn 1s forwards;
 }
 .delay1 {
     animation-delay: 1s;
+    -webkit-animation-delay: 1s;
     animation-fill-mode: backwards!important;
+    -webkit-animation-fill-mode: backwards!important;
 }
 .delay2 {
     animation-delay: 2.5s;
+    -webkit-animation-delay: 2.5s;
     animation-fill-mode: backwards!important;
+    -webkit-animation-fill-mode: backwards!important;
 }
 .delay3 {
     animation-delay: 4s;
+    -webkit-animation-delay: 4s;
     animation-fill-mode: backwards!important;
+    -webkit-animation-fill-mode: backwards!important;
 }
 .delay4 {
     animation-delay: 5.5s;
+    -webkit-animation-delay: 5.5s;
     animation-fill-mode: backwards!important;
+    -webkit-animation-fill-mode: backwards!important;
 }
 .delay5 {
     animation-delay: 8s;
+    -webkit-animation-delay: 8s;
     animation-fill-mode: backwards!important;
+    -webkit-animation-fill-mode: backwards!important;
 }
 .bg-animate {
     animation: bg 1s 8s forwards;
+    -webkit-animation: bg 1s 8s forwards;
 }
 /*page-02*/
 .page-02 {
