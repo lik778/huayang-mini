@@ -35,7 +35,9 @@ Page({
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
-	onLoad: function ({courseId, formCampDetail}) {
+	onLoad: function ({courseId, formCampDetail, invite_user_id}) {
+		// 记录分享人身份
+		getApp().globalData.super_user_id = invite_user_id
 		// 检查是否是训练营付费会员
 		if (formCampDetail === "payUser") {
 			this.setData({didPayUser: true})

@@ -127,6 +127,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // 记录分享人身份
+    getApp().globalData.super_user_id = options.invite_user_id
+
     bxPoint("applets_find", {
       from_uid: getApp().globalData.super_user_id
     })
