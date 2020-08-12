@@ -242,6 +242,7 @@ Page({
             })
           }
           if (res.content[i].type === 'video' && this.data.videoSrc === '') {
+            console.log(res.content[i].video)
             this.setData({
               videoSrc: res.content[i].video,
               posterSrc: res.content[i].cover
