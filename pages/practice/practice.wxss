@@ -98,11 +98,12 @@
 }
 /*today-boot-camp-plan*/
 .today-boot-camp-plan {
+    margin-bottom: 40rpx;
     border-radius: 8rpx;
+    overflow: hidden;
+    box-shadow: 0 0 12rpx 0 rgba(0,0,0,0.1);
 }
 .boot-camp {
-    box-shadow: 0 0 12rpx 0 rgba(0,0,0,0.1);
-    margin-bottom: 40rpx;
 }
 .no-camp {
     display: flex;
