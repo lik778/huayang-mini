@@ -10,6 +10,10 @@
   background: #fff;
 }
 
+.module-one {
+  padding-bottom: 25px;
+}
+
 .module-two {
   padding-bottom: 180rpx;
 }
@@ -240,6 +244,7 @@
 /* 大赛 */
 .module-two {
   margin-top: 20rpx;
+
 }
 
 .competition {
