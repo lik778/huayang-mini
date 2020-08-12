@@ -26,7 +26,7 @@
 		<view class="bg-color"></view>
 		<!-- 课程内容 -->
 		<view class="camp-container">
-			<view class="video" wx:if="{{videoSrc!==''}}">
+			<view class="video" wx:if="{{videoSrc!==''&&!showLock}}">
 				<view class="video-cover" bindtap="playVideo" wx-if="{{showVideoCover}}">
 					<image src="/assets/images/common/play.png"></image>
 				</view>
