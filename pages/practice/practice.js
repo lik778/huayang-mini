@@ -260,7 +260,7 @@ Page({
 
 		// 用户加入的课程
 		queryUserJoinedClasses().then((userJoinedClassesList) => {
-			userJoinedClassesList.forEach(classItem => {
+			userJoinedClassesList.filter(c => c.kecheng).forEach(classItem => {
 				classItem.kecheng.exerciseTime = calculateExerciseTime(classItem.kecheng.duration)
 			})
 			if (userJoinedClassesList.length > 0) {
@@ -268,8 +268,8 @@ Page({
 			} else {
 				// 推荐课程
 				queryRecommendCourseList({scene: 'zhide_kecheng_pratice'}).then((recommendList) => {
-					recommendList.forEach(recommendList => {
-						recommendList.exerciseTime = calculateExerciseTime(recommendList.duration)
+					recommendList.filter(r => r).forEach(recommendItem => {
+						recommendItem.exerciseTime = calculateExerciseTime(recommendItem.duration)
 					})
 					this.setData({recommendList})
 				})

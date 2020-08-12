@@ -242,16 +242,18 @@ Page({
 			isDownloading: true
 		})
 
-		let waitingForDownloadFiles = [...this.data.voiceUrlQueue, ...this.data.videoUrlQueue]
+		// let waitingForDownloadFiles = [...this.data.voiceUrlQueue, ...this.data.videoUrlQueue]
+		let waitingForDownloadFiles = [...this.data.voiceUrlQueue]
 		this.downloadFilesByProcess(waitingForDownloadFiles).then((downloadedFiles) => {
-			let voiceResourceTempAry = downloadedFiles.slice(0, downloadedFiles.length / 2)
-			let videoResourceTempAry = downloadedFiles.slice(downloadedFiles.length / 2)
+			let voiceResourceTempAry = downloadedFiles.slice()
+			// let voiceResourceTempAry = downloadedFiles.slice(0, downloadedFiles.length / 2)
+			// let videoResourceTempAry = downloadedFiles.slice(downloadedFiles.length / 2)
 
 			cookedCourseMetaData = cookedCourseMetaData.map((item, index) => {
 				return {
 					...item,
 					voice_link: voiceResourceTempAry[index],
-					link: videoResourceTempAry[index]
+					// link: videoResourceTempAry[index]
 				}
 			})
 
