@@ -60,7 +60,6 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: async function (options) {
-		bxPoint("course_play", {})
 
 		const self = this
 		const eventChannel = this.getOpenerEventChannel()
@@ -141,6 +140,8 @@ Page({
 		if (!this.data.accordPause && !this.data.isRunning) {
 			this.toggleAction("play")
 		}
+
+		bxPoint("course_play", {})
 	},
 
 	/**

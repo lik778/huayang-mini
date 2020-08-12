@@ -254,7 +254,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    bxPoint("applets_mine", {})
     let data = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     this.setData({
       statusHeight: data,
@@ -285,12 +284,12 @@ Page({
     }).then(() => {
       this.getUserInfo()
       this.getSignData()
-
     })
 
     this.getTaskList()
     this.getUserSingerInfo()
 
+    bxPoint("applets_mine", {})
   },
 
   /**

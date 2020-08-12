@@ -1,17 +1,7 @@
 // subCourse/campDetail/campDetail.js
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  getProductInfo,
-  getYouZanAppId
-} from '../../api/mall/index'
-import {
-  getCampDetail,
-  getCourseData,
-  getCurentDayData,
-  getMenyCourseList
-} from "../../api/course/index"
+import { GLOBAL_KEY } from "../../lib/config"
+import { getProductInfo, getYouZanAppId } from '../../api/mall/index'
+import { getCampDetail, getCourseData, getCurentDayData, getMenyCourseList } from "../../api/course/index"
 import {
   countDay,
   countDayOne,
@@ -360,9 +350,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    bxPoint("camp_calendar", {
-      from_uid: getApp().globalData.super_user_id
-    })
     if (options.share) {
       this.setData({
         backIndex: true
@@ -387,6 +374,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    bxPoint("camp_calendar", {from_uid: getApp().globalData.super_user_id})
+
     let height = parseInt((JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth - 30) / 16 * 9)
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,

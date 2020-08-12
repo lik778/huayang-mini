@@ -57,8 +57,6 @@ Page({
 			accountInfo,
 			backPath: `/subCourse/practiceDetail/practiceDetail?courseId=${courseId}`
 		})
-
-		bxPoint("course_details", {from_uid: getApp().globalData.super_user_id})
 	},
 
 	/**
@@ -72,7 +70,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-
+		bxPoint("course_details", {from_uid: getApp().globalData.super_user_id})
 	},
 
 	/**
