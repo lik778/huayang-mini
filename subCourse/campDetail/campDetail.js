@@ -1,7 +1,17 @@
 // subCourse/campDetail/campDetail.js
-import { GLOBAL_KEY } from "../../lib/config"
-import { getProductInfo, getYouZanAppId } from '../../api/mall/index'
-import { getCampDetail, getCourseData, getCurentDayData, getMenyCourseList } from "../../api/course/index"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
+import {
+  getProductInfo,
+  getYouZanAppId
+} from '../../api/mall/index'
+import {
+  getCampDetail,
+  getCourseData,
+  getCurentDayData,
+  getMenyCourseList
+} from "../../api/course/index"
 import {
   countDay,
   countDayOne,
@@ -72,7 +82,7 @@ Page({
           if (endTime === '') {
             endTime = dateList[i]
           } else {
-            if (Math.round(new Date(endTime) / 1000) > Math.round(new Date(dateList[i]) / 1000) || Math.round(new Date(dateList[i]) / 1000) > Math.round(new Date() / 1000)) {
+            if (Math.round(new Date(endTime) / 1000) > Math.round(new Date(dateList[i]) / 1000) && Math.round(new Date(dateList[i]) / 1000) > Math.round(new Date() / 1000)) {
               endTime = dateList[i]
             }
           }
@@ -94,11 +104,9 @@ Page({
       } else {
         cureentDay = new Date().getDate()
       }
-
       for (let i in realList) {
-        let differDay = countDayOne(realList[i], res.start_date)
+        let differDay = countDayOne(realList[i], this.getLearDay(res))
         campDateList.push(differDay)
-        // console.log(differDay, campDateList, 777)
         if (new Date(realList[i]).toLocaleDateString() === new Date().toLocaleDateString()) {
           weekData[i] = '今天'
         }
@@ -106,6 +114,7 @@ Page({
       // 批量获取多日课程内容
       this.batchGetCourse(campDateList)
       // 获取当日课程
+      res.nowDate = cureentDay
       this.toCureentDay(res)
       this.setData({
         campDetailData: res,
@@ -147,35 +156,64 @@ Page({
 
   // 获取当前天的课程
   toCureentDay(e) {
-    console.log(e)
     let dayNum = ''
+    let day = ''
+    this.setData({
+      videoSrc: ""
+    })
     if (e.currentTarget) {
       let event = e.currentTarget.dataset.item.dataNum
       if (event < 0 || event === undefined) return
       if (event >= 0) {
-        dayNum =e.currentTarget.dataset.item.day_num
+        dayNum = e.currentTarget.dataset.item.day_num
+      }
+      let date = new Date();
+      day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
+      if (day < Number(e.currentTarget.dataset.item.id)) {
+        this.setData({
+          showLock: true
+        })
+      } else {
+        this.setData({
+          showLock: false
+        })
       }
       this.setData({
         cureentDay: e.currentTarget.dataset.item.id
       })
     } else {
+      // start_date
       if (new Date(e.start_date) > new Date()) {
         // 未开营
         dayNum = 0
       } else {
         // 已开营
-        dayNum = 0
+        // dayNum = 0
+        let endTime = this.getLearDay(e)
+        let date = new Date();
+        let year = date.getFullYear()
+        let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1
+        day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
+        let nowDate = year + "-" + month + "-" + day
+        dayNum = countDayOne(nowDate, endTime)
+        if (day < Number(e.nowDate)) {
+          this.setData({
+            showLock: true
+          })
+        } else {
+          this.setData({
+            showLock: false
+          })
+        }
       }
     }
+    // console.log(day, Number(e.currentTarget.dataset.item.id))
     if (dayNum == 0) {
       this.setData({
         showLock: false
       })
-    } else {
-      this.setData({
-        showLock: true
-      })
     }
+
     getCurentDayData({
       day_num: dayNum,
       traincamp_id: this.data.campId
@@ -217,7 +255,23 @@ Page({
       })
     })
   },
-
+  // 取两个日期接近的
+  getLearDay(e) {
+    let endTime = ''
+    let data = e.start_date.split(",")
+    for (let i in data) {
+      if (endTime === '') {
+        // 说明只有一个开营日期
+        endTime = data[i]
+      } else {
+        // 多个开营日期
+        if (Math.round(new Date(endTime) / 1000) > Math.round(new Date(data[i]) / 1000) && Math.round(new Date(data[i]) / 1000) > Math.round(new Date() / 1000)) {
+          endTime = data[i]
+        }
+      }
+    }
+    return endTime
+  },
   // 控制是否显示遮罩层
   initCoverShow(id) {
     let showIdList = getLocalStorage(GLOBAL_KEY.campHasShowList) === undefined ? undefined : JSON.parse(getLocalStorage(GLOBAL_KEY.campHasShowList))
@@ -374,7 +428,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    bxPoint("camp_calendar", {from_uid: getApp().globalData.super_user_id})
+    bxPoint("camp_calendar", {
+      from_uid: getApp().globalData.super_user_id
+    })
 
     let height = parseInt((JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth - 30) / 16 * 9)
     this.setData({

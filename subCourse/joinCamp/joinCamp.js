@@ -53,7 +53,7 @@ Page({
           endTime = data[i]
         } else {
           // 多个开营日期
-          if (Math.round(new Date(endTime) / 1000) > Math.round(new Date(data[i]) / 1000) || Math.round(new Date(data[i]) / 1000) > Math.round(new Date() / 1000)) {
+          if (Math.round(new Date(endTime) / 1000) > Math.round(new Date(data[i]) / 1000) && Math.round(new Date(data[i]) / 1000) > Math.round(new Date() / 1000)) {
             endTime = data[i]
           }
         }
