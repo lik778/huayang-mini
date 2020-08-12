@@ -1,8 +1,19 @@
 // 加入训练营
-import { GLOBAL_KEY } from "../../lib/config"
-import { checkAuth } from "../../utils/auth"
-import { getCampDetail, getHasJoinCamp, joinCamp } from "../../api/course/index"
-import { getLocalStorage, payCourse } from "../../utils/util"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
+import {
+  checkAuth
+} from "../../utils/auth"
+import {
+  getCampDetail,
+  getHasJoinCamp,
+  joinCamp
+} from "../../api/course/index"
+import {
+  getLocalStorage,
+  payCourse
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -54,7 +65,7 @@ Page({
         buttonType = 2
       }
       if (res.discount_price === 0) {
-        if (userData.user_grade < res.level) {
+        if (userData.user_grade < res.user_grade) {
           buttonType = 3
         }
       }

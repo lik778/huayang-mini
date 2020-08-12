@@ -157,12 +157,13 @@ Page({
 
   // 获取当前天的课程
   toCureentDay(e) {
+    console.log(e)
     let dayNum = ''
     if (e.currentTarget) {
       let event = e.currentTarget.dataset.item.dataNum
       if (event < 0 || event === undefined) return
       if (event >= 0) {
-        dayNum = event
+        dayNum =e.currentTarget.dataset.item.day_num
       }
       this.setData({
         cureentDay: e.currentTarget.dataset.item.id
