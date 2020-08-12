@@ -70,7 +70,7 @@
                 </view>
             </block>
         </view>
-        <view class="boot-camp" wx:if="{{bootCampList.length === 0}}">
+        <view class="boot-camp {{bootCampList.length === 0 ? 'boot-camp-no-shadow' : '' }}" wx:if="{{bootCampList.length === 0}}">
             <view class="no-camp">
                 <text>快去挑选感兴趣的训练营吧</text>
                 <text class="find-camp-btn" bind:tap="goToDiscovery">去挑选</text>
