@@ -8,6 +8,7 @@ import {
   getTaskList,
   increaseExp,
   needUpdateUserInfo,
+  getPhoneNumber,
   taskCheckIn
 } from "../../api/course/index"
 import {
@@ -34,6 +35,7 @@ Page({
     canShow: false,
     processStyle: "width:0%;",
     taskStyle: "",
+    phoneNumber:"",
     functionStyle: "",
     hasCheckIn: false,
     showMessage: false,
@@ -243,6 +245,14 @@ Page({
     })
   },
 
+  // 获取客服号码
+  getNumber() {
+    getPhoneNumber().then(res => {
+      this.setData({
+        phoneNumber:res
+      })
+    })
+  },
 
   // 联系客服
   callPhone(e) {
@@ -284,6 +294,7 @@ Page({
     }).then(() => {
       this.getUserInfo()
       this.getSignData()
+      this.getNumber()
     })
 
     this.getTaskList()

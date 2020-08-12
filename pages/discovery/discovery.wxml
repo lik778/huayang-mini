@@ -2,7 +2,7 @@
 <view class="discovery" wx:if="{{campList!==null&&bannerList!==null&&courseList!==null}}">
 	<!--  模块一 -->
 	<!-- <view class="module-one" style="padding-bottom:130px"> -->
-	<view class="module-one">
+	<view class="{{showModelBanner?'module-one':'module-one hidden'}}">
 		<!-- banner 滚动区域 -->
 		<view class="swiper-box" wx:if="{{bannerList.length!==0}}">
 			<swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}" duration="{{500}}">
@@ -62,7 +62,7 @@
 		</view>
 	</view>
 	<!-- 模块二 -->
-	<view class="module-two" wx:if="{{true}}">
+	<view class="module-two" wx:if="{{showModelBanner}}">
 		<!-- 大赛 -->
 		<view class="competition">
 			<view class="competition-title">大赛</view>

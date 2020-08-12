@@ -1,11 +1,25 @@
 // pages/ discovery/discovery.js
-import { getLocalStorage, simpleDurationSimple } from "../../utils/util"
-import { checkAuth } from "../../utils/auth"
-import { getActivityList, getCampList, getFindBanner, getShowCourseList } from "../../api/course/index"
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  getLocalStorage,
+  simpleDurationSimple
+} from "../../utils/util"
+import {
+  checkAuth
+} from "../../utils/auth"
+import {
+  getActivityList,
+  getCampList,
+  getFindBanner,
+  getShowCourseList
+} from "../../api/course/index"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import request from "../../lib/request"
-import { getYouZanAppId } from "../../api/mall/index"
+import {
+  getYouZanAppId
+} from "../../api/mall/index"
 
 Page({
 
@@ -15,6 +29,7 @@ Page({
   data: {
     cureent: 0,
     campList: null,
+    showModelBanner: false,
     bannerList: null,
     courseList: null,
     activityList: null
@@ -60,6 +75,22 @@ Page({
       url: `/pages/webViewCommon/webViewCommon?link=${baseUrl}&type=link`,
     })
   },
+
+  // 处理是否显示模特大赛banner
+  initModelBanner() {
+    let show = false
+    if (request.baseUrl === 'https://huayang.baixing.cn') {
+      // 测试环境
+      show = true
+    } else {
+      // 正式环境
+      show = false
+    }
+    this.setData({
+      showModelBanner: show
+    })
+  },
+
   // 获取课程列表
   getCourseList() {
     getShowCourseList({
@@ -78,8 +109,13 @@ Page({
 
   // 处理轮播点击事件
   joinCampFrombanner(e) {
-    let {link, link_type} = e.currentTarget.dataset.item
-    bxPoint("applets_banner", {position: 'page/discovery/discovery'}, false)
+    let {
+      link,
+      link_type
+    } = e.currentTarget.dataset.item
+    bxPoint("applets_banner", {
+      position: 'page/discovery/discovery'
+    }, false)
     if (link_type === 'youzan') {
       getYouZanAppId().then(appId => {
         wx.navigateToMiniProgram({
@@ -88,7 +124,9 @@ Page({
         })
       })
     } else {
-      wx.navigateTo({url: link})
+      wx.navigateTo({
+        url: link
+      })
     }
   },
 
@@ -116,7 +154,9 @@ Page({
   },
   // 跳转到训练营详情
   joinCamp(e) {
-    bxPoint("find_join", {join_type: "bootcamp"}, false)
+    bxPoint("find_join", {
+      join_type: "bootcamp"
+    }, false)
     wx.navigateTo({
       url: `/subCourse/joinCamp/joinCamp?id=${e.currentTarget.dataset.index.id}`,
     })
@@ -146,13 +186,19 @@ Page({
       })
     }
 
-    checkAuth({redirectPath: "/pages/discovery/discovery", redirectType: "switch"}).then(() => {
+    checkAuth({
+      redirectPath: "/pages/discovery/discovery",
+      redirectType: "switch"
+    }).then(() => {
+      this.initModelBanner()
       this.getCampList()
       this.getBanner()
       this.getCourseList()
     })
 
-    bxPoint("applets_find", {from_uid: getApp().globalData.super_user_id})
+    bxPoint("applets_find", {
+      from_uid: getApp().globalData.super_user_id
+    })
   },
 
   /**

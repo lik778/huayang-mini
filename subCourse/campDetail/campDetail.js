@@ -10,7 +10,8 @@ import {
   getCampDetail,
   getCourseData,
   getCurentDayData,
-  getMenyCourseList
+  getMenyCourseList,
+  getArticileLink
 } from "../../api/course/index"
 import {
   countDay,
@@ -32,6 +33,7 @@ Page({
     appId: "",
     showLock: false,
     statusHeight: 0,
+    articileLink: "",
     realNowDay: "",
     backIndex: false,
     cureentDay: '', //当前日期
@@ -63,7 +65,7 @@ Page({
   // 加入交流群
   toTeam() {
     bxPoint("guide_wx", {}, false)
-    let link = 'https://mp.weixin.qq.com/s/qvNnbFv3OFATevcqidgmww'
+    let link = this.data.articileLink
     wx.navigateTo({
       url: `/pages/webViewCommon/webViewCommon?link=${link}`,
     })
@@ -207,13 +209,11 @@ Page({
         }
       }
     }
-    // console.log(day, Number(e.currentTarget.dataset.item.id))
     if (dayNum == 0) {
       this.setData({
         showLock: false
       })
     }
-
     getCurentDayData({
       day_num: dayNum,
       traincamp_id: this.data.campId
@@ -271,6 +271,14 @@ Page({
       }
     }
     return endTime
+  },
+  // 获取引导私域地址
+  getArticileLinkData() {
+    getArticileLink().then(res => {
+      this.setData({
+        articileLink: res
+      })
+    })
   },
   // 控制是否显示遮罩层
   initCoverShow(id) {
@@ -431,7 +439,7 @@ Page({
     bxPoint("camp_calendar", {
       from_uid: getApp().globalData.super_user_id
     })
-
+    this.getArticileLinkData()
     let height = parseInt((JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth - 30) / 16 * 9)
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,

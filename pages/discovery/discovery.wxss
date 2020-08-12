@@ -4,14 +4,22 @@
   /* background: red; */
 }
 
+
+
 .module-one,
 .module-two {
   padding: 0 30rpx;
   background: #fff;
 }
 
+
+
 .module-one {
   padding-bottom: 25px;
+}
+
+.hidden {
+  padding-bottom: 180rpx;
 }
 
 .module-two {
