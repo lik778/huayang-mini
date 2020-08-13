@@ -70,7 +70,7 @@ Page({
         user_id: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id
       }).then(res1 => {
         // res===false不需要显示完善资料
-        res1 = true
+        // res1 = true
         if (!res1) {
           // false不需要显示完善资料
           this.setData({
