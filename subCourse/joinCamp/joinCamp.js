@@ -56,21 +56,28 @@ Page({
       if (dateList.length > 1) {
         // 多个开营日期
         for (let i in dateList) {
-          if (new Date(dateList[i]).getTime() === new Date(nowDate).getTime()) {
-            // 开营当天
-            startDate = nowDate
-          } else if (startDate === '' && new Date(dateList[i]).getTime() > new Date(nowDate).getTime()) {
-            startDate = dateList[i]
-          } else if (new Date(dateList[i]).getTime() > new Date(startDate).getTime()) {
-            startDate = dateList[i]
+          if (new Date(dateList[i]).getTime() > new Date(nowDate).getTime()) {
+            // 开营时间大于当前日期
+            if (new Date(dateList[i]).getTime() === new Date(nowDate).getTime()) {
+              // 开营当天
+              startDate = nowDate
+            } else if (startDate === '') {
+              startDate = dateList[i]
+            } else if (new Date(startDate).getTime() > new Date(dateList[i]).getTime()) {
+              startDate = dateList[i]
+            }
           }
         }
+        console.log(startDate)
       } else {
-        startDate = res.start_date
+        if (new Date(res.start_date).getTime() > new Date(nowDate).getTime()) {
+          startDate = res.start_date
+        }
       }
       let pushTime = startDate.split("-")[1] + "月" + startDate.split("-")[2] + "日"
       let datas = startDate.replace(/-/g, "/")
-      if (new Date(datas + " 23:59:59").getTime() < new Date().getTime()) {
+
+      if (startDate === '') {
         // 没有开营日期
         buttonType = 2
       }
