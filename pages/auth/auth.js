@@ -125,7 +125,7 @@ Page({
 	/**
 	 * Lifecycle function--Called when page load
 	 */
-	onLoad: function ({invite_user_id = 0, redirectPath, redirectType}) {
+	onLoad: function ({invite_user_id = 0, source = '', redirectPath, redirectType}) {
 		redirectPath = redirectPath ? redirectPath.replace("$", "?") : ""
 		redirectPath = redirectPath ? redirectPath.replaceAll("#", "=") : ""
 		this.setData({
@@ -134,6 +134,7 @@ Page({
 			redirectType
 		})
 		getApp().globalData.super_user_id = invite_user_id
+		getApp().globalData.source = source
 
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 		if ($notNull(accountInfo) && hasUserInfo()) {

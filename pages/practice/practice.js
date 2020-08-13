@@ -84,7 +84,10 @@ Page({
 
 		this.initial()
 
-		bxPoint("applets_practice", {from_uid: getApp().globalData.super_user_id})
+		bxPoint("applets_practice", {
+			from_uid: getApp().globalData.super_user_id,
+			source: getApp().globalData.source,
+		})
 	},
 
 	/**
@@ -168,13 +171,13 @@ Page({
 	},
 	// 处理练习按钮事件
 	handleExerciseBtnTap(e) {
-		let item = e.currentTarget.dataset.item
+		let { item, parent } = e.currentTarget.dataset
 		if (item.type !== "kecheng" && item.kecheng_type !== 3) {
 			// 创建用户当日练习记录
 			createPracticeRecordInToday()
 		}
 		bxPoint("practice_start", {}, false)
-		console.log(item)
+		console.log(item, parent.bootCampId)
 		switch (item.type) {
 			case 'kecheng': {
 				switch (item.kecheng_type) {
@@ -195,7 +198,7 @@ Page({
 					}
 					case 3: {
 						// 结构化课程
-						wx.navigateTo({url: `/subCourse/practiceDetail/practiceDetail?courseId=${item.kecheng_id}&formCampDetail=payUser`})
+						wx.navigateTo({url: `/subCourse/practiceDetail/practiceDetail?courseId=${item.kecheng_id}&formCampDetail=payUser&parentBootCampId=${parent.bootCampId}`})
 						return
 					}
 				}

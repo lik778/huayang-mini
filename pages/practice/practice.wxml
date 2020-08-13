@@ -47,7 +47,7 @@
                             </view>
                             <view>{{contentItem.name || contentItem.title}}</view>
                         </view>
-                        <view class="boot-camp-start" bind:tap="handleExerciseBtnTap" data-item="{{contentItem}}">{{contentItem.type==='kecheng'?'练习':'前往'}}</view>
+                        <view class="boot-camp-start" bind:tap="handleExerciseBtnTap" data-item="{{contentItem}}" data-parent="{{item}}">{{contentItem.type==='kecheng'?'练习':'前往'}}</view>
                     </view>
                 </view>
             </block>

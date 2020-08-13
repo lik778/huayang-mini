@@ -13,6 +13,7 @@ Page({
 		statusHeight: 0, // 状态栏高度
 		screenHeight: 0, // 设备高度
 		screenWidth: 0, // 设备宽度
+		parentBootCampId: 0, // 训练营id，有就传无则不传
 		courseInfo: null, // 课程信息
 		currentActionIndex: 0, // 当前动作索引
 		originData: null,
@@ -60,6 +61,8 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: async function (options) {
+
+		this.setData({parentBootCampId: options.parentBootCampId})
 
 		const self = this
 		const eventChannel = this.getOpenerEventChannel()
@@ -220,9 +223,11 @@ Page({
 	async show() {
 		bxPoint("course_show", {practice_time: this.data.globalRecordTiming}, false)
 
-		wx.redirectTo({
-			url: `/subCourse/actionPost/actionPost?actionName=${this.data.courseInfo.name}&duration=${this.data.globalRecordTimeText}&actionNo=${this.data.originData.length}&keChengId=${this.data.courseInfo.id}`
-		})
+		let url = `/subCourse/actionPost/actionPost?actionName=${this.data.courseInfo.name}&duration=${this.data.globalRecordTimeText}&actionNo=${this.data.originData.length}&keChengId=${this.data.courseInfo.id}`
+		if (this.data.parentBootCampId) {
+				url += `&bootCampId=${this.data.parentBootCampId}`
+		}
+		wx.redirectTo({url})
 	},
 	/**
 	 * 在休息层切换上一个动作
@@ -398,7 +403,9 @@ Page({
 	stopAllAction() {
 		this.data.video.stop()
 		this.data.mainPointAudio.stop()
-		this.data.bgAudio.stop()
+		this.data.bgAudio.onCanplay(() => {
+			this.data.bgAudio.pause()
+		})
 	},
 	/**
 	 * 临时播放器 播放音频
