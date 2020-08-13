@@ -439,6 +439,7 @@ Page({
     })
     this.getArticileLinkData()
     let height = parseInt((JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth - 30) / 16 * 9)
+    console.log(height)
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
       videoHeight: `height:${height}px`

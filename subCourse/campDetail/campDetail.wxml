@@ -1,5 +1,5 @@
 <!--subCourse/campDetail/campDetail.wxml-->
-<view class="campdetail">
+<view class="campdetail" wx:if="{{videoHeight!==0}}">
 	<!-- navibar栏 -->
 	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
 		<naviBar title="我的课程表" color="#5F5F5F" titleColor="#fff" forceGoBackIndex="{{backIndex}}"></naviBar>
@@ -26,7 +26,7 @@
 		<view class="bg-color"></view>
 		<!-- 课程内容 -->
 		<view class="camp-container">
-			<view class="video" wx:if="{{videoSrc!==''}}">
+			<view class="video" wx:if="{{videoSrc!==''}}" style="{{videoHeight}}">
 				<view class="video-cover" wx-if="{{showLock}}" style="{{videoHeight}}">
 					<image  src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597224125GjluUS.jpg"></image>
 				</view>
