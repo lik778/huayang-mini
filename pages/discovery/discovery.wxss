@@ -159,6 +159,7 @@
   height: 200rpx;
   margin-bottom: 30rpx;
   position: relative;
+  overflow: hidden;
 }
 .atwalk-item-cover{
   width: 100%;
