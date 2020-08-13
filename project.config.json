@@ -140,6 +140,13 @@
 					"pathName": "subCourse/campDetail/campDetail",
 					"query": "id=14",
 					"scene": null
+				},
+				{
+					"id": 11,
+					"name": "subCourse/joinCamp/joinCamp",
+					"pathName": "subCourse/joinCamp/joinCamp",
+					"query": "id=1",
+					"scene": null
 				}
 			]
 		}

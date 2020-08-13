@@ -35,6 +35,7 @@ Page({
     statusHeight: 0,
     articileLink: "",
     realNowDay: "",
+    endTime: "",
     backIndex: false,
     cureentDay: '', //当前日期
     campId: 0, //训练营id
@@ -77,20 +78,25 @@ Page({
     getCampDetail({
       traincamp_id: id
     }).then(res => {
-      let endTime = ''
       let dateList = res.start_date.split(',')
+      let date = new Date();
+      let year = date.getFullYear()
+      let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1
+      let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
+      let nowDate = year + "-" + month + "-" + day
       if (dateList.length > 1) {
         // 多个开营日期
         for (let i in dateList) {
-          if (endTime === '') {
-            endTime = dateList[i]
-          } else {
-            if (Math.round(new Date(endTime) / 1000) > Math.round(new Date(dateList[i]) / 1000) && Math.round(new Date(dateList[i]) / 1000) > Math.round(new Date() / 1000)) {
-              endTime = dateList[i]
-            }
+          if (new Date(dateList[i]).getTime() === new Date(nowDate).getTime()) {
+            // 开营当天
+            res.start_date = nowDate
+          } else if (res.start_date === '' && new Date(dateList[i]).getTime() > new Date(nowDate).getTime()) {
+            res.start_date = dateList[i]
+          } else if (new Date(dateList[i]).getTime() > new Date(res.start_date).getTime()) {
+            res.start_date = dateList[i]
           }
         }
-        res.nowDay = countDay(new Date(), endTime) < 0 ? 0 : countDay(new Date(), endTime)
+        res.nowDay = countDay(new Date(), res.start_date) < 0 ? 0 : countDay(new Date(), res.start_date)
       } else {
         res.nowDay = countDay(new Date(), res.start_date) < 0 ? 0 : countDay(new Date(), res.start_date)
       }
@@ -166,7 +172,6 @@ Page({
     let day = ''
     if (e.currentTarget) {
       let event = e.currentTarget.dataset.item.dataNum
-      console.log(event)
       if (event < 0 || event === undefined) return
       if (event >= 0) {
         dayNum = e.currentTarget.dataset.item.day_num

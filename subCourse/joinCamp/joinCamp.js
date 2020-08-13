@@ -45,22 +45,31 @@ Page({
       this.setData({
         titleName: res.name
       })
-      let endTime = ''
-      let pushTime = ''
-      let data = res.start_date.split(",")
-      for (let i in data) {
-        if (endTime === '') {
-          // 说明只有一个开营日期
-          endTime = data[i]
-        } else {
-          // 多个开营日期
-          if (Math.round(new Date(endTime) / 1000) > Math.round(new Date(data[i]) / 1000) && Math.round(new Date(data[i]) / 1000) > Math.round(new Date() / 1000)) {
-            endTime = data[i]
+
+      let dateList = res.start_date.split(',')
+      let date = new Date();
+      let year = date.getFullYear()
+      let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1
+      let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
+      let nowDate = year + "-" + month + "-" + day
+      let startDate=''
+      if (dateList.length > 1) {
+        // 多个开营日期
+        for (let i in dateList) {
+          if (new Date(dateList[i]).getTime() === new Date(nowDate).getTime()) {
+            // 开营当天
+            startDate = nowDate
+          } else if (startDate === '' && new Date(dateList[i]).getTime() > new Date(nowDate).getTime()) {
+            startDate = dateList[i]
+          } else if (new Date(dateList[i]).getTime() > new Date(startDate).getTime()) {
+            startDate = dateList[i]
           }
         }
+      } else {
+        startDate=res.start_date
       }
-      pushTime = endTime.split("-")[1] + "月" + endTime.split("-")[2] + "日"
-      let datas = endTime.replace(/-/g, "/")
+      let pushTime = startDate.split("-")[1] + "月" + startDate.split("-")[2] + "日"
+      let datas = startDate.replace(/-/g, "/")
       if (new Date(datas + " 23:59:59").getTime() < new Date().getTime()) {
         // 没有开营日期
         buttonType = 2
@@ -74,7 +83,7 @@ Page({
         campDetailData: res,
         joinTime: pushTime,
         buttonType: buttonType,
-        endTime: endTime,
+        endTime: startDate,
         campId: id
       })
     })
@@ -175,7 +184,6 @@ Page({
             hasJoinAll: true
           })
         }
-
       } else {
         wx.redirectTo({
           url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
@@ -189,7 +197,6 @@ Page({
   onLoad: function (options) {
     // 记录分享人身份
     getApp().globalData.super_user_id = options.invite_user_id
-
     checkAuth({
       authPhone: true,
       redirectPath: `/subCourse/joinCamp/joinCamp$id#${options.id}`,
