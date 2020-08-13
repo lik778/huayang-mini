@@ -9,7 +9,7 @@
 	</view>
 	<view class="button-line" wx:if="{{buttonType===1}}">
 		<button bindtap="joinCamp" wx:if="{{campDetailData.discount_price>0&&!userInfo.is_zhide_vip&&!hasJoinAll}}" class="pay">立即支付 ¥{{campDetailData.discount_price/100}}</button>
-		<button bindtap="joinCamp" wx:else class="join">立即加入 <text>({{joinTime}}开营)</text></button>
+		<button bindtap="joinCamp" wx:else class="join">立即加入 <text>({{hasJoinAll ?timeJoin : joinTime}}开营)</text></button>
 	</view>
 	<view class="button-line-two" wx:if="{{buttonType===2}}">
 		<view class="join-button">即将开营</view>

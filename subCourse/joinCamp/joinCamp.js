@@ -23,6 +23,7 @@ Page({
     buttonType: 1,
     lock: true,
     campDetailData: {},
+    timeJoin:''
   },
   // 获取训练营详情
   getCampDetail(id) {
@@ -57,7 +58,6 @@ Page({
             }
           }
         }
-        console.log(startDate)
       } else {
         if (new Date(res.start_date).getTime() > new Date(nowDate).getTime()) {
           startDate = res.start_date
@@ -177,9 +177,11 @@ Page({
         this.getCampDetail(id)
         if (res.status === 2) {
           // 代表是已经加入过放弃的
+          let pushTime = res.date.split("-")[1] + "月" + res.date.split("-")[2] + "日"
           this.setData({
             hasJoinAll: true,
-            hasAllTime: res.date
+            hasAllTime: res.date,
+            timeJoin:pushTime
           })
         }
       } else {
