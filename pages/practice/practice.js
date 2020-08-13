@@ -300,9 +300,9 @@ Page({
 		let bootCampList = await queryUserJoinedBootCamp()
 		bootCampList = bootCampList.filter(item => +item.kecheng_traincamp.status !== 2)
 		let handlerBootCampList = []
-		for (const {kecheng_traincamp_id, kecheng_traincamp: {name, start_date, status}} of bootCampList) {
+		for (const {kecheng_traincamp_id, kecheng_traincamp: {name, date, status}} of bootCampList) {
 			// 根据训练营查找对应的课程
-			let dayNum = dayjs().diff(dayjs(start_date), 'day')
+			let dayNum = dayjs().diff(dayjs(date), 'day') + 1
 			let bootCampInfo = await queryBootCampContentInToday({
 				traincamp_id: kecheng_traincamp_id,
 				day_num: dayNum < 0 ? 0 : dayNum
