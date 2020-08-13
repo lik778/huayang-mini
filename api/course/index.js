@@ -1,7 +1,5 @@
 import request from "../../lib/request"
-import {
-	URL
-} from "../../lib/config"
+import { URL } from "../../lib/config"
 
 
 // 获取结构化练习海报背景图
@@ -95,6 +93,7 @@ export function queryUserHaveClassesInfo(params) {
 		request._get(URL.getUserHaveClassesInfo, params).then(({
 			data
 		}) => {
+			data = data || {}
 			resolve(data)
 		})
 	})
@@ -103,9 +102,8 @@ export function queryUserHaveClassesInfo(params) {
 // 获取用户已加入的课程
 export function queryUserJoinedClasses(params) {
 	return new Promise(resolve => {
-		request._get(URL.getUserJoinedClasses, params).then(({
-			data
-		}) => {
+		request._get(URL.getUserJoinedClasses, params).then(({data}) => {
+			data = data || []
 			resolve(data)
 		})
 	})
@@ -114,9 +112,8 @@ export function queryUserJoinedClasses(params) {
 // 在个人课程页 - 获取推荐课程
 export function queryRecommendCourseList(params) {
 	return new Promise(resolve => {
-		request._get(URL.getRecommendCourseList, params).then(({
-			data
-		}) => {
+		request._get(URL.getRecommendCourseList, params).then(({data}) => {
+			data = data || []
 			resolve(data)
 		})
 	})
@@ -125,9 +122,7 @@ export function queryRecommendCourseList(params) {
 // 创建当日练习记录
 export function createPracticeRecordInToday(params) {
 	return new Promise(resolve => {
-		request._post(URL.recordPracticeInToday, params).then(({
-			data
-		}) => {
+		request._post(URL.recordPracticeInToday, params).then(({data}) => {
 			resolve(data)
 		})
 	})
@@ -139,6 +134,7 @@ export function queryUserRecentPracticeLog(params) {
 		request._get(URL.getUserRecentPracticeLog, params).then(({
 			data
 		}) => {
+			data = data || []
 			resolve(data)
 		})
 	})
@@ -161,6 +157,7 @@ export function queryUserJoinedBootCamp(params) {
 		request._get(URL.getUserJoinedBootCamp, params).then(({
 			data
 		}) => {
+			data = data || []
 			resolve(data)
 		})
 	})

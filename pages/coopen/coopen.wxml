@@ -1,4 +1,4 @@
-<view class="coopen">
+<view class="coopen" wx:if="{{visible}}">
     <view class="page-01 bg-animate" wx:if="{{!didSkip}}" style="padding-top:{{statusHeight+44}}px;">
         <view class="prospect">
             <text class="move-animate delay1">朋友您好，很高兴与您相遇</text>
