@@ -75,12 +75,11 @@ Page({
 	onReachBottom: function () {
 
 	},
-	async cookData({actionName, duration, actionNo, keChengId, bootCampId}) {
+	async cookData({actionName, duration, actionNo, keChengId, bootCampId = 0}) {
 		let now = new Date()
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 		let cover = await queryPunchCardBg()
-		let qrCodeParams = bootCampId ? {kecheng_id: keChengId, traincamp_id: bootCampId} : {kecheng_id: keChengId}
-		let qrCode = await queryPunchCardQrCode(qrCodeParams)
+		let qrCode = await queryPunchCardQrCode({kecheng_id: keChengId, traincamp_id: bootCampId == 0 ? '' : bootCampId})
 		let userHaveClassesInfo = await queryUserHaveClassesInfo()
 
 		let data = {

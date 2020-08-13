@@ -4,7 +4,7 @@
             <image mode="aspectFill" src="{{item.pic_url}}"></image>
         </swiper-item>
     </swiper>
-    <view class="swiper-dot">
+    <view class="swiper-dot" wx:if="{{bannerList.length > 1}}">
         <view wx:for="{{bannerList}}" wx:key="index" class="{{currentBannerItem===index?'active swiper-dot-item':'swiper-dot-item'}}"></view>
     </view>
 

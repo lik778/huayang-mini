@@ -61,8 +61,7 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: async function (options) {
-
-		this.setData({parentBootCampId: options.parentBootCampId})
+		this.setData({parentBootCampId: options.parentBootCampId || 0})
 
 		const self = this
 		const eventChannel = this.getOpenerEventChannel()
@@ -223,10 +222,7 @@ Page({
 	async show() {
 		bxPoint("course_show", {practice_time: this.data.globalRecordTiming}, false)
 
-		let url = `/subCourse/actionPost/actionPost?actionName=${this.data.courseInfo.name}&duration=${this.data.globalRecordTimeText}&actionNo=${this.data.originData.length}&keChengId=${this.data.courseInfo.id}`
-		if (this.data.parentBootCampId) {
-				url += `&bootCampId=${this.data.parentBootCampId}`
-		}
+		let url = `/subCourse/actionPost/actionPost?actionName=${this.data.courseInfo.name}&duration=${this.data.globalRecordTimeText}&actionNo=${this.data.originData.length}&keChengId=${this.data.courseInfo.id}&bootCampId=${this.data.parentBootCampId}`
 		wx.redirectTo({url})
 	},
 	/**
