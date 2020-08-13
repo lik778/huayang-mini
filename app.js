@@ -33,7 +33,7 @@ App({
 				if (res.errMsg === "getSavedFileList:ok") {
 					console.log('savedFilesSize = ' + res.fileList.length);
 					// return
-					if (res.fileList.length !== 26) {
+					if (res.fileList.length !== 13) {
 						// 清理所有本地缓存文件
 						batchRemoveSavedFiles(res.fileList).then(() => {
 							// 批量下载"口令"包
@@ -56,5 +56,6 @@ App({
 	globalData: {
 		didSendRemindWithUserId: false, // 是否携带userId调用过弹窗接口
 		super_user_id: 0, // 上级邀请人id
+		source: "" // 用户场景来源
 	}
 })
