@@ -362,7 +362,7 @@ Page({
           } else {
             // 结构化
             wx.navigateTo({
-              url: `/subCourse/practiceDetail/practiceDetail?courseId=${res.id}&formCampDetail=payUser`,
+              url: `/subCourse/practiceDetail/practiceDetail?courseId=${res.id}&parentBootCampId=${this.data.campId}&formCampDetail=payUser`,
             })
           }
         } else {
