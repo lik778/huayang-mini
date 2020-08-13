@@ -35,6 +35,7 @@
 			<view class="catwalk-list">
 				<view class="catwalk-item" wx:for="{{courseList}}" wx:key="index" bindtap="toCourse" data-item="{{item}}">
 					<image src="{{item.cover_pic}}"></image>
+					<view class="atwalk-item-cover"></view>
 					<view class="catwalk-item-title">{{item.name}}</view>
 					<view class="catwalk-item-subtitle">
 						<text wx:if="{{item.level===1}}">初级</text>

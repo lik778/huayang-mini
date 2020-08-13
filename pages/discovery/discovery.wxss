@@ -157,10 +157,18 @@
 .catwalk-item {
   width: 100%;
   height: 200rpx;
-  margin-bottom: 20rpx;
+  margin-bottom: 30rpx;
   position: relative;
 }
-
+.atwalk-item-cover{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgba(0,0,0,0.15);
+  z-index: 10;
+}
 .catwalk-item-title {
   position: absolute;
   left: 30rpx;
@@ -170,6 +178,7 @@
   font-weight: bold;
   color: rgba(255, 255, 255, 1);
   line-height: 60rpx;
+  z-index: 20;
 }
 
 .catwalk-item-subtitle {
@@ -181,6 +190,7 @@
   font-weight: 400;
   color: rgba(255, 255, 255, 1);
   line-height: 44rpx;
+  z-index: 20;
 }
 
 .catwalk-item-subtitle text {
@@ -201,6 +211,7 @@
   color: rgba(255, 255, 255, 1);
   text-align: center;
   line-height: 60rpx;
+  z-index: 20;
 }
 
 .catwalk-item>image {
