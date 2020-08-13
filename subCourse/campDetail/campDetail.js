@@ -11,6 +11,7 @@ import {
   getCourseData,
   getCurentDayData,
   getMenyCourseList,
+  getHasJoinCamp,
   getArticileLink
 } from "../../api/course/index"
 import {
@@ -74,32 +75,19 @@ Page({
   },
 
   // 获取训练营信息
-  getCampDetailData(id) {
+  getCampDetailData({
+    id,
+    startDate
+  }) {
     getCampDetail({
       traincamp_id: id
     }).then(res => {
-      let dateList = res.start_date.split(',')
       let date = new Date();
       let year = date.getFullYear()
       let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1
       let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
       let nowDate = year + "-" + month + "-" + day
-      if (dateList.length > 1) {
-        // 多个开营日期
-        for (let i in dateList) {
-          if (new Date(dateList[i]).getTime() === new Date(nowDate).getTime()) {
-            // 开营当天
-            res.start_date = nowDate
-          } else if (res.start_date === '' && new Date(dateList[i]).getTime() > new Date(nowDate).getTime()) {
-            res.start_date = dateList[i]
-          } else if (new Date(dateList[i]).getTime() > new Date(res.start_date).getTime()) {
-            res.start_date = dateList[i]
-          }
-        }
-        res.nowDay = countDay(nowDate, res.start_date) < 0 ? 0 : countDay(nowDate, res.start_date)
-      } else {
-        res.nowDay = countDay(nowDate, res.start_date) < 0 ? 0 : countDay(nowDate, res.start_date)
-      }
+      res.nowDay = countDay(nowDate, startDate) < 0 ? 0 : countDay(nowDate, startDate)
       let onlyDayList = getTodayDate().one //只有日的日期列表
       let realList = getTodayDate().two //实际一周日期列表
       let campDateList = [] //当周对应训练营日期列表
@@ -114,8 +102,9 @@ Page({
         cureentDay = new Date().getDate()
       }
       for (let i in realList) {
-        let differDay = countDayOne(realList[i], this.getLearDay(res))
+        let differDay = countDayOne(realList[i], startDate)
         campDateList.push(differDay)
+
         if (new Date(realList[i]).toLocaleDateString() === new Date().toLocaleDateString()) {
           weekData[i] = '今天'
         }
@@ -159,7 +148,6 @@ Page({
           }
         }
       }
-      console.log(this.data.dateObj)
       this.setData({
         dateObj: this.data.dateObj
       })
@@ -198,7 +186,7 @@ Page({
       } else {
         // 已开营
         // dayNum = 0
-        let endTime = this.getLearDay(e)
+        let endTime = this.data.startTime
         let date = new Date();
         let year = date.getFullYear()
         let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1
@@ -247,7 +235,6 @@ Page({
             })
           }
           if (res.content[i].type === 'video' && this.data.videoSrc === '') {
-            console.log(res.content[i].video)
             this.setData({
               videoSrc: res.content[i].video,
               posterSrc: res.content[i].cover
@@ -267,23 +254,6 @@ Page({
         courseList: []
       })
     })
-  },
-  // 取两个日期接近的
-  getLearDay(e) {
-    let endTime = ''
-    let data = e.start_date.split(",")
-    for (let i in data) {
-      if (endTime === '') {
-        // 说明只有一个开营日期
-        endTime = data[i]
-      } else {
-        // 多个开营日期
-        if (Math.round(new Date(endTime) / 1000) > Math.round(new Date(data[i]) / 1000) && Math.round(new Date(data[i]) / 1000) > Math.round(new Date() / 1000)) {
-          endTime = data[i]
-        }
-      }
-    }
-    return endTime
   },
   // 获取引导私域地址
   getArticileLinkData() {
@@ -422,6 +392,20 @@ Page({
       })
     })
   },
+  // 跳转到训练营详情
+  checkCamp(id) {
+    getHasJoinCamp({
+      traincamp_id: id
+    }).then(res => {
+      this.setData({
+        startTime: res.date
+      })
+      this.getCampDetailData({
+        id: id,
+        startDate: res.date
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -431,7 +415,8 @@ Page({
         backIndex: true
       })
     }
-    this.getCampDetailData(options.id)
+    this.checkCamp(options.id)
+
     this.initCoverShow(options.id)
     this.getAppId()
     this.setData({
