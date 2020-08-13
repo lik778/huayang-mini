@@ -46,7 +46,6 @@ Page({
       this.setData({
         titleName: res.name
       })
-
       let dateList = res.start_date.split(',')
       let date = new Date();
       let year = date.getFullYear()
