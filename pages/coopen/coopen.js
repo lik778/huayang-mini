@@ -12,6 +12,7 @@ Page({
 		CourseLevels,
 		statusHeight: 0,
 		didSkip: false,
+		visible: false,
 		recommendCourseList: [],
 	},
 
@@ -30,10 +31,16 @@ Page({
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
+		// 解决IOS设备animation动画失效问题
+		let startTimer = setTimeout(() => {
+			this.setData({visible: true})
+			clearTimeout(startTimer)
+		}, 100)
+
 		let timer = setTimeout(() => {
 			this.setData({didSkip: true})
 			clearTimeout(timer)
-		}, 9000)
+		}, 9100)
 	},
 
 	/**
