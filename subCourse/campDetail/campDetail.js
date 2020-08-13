@@ -93,18 +93,17 @@ Page({
       let campDateList = [] //当周对应训练营日期列表
       let cureentDay = ''
       let weekData = manageWeek()
-      if (new Date(res.start_date) > new Date()) {
+      if (new Date(startDate) > new Date()) {
         // 未开营
-        onlyDayList = getTodayDate(res.start_date).one //只有日的日期列表
-        realList = getTodayDate(res.start_date).two //实际一周日期列表
-        cureentDay = new Date(res.start_date).getDate() - 1
+        onlyDayList = getTodayDate(startDate).one //只有日的日期列表
+        realList = getTodayDate(startDate).two //实际一周日期列表
+        cureentDay = new Date(startDate).getDate() - 1
       } else {
         cureentDay = new Date().getDate()
       }
       for (let i in realList) {
         let differDay = countDayOne(realList[i], startDate)
         campDateList.push(differDay)
-
         if (new Date(realList[i]).toLocaleDateString() === new Date().toLocaleDateString()) {
           weekData[i] = '今天'
         }
@@ -180,7 +179,7 @@ Page({
       })
     } else {
       // start_date
-      if (new Date(e.start_date) > new Date()) {
+      if (new Date(this.data.startTime) > new Date()) {
         // 未开营
         dayNum = 0
       } else {
