@@ -28,13 +28,13 @@
 
 /* banner */
 .swiper-box {
-  height: 240rpx;
+  height: 350rpx;
   position: relative;
 }
 
 .swiper-item-box {
   width: 100%;
-  height: 210rpx;
+  height: 320rpx;
 }
 
 .swiper-item-box image {

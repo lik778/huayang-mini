@@ -47,7 +47,10 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		bxPoint("applets_guide", {from_uid: getApp().globalData.super_user_id})
+		bxPoint("applets_guide", {
+			from_uid: getApp().globalData.super_user_id,
+			source: getApp().globalData.source
+		})
 	},
 
 	/**

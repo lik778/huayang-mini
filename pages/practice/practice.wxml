@@ -4,7 +4,7 @@
             <image mode="aspectFill" src="{{item.pic_url}}"></image>
         </swiper-item>
     </swiper>
-    <view class="swiper-dot">
+    <view class="swiper-dot" wx:if="{{bannerList.length > 1}}">
         <view wx:for="{{bannerList}}" wx:key="index" class="{{currentBannerItem===index?'active swiper-dot-item':'swiper-dot-item'}}"></view>
     </view>
 
@@ -47,7 +47,7 @@
                             </view>
                             <view>{{contentItem.name || contentItem.title}}</view>
                         </view>
-                        <view class="boot-camp-start" bind:tap="handleExerciseBtnTap" data-item="{{contentItem}}">{{contentItem.type==='kecheng'?'练习':'前往'}}</view>
+                        <view class="boot-camp-start" bind:tap="handleExerciseBtnTap" data-item="{{contentItem}}" data-parent="{{item}}">{{contentItem.type==='kecheng'?'练习':'前往'}}</view>
                     </view>
                 </view>
             </block>

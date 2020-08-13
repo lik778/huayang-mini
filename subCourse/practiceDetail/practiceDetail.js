@@ -16,6 +16,7 @@ Page({
 	data: {
 		statusHeight: 0,
 		screenWidth: 0,
+		parentBootCampId: 0, // 训练营id，有就传无则不传
 		accountInfo: {},
 		CourseLevels,
 		courseId: 0, // 课程ID
@@ -35,9 +36,11 @@ Page({
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
-	onLoad: function ({courseId, formCampDetail, invite_user_id}) {
+	onLoad: function (options) {
+		let {parentBootCampId = 0, courseId, source = '', formCampDetail, invite_user_id} = options
 		// 记录分享人身份
 		getApp().globalData.super_user_id = invite_user_id
+		getApp().globalData.source = source
 		// 检查是否是训练营付费会员
 		if (formCampDetail === "payUser") {
 			this.setData({didPayUser: true})
@@ -51,11 +54,12 @@ Page({
 
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 		this.setData({
+			parentBootCampId,
 			courseId,
 			screenWidth: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth,
 			statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
 			accountInfo,
-			backPath: `/subCourse/practiceDetail/practiceDetail?courseId=${courseId}`
+			backPath: parentBootCampId ? `/subCourse/practiceDetail/practiceDetail?courseId=${courseId}&parentBootCampId=${parentBootCampId}` : `/subCourse/practiceDetail/practiceDetail?courseId=${courseId}`
 		})
 	},
 
@@ -70,7 +74,10 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		bxPoint("course_details", {from_uid: getApp().globalData.super_user_id})
+		bxPoint("course_details", {
+			from_uid: getApp().globalData.super_user_id,
+			source: getApp().globalData.source,
+		})
 	},
 
 	/**
@@ -155,6 +162,13 @@ Page({
 	initial() {
 		// 获取训练营课程详情
 		getBootCampCourseInfo({kecheng_id: this.data.courseId}).then((response) => {
+
+			if (+response.hidden === 1) {
+				wx.hideShareMenu({
+					menus: ['shareAppMessage', 'shareTimeline']
+				})
+			}
+
 			// 检查是否付费用户
 			if (!this.data.didPayUser) {
 				// 检查用户等级
@@ -266,7 +280,7 @@ Page({
 			joinCourseInGuide({kecheng_id_str: this.data.courseId})
 
 			wx.navigateTo({
-				url: "/subCourse/actionPage/actionPage",
+				url: `/subCourse/actionPage/actionPage?parentBootCampId=${this.data.parentBootCampId}`,
 				success(res) {
 					res.eventChannel.emit('transmitCourseMeta', JSON.stringify(cookedCourseMetaData))
 					res.eventChannel.emit('transmitCourseInfo', JSON.stringify(self.data.courseInfoObj))

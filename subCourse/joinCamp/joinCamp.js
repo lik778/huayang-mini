@@ -1,19 +1,8 @@
 // 加入训练营
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  checkAuth
-} from "../../utils/auth"
-import {
-  getCampDetail,
-  getHasJoinCamp,
-  joinCamp
-} from "../../api/course/index"
-import {
-  getLocalStorage,
-  payCourse
-} from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
+import { checkAuth } from "../../utils/auth"
+import { getCampDetail, getHasJoinCamp, joinCamp } from "../../api/course/index"
+import { getLocalStorage, payCourse } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -206,6 +195,7 @@ Page({
   onLoad: function (options) {
     // 记录分享人身份
     getApp().globalData.super_user_id = options.invite_user_id
+    getApp().globalData.source = options.source
     checkAuth({
       authPhone: true,
       redirectPath: `/subCourse/joinCamp/joinCamp$id#${options.id}`,
@@ -237,7 +227,8 @@ Page({
     })
 
     bxPoint("camp_introduce", {
-      from_uid: getApp().globalData.super_user_id
+      from_uid: getApp().globalData.super_user_id,
+      source: getApp().globalData.source,
     })
   },
 
