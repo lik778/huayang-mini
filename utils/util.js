@@ -579,9 +579,26 @@ export const manageWeek = () => {
 
 // 计算两个日期相差xx天
 export const countDay = (nowDate, totalDate) => {
-	// nowDate当前日期，totalDate目标日期
-	let endTime = parseInt(nowDate.getTime() / 1000) - new Date(totalDate).getTime() / 1000
-	let date = parseInt(endTime / 60 / 60 / 24) //相差天数
+// nowDate当前日期，totalDate目标日期
+nowDate = nowDate.replace(/-/g, "/")
+totalDate = totalDate.replace(/-/g, "/")
+	var date1 = new Date(totalDate).getTime()
+	var date2 = new Date(nowDate).getTime()
+	let date3 = Math.ceil((date2 - date1) / (1000 * 60 * 60 * 24))
+	let date = ''
+	if (date3 === -1) {
+		// 开营前一天
+		date = 0
+	} else if (date3 === 0) {
+		// 开营当天
+		date = 1
+	} else if (date3 > 0) {
+		// 开营后面
+		date = date3 + 1
+	} else {
+		// 开营之前
+		date = -1
+	}
 	return date
 }
 

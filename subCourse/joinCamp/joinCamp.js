@@ -30,6 +30,7 @@ Page({
     hasJoinAll: false,
     endTime: "",
     userInfo: "",
+    hasAllTime: "",
     buttonType: 1,
     lock: true,
     campDetailData: {},
@@ -52,7 +53,7 @@ Page({
       let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1
       let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
       let nowDate = year + "-" + month + "-" + day
-      let startDate=''
+      let startDate = ''
       if (dateList.length > 1) {
         // 多个开营日期
         for (let i in dateList) {
@@ -66,7 +67,7 @@ Page({
           }
         }
       } else {
-        startDate=res.start_date
+        startDate = res.start_date
       }
       let pushTime = startDate.split("-")[1] + "月" + startDate.split("-")[2] + "日"
       let datas = startDate.replace(/-/g, "/")
@@ -102,7 +103,8 @@ Page({
   },
   // 加入训练营
   joinCamp() {
-
+    // console.log(this.data.hasJoinAll ? this.data.hasAllTime : this.data.endTime,11)
+    // return
     if (this.data.lock) {
       this.setData({
         lock: false
@@ -111,7 +113,7 @@ Page({
       joinCamp({
         open_id: getLocalStorage(GLOBAL_KEY.openId),
         // open_id:'oG8Rd5Zxr7cjV6tUdraUDdsOSS8w',
-        date: this.data.endTime,
+        date: this.data.hasJoinAll ? this.data.hasAllTime : this.data.endTime,
         traincamp_id: this.data.campId
       }).then((res) => {
         if (res.id) {
@@ -181,7 +183,8 @@ Page({
         if (res.status === 2) {
           // 代表是已经加入过放弃的
           this.setData({
-            hasJoinAll: true
+            hasJoinAll: true,
+            hasAllTime: res.date
           })
         }
       } else {

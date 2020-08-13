@@ -96,9 +96,9 @@ Page({
             res.start_date = dateList[i]
           }
         }
-        res.nowDay = countDay(new Date(), res.start_date) < 0 ? 0 : countDay(new Date(), res.start_date)
+        res.nowDay = countDay(nowDate, res.start_date) < 0 ? 0 : countDay(nowDate, res.start_date)
       } else {
-        res.nowDay = countDay(new Date(), res.start_date) < 0 ? 0 : countDay(new Date(), res.start_date)
+        res.nowDay = countDay(nowDate, res.start_date) < 0 ? 0 : countDay(nowDate, res.start_date)
       }
       let onlyDayList = getTodayDate().one //只有日的日期列表
       let realList = getTodayDate().two //实际一周日期列表
