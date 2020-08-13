@@ -264,13 +264,14 @@
     margin-bottom: 50rpx;
 }
 .practice-item {
+    position: relative;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 200rpx;
     padding: 30rpx;
-    margin-bottom: 20rpx;
+    margin-bottom: 30rpx;
     box-sizing: border-box;
     background-repeat: no-repeat;
     background-position: center;
@@ -278,11 +279,24 @@
     border-radius: 8rpx;
     color: white;
 }
+.practice-item::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.15);
+    z-index: 0;
+}
 .practice-item:last-child {
     margin-bottom: 0;
 }
 .practice-item:active {
     opacity: 0.8;
+}
+.practice-item view {
+    z-index: 1;
 }
 .practice-name {
     font: bold 44rpx/60rpx Helvetica;
