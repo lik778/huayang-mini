@@ -474,7 +474,7 @@ Page({
 	/**
 	 * 筹备下个动作
 	 */
-	prepareNextAction() {
+	async prepareNextAction() {
 		// 停止视频
 		this.data.video.stop()
 		// 切换下一个动作
@@ -526,12 +526,12 @@ Page({
 				})
 			})
 		} else {
+			// 「恭喜你完成练习」
+			await this.playTempBgAudio(LocaleVoice.lv6)
 			this.setData({
 				isRunning: false,
 				didPracticeDone: true
 			})
-			// 「恭喜你完成练习」
-			this.playTempBgAudio(LocaleVoice.lv6)
 			// 训练结束
 			this.setData({didShowResultLayer: true})
 			// 停止全局记时器
