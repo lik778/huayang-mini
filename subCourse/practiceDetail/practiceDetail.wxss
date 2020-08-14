@@ -42,7 +42,7 @@
     font: 36rpx/50rpx PingFang SC;
 }
 .course-desc {
-    font: 28rpx/44rpx PingFang SC;
+    font: 32rpx/44rpx PingFang SC;
     color: #222;
 }
 .dot {

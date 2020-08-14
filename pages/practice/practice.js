@@ -231,7 +231,7 @@ Page({
 	// 查看训练营详情
 	goToBootCamp(e) {
 		wx.navigateTo({
-			url: "/subCourse/campDetail/campDetail?id=" + e.currentTarget.dataset.bootcampid
+			url: "/subCourse/joinCamp/joinCamp?id=" + e.currentTarget.dataset.bootcampid
 		})
 	},
 	// 发现页

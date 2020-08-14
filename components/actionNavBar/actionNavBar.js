@@ -60,10 +60,14 @@ Component({
 			this.data.bgmAudio.play()
 		},
 		pauseBGM() {
-			this.data.bgmAudio.volume = 0
+			if (this.data.bgmAudio) {
+				this.data.bgmAudio.volume = 0
+			}
 		},
 		playBGM() {
-			this.data.bgmAudio.volume = 0.5
+			if (this.data.bgmAudio) {
+				this.data.bgmAudio.volume = 0.5
+			}
 		},
 		stopBGM() {
 			if (this.data.bgmAudio) {

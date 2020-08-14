@@ -131,7 +131,9 @@ Page({
 		// 设置"要领"音频播放结束监听回调
 		this.data.mainPointAudio.onEnded(function () {
 			// 还原口令音量
-			self.data.bgAudio.volume = 1
+			if (self.data.bgAudio) {
+				self.data.bgAudio.volume = 1
+			}
 			self.setData({
 				isPlayMainPointAudioPlaying: false // 释放要领正在播放中的状态
 			})
@@ -458,7 +460,9 @@ Page({
 		// 判断：当前动作的"要领"语音是否已播放
 		if (!this.data.didPlayMainPointAudioInCurrentTargetAction) {
 			// 降低口令音量
-			this.data.bgAudio.volume = 0.3
+			if (this.data.bgAudio) {
+				this.data.bgAudio.volume = 0.3
+			}
 			// 第一段"口令"结束开始播放"要领"
 			this.playMainPoint(this.data.targetActionObj.voice_link)
 		}
@@ -477,6 +481,8 @@ Page({
 	async prepareNextAction() {
 		// 停止视频
 		this.data.video.stop()
+		// 如何正在播放要领音频，停止要领播放
+		this.data.mainPointAudio.stop()
 		// 切换下一个动作
 		this.checkoutNextAction()
 		// 检查是否是最后一个动作
@@ -526,14 +532,14 @@ Page({
 				})
 			})
 		} else {
+			// 训练结束
+			this.setData({
+				didShowResultLayer: true,
+				didPracticeDone: true,
+				isRunning: false
+			})
 			// 「恭喜你完成练习」
 			await this.playTempBgAudio(LocaleVoice.lv6)
-			this.setData({
-				isRunning: false,
-				didPracticeDone: true
-			})
-			// 训练结束
-			this.setData({didShowResultLayer: true})
 			// 停止全局记时器
 			clearInterval(this.data.globalRecordTimer)
 			// 上传训练记录

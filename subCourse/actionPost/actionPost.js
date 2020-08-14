@@ -279,6 +279,7 @@ Page({
 		this.drawCanvas()
 	},
 	saveToLocal() {
+		const self = this
 		bxPoint("course_clock", {type: "hold"}, false)
 		if (!this.data._didDrawCanvasDone) {
 			wx.showLoading({
@@ -298,7 +299,7 @@ Page({
 					filePath: tempFilePath,
 					success(res) {
 						toast('图片保存成功', 3000, 'success')
-						this.punchCard()
+						self.punchCard()
 					},
 					fail() {
 						toast('图片保存失败')

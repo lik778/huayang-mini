@@ -34,7 +34,7 @@
 .arrow-left, .arrow-right {
     width: 28rpx;
     height: 44rpx;
-    margin: 40rpx;
+    padding: 40rpx;
 }
 .arrow-left.disabled, .arrow-right.disabled {
     opacity: 0.3;
@@ -119,6 +119,9 @@
     width: 390rpx;
     height: 448rpx;
     margin: 20rpx 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
 }
 .next-info {
     display: flex;
