@@ -33,7 +33,7 @@
 				<view  style="{{videoHeight}}" class="video-cover" bindtap="playVideo" wx-if="{{showVideoCover&&!showLock}}">
 					<image src="/assets/images/common/play.png"></image>
 				</view>
-				<video bindplay='playVideo' id="myVideo" src="{{videoSrc}}" poster="{{posterSrc}}" style="{{videoHeight}}" controls="{{showLock?false:true}}" show-center-play-btn="{{false}}" bindpause="pauseVideo" bindended="initVideo"></video>
+				<video id="myVideo" src="{{videoSrc}}" poster="{{posterSrc}}" style="{{videoHeight}}" controls="{{showLock?false:true}}" show-center-play-btn="{{false}}" bindpause="pauseVideo" bindended="initVideo"></video>
 			</view>
 			<view class="course-list" wx:if="{{courseList.content.length>0}}">
 				<view class="course-item" wx:for="{{courseList.content}}" wx:key="index">
