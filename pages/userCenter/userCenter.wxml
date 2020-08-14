@@ -30,7 +30,7 @@
 		<view class="full-message-cover"></view>
 		<view class="full-message-left">
 			<view class="full-message-top">完善个人资料 ›</view>
-			<view class="full-message-bottom">提升等级开启更多课程权益</view>
+			<view class="full-message-bottom"><text class="tetx-num">+100</text>成长值 开启更多课程权益</view>
 		</view>
 		<view class="full-message-right">
 			<image src="/assets/images/common/id.png"></image>
@@ -53,7 +53,8 @@
 						</view>
 					</view>
 				</view>
-				<view class="task-item-right" wx:if="{{item.TaskType==='task_checkin'&&!hasCheckIn}}" bindtap="checkin" data-type="{{item}}">
+				<view class="task-item-right" wx:if="{{item.TaskType==='task_checkin'&&!hasCheckIn}}" bindtap="checkin"
+					data-type="{{item}}">
 					签到
 				</view>
 				<view class="task-item-right-one" wx:if="{{item.TaskType==='task_checkin'&&hasCheckIn}}">
@@ -98,5 +99,7 @@
 		</view>
 	</view>
 	<!-- 提升经验值弹窗 -->
-	<levelAlert text02="{{gradeData.text02}}" text03="{{gradeData.text03}}" number="{{gradeData.experNum}}" hasGrade="{{gradeData.upgrade}}" didShow="{{gradeData.showLevelAlert}}" wx:if="{{gradeData.showLevelAlert}}"></levelAlert>
+	<levelAlert text02="{{gradeData.text02}}" text03="{{gradeData.text03}}" number="{{gradeData.experNum}}"
+		hasGrade="{{gradeData.upgrade}}" didShow="{{gradeData.showLevelAlert}}" wx:if="{{gradeData.showLevelAlert}}">
+	</levelAlert>
 </view>

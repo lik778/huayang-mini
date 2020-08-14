@@ -1,5 +1,5 @@
 <!--发现主页-->
-<view class="discovery" wx:if="{{campList!==null&&bannerList!==null&&courseList!==null}}">
+<view class="discovery" wx:if="{{canShow}}">
 	<!--  模块一 -->
 	<!-- <view class="module-one" style="padding-bottom:130px"> -->
 	<view class="{{showModelBanner?'module-one':'module-one hidden'}}">
