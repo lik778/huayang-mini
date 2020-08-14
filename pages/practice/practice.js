@@ -177,7 +177,7 @@ Page({
 			createPracticeRecordInToday()
 		}
 		bxPoint("practice_start", {}, false)
-		console.log(item, parent)
+		// console.log(item, parent)
 		switch (item.type) {
 			case 'kecheng': {
 				switch (item.kecheng_type) {
@@ -231,7 +231,7 @@ Page({
 	// 查看训练营详情
 	goToBootCamp(e) {
 		wx.navigateTo({
-			url: "/subCourse/campDetail/campDetail?id=" + e.currentTarget.dataset.bootcampid
+			url: "/subCourse/joinCamp/joinCamp?id=" + e.currentTarget.dataset.bootcampid
 		})
 	},
 	// 发现页
@@ -303,7 +303,7 @@ Page({
 		let bootCampList = await queryUserJoinedBootCamp()
 		bootCampList = bootCampList.filter(item => +item.kecheng_traincamp.status !== 2)
 		let handlerBootCampList = []
-		for (const {kecheng_traincamp_id, kecheng_traincamp: {name, date, status}} of bootCampList) {
+		for (const {kecheng_traincamp_id, date, kecheng_traincamp: {name, status}} of bootCampList) {
 			// 根据训练营查找对应的课程
 			let dayNum = dayjs().diff(dayjs(date), 'day') + 1
 			let bootCampInfo = await queryBootCampContentInToday({

@@ -34,7 +34,7 @@
 .arrow-left, .arrow-right {
     width: 28rpx;
     height: 44rpx;
-    margin: 40rpx;
+    padding: 40rpx;
 }
 .arrow-left.disabled, .arrow-right.disabled {
     opacity: 0.3;
@@ -95,6 +95,9 @@
     margin: 108rpx 0 90rpx;
     font: bold 372rpx/446rpx DIN Alternate,DIN Next Pro;
 }
+.action-count-down-ready-text {
+    font-size: 200rpx;
+}
 .action-name, .action-cycle-time {
     margin-bottom: 30rpx;
     font: 64rpx/90rpx PingFang SC;
@@ -119,6 +122,7 @@
     width: 390rpx;
     height: 448rpx;
     margin: 20rpx 0;
+    object-fit: contain;
 }
 .next-info {
     display: flex;

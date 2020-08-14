@@ -6,9 +6,7 @@
   <video
     custom-cache="{{false}}"
     object-fit="contain"
-    enable-play-gesture="{{true}}"
-    enable-auto-rotation="{{true}}"
-    play-btn-position="top"
+    controls="{{true}}"
     src="{{link}}"
     class="video-container {{adapter ? 'adapter' : ''}}"></video>
 </view>

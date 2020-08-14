@@ -31,7 +31,7 @@ Page({
 		isRunning: true, // 动作是否正在进行
 
 		didShowPrepareLayer: true, // 预备层
-		PrepareNumber: 3, // 预备数字
+		PrepareNumber: "准备", // 预备文案
 
 		didShowRestLayer: false, // 休息层
 		restTimeText: "00:00", // 休息时间
@@ -114,11 +114,11 @@ Page({
 		// 背景音频实例
 		this.data.bgAudio = wx.getBackgroundAudioManager()
 		this.data.bgAudio.onPause(() => {
-			console.log('---------暂停背景---------')
+			// console.log('---------暂停背景---------')
 			this.toggleAction("pause")
 		})
 		this.data.bgAudio.onStop(() => {
-			console.log('---------停止背景---------')
+			// console.log('---------停止背景---------')
 			wx.navigateBack()
 			this.destroyResource()
 		})
@@ -131,7 +131,9 @@ Page({
 		// 设置"要领"音频播放结束监听回调
 		this.data.mainPointAudio.onEnded(function () {
 			// 还原口令音量
-			self.data.bgAudio.volume = 1
+			if (self.data.bgAudio) {
+				self.data.bgAudio.volume = 1
+			}
 			self.setData({
 				isPlayMainPointAudioPlaying: false // 释放要领正在播放中的状态
 			})
@@ -198,7 +200,7 @@ Page({
 	},
 	// 监听小程序切前台的回掉函数
 	onAppShowCallback() {
-		console.log("------------小程序切 前台 事件------------")
+		// console.log("------------小程序切 前台 事件------------")
 		// 用户非手动暂停时自动延续上次播放进度
 		if (!this.data.accordPause && !this.data.isRunning) {
 			this.toggleAction("play")
@@ -208,7 +210,7 @@ Page({
 	},
 	// 监听小程序切后台的回掉函数
 	onAppHideCallback() {
-		console.log("------------小程序切 后台 事件------------")
+		// console.log("------------小程序切 后台 事件------------")
 		// 在休息层 & 未暂停休息 => 暂停休息阶段
 		if (this.data.didShowRestLayer && !this.data.didPauseRest) {
 			this.pauseRestTime("pause")
@@ -277,7 +279,7 @@ Page({
 					bxPoint("course_operation", {event: "exit", action_num: self.data.targetActionObj.id}, false)
 					wx.navigateBack()
 				} else if (res.cancel) {
-					console.log('取消')
+					// console.log('取消')
 				}
 			}
 		})
@@ -319,7 +321,9 @@ Page({
 		await this.playTempBgAudio(this.data.targetActionObj.name_voice_link)
 		await this.playTempBgAudio(voices_number(this.data.targetActionObj.cycleTime))
 		await this.playTempBgAudio(+this.data.targetActionObj.meta_type === 2 ? LocaleVoice.lv13 : LocaleVoice.lv7)
-		//  321开始!
+		//  准备321开始!
+		await this.playTempBgAudio(LocaleVoice.lv14)
+		this.setData({PrepareNumber: 3})
 		await this.playTempBgAudio(LocaleVoice.lv18)
 		this.setData({PrepareNumber: 2})
 		await this.playTempBgAudio(LocaleVoice.lv19)
@@ -334,7 +338,7 @@ Page({
 	 */
 	async switchPrevAction() {
 		if (this.data.currentActionIndex > 0) {
-			console.log('上一个动作')
+			// console.log('上一个动作')
 			this.stopAllAction()
 			this.checkoutNextAction(true)
 			// 显示预备页
@@ -350,7 +354,7 @@ Page({
 	 */
 	async switchNextAction() {
 		if (this.data.currentActionIndex < this.data.actionData.length - 1) {
-			console.log('下一个练习')
+			// console.log('下一个练习')
 			this.stopAllAction()
 			this.checkoutNextAction()
 			// 显示预备页
@@ -458,7 +462,9 @@ Page({
 		// 判断：当前动作的"要领"语音是否已播放
 		if (!this.data.didPlayMainPointAudioInCurrentTargetAction) {
 			// 降低口令音量
-			this.data.bgAudio.volume = 0.3
+			if (this.data.bgAudio) {
+				this.data.bgAudio.volume = 0.3
+			}
 			// 第一段"口令"结束开始播放"要领"
 			this.playMainPoint(this.data.targetActionObj.voice_link)
 		}
@@ -474,9 +480,11 @@ Page({
 	/**
 	 * 筹备下个动作
 	 */
-	prepareNextAction() {
+	async prepareNextAction() {
 		// 停止视频
 		this.data.video.stop()
+		// 如何正在播放要领音频，停止要领播放
+		this.data.mainPointAudio.stop()
 		// 切换下一个动作
 		this.checkoutNextAction()
 		// 检查是否是最后一个动作
@@ -526,14 +534,14 @@ Page({
 				})
 			})
 		} else {
+			// 训练结束
 			this.setData({
-				isRunning: false,
-				didPracticeDone: true
+				didShowResultLayer: true,
+				didPracticeDone: true,
+				isRunning: false
 			})
 			// 「恭喜你完成练习」
-			this.playTempBgAudio(LocaleVoice.lv6)
-			// 训练结束
-			this.setData({didShowResultLayer: true})
+			await this.playTempBgAudio(LocaleVoice.lv6)
 			// 停止全局记时器
 			clearInterval(this.data.globalRecordTimer)
 			// 上传训练记录
@@ -575,7 +583,7 @@ Page({
 		// 关闭预备遮罩层, 还原PrepareNumber=3
 		this.setData({
 			didShowPrepareLayer: false,
-			PrepareNumber: 3,
+			PrepareNumber: "准备",
 			isRunning: true
 		})
 		// 视频开始播放
