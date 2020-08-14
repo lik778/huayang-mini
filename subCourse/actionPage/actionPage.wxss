@@ -122,9 +122,7 @@
     width: 390rpx;
     height: 448rpx;
     margin: 20rpx 0;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
+    object-fit: contain;
 }
 .next-info {
     display: flex;

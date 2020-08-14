@@ -68,7 +68,7 @@
             <cover-view class="rest-time">{{restTimeText}}</cover-view>
             <cover-view class="next-action-info">
                 <cover-view class="next-action-cycle">下一个练习</cover-view>
-                <cover-view class="next-cover" style="background-image: url('{{targetActionObj.cover}}');"></cover-view>
+                <cover-image class="next-cover" src="{{targetActionObj.cover}}"></cover-image>
                 <cover-view class="next-info">
                     <cover-view class="next-action-name limit-two-line">{{targetActionObj.name}}</cover-view>
                     <cover-view class="next-action-cycle-time">

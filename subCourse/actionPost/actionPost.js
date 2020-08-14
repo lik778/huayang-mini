@@ -188,11 +188,12 @@ Page({
 	 * @param coverImage
 	 * @param avatarImage
 	 * @param qrCodeImage
+	 * @param recordNo
 	 */
 	drawHiddenCanvas(coverImage, avatarImage, qrCodeImage, recordNo) {
 		const canvasWidth = 300
 		const canvasHeight = 366
-		let ctx = wx.createCanvasContext('order')
+		let ctx = wx.createCanvasContext('actionOrder', this)
 		ctx.save()
 		ctx.rect(0, 0, 300, 480)
 		ctx.setFillStyle('#fff')
@@ -243,6 +244,7 @@ Page({
 		let tipNo = {x: 221, y: 448}
 		this.drawName(ctx, "长按识别二维码", 10, tipNo.x, tipNo.y, 'black')
 		this.drawName(ctx, "一起练习", 10, tipNo.x + 15, tipNo.y + 12, 'black')
+
 		ctx.draw(false, () => {
 			wx.hideLoading()
 			this.setData({
@@ -292,8 +294,8 @@ Page({
 			return
 		}
 
-		this._saveCanvasImageToLocal('order').then(({tempFilePath}) => {
-			// console.log(tempFilePath)
+		this._saveCanvasImageToLocal('actionOrder').then(({tempFilePath}) => {
+			console.log(tempFilePath)
 			queryWxAuth(WX_AUTH_TYPE.writePhotosAlbum).then(() => {
 				wx.saveImageToPhotosAlbum({
 					filePath: tempFilePath,
