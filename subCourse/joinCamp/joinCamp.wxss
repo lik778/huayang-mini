@@ -1,4 +1,8 @@
 /* subCourse/joinCamp/joinCamp.wxss */
+.detail {
+  padding-bottom: 160rpx;
+}
+
 .detail image {
   width: 100%;
   vertical-align: bottom;

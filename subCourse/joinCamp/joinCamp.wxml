@@ -5,7 +5,7 @@
 		<naviBar title="{{titleName}}" color="#fff" titleColor="#000000" forceGoBackIndex="{{true}}"></naviBar>
 	</view>
 	<view class="detail">
-		<image src="{{item}}" wx:for="{{campDetailData.desc}}" wx:key="index"></image>
+		<image src="{{item}}" wx:for="{{campDetailData.desc}}" mode="widthFix" wx:key="index"></image>
 	</view>
 	<view class="button-line" wx:if="{{buttonType===1}}">
 		<button bindtap="joinCamp" wx:if="{{campDetailData.discount_price>0&&!userInfo.is_zhide_vip&&!hasJoinAll}}" class="pay">立即支付 ¥{{campDetailData.discount_price/100}}</button>
