@@ -1,26 +1,17 @@
 // pages/userCenter/userCenter.js
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { GLOBAL_KEY } from "../../lib/config"
 import request from "../../lib/request"
 import {
+  getPhoneNumber,
   getSignData,
   getTaskList,
   increaseExp,
   needUpdateUserInfo,
-  getPhoneNumber,
   taskCheckIn
 } from "../../api/course/index"
-import {
-  getUserInfo
-} from "../../api/mine/index"
-import {
-  getLocalStorage,
-  setLocalStorage
-} from "../../utils/util"
-import {
-  checkAuth
-} from "../../utils/auth"
+import { getUserInfo } from "../../api/mine/index"
+import { getLocalStorage, setLocalStorage } from "../../utils/util"
+import { checkAuth } from "../../utils/auth"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -91,7 +82,7 @@ Page({
                   showLevelAlert: true
                 }
               })
-              console.log(userInfoLate.user_grade, res.user_grade)
+              // console.log(userInfoLate.user_grade, res.user_grade)
             } else {
               // 完善资料未升级
               this.setData({

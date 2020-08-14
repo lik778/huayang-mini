@@ -221,7 +221,6 @@ Page({
 
 	// 处理分享按钮点击事件
 	handleShareTap() {
-		console.log("分享给好友")
 		bxPoint("course_share", {}, false)
 	},
 

@@ -2,12 +2,12 @@
 import { GLOBAL_KEY } from '../../lib/config'
 import { getProductInfo, getYouZanAppId } from '../../api/mall/index'
 import {
+  getArticileLink,
   getCampDetail,
   getCourseData,
   getCurentDayData,
-  getMenyCourseList,
   getHasJoinCamp,
-  getArticileLink,
+  getMenyCourseList,
 } from '../../api/course/index'
 import {
   countDay,
@@ -159,7 +159,7 @@ Page({
 
   // 播放视频
   playVideo() {
-    console.log('播放')
+    // console.log('播放')
   },
 
   // 获取当前天的课程
@@ -465,7 +465,7 @@ Page({
         16) *
         9
     )
-    console.log(height)
+    // console.log(height)
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
         .statusBarHeight,

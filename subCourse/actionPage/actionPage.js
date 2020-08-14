@@ -114,11 +114,11 @@ Page({
 		// 背景音频实例
 		this.data.bgAudio = wx.getBackgroundAudioManager()
 		this.data.bgAudio.onPause(() => {
-			console.log('---------暂停背景---------')
+			// console.log('---------暂停背景---------')
 			this.toggleAction("pause")
 		})
 		this.data.bgAudio.onStop(() => {
-			console.log('---------停止背景---------')
+			// console.log('---------停止背景---------')
 			wx.navigateBack()
 			this.destroyResource()
 		})
@@ -198,7 +198,7 @@ Page({
 	},
 	// 监听小程序切前台的回掉函数
 	onAppShowCallback() {
-		console.log("------------小程序切 前台 事件------------")
+		// console.log("------------小程序切 前台 事件------------")
 		// 用户非手动暂停时自动延续上次播放进度
 		if (!this.data.accordPause && !this.data.isRunning) {
 			this.toggleAction("play")
@@ -208,7 +208,7 @@ Page({
 	},
 	// 监听小程序切后台的回掉函数
 	onAppHideCallback() {
-		console.log("------------小程序切 后台 事件------------")
+		// console.log("------------小程序切 后台 事件------------")
 		// 在休息层 & 未暂停休息 => 暂停休息阶段
 		if (this.data.didShowRestLayer && !this.data.didPauseRest) {
 			this.pauseRestTime("pause")
@@ -277,7 +277,7 @@ Page({
 					bxPoint("course_operation", {event: "exit", action_num: self.data.targetActionObj.id}, false)
 					wx.navigateBack()
 				} else if (res.cancel) {
-					console.log('取消')
+					// console.log('取消')
 				}
 			}
 		})
@@ -334,7 +334,7 @@ Page({
 	 */
 	async switchPrevAction() {
 		if (this.data.currentActionIndex > 0) {
-			console.log('上一个动作')
+			// console.log('上一个动作')
 			this.stopAllAction()
 			this.checkoutNextAction(true)
 			// 显示预备页
@@ -350,7 +350,7 @@ Page({
 	 */
 	async switchNextAction() {
 		if (this.data.currentActionIndex < this.data.actionData.length - 1) {
-			console.log('下一个练习')
+			// console.log('下一个练习')
 			this.stopAllAction()
 			this.checkoutNextAction()
 			// 显示预备页

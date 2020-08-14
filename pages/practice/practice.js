@@ -177,7 +177,7 @@ Page({
 			createPracticeRecordInToday()
 		}
 		bxPoint("practice_start", {}, false)
-		console.log(item, parent)
+		// console.log(item, parent)
 		switch (item.type) {
 			case 'kecheng': {
 				switch (item.kecheng_type) {
