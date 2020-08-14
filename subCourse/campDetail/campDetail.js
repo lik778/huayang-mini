@@ -1,19 +1,14 @@
 // subCourse/campDetail/campDetail.js
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  getProductInfo,
-  getYouZanAppId
-} from '../../api/mall/index'
+import { GLOBAL_KEY } from '../../lib/config'
+import { getProductInfo, getYouZanAppId } from '../../api/mall/index'
 import {
   getCampDetail,
   getCourseData,
   getCurentDayData,
   getMenyCourseList,
   getHasJoinCamp,
-  getArticileLink
-} from "../../api/course/index"
+  getArticileLink,
+} from '../../api/course/index'
 import {
   countDay,
   countDayOne,
@@ -21,22 +16,21 @@ import {
   getTodayDate,
   manageWeek,
   setLocalStorage,
-  simpleDurationSimple
-} from "../../utils/util"
-import bxPoint from "../../utils/bxPoint"
+  simpleDurationSimple,
+} from '../../utils/util'
+import bxPoint from '../../utils/bxPoint'
 
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-    appId: "",
+    appId: '',
     showLock: false,
     statusHeight: 0,
-    articileLink: "",
-    realNowDay: "",
-    endTime: "",
+    articileLink: '',
+    realNowDay: '',
+    endTime: '',
     backIndex: false,
     cureentDay: '', //当前日期
     campId: 0, //训练营id
@@ -45,29 +39,35 @@ Page({
     videoHeight: 0, //视频高度
     campDetailData: {}, //训练营详情
     courseList: [], //课程列表
-    startDay: "", //训练营开始时间
-    videoSrc: "", //视频地址
+    startDay: '', //训练营开始时间
+    videoSrc: '', //视频地址
     srcObj: {
-      course: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925TZrmey.jpg",
-      video: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925iFZICS.jpg",
-      product: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925fmEUmR.jpg",
-      url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925KAfZPv.jpg",
-      lock: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596613255fHAzmw.jpg"
+      course:
+        'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925TZrmey.jpg',
+      video:
+        'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925iFZICS.jpg',
+      product:
+        'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925fmEUmR.jpg',
+      url:
+        'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925KAfZPv.jpg',
+      lock:
+        'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596613255fHAzmw.jpg',
     },
-    posterSrc: "",
+    posterSrc: '',
     styleObj: {
-      all: "color:#000000;font-family:PingFang-SC-Bold,PingFang-SC;font-weight:bold;background:#F4F4F4",
-      notAll: "color:#000000;background:#F4F4F4"
+      all:
+        'color:#000000;font-family:PingFang-SC-Bold,PingFang-SC;font-weight:bold;background:#F4F4F4',
+      notAll: 'color:#000000;background:#F4F4F4',
     }, //日历的不同样式
     dateObj: {
       weekList: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
       dateList: [],
-    } //日历时间存储
+    }, //日历时间存储
   },
 
   // 加入交流群
   toTeam() {
-    bxPoint("guide_wx", {}, false)
+    bxPoint('guide_wx', {}, false)
     let link = this.data.articileLink
     wx.navigateTo({
       url: `/pages/webViewCommon/webViewCommon?link=${link}`,
@@ -75,19 +75,20 @@ Page({
   },
 
   // 获取训练营信息
-  getCampDetailData({
-    id,
-    startDate
-  }) {
+  getCampDetailData({ id, startDate }) {
     getCampDetail({
-      traincamp_id: id
-    }).then(res => {
-      let date = new Date();
+      traincamp_id: id,
+    }).then((res) => {
+      let date = new Date()
       let year = date.getFullYear()
-      let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1
-      let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
-      let nowDate = year + "-" + month + "-" + day
-      res.nowDay = countDay(nowDate, startDate) < 0 ? 0 : countDay(nowDate, startDate)
+      let month =
+        date.getMonth() + 1 < 10
+          ? '0' + (date.getMonth() + 1)
+          : date.getMonth() + 1
+      let day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
+      let nowDate = year + '-' + month + '-' + day
+      res.nowDay =
+        countDay(nowDate, startDate) < 0 ? 0 : countDay(nowDate, startDate)
       let onlyDayList = getTodayDate().one //只有日的日期列表
       let realList = getTodayDate().two //实际一周日期列表
       let campDateList = [] //当周对应训练营日期列表
@@ -104,7 +105,10 @@ Page({
       for (let i in realList) {
         let differDay = countDayOne(realList[i], startDate)
         campDateList.push(differDay)
-        if (new Date(realList[i]).toLocaleDateString() === new Date().toLocaleDateString()) {
+        if (
+          new Date(realList[i]).toLocaleDateString() ===
+          new Date().toLocaleDateString()
+        ) {
           weekData[i] = '今天'
         }
       }
@@ -120,9 +124,9 @@ Page({
           weekList: weekData,
           dateList: {
             date: onlyDayList,
-            realDate: realList
-          }
-        }
+            realDate: realList,
+          },
+        },
       })
     })
   },
@@ -130,9 +134,9 @@ Page({
   // 批量获取多日课程内容
   batchGetCourse(e) {
     getMenyCourseList({
-      day_num_str: e.join(","),
-      traincamp_id: this.data.campId
-    }).then(res => {
+      day_num_str: e.join(','),
+      traincamp_id: this.data.campId,
+    }).then((res) => {
       let dataObj = this.data.dateObj.dateList.date
       for (let i in dataObj) {
         dataObj[i].day_num = e[i]
@@ -148,7 +152,7 @@ Page({
         }
       }
       this.setData({
-        dateObj: this.data.dateObj
+        dateObj: this.data.dateObj,
       })
     })
   },
@@ -168,19 +172,19 @@ Page({
       if (event >= 0) {
         dayNum = e.currentTarget.dataset.item.day_num
       }
-      let date = new Date();
-      day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
+      let date = new Date()
+      day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
       if (day < Number(e.currentTarget.dataset.item.id)) {
         this.setData({
-          showLock: true
+          showLock: true,
         })
       } else {
         this.setData({
-          showLock: false
+          showLock: false,
         })
       }
       this.setData({
-        cureentDay: e.currentTarget.dataset.item.id
+        cureentDay: e.currentTarget.dataset.item.id,
       })
     } else {
       // start_date
@@ -191,85 +195,93 @@ Page({
         // 已开营
         // dayNum = 0
         let endTime = this.data.startTime
-        let date = new Date();
+        let date = new Date()
         let year = date.getFullYear()
-        let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1
-        day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
-        let nowDate = year + "-" + month + "-" + day
+        let month =
+          date.getMonth() + 1 < 10
+            ? '0' + (date.getMonth() + 1)
+            : date.getMonth() + 1
+        day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
+        let nowDate = year + '-' + month + '-' + day
         dayNum = countDayOne(nowDate, endTime)
         if (day < Number(e.nowDate)) {
           this.setData({
-            showLock: true
+            showLock: true,
           })
         } else {
           this.setData({
-            showLock: false
+            showLock: false,
           })
         }
       }
     }
     this.setData({
-      videoSrc: "",
-      posterSrc: ""
+      videoSrc: '',
+      posterSrc: '',
     })
     if (dayNum == 0) {
       this.setData({
-        showLock: false
+        showLock: false,
       })
     }
     getCurentDayData({
       day_num: dayNum,
-      traincamp_id: this.data.campId
-    }).then(res => {
-      if (res.length !== 0) {
-        res.content = JSON.parse(res.content)
-        for (let i in res.content) {
-          if (res.content[i].type === 'kecheng') {
-            getCourseData({
-              kecheng_id: res.content[i].kecheng_id
-            }).then(res1 => {
-              if (res1.length === 0) {
-                res.content[i].duration = 0 + "分钟"
-              } else {
-                res.content[i].duration = simpleDurationSimple(res1.duration)
-              }
-              this.setData({
-                courseList: res
-              })
-            })
-          }
-          if (res.content[i].type === 'video' && this.data.videoSrc === '') {
-            this.setData({
-              videoSrc: res.content[i].video,
-              posterSrc: res.content[i].cover
-            })
-          }
-        }
-        this.setData({
-          courseList: res
-        })
-      } else {
-        this.setData({
-          courseList: []
-        })
-      }
-    }).catch(() => {
-      this.setData({
-        courseList: []
-      })
+      traincamp_id: this.data.campId,
     })
+      .then((res) => {
+        if (res.length !== 0) {
+          res.content = JSON.parse(res.content)
+          for (let i in res.content) {
+            if (res.content[i].type === 'kecheng') {
+              getCourseData({
+                kecheng_id: res.content[i].kecheng_id,
+              }).then((res1) => {
+                if (res1.length === 0) {
+                  res.content[i].duration = 0 + '分钟'
+                } else {
+                  res.content[i].duration = simpleDurationSimple(res1.duration)
+                }
+                this.setData({
+                  courseList: res,
+                })
+              })
+            }
+            if (res.content[i].type === 'video' && this.data.videoSrc === '') {
+              this.setData({
+                videoSrc: res.content[i].video,
+                posterSrc: res.content[i].cover,
+              })
+            }
+          }
+          this.setData({
+            courseList: res,
+          })
+        } else {
+          this.setData({
+            courseList: [],
+          })
+        }
+      })
+      .catch(() => {
+        this.setData({
+          courseList: [],
+        })
+      })
   },
   // 获取引导私域地址
   getArticileLinkData() {
-    getArticileLink().then(res => {
+    getArticileLink().then((res) => {
       this.setData({
-        articileLink: res
+        articileLink: res,
       })
     })
   },
   // 控制是否显示遮罩层
   initCoverShow(id) {
-    let showIdList = getLocalStorage(GLOBAL_KEY.campHasShowList) === undefined ? undefined : JSON.parse(getLocalStorage(GLOBAL_KEY.campHasShowList))
+    let showIdList =
+      getLocalStorage(GLOBAL_KEY.campHasShowList) === undefined
+        ? undefined
+        : JSON.parse(getLocalStorage(GLOBAL_KEY.campHasShowList))
     let showCover = true
     if (showIdList === undefined) {
       setLocalStorage(GLOBAL_KEY.campHasShowList, [id])
@@ -284,16 +296,21 @@ Page({
       }
     }
     this.setData({
-      showCover: showCover
+      showCover: showCover,
     })
   },
 
+  hideCover() {
+    this.setData({
+      showVideoCover: false,
+    })
+  },
   // 播放/暂停视频
   playVideo() {
     this.videoContext.play()
     this.videoContext.requestFullScreen()
     this.setData({
-      showVideoCover: false
+      showVideoCover: false,
     })
   },
 
@@ -301,21 +318,21 @@ Page({
   pauseVideo() {
     this.videoContext.pause()
     this.setData({
-      showVideoCover: true
+      showVideoCover: true,
     })
   },
 
   // 播放结束初始化
   initVideo() {
     this.setData({
-      showVideoCover: true
+      showVideoCover: true,
     })
   },
 
   // 关闭遮罩层
   closeCover() {
     this.setData({
-      showCover: false
+      showCover: false,
     })
   },
 
@@ -325,12 +342,12 @@ Page({
     if (data.type === 'product') {
       // 商品
       getProductInfo({
-        product_id: data.product_id
+        product_id: data.product_id,
         // product_id: 37
       }).then((res) => {
         wx.navigateToMiniProgram({
           appId: this.data.appId,
-          path: res.product.third_link
+          path: res.product.third_link,
         })
       })
     } else {
@@ -346,8 +363,8 @@ Page({
     if (data.type === 'kecheng') {
       // 跳往结构化练习
       getCourseData({
-        kecheng_id: data.kecheng_id
-      }).then(res => {
+        kecheng_id: data.kecheng_id,
+      }).then((res) => {
         if (res.id) {
           if (res.kecheng_type === 0) {
             // 直播
@@ -373,8 +390,8 @@ Page({
         } else {
           wx.showToast({
             title: '课程不存在',
-            icon: "none",
-            duration: 3000
+            icon: 'none',
+            duration: 3000,
           })
         }
       })
@@ -382,7 +399,7 @@ Page({
       // 直接播放视频
       this.setData({
         videoSrc: data.video,
-        posterSrc: data.cover
+        posterSrc: data.cover,
       })
       this.playVideo()
     }
@@ -390,23 +407,23 @@ Page({
 
   // 获取有赞id
   getAppId() {
-    getYouZanAppId().then(appId => {
+    getYouZanAppId().then((appId) => {
       this.setData({
-        appId
+        appId,
       })
     })
   },
   // 跳转到训练营详情
   checkCamp(id) {
     getHasJoinCamp({
-      traincamp_id: id
-    }).then(res => {
+      traincamp_id: id,
+    }).then((res) => {
       this.setData({
-        startTime: res.date
+        startTime: res.date,
       })
       this.getCampDetailData({
         id: id,
-        startDate: res.date
+        startDate: res.date,
       })
     })
   },
@@ -416,7 +433,7 @@ Page({
   onLoad: function (options) {
     if (options.share) {
       this.setData({
-        backIndex: true
+        backIndex: true,
       })
     }
     this.checkCamp(options.id)
@@ -424,7 +441,7 @@ Page({
     this.initCoverShow(options.id)
     this.getAppId()
     this.setData({
-      campId: options.id
+      campId: options.id,
     })
   },
 
@@ -439,45 +456,42 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    bxPoint("camp_calendar", {
-      from_uid: getApp().globalData.super_user_id
+    bxPoint('camp_calendar', {
+      from_uid: getApp().globalData.super_user_id,
     })
     this.getArticileLinkData()
-    let height = parseInt((JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth - 30) / 16 * 9)
+    let height = parseInt(
+      ((JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth - 30) /
+        16) *
+        9
+    )
     console.log(height)
     this.setData({
-      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
-      videoHeight: `height:${height}px`
+      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
+        .statusBarHeight,
+      videoHeight: `height:${height}px`,
     })
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
-
-  },
+  onHide: function () {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
-
-  },
+  onUnload: function () {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-
-  },
+  onPullDownRefresh: function () {},
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-
-  },
+  onReachBottom: function () {},
 
   /**
    * 用户点击右上角分享
@@ -485,7 +499,10 @@ Page({
   onShareAppMessage: function () {
     return {
       title: `我正在参加${this.data.campDetailData.name}，每天都有看的见的变化，快来试试`,
-      path: "/subCourse/joinCamp/joinCamp?id=" + this.data.campId + `&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
+      path:
+        '/subCourse/joinCamp/joinCamp?id=' +
+        this.data.campId +
+        `&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`,
     }
-  }
+  },
 })
