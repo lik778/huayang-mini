@@ -157,11 +157,6 @@ Page({
     })
   },
 
-  // 播放视频
-  playVideo() {
-    // console.log('播放')
-  },
-
   // 获取当前天的课程
   toCureentDay(e) {
     let dayNum = ''

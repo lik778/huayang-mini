@@ -95,6 +95,9 @@
     margin: 108rpx 0 90rpx;
     font: bold 372rpx/446rpx DIN Alternate,DIN Next Pro;
 }
+.action-count-down-ready-text {
+    font-size: 200rpx;
+}
 .action-name, .action-cycle-time {
     margin-bottom: 30rpx;
     font: 64rpx/90rpx PingFang SC;

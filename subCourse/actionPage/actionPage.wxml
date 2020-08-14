@@ -56,7 +56,7 @@
 
         <!--  预备层  -->
         <cover-view class="prepare-layer" wx:if="{{didShowPrepareLayer}}">
-            <cover-view class="action-count-down">{{PrepareNumber}}</cover-view>
+            <cover-view class="action-count-down {{PrepareNumber === '准备' ? 'action-count-down-ready-text' : ''}}">{{PrepareNumber}}</cover-view>
             <cover-view class="action-name">{{targetActionObj.name}}</cover-view>
             <cover-view class="action-cycle-time">
                 {{targetActionObj.cycleTime}}{{targetActionObj.meta_type == 2 ? '次' : '秒'}}

@@ -31,7 +31,7 @@ Page({
 		isRunning: true, // 动作是否正在进行
 
 		didShowPrepareLayer: true, // 预备层
-		PrepareNumber: 3, // 预备数字
+		PrepareNumber: "准备", // 预备文案
 
 		didShowRestLayer: false, // 休息层
 		restTimeText: "00:00", // 休息时间
@@ -321,7 +321,9 @@ Page({
 		await this.playTempBgAudio(this.data.targetActionObj.name_voice_link)
 		await this.playTempBgAudio(voices_number(this.data.targetActionObj.cycleTime))
 		await this.playTempBgAudio(+this.data.targetActionObj.meta_type === 2 ? LocaleVoice.lv13 : LocaleVoice.lv7)
-		//  321开始!
+		//  准备321开始!
+		await this.playTempBgAudio(LocaleVoice.lv14)
+		this.setData({PrepareNumber: 3})
 		await this.playTempBgAudio(LocaleVoice.lv18)
 		this.setData({PrepareNumber: 2})
 		await this.playTempBgAudio(LocaleVoice.lv19)
@@ -581,7 +583,7 @@ Page({
 		// 关闭预备遮罩层, 还原PrepareNumber=3
 		this.setData({
 			didShowPrepareLayer: false,
-			PrepareNumber: 3,
+			PrepareNumber: "准备",
 			isRunning: true
 		})
 		// 视频开始播放
