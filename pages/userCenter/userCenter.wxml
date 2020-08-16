@@ -1,0 +1,105 @@
+<!--pages/userCenter/userCenter.wxml-->
+<view class="user-center" wx:if="{{taskList.length!==0&&canShow&&showAll}}">
+	<view class="banner">
+		<!-- 背景图 -->
+		<image src="/assets/images/common/banner-bg.png"></image>
+		<!-- 个人信息 -->
+		<view class="message">
+			<image src="{{userInfo.avatar_url}}"></image>
+			<text>{{userInfo.nick_name}}</text>
+		</view>
+		<!-- 经验条 -->
+		<view class="experience">
+			<view class="experience-title">
+				<view class="experience-title-left">
+					<text class="experience-title-left-one">我的等级</text>
+					<text class="experience-title-left-two">Lv {{userInfo.user_grade}}</text>
+				</view>
+				<view class="experience-title-right">
+					<text>成长值：{{userInfo.user_experience}}/{{userInfo.next_level_experience}}</text>
+				</view>
+			</view>
+			<view class="experience-process">
+				<view class="experience-process-active" style="{{processStyle}}"></view>
+			</view>
+		</view>
+	</view>
+	<!-- 完善个人资料 -->
+	<view class="full-message" wx:if="{{showMessage}}" bindtap="fullSelfMsg">
+		<view class="full-message-cover-one"></view>
+		<view class="full-message-cover"></view>
+		<view class="full-message-left">
+			<view class="full-message-top">完善个人资料 ›</view>
+			<view class="full-message-bottom"><text class="tetx-num">+100</text>成长值 开启更多课程权益</view>
+		</view>
+		<view class="full-message-right">
+			<image src="/assets/images/common/id.png"></image>
+		</view>
+	</view>
+	<!-- 每日任务 -->
+	<view class="task" style="{{taskStyle}}">
+		<view class="task-title">每日任务</view>
+		<view class="task-list">
+			<view class="task-item" wx:for="{{taskList}}" wx:key="index">
+				<view class="task-item-left">
+					<image src="{{item.Icon}}"></image>
+					<view class="task-item-middle">
+						<view>{{item.Name}}</view>
+						<view>{{item.Desc}}</view>
+						<view>
+							<text>{{item.textData1}}</text>
+							<text>{{item.textData2}}</text>
+							<text>{{item.textData3}}</text>
+						</view>
+					</view>
+				</view>
+				<view class="task-item-right" wx:if="{{item.TaskType==='task_checkin'&&!hasCheckIn}}" bindtap="checkin"
+					data-type="{{item}}">
+					签到
+				</view>
+				<view class="task-item-right-one" wx:if="{{item.TaskType==='task_checkin'&&hasCheckIn}}">
+					已签到
+				</view>
+				<view class="task-item-right" wx:if="{{item.TaskType==='task_pratice'}}" bindtap="pratice">
+					去训练
+				</view>
+				<view class="task-item-right" wx:if="{{item.TaskType==='task_pratice_playbill'}}" bindtap="pratice">
+					去打卡
+				</view>
+				<view class="task-item-right" wx:if="{{item.TaskType==='task_invite'}}" bindtap="invite">
+					去邀请
+					<button open-type='share'></button>
+				</view>
+			</view>
+		</view>
+	</view>
+	<!-- 功能栏 -->
+	<view class="function" style="{{functionStyle}}">
+		<view class="function-list">
+			<view class="function-item" bindtap="toOrder">
+				<view class="function-item-left">
+					<image src="/assets/images/common/order.png"></image>
+					<view class="function-item-box">
+						<view class="function-item-top">我的订单</view>
+						<view class="function-item-bottom">查询订单信息</view>
+					</view>
+				</view>
+				<image src="/assets/images/common/arrow.png"></image>
+			</view>
+			<view class="function-item" data-mobile="{{phoneNumber}}" bindtap="callPhone">
+				<view class="function-item-left">
+					<image src="/assets/images/common/contact.png" class="contact-image"></image>
+					<view class="function-item-box">
+						<view class="function-item-top">联系客服</view>
+						<view class="function-item-bottom">周一～周五 9:00-18:00 {{phoneNumber}}</view>
+					</view>
+				</view>
+				<image src="/assets/images/common/arrow.png"></image>
+			</view>
+		</view>
+	</view>
+	<!-- 提升经验值弹窗 -->
+	<levelAlert text02="{{gradeData.text02}}" text03="{{gradeData.text03}}" number="{{gradeData.experNum}}"
+		hasGrade="{{gradeData.upgrade}}" didShow="{{gradeData.showLevelAlert}}" wx:if="{{gradeData.showLevelAlert}}">
+	</levelAlert>
+</view>

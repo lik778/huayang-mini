@@ -12,15 +12,19 @@ Component({
     },
     titleColor: {
       type: String,
-      default: "black"
+      value: "black"
     },
-    share:{
-      type:Boolean,
-      default:true
+    color: {
+      type: String,
+      value: ""
     },
-    color:{
-      type:String,
-      default:""
+    forceGoBackIndex: {
+      type: Boolean,
+      value: false
+    },
+    forceGoBackPath: {
+      type: String,
+      value: ""
     }
   },
 
@@ -29,7 +33,7 @@ Component({
    */
   data: {
     statusBarHeight: 0,
-    color:""
+    color: ""
   },
 
   /**
@@ -38,11 +42,8 @@ Component({
   methods: {
     // 返回
     back() {
-      console.log(this.data.share)
-      if (this.data.share) {
-        wx.switchTab({
-          url: '/pages/index/index',
-        })
+      if (this.data.forceGoBackIndex) {
+        this.backIndex()
       } else {
         wx.navigateBack({
           delta: 1
@@ -51,15 +52,20 @@ Component({
     },
     // 返回首页
     backIndex() {
-      wx.switchTab({
-        url: '/pages/index/index',
-      })
+      if (this.data.forceGoBackPath) {
+        wx.switchTab({
+          url: this.data.forceGoBackPath
+        })
+      } else {
+        wx.switchTab({
+          url: '/pages/discovery/discovery',
+        })
+      }
     }
   },
   attached() {
     this.setData({
       statusBarHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
-    console.log(this.data.statusBarHeight)
   }
 })

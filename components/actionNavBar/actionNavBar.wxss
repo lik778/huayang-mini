@@ -1,0 +1,47 @@
+.action-nav-bar {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  line-height: 44px;
+  position: fixed;
+  width: 100vw;
+  left: 0;
+  top: 0;
+  z-index: 2000;
+}
+
+.back-module {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  /*border: 0.5px solid #DDDDDD;*/
+  /*border-radius: 999px;*/
+  margin-left: 8px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.back-module:active {
+  opacity: 0.8;
+}
+
+.back-icon {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.back-icon cover-image {
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 40rpx;
+}
+
+.title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  text-align: center;
+  font: 500 17px/19px PingFangSC-Medium, PingFang SC;
+  color: rgba(0, 0, 0, 1);
+}

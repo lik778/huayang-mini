@@ -3,6 +3,7 @@ import { getLocalStorage } from "../../utils/util"
 import { getMineOrder } from "../../api/mine/index"
 import { GLOBAL_KEY } from "../../lib/config.js"
 import { getYouZanAppId } from "../../api/mall/index"
+import bxPoint from "../../utils/bxPoint"
 
 Page({
 
@@ -11,42 +12,77 @@ Page({
    */
   data: {
     appId: "",
+    curentIndex: 0,
     statusHeight: 0,
-    orderData: []
+    titleList: ['训练营', '商品'],
+    orderData: [],
+    pageData: {
+      offset: 0,
+      current: 1,
+      limit: 10
+    }
+  },
+  // 切换tab
+  changeTab(e) {
+    bxPoint("order_tab", {tab: e.currentTarget.dataset.index == 1 ? "goods" : "camp"}, false)
+    this.setData({
+      curentIndex: e.currentTarget.dataset.index
+    })
+    this.getMineOrderData()
   },
   // 获取订单列表
-  getMineOrderData(e) {
-    getMineOrder(`user_id=${getLocalStorage(GLOBAL_KEY.userId)}`).then(res => {
+  getMineOrderData() {
+    let params = {}
+    if (this.data.curentIndex == 0) {
+      // 训练营
+      params = {
+        user_id: getLocalStorage(GLOBAL_KEY.userId),
+        order_type: 'traincamp',
+        offset: (this.data.pageData.current - 1) * this.data.pageData.limit,
+        limit: this.data.pageData.limit
+      }
+    } else {
+      // 商品
+      params = {
+        user_id: getLocalStorage(GLOBAL_KEY.userId),
+        order_type: 'product'
+      }
+    }
+    getMineOrder(params).then(res => {
       console.log(res)
       if (res.code === 0) {
         this.setData({
           orderData: res.data
+          // orderData: []
         })
       }
     })
   },
   // 查看订单
-  toOrder() {
-    console.log(1)
-    wx.navigateToMiniProgram({
-      appId: this.data.appId,
-      path: "/pages/usercenter/dashboard/index",
-      success() {
-        console.log('success');
-      },
-      fail(e) {
-        console.error(e);
-      },
-      complete() {
-        console.log('complete');
-      }
-    })
+  toOrder(e) {
+    if (this.data.curentIndex == 0) {
+      // 眺望训练营
+      let data = e.currentTarget.dataset.item.order_item_list[0]
+      wx.navigateTo({
+        url: `/subCourse/campDetail/campDetail?id=${data.product_id}`,
+      })
+      console.log(e)
+      console.log("去训练营")
+    } else {
+      wx.navigateToMiniProgram({
+        appId: this.data.appId,
+        path: "/pages/usercenter/dashboard/index"
+      })
+    }
+
   },
   // 获取有赞aooId
   getMiniProgramAppId() {
     getYouZanAppId().then(appId => {
       console.log(appId)
-      this.setData({appId})
+      this.setData({
+        appId
+      })
     })
   },
   /**
@@ -59,7 +95,7 @@ Page({
     // 获取订单列表
     this.getMineOrderData()
     // 获取有赞id
-   this.getMiniProgramAppId()
+    this.getMiniProgramAppId()
   },
 
   /**
@@ -73,7 +109,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    bxPoint("applets_order", {})
   },
 
   /**

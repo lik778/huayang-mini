@@ -1,0 +1,17 @@
+<view class="practice-manage">
+    <view class="title">训练营</view>
+    <view>
+        <view class="item" wx:for="{{userJoinedBootCamp}}" wx:key="index" bind:tap="quitBootCamp" data-index="{{item.id}}">
+            <text>{{item.kecheng_traincamp.name}}</text>
+            <text class="quit">放弃训练</text>
+        </view>
+    </view>
+
+    <view class="title">课程</view>
+    <view>
+        <view class="item" wx:for="{{userJoinedClassesList}}" wx:key="index" bind:tap="quitCourse" data-index="{{item.id}}">
+            <text>{{item.kecheng.name}}</text>
+            <text class="quit">放弃训练</text>
+        </view>
+    </view>
+</view>

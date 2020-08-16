@@ -133,13 +133,13 @@ Page({
 	buy(e) {
 		let target = e.currentTarget.dataset.item
 		wx.navigateTo({
-			url: '/subMall/detail/detail?prdId=' + target.product.id
+			url: '/subCourse/detail/detail?prdId=' + target.product.id
 		})
 	},
 	navigateToCategory(e) {
 		let item = e.currentTarget.dataset.item
 		wx.navigateTo({
-			url: '/subMall/category/category?categoryId=' + item.id
+			url: '/subCourse/category/category?categoryId=' + item.id
 		})
 	},
 	/**
@@ -162,6 +162,12 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
+		// if (typeof this.getTabBar === 'function' &&
+		// 	this.getTabBar()) {
+		// 	this.getTabBar().setData({
+		// 		selected: 1
+		// 	})
+		// }
 		checkAuth()
 	},
 
@@ -201,7 +207,7 @@ Page({
 	 */
 	onShareAppMessage: function () {
 		return {
-			title: '花样值得买',
+			title: '花样百姓+',
 			path: '/pages/mall/mall'
 		}
 	}

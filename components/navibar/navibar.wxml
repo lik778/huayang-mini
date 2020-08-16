@@ -1,13 +1,12 @@
-<!--components/navibar.wxml-->
 <view class="navibar" style="padding-top:{{statusBarHeight}}px;background:{{color===''?'#fff':color}};">
-	<view class="back-module">
-		<view class="back-icon" bindtap="back">
-      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587367782FtxQgC.jpg"></image>
+    <view class="back-module">
+        <view class="back-icon" bindtap="back">
+            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587367782FtxQgC.jpg"></image>
+        </view>
+        <view class="line-icon"></view>
+        <view class="back-index" bindtap="backIndex">
+            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587367841kQgDiU.jpg"></image>
+        </view>
     </view>
-		<view class="line-icon"></view>
-		<view class="back-index" bindtap="backIndex">
-      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1587367841kQgDiU.jpg"></image>
-    </view>
-	</view>
-	<view class="title" style="color:{{titleColor}}">{{title}}</view>
+    <view class="title" style="color:{{titleColor}}">{{title}}</view>
 </view>

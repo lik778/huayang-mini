@@ -8,7 +8,7 @@ Page({
     equityList: [
       {
         pic: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586412187mTUlyw.jpg',
-        name: '花样大学\n入学资格',
+        name: '花样百姓+\n入学资格',
       },
       {
         pic: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1586412211utplVQ.jpg',

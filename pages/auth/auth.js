@@ -1,12 +1,10 @@
-// pages/auth/auth.js
 import { wxGetUserInfoPromise } from '../../utils/auth.js'
-import { GLOBAL_KEY } from '../../lib/config.js'
-import { bindUserInfo, bindWxPhoneNumber, getWxInfo } from "../../api/auth/index"
-import { $notNull, getLocalStorage, setLocalStorage } from "../../utils/util"
-import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog'
-import { getUniversityCode } from "../../api/mine/index"
+import { GLOBAL_KEY, Version } from '../../lib/config.js'
+import { bindUserInfo, bindWxPhoneNumber, checkFocusLogin, getWxInfo } from "../../api/auth/index"
+import { $notNull, getLocalStorage, hasUserInfo, setLocalStorage } from "../../utils/util"
 import { APP_LET_ID } from "../../lib/config"
 import { wxLoginPromise } from "../../utils/auth"
+import { checkUserDidNeedCoopen } from "../../api/course/index"
 
 Page({
 
@@ -14,6 +12,9 @@ Page({
 	 * Page initial data
 	 */
 	data: {
+		redirectPath: "",
+		redirectType: "",
+		invite_user_id: 0,
 		didGetPhoneNumber: false,
 		show: false
 	},
@@ -26,41 +27,6 @@ Page({
 		wx.navigateTo({
 			url: '/pages/service/service'
 		})
-	},
-	checkUserAuth({is_zhide_vip, student_num}) {
-		if (is_zhide_vip) {
-			if (student_num) {
-				Dialog.confirm({
-					title: '提示',
-					message: '您已是花样大学学员',
-					confirmButtonText: '查看课程',
-					showCancelButton: false
-				}).then(() => {
-					getUniversityCode(`user_key=daxue`).then(res => {
-						wx.navigateTo({
-							url: `/subLive/courseList/courseList?id=${res.data.id}`,
-						})
-					})
-				}).catch(() => {
-				})
-			} else {
-				wx.navigateTo({
-					url: '/mine/joinSchool/joinSchool',
-				})
-			}
-		} else {
-			Dialog.confirm({
-				title: '提示',
-				message: '花样大学为花样汇超级会员专属权益，您暂无权限申请',
-				confirmButtonText: '立即加入“花样汇”',
-				showCancelButton: false
-			}).then(() => {
-				wx.navigateTo({
-					url: `/mine/joinVip/joinVip?from=${this.data.fromPath}`,
-				})
-			}).catch(() => {
-			})
-		}
 	},
 	/**
 	 * 一键微信授权
@@ -104,26 +70,79 @@ Page({
 		let {
 			errMsg = '', encryptedData: encrypted_data = '', iv = ''
 		} = e.detail
+
+		// 是否强制手机号授权
+		let didFocusLogin = await checkFocusLogin({app_version: Version})
+
 		if (errMsg.includes('ok')) {
 			let open_id = getLocalStorage(GLOBAL_KEY.openId)
 			if (encrypted_data && iv) {
 				let originAccountInfo = await bindWxPhoneNumber({
 					open_id,
 					encrypted_data,
-					iv
+					iv,
+					invite_user_id: this.data.invite_user_id
 				})
 				setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
-				wx.navigateBack()
+
+				// 是否需要自定义调整页面
+				if (this.data.redirectPath) {
+					if (this.data.redirectType === "redirect") {
+						wx.redirectTo({url: this.data.redirectPath})
+					} else if (this.data.redirectType === "switch") {
+						wx.switchTab({url: this.data.redirectPath})
+					} else {
+						wx.navigateTo({url: this.data.redirectPath})
+					}
+					return
+				}
+
+				// 判断用户是否需要引导加课程
+				checkUserDidNeedCoopen({user_id: originAccountInfo.id}).then((data) => {
+					// 1=>需要引导，2=>不需要引导
+					if (+data === 1) {
+						wx.navigateTo({
+							url: "/pages/coopen/coopen?invite_user_id=" + this.data.invite_user_id
+						})
+					} else {
+						wx.switchTab({
+							url: "/pages/practice/practice"
+						})
+					}
+				})
 			}
 		} else {
-			console.error('用户拒绝手机号授权')
-			wx.navigateBack()
+			if (didFocusLogin) {
+				// 强制授权请继续授权
+			} else {
+				// 随缘授权
+				wx.switchTab({
+					url: "/pages/discovery/discovery"
+				})
+			}
 		}
 	},
 	/**
 	 * Lifecycle function--Called when page load
 	 */
-	onLoad: function (options) {
+	onLoad: function ({invite_user_id = 0, source = '', redirectPath, redirectType}) {
+		redirectPath = redirectPath ? redirectPath.replace("$", "?") : ""
+		redirectPath = redirectPath ? redirectPath.replaceAll("#", "=") : ""
+		this.setData({
+			invite_user_id,
+			redirectPath,
+			redirectType
+		})
+		getApp().globalData.super_user_id = invite_user_id
+		getApp().globalData.source = source
+
+		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
+		if ($notNull(accountInfo) && hasUserInfo()) {
+			wx.switchTab({
+				url: '/pages/practice/practice'
+			})
+			return
+		}
 	},
 
 	/**
@@ -148,7 +167,9 @@ Page({
 					this.setData({didGetPhoneNumber: true})
 				}
 			})
-			.catch((error) => {console.error(error)})
+			.catch((error) => {
+				console.error(error)
+			})
 	},
 
 	/**
@@ -162,7 +183,6 @@ Page({
 	 * Lifecycle function--Called when page unload
 	 */
 	onUnload: function () {
-
 	},
 
 	/**
@@ -177,5 +197,12 @@ Page({
 	 */
 	onReachBottom: function () {
 
+	},
+	onShareAppMessage: function () {
+		let data = getLocalStorage(GLOBAL_KEY.userId)
+		return {
+			title: "跟着花样一起变美，变自信",
+			path: `/pages/auth/auth?invite_user_id=${data}`
+		}
 	}
 })

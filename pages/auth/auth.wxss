@@ -8,21 +8,24 @@
 }
 
 .auth .logo {
-  width: 466rpx;
-  height: 168rpx;
-  margin-top: 412rpx;
+  width: 590rpx;
+  height: 424rpx;
+  margin-top: 234rpx;
 }
 
 .auth .box {
   position: absolute;
-  bottom: 214rpx;
+  bottom: 360rpx;
   width: 100vw;
 }
 
 .auth .box:active {
   opacity: 0.9;
 }
-
+.slogan {
+  margin-top: 40rpx;
+  font: 44rpx/60rpx PingFang SC;
+}
 .button {
   width: 630rpx;
   height: 96rpx;
@@ -31,21 +34,21 @@
   border-radius: 48rpx;
   font-size: 36rpx;
   font-weight: 600;
-  background: rgb(5, 197, 98);
+  background: #CC0000;
   color: white;
 }
 
 .rules {
   position: absolute;
-  bottom: 140rpx;
+  bottom: 60rpx;
   left: 0;
   right: 0;
   margin-top: 40rpx;
   text-align: center;
   font-size: 28rpx;
-  color: rgba(138, 138, 138, 1);
+  color: #666;
 }
 
 .important {
-  color: rgba(12, 169, 240, 1);
+  color: #748BBE;
 }

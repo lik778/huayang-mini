@@ -1,0 +1,182 @@
+.practice-detail {
+    padding: 0 30rpx 128rpx;
+}
+/*intro*/
+.intro {
+    margin-bottom: 100rpx;
+}
+.course-name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0;
+}
+.name {
+    font: bold 56rpx/80rpx PingFang SC;
+}
+.share-box {
+    position: relative;
+}
+.share-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    width: 150rpx;
+    height: 64rpx;
+    background: transparent;
+}
+.share-icon {
+    width: 150rpx;
+    height: 64rpx;
+}
+.share-icon:active {
+    opacity: 0.8;
+}
+.course-level {
+    margin: 30rpx 0 50rpx;
+    font: 36rpx/50rpx PingFang SC;
+}
+.course-desc {
+    font: 32rpx/44rpx PingFang SC;
+    color: #222;
+}
+.dot {
+    margin: 0 10rpx;
+}
+/*preview*/
+.layer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.preview-layer-01 {
+    font: 52rpx/52rpx PingFang SC;
+}
+.preview-layer-02 {
+    font: 32rpx/44rpx PingFang SC;
+}
+.scroller {
+    white-space: nowrap;
+    width: 100%;
+    padding: 40rpx 0;
+    box-sizing: border-box;
+}
+.scroll-item {
+    display: inline-block;
+    width: 280rpx;
+    height: 280rpx;
+    margin-right: 20rpx;
+}
+.scroll-item:last-child {
+    margin-right: 0;
+}
+/*recent*/
+.recent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.avatar {
+    width: 60rpx;
+    height: 60rpx;
+    margin-right: 12rpx;
+    border-radius: 999rpx;
+}
+.avatar:last-child {
+    margin-right: 0;
+}
+.recent-count {
+    font: 28rpx/40rpx PingFang SC;
+    color: #444;
+}
+.btn-container {
+    overflow: hidden;
+    position: fixed;
+    bottom: 12rpx;
+    left: 0;
+    right: 0;
+    margin: 0 30rpx;
+    height: 96rpx;
+    font: 500 40rpx/96rpx PingFang SC;
+    color: white;
+    text-align: center;
+    border-radius: 999rpx;
+}
+.btn {
+    height: inherit;
+    width: inherit;
+    background: #CC0000;
+}
+.btn.downloading {
+    background: #222;
+}
+.btn:active {
+    opacity: 0.8;
+}
+.process {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    height: 96rpx;
+    background: #CC0000;
+    z-index: 1;
+}
+.btn-text {
+    position: fixed;
+    bottom: 12rpx;
+    left: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.level-alert {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .5);
+    z-index: 20;
+}
+.box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    border-radius: 16rpx;
+    box-sizing: border-box;
+    padding: 110rpx 70rpx 50rpx;
+    background: white;
+}
+.box image {
+    position: absolute;
+    left: 50%;
+    top: -50rpx;
+    transform: translateX(-50%);
+    width: 110rpx;
+    height: 134rpx;
+}
+.text-01 {
+    font: 44rpx/60rpx PingFang SC;
+}
+.alert-btn {
+    font: 500 40rpx/48rpx PingFang SC;
+    color: white;
+    background: #CC0000;
+    padding: 24rpx 120rpx;
+    border-radius: 999rpx;
+    margin-top: 38rpx;
+}
+.alert-btn:active {
+    opacity: 0.8;
+}

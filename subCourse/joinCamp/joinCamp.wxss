@@ -1,0 +1,141 @@
+/* subCourse/joinCamp/joinCamp.wxss */
+.detail {
+  padding-bottom: 160rpx;
+}
+
+.detail image {
+  width: 100%;
+  vertical-align: bottom;
+}
+
+.button-line {
+  width: calc(100% - 60rpx);
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 36rpx;
+}
+
+.button-line-two {
+  width: calc(100% - 60rpx);
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 36rpx;
+}
+
+.button-line-two .join-button {
+  background: #CDCDCD;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1);
+  line-height: 96rpx;
+  text-align: center;
+  border-radius: 48rpx;
+  border: none;
+}
+
+.join {
+  height: 96rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #CC0000;
+  border-radius: 48rpx;
+}
+
+.join-one {
+  height: 96rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #00BB66;
+  border-radius: 48rpx;
+}
+
+.join-one view:first-child {
+  text-decoration: line-through;
+}
+
+.join view {
+  text-align: center;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1);
+  line-height: 36rpx;
+}
+
+.join view:first-child {
+  font-size: 28rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 28rpx;
+  padding-top: 12rpx;
+  padding-bottom: 8rpx;
+}
+
+
+.pay {
+  background: #08C063;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1);
+  line-height: 96rpx;
+  border-radius: 48rpx;
+  text-align: center;
+}
+
+.level-alert {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgba(0, 0, 0, .5);
+  z-index: 20;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  border-radius: 16rpx;
+  box-sizing: border-box;
+  padding: 110rpx 70rpx 50rpx;
+  background: white;
+}
+
+.box image {
+  position: absolute;
+  left: 50%;
+  top: -50rpx;
+  transform: translateX(-50%);
+  width: 110rpx;
+  height: 134rpx;
+}
+
+.text-01 {
+  font: 44rpx/60rpx PingFang SC;
+}
+
+.alert-btn {
+  font: 500 40rpx/48rpx PingFang SC;
+  color: white;
+  background: #CC0000;
+  padding: 24rpx 120rpx;
+  border-radius: 999rpx;
+  margin-top: 38rpx;
+}
+
+.alert-btn:active {
+  opacity: 0.8;
+}

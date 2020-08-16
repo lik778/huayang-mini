@@ -1,23 +1,9 @@
 // pages/mine/mine.js
-import {
-    getScene,
-    getUniversityCode,
-    getUserInfo,
-    getVipShow
-} from "../../api/mine/index"
-import {
-    bindWxPhoneNumber
-} from "../../api/auth/index"
-import {
-    GLOBAL_KEY
-} from '../../lib/config'
-import {
-    getLocalStorage,
-    setLocalStorage
-} from "../../utils/util"
-import {
-    checkAuth
-} from "../../utils/auth"
+import { getScene, getUniversityCode, getUserInfo, getVipShow } from "../../api/mine/index"
+import { bindWxPhoneNumber } from "../../api/auth/index"
+import { GLOBAL_KEY } from '../../lib/config'
+import { getLocalStorage, setLocalStorage } from "../../utils/util"
+import { checkAuth } from "../../utils/auth"
 
 Page({
 
@@ -207,9 +193,14 @@ Page({
     onReady: function () {},
     // 生命周期函数--监听页面显示
     onShow: function () {
+        if (typeof this.getTabBar === 'function' &&
+          this.getTabBar()) {
+            this.getTabBar().setData({
+                selected: 2
+            })
+        }
         checkAuth({
-            listenable: true,
-            ignoreFocusLogin: true
+            authPhone: true
         }).then(() => {
             this.getUserInfoData()
             this.changeScene()
@@ -237,7 +228,7 @@ Page({
     // 用户点击右上角分享
     onShareAppMessage: function () {
         return {
-            title: "花样值得买",
+            title: "花样百姓+",
             path: '/pages/index/index',
         }
     }

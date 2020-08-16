@@ -1,21 +1,9 @@
 import md5 from 'md5'
-import {
-	GLOBAL_KEY,
-	ROOT_URL,
-	SHARE_PARAMS,
-	WeChatLiveStatus
-} from '../lib/config'
-import {
-	createOrder
-} from "../api/mine/payVip"
-import {
-	getWatchLiveAuth,
-	statisticsWatchNo
-} from "../api/live/course"
+import { GLOBAL_KEY, ROOT_URL, URL, WeChatLiveStatus } from '../lib/config'
+import { createOrder } from "../api/mine/payVip"
+import { getWatchLiveAuth, statisticsWatchNo } from "../api/live/course"
 import request from "../lib/request"
-import {
-	getUserInfo
-} from "../api/mine/index"
+import { getUserInfo } from "../api/mine/index"
 
 const livePlayer = requirePlugin('live-player-plugin')
 
@@ -39,6 +27,38 @@ export const queryToken = () => {
 export const formatNumber = n => {
 	n = n.toString()
 	return n[1] ? n : '0' + n
+}
+// 购买训练营课程
+export const payCourse = function ({
+	id,
+	name
+}) {
+	// 调用获取支付凭证
+	let getPaySignParams = {
+		open_id: getLocalStorage(GLOBAL_KEY.openId),
+		product_title: name,
+		order_id: id,
+		app_id: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)).app_id
+		// app_id:"wx5705fece1e1cdc1e"
+	}
+	let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo" //商户key
+	return new Promise((resolve, reject) => {
+		request._post(URL.getPaySign, getPaySignParams).then(({
+			data,
+			code
+		}) => {
+			if (code === 0) {
+				requestPayment({
+					prepay_id: data,
+					key: mallKey
+				}).then(res => {
+					resolve(res)
+				}).catch(err => {
+					reject(err)
+				})
+			}
+		})
+	})
 }
 
 /**
@@ -413,110 +433,284 @@ export function getUserInfoData() {
 
 // 处理js   37.5 *100=3970.0000000000005
 export const parseNumber = (number, multiply = 100) => {
-	return parseFloat((number * multiply).toFixed(2));
-};
+	return parseFloat((number * multiply).toFixed(2))
+}
 
 
 // 补0操作
 export const returnFloat = (values) => {
-	let value = Math.round(parseFloat(values) * 100) / 100;
-	let xsd = value.toString().split(".");
+	let value = Math.round(parseFloat(values) * 100) / 100
+	let xsd = value.toString().split(".")
 	if (xsd.length == 1) {
-		value = value.toString() + ".00";
-		return value;
+		value = value.toString() + ".00"
+		return value
 	}
 	if (xsd.length > 1) {
 		if (xsd[1].length < 2) {
-			value = value.toString() + "0";
+			value = value.toString() + "0"
 		}
-		return value;
-	}}
+		return value
+	}
+}
+
+// 批量下载文件
+export const batchDownloadFiles = function (downloadUrls) {
+	let downloadPromiseAry = []
+	downloadUrls.forEach(url => {
+		downloadPromiseAry.push(
+			new Promise((resolve, reject) => {
+				wx.downloadFile({
+					url,
+					success(res) {
+						if (res.statusCode === 200) {
+							resolve(res.tempFilePath)
+						}
+					},
+					fail() {
+						reject()
+					}
+				})
+			})
+		)
+	})
+	return Promise.all(downloadPromiseAry)
+}
+
+// 批量保存临时文件到本地缓存文件
+export const batchSaveFiles = function (tempFiles) {
+	let cachedFiles = []
+	tempFiles.forEach((tempFilePath) => {
+		cachedFiles.push(new Promise((resolve, reject) => {
+			wx.saveFile({
+				tempFilePath,
+				success(res) {
+					resolve(res.savedFilePath)
+				},
+				fail() {
+					reject()
+				}
+			})
+		}))
+	})
+
+	return Promise.all(cachedFiles)
+}
+
+// 清空本地缓存文件
+export const batchRemoveSavedFiles = function (localFiles) {
+	let removedFiles = []
+	localFiles.forEach(filePath => {
+		removedFiles.push(new Promise((resolve, reject) => {
+			wx.removeSavedFile({
+				filePath: filePath.filePath,
+				success() {
+					resolve()
+				},
+				fail() {
+					reject()
+				}
+			})
+		}))
+	})
+
+	return Promise.all(removedFiles)
+}
+
+// 处理日历显示
+export const getTodayDate = (date) => {
+	// console.log(date)
+	let currentDate = date ? new Date(date) : new Date()
+	let timesStamp = currentDate.getTime()
+	let currenDay = currentDate.getDay()
+	let dates = []
+	let dateArr = []
+	let dateArr1 = []
+	for (let i = 0; i < 7; i++) {
+		let newDate = new Date(timesStamp + 24 * 60 * 60 * 1000 * (i - (currenDay + 6) % 7))
+		dates.push(`${newDate.getFullYear()}-${String(newDate.getMonth() + 1).padStart(2, "0")}-${String(newDate.getDate()).padStart(2, "0")}`)
+	}
+	for (let i in dates) {
+		dateArr.push({
+			id: dates[i].split("-")[2],
+			dataNum: -1
+		})
+		dateArr1.push(dates[i])
+	}
+	// changeArrIndex(dateArr, 0, dateArr.length-1)
+	return {
+		one: dateArr,
+		two: dateArr1
+	}
+}
+// 处理日期
+export const manageWeek = () => {
+	let nowDate = new Date()
+	let week = nowDate.getDay() === 0 ? 7 : nowDate.getDay()
+	let weekList = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+	if (week === 7) {
+		week = '周日'
+	} else if (week === 1) {
+		week = '周一'
+	} else if (week === 2) {
+		week = '周二'
+	} else if (week === 3) {
+		week = '周三'
+	} else if (week === 4) {
+		week = '周四'
+	} else if (week === 5) {
+		week = '周五'
+	} else if (week === 6) {
+		week = '周六'
+	}
+	return weekList
+}
+
+// 计算两个日期相差xx天
+export const countDay = (nowDate, totalDate) => {
+// nowDate当前日期，totalDate目标日期
+nowDate = nowDate.replace(/-/g, "/")
+totalDate = totalDate.replace(/-/g, "/")
+	var date1 = new Date(totalDate).getTime()
+	var date2 = new Date(nowDate).getTime()
+	let date3 = Math.ceil((date2 - date1) / (1000 * 60 * 60 * 24))
+	let date = ''
+	if (date3 === -1) {
+		// 开营前一天
+		date = 0
+	} else if (date3 === 0) {
+		// 开营当天
+		date = 1
+	} else if (date3 > 0) {
+		// 开营后面
+		date = date3 + 1
+	} else {
+		// 开营之前
+		date = -1
+	}
+	return date
+}
+
+// 计算两个日期相差xx天
+export const countDayOne = (nowDate, totalDate) => {
+	// nowDate当前日期，totalDate目标日期
+	nowDate = nowDate.replace(/-/g, "/")
+	totalDate = totalDate.replace(/-/g, "/")
+	var date1 = new Date(totalDate).getTime()
+	var date2 = new Date(nowDate).getTime()
+	let date3 = Math.ceil((date2 - date1) / (1000 * 60 * 60 * 24))
+	let date = ''
+	if (date3 === -1) {
+		// 开营前一天
+		date = 0
+	} else if (date3 === 0) {
+		// 开营当天
+		date = 1
+	} else if (date3 > 0) {
+		// 开营后面
+		date = date3 + 1
+	} else {
+		// 开营之前
+		date = -1
+	}
+	return date
+}
+
+// 调换数组两个位置
+export const changeArrIndex = (arr, index1, index2) => {
+	arr[index1] = arr.splice(index2, 1, arr[index1])[0]
+	return arr
+}
+// 设置时间显示一分钟之内显示秒，一小时以内显示分，
+export const simpleDurationSimple = (duration) => {
+	let date = ''
+	if (duration < 60) {
+		date = duration + "秒"
+	} else {
+		date = Math.floor(duration / 60) + "分钟"
+	}
+	return date
+}
+// 设置时间显示一分钟之内显示秒，一小时以内显示分，
+export const simpleDuration = (duration, type) => {
+	if (type === 's') {
+		duration = duration * 1000
+	}
+	let str = ''
+	let days = '',
+		hours = '',
+		minutes = '',
+		seconds = ''
+	let day = 24 * 60 * 60 * 1000,
+		hour = 60 * 60 * 1000,
+		minute = 60 * 1000,
+		second = 1000
+	if (duration >= day) {
+		days = Math.floor(duration / day) + '天'
+		hours = Math.floor(duration % day / hour) + '小时'
+	} else if (duration >= hour && duration < day) {
+		hours = Math.floor(duration / hour) + '小时'
+		minutes = Math.floor(duration % hour / minute) + '分钟'
+	} else if (duration > minute && duration < hour) {
+		minutes = Math.floor(duration / minute) + '分钟'
+		seconds = Math.floor(duration % minute / second) + '秒'
+	} else if (duration < minute) {
+		seconds = Math.floor(duration / second) + '秒'
+	}
+	return days + hours + minutes + seconds
+}
 
 /**
- * 打点 - 用户点击事件
- * @param component 交互组件名称
- * @param click_type 跳转类型
+ * 计算训练时长
+ * @param times
  */
-export function dotByUserClick({component, click_type}) {
-	getApp().tracker.evt('user_click', {
-		tracktype: SHARE_PARAMS.trackType.event,
-		component,
-		click_type
+export const calculateExerciseTime = (times) => {
+	times = +times
+	let minutes = times / 60 | 0
+	let seconds = times % 60
+	if (times >= 60) {
+		return minutes
+	} else {
+		return seconds
+	}
+}
+
+/**
+ * 查询微信授权状态
+ * @param authKey
+ * @returns {Promise<unknown>}
+ */
+export const queryWxAuth = function (authKey = WX_AUTH_TYPE.userInfo) {
+	return new Promise((resolve, reject) => {
+		wxGetSetting(authKey).then((authResult = {}) => {
+			if (!authResult[authKey]) {
+				wx.authorize({
+					scope: authKey,
+					success() {
+						// 已同意
+						resolve()
+					},
+					fail() {
+						// 未同意
+						reject()
+					}
+				})
+			}
+		})
 	})
 }
 
 /**
- * 打点 - 用户分享
- * @param method 分享的途径
+ * 微信授权记录检查
  */
-export function dotByShare({method}) {
-	getApp().tracker.evt('app_share', {
-		tracktype: SHARE_PARAMS.trackType.event,
-		method
+export const wxGetSetting = function (authKey) {
+	return new Promise((resolve, reject) => {
+		wx.getSetting({
+			success({authSetting}) {
+				resolve(authSetting[authKey])
+			},
+			fail(e) {
+				reject(e)
+			}
+		})
 	})
 }
-
-/**
- * 打点 - 用户分享结果
- * @param method 分享的途径
- * @param status 分享行为的结果
- */
-export function dotByShareResult({method, status}) {
-	getApp().tracker.evt('app_share_result', {
-		tracktype: SHARE_PARAMS.trackType.event,
-		method,
-		status
-	})
-}
-
-/**
- * 打点 - 通过其他人分享进入
- * @param share_from 邀请者的 OpenID
- */
-export function dotByShareEnter({share_from}) {
-	getApp().tracker.evt('share_enter', {
-		tracktype: SHARE_PARAMS.trackType.event,
-		share_from,
-	})
-}
-
-/**
- * 打点 - 频道打点
- */
-export function dotByChannel() {
-	getApp().tracker.evt('channel', {
-		tracktype: SHARE_PARAMS.trackType.event
-	})
-}
-
-/**
- * 打点 - 用户输入
- * @param input_form_type 输入input的名称
- */
-export function dotByUserInputCollect({input_form_type}) {
-	getApp().tracker.evt('user_input_collect', {
-		tracktype: SHARE_PARAMS.trackType.event,
-		input_form_type
-	})
-}
-
-/**
- * 打点 - 小程序启动打点
- */
-export function dotByAppStart() {
-	getApp().tracker.evt('app_start')
-}
-
-/**
- * 打点 - 用户微信基础信息授权
- * @param sex
- * @param age
- * @param province
- * @param city
- */
-export function dotByUserWxAuth({sex, age, province, city}) {
-	getApp().tracker.evt('user_info', {
-		sex, age, province, city
-	})
-}
-

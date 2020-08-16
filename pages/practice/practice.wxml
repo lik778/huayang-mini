@@ -1,0 +1,122 @@
+<view class="practice">
+    <swiper class="banner" wx:if="{{bannerList.length > 0}}" indicator-dots="{{false}}" circular autoplay bindchange="changeSwiperIndex" interval="{{3000}}" duration="{{500}}">
+        <swiper-item class="swiper-item" bindtap="jumpToLink" data-item="{{item}}" wx:for="{{bannerList}}" wx:key="index">
+            <image mode="aspectFill" src="{{item.pic_url}}"></image>
+        </swiper-item>
+    </swiper>
+    <view class="swiper-dot" wx:if="{{bannerList.length > 1}}">
+        <view wx:for="{{bannerList}}" wx:key="index" class="{{currentBannerItem===index?'active swiper-dot-item':'swiper-dot-item'}}"></view>
+    </view>
+
+    <view class="support-layer">
+        <view class="title">练习时长</view>
+        <view class="exercise-time">
+            <text class="time">{{exerciseTime || 0}}</text>
+            <text class="unit">{{userHaveClassesInfo.study_time >= 60 ? "分钟" : "秒"}}</text>
+        </view>
+    </view>
+
+    <!--  本周练习进度  -->
+    <view class="support-layer">
+        <view class="title">
+            <text>本周练习</text>
+            <text class="manage" wx:if="{{userJoinedClassesList.length > 0 || bootCampList.length > 0}}" bind:tap="goToPracticeManage">课程管理</text>
+        </view>
+        <view class="week-line">
+            <view class="day-container" wx:for="{{weeklyLog}}" wx:key="index">
+                <view>{{item.dateText}}</view>
+                <image class="day-icon" mode="aspectFit" src="{{TagImageUrls[item.status]}}"></image>
+            </view>
+        </view>
+    </view>
+
+    <!--  今日练习计划  -->
+    <view class="today-boot-camp-plan">
+        <view class="boot-camp" wx:for="{{bootCampList}}" wx:key="index">
+            <block wx:if="{{item.content.length > 0}}">
+                <view class="boot-camp-name" bind:tap="goToBootCamp" data-bootCampId="{{item.bootCampId}}">
+                    <text>{{item.name}}</text>
+                    <view class="all-boot-camp">全部</view>
+                </view>
+                <view class="segmentation"></view>
+                <view class="boot-camp-content">
+                    <view class="boot-camp-course" wx:for="{{item.content}}" wx:for-item="contentItem" wx:for-index="contentIndex" wx:key="contentIndex">
+                        <view class="boot-camp-info">
+                            <view class="icon-box">
+                                <image mode="aspectFit" class="icon-{{contentItem.type}}" src="{{CourseTypeImage[contentItem.type]}}"></image>
+                            </view>
+                            <view>{{contentItem.name || contentItem.title}}</view>
+                        </view>
+                        <view class="boot-camp-start" bind:tap="handleExerciseBtnTap" data-item="{{contentItem}}" data-parent="{{item}}">{{contentItem.type==='kecheng'?'练习':'前往'}}</view>
+                    </view>
+                </view>
+            </block>
+            <block wx:if="{{item.content.length === 0}}">
+                <view class="boot-camp-name" bind:tap="goToBootCamp" data-bootCampId="{{item.bootCampId}}">
+                    <text>{{item.name}}</text>
+                    <view class="all-boot-camp">全部</view>
+                </view>
+                <view class="segmentation"></view>
+                <view class="no-exercise" wx:if="{{item.status !== 3 }}">
+                    <image mode="aspectFit" class="no-exercise-image" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596786073iGFqSK.jpg"></image>
+                    <text>今天没课，好好放松一下吧! </text>
+                </view>
+                <view class="failure" wx:else>
+                    <text>抱歉，您的训练营已到期，您可以：</text>
+                    <view class="failure-btn">
+                        <view class="choose-other" bind:tap="goToDiscovery">选择其他</view>
+                        <view class="choose-restart" bind:tap="goToBootCamp" data-bootCampId="{{item.bootCampId}}">重新开始</view>
+                    </view>
+                </view>
+            </block>
+        </view>
+        <view class="boot-camp {{bootCampList.length === 0 ? 'boot-camp-no-shadow' : '' }}" wx:if="{{bootCampList.length === 0}}">
+            <view class="no-camp">
+                <text>快去挑选感兴趣的训练营吧</text>
+                <text class="find-camp-btn" bind:tap="goToDiscovery">去挑选</text>
+            </view>
+        </view>
+    </view>
+
+    <!--  推荐课程  -->
+    <view class="support-layer" wx:if="{{userJoinedClassesList.length <= 0}}">
+        <view class="title recommend-title">推荐课程</view>
+    </view>
+
+    <!--  课程练习列表  -->
+    <view class="today-practice-list">
+        <view class="practice-item" wx:if="{{userJoinedClassesList.length > 0}}" wx:for="{{userJoinedClassesList}}" wx:key="index" bind:tap="handleCourseTap" data-id="{{item.kecheng.id}}" style="background-image:url('{{item.kecheng.cover_pic}}')">
+            <view class="practice-name limit-one-line">{{item.kecheng.name}}</view>
+            <view class="practice-sub">
+                <view class="practice-desc">
+                    <text>{{CourseLevels[item.kecheng.level]}}</text>
+                    <text>{{item.kecheng.exerciseTime}}{{item.kecheng.duration >= 60 ? "分钟" : "秒"}}</text>
+                    <text>{{item.kecheng.meta_count}}个动作</text>
+                </view>
+                <view class="join-now">立即练习</view>
+            </view>
+        </view>
+        <view class="practice-item" wx:if="{{userJoinedClassesList.length===0}}" wx:for="{{recommendList}}" wx:key="index" bind:tap="handleCourseTap" data-id="{{item.id}}" style="background-image:url('{{item.cover_pic}}')">
+            <view class="practice-name limit-one-line">{{item.name}}</view>
+            <view class="practice-sub">
+                <view class="practice-desc">
+                    <text>{{CourseLevels[item.level]}}</text>
+                    <text>{{item.exerciseTime}}{{item.duration >= 60 ? "分钟" : "秒"}}</text>
+                    <text>{{item.meta_count}}个动作</text>
+                </view>
+                <view class="join-now">立即练习</view>
+            </view>
+        </view>
+    </view>
+
+    <!--  提示  -->
+    <view class="tip-mask" wx:if="{{didShowTipsLay}}" bind:tap="hiddenTipMask">
+        <view class="tip-line">
+            <text>点击</text>
+            <image mode="aspectFit" class="tip-dot" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596799557wCpyax.jpg"></image>
+            <text>选择“浮窗”</text>
+            <image mode="aspectFit" class="tip-arrow" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596799587Ftwaoq.jpg"></image>
+        </view>
+        <view class="tip-line tip-text-02">收藏好课，每日练习找得到</view>
+    </view>
+</view>

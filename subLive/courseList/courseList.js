@@ -113,7 +113,7 @@ Page({
 	// 跳转去直播间
 	jumpToLive(e) {
 		let item = e.currentTarget.dataset.item // 直播间信息
-		checkAuth({listenable: true, ignoreFocusLogin: true}).then(() => {
+		checkAuth({authPhone: true}).then(() => {
 			// 判断是否是会员/是否入学
 			checkIdentity({roomId: item.num, link: item.link, zhiboRoomId: item.id})
 				.then((callbackString) => {
@@ -260,7 +260,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		checkAuth({listenable: true})
+		checkAuth()
 	},
 
 	/**
@@ -296,7 +296,7 @@ Page({
 	 */
 	onShareAppMessage: function () {
 		return {
-			title: "花样大学",
+			title: "花样百姓+",
 			path: '/subLive/courseList/courseList?id=' + this.data.daxueId,
 		}
 	}

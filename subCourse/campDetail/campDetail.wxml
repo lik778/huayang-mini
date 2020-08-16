@@ -1,0 +1,84 @@
+<!--subCourse/campDetail/campDetail.wxml-->
+<view class="campdetail" wx:if="{{videoHeight!==0}}">
+	<!-- navibar栏 -->
+	<view class="navigation" style="padding-top:{{statusHeight+44}}px;background:#5F5F5F;">
+		<naviBar title="我的课程表" color="#5F5F5F" titleColor="#fff" forceGoBackIndex="{{backIndex}}"></naviBar>
+	</view>
+	<!-- 背景层 -->
+	<view class="bg">
+		<view class="bg-title">{{campDetailData.name}}</view>
+		<view class="bg-subtitle">第 {{campDetailData.nowDay}}/{{campDetailData.period}} 天</view>
+	</view>
+	<!-- 主体-->
+	<view class="main">
+		<!-- 日期栏 -->
+		<view class="date">
+			<view class="week-line">
+				<text wx:for="{{dateObj.weekList}}" wx:key="index">{{item}}</text>
+			</view>
+			<view class="date-line">
+				<view bindtap="toCureentDay" data-item='{{item}}' wx:for="{{dateObj.dateList.date}}" wx:key="index" class="{{item.dataNum<0?'':'sub-active'}}">
+					<text style="{{cureentDay==item.id?styleObj.all:''}}">{{item.id}}</text>
+					<image wx:if="{{cureentDay==item.id}}" src="/assets/images/common/current-arrow.png"></image>
+				</view>
+			</view>
+		</view>
+		<view class="bg-color"></view>
+		<!-- 课程内容 -->
+		<view class="camp-container">
+			<view class="video" wx:if="{{videoSrc!==''}}" style="{{videoHeight}}">
+				<view class="video-cover" wx-if="{{showLock}}" style="{{videoHeight}}">
+					<image  src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597224125GjluUS.jpg"></image>
+				</view>
+				<view  style="{{videoHeight}}" class="video-cover" bindtap="playVideo" wx-if="{{showVideoCover&&!showLock}}">
+					<image src="/assets/images/common/play.png"></image>
+				</view>
+				<video id="myVideo" bindplay="hideCover" src="{{videoSrc}}" poster="{{posterSrc}}" style="{{videoHeight}}" controls="{{showLock?false:true}}" show-center-play-btn="{{false}}" bindpause="pauseVideo" bindended="initVideo"></video>
+			</view>
+			<view class="course-list" wx:if="{{courseList.content.length>0}}">
+				<view class="course-item" wx:for="{{courseList.content}}" wx:key="index">
+					<view class="course-item-left" wx:if="{{!showLock}}">
+						<image src="{{srcObj.course}}" wx:if="{{item.type==='kecheng'}}"></image>
+						<image src="{{srcObj.video}}" wx:if="{{item.type==='video'}}"></image>
+						<image src="{{srcObj.product}}" wx:if="{{item.type==='product'}}"></image>
+						<image src="{{srcObj.url}}" wx:if="{{item.type==='url'}}"></image>
+					</view>
+					<view class="course-item-left" wx:else>
+						<image src="{{srcObj.lock}}" class="lock-icon"></image>
+					</view>
+					<view class="course-item-right">
+						<view class="course-item-right-left">
+							<text>{{item.name?item.name:item.title}}</text>
+							<text wx:if="{{item.type==='kecheng'}}" class="course-time">{{item.duration}}</text>
+						</view>
+						<view class="course-item-right-right" wx:if="{{!showLock}}">
+							<text wx:if="{{item.type==='kecheng'||item.type==='video'}}" bindtap="toDetail" data-item="{{item}}">练习</text>
+							<text wx:else bindtap="toProduct" data-item="{{item}}">前往</text>
+						</view>
+						<view class="course-item-right-right" wx:else>
+							<text class="canshow">练习</text>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<!-- 按钮层 -->
+	<view class="bottom-bg"></view>
+	<view class="bottom">
+		<view class="button" bindtap="toTeam">
+			<image src='/assets/images/common/wechat.png'></image>
+			<text>加入互动交流群</text>
+		</view>
+	</view>
+	<!-- 遮罩层 -->
+	<view class="cover-bg" wx:if="{{showCover}}" bindtap="closeCover">
+		<view class="cover-bg-box">
+			<view class="cover-text">
+				<view>点击下方按钮</view>
+				<view>专属客服服务</view>
+			</view>
+			<image src="/assets/images/common/long-down-arrow.png"></image>
+		</view>
+	</view>
+</view>

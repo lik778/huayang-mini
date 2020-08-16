@@ -1,0 +1,8 @@
+<cover-view class="action-nav-bar" style="padding-top:{{statusBarHeight}}px;background:{{navbarColor === '' ? '#fff' : navbarColor}};">
+    <cover-view class="back-module" bind:tap="checkoutMute">
+        <cover-view class="back-icon" style="background:{{navbarColor === '' ? '#fff' : navbarColor}};" wx:if="{{hideIcon}}">
+            <cover-image bind:tap="goBack" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597131543zKwtZa.jpg"></cover-image>
+        </cover-view>
+    </cover-view>
+    <cover-view class="title" style="color:{{titleColor}}">{{title}}</cover-view>
+</cover-view>

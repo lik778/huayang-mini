@@ -1,0 +1,101 @@
+<!--发现主页-->
+<view class="discovery" wx:if="{{canShow}}">
+	<!--  模块一 -->
+	<!-- <view class="module-one" style="padding-bottom:130px"> -->
+	<view class="{{showModelBanner?'module-one':'module-one hidden'}}">
+		<!-- banner 滚动区域 -->
+		<view class="swiper-box" wx:if="{{bannerList.length!==0}}">
+			<swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}" duration="{{500}}">
+				<swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="joinCampFrombanner" data-item="{{item}}">
+					<view class="swiper-cover"></view>
+					<image src="{{item.pic_url}}"></image>
+				</swiper-item>
+			</swiper>
+			<view class="swiper-dot">
+				<view wx:for="{{bannerList}}" wx:key="index" class="{{cureent===index?'active swiper-dot-item':'swiper-dot-item'}}"></view>
+			</view>
+		</view>
+		<!-- 训练营 -->
+		<view class="camp" wx:if="{{campList.length!==0}}">
+			<view class="camp-title">训练营</view>
+			<view class="camp-list">
+				<view class="camp-item" wx:for="{{campList}}" wx:key="index" bindtap="joinCamp" data-index="{{item}}">
+					<image src="{{item.cover_pic}}"></image>
+					<view class="camp-item-main">
+						<view class="camp-item-title">{{item.name}}</view>
+						<view class="camp-subtitle">{{item.summary}}</view>
+					</view>
+					<view class="camp-button">立即参加</view>
+				</view>
+			</view>
+		</view>
+		<!-- 走秀课 -->
+		<view class="catwalk" wx:if="{{courseList.length!==0}}">
+			<view class="catwalk-title">走秀课</view>
+			<view class="catwalk-list">
+				<view class="catwalk-item" wx:for="{{courseList}}" wx:key="index" bindtap="toCourse" data-item="{{item}}">
+					<image src="{{item.cover_pic}}"></image>
+					<view class="atwalk-item-cover"></view>
+					<view class="catwalk-item-title">{{item.name}}</view>
+					<view class="catwalk-item-subtitle">
+						<text wx:if="{{item.level===1}}">初级</text>
+						<text wx:if="{{item.level===2}}">中级</text>
+						<text wx:if="{{item.level===3}}">高级</text>
+						<text>{{item.duration}}</text>
+						<text>{{item.listNum}}个动作</text>
+					</view>
+					<view class="catwalk-item-button">立即参加</view>
+				</view>
+			</view>
+		</view>
+		<!-- 时尚课 -->
+		<view class="fashion" wx:if="{{false}}">
+			<view class="fashion-title">时尚课</view>
+			<view class="fashion-list">
+				<view class="fashion-item">
+					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596007646ojVZsT.jpg"></image>
+					<view class="fashion-item-right">
+						<view class="fashion-item-right-top">明星美妆师精心打造专属美妆入门课，全面解决50+人群常见妆容问题！</view>
+						<view class="fashion-item-right-bottom">¥99.00</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<!-- 模块二 -->
+	<view class="module-two" wx:if="{{showModelBanner}}">
+		<!-- 大赛 -->
+		<view class="competition">
+			<view class="competition-title">大赛</view>
+			<view class="competition-list">
+				<view class="competition-item" bindtap="toModelCompetition">
+					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596007833DKzGtL.jpg"></image>
+					<view class="competition-item-title">2020花样时尚模特大赛</view>
+				</view>
+				<view class="competition-item" style="margin-top:40rpx" bindtap="toModelCompetition">
+					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596007833DKzGtL.jpg"></image>
+					<view class="competition-item-title">2020花样时尚模特大赛</view>
+				</view>
+			</view>
+		</view>
+		<!-- 活动 -->
+		<view class="activity" wx:if="{{activityList.length!==0&&activityList!==null}}">
+			<view class="activity-title">活动</view>
+			<view class="activity-list">
+				<view class="activity-item" wx:for="{{activityList}}" wx:key="index">
+					<image src="{{item.cover_url}}"></image>
+					<view class="activity-item-desc">
+						<view class="activity-item-desc-title">{{item.title}}</view>
+						<view class="activity-item-desc-time">{{item.start_time}}</view>
+						<view class="activity-item-desc-area">{{item.address}}</view>
+						<view class="activity-item-desc-price" wx:if="{{item.discount_price!==-1}}">
+							<text>¥{{item.price}}</text>
+							<text>¥{{item.discount_price}}</text>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+
+</view>

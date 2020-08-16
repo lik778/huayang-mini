@@ -1,22 +1,19 @@
-/* components/navibar.wxss */
 .navibar {
   display: flex;
   align-items: center;
   height: 44px;
   line-height: 44px;
-  position: relative;
   position: fixed;
   width: 100vw;
   left: 0;
+  right: 0;
   top: 0;
-  /* background: #fff; */
   z-index: 2000;
 }
 
 .back-module {
   display: flex;
   align-items: center;
-  /* width: 92px; */
   height: 30px;
   border: 0.5px solid #DDDDDD;
   border-radius: 999rpx;

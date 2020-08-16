@@ -1,12 +1,22 @@
 //app.js
-import { getLocalStorage, setLocalStorage } from './utils/util'
+import {
+	batchDownloadFiles,
+	batchRemoveSavedFiles,
+	batchSaveFiles,
+	getLocalStorage,
+	setLocalStorage
+} from './utils/util'
 import { GLOBAL_KEY } from './lib/config'
-import { BxTracker } from './anka-tracker.min.js'
-import trackerConfig from './anka.config'
-const Tracker = BxTracker.generateTrackerInstance(trackerConfig)
+import { voices_ary } from "./lib/voices"
 
 App({
-	onLaunch: function () {},
+	onLaunch: function () {
+		wx.loadFontFace({
+			global: true,
+			family: 'Condensed',
+			source: 'url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/font/DIN%20Condensed%20Bold.ttf")',
+		})
+	},
 	onShow(options) {
 		// 记录设备信息，保证进入详情页时可以获取到statusHeight自定义navibar
 		if (!getLocalStorage(GLOBAL_KEY.systemParams)) {
@@ -16,17 +26,26 @@ App({
 				},
 			})
 		}
-	},
-	// 初始化打点sdk
-	initialPointMachine() {
-		let openId = getLocalStorage(GLOBAL_KEY.openId)
-		if (!openId || this.initialize) return false
-		Tracker.asyncInitWithCommonData({
-			open_id: openId,
-			union_id: ''
-		}).then(() => {
-			this.initialize = true
-			console.log('初始化成功，开始执行打点任务')
+
+		// 将"口令"包文件至本地缓存文件
+		wx.getSavedFileList({
+			success(res) {
+				if (res.errMsg === "getSavedFileList:ok") {
+					console.log('savedFilesSize = ' + res.fileList.length);
+					// return
+					if (res.fileList.length !== 13) {
+						// 清理所有本地缓存文件
+						batchRemoveSavedFiles(res.fileList).then(() => {
+							// 批量下载"口令"包
+							batchDownloadFiles(voices_ary).then((response) => {
+								batchSaveFiles(response).then((ary) => {
+									console.log(ary);
+								})
+							})
+						})
+					}
+				}
+			}
 		})
 	},
 	onUnload() {},
@@ -36,5 +55,7 @@ App({
 	},
 	globalData: {
 		didSendRemindWithUserId: false, // 是否携带userId调用过弹窗接口
+		super_user_id: 0, // 上级邀请人id
+		source: "" // 用户场景来源
 	}
 })
