@@ -34,7 +34,7 @@ Page({
     buttonType: 1,
     lock: true,
     campDetailData: {},
-    timeJoin:'',
+    timeJoin: '',
     backIndex: false
   },
   // 获取训练营详情
@@ -183,8 +183,11 @@ Page({
       traincamp_id: id
     }).then(res => {
       console.log(res, 100)
-      if (res.length === 0 || res.status === 2 || res.id) {
-        this.getCampDetail(id)
+      if (res.id) {
+        wx.redirectTo({
+          url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
+        })
+      } else {
         if (res.status === 2) {
           // 代表是已经加入过放弃的
           let pushTime = res.date.split("-")[1] + "月" + res.date.split("-")[2] + "日"
@@ -193,11 +196,9 @@ Page({
             hasAllTime: res.date,
             timeJoin: pushTime
           })
+        } else {
+          this.getCampDetail(id)
         }
-      } else {
-        wx.redirectTo({
-          url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
-        })
       }
     })
   },
