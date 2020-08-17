@@ -37,6 +37,7 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
+		console.error(options)
 		let {parentBootCampId = 0, courseId, source = '', formCampDetail, invite_user_id} = options
 		// 记录分享人身份
 		getApp().globalData.super_user_id = invite_user_id

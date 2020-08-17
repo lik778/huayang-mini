@@ -30,9 +30,9 @@ export const formatNumber = n => {
 }
 // 购买训练营课程
 export const payCourse = function ({
-	id,
-	name
-}) {
+																		 id,
+																		 name
+																	 }) {
 	// 调用获取支付凭证
 	let getPaySignParams = {
 		open_id: getLocalStorage(GLOBAL_KEY.openId),
@@ -44,9 +44,9 @@ export const payCourse = function ({
 	let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo" //商户key
 	return new Promise((resolve, reject) => {
 		request._post(URL.getPaySign, getPaySignParams).then(({
-			data,
-			code
-		}) => {
+																														data,
+																														code
+																													}) => {
 			if (code === 0) {
 				requestPayment({
 					prepay_id: data,
@@ -66,8 +66,8 @@ export const payCourse = function ({
  * @returns
  */
 export const payVip = function ({
-	id
-}) {
+																	id
+																}) {
 	let createOrderParmas = {
 		scene: "zhide_vip",
 		recommend_user_id: id || "",
@@ -302,11 +302,11 @@ export const getSchedule = async function (roomIds = []) {
 
 // 判断是否是会员/是否入学
 export const checkIdentity = function ({
-	roomId,
-	link,
-	zhiboRoomId,
-	customParams = {}
-}) {
+																				 roomId,
+																				 link,
+																				 zhiboRoomId,
+																				 customParams = {}
+																			 }) {
 	const userId = getLocalStorage(GLOBAL_KEY.userId)
 	return new Promise((resolve, reject) => {
 		if (userId == null) {
@@ -314,9 +314,9 @@ export const checkIdentity = function ({
 		} else {
 			// 获取直播权限
 			getWatchLiveAuth({
-					room_id: zhiboRoomId,
-					user_id: userId
-				})
+				room_id: zhiboRoomId,
+				user_id: userId
+			})
 				.then(res => {
 					if (res === 'vip') {
 						// 非会员，跳往花样汇
@@ -361,8 +361,8 @@ export const checkIdentity = function ({
 function queryLiveStatus(roomId) {
 	return new Promise((resolve, reject) => {
 		livePlayer.getLiveStatus({
-				room_id: roomId
-			})
+			room_id: roomId
+		})
 			.then(response => {
 				resolve(response)
 			})
@@ -568,8 +568,8 @@ export const manageWeek = () => {
 // 计算两个日期相差xx天
 export const countDay = (nowDate, totalDate) => {
 // nowDate当前日期，totalDate目标日期
-nowDate = nowDate.replace(/-/g, "/")
-totalDate = totalDate.replace(/-/g, "/")
+	nowDate = nowDate.replace(/-/g, "/")
+	totalDate = totalDate.replace(/-/g, "/")
 	var date1 = new Date(totalDate).getTime()
 	var date2 = new Date(nowDate).getTime()
 	let date3 = Math.ceil((date2 - date1) / (1000 * 60 * 60 * 24))
@@ -713,4 +713,39 @@ export const wxGetSetting = function (authKey) {
 			}
 		})
 	})
+}
+
+/**
+ * 检查字符长度
+ * @param string
+ */
+export const calcStringLen = function (string) {
+	let strlen = 0
+	for (let i = 0; i < string.length; i++) {
+		if (string.charCodeAt(i) > 255)
+			strlen += 2
+		else
+			strlen++
+	}
+	return strlen
+}
+
+/**
+ * 截取指定长度字符
+ */
+export const splitTargetNoString = (str, len) => {
+	let regexp = /[^\x00-\xff]/g// 正在表达式匹配中文
+	// 当字符串字节长度小于指定的字节长度时
+	if (str.replace(regexp, "aa").length <= len) {
+		return str
+	}
+	// 假设指定长度内都是中文
+	let m = Math.floor(len / 2)
+	for (let i = m, j = str.length; i < j; i++) {
+		// 当截取字符串字节长度满足指定的字节长度
+		if (str.substring(0, i).replace(regexp, "aa").length >= len) {
+			return str.substring(0, i)
+		}
+	}
+	return str
 }

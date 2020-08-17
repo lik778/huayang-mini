@@ -1,5 +1,5 @@
 // subCourse/actionPost/actionPost.js
-import { $notNull, getLocalStorage, queryWxAuth, toast } from "../../utils/util"
+import { $notNull, calcStringLen, getLocalStorage, queryWxAuth, splitTargetNoString, toast } from "../../utils/util"
 import { GLOBAL_KEY, WX_AUTH_TYPE } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import { increaseExp, queryPunchCardBg, queryPunchCardQrCode, queryUserHaveClassesInfo } from "../../api/course/index"
@@ -221,7 +221,8 @@ Page({
 		// 头像
 		this.drawBorderCircle(ctx, avatarImage, 49, 366, 30)
 		// 昵称
-		let nickname = this.data.postData.nickname.length > 7 ? `${this.data.postData.nickname.slice(0, 7)}..` : this.data.postData.nickname
+		let name = this.data.postData.nickname
+		let nickname = calcStringLen(name) > 14 ? `${splitTargetNoString(name, 13)}..` : name
 		ctx.font = `${18}px PingFang SC`
 		this.drawName(ctx, nickname, 18, 94, 376, "black")
 		// 训练参数
