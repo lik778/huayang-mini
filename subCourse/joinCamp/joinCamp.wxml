@@ -8,13 +8,15 @@
 		<image src="{{item}}" wx:for="{{campDetailData.desc}}" mode="widthFix" wx:key="index"></image>
 	</view>
 	<view class="button-line" wx:if="{{buttonType===1}}">
-		<view bindtap="joinCamp" wx:if="{{campDetailData.discount_price<0&&campDetailData.price>0}}" class="pay">立即加入
+		<view bindtap="joinCamp" wx:if="{{campDetailData.discount_price<0&&campDetailData.price>0&&!userInfo.is_zhide_vip}}"
+			class="pay">立即加入
 			¥{{campDetailData.price/100}}</view>
-		<view class="join join-one" wx:if="{{campDetailData.discount_price>0}}">
+		<view class="join join-one" wx:if="{{campDetailData.discount_price>0&&!userInfo.is_zhide_vip}}" bindtap="joinCamp">
 			<view>原价 ¥{{campDetailData.price/100}}</view>
 			<view>立即加入 ¥{{campDetailData.discount_price/100}}</view>
 		</view>
-		<view bindtap="joinCamp" class="join" wx:if="{{campDetailData.discount_price==0||campDetailData.price==0}}">
+		<view bindtap="joinCamp" class="join"
+			wx:if="{{campDetailData.discount_price==0||campDetailData.price==0||userInfo.is_zhide_vip}}">
 			<view>({{hasJoinAll ?timeJoin : joinTime}}开营)</view>
 			<view>立即加入</view>
 		</view>
