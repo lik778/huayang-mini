@@ -18,10 +18,6 @@
 
     <!--  本周练习进度  -->
     <view class="support-layer">
-        <view class="title">
-            <text>本周练习</text>
-            <text class="manage" wx:if="{{userJoinedClassesList.length > 0 || bootCampList.length > 0}}" bind:tap="goToPracticeManage">课程管理</text>
-        </view>
         <view class="week-line">
             <view class="day-container" wx:for="{{weeklyLog}}" wx:key="index">
                 <view>{{item.dateText}}</view>
@@ -31,12 +27,18 @@
     </view>
 
     <!--  今日练习计划  -->
+    <view class="support-layer">
+        <view class="title">
+            <text>我练习的课程</text>
+            <text class="manage" wx:if="{{userJoinedClassesList.length > 0 || bootCampList.length > 0}}" bind:tap="goToPracticeManage">管理课程</text>
+        </view>
+    </view>
     <view class="today-boot-camp-plan">
         <view class="boot-camp" wx:for="{{bootCampList}}" wx:key="index">
             <block wx:if="{{item.content.length > 0}}">
-                <view class="boot-camp-name" bind:tap="goToBootCamp" data-bootCampId="{{item.bootCampId}}">
+                <view class="boot-camp-name" bind:tap="goToBootCamp" data-item="{{item}}">
                     <text>{{item.name}}</text>
-                    <view class="all-boot-camp">全部</view>
+                    <view class="all-boot-camp" wx:if="{{item.status !== 3}}">全部</view>
                 </view>
                 <view class="segmentation"></view>
                 <view class="boot-camp-content">
@@ -52,12 +54,12 @@
                 </view>
             </block>
             <block wx:if="{{item.content.length === 0}}">
-                <view class="boot-camp-name" bind:tap="goToBootCamp" data-bootCampId="{{item.bootCampId}}">
+                <view class="boot-camp-name" bind:tap="goToBootCamp" data-item="{{item}}">
                     <text>{{item.name}}</text>
-                    <view class="all-boot-camp">全部</view>
+                    <view class="all-boot-camp" wx:if="{{item.status !== 3}}">全部</view>
                 </view>
                 <view class="segmentation"></view>
-                <view class="no-exercise" wx:if="{{item.status !== 3 }}">
+                <view class="no-exercise" wx:if="{{item.status !== 3}}">
                     <image mode="aspectFit" class="no-exercise-image" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596786073iGFqSK.jpg"></image>
                     <text>今天没课，好好放松一下吧! </text>
                 </view>
