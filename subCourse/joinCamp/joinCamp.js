@@ -23,7 +23,8 @@ Page({
     buttonType: 1,
     lock: true,
     campDetailData: {},
-    timeJoin:''
+    timeJoin:'',
+    backIndex: false
   },
   // 获取训练营详情
   getCampDetail(id) {
@@ -198,6 +199,11 @@ Page({
     // 记录分享人身份
     getApp().globalData.super_user_id = options.invite_user_id
     getApp().globalData.source = options.source
+
+    this.setData({
+      backIndex: !!options.share
+    })
+
     checkAuth({
       authPhone: true,
       redirectPath: `/subCourse/joinCamp/joinCamp$id#${options.id}`,
