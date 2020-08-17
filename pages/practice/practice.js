@@ -237,6 +237,12 @@ Page({
 			})
 		}
 	},
+	restartToBootCamp(e) {
+		let {bootCampId} = e.currentTarget.dataset.item
+		wx.navigateTo({
+			url: "/subCourse/joinCamp/joinCamp?id=" + bootCampId
+		})
+	},
 	// 发现页
 	goToDiscovery() {
 		bxPoint("parctice_choose", {}, false)
