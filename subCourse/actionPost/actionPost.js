@@ -256,7 +256,7 @@ Page({
 				if (this.data._invokeSaveToLocalAction) {
 					this.saveToLocal()
 				}
-			}, 300)
+			}, 500)
 		})
 	},
 	/**
