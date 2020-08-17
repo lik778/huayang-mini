@@ -1,9 +1,10 @@
 .practice-detail {
-    padding: 0 30rpx 128rpx;
+    padding: 0 0 128rpx;
 }
 /*intro*/
 .intro {
     margin-bottom: 100rpx;
+    padding: 0 30rpx;
 }
 .course-name {
     display: flex;
@@ -53,6 +54,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 30rpx;
 }
 .preview-layer-01 {
     font: 52rpx/52rpx PingFang SC;
@@ -72,14 +74,18 @@
     height: 280rpx;
     margin-right: 20rpx;
 }
+.scroll-item:first-child {
+    margin-left: 30rpx;
+}
 .scroll-item:last-child {
-    margin-right: 0;
+    margin-right: 30rpx;
 }
 /*recent*/
 .recent {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 30rpx;
 }
 .avatar {
     width: 60rpx;

@@ -141,5 +141,5 @@
 }
 #canvas-order {
     position: absolute;
-    left: 300%;
+    /*left: 300%;*/
 }
