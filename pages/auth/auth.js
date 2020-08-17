@@ -133,7 +133,9 @@ Page({
 			redirectPath,
 			redirectType
 		})
-		getApp().globalData.super_user_id = invite_user_id
+		if (invite_user_id) {
+			getApp().globalData.super_user_id = invite_user_id
+		}
 		if (source) {
 			getApp().globalData.source = source
 		}

@@ -40,7 +40,9 @@ Page({
 		console.log(`source = ${options.source}`)
 		let {parentBootCampId = 0, courseId, source = '', formCampDetail, invite_user_id} = options
 		// 记录分享人身份
-		getApp().globalData.super_user_id = invite_user_id
+		if (invite_user_id) {
+			getApp().globalData.super_user_id = invite_user_id
+		}
 		if (source) {
 			getApp().globalData.source = source
 		}

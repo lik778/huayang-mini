@@ -196,7 +196,9 @@ Page({
    */
   onLoad: function (options) {
     // 记录分享人身份
-    getApp().globalData.super_user_id = options.invite_user_id
+    if (options.invite_user_id) {
+      getApp().globalData.super_user_id = options.invite_user_id
+    }
     if (options.source) {
       getApp().globalData.source = options.source
     }
