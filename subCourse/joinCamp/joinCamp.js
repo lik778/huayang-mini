@@ -1,8 +1,19 @@
 // 加入训练营
-import { GLOBAL_KEY } from "../../lib/config"
-import { checkAuth } from "../../utils/auth"
-import { getCampDetail, getHasJoinCamp, joinCamp } from "../../api/course/index"
-import { getLocalStorage, payCourse } from "../../utils/util"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
+import {
+  checkAuth
+} from "../../utils/auth"
+import {
+  getCampDetail,
+  getHasJoinCamp,
+  joinCamp
+} from "../../api/course/index"
+import {
+  getLocalStorage,
+  payCourse
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -171,11 +182,35 @@ Page({
     getHasJoinCamp({
       traincamp_id: id
     }).then(res => {
-      console.log(res, 100)
+
       if (res.id) {
-        wx.redirectTo({
-          url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
-        })
+        res.date = res.date.replace(/-/g, "/")
+        let oneDayTime = 8640000 * res.period //一天毫秒数
+        let dateDay = new Date(res.date).getTime()
+        let date = new Date();
+        let year = date.getFullYear()
+        let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1
+        let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
+        let nowDate = year + "-" + month + "-" + day
+        let nowDay = new Date(nowDate).getTime()
+        if (dateDay + oneDayTime > nowDay) {
+          wx.redirectTo({
+            url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
+          })
+        } else {
+          if (res.status === 2) {
+            // 代表是已经加入过放弃的
+            let pushTime = res.date.split("-")[1] + "月" + res.date.split("-")[2] + "日"
+            this.setData({
+              hasJoinAll: true,
+              hasAllTime: res.date,
+              timeJoin: pushTime
+            })
+          } else {
+            this.getCampDetail(id)
+          }
+        }
+
       } else {
         if (res.status === 2) {
           // 代表是已经加入过放弃的
