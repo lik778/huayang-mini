@@ -265,7 +265,6 @@ Page({
 						clearTimeout(this.data.endTimer)
 						this.setData({
 							_didDrawCanvasDone: true,
-							timer: null
 						})
 						this.saveToLocal()
 					}
