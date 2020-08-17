@@ -41,7 +41,9 @@ Page({
 		let {parentBootCampId = 0, courseId, source = '', formCampDetail, invite_user_id} = options
 		// 记录分享人身份
 		getApp().globalData.super_user_id = invite_user_id
-		getApp().globalData.source = source
+		if (source) {
+			getApp().globalData.source = source
+		}
 		// 检查是否是训练营付费会员
 		if (formCampDetail === "payUser") {
 			this.setData({didPayUser: true})

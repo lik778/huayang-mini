@@ -134,7 +134,9 @@ Page({
 			redirectType
 		})
 		getApp().globalData.super_user_id = invite_user_id
-		getApp().globalData.source = source
+		if (source) {
+			getApp().globalData.source = source
+		}
 
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 		if ($notNull(accountInfo) && hasUserInfo()) {

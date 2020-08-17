@@ -164,7 +164,9 @@ Page({
   onLoad: function (options) {
     // 记录分享人身份
     getApp().globalData.super_user_id = options.invite_user_id
-    getApp().globalData.source = options.source
+    if (options.source) {
+      getApp().globalData.source = options.source
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
