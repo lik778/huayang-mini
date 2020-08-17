@@ -2,7 +2,7 @@
     <!--  自定义头部  -->
     <cover-view class="navigation" style="padding-top:{{statusHeight+43}}px;">
         <naviBar title="{{didShowResultLayer ? '训练结束' : targetActionObj.name}}"
-                 hideIcon="{{didShowResultLayer || didShowRestLayer}}"
+                 hideIcon="{{didShowPrepareLayer || didShowResultLayer || didShowRestLayer}}"
                  color="{{didShowResultLayer?'#990000':''}}"
                  titleColor="{{didShowResultLayer?'white':''}}"
         ></naviBar>
