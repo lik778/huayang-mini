@@ -109,6 +109,7 @@
 .rest-time {
     margin: 90rpx 0 40rpx;
     font: bold 142rpx/170rpx DIN Alternate,DIN Next Pro;
+    background: #f5f5f5;
 }
 .next-action-info {
     display: flex;
