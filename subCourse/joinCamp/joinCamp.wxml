@@ -14,7 +14,7 @@
 			<view>原价 ¥{{campDetailData.price/100}}</view>
 			<view>立即加入 ¥{{campDetailData.discount_price/100}}</view>
 		</view>
-		<view bindtap="joinCamp-two" class="join" wx:if="{{campDetailData.discount_price==0||campDetailData.price==0}}">
+		<view bindtap="joinCamp" class="join" wx:if="{{campDetailData.discount_price==0||campDetailData.price==0}}">
 			<view>({{hasJoinAll ?timeJoin : joinTime}}开营)</view>
 			<view>立即加入</view>
 		</view>
