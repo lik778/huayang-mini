@@ -1,8 +1,19 @@
 // 加入训练营
-import { GLOBAL_KEY } from "../../lib/config"
-import { checkAuth } from "../../utils/auth"
-import { getCampDetail, getHasJoinCamp, joinCamp } from "../../api/course/index"
-import { getLocalStorage, payCourse } from "../../utils/util"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
+import {
+  checkAuth
+} from "../../utils/auth"
+import {
+  getCampDetail,
+  getHasJoinCamp,
+  joinCamp
+} from "../../api/course/index"
+import {
+  getLocalStorage,
+  payCourse
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -23,7 +34,7 @@ Page({
     buttonType: 1,
     lock: true,
     campDetailData: {},
-    timeJoin:''
+    timeJoin: ''
   },
   // 获取训练营详情
   getCampDetail(id) {
@@ -34,7 +45,7 @@ Page({
       let buttonType = 1
       res.desc = res.desc.split(",")
       this.setData({
-        titleName: res.name
+        titleName: res.name.length > 8 ? res.name.slice(0, 8) + ".." : res.name
       })
       let dateList = res.start_date.split(',')
       let date = new Date();
@@ -65,8 +76,7 @@ Page({
       }
       let pushTime = startDate.split("-")[1] + "月" + startDate.split("-")[2] + "日"
       let datas = startDate.replace(/-/g, "/")
-
-      if (startDate === '') {
+      if (startDate === '' && !this.data.hasJoinAll) {
         // 没有开营日期
         buttonType = 2
       }
@@ -98,8 +108,6 @@ Page({
   },
   // 加入训练营
   joinCamp() {
-    // console.log(this.data.hasJoinAll ? this.data.hasAllTime : this.data.endTime,11)
-    // return
     if (this.data.lock) {
       this.setData({
         lock: false
@@ -173,7 +181,8 @@ Page({
     getHasJoinCamp({
       traincamp_id: id
     }).then(res => {
-      if (res.length === 0 || res.status === 2) {
+      console.log(res, 100)
+      if (res.length === 0 || res.status === 2 || res.id) {
         this.getCampDetail(id)
         if (res.status === 2) {
           // 代表是已经加入过放弃的
@@ -181,7 +190,7 @@ Page({
           this.setData({
             hasJoinAll: true,
             hasAllTime: res.date,
-            timeJoin:pushTime
+            timeJoin: pushTime
           })
         }
       } else {
