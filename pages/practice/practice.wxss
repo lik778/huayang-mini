@@ -46,6 +46,8 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    margin: 84rpx 0 36rpx;
+    font: 52rpx/52rpx PingFang SC;
 }
 .manage {
     font: 32rpx/44rpx PingFang SC;
@@ -55,7 +57,7 @@
     opacity: 0.8;
 }
 .exercise-time {
-    margin: 40rpx 0 90rpx;
+    margin: 40rpx 0 84rpx;
 }
 .time {
     font: 96rpx/96rpx Condensed;
@@ -70,7 +72,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 40rpx 0 50rpx;
+    margin-top: 50rpx;
 }
 .week-line::after {
     position: absolute;

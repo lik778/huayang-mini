@@ -230,13 +230,17 @@ Page({
 	},
 	// 查看训练营详情
 	goToBootCamp(e) {
-		wx.navigateTo({
-			url: "/subCourse/joinCamp/joinCamp?id=" + e.currentTarget.dataset.bootcampid
-		})
+		let {bootCampId, status} = e.currentTarget.dataset.item
+		if (status !== 3) {
+			wx.navigateTo({
+				url: "/subCourse/campDetail/campDetail?id=" + bootCampId
+			})
+		}
 	},
 	// 发现页
 	goToDiscovery() {
 		bxPoint("parctice_choose", {}, false)
+		setLocalStorage("needToScrollTop", "1")
 		wx.switchTab({
 			url: '/pages/discovery/discovery'
 		})
