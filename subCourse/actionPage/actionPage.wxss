@@ -124,7 +124,7 @@
 .next-cover {
     width: 390rpx;
     height: 390rpx;
-    margin: 20rpx 0;
+    margin: 20rpx 0 58rpx;
     object-fit: contain;
 }
 .next-info {
