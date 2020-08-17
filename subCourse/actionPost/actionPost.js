@@ -20,7 +20,8 @@ Page({
 		didShowLevelAlert: false, // 等级经验弹窗
 		hasGrade: false, // 是否升级
 		levelNumber: 0, // 升级等级/经验
-		nextLevelText: "" // 升下一级所需经验
+		nextLevelText: "", // 升下一级所需经验
+		endTimer: null
 	},
 
 	/**
@@ -246,18 +247,31 @@ Page({
 		this.drawName(ctx, "长按识别二维码", 10, tipNo.x, tipNo.y, 'black')
 		this.drawName(ctx, "一起练习", 10, tipNo.x + 15, tipNo.y + 12, 'black')
 
-		setTimeout(() => {
-			ctx.draw(false, () => {
-				wx.hideLoading()
-				this.setData({
-					_didDrawCanvasDone: true
-				})
-				// 如果用户在绘制结束前已经点击"保存图片到本地"，则自动触发saveToLocal
-				if (this.data._invokeSaveToLocalAction) {
-					this.saveToLocal()
-				}
-			}, 500)
+		ctx.draw(false, () => {
+			wx.hideLoading()
+			this.setData({
+				_didDrawCanvasDone: true
+			})
+			// 如果用户在绘制结束前已经点击"保存图片到本地"，则自动触发saveToLocal
+			if (this.data._invokeSaveToLocalAction) {
+				this.saveToLocal()
+			}
 		})
+
+		if (!this.data.endTimer) {
+			this.setData({
+				endTimer: setTimeout(() => {
+					if (!this.data._didDrawCanvasDone) {
+						clearTimeout(this.data.endTimer)
+						this.setData({
+							_didDrawCanvasDone: true,
+							timer: null
+						})
+						this.saveToLocal()
+					}
+				}, 3000)
+			})
+		}
 	},
 	/**
 	 * 绘制canvas
@@ -337,6 +351,13 @@ Page({
 				fileType,
 				success(result) {
 					resolve(result)
+				},
+				fail(err) {
+					reject(err)
+				},
+				complete(res) {
+					console.error(res)
+					reject()
 				}
 			})
 		})
