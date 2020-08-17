@@ -537,11 +537,8 @@ Page({
 			// 训练结束
 			this.setData({
 				didShowResultLayer: true,
-				didPracticeDone: true,
-				isRunning: false
+				didPracticeDone: true
 			})
-			// 「恭喜你完成练习」
-			await this.playTempBgAudio(LocaleVoice.lv6)
 			// 停止全局记时器
 			clearInterval(this.data.globalRecordTimer)
 			// 上传训练记录
@@ -550,6 +547,11 @@ Page({
 				user_id: getLocalStorage(GLOBAL_KEY.userId),
 				kecheng_id: this.data.courseInfo.id,
 				duation: this.data.globalRecordTiming
+			})
+			// 「恭喜你完成练习」
+			await this.playTempBgAudio(LocaleVoice.lv6)
+			this.setData({
+				isRunning: false
 			})
 			// 经验值提升弹窗
 			increaseExp({task_type: "task_pratice"}).then((data) => {

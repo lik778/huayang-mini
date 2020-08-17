@@ -17,6 +17,7 @@ Page({
     campList: null,
     showModelBanner: false,
     bannerList: null,
+    canShow: false,
     courseList: null,
     activityList: null
   },
@@ -90,6 +91,14 @@ Page({
       this.setData({
         courseList: res
       })
+      setTimeout(() => {
+        wx.pageScrollTo({
+          scrollTop: 0
+        })
+        this.setData({
+          canShow: true
+        })
+      }, 20)
     })
   },
 
@@ -125,6 +134,7 @@ Page({
       this.setData({
         bannerList: res
       })
+      this.getCourseList()
     })
   },
   // 获取训练营列表
@@ -136,6 +146,7 @@ Page({
       this.setData({
         campList: res.list
       })
+      this.getBanner()
     })
   },
   // 跳转到训练营详情
@@ -179,8 +190,6 @@ Page({
     }).then(() => {
       this.initModelBanner()
       this.getCampList()
-      this.getBanner()
-      this.getCourseList()
     })
 
     bxPoint("applets_find", {

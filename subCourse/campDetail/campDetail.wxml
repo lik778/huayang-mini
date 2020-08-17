@@ -1,7 +1,7 @@
 <!--subCourse/campDetail/campDetail.wxml-->
 <view class="campdetail" wx:if="{{videoHeight!==0}}">
 	<!-- navibar栏 -->
-	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+	<view class="navigation" style="padding-top:{{statusHeight+44}}px;background:#5F5F5F;">
 		<naviBar title="我的课程表" color="#5F5F5F" titleColor="#fff" forceGoBackIndex="{{backIndex}}"></naviBar>
 	</view>
 	<!-- 背景层 -->

@@ -16,7 +16,6 @@ Page({
     if (options.type === 'link') {
       link = decodeURIComponent(link)
     }
-    // console.log(link)
     this.setData({
       link: link
     })
