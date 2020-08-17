@@ -246,15 +246,17 @@ Page({
 		this.drawName(ctx, "长按识别二维码", 10, tipNo.x, tipNo.y, 'black')
 		this.drawName(ctx, "一起练习", 10, tipNo.x + 15, tipNo.y + 12, 'black')
 
-		ctx.draw(false, () => {
-			wx.hideLoading()
-			this.setData({
-				_didDrawCanvasDone: true
-			})
-			// 如果用户在绘制结束前已经点击"保存图片到本地"，则自动触发saveToLocal
-			if (this.data._invokeSaveToLocalAction) {
-				this.saveToLocal()
-			}
+		setTimeout(() => {
+			ctx.draw(false, () => {
+				wx.hideLoading()
+				this.setData({
+					_didDrawCanvasDone: true
+				})
+				// 如果用户在绘制结束前已经点击"保存图片到本地"，则自动触发saveToLocal
+				if (this.data._invokeSaveToLocalAction) {
+					this.saveToLocal()
+				}
+			}, 300)
 		})
 	},
 	/**
