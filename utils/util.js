@@ -692,6 +692,9 @@ export const queryWxAuth = function (authKey = WX_AUTH_TYPE.userInfo) {
 					fail() {
 						// 未同意
 						reject()
+					},
+					complete(res) {
+						console.error('wxGetSetting', res)
 					}
 				})
 			}
