@@ -245,7 +245,7 @@ Page({
 		this.drawName(ctx, "长按识别二维码", 10, tipNo.x, tipNo.y, 'black')
 		this.drawName(ctx, "一起练习", 10, tipNo.x + 15, tipNo.y + 12, 'black')
 
-		ctx.draw(false, setTimeout(() => {
+		ctx.draw(false, () => {
 			wx.hideLoading()
 			this.setData({
 				_didDrawCanvasDone: true
@@ -254,7 +254,7 @@ Page({
 			if (this.data._invokeSaveToLocalAction) {
 				this.saveToLocal()
 			}
-		}, 200))
+		})
 	},
 	/**
 	 * 绘制canvas
