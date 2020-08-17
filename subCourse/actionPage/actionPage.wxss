@@ -106,10 +106,12 @@
     color:rgba(102,102,102,1);
 }
 /*rest-layer*/
+.rest-layer {
+    background: #f5f5f5;
+}
 .rest-time {
     margin: 90rpx 0 40rpx;
     font: bold 142rpx/170rpx DIN Alternate,DIN Next Pro;
-    background: #f5f5f5;
 }
 .next-action-info {
     display: flex;
@@ -121,7 +123,7 @@
 }
 .next-cover {
     width: 390rpx;
-    height: 448rpx;
+    height: 390rpx;
     margin: 20rpx 0;
     object-fit: contain;
 }
