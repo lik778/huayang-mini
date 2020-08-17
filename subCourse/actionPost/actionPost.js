@@ -127,7 +127,7 @@ Page({
 					didShowLevelAlert: true,
 					hasGrade: data.has_grade,
 					levelNumber: data.has_grade ? data.level : 10,
-					nextLevelText: data.level < 3 ? `还差${data.next_experience - data.experience}升至Lv${data.level+1}` : ""
+					nextLevelText: data.level < 3 ? `还差${data.next_experience - data.experience}升至Lv${data.level + 1}` : ""
 				})
 			}
 		})
@@ -245,7 +245,7 @@ Page({
 		this.drawName(ctx, "长按识别二维码", 10, tipNo.x, tipNo.y, 'black')
 		this.drawName(ctx, "一起练习", 10, tipNo.x + 15, tipNo.y + 12, 'black')
 
-		ctx.draw(false, () => {
+		ctx.draw(false, setTimeout(() => {
 			wx.hideLoading()
 			this.setData({
 				_didDrawCanvasDone: true
@@ -254,7 +254,7 @@ Page({
 			if (this.data._invokeSaveToLocalAction) {
 				this.saveToLocal()
 			}
-		})
+		}, 200))
 	},
 	/**
 	 * 绘制canvas

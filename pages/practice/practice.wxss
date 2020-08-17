@@ -220,6 +220,9 @@
     padding-bottom: 30rpx;
     font: 30rpx/42rpx PingFang SC;
 }
+.boot-camp-course:last-child {
+    padding-bottom: 0;
+}
 .boot-camp-course:active {
     opacity: 0.8;
 }
