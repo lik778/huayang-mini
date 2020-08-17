@@ -16,12 +16,12 @@
 			<view>立即加入 ¥{{campDetailData.discount_price/100}}</view>
 		</view>
 		<view bindtap="joinCamp" class="join"
-			wx:if="{{campDetailData.discount_price==0||campDetailData.price==0||userInfo.is_zhide_vip||hasJoinAll}}">
+			wx:if="{{campDetailData.discount_price==0||campDetailData.price==0||userInfo.is_zhide_vip}}">
 			<view>({{hasJoinAll?timeJoin : joinTime}}开营)</view>
 			<view>立即加入</view>
 		</view>
 	</view>
-	<view class="button-line-two" wx:if="{{buttonType===2||!hasJoinAll}}">
+	<view class="button-line-two" wx:if="{{buttonType===2}}">
 		<view class="join-button">即将开营</view>
 	</view>
 	<view class="button-line" wx:if="{{buttonType===3}}">

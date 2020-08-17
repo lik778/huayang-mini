@@ -92,9 +92,9 @@ Page({
         courseList: res
       })
       setTimeout(() => {
-        wx.pageScrollTo({
-          scrollTop: 0
-        })
+        // wx.pageScrollTo({
+        //   scrollTop: 0
+        // })
         this.setData({
           canShow: true
         })
