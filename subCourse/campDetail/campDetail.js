@@ -497,7 +497,7 @@ Page({
       path:
         '/subCourse/joinCamp/joinCamp?id=' +
         this.data.campId +
-        `&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`,
+        `&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}&share=true`,
     }
   },
 })
