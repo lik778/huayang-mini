@@ -101,7 +101,11 @@ Page({
         onlyDayList = getTodayDate(startDate).one //只有日的日期列表
         realList = getTodayDate(startDate).two //实际一周日期列表
         // cureentDay = new Date(startDate).getDate() - 1
-        cureentDay = onlyDayList[0].id
+        for (let i in onlyDayList) {
+          if (onlyDayList[i].id === startDate.split("-")[2]) {
+            cureentDay = onlyDayList[i - 1].id
+          }
+        }
       } else {
         cureentDay = new Date().getDate()
       }
@@ -178,7 +182,7 @@ Page({
       let realList = this.data.dateObj.dateList.realDate
       for (let i in dateList) {
         if (dateList[i].id === clickDay) {
-          str1 = realList[i]
+          str1 = realList[i].replace(/-/g, "/")
         }
       }
       let date1 = new Date(str1).getTime() //开营日期
@@ -214,7 +218,7 @@ Page({
         dayNum = countDayOne(nowDate, endTime)
         let Str = this.getNowTimeStr()
         let date1 = new Date(Str).getTime() //当前日期
-        let date2 = new Date(Number(e.nowDate)).getTime() //开营日期
+        let date2 = new Date(e.nowDate).getTime() //开营日期
         if (date1 < date2) {
           this.setData({
             showLock: true,
