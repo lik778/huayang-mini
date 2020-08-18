@@ -27,7 +27,7 @@ Page({
     campId: 0,
     titleName: "",
     joinTime: "",
-    hasJoinAll: false,
+    hasJoinAll: false,//代表加入过
     endTime: "",
     userInfo: "",
     hasAllTime: "",
@@ -200,7 +200,7 @@ Page({
             let pushTime = res.date.split("/")[1] + "月" + res.date.split("/")[2] + "日"
             this.setData({
               hasJoinAll: true,
-              hasAllTime: res.date,
+              hasAllTime: res.date.replace(/\//g, "-"),
               timeJoin: pushTime
             })
             console.log(pushTime, 11)
