@@ -247,31 +247,15 @@ Page({
 		this.drawName(ctx, "长按识别二维码", 10, tipNo.x, tipNo.y, 'black')
 		this.drawName(ctx, "一起练习", 10, tipNo.x + 15, tipNo.y + 12, 'black')
 
-		ctx.draw(false, () => {
+		ctx.draw(true, () => {
 			wx.hideLoading()
-			this.setData({
-				_didDrawCanvasDone: true
+			this.setData({_didDrawCanvasDone: true}, () => {
+				// 如果用户在绘制结束前已经点击"保存图片到本地"，则自动触发saveToLocal
+				if (this.data._invokeSaveToLocalAction) {
+					this.saveToLocal()
+				}
 			})
-			// 如果用户在绘制结束前已经点击"保存图片到本地"，则自动触发saveToLocal
-			if (this.data._invokeSaveToLocalAction) {
-				this.saveToLocal()
-			}
 		})
-
-		if (!this.data.endTimer) {
-			this.setData({
-				endTimer: setTimeout(() => {
-					if (!this.data._didDrawCanvasDone) {
-						clearTimeout(this.data.endTimer)
-						this.setData({
-							_didDrawCanvasDone: true,
-							timer: null
-						})
-						this.saveToLocal()
-					}
-				}, 3000)
-			})
-		}
 	},
 	/**
 	 * 绘制canvas
@@ -313,30 +297,32 @@ Page({
 
 		this._saveCanvasImageToLocal('actionOrder').then(({tempFilePath}) => {
 			console.log(tempFilePath)
-			queryWxAuth(WX_AUTH_TYPE.writePhotosAlbum).then(() => {
-				wx.saveImageToPhotosAlbum({
-					filePath: tempFilePath,
-					success(res) {
-						toast('图片保存成功', 3000, 'success')
-						self.punchCard()
-					},
-					fail() {
-						toast('图片保存失败')
-					}
-				})
-			}).catch(() => {
-				wx.showModal({
-					title: '相册授权',
-					content: '保存失败，未获得您的授权，请前往设置授权',
-					confirmText: '去设置',
-					confirmColor: '#33c71b',
-					success(res) {
-						if (res.confirm) {
-							wx.openSetting()
+			queryWxAuth(WX_AUTH_TYPE.writePhotosAlbum)
+				.then(() => {
+					wx.saveImageToPhotosAlbum({
+						filePath: tempFilePath,
+						success(res) {
+							toast('图片保存成功', 3000, 'success')
+							self.punchCard()
+						},
+						fail() {
+							toast('图片保存失败')
 						}
-					}
+					})
 				})
-			})
+				.catch(() => {
+					wx.showModal({
+						title: '相册授权',
+						content: '保存失败，未获得您的授权，请前往设置授权',
+						confirmText: '去设置',
+						confirmColor: '#33c71b',
+						success(res) {
+							if (res.confirm) {
+								wx.openSetting()
+							}
+						}
+					})
+				})
 		})
 	},
 	// 保存canvas图片到本地
@@ -354,10 +340,6 @@ Page({
 				},
 				fail(err) {
 					reject(err)
-				},
-				complete(res) {
-					console.error(res)
-					reject()
 				}
 			})
 		})
