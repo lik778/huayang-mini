@@ -230,13 +230,23 @@ Page({
 	},
 	// 查看训练营详情
 	goToBootCamp(e) {
+		let {bootCampId, status} = e.currentTarget.dataset.item
+		if (status !== 3) {
+			wx.navigateTo({
+				url: "/subCourse/campDetail/campDetail?id=" + bootCampId
+			})
+		}
+	},
+	restartToBootCamp(e) {
+		let {bootCampId} = e.currentTarget.dataset.item
 		wx.navigateTo({
-			url: "/subCourse/joinCamp/joinCamp?id=" + e.currentTarget.dataset.bootcampid
+			url: "/subCourse/joinCamp/joinCamp?id=" + bootCampId
 		})
 	},
 	// 发现页
 	goToDiscovery() {
 		bxPoint("parctice_choose", {}, false)
+		setLocalStorage("needToScrollTop", "1")
 		wx.switchTab({
 			url: '/pages/discovery/discovery'
 		})
@@ -303,7 +313,7 @@ Page({
 		let bootCampList = await queryUserJoinedBootCamp()
 		bootCampList = bootCampList.filter(item => +item.kecheng_traincamp.status !== 2)
 		let handlerBootCampList = []
-		for (const {kecheng_traincamp_id, date, kecheng_traincamp: {name, status}} of bootCampList) {
+		for (const {kecheng_traincamp_id, date, status, kecheng_traincamp: {name}} of bootCampList) {
 			// 根据训练营查找对应的课程
 			let dayNum = dayjs().diff(dayjs(date), 'day') + 1
 			let bootCampInfo = await queryBootCampContentInToday({

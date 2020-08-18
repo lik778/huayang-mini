@@ -114,7 +114,7 @@
           "id": 6,
           "name": "subCourse/practiceDetail/practiceDetail",
           "pathName": "subCourse/practiceDetail/practiceDetail",
-          "query": "courseId=16",
+          "query": "courseId=16&source=competition",
           "scene": null
         },
         {

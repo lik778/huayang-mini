@@ -4,12 +4,12 @@ import {
 } from "../../lib/config"
 import request from "../../lib/request"
 import {
-  getPhoneNumber,
-  getSignData,
-  getTaskList,
-  increaseExp,
-  needUpdateUserInfo,
-  taskCheckIn
+	getPhoneNumber,
+	getSignData,
+	getTaskList,
+	increaseExp,
+	needUpdateUserInfo,
+	taskCheckIn
 } from "../../api/course/index"
 import {
   getUserInfo

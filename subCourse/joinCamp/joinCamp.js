@@ -1,8 +1,19 @@
 // 加入训练营
-import { GLOBAL_KEY } from "../../lib/config"
-import { checkAuth } from "../../utils/auth"
-import { getCampDetail, getHasJoinCamp, joinCamp } from "../../api/course/index"
-import { getLocalStorage, payCourse } from "../../utils/util"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
+import {
+  checkAuth
+} from "../../utils/auth"
+import {
+  getCampDetail,
+  getHasJoinCamp,
+  joinCamp
+} from "../../api/course/index"
+import {
+  getLocalStorage,
+  payCourse
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -16,14 +27,15 @@ Page({
     campId: 0,
     titleName: "",
     joinTime: "",
-    hasJoinAll: false,
+    hasJoinAll: false,//代表加入过
     endTime: "",
     userInfo: "",
     hasAllTime: "",
     buttonType: 1,
     lock: true,
     campDetailData: {},
-    timeJoin:''
+    timeJoin: '',
+    backIndex: false
   },
   // 获取训练营详情
   getCampDetail(id) {
@@ -34,7 +46,7 @@ Page({
       let buttonType = 1
       res.desc = res.desc.split(",")
       this.setData({
-        titleName: res.name
+        titleName: res.name.length > 8 ? res.name.slice(0, 8) + ".." : res.name
       })
       let dateList = res.start_date.split(',')
       let date = new Date();
@@ -65,8 +77,7 @@ Page({
       }
       let pushTime = startDate.split("-")[1] + "月" + startDate.split("-")[2] + "日"
       let datas = startDate.replace(/-/g, "/")
-
-      if (startDate === '') {
+      if (startDate === '' && !this.data.hasJoinAll) {
         // 没有开营日期
         buttonType = 2
       }
@@ -98,8 +109,6 @@ Page({
   },
   // 加入训练营
   joinCamp() {
-    // console.log(this.data.hasJoinAll ? this.data.hasAllTime : this.data.endTime,11)
-    // return
     if (this.data.lock) {
       this.setData({
         lock: false
@@ -173,21 +182,50 @@ Page({
     getHasJoinCamp({
       traincamp_id: id
     }).then(res => {
-      if (res.length === 0 || res.status === 2) {
-        this.getCampDetail(id)
-        if (res.status === 2) {
-          // 代表是已经加入过放弃的
-          let pushTime = res.date.split("-")[1] + "月" + res.date.split("-")[2] + "日"
-          this.setData({
-            hasJoinAll: true,
-            hasAllTime: res.date,
-            timeJoin:pushTime
-          })
+      if (res.id) {
+        // 已经加入过
+        res.date = res.date.replace(/-/g, "/")
+        let oneDayTime = 86400000 * res.period //一天毫秒数
+        let dateDay = new Date(res.date).getTime() //加入日期
+        let date = new Date();
+        let year = date.getFullYear()
+        let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1
+        let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
+        let nowDate = year + "/" + month + "/" + day
+        let nowDay = new Date(nowDate).getTime()
+        if (dateDay + oneDayTime > nowDay) {
+          // 训练营未过期
+          if (res.status === 2) {
+            // 代表是已经加入过放弃的
+            let pushTime = res.date.split("/")[1] + "月" + res.date.split("/")[2] + "日"
+            this.setData({
+              hasJoinAll: true,
+              hasAllTime: res.date.replace(/\//g, "-"),
+              timeJoin: pushTime
+            })
+            console.log(pushTime, 11)
+            this.getCampDetail(id)
+          } else {
+            wx.redirectTo({
+              url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
+            })
+          }
+        } else {
+          // 训练营已过期
+          if (res.status === 2) {
+            // 代表是已经加入过放弃的
+            let pushTime = res.date.split("/")[1] + "月" + res.date.split("/")[2] + "日"
+            this.setData({
+              hasJoinAll: true,
+              hasAllTime: res.date,
+              timeJoin: pushTime
+            })
+          }
+          this.getCampDetail(id)
         }
       } else {
-        wx.redirectTo({
-          url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
-        })
+        // 未加入过
+        this.getCampDetail(id)
       }
     })
   },
@@ -196,8 +234,17 @@ Page({
    */
   onLoad: function (options) {
     // 记录分享人身份
-    getApp().globalData.super_user_id = options.invite_user_id
-    getApp().globalData.source = options.source
+    if (options.invite_user_id) {
+      getApp().globalData.super_user_id = options.invite_user_id
+    }
+    if (options.source) {
+      getApp().globalData.source = options.source
+    }
+
+    this.setData({
+      backIndex: !!options.share
+    })
+
     checkAuth({
       authPhone: true,
       redirectPath: `/subCourse/joinCamp/joinCamp$id#${options.id}`,

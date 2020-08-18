@@ -1,25 +1,11 @@
 // pages/ discovery/discovery.js
-import {
-  getLocalStorage,
-  simpleDurationSimple
-} from "../../utils/util"
-import {
-  checkAuth
-} from "../../utils/auth"
-import {
-  getActivityList,
-  getCampList,
-  getFindBanner,
-  getShowCourseList
-} from "../../api/course/index"
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { getLocalStorage, simpleDurationSimple } from "../../utils/util"
+import { checkAuth } from "../../utils/auth"
+import { getActivityList, getCampList, getFindBanner, getShowCourseList } from "../../api/course/index"
+import { GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import request from "../../lib/request"
-import {
-  getYouZanAppId
-} from "../../api/mall/index"
+import { getYouZanAppId } from "../../api/mall/index"
 
 Page({
 
@@ -64,13 +50,10 @@ Page({
   },
   // 跳转到模特大赛
   toModelCompetition() {
-    let data = JSON.stringify({
-      activity_id: 29,
-      user_id: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id,
-      user_grade: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
-    })
-    let baseUrl = `${request.baseUrl}/#/modelCompetition/introduce?data=${data}`
-    // let baseUrl = `${request.baseUrl}/#/modelCompetition/detail?id=816`
+    let activity_id = 29
+    let user_id = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id
+    let user_grade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
+    let baseUrl = `${request.baseUrl}/#/modelCompetition/introduce?activity_id=${activity_id}&user_id=${user_id}&user_grade=${user_grade}`
     baseUrl = encodeURIComponent(baseUrl)
     wx.navigateTo({
       url: `/pages/webViewCommon/webViewCommon?link=${baseUrl}&type=link`,
@@ -106,9 +89,13 @@ Page({
         courseList: res
       })
       setTimeout(() => {
-        wx.pageScrollTo({
-          scrollTop: 0
-        })
+        console.log(getLocalStorage('needToScrollTop'))
+        if (Number(getLocalStorage('needToScrollTop')) === 1) {
+          wx.pageScrollTo({
+            scrollTop: 0
+          })
+          wx.removeStorageSync('needToScrollTop')
+        }
         this.setData({
           canShow: true
         })
@@ -169,7 +156,7 @@ Page({
       join_type: "bootcamp"
     }, false)
     wx.navigateTo({
-      url: `/subCourse/joinCamp/joinCamp?id=${e.currentTarget.dataset.index.id}`,
+      url: `/subCourse/joinCamp/joinCamp?id=${e.currentTarget.dataset.index.id}&share=true`,
     })
   },
   /**
@@ -177,8 +164,12 @@ Page({
    */
   onLoad: function (options) {
     // 记录分享人身份
-    getApp().globalData.super_user_id = options.invite_user_id
-    getApp().globalData.source = options.source
+    if (options.invite_user_id) {
+      getApp().globalData.super_user_id = options.invite_user_id
+    }
+    if (options.source) {
+      getApp().globalData.source = options.source
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

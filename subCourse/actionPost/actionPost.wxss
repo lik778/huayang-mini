@@ -1,3 +1,4 @@
+@import "../../assets/css/common.wxss";
 .action-post {
     overflow: hidden;
     position: relative;
@@ -69,6 +70,8 @@
     margin-right: 30rpx;
 }
 .nickname {
+    width: 230rpx;
+    height: 36rpx;
     font: 36rpx/36rpx PingFang SC;
 }
 .left-bottom {

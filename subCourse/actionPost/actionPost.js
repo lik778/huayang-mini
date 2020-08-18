@@ -1,5 +1,5 @@
 // subCourse/actionPost/actionPost.js
-import { $notNull, getLocalStorage, queryWxAuth, toast } from "../../utils/util"
+import { $notNull, calcStringLen, getLocalStorage, queryWxAuth, splitTargetNoString, toast } from "../../utils/util"
 import { GLOBAL_KEY, WX_AUTH_TYPE } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import { increaseExp, queryPunchCardBg, queryPunchCardQrCode, queryUserHaveClassesInfo } from "../../api/course/index"
@@ -20,7 +20,8 @@ Page({
 		didShowLevelAlert: false, // 等级经验弹窗
 		hasGrade: false, // 是否升级
 		levelNumber: 0, // 升级等级/经验
-		nextLevelText: "" // 升下一级所需经验
+		nextLevelText: "", // 升下一级所需经验
+		endTimer: null
 	},
 
 	/**
@@ -127,7 +128,7 @@ Page({
 					didShowLevelAlert: true,
 					hasGrade: data.has_grade,
 					levelNumber: data.has_grade ? data.level : 10,
-					nextLevelText: data.level < 3 ? `还差${data.next_experience - data.experience}升至Lv${data.level+1}` : ""
+					nextLevelText: data.level < 3 ? `还差${data.next_experience - data.experience}升至Lv${data.level + 1}` : ""
 				})
 			}
 		})
@@ -221,7 +222,8 @@ Page({
 		// 头像
 		this.drawBorderCircle(ctx, avatarImage, 49, 366, 30)
 		// 昵称
-		let nickname = this.data.postData.nickname.length > 7 ? `${this.data.postData.nickname.slice(0, 7)}..` : this.data.postData.nickname
+		let name = this.data.postData.nickname
+		let nickname = calcStringLen(name) > 14 ? `${splitTargetNoString(name, 13)}..` : name
 		ctx.font = `${18}px PingFang SC`
 		this.drawName(ctx, nickname, 18, 94, 376, "black")
 		// 训练参数
@@ -245,15 +247,14 @@ Page({
 		this.drawName(ctx, "长按识别二维码", 10, tipNo.x, tipNo.y, 'black')
 		this.drawName(ctx, "一起练习", 10, tipNo.x + 15, tipNo.y + 12, 'black')
 
-		ctx.draw(false, () => {
+		ctx.draw(true, () => {
 			wx.hideLoading()
-			this.setData({
-				_didDrawCanvasDone: true
+			this.setData({_didDrawCanvasDone: true}, () => {
+				// 如果用户在绘制结束前已经点击"保存图片到本地"，则自动触发saveToLocal
+				if (this.data._invokeSaveToLocalAction) {
+					this.saveToLocal()
+				}
 			})
-			// 如果用户在绘制结束前已经点击"保存图片到本地"，则自动触发saveToLocal
-			if (this.data._invokeSaveToLocalAction) {
-				this.saveToLocal()
-			}
 		})
 	},
 	/**
@@ -296,30 +297,32 @@ Page({
 
 		this._saveCanvasImageToLocal('actionOrder').then(({tempFilePath}) => {
 			console.log(tempFilePath)
-			queryWxAuth(WX_AUTH_TYPE.writePhotosAlbum).then(() => {
-				wx.saveImageToPhotosAlbum({
-					filePath: tempFilePath,
-					success(res) {
-						toast('图片保存成功', 3000, 'success')
-						self.punchCard()
-					},
-					fail() {
-						toast('图片保存失败')
-					}
-				})
-			}).catch(() => {
-				wx.showModal({
-					title: '相册授权',
-					content: '保存失败，未获得您的授权，请前往设置授权',
-					confirmText: '去设置',
-					confirmColor: '#33c71b',
-					success(res) {
-						if (res.confirm) {
-							wx.openSetting()
+			queryWxAuth(WX_AUTH_TYPE.writePhotosAlbum)
+				.then(() => {
+					wx.saveImageToPhotosAlbum({
+						filePath: tempFilePath,
+						success(res) {
+							toast('图片保存成功', 3000, 'success')
+							self.punchCard()
+						},
+						fail() {
+							toast('图片保存失败')
 						}
-					}
+					})
 				})
-			})
+				.catch(() => {
+					wx.showModal({
+						title: '相册授权',
+						content: '保存失败，未获得您的授权，请前往设置授权',
+						confirmText: '去设置',
+						confirmColor: '#33c71b',
+						success(res) {
+							if (res.confirm) {
+								wx.openSetting()
+							}
+						}
+					})
+				})
 		})
 	},
 	// 保存canvas图片到本地
@@ -334,6 +337,9 @@ Page({
 				fileType,
 				success(result) {
 					resolve(result)
+				},
+				fail(err) {
+					reject(err)
 				}
 			})
 		})

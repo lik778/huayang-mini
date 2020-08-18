@@ -50,7 +50,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #00BB66;
+  background: #CC0000;
   border-radius: 48rpx;
 }
 
@@ -79,7 +79,7 @@
 
 
 .pay {
-  background: #08C063;
+  background: #CC0000;
   font-size: 40rpx;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
