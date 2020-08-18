@@ -1,6 +1,11 @@
 // subCourse/campDetail/campDetail.js
-import { GLOBAL_KEY } from '../../lib/config'
-import { getProductInfo, getYouZanAppId } from '../../api/mall/index'
+import {
+  GLOBAL_KEY
+} from '../../lib/config'
+import {
+  getProductInfo,
+  getYouZanAppId
+} from '../../api/mall/index'
 import {
   getArticileLink,
   getCampDetail,
@@ -42,21 +47,15 @@ Page({
     startDay: '', //训练营开始时间
     videoSrc: '', //视频地址
     srcObj: {
-      course:
-        'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925TZrmey.jpg',
-      video:
-        'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925iFZICS.jpg',
-      product:
-        'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925fmEUmR.jpg',
-      url:
-        'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925KAfZPv.jpg',
-      lock:
-        'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596613255fHAzmw.jpg',
+      course: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925TZrmey.jpg',
+      video: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925iFZICS.jpg',
+      product: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925fmEUmR.jpg',
+      url: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925KAfZPv.jpg',
+      lock: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596613255fHAzmw.jpg',
     },
     posterSrc: '',
     styleObj: {
-      all:
-        'color:#000000;font-family:PingFang-SC-Bold,PingFang-SC;font-weight:bold;background:#F4F4F4',
+      all: 'color:#000000;font-family:PingFang-SC-Bold,PingFang-SC;font-weight:bold;background:#F4F4F4',
       notAll: 'color:#000000;background:#F4F4F4',
     }, //日历的不同样式
     dateObj: {
@@ -75,16 +74,19 @@ Page({
   },
 
   // 获取训练营信息
-  getCampDetailData({ id, startDate }) {
+  getCampDetailData({
+    id,
+    startDate
+  }) {
     getCampDetail({
       traincamp_id: id,
     }).then((res) => {
       let date = new Date()
       let year = date.getFullYear()
       let month =
-        date.getMonth() + 1 < 10
-          ? '0' + (date.getMonth() + 1)
-          : date.getMonth() + 1
+        date.getMonth() + 1 < 10 ?
+        '0' + (date.getMonth() + 1) :
+        date.getMonth() + 1
       let day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
       let nowDate = year + '-' + month + '-' + day
       res.nowDay =
@@ -98,7 +100,8 @@ Page({
         // 未开营
         onlyDayList = getTodayDate(startDate).one //只有日的日期列表
         realList = getTodayDate(startDate).two //实际一周日期列表
-        cureentDay = new Date(startDate).getDate() - 1
+        // cureentDay = new Date(startDate).getDate() - 1
+        cureentDay = onlyDayList[0].id
       } else {
         cureentDay = new Date().getDate()
       }
@@ -167,9 +170,19 @@ Page({
       if (event >= 0) {
         dayNum = e.currentTarget.dataset.item.day_num
       }
-      let date = new Date()
-      day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
-      if (day < Number(e.currentTarget.dataset.item.id)) {
+      let nowDate = this.getNowTimeStr()
+      let date = new Date(nowDate).getTime() //当前日期
+      let clickDay = e.currentTarget.dataset.item.id
+      let str1 = ''
+      let dateList = this.data.dateObj.dateList.date
+      let realList = this.data.dateObj.dateList.realDate
+      for (let i in dateList) {
+        if (dateList[i].id === clickDay) {
+          str1 = realList[i]
+        }
+      }
+      let date1 = new Date(str1).getTime() //开营日期
+      if (date < date1) {
         this.setData({
           showLock: true,
         })
@@ -193,13 +206,16 @@ Page({
         let date = new Date()
         let year = date.getFullYear()
         let month =
-          date.getMonth() + 1 < 10
-            ? '0' + (date.getMonth() + 1)
-            : date.getMonth() + 1
+          date.getMonth() + 1 < 10 ?
+          '0' + (date.getMonth() + 1) :
+          date.getMonth() + 1
         day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
         let nowDate = year + '-' + month + '-' + day
         dayNum = countDayOne(nowDate, endTime)
-        if (day < Number(e.nowDate)) {
+        let Str = this.getNowTimeStr()
+        let date1 = new Date(Str).getTime() //当前日期
+        let date2 = new Date(Number(e.nowDate)).getTime() //开营日期
+        if (date1 < date2) {
           this.setData({
             showLock: true,
           })
@@ -220,9 +236,9 @@ Page({
       })
     }
     getCurentDayData({
-      day_num: dayNum,
-      traincamp_id: this.data.campId,
-    })
+        day_num: dayNum,
+        traincamp_id: this.data.campId,
+      })
       .then((res) => {
         if (res.length !== 0) {
           res.content = JSON.parse(res.content)
@@ -263,6 +279,19 @@ Page({
         })
       })
   },
+  // 获取当前日期时间戳
+  getNowTimeStr() {
+    let day = ''
+    let date = new Date()
+    let year = date.getFullYear()
+    let month =
+      date.getMonth() + 1 < 10 ?
+      '0' + (date.getMonth() + 1) :
+      date.getMonth() + 1
+    day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
+    let nowDate = year + '/' + month + '/' + day
+    return nowDate
+  },
   // 获取引导私域地址
   getArticileLinkData() {
     getArticileLink().then((res) => {
@@ -274,9 +303,9 @@ Page({
   // 控制是否显示遮罩层
   initCoverShow(id) {
     let showIdList =
-      getLocalStorage(GLOBAL_KEY.campHasShowList) === undefined
-        ? undefined
-        : JSON.parse(getLocalStorage(GLOBAL_KEY.campHasShowList))
+      getLocalStorage(GLOBAL_KEY.campHasShowList) === undefined ?
+      undefined :
+      JSON.parse(getLocalStorage(GLOBAL_KEY.campHasShowList))
     let showCover = true
     if (showIdList === undefined) {
       setLocalStorage(GLOBAL_KEY.campHasShowList, [id])
@@ -458,9 +487,8 @@ Page({
     let height = parseInt(
       ((JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth - 30) /
         16) *
-        9
+      9
     )
-    // console.log(height)
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
         .statusBarHeight,
@@ -494,8 +522,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: `我正在参加${this.data.campDetailData.name}，每天都有看的见的变化，快来试试`,
-      path:
-        '/subCourse/joinCamp/joinCamp?id=' +
+      path: '/subCourse/joinCamp/joinCamp?id=' +
         this.data.campId +
         `&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}&share=true`,
     }
