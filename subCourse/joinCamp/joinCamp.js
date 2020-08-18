@@ -182,47 +182,50 @@ Page({
     getHasJoinCamp({
       traincamp_id: id
     }).then(res => {
-
       if (res.id) {
+        // 已经加入过
         res.date = res.date.replace(/-/g, "/")
-        let oneDayTime = 8640000 * res.period //一天毫秒数
-        let dateDay = new Date(res.date).getTime()
+        let oneDayTime = 86400000 * res.period //一天毫秒数
+        let dateDay = new Date(res.date).getTime() //加入日期
         let date = new Date();
         let year = date.getFullYear()
         let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1
         let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
-        let nowDate = year + "-" + month + "-" + day
+        let nowDate = year + "/" + month + "/" + day
         let nowDay = new Date(nowDate).getTime()
         if (dateDay + oneDayTime > nowDay) {
-          wx.redirectTo({
-            url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
-          })
-        } else {
+          // 训练营未过期
           if (res.status === 2) {
             // 代表是已经加入过放弃的
-            let pushTime = res.date.split("-")[1] + "月" + res.date.split("-")[2] + "日"
+            let pushTime = res.date.split("/")[1] + "月" + res.date.split("/")[2] + "日"
             this.setData({
               hasJoinAll: true,
               hasAllTime: res.date,
               timeJoin: pushTime
             })
-          } else {
+            console.log(pushTime, 11)
             this.getCampDetail(id)
+          } else {
+            wx.redirectTo({
+              url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
+            })
           }
-        }
-
-      } else {
-        if (res.status === 2) {
-          // 代表是已经加入过放弃的
-          let pushTime = res.date.split("-")[1] + "月" + res.date.split("-")[2] + "日"
-          this.setData({
-            hasJoinAll: true,
-            hasAllTime: res.date,
-            timeJoin: pushTime
-          })
         } else {
+          // 训练营已过期
+          if (res.status === 2) {
+            // 代表是已经加入过放弃的
+            let pushTime = res.date.split("/")[1] + "月" + res.date.split("/")[2] + "日"
+            this.setData({
+              hasJoinAll: true,
+              hasAllTime: res.date,
+              timeJoin: pushTime
+            })
+          }
           this.getCampDetail(id)
         }
+      } else {
+        // 未加入过
+        this.getCampDetail(id)
       }
     })
   },
