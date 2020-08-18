@@ -50,13 +50,10 @@ Page({
   },
   // 跳转到模特大赛
   toModelCompetition() {
-    let data = JSON.stringify({
-      activity_id: 29,
-      user_id: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id,
-      user_grade: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
-    })
-    let baseUrl = `${request.baseUrl}/#/modelCompetition/introduce?data=${data}`
-    // let baseUrl = `${request.baseUrl}/#/modelCompetition/detail?id=816`
+    let activity_id = 29
+    let user_id = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id
+    let user_grade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
+    let baseUrl = `${request.baseUrl}/#/modelCompetition/introduce?activity_id=${activity_id}&user_id=${user_id}&user_grade=${user_grade}`
     baseUrl = encodeURIComponent(baseUrl)
     wx.navigateTo({
       url: `/pages/webViewCommon/webViewCommon?link=${baseUrl}&type=link`,
