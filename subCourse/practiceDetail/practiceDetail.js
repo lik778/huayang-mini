@@ -66,13 +66,14 @@ Page({
 			accountInfo,
 			backPath: parentBootCampId ? `/subCourse/practiceDetail/practiceDetail?courseId=${courseId}&parentBootCampId=${parentBootCampId}` : `/subCourse/practiceDetail/practiceDetail?courseId=${courseId}`
 		})
+
+		this.initial()
 	},
 
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
-		this.initial()
 	},
 
 	/**

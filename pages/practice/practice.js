@@ -315,10 +315,16 @@ Page({
 		let handlerBootCampList = []
 		for (const {kecheng_traincamp_id, date, status, kecheng_traincamp: {name}} of bootCampList) {
 			// 根据训练营查找对应的课程
-			let dayNum = dayjs().diff(dayjs(date), 'day') + 1
+			let dayDiff = dayjs().diff(dayjs(date), 'day', true)
+			let dayNum = dayDiff | 0
+			if (parseFloat(dayDiff) >= 0) {
+				dayNum += 1
+			} else {
+				dayNum = 0
+			}
 			let bootCampInfo = await queryBootCampContentInToday({
 				traincamp_id: kecheng_traincamp_id,
-				day_num: dayNum < 0 ? 0 : dayNum
+				day_num: dayNum
 			})
 
 			let content = bootCampInfo && bootCampInfo.content ? JSON.parse(bootCampInfo.content) : []
