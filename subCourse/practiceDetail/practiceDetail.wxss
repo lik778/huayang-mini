@@ -1,3 +1,4 @@
+@import "../../assets/css/common.wxss";
 .practice-detail {
     padding: 0 0 128rpx;
 }
@@ -68,17 +69,29 @@
     padding: 40rpx 0;
     box-sizing: border-box;
 }
-.scroll-item {
-    display: inline-block;
-    width: 280rpx;
-    height: 280rpx;
+.scroll-box {
+    display: inline-flex;
+    flex-direction: column;
     margin-right: 20rpx;
 }
-.scroll-item:first-child {
+.scroll-box:first-child {
     margin-left: 30rpx;
 }
-.scroll-item:last-child {
+.scroll-box:last-child {
     margin-right: 30rpx;
+}
+.scroll-item {
+    width: 280rpx;
+    height: 280rpx;
+    font: 32rpx/32rpx PingFang SC;
+}
+.scroll-item-name {
+    display: block;
+    width: 280rpx;
+    margin: 20rpx 0;
+}
+.scroll-item-count {
+    color: rgba(0,0,0, 0.6);
 }
 /*recent*/
 .recent {

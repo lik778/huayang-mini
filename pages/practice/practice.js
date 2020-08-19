@@ -57,6 +57,17 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
+		let {scene} = options
+		// 通过小程序码进入 scene=${source}
+		if (scene) {
+			let sceneAry = decodeURIComponent(scene).split('/');
+			let [sceneSource = ''] = sceneAry;
+
+			if (sceneSource) {
+				getApp().globalData.source = sceneSource
+			}
+		}
+
 		// 检查是否需要展示提示层
 		this.checkTipsLay()
 	},
@@ -315,10 +326,16 @@ Page({
 		let handlerBootCampList = []
 		for (const {kecheng_traincamp_id, date, status, kecheng_traincamp: {name}} of bootCampList) {
 			// 根据训练营查找对应的课程
-			let dayNum = dayjs().diff(dayjs(date), 'day') + 1
+			let dayDiff = dayjs().diff(dayjs(date), 'day', true)
+			let dayNum = dayDiff | 0
+			if (parseFloat(dayDiff) >= 0) {
+				dayNum += 1
+			} else {
+				dayNum = 0
+			}
 			let bootCampInfo = await queryBootCampContentInToday({
 				traincamp_id: kecheng_traincamp_id,
-				day_num: dayNum < 0 ? 0 : dayNum
+				day_num: dayNum
 			})
 
 			let content = bootCampInfo && bootCampInfo.content ? JSON.parse(bootCampInfo.content) : []

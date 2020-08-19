@@ -1,19 +1,8 @@
 // 加入训练营
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  checkAuth
-} from "../../utils/auth"
-import {
-  getCampDetail,
-  getHasJoinCamp,
-  joinCamp
-} from "../../api/course/index"
-import {
-  getLocalStorage,
-  payCourse
-} from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
+import { checkAuth } from "../../utils/auth"
+import { getCampDetail, getHasJoinCamp, joinCamp } from "../../api/course/index"
+import { getLocalStorage, payCourse } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -27,7 +16,7 @@ Page({
     campId: 0,
     titleName: "",
     joinTime: "",
-    hasJoinAll: false,//代表加入过
+    hasJoinAll: false, //代表加入过
     endTime: "",
     userInfo: "",
     hasAllTime: "",
@@ -233,26 +222,38 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // 记录分享人身份
-    if (options.invite_user_id) {
-      getApp().globalData.super_user_id = options.invite_user_id
+    let {scene, invite_user_id, source, id, share} = options
+    let campId = id
+    // 通过小程序码进入 scene=${source}/${id}/${share}
+    if (scene) {
+      let sceneAry = decodeURIComponent(scene).split('/');
+      let [sceneSource = '', sceneId = 0, sceneShare = ''] = sceneAry;
+      if (sceneId) {
+        campId = sceneId
+      }
+      if (sceneSource) {
+        getApp().globalData.source = sceneSource
+      }
+      this.setData({backIndex: !!sceneShare})
+    } else {
+      // 通过卡片进入
+      if (invite_user_id) {
+        getApp().globalData.super_user_id = invite_user_id
+      }
+      if (source) {
+        getApp().globalData.source = source
+      }
+      this.setData({backIndex: !!share})
     }
-    if (options.source) {
-      getApp().globalData.source = options.source
-    }
-
-    this.setData({
-      backIndex: !!options.share
-    })
 
     checkAuth({
       authPhone: true,
-      redirectPath: `/subCourse/joinCamp/joinCamp$id#${options.id}`,
+      redirectPath: `/subCourse/joinCamp/joinCamp$id#${campId}`,
       redirectType: 'redirect'
     }).then(() => {
       let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
       this.setData({
-        campId: options.id,
+        campId,
         userInfo: userInfo
       })
       // id代表训练营ID
