@@ -25,7 +25,7 @@
         <view class="week-line">
             <view class="day-container" wx:for="{{weeklyLog}}" wx:key="index">
                 <view>{{item.dateText}}</view>
-                <image class="day-icon" mode="aspectFit" src="{{TagImageUrls[item.status]}}"></image>
+                <image class="day-icon" mode="aspectFill" src="{{TagImageUrls[item.status]}}"></image>
             </view>
         </view>
     </view>
@@ -43,7 +43,7 @@
                     <view class="boot-camp-course" wx:for="{{item.content}}" wx:for-item="contentItem" wx:for-index="contentIndex" wx:key="contentIndex">
                         <view class="boot-camp-info">
                             <view class="icon-box">
-                                <image mode="aspectFit" class="icon-{{contentItem.type}}" src="{{CourseTypeImage[contentItem.type]}}"></image>
+                                <image mode="aspectFill" class="icon-{{contentItem.type}}" src="{{CourseTypeImage[contentItem.type]}}"></image>
                             </view>
                             <view>{{contentItem.name || contentItem.title}}</view>
                         </view>

@@ -13,7 +13,7 @@ Page({
 	 */
 	data: {
 		redirectPath: "",
-		redirectType: "",
+		redirectType: "redirect",
 		invite_user_id: 0,
 		didGetPhoneNumber: false,
 		show: false
@@ -125,9 +125,11 @@ Page({
 	/**
 	 * Lifecycle function--Called when page load
 	 */
-	onLoad: function ({invite_user_id = 0, source = '', redirectPath, redirectType}) {
-		redirectPath = redirectPath ? redirectPath.replace("$", "?") : ""
-		redirectPath = redirectPath ? redirectPath.replaceAll("#", "=") : ""
+	onLoad: function (options) {
+		let {invite_user_id = 0, source = '', redirectPath, redirectType} = options
+
+		redirectPath = redirectPath ? redirectPath.replace(/\$/, "?") : ""
+		redirectPath = redirectPath ? redirectPath.replace(/#/ig, "=") : ""
 		this.setData({
 			invite_user_id,
 			redirectPath,
