@@ -86,6 +86,7 @@
     font: 32rpx/32rpx PingFang SC;
 }
 .scroll-item-name {
+    display: block;
     width: 280rpx;
     margin: 20rpx 0;
 }
