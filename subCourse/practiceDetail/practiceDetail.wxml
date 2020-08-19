@@ -33,8 +33,8 @@
                 <view class="scroll-box" wx:for="{{actionQueue}}" wx:key="index">
                     <image class="scroll-item" mode="aspectFill"
                            src="{{item.cover}}"></image>
-                    <text class="scroll-item-name">{{item.name}}</text>
-                    <text class="scroll-item-count">{{item.cycleTime}}{{item.meta_type == 2 ? '次' : '秒'}}</text>
+                    <view class="scroll-item-name limit-one-line">{{item.name}}</view>
+                    <view class="scroll-item-count">{{item.cycleTime}}{{item.meta_type == 2 ? '次' : '秒'}}</view>
                 </view>
             </scroll-view>
         </view>

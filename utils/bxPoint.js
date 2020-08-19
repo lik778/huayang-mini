@@ -3,7 +3,7 @@
    1. url地址需要encodeURIComponet编译，避免接口get请求参数被截断问题
  */
 import { getLocalStorage } from "./util"
-import { GLOBAL_KEY } from "../lib/config"
+import { GLOBAL_KEY, ROOT_URL } from "../lib/config"
 import request from "../lib/request"
 
 
@@ -70,16 +70,22 @@ const bxPoint = function(siteId, params, ispv = true) {
       )
     })
   }
+
+  if (request.baseUrl === ROOT_URL.dev) {
+    params = {
+      ...params,
+      __debug: "1", // 打点数据，测试环境携带__dev，上线后去除该字段
+    }
+  }
+
   params = {
     ...commonParams,
     ...params,
-    // __debug: "1", // 测试打点数据，上线时记得去除
     time: +new Date(),
     site_id: siteId,
     tracktype: ispv ? "pageview" : "event",
     event_type: 'huayang'
   }
-  // console.log(params);
   return new Promise(resolve => {
     request._get('https://www.baixing.com/c/ev/huayang', params).then(() => {
       resolve()
