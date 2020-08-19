@@ -21,6 +21,8 @@
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
+    "useMultiFrameRuntime": false,
+    "useApiHook": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -30,9 +32,7 @@
     "useCompilerModule": false,
     "userConfirmedUseCompilerModuleSwitch": false,
     "packNpmManually": false,
-    "packNpmRelationList": [],
-    "useMultiFrameRuntime": false,
-    "useApiHook": true
+    "packNpmRelationList": []
   },
   "compileType": "miniprogram",
   "libVersion": "2.12.0",
@@ -149,7 +149,14 @@
           "id": 11,
           "name": "subCourse/joinCamp/joinCamp",
           "pathName": "subCourse/joinCamp/joinCamp",
-          "query": "id=1",
+          "query": "id=1&share=true",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/practice/practice",
+          "pathName": "/subCourse/joinCamp/joinCamp",
+          "query": "id=13&share=true",
           "scene": null
         }
       ]

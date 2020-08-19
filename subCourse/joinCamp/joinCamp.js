@@ -27,7 +27,7 @@ Page({
     campId: 0,
     titleName: "",
     joinTime: "",
-    hasJoinAll: false,//代表加入过
+    hasJoinAll: false, //代表加入过
     endTime: "",
     userInfo: "",
     hasAllTime: "",
@@ -233,13 +233,22 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // 记录分享人身份
-    if (options.invite_user_id) {
-      getApp().globalData.super_user_id = options.invite_user_id
+    let id = ''
+    if (options.scene) {
+      // 小程序码进入
+      id = options.scene.id
+    } else {
+      // 普通进入
+      // 记录分享人身份
+      if (options.invite_user_id) {
+        getApp().globalData.super_user_id = options.invite_user_id
+      }
+      if (options.source) {
+        getApp().globalData.source = options.source
+      }
+      id = options.id
     }
-    if (options.source) {
-      getApp().globalData.source = options.source
-    }
+
 
     this.setData({
       backIndex: !!options.share
@@ -247,12 +256,12 @@ Page({
 
     checkAuth({
       authPhone: true,
-      redirectPath: `/subCourse/joinCamp/joinCamp$id#${options.id}`,
+      redirectPath: `/subCourse/joinCamp/joinCamp$id#${id}`,
       redirectType: 'redirect'
     }).then(() => {
       let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
       this.setData({
-        campId: options.id,
+        campId: id,
         userInfo: userInfo
       })
       // id代表训练营ID
