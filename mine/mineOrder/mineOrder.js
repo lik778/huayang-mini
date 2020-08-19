@@ -49,7 +49,6 @@ Page({
       }
     }
     getMineOrder(params).then(res => {
-      console.log(res)
       if (res.code === 0) {
         this.setData({
           orderData: res.data
@@ -66,8 +65,6 @@ Page({
       wx.navigateTo({
         url: `/subCourse/campDetail/campDetail?id=${data.product_id}`,
       })
-      console.log(e)
-      console.log("去训练营")
     } else {
       wx.navigateToMiniProgram({
         appId: this.data.appId,
@@ -79,7 +76,6 @@ Page({
   // 获取有赞aooId
   getMiniProgramAppId() {
     getYouZanAppId().then(appId => {
-      console.log(appId)
       this.setData({
         appId
       })

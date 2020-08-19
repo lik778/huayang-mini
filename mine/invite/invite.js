@@ -1,23 +1,9 @@
 // mine/invite/invite.js
-import {
-  createCanvas
-} from "./canvas"
-import {
-  getInviteCode,
-  getVipNum,
-  getActivityTime
-} from "../../api/mine/index"
-import {
-  getSubscriptionStatus,
-  subscription
-} from "../../api/live/course"
-import {
-  getLocalStorage
-} from "../../utils/util"
-import {
-  GLOBAL_KEY,
-  SubscriptType
-} from "../../lib/config"
+import { createCanvas } from "./canvas"
+import { getActivityTime, getInviteCode, getVipNum } from "../../api/mine/index"
+import { getSubscriptionStatus, subscription } from "../../api/live/course"
+import { getLocalStorage } from "../../utils/util"
+import { GLOBAL_KEY, SubscriptType } from "../../lib/config"
 
 Page({
 
@@ -176,7 +162,6 @@ Page({
             }
           })
         } else {
-          console.log("获取授权好了")
           _this.saveImg({
             url: _this.data.canvasBgUrl,
             _this
@@ -197,7 +182,6 @@ Page({
         qcCode: this.data.qcCode,
         noteText: this.data.noteText
       }).then(url => {
-        console.log("canvas图片有了")
         this.setData({
           canvasBgUrl: url
         })
@@ -211,7 +195,6 @@ Page({
     url,
     _this
   }) {
-    console.log("保存")
     wx.saveImageToPhotosAlbum({
       filePath: url,
       success(res) {
@@ -344,7 +327,6 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (res) {
-    console.log(res)
     return {
       title: `${this.data.userInfo.nickname}刚加入花样汇，邀请你一起加入，免费课程看不完`,
       path: `/mine/joinVip/joinVip?scene=${getLocalStorage(GLOBAL_KEY.userId)}&from=invitePoster`,
