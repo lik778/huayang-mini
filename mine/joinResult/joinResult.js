@@ -1,15 +1,8 @@
 // mine/joinResult/joinResult.js
-import {
-  getUserInfo,
-  getScene
-} from "../../api/mine/index"
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  getLocalStorage,
-  setLocalStorage
-} from "../../utils/util"
+import { getScene, getUserInfo } from "../../api/mine/index"
+import { GLOBAL_KEY } from "../../lib/config"
+import { getLocalStorage, setLocalStorage } from "../../utils/util"
+
 Page({
 
   /**
@@ -47,7 +40,6 @@ Page({
     })
   },
   onClickHide(e) {
-    console.log(e)
     if (e.currentTarget.dataset.index === "1") {
       this.setData({
         showSuccess: false
