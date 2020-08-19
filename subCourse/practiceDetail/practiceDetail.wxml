@@ -30,8 +30,12 @@
                 <text class="preview-layer-02">{{actionQueue.length}}个动作</text>
             </view>
             <scroll-view class="scroller" scroll-x="{{true}}">
-                <image class="scroll-item" wx:for="{{actionQueue}}" wx:key="index" mode="aspectFit"
-                       src="{{item.cover}}"></image>
+                <view class="scroll-box" wx:for="{{actionQueue}}" wx:key="index">
+                    <image class="scroll-item" mode="aspectFill"
+                           src="{{item.cover}}"></image>
+                    <text class="scroll-item-name">{{item.name}}</text>
+                    <text class="scroll-item-count">{{item.cycleTime}}{{item.meta_type == 2 ? '次' : '秒'}}</text>
+                </view>
             </scroll-view>
         </view>
 
