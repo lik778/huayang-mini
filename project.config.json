@@ -149,7 +149,14 @@
           "id": 11,
           "name": "subCourse/joinCamp/joinCamp",
           "pathName": "subCourse/joinCamp/joinCamp",
-          "query": "id=1",
+          "query": "id=1&share=true",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/practice/practice",
+          "pathName": "/subCourse/joinCamp/joinCamp",
+          "query": "id=13&share=true",
           "scene": null
         }
       ]

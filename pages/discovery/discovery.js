@@ -1,11 +1,25 @@
 // pages/ discovery/discovery.js
-import { getLocalStorage, simpleDurationSimple } from "../../utils/util"
-import { checkAuth } from "../../utils/auth"
-import { getActivityList, getCampList, getFindBanner, getShowCourseList } from "../../api/course/index"
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  getLocalStorage,
+  simpleDurationSimple
+} from "../../utils/util"
+import {
+  checkAuth
+} from "../../utils/auth"
+import {
+  getActivityList,
+  getCampList,
+  getFindBanner,
+  getShowCourseList
+} from "../../api/course/index"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import request from "../../lib/request"
-import { getYouZanAppId } from "../../api/mall/index"
+import {
+  getYouZanAppId
+} from "../../api/mall/index"
 
 Page({
 
@@ -54,6 +68,7 @@ Page({
     let user_id = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id
     let user_grade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
     let baseUrl = `${request.baseUrl}/#/modelCompetition/introduce?activity_id=${activity_id}&user_id=${user_id}&user_grade=${user_grade}`
+    console.log(baseUrl)
     baseUrl = encodeURIComponent(baseUrl)
     wx.navigateTo({
       url: `/pages/webViewCommon/webViewCommon?link=${baseUrl}&type=link`,
