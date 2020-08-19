@@ -1,6 +1,11 @@
 // subCourse/campDetail/campDetail.js
-import { GLOBAL_KEY } from '../../lib/config'
-import { getProductInfo, getYouZanAppId } from '../../api/mall/index'
+import {
+  GLOBAL_KEY
+} from '../../lib/config'
+import {
+  getProductInfo,
+  getYouZanAppId
+} from '../../api/mall/index'
 import {
   getArticileLink,
   getCampDetail,
@@ -31,6 +36,8 @@ Page({
     articileLink: '',
     realNowDay: '',
     endTime: '',
+    bgStyle: '',
+    bgImgStyle: "",
     backIndex: false,
     cureentDay: '', //当前日期
     campId: 0, //训练营id
@@ -57,6 +64,12 @@ Page({
       weekList: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
       dateList: [],
     }, //日历时间存储
+  },
+  // 返回上一页
+  toLast() {
+    wx.switchTab({
+      url: '/pages/practice/practice',
+    })
   },
 
   // 加入交流群
@@ -122,6 +135,7 @@ Page({
       this.setData({
         campDetailData: res,
         cureentDay: cureentDay,
+        bgStyle: `background-image: url(${res.cover_pic})`,
         dateObj: {
           weekList: weekData,
           dateList: {
@@ -454,7 +468,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let {scene, id, share} = options
+    let {
+      scene,
+      id,
+      share
+    } = options
 
     // 通过小程序码进入 scene=${source}
     if (scene) {
@@ -475,7 +493,9 @@ Page({
     this.checkCamp(id)
     this.initCoverShow(id)
     this.getAppId()
-    this.setData({campId: id})
+    this.setData({
+      campId: id
+    })
   },
 
   /**
@@ -483,6 +503,10 @@ Page({
    */
   onReady: function () {
     this.videoContext = wx.createVideoContext('myVideo')
+    let systemInfo = wx.getMenuButtonBoundingClientRect().top
+    this.setData({
+      bgImgStyle: `top:${systemInfo}px`
+    })
   },
 
   /**

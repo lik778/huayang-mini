@@ -9,9 +9,22 @@
 }
 
 .bg {
-  background: #5f5f5f;
-  height: 272rpx;
+  /* background: #5f5f5f; */
+  /* height: 272rpx; */
+  height: 400rpx;
   position: relative;
+}
+
+.bg .backLast {
+  position: absolute;
+  width: 62rpx;
+  height: 62rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 16rpx;
+  top: 90rpx;
 }
 
 .bg-title {
