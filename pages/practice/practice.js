@@ -57,6 +57,17 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
+		let {scene} = options
+		// 通过小程序码进入 scene=${source}
+		if (scene) {
+			let sceneAry = decodeURIComponent(scene).split('/');
+			let [sceneSource = ''] = sceneAry;
+
+			if (sceneSource) {
+				getApp().globalData.source = sceneSource
+			}
+		}
+
 		// 检查是否需要展示提示层
 		this.checkTipsLay()
 	},

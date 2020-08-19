@@ -1,11 +1,6 @@
 // subCourse/campDetail/campDetail.js
-import {
-  GLOBAL_KEY
-} from '../../lib/config'
-import {
-  getProductInfo,
-  getYouZanAppId
-} from '../../api/mall/index'
+import { GLOBAL_KEY } from '../../lib/config'
+import { getProductInfo, getYouZanAppId } from '../../api/mall/index'
 import {
   getArticileLink,
   getCampDetail,
@@ -459,18 +454,28 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (options.share) {
+    let {scene, id, share} = options
+
+    // 通过小程序码进入 scene=${source}
+    if (scene) {
+      let sceneAry = decodeURIComponent(scene).split('/')
+      let [sceneSource = ''] = sceneAry
+
+      if (sceneSource) {
+        getApp().globalData.source = sceneSource
+      }
+    }
+
+    if (share) {
       this.setData({
         backIndex: true,
       })
     }
-    this.checkCamp(options.id)
 
-    this.initCoverShow(options.id)
+    this.checkCamp(id)
+    this.initCoverShow(id)
     this.getAppId()
-    this.setData({
-      campId: options.id,
-    })
+    this.setData({campId: id})
   },
 
   /**

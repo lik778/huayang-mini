@@ -1,25 +1,11 @@
 // pages/ discovery/discovery.js
-import {
-  getLocalStorage,
-  simpleDurationSimple
-} from "../../utils/util"
-import {
-  checkAuth
-} from "../../utils/auth"
-import {
-  getActivityList,
-  getCampList,
-  getFindBanner,
-  getShowCourseList
-} from "../../api/course/index"
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { getLocalStorage, simpleDurationSimple } from "../../utils/util"
+import { checkAuth } from "../../utils/auth"
+import { getActivityList, getCampList, getFindBanner, getShowCourseList } from "../../api/course/index"
+import { GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import request from "../../lib/request"
-import {
-  getYouZanAppId
-} from "../../api/mall/index"
+import { getYouZanAppId } from "../../api/mall/index"
 
 Page({
 
@@ -68,7 +54,6 @@ Page({
     let user_id = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id
     let user_grade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
     let baseUrl = `${request.baseUrl}/#/modelCompetition/introduce?activity_id=${activity_id}&user_id=${user_id}&user_grade=${user_grade}`
-    console.log(baseUrl)
     baseUrl = encodeURIComponent(baseUrl)
     wx.navigateTo({
       url: `/pages/webViewCommon/webViewCommon?link=${baseUrl}&type=link`,
@@ -178,12 +163,23 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // 记录分享人身份
-    if (options.invite_user_id) {
-      getApp().globalData.super_user_id = options.invite_user_id
-    }
-    if (options.source) {
-      getApp().globalData.source = options.source
+    let {scene, invite_user_id, source} = options
+    // 通过小程序码进入 scene=${source}
+    if (scene) {
+      let sceneAry = decodeURIComponent(scene).split('/');
+      let [sceneSource = ''] = sceneAry;
+
+      if (sceneSource) {
+        getApp().globalData.source = sceneSource
+      }
+    } else {
+      // 通过卡片进入
+      if (invite_user_id) {
+        getApp().globalData.super_user_id = invite_user_id
+      }
+      if (source) {
+        getApp().globalData.source = source
+      }
     }
   },
   /**

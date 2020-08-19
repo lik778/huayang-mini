@@ -37,15 +37,25 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		console.log(`source = ${options.source}`)
-		let {parentBootCampId = 0, courseId, source = '', formCampDetail, invite_user_id} = options
-		// 记录分享人身份
-		if (invite_user_id) {
-			getApp().globalData.super_user_id = invite_user_id
+		let {scene, parentBootCampId = 0, courseId, source = '', formCampDetail, invite_user_id} = options
+		// 通过小程序码进入 scene=${source}
+		if (scene) {
+			let sceneAry = decodeURIComponent(scene).split('/')
+			let [sceneSource = ''] = sceneAry
+
+			if (sceneSource) {
+				getApp().globalData.source = sceneSource
+			}
+		} else {
+			// 通过卡片进入
+			if (invite_user_id) {
+				getApp().globalData.super_user_id = invite_user_id
+			}
+			if (source) {
+				getApp().globalData.source = source
+			}
 		}
-		if (source) {
-			getApp().globalData.source = source
-		}
+
 		// 检查是否是训练营付费会员
 		if (formCampDetail === "payUser") {
 			this.setData({didPayUser: true})
