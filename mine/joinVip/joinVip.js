@@ -168,7 +168,6 @@ Page({
     },
     // 改变选择框
     changeChecked() {
-        console.log(this.data.checked, 9999999)
         this.setData({
             checked: !this.data.checked
         })
@@ -264,7 +263,6 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-        console.log(111)
     },
 
     /**

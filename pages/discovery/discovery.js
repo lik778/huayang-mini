@@ -89,7 +89,6 @@ Page({
         courseList: res
       })
       setTimeout(() => {
-        console.log(getLocalStorage('needToScrollTop'))
         if (Number(getLocalStorage('needToScrollTop')) === 1) {
           wx.pageScrollTo({
             scrollTop: 0

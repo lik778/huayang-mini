@@ -192,7 +192,6 @@ Page({
               hasAllTime: res.date.replace(/\//g, "-"),
               timeJoin: pushTime
             })
-            console.log(pushTime, 11)
             this.getCampDetail(id)
           } else {
             wx.redirectTo({

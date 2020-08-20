@@ -21,8 +21,6 @@
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
 		"compileHotReLoad": false,
-		"useMultiFrameRuntime": false,
-		"useApiHook": true,
 		"babelSetting": {
 			"ignore": [],
 			"disablePlugins": [],
@@ -31,6 +29,8 @@
 		"useIsolateContext": true,
 		"useCompilerModule": false,
 		"userConfirmedUseCompilerModuleSwitch": false,
+		"useMultiFrameRuntime": false,
+		"useApiHook": true,
 		"packNpmManually": false,
 		"packNpmRelationList": []
 	},
@@ -157,6 +157,20 @@
 					"name": "pages/discovery/discovery",
 					"pathName": "pages/discovery/discovery",
 					"query": "scene=discovery%2Fshare",
+					"scene": null
+				},
+				{
+					"id": 13,
+					"name": "subCourse/campDetail/campDetail",
+					"pathName": "subCourse/campDetail/campDetail",
+					"query": "id=21",
+					"scene": null
+				},
+				{
+					"id": 14,
+					"name": "pages/discovery/discovery",
+					"pathName": "pages/discovery/discovery",
+					"query": "",
 					"scene": null
 				}
 			]

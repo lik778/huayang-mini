@@ -21,7 +21,6 @@ Page({
     this.setData({
       radio: e.detail
     })
-    console.log(e.detail)
   },
   getWebViewData(mobile) {
     this.setData({

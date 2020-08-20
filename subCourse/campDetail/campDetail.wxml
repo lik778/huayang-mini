@@ -1,11 +1,12 @@
 <!--subCourse/campDetail/campDetail.wxml-->
 <view class="campdetail" wx:if="{{videoHeight!==0}}">
 	<!-- navibar栏 -->
-	<view class="navigation" style="padding-top:{{statusHeight+44}}px;background:#5F5F5F;">
+	<!-- <view class="navigation" style="padding-top:{{statusHeight+44}}px;background:#5F5F5F;">
 		<naviBar title="我的课程表" color="#5F5F5F" titleColor="#fff" forceGoBackIndex="{{backIndex}}"></naviBar>
-	</view>
+	</view> -->
 	<!-- 背景层 -->
-	<view class="bg">
+	<view class="bg" style="{{bgStyle}}">
+		<image class="backLast" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597131543zKwtZa.jpg" bindtap="toLast" style="{{bgImgStyle}}"></image>
 		<view class="bg-title">{{campDetailData.name}}</view>
 		<view class="bg-subtitle">第 {{campDetailData.nowDay}}/{{campDetailData.period}} 天</view>
 	</view>
@@ -17,7 +18,8 @@
 				<text wx:for="{{dateObj.weekList}}" wx:key="index">{{item}}</text>
 			</view>
 			<view class="date-line">
-				<view bindtap="toCureentDay" data-item='{{item}}' wx:for="{{dateObj.dateList.date}}" wx:key="index" class="{{item.dataNum<0?'':'sub-active'}}">
+				<view bindtap="toCureentDay" data-item='{{item}}' wx:for="{{dateObj.dateList.date}}" wx:key="index"
+					class="{{item.dataNum<0?'':'sub-active'}}">
 					<text style="{{cureentDay==item.id?styleObj.all:''}}">{{item.id}}</text>
 					<image wx:if="{{cureentDay==item.id}}" src="/assets/images/common/current-arrow.png"></image>
 				</view>
@@ -28,12 +30,14 @@
 		<view class="camp-container">
 			<view class="video" wx:if="{{videoSrc!==''}}" style="{{videoHeight}}">
 				<view class="video-cover" wx-if="{{showLock}}" style="{{videoHeight}}">
-					<image  src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597224125GjluUS.jpg"></image>
+					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597224125GjluUS.jpg"></image>
 				</view>
-				<view  style="{{videoHeight}}" class="video-cover" bindtap="playVideo" wx-if="{{showVideoCover&&!showLock}}">
+				<view style="{{videoHeight}}" class="video-cover" bindtap="playVideo" wx-if="{{showVideoCover&&!showLock}}">
 					<image src="/assets/images/common/play.png"></image>
 				</view>
-				<video id="myVideo" bindplay="hideCover" src="{{videoSrc}}" poster="{{posterSrc}}" style="{{videoHeight}}" controls="{{showLock?false:true}}" show-center-play-btn="{{false}}" bindpause="pauseVideo" bindended="initVideo"></video>
+				<video id="myVideo" bindplay="hideCover" src="{{videoSrc}}" poster="{{posterSrc}}" style="{{videoHeight}}"
+					controls="{{showLock?false:true}}" show-center-play-btn="{{false}}" bindpause="pauseVideo"
+					bindended="initVideo"></video>
 			</view>
 			<view class="course-list" wx:if="{{courseList.content.length>0}}">
 				<view class="course-item" wx:for="{{courseList.content}}" wx:key="index">
@@ -52,7 +56,8 @@
 							<text wx:if="{{item.type==='kecheng'}}" class="course-time">{{item.duration}}</text>
 						</view>
 						<view class="course-item-right-right" wx:if="{{!showLock}}">
-							<text wx:if="{{item.type==='kecheng'||item.type==='video'}}" bindtap="toDetail" data-item="{{item}}">练习</text>
+							<text wx:if="{{item.type==='kecheng'||item.type==='video'}}" bindtap="toDetail"
+								data-item="{{item}}">练习</text>
 							<text wx:else bindtap="toProduct" data-item="{{item}}">前往</text>
 						</view>
 						<view class="course-item-right-right" wx:else>
