@@ -16,7 +16,7 @@
 }
 
 .bg .backLast {
-  position: absolute;
+  position: fixed;
   width: 62rpx;
   height: 62rpx;
   border-radius: 50%;
