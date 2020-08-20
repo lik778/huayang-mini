@@ -14,8 +14,8 @@
     "wx85d130227f745fc5"
   ],
   "pages": [
-    "pages/practice/practice",
     "pages/discovery/discovery",
+    "pages/practice/practice",
     "pages/userCenter/userCenter",
     "pages/index/index",
     "pages/mine/mine",

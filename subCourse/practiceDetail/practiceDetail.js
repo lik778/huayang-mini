@@ -5,9 +5,10 @@ import {
 	joinCourseInGuide
 } from "../../api/course/index"
 import { $notNull, calculateExerciseTime, getLocalStorage } from "../../utils/util"
-import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
+import { CourseLevels, GLOBAL_KEY, Version } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import { checkAuth } from "../../utils/auth"
+import { checkFocusLogin } from "../../api/auth/index"
 
 Page({
 	/**
@@ -36,7 +37,7 @@ Page({
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
-	onLoad: function (options) {
+	onLoad: async function (options) {
 		let {scene, parentBootCampId = 0, courseId, source = '', formCampDetail, invite_user_id} = options
 		// 通过小程序码进入 scene=${source}
 		if (scene) {
@@ -61,11 +62,15 @@ Page({
 			this.setData({didPayUser: true})
 		}
 
-		checkAuth({
-			authPhone: true,
-			redirectPath: `/subCourse/practiceDetail/practiceDetail$courseId#${courseId}`,
-			redirectType: 'redirect'
-		})
+		// 是否强制手机号授权
+		let didFocusLogin = await checkFocusLogin({app_version: Version})
+		if (didFocusLogin) {
+			checkAuth({
+				authPhone: true,
+				redirectPath: `/subCourse/practiceDetail/practiceDetail$courseId#${courseId}`,
+				redirectType: 'redirect'
+			})
+		}
 
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 		this.setData({
