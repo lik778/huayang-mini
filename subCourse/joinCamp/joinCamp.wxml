@@ -22,7 +22,7 @@
 			<view>({{hasJoinAll?timeJoin : joinTime}}开营)</view>
 			<view>立即加入</view>
 		</view>
-		<view bindtap="joinCamp" class="join" wx:if="{{hasJoinAll}}">
+		<view bindtap="joinCamp" class="join-again" wx:if="{{hasJoinAll}}">
 			<view>恢复练习</view>
 		</view>
 	</view>
