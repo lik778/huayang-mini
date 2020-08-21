@@ -56,7 +56,7 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		let {scene} = options
+		let {scene, invite_user_id} = options
 		// 通过小程序码进入 scene=${source}
 		if (scene) {
 			let sceneAry = decodeURIComponent(scene).split('/')
@@ -65,6 +65,10 @@ Page({
 			if (sceneSource) {
 				getApp().globalData.source = sceneSource
 			}
+		}
+
+		if (invite_user_id) {
+			getApp().globalData.super_user_id = invite_user_id
 		}
 
 		// 检查是否需要展示提示层
@@ -128,11 +132,9 @@ Page({
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
-		let data = getLocalStorage(GLOBAL_KEY.userId)
-
 		return {
 			title: '跟着花样一起变美，变自信',
-			path: `/pages/practice/practice?invite_user_id=${data}`
+			path: `/pages/practice/practice?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
 		}
 	},
 	// 处理轮播点击事件
