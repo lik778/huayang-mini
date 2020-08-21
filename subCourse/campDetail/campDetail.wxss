@@ -13,6 +13,9 @@
   /* height: 272rpx; */
   height: 400rpx;
   position: relative;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .bg .backLast {

@@ -4,10 +4,9 @@ import {
 	getRecentVisitorList,
 	joinCourseInGuide
 } from "../../api/course/index"
-import { $notNull, calculateExerciseTime, getLocalStorage } from "../../utils/util"
+import { $notNull, calculateExerciseTime, getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
 import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
-import { checkAuth } from "../../utils/auth"
 
 Page({
 	/**
@@ -31,12 +30,13 @@ Page({
 		didShowAlert: false,
 		didPayUser: false, // 是否是付费用户
 		backPath: "", // 自定义导航栏返回路径
+		didShowAuth: false, // 授权弹窗
 	},
 
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
-	onLoad: function (options) {
+	onLoad: async function (options) {
 		let {scene, parentBootCampId = 0, courseId, source = '', formCampDetail, invite_user_id} = options
 		// 通过小程序码进入 scene=${source}
 		if (scene) {
@@ -60,12 +60,6 @@ Page({
 		if (formCampDetail === "payUser") {
 			this.setData({didPayUser: true})
 		}
-
-		checkAuth({
-			authPhone: true,
-			redirectPath: `/subCourse/practiceDetail/practiceDetail$courseId#${courseId}`,
-			redirectType: 'redirect'
-		})
 
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 		this.setData({
@@ -132,6 +126,18 @@ Page({
 			title: `我正在学习${this.data.courseInfoObj.name}，每天都有看的见的变化，快来试试`,
 			path: `/subCourse/practiceDetail/practiceDetail?courseId=${this.data.courseId}&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
 		}
+	},
+
+	// 用户拒绝授权
+	authCancelEvent(e) {
+		this.setData({didShowAuth: false})
+		console.log('用户完成授权')
+	},
+
+	// 用户完成授权
+	authCompleteEvent(e) {
+		this.setData({didShowAuth: false})
+		console.log('用户完成授权')
 	},
 
 	goToTask() {
@@ -242,7 +248,12 @@ Page({
 
 	// 开始练习
 	startPractice() {
-		bxPoint("practice_begin", {}, false)
+		if (!(hasAccountInfo() && hasUserInfo())) {
+			this.setData({didShowAuth: true})
+			return
+		}
+
+		bxPoint("practice_begin", {keChengId: this.data.courseId}, false)
 		createPracticeRecordInToday()
 		// 检查权限
 		if (!$notNull(this.data.accountInfo)) {
