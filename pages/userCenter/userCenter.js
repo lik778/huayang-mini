@@ -40,6 +40,7 @@ Page({
     hasCheckIn: false,
     showMessage: false,
     showAll: false,
+    fromOrderButton: false,
     baseUrl: '',
     gradeData: {
       experNum: 0,
@@ -82,6 +83,14 @@ Page({
       didShowAuth: false,
       noUserInfo: false
     })
+    if (this.data.fromOrderButton) {
+      this.setData({
+        fromOrderButton: false
+      })
+      wx.navigateTo({
+        url: '/mine/mineOrder/mineOrder',
+      })
+    }
   },
   // 判断是否需要填写用户资料
   needUpdateUserInfo(res) {
@@ -111,7 +120,6 @@ Page({
                   showLevelAlert: true
                 }
               })
-              // console.log(userInfoLate.user_grade, res.user_grade)
             } else {
               // 完善资料未升级
               this.setData({
@@ -175,8 +183,6 @@ Page({
     bxPoint("mine_task", {
       task_type: "signIn"
     }, false)
-    // console.log()
-    // return
     let experNumData = Number(e.currentTarget.dataset.type.textData2.split("+")[1])
     taskCheckIn({
       open_id: getLocalStorage(GLOBAL_KEY.openId),
@@ -190,7 +196,6 @@ Page({
       }).then(res => {
         this.getUserSingerInfo()
         if (res.has_grade) {
-          // if (false) {
           // 签到升级了
           this.setData({
             gradeData: {
@@ -260,9 +265,16 @@ Page({
   },
   // 我的订单
   toOrder() {
-    wx.navigateTo({
-      url: '/mine/mineOrder/mineOrder',
-    })
+    if (hasUserInfo() && hasAccountInfo()) {
+      wx.navigateTo({
+        url: '/mine/mineOrder/mineOrder',
+      })
+    } else {
+      this.setData({
+        didShowAuth: true,
+        fromOrderButton: true
+      })
+    }
   },
 
   // 获取客服号码
