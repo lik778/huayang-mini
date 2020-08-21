@@ -40,7 +40,10 @@ Page({
 		let timer = setTimeout(() => {
 			this.setData({didSkip: true})
 			clearTimeout(timer)
-		}, 9100)
+			wx.switchTab({
+				url: '/pages/discovery/discovery',
+			})
+		}, 7500)
 	},
 
 	/**

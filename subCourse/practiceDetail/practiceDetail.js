@@ -4,7 +4,7 @@ import {
 	getRecentVisitorList,
 	joinCourseInGuide
 } from "../../api/course/index"
-import { $notNull, calculateExerciseTime, getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
+import { calculateExerciseTime, getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
 import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 
@@ -248,6 +248,7 @@ Page({
 
 	// 开始练习
 	startPractice() {
+		// 检查权限
 		if (!(hasAccountInfo() && hasUserInfo())) {
 			this.setData({didShowAuth: true})
 			return
@@ -255,13 +256,6 @@ Page({
 
 		bxPoint("practice_begin", {keChengId: this.data.courseId}, false)
 		createPracticeRecordInToday()
-		// 检查权限
-		if (!$notNull(this.data.accountInfo)) {
-			wx.navigateTo({
-				url: "/pages/auth/auth"
-			})
-			return
-		}
 
 		// 检查是否是付费用户，是=>跳过用户等级检查，否=>检查用户等级
 		if (!this.data.didPayUser) {

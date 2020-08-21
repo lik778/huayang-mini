@@ -1,5 +1,5 @@
 // pages/ discovery/discovery.js
-import { getLocalStorage, simpleDurationSimple } from "../../utils/util"
+import { getLocalStorage, setLocalStorage, simpleDurationSimple } from "../../utils/util"
 import { checkAuth } from "../../utils/auth"
 import { getActivityList, getCampList, getFindBanner, getShowCourseList } from "../../api/course/index"
 import { GLOBAL_KEY } from "../../lib/config"
@@ -158,6 +158,16 @@ Page({
       url: `/subCourse/joinCamp/joinCamp?id=${e.currentTarget.dataset.index.id}&share=true`,
     })
   },
+  // 检查用户是否引导
+  checkUserGuide() {
+    let didUserGuided = getLocalStorage('has_user_guide_page')
+    if (didUserGuided !== 'yes') {
+      wx.navigateTo({
+        url: "/pages/coopen/coopen"
+      })
+      setLocalStorage('has_user_guide_page', 'yes')
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -180,6 +190,7 @@ Page({
         getApp().globalData.source = source
       }
     }
+    this.checkUserGuide()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
