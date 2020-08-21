@@ -366,7 +366,7 @@ Page({
     }
     return {
       title: '跟着花样一起变美，变自信',
-      path: `/pages/auth/auth`
+      path: `/pages/discovery/discovery?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
     }
   }
 })
