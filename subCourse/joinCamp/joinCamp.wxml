@@ -40,4 +40,7 @@
 			<view class="alert-btn" bindtap="goToTask">去完成</view>
 		</view>
 	</view>
+	<!-- 授权弹窗 -->
+	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
+	</authModule>
 </view>

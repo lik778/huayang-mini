@@ -1,15 +1,17 @@
 <!--pages/userCenter/userCenter.wxml-->
-<view class="user-center" wx:if="{{taskList.length!==0&&canShow&&showAll}}">
+<view class="user-center">
 	<view class="banner">
 		<!-- 背景图 -->
 		<image src="/assets/images/common/banner-bg.png"></image>
 		<!-- 个人信息 -->
 		<view class="message">
-			<image src="{{userInfo.avatar_url}}"></image>
-			<text>{{userInfo.nick_name}}</text>
+			<image wx:if="{{!noUserInfo}}" src="{{userInfo.avatar_url}}"></image>
+			<text wx:if="{{!noUserInfo}}">{{userInfo.nick_name}}</text>
+			<image wx:if="{{noUserInfo}}" src="noUserInfo" bindtap="getAuth"></image>
+			<text wx:if="{{noUserInfo}}" bindtap="getAuth">点击登录</text>
 		</view>
 		<!-- 经验条 -->
-		<view class="experience">
+		<view class="experience" wx:if="{{!noUserInfo}}">
 			<view class="experience-title">
 				<view class="experience-title-left">
 					<text class="experience-title-left-one">我的等级</text>
@@ -25,7 +27,7 @@
 		</view>
 	</view>
 	<!-- 完善个人资料 -->
-	<view class="full-message" wx:if="{{showMessage}}" bindtap="fullSelfMsg">
+	<view class="full-message" wx:if="{{showMessage&&showAll}}" bindtap="fullSelfMsg">
 		<view class="full-message-cover-one"></view>
 		<view class="full-message-cover"></view>
 		<view class="full-message-left">
@@ -37,7 +39,7 @@
 		</view>
 	</view>
 	<!-- 每日任务 -->
-	<view class="task" style="{{taskStyle}}">
+	<view class="task" style="{{taskStyle}}" wx:if="{{taskList.length!==0}}">
 		<view class="task-title">每日任务</view>
 		<view class="task-list">
 			<view class="task-item" wx:for="{{taskList}}" wx:key="index">
@@ -53,8 +55,8 @@
 						</view>
 					</view>
 				</view>
-				<view class="task-item-right" wx:if="{{item.TaskType==='task_checkin'&&!hasCheckIn}}" bindtap="checkin"
-					data-type="{{item}}">
+				<view class="task-item-right" wx:if="{{item.TaskType==='task_checkin'&&!hasCheckIn}}" data-type="{{item}}"
+					bindtap="{{noUserInfo?'getAuth':'checkin'}}">
 					签到
 				</view>
 				<view class="task-item-right-one" wx:if="{{item.TaskType==='task_checkin'&&hasCheckIn}}">
@@ -66,7 +68,10 @@
 				<view class="task-item-right" wx:if="{{item.TaskType==='task_pratice_playbill'}}" bindtap="pratice">
 					去打卡
 				</view>
-				<view class="task-item-right" wx:if="{{item.TaskType==='task_invite'}}" bindtap="invite">
+				<view class="task-item-right" wx:if="{{item.TaskType==='task_invite'&&noUserInfo}}" bindtap="getAuth">
+					去邀请
+				</view>
+				<view class="task-item-right" wx:if="{{item.TaskType==='task_invite'&&!noUserInfo}}" bindtap="invite">
 					去邀请
 					<button open-type='share'></button>
 				</view>
@@ -102,4 +107,7 @@
 	<levelAlert text02="{{gradeData.text02}}" text03="{{gradeData.text03}}" number="{{gradeData.experNum}}"
 		hasGrade="{{gradeData.upgrade}}" didShow="{{gradeData.showLevelAlert}}" wx:if="{{gradeData.showLevelAlert}}">
 	</levelAlert>
+	<!-- 授权弹窗 -->
+	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
+	</authModule>
 </view>

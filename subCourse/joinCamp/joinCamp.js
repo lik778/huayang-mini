@@ -1,8 +1,21 @@
 // 加入训练营
-import { GLOBAL_KEY } from "../../lib/config"
-import { checkAuth } from "../../utils/auth"
-import { getCampDetail, getHasJoinCamp, joinCamp } from "../../api/course/index"
-import { getLocalStorage, payCourse } from "../../utils/util"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
+import {
+  checkAuth
+} from "../../utils/auth"
+import {
+  getCampDetail,
+  getHasJoinCamp,
+  joinCamp
+} from "../../api/course/index"
+import {
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  payCourse
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -13,6 +26,7 @@ Page({
   data: {
     didShowAlert: false,
     statusHeight: 0,
+    didShowAuth: false,
     campId: 0,
     titleName: "",
     joinTime: "",
@@ -31,7 +45,6 @@ Page({
     getCampDetail({
       traincamp_id: id
     }).then(res => {
-      let userData = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
       let buttonType = 1
       res.desc = res.desc.split(",")
       this.setData({
@@ -70,7 +83,19 @@ Page({
         // 没有开营日期
         buttonType = 2
       }
+      if (!hasUserInfo() || !hasAccountInfo()) {
+        // 没有授权
+        this.setData({
+          campDetailData: res,
+          joinTime: pushTime,
+          buttonType: buttonType,
+          endTime: startDate,
+          campId: id
+        })
+        return
+      }
       if (res.discount_price === 0) {
+        let userData = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
         if (userData.user_grade < res.user_grade) {
           buttonType = 3
         }
@@ -96,45 +121,65 @@ Page({
       url: '/pages/userCenter/userCenter',
     })
   },
+  // 用户授权取消
+  authCancelEvent() {
+    this.setData({
+      didShowAuth: false
+    })
+  },
+  // 用户确认授权
+  authCompleteEvent() {
+    this.setData({
+      didShowAuth: false,
+    })
+    this.checkCamp(this.data.campId)
+    // this.joinCamp()
+  },
   // 加入训练营
   joinCamp() {
-    if (this.data.lock) {
-      this.setData({
-        lock: false
-      })
-      bxPoint("camp_join", {}, false)
-      joinCamp({
-        open_id: getLocalStorage(GLOBAL_KEY.openId),
-        // open_id:'oG8Rd5Zxr7cjV6tUdraUDdsOSS8w',
-        date: this.data.hasJoinAll ? this.data.hasAllTime : this.data.endTime,
-        traincamp_id: this.data.campId
-      }).then((res) => {
-        if (res.id) {
-          payCourse({
-            id: res.id,
-            name: '加入训练营'
-          }).then(res => {
-            // 设置顶部标题
-            if (res.errMsg === "requestPayment:ok") {
-              this.backFun({
-                type: "success"
-              })
-            } else {
+    if (hasUserInfo() && hasAccountInfo()) {
+      if (this.data.lock) {
+        this.setData({
+          lock: false
+        })
+        bxPoint("camp_join", {}, false)
+        joinCamp({
+          open_id: getLocalStorage(GLOBAL_KEY.openId),
+          // open_id:'oG8Rd5Zxr7cjV6tUdraUDdsOSS8w',
+          date: this.data.hasJoinAll ? this.data.hasAllTime : this.data.endTime,
+          traincamp_id: this.data.campId
+        }).then((res) => {
+          if (res.id) {
+            payCourse({
+              id: res.id,
+              name: '加入训练营'
+            }).then(res => {
+              // 设置顶部标题
+              if (res.errMsg === "requestPayment:ok") {
+                this.backFun({
+                  type: "success"
+                })
+              } else {
 
+                this.backFun({
+                  type: "fail"
+                })
+              }
+            }).catch(err => {
               this.backFun({
                 type: "fail"
               })
-            }
-          }).catch(err => {
-            this.backFun({
-              type: "fail"
             })
-          })
-        } else {
-          this.backFun({
-            type: "success"
-          })
-        }
+          } else {
+            this.backFun({
+              type: "success"
+            })
+          }
+        })
+      }
+    } else {
+      this.setData({
+        didShowAuth: true
       })
     }
 
@@ -221,7 +266,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let {scene, invite_user_id, source, id, share} = options
+    let {
+      scene,
+      invite_user_id,
+      source,
+      id,
+      share
+    } = options
     let campId = id
     // 通过小程序码进入 scene=${source}/${id}/${share}
     if (scene) {
@@ -233,7 +284,9 @@ Page({
       if (sceneSource) {
         getApp().globalData.source = sceneSource
       }
-      this.setData({backIndex: !!sceneShare})
+      this.setData({
+        backIndex: !!sceneShare
+      })
     } else {
       // 通过卡片进入
       if (invite_user_id) {
@@ -242,14 +295,12 @@ Page({
       if (source) {
         getApp().globalData.source = source
       }
-      this.setData({backIndex: !!share})
+      this.setData({
+        backIndex: !!share
+      })
     }
 
-    checkAuth({
-      authPhone: true,
-      redirectPath: `/subCourse/joinCamp/joinCamp$id#${campId}`,
-      redirectType: 'redirect'
-    }).then(() => {
+    if (hasUserInfo() && hasAccountInfo()) {
       let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
       this.setData({
         campId,
@@ -257,7 +308,15 @@ Page({
       })
       // id代表训练营ID
       this.checkCamp(this.data.campId)
-    })
+
+    } else {
+      this.setData({
+        campId: campId
+      })
+      // id代表训练营ID
+      this.getCampDetail(campId)
+      console.log('搜索')
+    }
   },
 
   /**

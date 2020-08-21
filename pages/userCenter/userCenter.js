@@ -1,4 +1,6 @@
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 import request from "../../lib/request"
 import {
   getPhoneNumber,
@@ -8,8 +10,15 @@ import {
   needUpdateUserInfo,
   taskCheckIn
 } from "../../api/course/index"
-import { getUserInfo } from "../../api/mine/index"
-import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage } from "../../utils/util"
+import {
+  getUserInfo
+} from "../../api/mine/index"
+import {
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  setLocalStorage
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -19,7 +28,9 @@ Page({
    */
   data: {
     userInfo: null,
+    didShowAuth: false,
     statusHeight: 0,
+    noUserInfo: true,
     taskList: [],
     canShow: false,
     processStyle: "width:0%;",
@@ -50,6 +61,26 @@ Page({
         })
       })
 
+    })
+  },
+  // 获取授权
+  getAuth() {
+    this.setData({
+      didShowAuth: true
+    })
+  },
+  // 用户授权取消
+  authCancelEvent() {
+    this.setData({
+      didShowAuth: false
+    })
+  },
+  // 用户确认授权
+  authCompleteEvent() {
+    this.initFun()
+    this.setData({
+      didShowAuth: false,
+      noUserInfo: false
     })
   },
   // 判断是否需要填写用户资料
@@ -242,7 +273,13 @@ Page({
       })
     })
   },
-
+  //公用方法
+  initFun() {
+    this.getUserInfo()
+    this.getSignData()
+    this.getNumber()
+    this.getUserSingerInfo()
+  },
   // 联系客服
   callPhone(e) {
     wx.makePhoneCall({
@@ -278,14 +315,16 @@ Page({
     }
 
     if (hasUserInfo() && hasAccountInfo()) {
-      this.getUserInfo()
-      this.getSignData()
-      this.getNumber()
-
-      this.getTaskList()
-      this.getUserSingerInfo()
+      this.initFun()
+      this.setData({
+        noUserInfo: false
+      })
+    } else {
+      this.setData({
+        noUserInfo: true
+      })
     }
-
+    this.getTaskList()
     bxPoint("applets_mine", {})
   },
 
