@@ -1,15 +1,15 @@
 import { GLOBAL_KEY } from "../../lib/config"
 import request from "../../lib/request"
 import {
-	getPhoneNumber,
-	getSignData,
-	getTaskList,
-	increaseExp,
-	needUpdateUserInfo,
-	taskCheckIn
+  getPhoneNumber,
+  getSignData,
+  getTaskList,
+  increaseExp,
+  needUpdateUserInfo,
+  taskCheckIn
 } from "../../api/course/index"
 import { getUserInfo } from "../../api/mine/index"
-import { getLocalStorage, setLocalStorage } from "../../utils/util"
+import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -277,12 +277,14 @@ Page({
       })
     }
 
-    this.getUserInfo()
-    this.getSignData()
-    this.getNumber()
+    if (hasUserInfo() && hasAccountInfo()) {
+      this.getUserInfo()
+      this.getSignData()
+      this.getNumber()
 
-    this.getTaskList()
-    this.getUserSingerInfo()
+      this.getTaskList()
+      this.getUserSingerInfo()
+    }
 
     bxPoint("applets_mine", {})
   },

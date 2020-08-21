@@ -110,10 +110,9 @@ Page({
 	 */
 	onShareAppMessage: function () {
 		bxPoint("course_clock", {type: "clock"}, false)
-		let data = getLocalStorage(GLOBAL_KEY.userId)
 		return {
 			title: "跟着花样一起变美，变自信",
-			path: `/pages/auth/auth?invite_user_id=${data}`
+			path: `/subCourse/practiceDetail/practiceDetail?courseId=${this.data.postData.keChengId}&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
 		}
 	},
 	// 打卡

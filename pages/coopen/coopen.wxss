@@ -73,8 +73,8 @@
     -webkit-animation-fill-mode: backwards!important;
 }
 .bg-animate {
-    animation: bg 1s 8s forwards;
-    -webkit-animation: bg 1s 8s forwards;
+    animation: bg 1s 7s forwards;
+    -webkit-animation: bg 1s 7s forwards;
 }
 /*page-02*/
 .page-02 {

@@ -132,7 +132,7 @@ Page({
 
 		return {
 			title: '跟着花样一起变美，变自信',
-			path: `/pages/auth/auth?invite_user_id=${data}`
+			path: `/pages/practice/practice?invite_user_id=${data}`
 		}
 	},
 	// 处理轮播点击事件
