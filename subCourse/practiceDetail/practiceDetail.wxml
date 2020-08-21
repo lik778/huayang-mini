@@ -63,4 +63,6 @@
             <view class="alert-btn" bindtap="goToTask">去完成</view>
         </view>
     </view>
+
+    <auth show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></auth>
 </view>

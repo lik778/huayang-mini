@@ -1,7 +1,4 @@
-// pages/userCenter/userCenter.js
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { GLOBAL_KEY } from "../../lib/config"
 import request from "../../lib/request"
 import {
 	getPhoneNumber,
@@ -11,16 +8,8 @@ import {
 	needUpdateUserInfo,
 	taskCheckIn
 } from "../../api/course/index"
-import {
-  getUserInfo
-} from "../../api/mine/index"
-import {
-  getLocalStorage,
-  setLocalStorage
-} from "../../utils/util"
-import {
-  checkAuth
-} from "../../utils/auth"
+import { getUserInfo } from "../../api/mine/index"
+import { getLocalStorage, setLocalStorage } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -287,15 +276,10 @@ Page({
         selected: 2
       })
     }
-    checkAuth({
-      authPhone: true,
-      redirectPath: "/pages/practice/practice",
-      redirectType: "switch"
-    }).then(() => {
-      this.getUserInfo()
-      this.getSignData()
-      this.getNumber()
-    })
+
+    this.getUserInfo()
+    this.getSignData()
+    this.getNumber()
 
     this.getTaskList()
     this.getUserSingerInfo()
