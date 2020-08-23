@@ -7,7 +7,7 @@
 		<view class="message">
 			<image wx:if="{{!noUserInfo}}" src="{{userInfo.avatar_url}}"></image>
 			<text wx:if="{{!noUserInfo}}">{{userInfo.nick_name}}</text>
-			<image wx:if="{{noUserInfo}}" src="noUserInfo" bindtap="getAuth"></image>
+			<image wx:if="{{noUserInfo}}" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1598157462sLyHMj.jpg" bindtap="getAuth"></image>
 			<text wx:if="{{noUserInfo}}" bindtap="getAuth">点击登录</text>
 		</view>
 		<!-- 经验条 -->
