@@ -1,5 +1,13 @@
 // subCourse/actionPost/actionPost.js
-import { $notNull, calcStringLen, getLocalStorage, queryWxAuth, splitTargetNoString, toast } from "../../utils/util"
+import {
+	$notNull,
+	batchDownloadFiles,
+	calcStringLen,
+	getLocalStorage,
+	queryWxAuth,
+	splitTargetNoString,
+	toast
+} from "../../utils/util"
 import { GLOBAL_KEY, WX_AUTH_TYPE } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import { increaseExp, queryPunchCardBg, queryPunchCardQrCode, queryUserHaveClassesInfo } from "../../api/course/index"
@@ -262,20 +270,23 @@ Page({
 	drawCanvas() {
 		let {cover, avatar, qrCode} = this.data.postData
 		let assets = [cover, avatar, qrCode]
-		let promiseAry = []
-		assets.forEach(src => {
-			promiseAry.push(new Promise(resolve => {
-				wx.getImageInfo({
-					src,
-					success({path}) {
-						resolve(path)
-					}
-				})
-			}))
-		})
-		Promise.all(promiseAry).then(([coverImage, avatarImage, qrCodeImage]) => {
+
+		batchDownloadFiles(assets).then(([coverImage, avatarImage, qrCodeImage]) => {
 			this.drawHiddenCanvas(coverImage, avatarImage, qrCodeImage, this.data.postData.recordNo)
 		})
+		// assets.forEach(src => {
+		// 	promiseAry.push(new Promise(resolve => {
+		// 		wx.getImageInfo({
+		// 			src,
+		// 			success({path}) {
+		// 				resolve(path)
+		// 			}
+		// 		})
+		// 	}))
+		// })
+		// Promise.all(promiseAry).then(([coverImage, avatarImage, qrCodeImage]) => {
+		// 	this.drawHiddenCanvas(coverImage, avatarImage, qrCodeImage, this.data.postData.recordNo)
+		// })
 	},
 	initial() {
 		this.drawCanvas()
