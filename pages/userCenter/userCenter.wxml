@@ -5,10 +5,10 @@
 		<image src="/assets/images/common/banner-bg.png"></image>
 		<!-- 个人信息 -->
 		<view class="message">
-			<image wx:if="{{!noUserInfo}}" src="{{userInfo.avatar_url}}"></image>
-			<text wx:if="{{!noUserInfo}}">{{userInfo.nick_name}}</text>
-			<image wx:if="{{noUserInfo}}" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1598157462sLyHMj.jpg" bindtap="getAuth"></image>
-			<text wx:if="{{noUserInfo}}" bindtap="getAuth">点击登录</text>
+			<image wx:if="{{!nodata}}" src="{{userInfo.avatar_url}}"></image>
+			<text wx:if="{{!nodata}}">{{userInfo.nick_name||userInfo.nickname}}</text>
+			<image wx:if="{{nodata}}" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1598157462sLyHMj.jpg" bindtap="getAuth"></image>
+			<text wx:if="{{nodata}}" bindtap="getAuth">点击登录</text>
 		</view>
 		<!-- 经验条 -->
 		<view class="experience" wx:if="{{!noUserInfo}}">

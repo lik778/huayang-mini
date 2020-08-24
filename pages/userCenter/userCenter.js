@@ -31,6 +31,7 @@ Page({
     didShowAuth: false,
     statusHeight: 0,
     noUserInfo: true,
+    nodata: true,
     taskList: [],
     canShow: false,
     processStyle: "width:0%;",
@@ -325,15 +326,25 @@ Page({
         selected: 2
       })
     }
-
-    if (hasUserInfo() && hasAccountInfo()) {
+    if (hasUserInfo() && !hasAccountInfo()) {
+      // 有微信信息没有手机号信息
+      this.setData({
+        userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)),
+        noUserInfo: true,
+        nodata: false,
+      })
+    } else if (hasUserInfo() && hasAccountInfo()) {
+      // 有微信信息且有手机号信息
       this.initFun()
       this.setData({
-        noUserInfo: false
+        noUserInfo: false,
+        nodata: false
       })
     } else {
+      // nothing
       this.setData({
-        noUserInfo: true
+        noUserInfo: true,
+        nodata: true
       })
     }
     this.getTaskList()
