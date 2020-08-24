@@ -25,7 +25,7 @@
 }
 
 .box-fade-out {
-    animation: fadeOut 161ms ease-out;
+    animation: fadeOut 161ms ease-out forwards;
 }
 .tip {
     text-align: center;

@@ -34,7 +34,8 @@ Page({
 		PrepareNumber: "准备", // 预备文案
 
 		didShowRestLayer: false, // 休息层
-		restTimeText: "00:00", // 休息时间
+		restTimeNo: 0, // 休息时间
+		restTimeText: "00:00", // 休息时间文案
 		didPauseRest: false, // 是否暂停休息阶段
 		didLeaveRestImmediate: false, // 是否立即结束休息阶段
 
@@ -496,7 +497,7 @@ Page({
 				// 休息完开始下一个动作
 				let restPromise = new Promise(resolve => {
 					let timer = null
-					let delayTime = this.data.targetActionObj.restTime
+					let delayTime = this.data.restTimeNo
 					let doneTime = 1
 					timer = setInterval(() => {
 						// 用户是否暂停休息时间
@@ -599,7 +600,8 @@ Page({
 		let voices = voices_ary.slice(+splitSizeAry[0], +splitSizeAry[1])
 
 		this.setData({
-			didPlayMainPointAudioInCurrentTargetAction: false
+			didPlayMainPointAudioInCurrentTargetAction: false,
+			restTimeNo: restTime
 		})
 
 		this.playCommand(voices)
