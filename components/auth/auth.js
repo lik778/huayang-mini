@@ -18,7 +18,7 @@ Component({
           let timer = setTimeout(() => {
             this.setData({didVisible: newVal})
             clearTimeout(timer)
-          }, 160)
+          }, 200)
         }
       }
     }
