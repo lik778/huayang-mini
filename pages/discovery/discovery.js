@@ -235,6 +235,7 @@ Page({
     } else {
       // 通过卡片进入
       if (invite_user_id) {
+        setLocalStorage(GLOBAL_KEY.invite_user_id,invite_user_id)
         getApp().globalData.super_user_id = invite_user_id
       }
       if (source) {
