@@ -1,28 +1,11 @@
 // pages/ discovery/discovery.js
-import {
-  getLocalStorage,
-  setLocalStorage,
-  hasAccountInfo,
-  hasUserInfo,
-  simpleDurationSimple
-} from "../../utils/util"
-import {
-  checkAuth
-} from "../../utils/auth"
-import {
-  getActivityList,
-  getCampList,
-  getFindBanner,
-  getShowCourseList
-} from "../../api/course/index"
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage, simpleDurationSimple } from "../../utils/util"
+import { checkAuth } from "../../utils/auth"
+import { getActivityList, getCampList, getFindBanner, getShowCourseList } from "../../api/course/index"
+import { GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import request from "../../lib/request"
-import {
-  getYouZanAppId
-} from "../../api/mall/index"
+import { getYouZanAppId } from "../../api/mall/index"
 
 Page({
 
@@ -235,7 +218,6 @@ Page({
     } else {
       // 通过卡片进入
       if (invite_user_id) {
-        setLocalStorage(GLOBAL_KEY.invite_user_id,invite_user_id)
         getApp().globalData.super_user_id = invite_user_id
       }
       if (source) {

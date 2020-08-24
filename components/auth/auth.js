@@ -1,6 +1,6 @@
 import { wxGetUserInfoPromise, wxLoginPromise } from "../../utils/auth"
-import { bindUserInfo, bindWxPhoneNumber, checkFocusLogin, getWxInfo } from "../../api/auth/index"
-import { APP_LET_ID, GLOBAL_KEY, Version } from "../../lib/config"
+import { bindUserInfo, bindWxPhoneNumber, getWxInfo } from "../../api/auth/index"
+import { APP_LET_ID, GLOBAL_KEY } from "../../lib/config"
 import { $notNull, getLocalStorage, setLocalStorage } from "../../utils/util"
 
 Component({
@@ -79,18 +79,18 @@ Component({
         errMsg = '', encryptedData: encrypted_data = '', iv = ''
       } = e.detail
 
-      // 是否强制手机号授权
-      let didFocusLogin = await checkFocusLogin({app_version: Version})
-
       if (errMsg.includes('ok')) {
         let open_id = getLocalStorage(GLOBAL_KEY.openId)
+        let params = {
+          open_id,
+          encrypted_data,
+          iv,
+        }
         if (encrypted_data && iv) {
-          let originAccountInfo = await bindWxPhoneNumber({
-            open_id,
-            encrypted_data,
-            iv,
-            invite_user_id: this.data.invite_user_id
-          })
+          if (getApp().globalData.invite_user_id) {
+            params = {...params, invite_user_id: getApp().globalData.invite_user_id}
+          }
+          let originAccountInfo = await bindWxPhoneNumber(params)
           setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
         }
       this.complete()
