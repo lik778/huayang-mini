@@ -496,6 +496,11 @@ Page({
     this.setData({
       campId: id
     })
+
+    // 记录起始页面地址
+		if (!getApp().globalData.firstViewPage && getCurrentPages().length > 0) {
+			getApp().globalData.firstViewPage = getCurrentPages()[0].route
+		}
   },
 
   /**

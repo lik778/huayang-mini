@@ -225,6 +225,7 @@ Page({
   // 检查用户是否引导
   checkUserGuide() {
     let didUserGuided = getLocalStorage('has_user_guide_page')
+    if (getApp().globalData.firstViewPage) return
     if (didUserGuided !== 'yes') {
       wx.navigateTo({
         url: "/pages/coopen/coopen"

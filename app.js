@@ -55,6 +55,7 @@ App({
 	},
 	globalData: {
 		didSendRemindWithUserId: false, // 是否携带userId调用过弹窗接口
+		firstViewPage: "", // 用户打开的第一个页面地址
 		super_user_id: 0, // 上级邀请人id
 		source: "" // 用户场景来源
 	}
