@@ -71,18 +71,12 @@ const bxPoint = function(siteId, params, ispv = true) {
     })
   }
 
-  if (request.baseUrl === ROOT_URL.dev) {
-    params = {
-      ...params,
-      __debug: "1", // 打点数据，测试环境携带__dev，上线后去除该字段
-    }
-  }
-
   params = {
     ...commonParams,
     ...params,
     time: +new Date(),
     site_id: siteId,
+    __debug: "1", // 打点数据，测试环境携带__dev，上线后去除该字段
     tracktype: ispv ? "pageview" : "event",
     event_type: 'huayang'
   }
