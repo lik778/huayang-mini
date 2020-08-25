@@ -332,6 +332,8 @@ Page({
         userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)),
         noUserInfo: true,
         nodata: false,
+        taskStyle: "top:-138rpx",
+        functionStyle: "top:-138rpx"
       })
     } else if (hasUserInfo() && hasAccountInfo()) {
       // 有微信信息且有手机号信息
