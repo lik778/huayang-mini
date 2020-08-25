@@ -95,7 +95,7 @@ Page({
     let baseUrl = `${this.data.modelBannerLink}&user_id=${user_id}&user_grade=${user_grade}`
     baseUrl = encodeURIComponent(baseUrl)
     wx.navigateTo({
-      url: `/pages/webViewCommon/webViewCommon?link=${baseUrl}&type=link`,
+      url: `/pages/webViewCommon/webViewCommon?link=${baseUrl}&type=link&isModel=true`,
     })
   },
   // 跳转到模特大赛
