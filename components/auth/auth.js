@@ -108,11 +108,10 @@ Component({
           iv,
         }
         if (encrypted_data && iv) {
-          console.log(getApp().globalData.invite_user_id)
-          if (getApp().globalData.invite_user_id) {
+          if (getApp().globalData.super_user_id) {
             params = {
               ...params,
-              invite_user_id: getApp().globalData.invite_user_id
+              invite_user_id: getApp().globalData.super_user_id
             }
           }
           let originAccountInfo = await bindWxPhoneNumber(params)
