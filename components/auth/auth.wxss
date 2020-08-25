@@ -11,7 +11,7 @@
 
 .box {
     position: relative;
-    margin: 300rpx auto;
+    margin: 40% auto;
     width: 600rpx;
     height: 620rpx;
     padding: 50rpx 30rpx 40rpx;
