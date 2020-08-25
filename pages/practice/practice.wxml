@@ -17,7 +17,7 @@
     </view>
 
     <!--  本周练习进度  -->
-    <view class="support-layer">
+    <view class="support-layer" wx:if="{{weeklyLog.length>0}}">
         <view class="week-line">
             <view class="day-container" wx:for="{{weeklyLog}}" wx:key="index">
                 <view>{{item.dateText}}</view>

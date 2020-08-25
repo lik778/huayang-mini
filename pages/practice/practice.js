@@ -73,6 +73,11 @@ Page({
 
 		// 检查是否需要展示提示层
 		this.checkTipsLay()
+
+		// 记录起始页面地址
+		if (!getApp().globalData.firstViewPage && getCurrentPages().length > 0) {
+			getApp().globalData.firstViewPage = getCurrentPages()[0].route
+		}
 	},
 
 	/**
