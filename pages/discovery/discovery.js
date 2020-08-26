@@ -123,7 +123,7 @@ Page({
       })
     })
     let show = false
-    let isStage = true //正式上线后需要置为false
+    let isStage = false //正式上线后需要置为false
     if (request.baseUrl === 'https://huayang.baixing.cn') {
       // 测试环境
       show = true
