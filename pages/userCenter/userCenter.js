@@ -1,6 +1,4 @@
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { GLOBAL_KEY } from "../../lib/config"
 import request from "../../lib/request"
 import {
   getPhoneNumber,
@@ -10,15 +8,8 @@ import {
   needUpdateUserInfo,
   taskCheckIn
 } from "../../api/course/index"
-import {
-  getUserInfo
-} from "../../api/mine/index"
-import {
-  getLocalStorage,
-  hasAccountInfo,
-  hasUserInfo,
-  setLocalStorage
-} from "../../utils/util"
+import { getUserInfo } from "../../api/mine/index"
+import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -127,7 +118,7 @@ Page({
                 gradeData: {
                   experNum: 100,
                   text02: "完善资料成功",
-                  text03: res.user_grade < 3 ? `还差${res.next_level_experience-res.user_experience}升至Lv${res.user_grade+1}` : "",
+                  text03: res.user_grade < 3 ? `还差${res.next_level_experience-res.user_experience}升至Lv${res.user_grade+1}解锁` : "",
                   upgrade: false,
                   showLevelAlert: true
                 }
@@ -213,7 +204,7 @@ Page({
             gradeData: {
               experNum: experNumData,
               text02: "签到成功",
-              text03: res.level < 3 ? `还差${res.next_experience - res.experience}升至Lv${res.level+1}` : "",
+              text03: res.level < 3 ? `还差${res.next_experience - res.experience}升至Lv${res.level+1}解锁` : "",
               upgrade: false,
               showLevelAlert: true
             }

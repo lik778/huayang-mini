@@ -562,7 +562,7 @@ Page({
 						didShowLevelAlert: true,
 						hasGrade: data.has_grade,
 						levelNumber: data.has_grade ? data.level : 10,
-						nextLevelText: data.level < 3 ? `还差${data.next_experience - data.experience}升至Lv${data.level + 1}` : ""
+						nextLevelText: data.level < 3 ? `还差${data.next_experience - data.experience}升至Lv${data.level + 1}解锁` : ""
 					})
 				}
 			})
