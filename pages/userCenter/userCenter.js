@@ -1,26 +1,15 @@
-// pages/userCenter/userCenter.js
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { GLOBAL_KEY } from "../../lib/config"
 import request from "../../lib/request"
 import {
-	getPhoneNumber,
-	getSignData,
-	getTaskList,
-	increaseExp,
-	needUpdateUserInfo,
-	taskCheckIn
+  getPhoneNumber,
+  getSignData,
+  getTaskList,
+  increaseExp,
+  needUpdateUserInfo,
+  taskCheckIn
 } from "../../api/course/index"
-import {
-  getUserInfo
-} from "../../api/mine/index"
-import {
-  getLocalStorage,
-  setLocalStorage
-} from "../../utils/util"
-import {
-  checkAuth
-} from "../../utils/auth"
+import { getUserInfo } from "../../api/mine/index"
+import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -30,7 +19,10 @@ Page({
    */
   data: {
     userInfo: null,
+    didShowAuth: false,
     statusHeight: 0,
+    noUserInfo: true,
+    nodata: true,
     taskList: [],
     canShow: false,
     processStyle: "width:0%;",
@@ -40,6 +32,7 @@ Page({
     hasCheckIn: false,
     showMessage: false,
     showAll: false,
+    fromOrderButton: false,
     baseUrl: '',
     gradeData: {
       experNum: 0,
@@ -62,6 +55,34 @@ Page({
       })
 
     })
+  },
+  // 获取授权
+  getAuth() {
+    this.setData({
+      didShowAuth: true
+    })
+  },
+  // 用户授权取消
+  authCancelEvent() {
+    this.setData({
+      didShowAuth: false
+    })
+  },
+  // 用户确认授权
+  authCompleteEvent() {
+    this.initFun()
+    this.setData({
+      didShowAuth: false,
+      noUserInfo: false
+    })
+    if (this.data.fromOrderButton) {
+      this.setData({
+        fromOrderButton: false
+      })
+      wx.navigateTo({
+        url: '/mine/mineOrder/mineOrder',
+      })
+    }
   },
   // 判断是否需要填写用户资料
   needUpdateUserInfo(res) {
@@ -91,14 +112,13 @@ Page({
                   showLevelAlert: true
                 }
               })
-              // console.log(userInfoLate.user_grade, res.user_grade)
             } else {
               // 完善资料未升级
               this.setData({
                 gradeData: {
                   experNum: 100,
                   text02: "完善资料成功",
-                  text03: res.user_grade < 3 ? `还差${res.next_level_experience-res.user_experience}升至Lv${res.user_grade+1}` : "",
+                  text03: res.user_grade < 3 ? `还差${res.next_level_experience-res.user_experience}升至Lv${res.user_grade+1}解锁` : "",
                   upgrade: false,
                   showLevelAlert: true
                 }
@@ -155,8 +175,6 @@ Page({
     bxPoint("mine_task", {
       task_type: "signIn"
     }, false)
-    // console.log()
-    // return
     let experNumData = Number(e.currentTarget.dataset.type.textData2.split("+")[1])
     taskCheckIn({
       open_id: getLocalStorage(GLOBAL_KEY.openId),
@@ -170,7 +188,6 @@ Page({
       }).then(res => {
         this.getUserSingerInfo()
         if (res.has_grade) {
-          // if (false) {
           // 签到升级了
           this.setData({
             gradeData: {
@@ -187,7 +204,7 @@ Page({
             gradeData: {
               experNum: experNumData,
               text02: "签到成功",
-              text03: res.level < 3 ? `还差${res.next_experience - res.experience}升至Lv${res.level+1}` : "",
+              text03: res.level < 3 ? `还差${res.next_experience - res.experience}升至Lv${res.level+1}解锁` : "",
               upgrade: false,
               showLevelAlert: true
             }
@@ -240,9 +257,16 @@ Page({
   },
   // 我的订单
   toOrder() {
-    wx.navigateTo({
-      url: '/mine/mineOrder/mineOrder',
-    })
+    if (hasUserInfo() && hasAccountInfo()) {
+      wx.navigateTo({
+        url: '/mine/mineOrder/mineOrder',
+      })
+    } else {
+      this.setData({
+        didShowAuth: true,
+        fromOrderButton: true
+      })
+    }
   },
 
   // 获取客服号码
@@ -253,7 +277,13 @@ Page({
       })
     })
   },
-
+  //公用方法
+  initFun() {
+    this.getUserInfo()
+    this.getSignData()
+    this.getNumber()
+    this.getUserSingerInfo()
+  },
   // 联系客服
   callPhone(e) {
     wx.makePhoneCall({
@@ -287,19 +317,30 @@ Page({
         selected: 2
       })
     }
-    checkAuth({
-      authPhone: true,
-      redirectPath: "/pages/practice/practice",
-      redirectType: "switch"
-    }).then(() => {
-      this.getUserInfo()
-      this.getSignData()
-      this.getNumber()
-    })
-
+    if (hasUserInfo() && !hasAccountInfo()) {
+      // 有微信信息没有手机号信息
+      this.setData({
+        userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)),
+        noUserInfo: true,
+        nodata: false,
+        taskStyle: "top:-138rpx",
+        functionStyle: "top:-138rpx"
+      })
+    } else if (hasUserInfo() && hasAccountInfo()) {
+      // 有微信信息且有手机号信息
+      this.initFun()
+      this.setData({
+        noUserInfo: false,
+        nodata: false
+      })
+    } else {
+      // nothing
+      this.setData({
+        noUserInfo: true,
+        nodata: true
+      })
+    }
     this.getTaskList()
-    this.getUserSingerInfo()
-
     bxPoint("applets_mine", {})
   },
 
@@ -341,7 +382,7 @@ Page({
     }
     return {
       title: '跟着花样一起变美，变自信',
-      path: `/pages/auth/auth`
+      path: `/pages/discovery/discovery?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
     }
   }
 })

@@ -1,4 +1,7 @@
-import { getBannerList, getYouZanAppId } from "../../api/mall/index"
+import {
+	getBannerList,
+	getYouZanAppId
+} from "../../api/mall/index"
 import {
 	createPracticeRecordInToday,
 	getCourseData,
@@ -9,10 +12,18 @@ import {
 	queryUserJoinedClasses,
 	queryUserRecentPracticeLog
 } from "../../api/course/index"
-import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
+import {
+	CourseLevels,
+	GLOBAL_KEY
+} from "../../lib/config"
 import dayjs from "dayjs"
-import { $notNull, calculateExerciseTime, getLocalStorage, setLocalStorage } from "../../utils/util"
-import { checkAuth } from "../../utils/auth"
+import {
+	$notNull,
+	calculateExerciseTime,
+	getLocalStorage,
+	hasAccountInfo,
+	setLocalStorage
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 const TagImageUrls = {
@@ -57,26 +68,37 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		let {scene} = options
+		let {
+			scene,
+			invite_user_id
+		} = options
 		// 通过小程序码进入 scene=${source}
 		if (scene) {
-			let sceneAry = decodeURIComponent(scene).split('/');
-			let [sceneSource = ''] = sceneAry;
+			let sceneAry = decodeURIComponent(scene).split('/')
+			let [sceneSource = ''] = sceneAry
 
 			if (sceneSource) {
 				getApp().globalData.source = sceneSource
 			}
 		}
 
+		if (invite_user_id) {
+			getApp().globalData.super_user_id = invite_user_id
+		}
+
 		// 检查是否需要展示提示层
 		this.checkTipsLay()
+
+		// 记录起始页面地址
+		if (!getApp().globalData.firstViewPage && getCurrentPages().length > 0) {
+			getApp().globalData.firstViewPage = getCurrentPages()[0].route
+		}
 	},
 
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
-	onReady: function () {
-	},
+	onReady: function () {},
 
 	/**
 	 * 生命周期函数--监听页面显示
@@ -88,10 +110,6 @@ Page({
 				selected: 1
 			})
 		}
-
-		checkAuth({
-			authPhone: true
-		})
 
 		this.initial()
 
@@ -133,17 +151,20 @@ Page({
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
-		let data = getLocalStorage(GLOBAL_KEY.userId)
-
 		return {
 			title: '跟着花样一起变美，变自信',
-			path: `/pages/auth/auth?invite_user_id=${data}`
+			path: `/pages/practice/practice?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
 		}
 	},
 	// 处理轮播点击事件
 	jumpToLink(e) {
-		let {link, link_type} = e.currentTarget.dataset.item
-		bxPoint("applets_banner", {position: 'page/practice/practice'}, false)
+		let {
+			link,
+			link_type
+		} = e.currentTarget.dataset.item
+		bxPoint("applets_banner", {
+			position: 'page/practice/practice'
+		}, false)
 		if (link_type === 'youzan') {
 			getYouZanAppId().then(appId => {
 				wx.navigateToMiniProgram({
@@ -152,19 +173,25 @@ Page({
 				})
 			})
 		} else {
-			wx.navigateTo({url: link})
+			wx.navigateTo({
+				url: link
+			})
 		}
 	},
 	hiddenTipMask() {
-		this.setData({didShowTipsLay: false})
+		this.setData({
+			didShowTipsLay: false
+		})
 	},
 	checkTipsLay() {
 		const key = "hua_yang_practice_tip_mask_time"
 		let markTime = getLocalStorage(key)
-		let now = +new Date()/1000|0
-		let buf = 7*24*60*60
+		let now = +new Date() / 1000 | 0
+		let buf = 7 * 24 * 60 * 60
 		if (!markTime || markTime < now) {
-			this.setData({didShowTipsLay: true})
+			this.setData({
+				didShowTipsLay: true
+			})
 			setLocalStorage(key, now + buf)
 		}
 	},
@@ -182,7 +209,10 @@ Page({
 	},
 	// 处理练习按钮事件
 	handleExerciseBtnTap(e) {
-		let { item, parent } = e.currentTarget.dataset
+		let {
+			item,
+			parent
+		} = e.currentTarget.dataset
 		if (item.type !== "kecheng" && item.kecheng_type !== 3) {
 			// 创建用户当日练习记录
 			createPracticeRecordInToday()
@@ -194,29 +224,39 @@ Page({
 				switch (item.kecheng_type) {
 					case 0: {
 						// 直播
-						wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${item.room_id}`})
+						wx.navigateTo({
+							url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${item.room_id}`
+						})
 						return
 					}
 					case 1: {
 						// 回看
-						wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${item.room_id}`})
+						wx.navigateTo({
+							url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${item.room_id}`
+						})
 						return
 					}
 					case 2: {
 						// 小鹅通
-						wx.navigateTo({url: `/pages/webViewCommon/webViewCommon?link=${item.url}`})
+						wx.navigateTo({
+							url: `/pages/webViewCommon/webViewCommon?link=${item.url}`
+						})
 						return
 					}
 					case 3: {
 						// 结构化课程
-						wx.navigateTo({url: `/subCourse/practiceDetail/practiceDetail?courseId=${item.kecheng_id}&formCampDetail=payUser&parentBootCampId=${parent.bootCampId}`})
+						wx.navigateTo({
+							url: `/subCourse/practiceDetail/practiceDetail?courseId=${item.kecheng_id}&formCampDetail=payUser&parentBootCampId=${parent.bootCampId}`
+						})
 						return
 					}
 				}
 				return
 			}
 			case 'url': {
-				wx.navigateTo({url: `/pages/webViewCommon/webViewCommon?link=${item.url}`})
+				wx.navigateTo({
+					url: `/pages/webViewCommon/webViewCommon?link=${item.url}`
+				})
 				return
 			}
 			case 'product': {
@@ -241,7 +281,10 @@ Page({
 	},
 	// 查看训练营详情
 	goToBootCamp(e) {
-		let {bootCampId, status} = e.currentTarget.dataset.item
+		let {
+			bootCampId,
+			status
+		} = e.currentTarget.dataset.item
 		if (status !== 3) {
 			wx.navigateTo({
 				url: "/subCourse/campDetail/campDetail?id=" + bootCampId
@@ -249,7 +292,9 @@ Page({
 		}
 	},
 	restartToBootCamp(e) {
-		let {bootCampId} = e.currentTarget.dataset.item
+		let {
+			bootCampId
+		} = e.currentTarget.dataset.item
 		wx.navigateTo({
 			url: "/subCourse/joinCamp/joinCamp?id=" + bootCampId
 		})
@@ -276,87 +321,119 @@ Page({
 			}
 		})
 	},
+	// 推荐课程
+	queryRecommendClasses() {
+		queryRecommendCourseList({
+			scene: 'zhide_kecheng_pratice'
+		}).then((recommendList) => {
+			recommendList.filter(r => r).forEach(recommendItem => {
+				recommendItem.exerciseTime = calculateExerciseTime(recommendItem.duration)
+			})
+			this.setData({
+				recommendList
+			})
+		})
+	},
 	async initial() {
 		// banner
-		getBannerList({scene: 7}).then((bannerList) => {
-			this.setData({bannerList})
+		getBannerList({
+			scene: 7
+		}).then((bannerList) => {
+			this.setData({
+				bannerList
+			})
 		})
 
-		// 用户加入的课程
-		queryUserJoinedClasses().then((userJoinedClassesList) => {
-			userJoinedClassesList.filter(c => c.kecheng).forEach(classItem => {
-				classItem.kecheng.exerciseTime = calculateExerciseTime(classItem.kecheng.duration)
-			})
-			if (userJoinedClassesList.length > 0) {
-				this.setData({userJoinedClassesList})
-			} else {
-				// 推荐课程
-				queryRecommendCourseList({scene: 'zhide_kecheng_pratice'}).then((recommendList) => {
-					recommendList.filter(r => r).forEach(recommendItem => {
-						recommendItem.exerciseTime = calculateExerciseTime(recommendItem.duration)
+		if (hasAccountInfo()) {
+			// 用户加入的课程
+			queryUserJoinedClasses().then((userJoinedClassesList) => {
+				userJoinedClassesList.filter(c => c.kecheng).forEach(classItem => {
+					classItem.kecheng.exerciseTime = calculateExerciseTime(classItem.kecheng.duration)
+				})
+				if (userJoinedClassesList.length > 0) {
+					this.setData({
+						userJoinedClassesList
 					})
-					this.setData({recommendList})
+				} else {
+					this.queryRecommendClasses()
+				}
+			})
+
+			// 用户学习数据统计
+			queryUserHaveClassesInfo().then((userHaveClassesInfo) => {
+				this.setData({
+					userHaveClassesInfo,
+					exerciseTime: calculateExerciseTime(userHaveClassesInfo.study_time)
+				})
+			})
+
+			// 用户最近7天的打卡记录
+			let userRecentPracticeLog = await queryUserRecentPracticeLog({
+				limit: 7
+			})
+			let weeklyLog = this.generateWeeklyLog()
+			let now = dayjs()
+			weeklyLog.forEach((dayItem, index) => {
+				let target = userRecentPracticeLog.find(n => Number(String(n.date).slice(-2)) === dayItem.date)
+				if ($notNull(target)) {
+					dayItem.status = Number(String(target.date).slice(-2)) === now.date() ? 'done' : 'gone'
+				}
+			})
+			this.setData({
+				weeklyLog
+			})
+
+			// 获取训练营列表
+			let bootCampList = await queryUserJoinedBootCamp()
+			bootCampList = bootCampList.filter(item => +item.kecheng_traincamp.status !== 2)
+			let handlerBootCampList = []
+			for (const {
+					kecheng_traincamp_id,
+					date,
+					status,
+					kecheng_traincamp: {
+						name
+					}
+				} of bootCampList) {
+				// 根据训练营查找对应的课程
+				let dayDiff = dayjs().diff(dayjs(date), 'day', true)
+				let dayNum = dayDiff | 0
+				if (parseFloat(dayDiff) >= 0) {
+					dayNum += 1
+				} else {
+					dayNum = 0
+				}
+				let bootCampInfo = await queryBootCampContentInToday({
+					traincamp_id: kecheng_traincamp_id,
+					day_num: dayNum
+				})
+
+				let content = bootCampInfo && bootCampInfo.content ? JSON.parse(bootCampInfo.content) : []
+
+				// 解析课程详情
+				for (let index = 0; index < content.length; index++) {
+					let c = content[index]
+					if (c.kecheng_id) {
+						let kechengInfo = await getCourseData({
+							kecheng_id: c.kecheng_id
+						})
+						c.kecheng_type = kechengInfo.kecheng_type
+						c.room_id = kechengInfo.room_id
+					}
+				}
+
+				handlerBootCampList.push({
+					bootCampId: kecheng_traincamp_id,
+					name: name,
+					content,
+					status: +status
 				})
 			}
-		})
-
-		// 用户学习数据统计
-		queryUserHaveClassesInfo().then((userHaveClassesInfo) => {
 			this.setData({
-				userHaveClassesInfo,
-				exerciseTime: calculateExerciseTime(userHaveClassesInfo.study_time)
+				bootCampList: handlerBootCampList.slice()
 			})
-		})
-
-		// 用户最近7天的打卡记录
-		let userRecentPracticeLog = await queryUserRecentPracticeLog({limit: 7})
-		let weeklyLog = this.generateWeeklyLog()
-		let now = dayjs()
-		weeklyLog.forEach((dayItem, index) => {
-			let target = userRecentPracticeLog.find(n => Number(String(n.date).slice(-2)) === dayItem.date)
-			if ($notNull(target)) {
-				dayItem.status = Number(String(target.date).slice(-2)) === now.date() ? 'done' : 'gone'
-			}
-		})
-		this.setData({weeklyLog})
-
-		// 获取训练营列表
-		let bootCampList = await queryUserJoinedBootCamp()
-		bootCampList = bootCampList.filter(item => +item.kecheng_traincamp.status !== 2)
-		let handlerBootCampList = []
-		for (const {kecheng_traincamp_id, date, status, kecheng_traincamp: {name}} of bootCampList) {
-			// 根据训练营查找对应的课程
-			let dayDiff = dayjs().diff(dayjs(date), 'day', true)
-			let dayNum = dayDiff | 0
-			if (parseFloat(dayDiff) >= 0) {
-				dayNum += 1
-			} else {
-				dayNum = 0
-			}
-			let bootCampInfo = await queryBootCampContentInToday({
-				traincamp_id: kecheng_traincamp_id,
-				day_num: dayNum
-			})
-
-			let content = bootCampInfo && bootCampInfo.content ? JSON.parse(bootCampInfo.content) : []
-
-			// 解析课程详情
-			for (let index = 0; index < content.length; index++) {
-				let c = content[index]
-				if (c.kecheng_id) {
-					let kechengInfo = await getCourseData({kecheng_id: c.kecheng_id})
-					c.kecheng_type = kechengInfo.kecheng_type
-					c.room_id = kechengInfo.room_id
-				}
-			}
-
-			handlerBootCampList.push({
-				bootCampId: kecheng_traincamp_id,
-				name: name,
-				content,
-				status: +status
-			})
+		} else {
+			this.queryRecommendClasses()
 		}
-		this.setData({bootCampList: handlerBootCampList.slice()})
 	}
 })

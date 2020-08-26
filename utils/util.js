@@ -258,6 +258,15 @@ export const hasUserInfo = function () {
 }
 
 /**
+ * 账号信息是否存在
+ * @returns {boolean}
+ */
+export const hasAccountInfo = function () {
+	let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
+	return $notNull(accountInfo)
+}
+
+/**
  * 批量获取直播间状态
  * @param roomIds
  * @returns {Promise<unknown[]>}

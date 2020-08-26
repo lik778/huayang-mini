@@ -1,5 +1,13 @@
 // subCourse/actionPost/actionPost.js
-import { $notNull, calcStringLen, getLocalStorage, queryWxAuth, splitTargetNoString, toast } from "../../utils/util"
+import {
+	$notNull,
+	batchDownloadFiles,
+	calcStringLen,
+	getLocalStorage,
+	queryWxAuth,
+	splitTargetNoString,
+	toast
+} from "../../utils/util"
 import { GLOBAL_KEY, WX_AUTH_TYPE } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import { increaseExp, queryPunchCardBg, queryPunchCardQrCode, queryUserHaveClassesInfo } from "../../api/course/index"
@@ -110,10 +118,9 @@ Page({
 	 */
 	onShareAppMessage: function () {
 		bxPoint("course_clock", {type: "clock"}, false)
-		let data = getLocalStorage(GLOBAL_KEY.userId)
 		return {
 			title: "跟着花样一起变美，变自信",
-			path: `/pages/auth/auth?invite_user_id=${data}`
+			path: `/subCourse/practiceDetail/practiceDetail?courseId=${this.data.postData.keChengId}&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
 		}
 	},
 	// 打卡
@@ -128,7 +135,7 @@ Page({
 					didShowLevelAlert: true,
 					hasGrade: data.has_grade,
 					levelNumber: data.has_grade ? data.level : 10,
-					nextLevelText: data.level < 3 ? `还差${data.next_experience - data.experience}升至Lv${data.level + 1}` : ""
+					nextLevelText: data.level < 3 ? `还差${data.next_experience - data.experience}升至Lv${data.level + 1}解锁` : ""
 				})
 			}
 		})
@@ -263,20 +270,23 @@ Page({
 	drawCanvas() {
 		let {cover, avatar, qrCode} = this.data.postData
 		let assets = [cover, avatar, qrCode]
-		let promiseAry = []
-		assets.forEach(src => {
-			promiseAry.push(new Promise(resolve => {
-				wx.getImageInfo({
-					src,
-					success({path}) {
-						resolve(path)
-					}
-				})
-			}))
-		})
-		Promise.all(promiseAry).then(([coverImage, avatarImage, qrCodeImage]) => {
+
+		batchDownloadFiles(assets).then(([coverImage, avatarImage, qrCodeImage]) => {
 			this.drawHiddenCanvas(coverImage, avatarImage, qrCodeImage, this.data.postData.recordNo)
 		})
+		// assets.forEach(src => {
+		// 	promiseAry.push(new Promise(resolve => {
+		// 		wx.getImageInfo({
+		// 			src,
+		// 			success({path}) {
+		// 				resolve(path)
+		// 			}
+		// 		})
+		// 	}))
+		// })
+		// Promise.all(promiseAry).then(([coverImage, avatarImage, qrCodeImage]) => {
+		// 	this.drawHiddenCanvas(coverImage, avatarImage, qrCodeImage, this.data.postData.recordNo)
+		// })
 	},
 	initial() {
 		this.drawCanvas()

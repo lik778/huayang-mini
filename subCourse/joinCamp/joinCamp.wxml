@@ -12,14 +12,18 @@
 			wx:if="{{campDetailData.discount_price<0&&campDetailData.price>0&&!userInfo.is_zhide_vip&&!hasJoinAll}}"
 			class="pay">立即加入
 			¥{{campDetailData.price/100}}</view>
-		<view class="join join-one" wx:if="{{campDetailData.discount_price>0&&!userInfo.is_zhide_vip&&!hasJoinAll}}" bindtap="joinCamp">
+		<view class="join join-one" wx:if="{{campDetailData.discount_price>0&&!userInfo.is_zhide_vip&&!hasJoinAll}}"
+			bindtap="joinCamp">
 			<view>原价 ¥{{campDetailData.price/100}}</view>
 			<view>立即加入 ¥{{campDetailData.discount_price/100}}</view>
 		</view>
 		<view bindtap="joinCamp" class="join"
-			wx:if="{{campDetailData.discount_price==0||campDetailData.price==0||userInfo.is_zhide_vip||hasJoinAll}}">
+			wx:if="{{campDetailData.discount_price==0||campDetailData.price==0||userInfo.is_zhide_vip}}">
 			<view>({{hasJoinAll?timeJoin : joinTime}}开营)</view>
 			<view>立即加入</view>
+		</view>
+		<view bindtap="joinCamp" class="join-again" wx:if="{{hasJoinAll}}">
+			<view>恢复练习</view>
 		</view>
 	</view>
 	<view class="button-line-two" wx:if="{{buttonType===2}}">
@@ -36,4 +40,7 @@
 			<view class="alert-btn" bindtap="goToTask">去完成</view>
 		</view>
 	</view>
+	<!-- 授权弹窗 -->
+	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
+	</authModule>
 </view>

@@ -1,6 +1,7 @@
 {
   "navigationStyle": "custom",
   "usingComponents": {
-    "naviBar": "../../components/navibar/navibar"
+    "naviBar": "../../components/navibar/navibar",
+    "authModule": "../../components/auth/auth"
   }
 }

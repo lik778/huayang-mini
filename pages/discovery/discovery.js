@@ -1,11 +1,28 @@
 // pages/ discovery/discovery.js
-import { getLocalStorage, simpleDurationSimple } from "../../utils/util"
-import { checkAuth } from "../../utils/auth"
-import { getActivityList, getCampList, getFindBanner, getShowCourseList } from "../../api/course/index"
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  setLocalStorage,
+  simpleDurationSimple
+} from "../../utils/util"
+import {
+  checkAuth
+} from "../../utils/auth"
+import {
+  getActivityList,
+  getCampList,
+  getFindBanner,
+  getShowCourseList
+} from "../../api/course/index"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import request from "../../lib/request"
-import { getYouZanAppId } from "../../api/mall/index"
+import {
+  getYouZanAppId
+} from "../../api/mall/index"
 
 Page({
 
@@ -16,10 +33,31 @@ Page({
     cureent: 0,
     campList: null,
     showModelBanner: false,
+    didShowAuth: false,
     bannerList: null,
     canShow: false,
     courseList: null,
+    modelBannerLink: "",
     activityList: null
+  },
+  // 获取授权
+  getAuth() {
+    this.setData({
+      didShowAuth: true
+    })
+  },
+  // 用户授权取消
+  authCancelEvent() {
+    this.setData({
+      didShowAuth: false
+    })
+  },
+  // 用户确认授权
+  authCompleteEvent() {
+    this.setData({
+      didShowAuth: false,
+    })
+    this.initToCompetitonFun()
   },
   // 加入课程
   toCourse(e) {
@@ -48,23 +86,49 @@ Page({
       })
     })
   },
-  // 跳转到模特大赛
-  toModelCompetition() {
+  // 封装跳转模特大赛事件
+  initToCompetitonFun() {
     let activity_id = 29
     let user_id = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id
     let user_grade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
-    let baseUrl = `${request.baseUrl}/#/modelCompetition/introduce?activity_id=${activity_id}&user_id=${user_id}&user_grade=${user_grade}`
+    // let baseUrl = `${request.baseUrl}/#/modelCompetition/introduce?activity_id=${activity_id}&user_id=${user_id}&user_grade=${user_grade}`
+    let baseUrl = `${this.data.modelBannerLink}&user_id=${user_id}&user_grade=${user_grade}`
     baseUrl = encodeURIComponent(baseUrl)
     wx.navigateTo({
-      url: `/pages/webViewCommon/webViewCommon?link=${baseUrl}&type=link`,
+      url: `/pages/webViewCommon/webViewCommon?link=${baseUrl}&type=link&isModel=true`,
     })
+  },
+  // 跳转到模特大赛
+  toModelCompetition(e) {
+    if (hasUserInfo() && hasAccountInfo()) {
+      this.setData({
+        modelBannerLink: e.currentTarget.dataset.item.link
+      })
+      this.initToCompetitonFun()
+    } else {
+      this.setData({
+        didShowAuth: true,
+        modelBannerLink: e.currentTarget.dataset.item.link
+      })
+    }
   },
 
   // 处理是否显示模特大赛banner
   initModelBanner() {
+    getFindBanner({
+      scene: 9
+    }).then(res => {
+      this.setData({
+        competitionBannerList: res
+      })
+    })
     let show = false
+    let isStage = false //正式上线后需要置为false
     if (request.baseUrl === 'https://huayang.baixing.cn') {
       // 测试环境
+      show = true
+    } else if (isStage) {
+      // 测试环境线上接口
       show = true
     } else {
       // 正式环境
@@ -158,11 +222,26 @@ Page({
       url: `/subCourse/joinCamp/joinCamp?id=${e.currentTarget.dataset.index.id}&share=true`,
     })
   },
+  // 检查用户是否引导
+  checkUserGuide() {
+    let didUserGuided = getLocalStorage('has_user_guide_page')
+    if (getApp().globalData.firstViewPage) return
+    if (didUserGuided !== 'yes') {
+      wx.navigateTo({
+        url: "/pages/coopen/coopen"
+      })
+      setLocalStorage('has_user_guide_page', 'yes')
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let {scene, invite_user_id, source} = options
+    let {
+      scene,
+      invite_user_id,
+      source
+    } = options
     // 通过小程序码进入 scene=${source}
     if (scene) {
       let sceneAry = decodeURIComponent(scene).split('/');
@@ -180,6 +259,7 @@ Page({
         getApp().globalData.source = source
       }
     }
+    this.checkUserGuide()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

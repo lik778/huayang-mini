@@ -14,6 +14,7 @@ Page({
 		didSkip: false,
 		visible: false,
 		recommendCourseList: [],
+		timer: null
 	},
 
 	/**
@@ -37,10 +38,13 @@ Page({
 			clearTimeout(startTimer)
 		}, 100)
 
-		let timer = setTimeout(() => {
+		this.data.timer = setTimeout(() => {
 			this.setData({didSkip: true})
-			clearTimeout(timer)
-		}, 9100)
+			clearTimeout(this.data.timer)
+			wx.switchTab({
+				url: '/pages/discovery/discovery',
+			})
+		}, 7500)
 	},
 
 	/**
@@ -127,6 +131,7 @@ Page({
 	 */
 	skip() {
 		bxPoint("applets_skip", {}, false)
+		clearTimeout(this.data.timer)
 		wx.switchTab({
 			url: "/pages/discovery/discovery"
 		})

@@ -4,7 +4,7 @@
             <view class="text-01">{{text01}}</view>
             <view class="text-02">{{text02}}</view>
             <view class="text-03" wx:if="{{!hasGrade}}">{{text03}}</view>
-            <view class="text-03" wx:if="{{!hasGrade}}">解锁更多课程</view>
+            <view class="text-03" wx:if="{{!hasGrade}}">更多课程</view>
         </view>
         <image mode="aspectFit" class="alert-icon {{hasGrade ? 'champion' : ''}}" src="{{iconImage}}"></image>
     </view>

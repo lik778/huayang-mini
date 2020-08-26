@@ -12,18 +12,18 @@ Component({
 		},
 		titleColor: {
 			type: String,
-			default: "black"
+			value: "black"
 		},
 		color: {
 			type: String,
-			default: "",
+			value: "",
 			observer(newVal) {
 				this.setData({navbarColor: newVal})
 			}
 		},
 		hideIcon: {
 			type: Boolean,
-			default: false
+			value: false
 		}
 	},
 

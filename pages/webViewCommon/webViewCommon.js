@@ -5,7 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    link: ""
+    link: "",
+    isModel: false
   },
 
   /**
@@ -15,6 +16,12 @@ Page({
     let link = options.link
     if (options.type === 'link') {
       link = decodeURIComponent(link)
+    }
+    if (options.isModel === 'true') {
+      this.setData({
+        baseUrl: decodeURIComponent(link),
+        isModel: true
+      })
     }
     this.setData({
       link: link
@@ -67,6 +74,12 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    if (this.data.isModel) {
+      return {
+        title: "这里有好多好课，快来一起变美，变自信",
+        path: `/pages/webViewCommon/webViewCommon?link=${this.data.baseUrl}&type=link`
+      }
+    }
 
   }
 })

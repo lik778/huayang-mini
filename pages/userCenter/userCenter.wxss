@@ -2,6 +2,8 @@
 .user-center {
   background: #F9F9F9;
   padding-bottom: 100rpx;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 /* 个人信息  */

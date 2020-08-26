@@ -5,14 +5,16 @@
 	<view class="{{showModelBanner?'module-one':'module-one hidden'}}">
 		<!-- banner 滚动区域 -->
 		<view class="swiper-box" wx:if="{{bannerList.length!==0}}">
-			<swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}" duration="{{500}}">
+			<swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}"
+				duration="{{500}}">
 				<swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="joinCampFrombanner" data-item="{{item}}">
 					<view class="swiper-cover"></view>
 					<image mode="cover" src="{{item.pic_url}}"></image>
 				</swiper-item>
 			</swiper>
 			<view class="swiper-dot">
-				<view wx:for="{{bannerList}}" wx:key="index" class="{{cureent===index?'active swiper-dot-item':'swiper-dot-item'}}"></view>
+				<view wx:for="{{bannerList}}" wx:key="index"
+					class="{{cureent===index?'active swiper-dot-item':'swiper-dot-item'}}"></view>
 			</view>
 		</view>
 		<!-- 训练营 -->
@@ -68,13 +70,10 @@
 		<view class="competition">
 			<view class="competition-title">大赛</view>
 			<view class="competition-list">
-				<view class="competition-item" bindtap="toModelCompetition">
-					<image mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596007833DKzGtL.jpg"></image>
-					<view class="competition-item-title">2020花样时尚模特大赛</view>
-				</view>
-				<view class="competition-item" style="margin-top:40rpx" bindtap="toModelCompetition">
-					<image mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596007833DKzGtL.jpg"></image>
-					<view class="competition-item-title">2020花样时尚模特大赛</view>
+				<view class="competition-item" bindtap="toModelCompetition" data-item='{{item}}'
+					wx:for="{{competitionBannerList}}" wx:key="index">
+					<image mode="aspectFill" src="{{item.pic_url}}"></image>
+					<view class="competition-item-title">{{item.title}}</view>
 				</view>
 			</view>
 		</view>
@@ -96,6 +95,10 @@
 				</view>
 			</view>
 		</view>
+		<!-- 授权弹窗 -->
+		<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent"
+			bind:authCompleteEvent="authCompleteEvent">
+		</authModule>
 	</view>
 
 </view>

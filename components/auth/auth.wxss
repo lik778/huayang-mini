@@ -1,0 +1,125 @@
+.auth {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .4);
+    color: black;
+    z-index: 90;
+}
+
+.box {
+    position: relative;
+    margin: 40% auto;
+    width: 600rpx;
+    height: 620rpx;
+    padding: 50rpx 30rpx 40rpx;
+    box-sizing: border-box;
+    border-radius: 16rpx;
+    background: white;
+}
+
+.box-fade-in {
+    animation: fadeIn 323ms ease-in;
+}
+
+.box-fade-out {
+    animation: fadeOut 161ms ease-out forwards;
+}
+.tip {
+    text-align: center;
+    font: 48rpx/48rpx PingFang SC;
+}
+.txt {
+    margin: 50rpx 0;
+    font: 40rpx/56rpx PingFang SC;
+}
+.rules {
+    text-align: center;
+    font: 32rpx/44rpx PingFang SC;
+    color: #888;
+}
+
+.important {
+    color: #748BBE;
+}
+.confirm {
+    position: relative;
+}
+
+.sure {
+    position: relative;
+    margin-top: 50rpx;
+}
+
+.button {
+    height: 96rpx;
+    width: 500rpx;
+    margin: 0 auto;
+    font: 500 40rpx/96rpx PingFang SC;
+    text-align: center;
+    border-radius: 48rpx;
+    background: #CC0000;
+    color: white;
+}
+
+.hidden-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: transparent;
+}
+
+.hidden-button::after {
+    border: 0 none;
+}
+.cancel {
+    height: 40rpx;
+    width: 500rpx;
+    margin: 0 auto;
+    padding: 40rpx 0;
+    font: 40rpx/40rpx PingFang SC;
+    text-align: center;
+    color: #9A9A9A;
+}
+.cancel:active {
+    opacity: 0.8;
+}
+@keyframes fadeIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    25% {
+        transform: scale(0.5);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    75% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(0.5);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
