@@ -3,7 +3,7 @@
    1. url地址需要encodeURIComponet编译，避免接口get请求参数被截断问题
  */
 import { getLocalStorage } from "./util"
-import { GLOBAL_KEY, ROOT_URL } from "../lib/config"
+import { GLOBAL_KEY } from "../lib/config"
 import request from "../lib/request"
 
 
@@ -53,8 +53,9 @@ function getKeyValue(keyAry = [], targetObject = {}) {
 
 /**
  * 打点方法
+ * @param siteId
  * @param params 数据属性参数
- * @param userInfoLocalStorageKey 对应localStorage的用户信息keyName，类似"window.localStorage.getItem("xxx")中的xxx"
+ * @param ispv
  * @returns {Promise<unknown>}
  */
 const bxPoint = function(siteId, params, ispv = true) {

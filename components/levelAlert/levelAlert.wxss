@@ -48,7 +48,6 @@
     font: 32rpx/44rpx PingFang SC;
 }
 .text-03 {
-    margin: 10rpx 0;
     font: 26rpx/36rpx PingFang SC;
     color: #666;
 }
