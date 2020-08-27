@@ -111,6 +111,7 @@ Page({
         // cureentDay = new Date(startDate).getDate() - 1
         for (let i in onlyDayList) {
           if (onlyDayList[i].id === startDate.split("-")[2]) {
+            console.log(onlyDayList)
             cureentDay = onlyDayList[i - 1].id
           }
         }
@@ -127,6 +128,7 @@ Page({
           weekData[i] = '今天'
         }
       }
+    
       // 批量获取多日课程内容
       this.batchGetCourse(campDateList)
       // 获取当日课程
@@ -149,6 +151,7 @@ Page({
 
   // 批量获取多日课程内容
   batchGetCourse(e) {
+   
     getMenyCourseList({
       day_num_str: e.join(','),
       traincamp_id: this.data.campId,
@@ -175,6 +178,7 @@ Page({
 
   // 获取当前天的课程
   toCureentDay(e) {
+    
     let dayNum = ''
     let day = ''
     if (e.currentTarget) {
@@ -204,6 +208,7 @@ Page({
           showLock: false,
         })
       }
+      
       this.setData({
         cureentDay: e.currentTarget.dataset.item.id,
       })
