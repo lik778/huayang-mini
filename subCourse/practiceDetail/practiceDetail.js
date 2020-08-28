@@ -45,6 +45,7 @@ Page({
 			let [sceneSource = ''] = sceneAry
 
 			if (sceneSource) {
+				this.setData({didGoBackToDiscovery: true})
 				getApp().globalData.source = sceneSource
 			}
 		} else {
