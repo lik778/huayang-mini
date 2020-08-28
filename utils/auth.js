@@ -19,9 +19,9 @@ const checkAuth = async ({authPhone = false, redirectPath = "", redirectType = "
 				resolve()
 			} else {
 				// 跳转到授权页面
-				wx.navigateTo({
-					url: `/pages/auth/auth?redirectPath=${redirectPath}&redirectType=${redirectType}`
-				})
+				// wx.navigateTo({
+				// 	url: `/pages/auth/auth?redirectPath=${redirectPath}&redirectType=${redirectType}`
+				// })
 				reject()
 			}
 		})
@@ -60,9 +60,9 @@ const wxLogin = () => {
 					resolve()
 				} else {
 					// 跳转到授权页面
-					wx.navigateTo({
-						url: '/pages/auth/auth'
-					})
+					// wx.navigateTo({
+					// 	url: '/pages/auth/auth'
+					// })
 					reject()
 				}
 			})
