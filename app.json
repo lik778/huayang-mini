@@ -20,7 +20,6 @@
     "pages/index/index",
     "pages/mine/mine",
     "pages/mall/mall",
-    "pages/auth/auth",
     "pages/privacy/privacy",
     "pages/service/service",
     "pages/coopen/coopen",
