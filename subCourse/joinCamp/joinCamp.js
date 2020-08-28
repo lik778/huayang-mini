@@ -1,7 +1,18 @@
 // 加入训练营
-import { GLOBAL_KEY } from "../../lib/config"
-import { getCampDetail, getHasJoinCamp, joinCamp } from "../../api/course/index"
-import { getLocalStorage, hasAccountInfo, hasUserInfo, payCourse } from "../../utils/util"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
+import {
+  getCampDetail,
+  getHasJoinCamp,
+  joinCamp
+} from "../../api/course/index"
+import {
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  payCourse
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -14,6 +25,7 @@ Page({
     statusHeight: 0,
     didShowAuth: false,
     campId: 0,
+    overdue: false,
     titleName: "",
     joinTime: "",
     hasJoinAll: false, //代表加入过
@@ -117,7 +129,13 @@ Page({
           }
           if (this.data.hasJoinAll) {
             // 中途退出
-            buttonType = 4
+            if (this.data.overdue) {
+              // 未过期
+              buttonType = 1
+            } else {
+              // 过期
+              buttonType = 4
+            }
           }
         }
         this.setData({
@@ -265,17 +283,13 @@ Page({
             })
           }
         } else {
-          // 训练营已过期
-          if (res.status === 2) {
-            // 代表是已经加入过放弃的
-            let pushTime = res.date.split("/")[1] + "月" + res.date.split("/")[2] + "日"
-            this.setData({
-              hasJoinAll: true,
-              hasAllTime: res.date,
-              timeJoin: pushTime
-            })
-          }
-          this.getCampDetail(id)
+          console.log(111)
+          this.setData({
+            overdue: true
+          })
+          this.getCampDetail(
+            id
+          )
         }
       } else {
         // 未加入过
