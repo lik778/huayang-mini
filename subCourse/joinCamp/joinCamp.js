@@ -242,7 +242,6 @@ Page({
         duration: 2000
       })
       setTimeout(() => {
-        wx.hideToast()
         wx.redirectTo({
           url: `/subCourse/campDetail/campDetail?id=${this.data.campId}&share=true`,
         })
