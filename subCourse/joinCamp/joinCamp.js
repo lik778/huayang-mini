@@ -26,79 +26,115 @@ Page({
     timeJoin: '',
     backIndex: false
   },
-  // 获取训练营详情
-  getCampDetail(id) {
-    getCampDetail({
-      traincamp_id: id
-    }).then(res => {
-      let buttonType = 1
-      res.desc = res.desc.split(",")
-      this.setData({
-        titleName: res.name.length > 8 ? res.name.slice(0, 8) + ".." : res.name
-      })
-      let dateList = res.start_date.split(',')
+  // 生成当前天的日期
+  getCurrentDate(currentDate) {
+    return new Promise(resolve => {
       let date = new Date();
       let year = date.getFullYear()
       let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1
       let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
       let nowDate = year + "-" + month + "-" + day
+      resolve(nowDate)
+    })
+  },
+  // 获取训练营详情
+  getCampDetail(id) {
+    getCampDetail({
+      traincamp_id: id
+    }).then(res => {
+      let dateList = res.start_date.split(',')
       let startDate = ''
-      if (dateList.length > 1) {
-        // 多个开营日期
-        for (let i in dateList) {
-          if (new Date(dateList[i]).getTime() > new Date(nowDate).getTime()) {
-            // 开营时间大于当前日期
-            if (new Date(dateList[i]).getTime() === new Date(nowDate).getTime()) {
-              // 开营当天
-              startDate = nowDate
-            } else if (startDate === '') {
-              startDate = dateList[i]
-            } else if (new Date(startDate).getTime() > new Date(dateList[i]).getTime()) {
-              startDate = dateList[i]
+      let pushTime = ''
+      let buttonType = 7
+      res.desc = res.desc.split(",")
+      this.getCurrentDate().then(nowDate => {
+        let date2 = new Date(nowDate).getTime() //当前日期
+        if (dateList.length > 1) {
+          // 多个开营日期
+          for (let i in dateList) {
+            let date1 = new Date(dateList[i]).getTime() //开营日期
+            let date3 = ''
+            if (date1 > date2) {
+              // 存在开营日期大于当前日期
+              if (startDate !== '') {
+                date3 = new Date(startDate).getTime()
+              }
+              startDate = startDate === '' ? dateList[i] : date3 > date1 ? dateList[i] : startDate
             }
           }
+        } else {
+          // 一个开营日期
+          let date1 = new Date(res.start_date).getTime()
+          if (date1 > date2) {
+            startDate = res.start_date
+          }
         }
-      } else {
-        if (new Date(res.start_date).getTime() > new Date(nowDate).getTime()) {
-          startDate = res.start_date
+        if (startDate !== '') {
+          pushTime = startDate.split("-")[1] + "月" + startDate.split("-")[2] + "日"
+          pushTime = pushTime.replace(/-/g, "/")
         }
-      }
-      let pushTime = startDate.split("-")[1] + "月" + startDate.split("-")[2] + "日"
-      let datas = startDate.replace(/-/g, "/")
-      if (startDate === '' && !this.data.hasJoinAll) {
-        // 没有开营日期
-        buttonType = 2
-      }
-      if (!hasUserInfo() || !hasAccountInfo()) {
-        // 没有授权
+        if (!hasUserInfo() || !hasAccountInfo()) {
+          // 没有授权
+          buttonType = 7
+        } else {
+          // 受过权了
+          if (res.price > 0) {
+            // 收费
+            if (res.discount_price < res.price && res.discount_price > 0) {
+              // 有折扣价且折扣价>0
+              buttonType = 3
+            } else if (res.discount_price < 0) {
+              // 不折扣
+              buttonType = 2
+            } else if (res.discount_price === 0) {
+              // 有折扣价且为0
+              let userData = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+              if (userData.user_grade < res.user_grade) {
+                // 免费但是等级不够
+                buttonType = 6
+              } else {
+                // 免费且等级够了
+                buttonType = 5
+              }
+            } else {
+              // 无折扣价
+              buttonType = 2
+            }
+          } else {
+            // 免费
+            let userData = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+            if (userData.user_grade < res.user_grade) {
+              // 免费但是等级不够
+              buttonType = 6
+            } else {
+              // 免费且等级够了
+              buttonType = 5
+            }
+          }
+          if (startDate === '') {
+            // 后续没有训练营开营日期了
+            buttonType = 1
+          }
+          if (this.data.hasJoinAll) {
+            // 中途退出
+            buttonType = 4
+          }
+        }
         this.setData({
           campDetailData: res,
           joinTime: pushTime,
           buttonType: buttonType,
           endTime: startDate,
-          campId: id
+          campId: id,
+          titleName: res.name.length > 8 ? res.name.slice(0, 8) + ".." : res.name
         })
-        return
-      }
-      if (res.discount_price === 0) {
-        let userData = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-        if (userData.user_grade < res.user_grade) {
-          buttonType = 3
-        }
-      }
-      this.setData({
-        campDetailData: res,
-        joinTime: pushTime,
-        buttonType: buttonType,
-        endTime: startDate,
-        campId: id
       })
     })
   },
   // 等级不够
   openBox() {
     this.setData({
-      didShowAlert: true
+      didShowAlert: !this.data.didShowAlert
     })
   },
   // 跳往任务页
@@ -131,7 +167,6 @@ Page({
         bxPoint("camp_join", {}, false)
         joinCamp({
           open_id: getLocalStorage(GLOBAL_KEY.openId),
-          // open_id:'oG8Rd5Zxr7cjV6tUdraUDdsOSS8w',
           date: this.data.hasJoinAll ? this.data.hasAllTime : this.data.endTime,
           traincamp_id: this.data.campId
         }).then((res) => {
@@ -294,20 +329,18 @@ Page({
       })
       // id代表训练营ID
       this.checkCamp(this.data.campId)
-
     } else {
       this.setData({
         campId: campId
       })
       // id代表训练营ID
       this.getCampDetail(campId)
-      console.log('搜索')
     }
 
-		// 记录起始页面地址
-		if (!getApp().globalData.firstViewPage && getCurrentPages().length > 0) {
-			getApp().globalData.firstViewPage = getCurrentPages()[0].route
-		}
+    // 记录起始页面地址
+    if (!getApp().globalData.firstViewPage && getCurrentPages().length > 0) {
+      getApp().globalData.firstViewPage = getCurrentPages()[0].route
+    }
   },
 
   /**
