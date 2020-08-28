@@ -130,10 +130,10 @@ Page({
           if (this.data.hasJoinAll) {
             // 中途退出
             if (this.data.overdue) {
-              // 未过期
+              // 过期
               buttonType = 1
             } else {
-              // 过期
+              // 未过期
               buttonType = 4
             }
           }
@@ -283,7 +283,6 @@ Page({
             })
           }
         } else {
-          console.log(111)
           this.setData({
             overdue: true
           })
