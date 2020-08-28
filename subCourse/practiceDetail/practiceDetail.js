@@ -31,6 +31,7 @@ Page({
 		didPayUser: false, // 是否是付费用户
 		backPath: "", // 自定义导航栏返回路径
 		didShowAuth: false, // 授权弹窗
+		didGoBackToDiscovery: false // 是否返回发现页
 	},
 
 	/**
@@ -49,6 +50,7 @@ Page({
 		} else {
 			// 通过卡片进入
 			if (invite_user_id) {
+				this.setData({didGoBackToDiscovery: true})
 				getApp().globalData.super_user_id = invite_user_id
 			}
 			if (source) {
