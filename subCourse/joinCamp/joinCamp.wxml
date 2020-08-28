@@ -13,14 +13,15 @@
 			<!-- 没有开营日期 -->
 			即将开营
 		</view>
-		<view class="button-two button-style-two" wx:if="{{buttonType===2}}" bindtap="joinCamp">
+		<view class="button-two button-style-four" wx:if="{{buttonType===2}}" bindtap="joinCamp">
 			<!-- 立即加入+价格（没有折扣） -->
-			立即加入 ¥{{campDetailData.price/100}}
+			<view>({{hasJoinAll?timeJoin : joinTime}}开营)</view>
+			<view>立即加入 ¥{{campDetailData.price/100}}</view>
 		</view>
-		<view class="button-three button-style-three" wx:if="{{buttonType===3}}" bindtap="joinCamp">
+		<view class="button-three button-style-four" wx:if="{{buttonType===3}}" bindtap="joinCamp">
 			<!-- 立即支付+折扣价+原价 -->
-			<view>原价 ¥{{campDetailData.price/100}}</view>
-			<view>立即加入 <text>¥{{campDetailData.discount_price/100}}</text></view>
+			<view>({{hasJoinAll?timeJoin : joinTime}}开营)</view>
+			<view>立即加入 ¥{{campDetailData.discount_price/100}}<text>原价 ¥{{campDetailData.price/100}}</text></view>
 		</view>
 		<view class="button-four button-style-two" wx:if="{{buttonType===4}}" bindtap="joinCamp">
 			<!-- 放弃的训练营且营没有过期 -->
@@ -31,9 +32,10 @@
 			<view>({{hasJoinAll?timeJoin : joinTime}}开营)</view>
 			<view>立即加入</view>
 		</view>
-		<view class="button-six button-style-two" wx:if="{{buttonType===6}}" bindtap="openBox">
+		<view class="button-six button-style-four" wx:if="{{buttonType===6}}" bindtap="openBox">
 			<!-- 免费有等级 -->
-			LV {{campDetailData.user_grade}} 等级开启
+			<view>({{hasJoinAll?timeJoin : joinTime}}开营)</view>
+			<view>LV {{campDetailData.user_grade}} 等级开启</view>
 		</view>
 		<view class="button-six button-style-two" wx:if="{{buttonType===7}}" bindtap="joinCamp">
 			<!-- 未授权 -->

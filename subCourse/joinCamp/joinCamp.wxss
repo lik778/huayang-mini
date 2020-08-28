@@ -38,6 +38,34 @@
   background: #CDCDCD;
 }
 
+.button-style-four view:first-child {
+  font-size: 14px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 14px;
+  padding-top: 12rpx;
+}
+
+.button-style-four view:last-child {
+  font-size: 20px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 18px;
+  padding-top: 8rpx;
+}
+
+.button-style-four view:last-child text {
+  font-size: 14px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 14px;
+  text-decoration: line-through;
+  padding-left: 12rpx;
+}
+
 .button-style-two {
   line-height: 96rpx;
 }
@@ -71,7 +99,8 @@
   padding-top: 12rpx;
   text-decoration: line-through;
 }
-.button-five view:first-child{
+
+.button-five view:first-child {
   text-decoration: none;
 }
 
