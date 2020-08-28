@@ -99,6 +99,7 @@ Page({
       let nowDate = year + '-' + month + '-' + day
       res.nowDay =
         countDay(nowDate, startDate) < 0 ? 0 : countDay(nowDate, startDate)
+      console.log(nowDate,startDate,111)
       let onlyDayList = getTodayDate().one //只有日的日期列表
       let realList = getTodayDate().two //实际一周日期列表
       let campDateList = [] //当周对应训练营日期列表
