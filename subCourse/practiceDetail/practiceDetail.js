@@ -37,7 +37,7 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: async function (options) {
-		let {scene, parentBootCampId = 0, courseId, source = '', formCampDetail, invite_user_id} = options
+		let {scene, parentBootCampId = 0, courseId, source = '', formCampDetail, invite_user_id = ""} = options
 		// 通过小程序码进入 scene=${source}
 		if (scene) {
 			let sceneAry = decodeURIComponent(scene).split('/')

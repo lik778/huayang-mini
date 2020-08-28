@@ -1,21 +1,7 @@
 // 加入训练营
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  checkAuth
-} from "../../utils/auth"
-import {
-  getCampDetail,
-  getHasJoinCamp,
-  joinCamp
-} from "../../api/course/index"
-import {
-  getLocalStorage,
-  hasAccountInfo,
-  hasUserInfo,
-  payCourse
-} from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
+import { getCampDetail, getHasJoinCamp, joinCamp } from "../../api/course/index"
+import { getLocalStorage, hasAccountInfo, hasUserInfo, payCourse } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -268,7 +254,7 @@ Page({
   onLoad: function (options) {
     let {
       scene,
-      invite_user_id,
+      invite_user_id = "",
       source,
       id,
       share
