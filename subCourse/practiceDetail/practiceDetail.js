@@ -31,24 +31,27 @@ Page({
 		didPayUser: false, // 是否是付费用户
 		backPath: "", // 自定义导航栏返回路径
 		didShowAuth: false, // 授权弹窗
+		didGoBackToDiscovery: false // 是否返回发现页
 	},
 
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: async function (options) {
-		let {scene, parentBootCampId = 0, courseId, source = '', formCampDetail, invite_user_id} = options
+		let {scene, parentBootCampId = 0, courseId, source = '', formCampDetail, invite_user_id = ""} = options
 		// 通过小程序码进入 scene=${source}
 		if (scene) {
 			let sceneAry = decodeURIComponent(scene).split('/')
 			let [sceneSource = ''] = sceneAry
 
 			if (sceneSource) {
+				this.setData({didGoBackToDiscovery: true})
 				getApp().globalData.source = sceneSource
 			}
 		} else {
 			// 通过卡片进入
 			if (invite_user_id) {
+				this.setData({didGoBackToDiscovery: true})
 				getApp().globalData.super_user_id = invite_user_id
 			}
 			if (source) {

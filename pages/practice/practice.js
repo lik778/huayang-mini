@@ -1,7 +1,4 @@
-import {
-	getBannerList,
-	getYouZanAppId
-} from "../../api/mall/index"
+import { getBannerList, getYouZanAppId } from "../../api/mall/index"
 import {
 	createPracticeRecordInToday,
 	getCourseData,
@@ -12,18 +9,9 @@ import {
 	queryUserJoinedClasses,
 	queryUserRecentPracticeLog
 } from "../../api/course/index"
-import {
-	CourseLevels,
-	GLOBAL_KEY
-} from "../../lib/config"
+import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
-import {
-	$notNull,
-	calculateExerciseTime,
-	getLocalStorage,
-	hasAccountInfo,
-	setLocalStorage
-} from "../../utils/util"
+import { $notNull, calculateExerciseTime, getLocalStorage, hasAccountInfo, setLocalStorage } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 const TagImageUrls = {
@@ -70,7 +58,7 @@ Page({
 	onLoad: function (options) {
 		let {
 			scene,
-			invite_user_id
+			invite_user_id = ""
 		} = options
 		// 通过小程序码进入 scene=${source}
 		if (scene) {
@@ -385,7 +373,7 @@ Page({
 
 			// 获取训练营列表
 			let bootCampList = await queryUserJoinedBootCamp()
-			bootCampList = bootCampList.filter(item => +item.kecheng_traincamp.status !== 2)
+			bootCampList = bootCampList.filter(item => +item.status !== 2 && +item.status !== 0)
 			let handlerBootCampList = []
 			for (const {
 					kecheng_traincamp_id,

@@ -80,7 +80,15 @@ Page({
       url: `/pages/webViewCommon/webViewCommon?link=${link}`,
     })
   },
-
+  // 获取当前天的前一天或者后一天
+  getNextDate(date, day) {
+    var dd = new Date(date);
+    dd.setDate(dd.getDate() + day);
+    var y = dd.getFullYear();
+    var m = dd.getMonth() + 1 < 10 ? "0" + (dd.getMonth() + 1) : dd.getMonth() + 1;
+    var d = dd.getDate() < 10 ? "0" + dd.getDate() : dd.getDate();
+    return y + "-" + m + "-" + d;
+  },
   // 获取训练营信息
   getCampDetailData({
     id,
@@ -109,10 +117,19 @@ Page({
         onlyDayList = getTodayDate(startDate).one //只有日的日期列表
         realList = getTodayDate(startDate).two //实际一周日期列表
         // cureentDay = new Date(startDate).getDate() - 1
+        let dataIdArr = []
+        let str2 = ''
         for (let i in onlyDayList) {
+          dataIdArr.push(onlyDayList[i].id)
           if (onlyDayList[i].id === startDate.split("-")[2]) {
-            cureentDay = onlyDayList[i - 1].id
+            cureentDay = this.getNextDate(startDate, -1).split("-")[2]
+            str2 = startDate
           }
+        }
+        if (dataIdArr.indexOf(cureentDay) === -1) {
+          let date1 = this.getNextDate(startDate, -1)
+          onlyDayList = getTodayDate(date1).one //只有日的日期列表
+          realList = getTodayDate(date1).two //实际一周日期列表
         }
       } else {
         cureentDay = new Date().getDate()
@@ -127,6 +144,7 @@ Page({
           weekData[i] = '今天'
         }
       }
+
       // 批量获取多日课程内容
       this.batchGetCourse(campDateList)
       // 获取当日课程
@@ -149,6 +167,7 @@ Page({
 
   // 批量获取多日课程内容
   batchGetCourse(e) {
+
     getMenyCourseList({
       day_num_str: e.join(','),
       traincamp_id: this.data.campId,
@@ -175,6 +194,7 @@ Page({
 
   // 获取当前天的课程
   toCureentDay(e) {
+
     let dayNum = ''
     let day = ''
     if (e.currentTarget) {
@@ -204,6 +224,7 @@ Page({
           showLock: false,
         })
       }
+
       this.setData({
         cureentDay: e.currentTarget.dataset.item.id,
       })
@@ -498,9 +519,9 @@ Page({
     })
 
     // 记录起始页面地址
-		if (!getApp().globalData.firstViewPage && getCurrentPages().length > 0) {
-			getApp().globalData.firstViewPage = getCurrentPages()[0].route
-		}
+    if (!getApp().globalData.firstViewPage && getCurrentPages().length > 0) {
+      getApp().globalData.firstViewPage = getCurrentPages()[0].route
+    }
   },
 
   /**

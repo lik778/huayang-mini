@@ -8,87 +8,105 @@
   vertical-align: bottom;
 }
 
-.button-line {
-  width: calc(100% - 60rpx);
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 36rpx;
-}
-
-.button-line-two {
-  width: calc(100% - 60rpx);
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 36rpx;
-}
-
-.button-line-two .join-button {
-  background: #CDCDCD;
-  font-size: 40rpx;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 1);
-  line-height: 96rpx;
-  text-align: center;
-  border-radius: 48rpx;
-  border: none;
-}
-
-.join {
-  height: 96rpx;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #CC0000;
-  border-radius: 48rpx;
-}
-
-.join-again {
-  height: 96rpx;
+/* 按钮不同样式 */
+.button {
+  width: 100vw;
+  height: 120rpx;
   display: flex;
   align-items: center;
-  background: #CC0000;
-  border-radius: 48rpx;
   justify-content: center;
+  background: #fff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+.button>view {
+  width: calc(100% - 60rpx);
+  height: 96rpx;
+  border-radius: 999rpx;
+  text-align: center;
   font-size: 20px;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
   color: rgba(255, 255, 255, 1);
+  background: #CC0000;
 }
 
-.join-one {
-  height: 96rpx;
+.button .button-style-one {
+  line-height: 96rpx;
+  background: #CDCDCD;
+}
+
+.button-style-four view:first-child {
+  font-size: 14px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 14px;
+  padding-top: 12rpx;
+}
+
+.button-style-four view:last-child {
+  font-size: 20px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 18px;
+  padding-top: 8rpx;
+}
+
+.button-style-four view:last-child text {
+  font-size: 14px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 14px;
+  text-decoration: line-through;
+  padding-left: 12rpx;
+}
+
+.button-style-two {
+  line-height: 96rpx;
+}
+
+.button-style-three {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #CC0000;
-  border-radius: 48rpx;
 }
 
-.join-one view:first-child {
-  text-decoration: line-through;
+.button-style-three view {
+  line-height: 18px;
 }
 
-.join view {
-  text-align: center;
-  font-size: 40rpx;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 1);
-  line-height: 36rpx;
+.button-style-three text {
+  line-height: 18px;
+  font-size: 14px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 14px;
 }
 
-.join view:first-child {
-  font-size: 28rpx;
+.button-style-three view:first-child {
+  font-size: 14px;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.8);
-  line-height: 28rpx;
-  padding-top: 12rpx;
+  line-height: 14px;
   padding-bottom: 8rpx;
+  padding-top: 12rpx;
+  text-decoration: line-through;
 }
+
+.button-five view:first-child {
+  text-decoration: none;
+}
+
+
+
+
 
 
 .pay {
