@@ -1,28 +1,11 @@
 // pages/ discovery/discovery.js
-import {
-  getLocalStorage,
-  hasAccountInfo,
-  hasUserInfo,
-  setLocalStorage,
-  simpleDurationSimple
-} from "../../utils/util"
-import {
-  checkAuth
-} from "../../utils/auth"
-import {
-  getActivityList,
-  getCampList,
-  getFindBanner,
-  getShowCourseList
-} from "../../api/course/index"
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage, simpleDurationSimple } from "../../utils/util"
+import { checkAuth } from "../../utils/auth"
+import { getActivityList, getCampList, getFindBanner, getShowCourseList } from "../../api/course/index"
+import { GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import request from "../../lib/request"
-import {
-  getYouZanAppId
-} from "../../api/mall/index"
+import { getYouZanAppId } from "../../api/mall/index"
 
 Page({
 
@@ -240,7 +223,7 @@ Page({
   onLoad: function (options) {
     let {
       scene,
-      invite_user_id,
+      invite_user_id = "",
       source
     } = options
     // 通过小程序码进入 scene=${source}

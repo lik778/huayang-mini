@@ -1,7 +1,4 @@
-import {
-	getBannerList,
-	getYouZanAppId
-} from "../../api/mall/index"
+import { getBannerList, getYouZanAppId } from "../../api/mall/index"
 import {
 	createPracticeRecordInToday,
 	getCourseData,
@@ -12,18 +9,9 @@ import {
 	queryUserJoinedClasses,
 	queryUserRecentPracticeLog
 } from "../../api/course/index"
-import {
-	CourseLevels,
-	GLOBAL_KEY
-} from "../../lib/config"
+import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
-import {
-	$notNull,
-	calculateExerciseTime,
-	getLocalStorage,
-	hasAccountInfo,
-	setLocalStorage
-} from "../../utils/util"
+import { $notNull, calculateExerciseTime, getLocalStorage, hasAccountInfo, setLocalStorage } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 const TagImageUrls = {
@@ -70,7 +58,7 @@ Page({
 	onLoad: function (options) {
 		let {
 			scene,
-			invite_user_id
+			invite_user_id = ""
 		} = options
 		// 通过小程序码进入 scene=${source}
 		if (scene) {

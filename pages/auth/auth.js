@@ -14,7 +14,7 @@ Page({
 	data: {
 		redirectPath: "",
 		redirectType: "redirect",
-		invite_user_id: 0,
+		invite_user_id: "",
 		didGetPhoneNumber: false,
 		show: false
 	},
@@ -126,7 +126,7 @@ Page({
 	 * Lifecycle function--Called when page load
 	 */
 	onLoad: function (options) {
-		let {invite_user_id = 0, source = '', redirectPath, redirectType} = options
+		let {invite_user_id = "", source = '', redirectPath, redirectType} = options
 
 		redirectPath = redirectPath ? redirectPath.replace(/\$/, "?") : ""
 		redirectPath = redirectPath ? redirectPath.replace(/#/ig, "=") : ""
