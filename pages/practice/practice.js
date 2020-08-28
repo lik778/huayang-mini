@@ -373,7 +373,7 @@ Page({
 
 			// 获取训练营列表
 			let bootCampList = await queryUserJoinedBootCamp()
-			bootCampList = bootCampList.filter(item => +item.kecheng_traincamp.status !== 2 && +item.kecheng_traincamp.status !== 0)
+			bootCampList = bootCampList.filter(item => +item.status !== 2 && +item.status !== 0)
 			let handlerBootCampList = []
 			for (const {
 					kecheng_traincamp_id,
