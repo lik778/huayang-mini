@@ -1,0 +1,102 @@
+/* subCourse/videoCourse/videoCourse.wxss */
+.button-line {
+  width: calc(100vw - 60rpx);
+  position: fixed;
+  left: 30rpx;
+  height: 96rpx;
+  bottom: 12rpx;
+  background: #CC0000;
+  border-radius: 999rpx;
+}
+
+.button-one {
+  text-align: center;
+  line-height: 96rpx;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+/* 视频区域 */
+.video {
+  margin: 0 30rpx;
+  border-radius: 8rpx;
+  overflow: hidden;
+  position: relative;
+  height: 400rpx;
+}
+
+.video video {
+  width: 100%;
+  height: 100%;
+  vertical-align: bottom;
+  border-radius: 8rpx;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
+}
+
+.video-cover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8rpx;
+  z-index: 20;
+}
+
+.video image {
+  width: 130rpx;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 130rpx;
+}
+
+/* 内容简介区域 */
+.info {
+  padding: 0 30rpx;
+  padding-top: 60rpx;
+}
+
+.info-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 30rpx;
+}
+
+.info-title-left {
+  font-size: 56rpx;
+  font-family: Helvetica;
+  color: #000000;
+  line-height: 56rpx;
+}
+
+.info-title-right {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 44rpx;
+}
+
+.info-main {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #222222;
+  line-height: 44rpx;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}

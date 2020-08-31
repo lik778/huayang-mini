@@ -116,7 +116,8 @@ Page({
   // 处理是否显示模特大赛banner
   initModelBanner() {
     getFindBanner({
-      scene: 9
+      // scene: 9
+      scene: 11
     }).then(res => {
       this.setData({
         competitionBannerList: res,

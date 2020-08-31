@@ -1,0 +1,46 @@
+<!--subCourse/videoCourse/videoCourse.wxml-->
+<view class="video-course">
+  <!-- 视频区域 -->
+  <view class="video">
+    <video src="https://gf.kaipian.cn/1587704424757-guangzhouyanshi0424.mp4" id="myVideo" bindplay="hideCover"
+      src="{{videoSrc}}" poster="{{posterSrc}}" style="{{videoHeight}}" controls="{{showLock?false:true}}"
+      show-center-play-btn="{{false}}" bindpause="pauseVideo" bindended="initVideo"></video>
+    <view class="video-cover">
+      <image src="/assets/images/common/play.png"></image>
+    </view>
+  </view>
+  <!-- 内容简介区域 -->
+  <view class="info">
+    <view class="info-title">
+      <view class="info-title-left">美妆研习社</view>
+      <view class="info-title-right">共24人练习</view>
+    </view>
+    <view class="info-main">
+      明星美妆师精心打造专属美妆入门课，全面解决50+人群常见问题！明星美妆师精心打造专属美妆入门课，全面解决50+人群常见问题！
+    </view>
+  </view>
+  <!-- 课程列表 -->
+  <view class="course">
+    <view class="course-title">
+      <view class="course-title-left">课程内容</view>
+      <view class="course-title-right">6个课时</view>
+    </view>
+    <view class="course-list">
+      <view class="course-item">
+        <view class="course-item-left">
+          
+        </view>
+        <view class="course-item-right">
+          正在播放
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 按钮 -->
+  <view class="button-line">
+    <view class="button-one" bindtap="joinVideoCourse">加入课程</view>
+  </view>
+  <!-- 授权弹窗 -->
+  <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
+  </authModule>
+</view>
