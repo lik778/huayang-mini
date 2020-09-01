@@ -1,5 +1,7 @@
 import request from "../../lib/request"
-import { URL } from "../../lib/config"
+import {
+	URL
+} from "../../lib/config"
 
 
 // 获取结构化练习海报背景图
@@ -102,7 +104,9 @@ export function queryUserHaveClassesInfo(params) {
 // 获取用户已加入的课程
 export function queryUserJoinedClasses(params) {
 	return new Promise(resolve => {
-		request._get(URL.getUserJoinedClasses, params).then(({data}) => {
+		request._get(URL.getUserJoinedClasses, params).then(({
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})
@@ -112,7 +116,9 @@ export function queryUserJoinedClasses(params) {
 // 在个人课程页 - 获取推荐课程
 export function queryRecommendCourseList(params) {
 	return new Promise(resolve => {
-		request._get(URL.getRecommendCourseList, params).then(({data}) => {
+		request._get(URL.getRecommendCourseList, params).then(({
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})
@@ -122,7 +128,9 @@ export function queryRecommendCourseList(params) {
 // 创建当日练习记录
 export function createPracticeRecordInToday(params) {
 	return new Promise(resolve => {
-		request._post(URL.recordPracticeInToday, params).then(({data}) => {
+		request._post(URL.recordPracticeInToday, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -386,6 +394,28 @@ export function getPhoneNumber(params) {
 export function getArticileLink(params) {
 	return new Promise(resolve => {
 		request._get(URL.getArticileLink, params).then(({
+			data
+		}) => {
+			resolve(data)
+		})
+	})
+}
+
+/***********视频课程*************/
+// 获取视频课程列表
+export function getVideoCourseList(params) {
+	return new Promise(resolve => {
+		request._get(URL.getVideoCourseList, params).then(({
+			data
+		}) => {
+			resolve(data)
+		})
+	})
+}
+// 获取视频课程详情
+export function getVideoCourseDetail(params) {
+	return new Promise(resolve => {
+		request._get(URL.getVideoCourseDetail, params).then(({
 			data
 		}) => {
 			resolve(data)
