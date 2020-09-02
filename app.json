@@ -61,8 +61,6 @@
     {
       "root": "subCourse",
       "pages": [
-        "detail/detail",
-        "category/category",
         "practiceDetail/practiceDetail",
         "actionPage/actionPage",
         "practiceManage/practiceManage",
@@ -70,6 +68,13 @@
         "joinCamp/joinCamp",
         "actionPost/actionPost",
         "videoCourse/videoCourse"
+      ]
+    },
+    {
+      "root": "subMall",
+      "pages": [
+        "detail/detail",
+        "category/category"
       ]
     }
   ],
