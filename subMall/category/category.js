@@ -1,5 +1,4 @@
-// subCourse/category/category.js
-import { getCategory, getProductListByCategory } from "../../api/mall/index"
+import { getCategory, getProductListByCategory } from "../../api/mall"
 import { checkAuth } from "../../utils/auth"
 
 Page({
@@ -76,7 +75,7 @@ Page({
   buy(e) {
     let target = e.currentTarget.dataset.item
     wx.navigateTo({
-      url: '/subCourse/detail/detail?prdId=' + target.product.id
+      url: '/subMall/detail/detail?prdId=' + target.product.id
     })
   },
   /**
@@ -130,7 +129,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: '花样百姓+',
-      path: '/subCourse/category/category?categoryId=' + this.data.categoryId
+      path: '/subMall/category/category?categoryId=' + this.data.categoryId
     }
   }
 })

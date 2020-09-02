@@ -1,4 +1,3 @@
-/* subCourse/category/category.wxss */
 .custom-tab-class {
     height: 92rpx !important;
     flex-basis: 20% !important;

@@ -1,5 +1,4 @@
-// subCourse/detail/detail.js
-import { getProductInfo, getYouZanAppId } from "../../api/mall/index"
+import { getProductInfo, getYouZanAppId } from "../../api/mall"
 import { checkAuth } from "../../utils/auth"
 import { changeTwoDecimal_f } from "../../utils/util"
 
@@ -122,7 +121,7 @@ Page({
 	onShareAppMessage: function () {
 		return {
 			title: "花样百姓+",
-			path: '/subCourse/detail/detail?prdId=' + this.data.prdId
+			path: '/subMall/detail/detail?prdId=' + this.data.prdId
 		}
 	}
 })

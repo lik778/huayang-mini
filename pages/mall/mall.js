@@ -133,13 +133,13 @@ Page({
 	buy(e) {
 		let target = e.currentTarget.dataset.item
 		wx.navigateTo({
-			url: '/subCourse/detail/detail?prdId=' + target.product.id
+			url: '/subMall/detail/detail?prdId=' + target.product.id
 		})
 	},
 	navigateToCategory(e) {
 		let item = e.currentTarget.dataset.item
 		wx.navigateTo({
-			url: '/subCourse/category/category?categoryId=' + item.id
+			url: '/subMall/category/category?categoryId=' + item.id
 		})
 	},
 	/**
