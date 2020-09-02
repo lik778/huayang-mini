@@ -249,7 +249,7 @@ Page({
 			}
 			case 'product': {
 				wx.navigateTo({
-					url: '/subCourse/detail/detail?prdId=' + item.product_id
+					url: '/subMall/detail/detail?prdId=' + item.product_id
 				})
 				return
 			}
