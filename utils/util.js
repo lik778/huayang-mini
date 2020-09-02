@@ -667,6 +667,33 @@ export const simpleDuration = (duration, type) => {
 	}
 	return days + hours + minutes + seconds
 }
+export const simpleDurationDate = (duration, type) => {
+	if (type === 's') {
+		duration = duration * 1000
+	}
+	let str = ''
+	let days = '',
+		hours = '',
+		minutes = '',
+		seconds = ''
+	let day = 24 * 60 * 60 * 1000,
+		hour = 60 * 60 * 1000,
+		minute = 60 * 1000,
+		second = 1000
+	if (duration >= day) {
+		days = Math.floor(duration / day) + ':'
+		hours = Math.floor(duration % day / hour) + ':'
+	} else if (duration >= hour && duration < day) {
+		hours = Math.floor(duration / hour) + ':'
+		minutes = Math.floor(duration % hour / minute) + ':'
+	} else if (duration > minute && duration < hour) {
+		minutes = Math.floor(duration / minute) + ':'
+		seconds = Math.floor(duration % minute / second) 
+	} else if (duration < minute) {
+		seconds = Math.floor(duration / second) 
+	}
+	return days + hours + minutes + seconds
+}
 
 /**
  * 计算训练时长

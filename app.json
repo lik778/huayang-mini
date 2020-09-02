@@ -68,7 +68,8 @@
         "practiceManage/practiceManage",
         "campDetail/campDetail",
         "joinCamp/joinCamp",
-        "actionPost/actionPost"
+        "actionPost/actionPost",
+        "videoCourse/videoCourse"
       ]
     }
   ],
