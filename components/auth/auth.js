@@ -71,12 +71,13 @@ Component({
               setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
               bxPoint("applets_auth_status", {auth_type: "weixin", auth_result: "success"}, false)
               this.checkLogin()
+            }).catch(() => {
+              // 用户取消微信授权
+              this.cancel()
+              bxPoint("applets_auth_status", {auth_type: "weixin", auth_result: "fail"}, false)
             })
           })
       } catch (error) {
-        // 用户取消微信授权
-        this.cancel()
-        bxPoint("applets_auth_status", {auth_type: "weixin", auth_result: "fail"}, false)
       }
     },
     /**
