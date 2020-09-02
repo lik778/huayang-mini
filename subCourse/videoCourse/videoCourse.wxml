@@ -55,11 +55,11 @@
       </view>
 
     </view>
-    <view class="show-more" wx:if="{{showMore}}" bindtap="showMore">
+    <view class="show-more" wx:if="{{showMore&&showMoreAll}}" bindtap="showMore">
       <text>展开</text>
       <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1598926869coRQGr.jpg"></image>
     </view>
-    <view class="show-more" wx:else bindtap="showMore">
+    <view class="show-more" wx:if="{{!showMore&&showMoreAll}}" bindtap="showMore">
       <text>收起</text>
       <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599013164smiPpQ.jpg"></image>
     </view>

@@ -1,9 +1,25 @@
 // pages/ discovery/discovery.js
-import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage, simpleDurationSimple } from "../../utils/util"
-import { getActivityList, getCampList, getFindBanner, getShowCourseList } from "../../api/course/index"
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  setLocalStorage,
+  simpleDurationSimple
+} from "../../utils/util"
+import {
+  getActivityList,
+  getCampList,
+  getFindBanner,
+  getVideoCourseList,
+  getShowCourseList
+} from "../../api/course/index"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
-import { getYouZanAppId } from "../../api/mall/index"
+import {
+  getYouZanAppId
+} from "../../api/mall/index"
 
 Page({
 
@@ -18,6 +34,7 @@ Page({
     bannerList: null,
     canShow: false,
     courseList: null,
+    videoList: '',
     modelBannerLink: "",
     activityList: null
   },
@@ -121,7 +138,35 @@ Page({
     //   showModelBanner: show
     // })
   },
-
+  // 获取视频课程列表
+  getVideoCourse() {
+    getVideoCourseList({
+      limit: 2
+    }).then(res => {
+      res = res || []
+      for (let i in res) {
+        if (res[i].price > 0 && res[i].discount_price === 0) {
+          res[i].money = ''
+        } else if (res[i].price > 0 && res[i].discount_price > 0) {
+          res[i].money = (res[i].discount_price / 100).toFixed(2)
+        } else if (res[i].price > 0 && res[i].discount_price === -1) {
+          res[i].money = (res[i].price / 100).toFixed(2)
+        } else if (res[i].price <= 0 && res[i].discount_price === -1) {
+          res[i].money = ''
+        }
+      }
+      this.setData({
+        videoList: res
+      })
+    })
+  },
+  // 跳往视频详情页
+  toVideoDetail(e) {
+    let id = e.currentTarget.dataset.item.id
+    wx.navigateTo({
+      url: `/subCourse/videoCourse/videoCourse?videoId=${id}`,
+    })
+  },
   // 获取课程列表
   getCourseList() {
     getShowCourseList({
@@ -193,6 +238,7 @@ Page({
       this.setData({
         campList: res.list
       })
+      this.getVideoCourse()
       this.getBanner()
     })
   },
@@ -261,10 +307,8 @@ Page({
         selected: 0
       })
     }
-
     this.initModelBanner()
     this.getCampList()
-
     bxPoint("applets_find", {
       from_uid: getApp().globalData.super_user_id,
       source: getApp().globalData.source,

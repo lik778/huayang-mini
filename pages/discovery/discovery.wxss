@@ -4,15 +4,11 @@
   /* background: red; */
 }
 
-
-
 .module-one,
 .module-two {
   padding: 0 30rpx;
   background: #fff;
 }
-
-
 
 .module-one {
   padding-bottom: 25px;
@@ -73,7 +69,7 @@
 
 /* 训练营 */
 .camp {
-  padding-top: 52rpx;
+  padding-top: 72rpx;
 }
 
 .camp-title,
@@ -161,16 +157,18 @@
   position: relative;
   overflow: hidden;
 }
-.atwalk-item-cover{
+
+.atwalk-item-cover {
   width: 100%;
   height: 100%;
   position: absolute;
   left: 0;
   top: 0;
-  background: rgba(0,0,0,0.15);
+  background: rgba(0, 0, 0, 0.15);
   z-index: 10;
   border-radius: 8rpx;
 }
+
 .catwalk-item-title {
   position: absolute;
   left: 30rpx;
@@ -269,16 +267,18 @@
 }
 
 .competition {
-  padding-top: 60rpx;
+  padding-top: 50rpx;
 }
 
 .competition-item {
   position: relative;
+  height: 320rpx;
+  margin-bottom: 30rpx;
 }
 
 .competition-item>image {
   width: 100%;
-  height: 284rpx;
+  height: 320rpx;
   border-radius: 8rpx;
 }
 
@@ -368,4 +368,116 @@
 .activity-item-desc-price text:last-child {
   color: rgba(204, 0, 0, 1);
   margin-left: 10rpx;
+}
+
+/* 视频课程 */
+.video-course {
+  padding-top: 100rpx;
+  padding-bottom: 20rpx;
+}
+
+.video-course-title {
+  height: 76rpx;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.video-course-title-left {
+  font-size: 52rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 52rpx;
+}
+
+.video-course-title-right {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 44rpx;
+}
+
+.video-course-main {
+  padding-top: 28rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.video-course-main-left image {
+  width: 340rpx;
+  height: 460rpx;
+  vertical-align: bottom;
+}
+
+.video-course-main-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.video-course-main-right-top image {
+  width: 340rpx;
+  height: 228rpx;
+  vertical-align: bottom;
+}
+
+.video-course-main-right-bottom image {
+  width: 340rpx;
+  height: 228rpx;
+  vertical-align: bottom;
+}
+
+.video-course-list {
+  padding-top: 12rpx;
+}
+
+.video-course-item {
+  display: flex;
+  justify-content: space-between;
+  height: 220rpx;
+  padding-top: 30rpx;
+}
+
+.video-course-item-left {
+  width: 220rpx;
+}
+
+.video-course-item-left image {
+  width: 220rpx;
+  height: 220rpx;
+  vertical-align: bottom;
+  border-radius: 8rpx;
+}
+
+.video-course-item-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 450rpx;
+}
+
+.video-course-item-right-top {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 44rpx;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.video-course-item-right-bottom {
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #CC0000;
+  line-height: 50rpx;
 }

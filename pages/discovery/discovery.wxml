@@ -17,6 +17,7 @@
 					class="{{cureent===index?'active swiper-dot-item':'swiper-dot-item'}}"></view>
 			</view>
 		</view>
+
 		<!-- 训练营 -->
 		<view class="camp" wx:if="{{campList.length!==0}}">
 			<view class="camp-title">训练营</view>
@@ -28,6 +29,42 @@
 						<view class="camp-subtitle">{{item.summary}}</view>
 					</view>
 					<view class="camp-button">立即参加</view>
+				</view>
+			</view>
+		</view>
+		<!-- 视频课 -->
+		<view class="video-course">
+			<view class="video-course-title">
+				<view class="video-course-title-left">课程</view>
+				<view class="video-course-title-right">更多课程 ›</view>
+			</view>
+			<view class="video-course-main">
+				<view class="video-course-main-left">
+					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599037451lQvNoc.jpg"></image>
+				</view>
+				<view class="video-course-main-right">
+					<view class="video-course-main-right-top">
+						<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599037451ZYEAsb.jpg"></image>
+					</view>
+					<view class="video-course-main-right-bottom">
+						<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599037451bjKfsZ.jpg"></image>
+					</view>
+				</view>
+			</view>
+			<view class="video-course-list">
+				<view class="video-course-item" wx:for="{{videoList}}" wx:key="index" bindtap="toVideoDetail"
+					data-item="{{item}}">
+					<view class="video-course-item-left">
+						<image src="{{item.cover_pic}}"></image>
+					</view>
+					<view class="video-course-item-right">
+						<view class="video-course-item-right-top">
+							{{item.name}}
+						</view>
+						<view class="video-course-item-right-bottom" wx:if="{{item.money!==''}}">
+							¥{{item.money}}
+						</view>
+					</view>
 				</view>
 			</view>
 		</view>
