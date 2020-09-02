@@ -4,6 +4,7 @@ import { GLOBAL_KEY } from "../../lib/config"
 import { LocaleVoice, voices_ary, voices_key, voices_number } from "../../lib/voices"
 import { completePractice, increaseExp, recordPracticeBehavior } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
+import { collectError } from "../../api/auth/index"
 
 Page({
 	/**
@@ -138,6 +139,19 @@ Page({
 			self.setData({
 				isPlayMainPointAudioPlaying: false // 释放要领正在播放中的状态
 			})
+		})
+
+		// 兼容内置播放器解析音频报错
+		this.data.mainPointAudio.onError(function (err) {
+			// 还原口令音量
+			if (self.data.bgAudio) {
+				self.data.bgAudio.volume = 1
+			}
+			self.setData({
+				isPlayMainPointAudioPlaying: false // 释放要领正在播放中的状态
+			})
+
+			collectError({page: "actionPage.mainPointAudio", error_code: err.errCode, error_message: err.errMsg})
 		})
 
 		// 监听小程序切后台事件
@@ -426,6 +440,12 @@ Page({
 				}
 			})
 			audio.onEnded(() => {
+				resolve()
+			})
+
+			// 兼容外置播放器解析音频报错问题
+			audio.onError((err) => {
+				collectError({page: "actionPage.bgAudio", error_code: err.errCode, error_message: err.errMsg})
 				resolve()
 			})
 		})
