@@ -420,7 +420,7 @@
 
 .video-course-main-right-top image {
   width: 340rpx;
-  height: 228rpx;
+  height: 226rpx;
   vertical-align: bottom;
 }
 

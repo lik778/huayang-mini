@@ -26,6 +26,7 @@ Page({
   data: {
     didShowAuth: false,
     playIndex: -1,
+    didShowAlert: false,
     videoSrc: "",
     buttonType: 1,
     lock: true,
@@ -37,6 +38,18 @@ Page({
     showMore: true,
     showVideoCover: true,
     hasLogin: false
+  },
+  // 等级不够关闭弹窗
+  openBox() {
+    this.setData({
+      didShowAlert: !this.data.didShowAlert
+    })
+  },
+  // 等级不够完成任务跳往任务页
+  goToTask() {
+    wx.switchTab({
+      url: '/pages/userCenter/userCenter',
+    })
   },
   // 播放
   play(e) {
@@ -84,6 +97,10 @@ Page({
         didShowAuth: true
       })
       return
+    } else if (userInfo && userInfo.user_grade < this.data.courseData.user_grade) {
+      this.setData({
+        didShowAlert: true
+      })
     } else {
       if (this.data.lock) {
         // 加入课程

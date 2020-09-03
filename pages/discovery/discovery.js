@@ -138,6 +138,20 @@ Page({
     //   showModelBanner: show
     // })
   },
+  // 跳往视频课程全部列表
+  toVideoList() {
+    console.log(11)
+  },
+  // 获取视频课程列表banner
+  getVideoBanner() {
+    getFindBanner({
+      scene: 13
+    }).then(res => {
+      this.setData({
+        videoBannerList: res
+      })
+    })
+  },
   // 获取视频课程列表
   getVideoCourse() {
     getVideoCourseList({
@@ -155,6 +169,7 @@ Page({
           res[i].money = ''
         }
       }
+      this.getVideoBanner()
       this.setData({
         videoList: res
       })

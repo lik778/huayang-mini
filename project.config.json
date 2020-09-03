@@ -186,6 +186,12 @@
           "pathName": "subCourse/videoCourse/videoCourse",
           "query": "",
           "scene": null
+        },
+        {
+          "id": -1,
+          "name": "subCourse/videoCourseList/videoCourseList",
+          "pathName": "subCourse/videoCourseList/videoCourseList",
+          "scene": null
         }
       ]
     }
