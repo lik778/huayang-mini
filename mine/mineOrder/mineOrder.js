@@ -22,7 +22,8 @@ Page({
     appId: "",
     curentIndex: 0,
     statusHeight: 0,
-    titleList: ['训练营', '商品', '课程'],
+    // titleList: ['训练营', '商品', '课程'],
+    titleList: ['训练营', '商品'],
     orderData: [],
     pageData: {
       offset: 0,

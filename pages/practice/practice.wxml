@@ -125,7 +125,7 @@
     </view>
 
     <!-- 视频课程学习列表 -->
-    <view class="video-practice-list">
+    <view class="video-practice-list" wx:if="{{false}}">
         <view class="video-practice-item" wx:for="{{videoPracticeList}}" bindtap="toVideoDetail" wx:key="index"
             data-item="{{item}}">
             <view class="video-practice-item-left">

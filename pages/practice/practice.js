@@ -383,7 +383,7 @@ Page({
 				}
 			})
 			// 获取加入的视频课程
-			this.getVideoPracticeList()
+			// this.getVideoPracticeList()
 			// 用户学习数据统计
 			queryUserHaveClassesInfo().then((userHaveClassesInfo) => {
 				this.setData({
