@@ -4,13 +4,13 @@ import {
   setLocalStorage,
   hasAccountInfo,
   hasUserInfo,
+  payCourse,
   simpleDurationSimple,
   simpleDurationDate,
   convertToChinaNum,
   simpleDuration
 } from "../../utils/util"
 import {
-  getVideoCourseList,
   checkJoinVideoCourse,
   getVideoCourseDetail,
   joinVideoCourse
@@ -26,14 +26,30 @@ Page({
   data: {
     didShowAuth: false,
     playIndex: -1,
+    didShowAlert: false,
     videoSrc: "",
     buttonType: 1,
+    lock: true,
+    videoId: "",
     courseData: '',
     videoLock: true,
     closeCover: false,
+    showMoreAll: false,
     showMore: true,
     showVideoCover: true,
     hasLogin: false
+  },
+  // 等级不够关闭弹窗
+  openBox() {
+    this.setData({
+      didShowAlert: !this.data.didShowAlert
+    })
+  },
+  // 等级不够完成任务跳往任务页
+  goToTask() {
+    wx.switchTab({
+      url: '/pages/userCenter/userCenter',
+    })
   },
   // 播放
   play(e) {
@@ -81,34 +97,81 @@ Page({
         didShowAuth: true
       })
       return
-    } else {
-      // 加入课程
-      joinVideoCourse({
-        open_id: openid,
-        series_id: this.data.courseData.id
-      }).then(res => {
-        if (res === 'success') {
-          this.checkIsjoined()
-        }
+    } else if (userInfo && userInfo.user_grade < this.data.courseData.user_grade) {
+      this.setData({
+        didShowAlert: true
       })
+    } else {
+      if (this.data.lock) {
+        // 加入课程
+        joinVideoCourse({
+          open_id: openid,
+          series_id: this.data.courseData.id
+        }).then(res => {
+          this.setData({
+            lock: false
+          })
+          if (res === 'success') {
+            this.checkIsjoined()
+          } else if (res.num) {
+            payCourse({
+              id: res.id,
+              name: '加入视频课程'
+            }).then(res => {
+              // 设置顶部标题
+              if (res.errMsg === "requestPayment:ok") {
+                this.backFun({
+                  type: "success"
+                })
+              } else {
+                this.backFun({
+                  type: "fail"
+                })
+              }
+            }).catch(err => {
+              this.backFun({
+                type: "fail"
+              })
+            })
+          }
+        })
+      }
+
     }
   },
-  // 获取课程列表
-  getVideoList() {
-    getVideoCourseList().then(res => {
-      console.log(res)
-    })
+  // 集中处理支付回调
+  backFun({
+    type
+  }) {
+    if (type === 'fail') {
+      this.setData({
+        lock: true
+      })
+      wx.showToast({
+        title: '支付失败',
+        icon: "none",
+        duration: 2000
+      })
+    } else {
+      wx.showToast({
+        title: '加入成功',
+        icon: "success",
+        duration: 2000
+      })
+      this.checkIsjoined()
+    }
   },
   // 获取课程详情
   getVideoDetail(button) {
     getVideoCourseDetail({
-      series_id: 12
+      series_id: this.data.videoId
     }).then(res => {
       let buttonType = 1
       let showMore = false
+      let showMoreAll = false
       let videoListAll = null
       let lock = true
-      let userGrade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
+      let userGrade = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade : 0
       res.detail_pics = res.detail_pics.split(",")
       if (res.discount_price === -1 && res.price > 0) {
         // 原价出售
@@ -138,6 +201,9 @@ Page({
       if (videoListAll.length > 3) {
         // 显示展开按钮
         showMore = true
+        showMoreAll = true
+      } else {
+        showMoreAll = false
       }
       if (button === 6 || buttonType === 6) {
         // 控制视频是否可以播放
@@ -146,6 +212,7 @@ Page({
       this.setData({
         courseData: res,
         hasLogin: true,
+        showMoreAll: showMoreAll,
         videoListAll: videoListAll,
         showMore: showMore,
         videoLock: lock,
@@ -160,7 +227,7 @@ Page({
       hasUserInfo()) {
       // 已经登录
       checkJoinVideoCourse({
-        kecheng_series_id: 12
+        kecheng_series_id: this.data.videoId
       }).then(res => {
         if (res === null) {
           // 未加入过
@@ -178,7 +245,7 @@ Page({
       })
     } else {
       // 未登陆
-      this.getVideoDetail()
+      this.getVideoDetail(1)
     }
   },
   // 展开全部
@@ -203,14 +270,19 @@ Page({
   // 授权弹窗确认回调
   authCompleteEvent() {
     this.checkIsjoined()
-    this.setData({
-      didShowAuth: false,
-    })
+    setTimeout(() => {
+      this.setData({
+        didShowAuth: false,
+      })
+    }, 200)
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      videoId: options.videoId
+    })
     this.checkIsjoined()
   },
 

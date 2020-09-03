@@ -443,3 +443,14 @@ export function joinVideoCourse(params) {
 		})
 	})
 }
+
+// 获取课程分类列表
+export function getVideoTypeList(params) {
+	return new Promise(resolve => {
+		request._get(URL.getVideoTypeList, params).then(({
+			data
+		}) => {
+			resolve(data)
+		})
+	})
+}

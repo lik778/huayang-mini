@@ -31,7 +31,7 @@
     <view class="course-list">
       <view wx:for="{{courseData.video_detail}}" wx:key="index">
         <view class="{{playIndex===index?'course-item course-item-active':'course-item'}}"
-          bindtap="{{buttonType===6||item.canReplay?'play':''}}" data-item="{{item}}" data-index="{{index}}">
+          bindtap="{{item.canReplay?buttonType===6?'play':'':''}}" data-item="{{item}}" data-index="{{index}}">
           <view class="course-item-left">
             <view class="course-item-left-left" wx:if="{{item.canReplay}}">试看</view>
             <view class="course-item-left-left" wx:if="{{!item.canReplay&&hasLogin&&buttonType===6}}">
@@ -55,11 +55,11 @@
       </view>
 
     </view>
-    <view class="show-more" wx:if="{{showMore}}" bindtap="showMore">
+    <view class="show-more" wx:if="{{showMore&&showMoreAll}}" bindtap="showMore">
       <text>展开</text>
       <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1598926869coRQGr.jpg"></image>
     </view>
-    <view class="show-more" wx:else bindtap="showMore">
+    <view class="show-more" wx:if="{{!showMore&&showMoreAll}}" bindtap="showMore">
       <text>收起</text>
       <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599013164smiPpQ.jpg"></image>
     </view>
@@ -86,4 +86,13 @@
   <!-- 授权弹窗 -->
   <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
   </authModule>
+  <!-- 等级不够弹窗 -->
+  <view class="level-alert" wx:if="{{didShowAlert}}" bindtap="openBox">
+    <view class="box">
+      <image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596513575jAcfBN.jpg"></image>
+      <view class="text-01">快去完成任务提升</view>
+      <view class="text-01">等级解锁视频吧</view>
+      <view class="alert-btn" bindtap="goToTask">去完成</view>
+    </view>
+  </view>
 </view>

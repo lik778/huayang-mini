@@ -1,0 +1,47 @@
+/* subCourse/videoCourseList/videoCourseList.wxss */
+
+.type-list {
+  display: flex;
+  align-items: center;
+  padding-bottom: 10rpx;
+  position: fixed;
+  background: #fff;
+  width: calc(100% - 80rpx);
+  padding-left: 30rpx;
+  padding-top: 32rpx;
+}
+
+.main-title-item {
+  font-size: 44rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  line-height: 60rpx;
+  margin-right: 60rpx;
+}
+
+.main-title-item:last-child {
+  margin-right: 0;
+}
+
+.active {
+  font-size: 44rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 1);
+  line-height: 60rpx;
+  position: relative;
+
+}
+
+.active::after {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -8rpx;
+  content: "";
+  width: 84rpx;
+  height: 8rpx;
+  border-radius: 4rpx;
+  background: #CC0000;
+}

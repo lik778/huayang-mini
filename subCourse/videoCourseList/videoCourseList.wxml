@@ -1,0 +1,14 @@
+<!--subCourse/videoCourseList/videoCourseList.wxml-->
+<view class="list">
+  <view class="type-list">
+    <view class="{{curentIndex===index?'main-title-item active':'main-title-item'}}" wx:for="{{titleList}}"
+      wx:key="index" bindtap="changeTab" data-index="{{index}}">
+      {{item}}
+    </view>
+  </view>
+  <view class="list-main">
+    <view class="list-item">
+      
+    </view>
+  </view>
+</view>

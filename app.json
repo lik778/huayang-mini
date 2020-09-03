@@ -67,7 +67,8 @@
         "campDetail/campDetail",
         "joinCamp/joinCamp",
         "actionPost/actionPost",
-        "videoCourse/videoCourse"
+        "videoCourse/videoCourse",
+        "videoCourseList/videoCourseList"
       ]
     },
     {
