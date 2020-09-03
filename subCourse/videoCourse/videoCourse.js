@@ -154,7 +154,7 @@ Page({
       let showMoreAll = false
       let videoListAll = null
       let lock = true
-      let userGrade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
+      let userGrade = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade : 0
       res.detail_pics = res.detail_pics.split(",")
       if (res.discount_price === -1 && res.price > 0) {
         // 原价出售
@@ -228,7 +228,7 @@ Page({
       })
     } else {
       // 未登陆
-      this.getVideoDetail()
+      this.getVideoDetail(1)
     }
   },
   // 展开全部
