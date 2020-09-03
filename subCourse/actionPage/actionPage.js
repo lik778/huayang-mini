@@ -445,7 +445,7 @@ Page({
 
 			// 兼容外置播放器解析音频报错问题
 			audio.onError((err) => {
-				collectError({page: "actionPage.bgAudio", error_code: err.errCode, error_message: err.errMsg})
+				collectError({page: "actionPage.bgAudio", error_code: err.errCode, error_message: {...err.errMsg, err_link: link}})
 				resolve()
 			})
 		})
