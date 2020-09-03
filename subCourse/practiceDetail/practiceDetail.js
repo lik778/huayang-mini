@@ -4,7 +4,7 @@ import {
 	getRecentVisitorList,
 	joinCourseInGuide
 } from "../../api/course/index"
-import { calculateExerciseTime, getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
+import { $notNull, calculateExerciseTime, getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
 import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 
@@ -217,16 +217,23 @@ Page({
 
 			// 检查是否付费用户
 			if (!this.data.didPayUser) {
-				// 检查用户等级
-				if (response.user_grade > (this.data.accountInfo.user_grade || 0)) {
-					this.setData({
-						btnText: `Lv ${response.user_grade} 等级开启`,
-						isDownloading: true // 禁止用户点击按钮
-					})
+				if ($notNull(this.data.accountInfo)) {
+					// 检查用户等级
+					if (response.user_grade > (this.data.accountInfo.user_grade || 0)) {
+						this.setData({
+							btnText: `Lv ${response.user_grade} 等级开启`,
+							isDownloading: true // 禁止用户点击按钮
+						})
+					} else {
+						this.setData({
+							btnText: "开始练习",
+							isDownloading: false
+						})
+					}
 				} else {
 					this.setData({
 						btnText: "开始练习",
-						isDownloading: false
+						isDownloading: true // 禁止用户点击按钮
 					})
 				}
 			}
