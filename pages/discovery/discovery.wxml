@@ -33,7 +33,7 @@
 			</view>
 		</view>
 		<!-- 视频课 -->
-		<view class="video-course" wx:if="{{false}}">
+		<view class="video-course">
 			<view class="video-course-title">
 				<view class="video-course-title-left">课程</view>
 				<view class="video-course-title-right" bindtap="toVideoList">更多课程 ›</view>
