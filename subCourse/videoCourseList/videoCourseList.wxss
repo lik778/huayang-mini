@@ -3,12 +3,10 @@
 .type-list {
   display: flex;
   align-items: center;
-  padding-bottom: 10rpx;
   position: fixed;
   background: #fff;
   width: calc(100% - 80rpx);
-  padding-left: 30rpx;
-  padding-top: 32rpx;
+  padding: 32rpx 50rpx 10rpx 30rpx;
 }
 
 .main-title-item {
@@ -44,4 +42,60 @@
   height: 8rpx;
   border-radius: 4rpx;
   background: #CC0000;
+}
+
+/* 视频课程列表 */
+.list-main {
+  margin: 0 auto;
+  padding-top: 116rpx;
+  width: calc(100% - 60rpx);
+}
+
+.list-item {
+  height: 300rpx;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #F2F2F2;
+}
+
+.list-item-right {
+  height: 220rpx;
+  width: calc(100% - 240rpx);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.list-item-right-top {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 44rpx;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.list-item-right-bottom {
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #CC0000;
+  line-height: 50rpx;
+}
+
+.list-item-left {
+  width: 240rpx;
+}
+
+.list-item-left image {
+  width: 220rpx;
+  height: 220rpx;
+  border-radius: 8rpx;
+  vertical-align: bottom;
 }

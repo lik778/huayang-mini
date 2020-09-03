@@ -2,7 +2,7 @@
 <view class="video-course" wx:if="courseData!==''">
   <!-- 视频区域 -->
   <view class="video">
-    <video id="myVideo" bindplay="playVideo" src="{{videoSrc}}" poster="{{courseData.cover_pic}}"
+    <video id="myVideo" bindplay="playVideo" src="{{videoSrc}}" poster="{{showVideoCover?courseData.cover_pic:''}}"
       style="{{videoHeight}}" bindpause="pause" controls="{{showLock?false:true}}" show-center-play-btn="{{false}}"
       bindended="endVideo"></video>
     <view class="video-cover" wx:if="{{showVideoCover&&buttonType===6}}" bindtap="play">
@@ -82,6 +82,13 @@
     </view>
     <view class="button-one" bindtap="join" wx:if="{{buttonType===4}}">立即加入 ¥{{courseData.price}}</view>
     <view class="button-one" bindtap="join" wx:if="{{buttonType===5}}">恢复练习</view>
+  </view>
+  <!-- 分享微信好友 -->
+  <view class="share">
+    <view class="share-box">
+      <button open-type="share"></button>
+      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599118170RBWnFr.jpg"></image>
+    </view>
   </view>
   <!-- 授权弹窗 -->
   <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">

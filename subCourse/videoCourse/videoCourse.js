@@ -5,15 +5,18 @@ import {
   hasAccountInfo,
   hasUserInfo,
   payCourse,
+
   simpleDurationSimple,
   simpleDurationDate,
   convertToChinaNum,
+  secondToMinute,
   simpleDuration
 } from "../../utils/util"
 import {
   checkJoinVideoCourse,
   getVideoCourseDetail,
-  joinVideoCourse
+  joinVideoCourse,
+  recordStudy,
 } from "../../api/course/index"
 import {
   GLOBAL_KEY
@@ -70,15 +73,22 @@ Page({
         showVideoCover: false
       })
     }
+    console.log(playIndex)
+    recordStudy({
+      kecheng_series_id: this.data.courseData.id,
+      kecheng_num: playIndex + 1
+    }).then(res => {
+      console.log(res, 10101)
+    })
     setTimeout(() => {
       this.videoContext.play()
     }, 200)
   },
   // 播放结束
   endVideo() {
-    this.setData({
-      showVideoCover: true
-    })
+    // this.setData({
+    //   showVideoCover: false
+    // })
   },
   // 暂停播放
   pause() {
@@ -194,7 +204,8 @@ Page({
       videoListAll = JSON.parse(res.video_detail)
       for (let i in videoListAll) {
         // 处理课程视频长度以及第xx节课
-        videoListAll[i].time = simpleDurationDate(videoListAll[i].time, 's')
+        videoListAll[i].time = secondToMinute(videoListAll[i].time)
+        // videoListAll[i].time = simpleDurationDate(videoListAll[i].time, 's')
         videoListAll[i].Index = convertToChinaNum(parseInt(i) + 1)
       }
       res.video_detail = videoListAll.slice(0, 3)

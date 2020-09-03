@@ -7,8 +7,14 @@
     </view>
   </view>
   <view class="list-main">
-    <view class="list-item">
-      
+    <view class="list-item" wx:for="{{videoList}}" wx:key="index" bindtap="toVideoCourseDetail" data-item="{{item}}">
+      <view class="list-item-left">
+        <image src="{{item.cover_pic}}"></image>
+      </view>
+      <view class="list-item-right">
+        <view class="list-item-right-top">{{item.name}}</view>
+        <view class="list-item-right-bottom" wx:if="{{item.money!==''}}">¥{{item.money}}</view>
+      </view>
     </view>
   </view>
 </view>

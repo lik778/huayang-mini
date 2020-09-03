@@ -1,4 +1,7 @@
-import { getBannerList, getYouZanAppId } from "../../api/mall/index"
+import {
+	getBannerList,
+	getYouZanAppId
+} from "../../api/mall/index"
 import {
 	createPracticeRecordInToday,
 	getCourseData,
@@ -7,11 +10,21 @@ import {
 	queryUserHaveClassesInfo,
 	queryUserJoinedBootCamp,
 	queryUserJoinedClasses,
-	queryUserRecentPracticeLog
+	queryUserRecentPracticeLog,
+	getVideoPracticeData
 } from "../../api/course/index"
-import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
+import {
+	CourseLevels,
+	GLOBAL_KEY
+} from "../../lib/config"
 import dayjs from "dayjs"
-import { $notNull, calculateExerciseTime, getLocalStorage, hasAccountInfo, setLocalStorage } from "../../utils/util"
+import {
+	$notNull,
+	calculateExerciseTime,
+	getLocalStorage,
+	hasAccountInfo,
+	setLocalStorage
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 const TagImageUrls = {
@@ -42,6 +55,7 @@ Page({
 		CourseLevels,
 		CourseTypeImage,
 		bannerList: [],
+		videoPracticeList: [],
 		userHaveClassesInfo: {}, // 用户的学习数据统计
 		userJoinedClassesList: [], // 用户加入的课程列表
 		recommendList: [], // 推荐课程列表
@@ -309,6 +323,28 @@ Page({
 			}
 		})
 	},
+	// 获取视频课程学历列表
+	getVideoPracticeList() {
+		getVideoPracticeData().then(res => {
+			if (res.length > 0) {
+				for (let i in res) {
+					res[i].kecheng_series.video_detail = JSON.parse(res[i].kecheng_series.video_detail)
+					res[i].videoList = res[i].kecheng_series.video_detail.length
+				}
+			}
+			console.log(res)
+			this.setData({
+				videoPracticeList: res
+			})
+		})
+	},
+	// 跳往视频课程详情
+	toVideoDetail(e) {
+		let id = e.currentTarget.dataset.item.kecheng_series.id
+		wx.navigateTo({
+			url: `/subCourse/videoCourse/videoCourse?videoId=${id}`,
+		})
+	},
 	// 推荐课程
 	queryRecommendClasses() {
 		queryRecommendCourseList({
@@ -346,7 +382,8 @@ Page({
 					this.queryRecommendClasses()
 				}
 			})
-
+			// 获取加入的视频课程
+			this.getVideoPracticeList()
 			// 用户学习数据统计
 			queryUserHaveClassesInfo().then((userHaveClassesInfo) => {
 				this.setData({

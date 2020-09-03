@@ -187,16 +187,25 @@
   box-sizing: border-box;
 }
 
+.course-item-active .course-item-right {
+  color: #CC0000;
+}
+
 .course-item-left {
   display: flex;
   align-items: center;
-  width: calc(100% - 150rpx);
+  width: calc(100% - 148rpx);
 }
 
 .course-item-right {
   width: 150rpx;
   padding-right: 20rpx;
   text-align: right;
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 32rpx;
 }
 
 .course-item-left-left {
@@ -216,7 +225,7 @@
 }
 
 .course-item-left-right {
-  width: 400rpx;
+  width: 450rpx;
 }
 
 .item-left-bottom {
@@ -332,4 +341,39 @@
 
 .alert-btn:active {
   opacity: 0.8;
+}
+
+/* 分享按钮 */
+.share {
+  position: fixed;
+  right: 26rpx;
+  bottom: 188rpx;
+  width: 180rpx;
+  height: 80rpx;
+}
+
+.share image {
+  width: 180rpx;
+  height: 80rpx;
+  vertical-align: bottom;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 5;
+}
+
+.share-box {
+  position: relative;
+  width: 180rpx;
+  height: 80rpx;
+}
+
+.share-box button {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  opacity: 0;
+  width: 180rpx;
+  height: 80rpx;
 }

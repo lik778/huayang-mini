@@ -191,6 +191,20 @@
           "id": -1,
           "name": "subCourse/videoCourseList/videoCourseList",
           "pathName": "subCourse/videoCourseList/videoCourseList",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "mine/mineOrder/mineOrder",
+          "pathName": "mine/mineOrder/mineOrder",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/practice/practice",
+          "pathName": "pages/practice/practice",
           "scene": null
         }
       ]

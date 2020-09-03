@@ -140,7 +140,9 @@ Page({
   },
   // 跳往视频课程全部列表
   toVideoList() {
-    console.log(11)
+    wx.navigateTo({
+      url: '/subCourse/videoCourseList/videoCourseList',
+    })
   },
   // 获取视频课程列表banner
   getVideoBanner() {
@@ -308,9 +310,7 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-
-  },
+  onReady: function () {},
 
   /**
    * 生命周期函数--监听页面显示

@@ -1,8 +1,16 @@
 // mine/mineOrder/mineOrder.js
-import { getLocalStorage } from "../../utils/util"
-import { getMineOrder } from "../../api/mine/index"
-import { GLOBAL_KEY } from "../../lib/config.js"
-import { getYouZanAppId } from "../../api/mall/index"
+import {
+  getLocalStorage
+} from "../../utils/util"
+import {
+  getMineOrder
+} from "../../api/mine/index"
+import {
+  GLOBAL_KEY
+} from "../../lib/config.js"
+import {
+  getYouZanAppId
+} from "../../api/mall/index"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -14,7 +22,7 @@ Page({
     appId: "",
     curentIndex: 0,
     statusHeight: 0,
-    titleList: ['训练营', '商品'],
+    titleList: ['训练营', '商品', '课程'],
     orderData: [],
     pageData: {
       offset: 0,
@@ -24,7 +32,9 @@ Page({
   },
   // 切换tab
   changeTab(e) {
-    bxPoint("order_tab", {tab: e.currentTarget.dataset.index == 1 ? "goods" : "camp"}, false)
+    bxPoint("order_tab", {
+      tab: e.currentTarget.dataset.index == 1 ? "goods" : "camp"
+    }, false)
     this.setData({
       curentIndex: e.currentTarget.dataset.index
     })
@@ -38,6 +48,14 @@ Page({
       params = {
         user_id: getLocalStorage(GLOBAL_KEY.userId),
         order_type: 'traincamp',
+        offset: (this.data.pageData.current - 1) * this.data.pageData.limit,
+        limit: this.data.pageData.limit
+      }
+    } else if (this.data.curentIndex == 2) {
+      // 课程
+      params = {
+        user_id: getLocalStorage(GLOBAL_KEY.userId),
+        order_type: 'kecheng_series',
         offset: (this.data.pageData.current - 1) * this.data.pageData.limit,
         limit: this.data.pageData.limit
       }
@@ -64,6 +82,12 @@ Page({
       let data = e.currentTarget.dataset.item.order_item_list[0]
       wx.navigateTo({
         url: `/subCourse/campDetail/campDetail?id=${data.product_id}`,
+      })
+    } else if (this.data.curentIndex == 2) {
+      // 跳往课程详情
+      let data = e.currentTarget.dataset.item.order_item_list[0]
+      wx.navigateTo({
+        url: `/subCourse/videoCourse/videoCourse?videoId=${data.product_id}`,
       })
     } else {
       wx.navigateToMiniProgram({

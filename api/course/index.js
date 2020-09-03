@@ -454,3 +454,23 @@ export function getVideoTypeList(params) {
 		})
 	})
 }
+// 练习页获取视频练习列表
+export function getVideoPracticeData(params) {
+	return new Promise(resolve => {
+		request._get(URL.getVideoPracticeData, params).then(({
+			data
+		}) => {
+			resolve(data)
+		})
+	})
+}
+// 记录学习到第几节课程
+export function recordStudy(params) {
+	return new Promise(resolve => {
+		request._post(URL.recordStudy, params).then(({
+			data
+		}) => {
+			resolve(data)
+		})
+	})
+}
