@@ -2,7 +2,7 @@
 
 .practice {
     position: relative;
-    padding: 15rpx 30rpx 150rpx;
+    padding: 15rpx 30rpx 180rpx;
 }
 
 /*banner*/
