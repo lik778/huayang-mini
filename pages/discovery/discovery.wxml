@@ -39,14 +39,14 @@
 				<view class="video-course-title-right" bindtap="toVideoList">更多课程 ›</view>
 			</view>
 			<view class="video-course-main">
-				<view class="video-course-main-left">
+				<view class="video-course-main-left" bindtap="toVideoList" data-index="2">
 					<image src="{{videoBannerList[0].pic_url}}"></image>
 				</view>
 				<view class="video-course-main-right">
-					<view class="video-course-main-right-top">
+					<view class="video-course-main-right-top" bindtap="toVideoList" data-index="1">
 						<image src="{{videoBannerList[1].pic_url}}"></image>
 					</view>
-					<view class="video-course-main-right-bottom">
+					<view class="video-course-main-right-bottom" bindtap="toVideoList" data-index="3">
 						<image src="{{videoBannerList[2].pic_url}}"></image>
 					</view>
 				</view>

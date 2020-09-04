@@ -139,10 +139,17 @@ Page({
     // })
   },
   // 跳往视频课程全部列表
-  toVideoList() {
-    wx.navigateTo({
-      url: '/subCourse/videoCourseList/videoCourseList',
-    })
+  toVideoList(e) {
+    if (e.currentTarget.dataset.index) {
+      let index = parseInt(e.currentTarget.dataset.index)
+      wx.navigateTo({
+        url: `/subCourse/videoCourseList/videoCourseList?index=${index}`
+      })
+    } else {
+      wx.navigateTo({
+        url: `/subCourse/videoCourseList/videoCourseList`
+      })
+    }
   },
   // 获取视频课程列表banner
   getVideoBanner() {

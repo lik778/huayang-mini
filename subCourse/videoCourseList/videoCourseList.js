@@ -75,7 +75,7 @@ Page({
     })
   },
   // 获取tab列表
-  getTabList() {
+  getTabList(index) {
     getVideoTypeList().then(res => {
       let arr = []
       let keyArr = []
@@ -88,16 +88,24 @@ Page({
         titleList: arr,
         keyArr: keyArr
       })
-      this.changeTab()
+      if (index !== '') {
+        this.changeTab(index)
+      } else {
+        this.changeTab(index)
+      }
     })
   },
   // 切换tab
   changeTab(e) {
     let index = ''
     if (e) {
-      index = e.currentTarget.dataset.index
+      if (e.currentTarget) {
+        index = e.currentTarget.dataset.index
+      } else {
+        index = e
+      }
       this.setData({
-        curentIndex: e.currentTarget.dataset.index
+        curentIndex: index
       })
     } else {
       index = 0
@@ -114,7 +122,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getTabList()
+    let index = options.index ? parseInt(options.index) : ""
+    if (options.index) {
+      this.setData({
+        curentIndex: index
+      })
+    }
+    this.getTabList(index)
   },
 
   /**
