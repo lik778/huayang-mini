@@ -51,15 +51,15 @@ Page({
       }
       for (let i in res) {
         if (res[i].discount_price < 0 && res[i].price <= 0) {
-          res[i].money = ''
+          res[i].money = '免费'
         } else if (res[i].discount_price === -1 && res[i].price > 0) {
           res[i].money = (res[i].price / 100).toFixed(2)
         } else if (res[i].discount_price > 0 && res[i].price > 0) {
           res[i].money = (res[i].discount_price / 100).toFixed(2)
         } else if (res[i].discount_price === 0 && res[i].price > 0) {
-          res[i].money = ''
+          res[i].money = '免费'
         } else if (res[i].discount_price === 0 && res[i].price === 0) {
-          res[i].money = ''
+          res[i].money = '免费'
         }
       }
       if (refresh) {

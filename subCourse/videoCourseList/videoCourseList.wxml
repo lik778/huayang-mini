@@ -13,7 +13,8 @@
       </view>
       <view class="list-item-right">
         <view class="list-item-right-top">{{item.name}}</view>
-        <view class="list-item-right-bottom" wx:if="{{item.money!==''}}">¥{{item.money}}</view>
+        <view class="list-item-right-bottom" wx:if="{{item.money!=='免费'}}">¥{{item.money}}</view>
+        <view class="list-item-right-bottom" wx:if="{{item.money==='免费'}}">{{item.money}}</view>
       </view>
     </view>
   </view>

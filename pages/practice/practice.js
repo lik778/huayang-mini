@@ -220,7 +220,6 @@ Page({
 			createPracticeRecordInToday()
 		}
 		bxPoint("practice_start", {}, false)
-		// console.log(item, parent)
 		switch (item.type) {
 			case 'kecheng': {
 				switch (item.kecheng_type) {
@@ -332,7 +331,6 @@ Page({
 					res[i].videoList = res[i].kecheng_series.video_detail.length
 				}
 			}
-			console.log(res)
 			this.setData({
 				videoPracticeList: res
 			})
