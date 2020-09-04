@@ -35,7 +35,6 @@ Page({
   // 获取课程列表
   getVideoList(index, refresh = true) {
     let category = ''
-    let userGrade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
     if (index === 0) {
       category = ''
     } else {
