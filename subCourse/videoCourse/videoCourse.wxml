@@ -31,7 +31,7 @@
     <view class="course-list">
       <view wx:for="{{courseData.video_detail}}" wx:key="index">
         <view class="{{playIndex===index?'course-item course-item-active':'course-item'}}"
-          bindtap="{{hasLogin?buttonType===6?'play':item.canReplay?'play':'':''}}" data-item="{{item}}"
+          bindtap="{{hasLogin?buttonType===6?'play':item.canReplay?'play':'':'join'}}" data-item="{{item}}"
           data-index="{{index}}">
           <view class="course-item-left">
             <view class="course-item-left-left" wx:if="{{item.canReplay}}">试看</view>

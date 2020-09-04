@@ -84,9 +84,9 @@ Page({
   },
   // 播放结束
   endVideo() {
-    // this.setData({
-    //   showVideoCover: false
-    // })
+    this.setData({
+      playIndex: -1
+    })
   },
   // 暂停播放
   pause() {
