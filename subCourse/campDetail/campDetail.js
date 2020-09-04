@@ -328,7 +328,9 @@ Page({
   },
   // 获取引导私域地址
   getArticileLinkData() {
-    getArticileLink().then((res) => {
+    getArticileLink({
+      traincamp_id: this.data.campId
+    }).then((res) => {
       this.setData({
         articileLink: res,
       })
@@ -528,7 +530,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-   
+
     let systemInfo = wx.getMenuButtonBoundingClientRect().top
     this.setData({
       bgImgStyle: `top:${systemInfo}px`
