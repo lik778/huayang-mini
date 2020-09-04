@@ -73,12 +73,10 @@ Page({
         showVideoCover: false
       })
     }
-    console.log(playIndex)
+    // 记录学习到第几课
     recordStudy({
       kecheng_series_id: this.data.courseData.id,
       kecheng_num: playIndex + 1
-    }).then(res => {
-      console.log(res, 10101)
     })
     setTimeout(() => {
       this.videoContext.play()
