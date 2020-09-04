@@ -220,7 +220,6 @@ Page({
       }
       this.setData({
         courseData: res,
-        hasLogin: true,
         showMoreAll: showMoreAll,
         videoListAll: videoListAll,
         showMore: showMore,
@@ -235,6 +234,9 @@ Page({
     if (hasAccountInfo() &&
       hasUserInfo()) {
       // 已经登录
+      this.setData({
+        hasLogin: true
+      })
       checkJoinVideoCourse({
         kecheng_series_id: this.data.videoId
       }).then(res => {
@@ -254,6 +256,9 @@ Page({
       })
     } else {
       // 未登陆
+      this.setData({
+        hasLogin: false
+      })
       this.getVideoDetail(1)
     }
   },
