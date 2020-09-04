@@ -35,10 +35,10 @@
           <view class="course-item-left">
             <view class="course-item-left-left" wx:if="{{item.canReplay}}">试看</view>
             <view class="course-item-left-left" wx:if="{{!item.canReplay&&hasLogin&&buttonType===6}}">
-              <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1598925311ujROjY.jpg"></image>
+              <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599188783dnVheO.jpg"></image>
             </view>
             <view class="course-item-left-left video-lock" wx:if="{{!item.canReplay&&(!hasLogin||buttonType!==6)}}">
-              <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1598925341BLYyqc.jpg"></image>
+              <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599188738gbIlPx.jpg"></image>
             </view>
             <view class="course-item-left-right">
               <view class="item-left-top">第{{item.Index}}课</view>
