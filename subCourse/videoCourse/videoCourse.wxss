@@ -111,7 +111,7 @@
 
 .invite-to image {
   width: 100%;
-  height: 88rpx;
+  height: 116rpx;
   vertical-align: bottom;
 }
 

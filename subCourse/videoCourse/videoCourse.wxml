@@ -30,8 +30,8 @@
   </view>
   <!-- 引导私域部分 -->
   <view class="invite-to" bindtap="toLink">
-    <!-- <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599469267FjRuzy.jpg"></image> -->
-    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599462262MAYCRv.jpg"></image>
+    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599472362RzdPlv.jpg"></image>
+    <!-- <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599462262MAYCRv.jpg"></image> -->
   </view>
   <!-- 课程列表 -->
   <view class="course" id="course">
