@@ -14,23 +14,23 @@
 			<view class="main-item" wx:for="{{orderData}}" wx:key="index" bindtap="toOrder" data-item="{{item}}">
 				<view class="main-item-top">
 					<view class="main-item-left">
-						<image src="{{item.order_item_list[0].product_info.cover_pic}}" wx:if="{{curentIndex==0||curentIndex==2}}">
+						<image src="{{item.order_item_list[0].product_info.cover_pic}}" wx:if="{{curentIndex==0||curentIndex==1}}">
 						</image>
-						<image src="{{item.product_pic}}" wx:if="{{curentIndex==1}}"></image>
+						<image src="{{item.product_pic}}" wx:if="{{curentIndex==2}}"></image>
 					</view>
 					<view class="main-item-right">
-						<view class="item-top" wx:if="{{curentIndex==1}}">{{item.product_title}}</view>
-						<view class="item-top" wx:if="{{curentIndex==0||curentIndex==2}}">{{item.order_item_list[0].product_name}}
+						<view class="item-top" wx:if="{{curentIndex==2}}">{{item.product_title}}</view>
+						<view class="item-top" wx:if="{{curentIndex==0||curentIndex==1}}">{{item.order_item_list[0].product_name}}
 						</view>
 						<view class="item-bottom">
 							<view class="order-price">
 								订单金额：<text style="font-size:18px;font-weight:600;color:rgba(0, 0, 0, 1);"
-									wx:if="{{curentIndex==0||curentIndex==2}}">¥{{item.real_price/100}}</text>
+									wx:if="{{curentIndex==0||curentIndex==1}}">¥{{item.real_price/100}}</text>
 								<text style="font-size:18px;font-weight:600;color:rgba(0, 0, 0, 1);"
-									wx:if="{{curentIndex==1}}">¥{{item.total_fee}}</text>
+									wx:if="{{curentIndex==2}}">¥{{item.total_fee}}</text>
 							</view>
-							<view class="order-time" wx:if="{{curentIndex==0||curentIndex==2}}">订单时间：{{item.created_at}}</view>
-							<view class="order-time" wx:if="{{curentIndex==1}}">订单时间：{{item.order_create_time}}</view>
+							<view class="order-time" wx:if="{{curentIndex==0||curentIndex==1}}">订单时间：{{item.created_at}}</view>
+							<view class="order-time" wx:if="{{curentIndex==2}}">订单时间：{{item.order_create_time}}</view>
 						</view>
 						<view class="main-item-bottom">
 							<view class="button">查看订单</view>

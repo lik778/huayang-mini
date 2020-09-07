@@ -474,3 +474,13 @@ export function recordStudy(params) {
 		})
 	})
 }
+// 获取视频课引流私域文章link
+export function getVideoArticleLink(params) {
+	return new Promise(resolve => {
+		request._get(URL.getVideoArticleLink, params).then(({
+			data
+		}) => {
+			resolve(data)
+		})
+	})
+}

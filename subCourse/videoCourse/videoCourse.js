@@ -5,18 +5,16 @@ import {
   hasAccountInfo,
   hasUserInfo,
   payCourse,
-
-  simpleDurationSimple,
-  simpleDurationDate,
   convertToChinaNum,
   secondToMinute,
-  simpleDuration
 } from "../../utils/util"
+import bxPoint from "../../utils/bxPoint"
 import {
   checkJoinVideoCourse,
   getVideoCourseDetail,
   joinVideoCourse,
   recordStudy,
+  getVideoArticleLink
 } from "../../api/course/index"
 import {
   GLOBAL_KEY
@@ -27,20 +25,22 @@ Page({
    * 页面的初始数据
    */
   data: {
-    didShowAuth: false,
-    playIndex: -1,
-    didShowAlert: false,
-    videoSrc: "",
-    buttonType: 1,
-    lock: true,
-    videoId: "",
-    courseData: '',
-    videoLock: true,
-    closeCover: false,
-    showMoreAll: false,
-    showMore: true,
-    showVideoCover: true,
-    hasLogin: false
+    didShowAuth: false, //控制显示授权弹窗
+    playIndex: -1, //当前播放视频index
+    didShowAlert: false, //控制显示等级不够弹窗
+    videoSrc: "", //视频播放地址
+    buttonType: 1, //按钮类型
+    tabIndex: 0, //tab切换index
+    lock: true, //请求接口lock
+    videoId: "", //视频id
+    courseData: '', //视频详情数据
+    videoLock: true, //视频锁控制显示
+    closeCover: false, //关闭封面图
+    showMoreAll: false, //
+    showMore: true, //展示课程列表更多
+    showVideoCover: true, //是否显示视频播放按钮/封面
+    hasLogin: false, //是否登录
+    articleLink: '' //引导私域文章地址
   },
   // 等级不够关闭弹窗
   openBox() {
@@ -78,6 +78,11 @@ Page({
       kecheng_series_id: this.data.courseData.id,
       kecheng_num: playIndex + 1
     })
+    // 学习课程打点
+    bxPoint("series_content_click", {
+      series_id: this.data.courseData.id,
+      kecheng_title: e.currentTarget.dataset.item.title
+    }, false)
     setTimeout(() => {
       this.videoContext.play()
     }, 200)
@@ -119,6 +124,9 @@ Page({
           this.setData({
             lock: false
           })
+          bxPoint("series_join", {
+            series_id: this.data.courseData.id
+          }, false)
           if (res === 'success') {
             this.backFun({
               type: "success"
@@ -220,6 +228,7 @@ Page({
         // 控制视频是否可以播放
         lock = false
       }
+      this.getArticleLink(res.id)
       this.setData({
         courseData: res,
         showMoreAll: showMoreAll,
@@ -277,6 +286,12 @@ Page({
       showMore: !this.data.showMore
     })
   },
+  // 分享打点
+  share() {
+    bxPoint("series_share", {
+      series_id: this.data.courseData.id
+    }, false)
+  },
   // 授权弹窗取消回调
   authCancelEvent() {
     this.setData({
@@ -292,12 +307,61 @@ Page({
       })
     }, 200)
   },
+  // 目录/详情切换
+  changeTabIndex(e) {
+    let index = parseInt(e.currentTarget.dataset.index)
+    // this.scrollToDetail(index)
+    this.setData({
+      tabIndex: index
+    })
+  },
+  // 获取视频课程引流文章地址
+  getArticleLink(e) {
+    getVideoArticleLink({
+      series_id: e
+    }).then(res => {
+      this.setData({
+        articleLink: res
+      })
+    })
+  },
+  // 点击添加班主任微信
+  toLink() {
+    wx.navigateTo({
+      url: this.data.articleLink,
+    })
+  },
+  // 滚动至课程详情
+  scrollToDetail(e) {
+    let query = wx.createSelectorQuery()
+    if (e === 0) {
+      query.select('#course').boundingClientRect((rect) => {
+        wx.pageScrollTo({
+          scrollTop: rect.top,
+          duration: 100,
+        })
+      }).exec()
+    } else {
+      query.select('#course-detail').boundingClientRect((rect) => {
+        wx.pageScrollTo({
+          scrollTop: rect.top,
+          duration: 100,
+        })
+      }).exec()
+    }
+
+
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     this.setData({
       videoId: options.videoId
+    })
+    // pv打点
+    bxPoint("series_detail", {
+      series_id: this.data.courseData.id
     })
     this.checkIsjoined()
   },
@@ -336,7 +400,9 @@ Page({
   onPullDownRefresh: function () {
 
   },
+  onPageScroll: function () {
 
+  },
   /**
    * 页面上拉触底事件的处理函数
    */

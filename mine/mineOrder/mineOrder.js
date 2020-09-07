@@ -22,7 +22,7 @@ Page({
     appId: "",
     curentIndex: 0,
     statusHeight: 0,
-    titleList: ['训练营', '商品', '课程'],
+    titleList: ['训练营', '课程', '商品'],
     // titleList: ['训练营', '商品'],
     orderData: [],
     pageData: {
@@ -52,7 +52,7 @@ Page({
         offset: (this.data.pageData.current - 1) * this.data.pageData.limit,
         limit: this.data.pageData.limit
       }
-    } else if (this.data.curentIndex == 2) {
+    } else if (this.data.curentIndex == 1) {
       // 课程
       params = {
         user_id: getLocalStorage(GLOBAL_KEY.userId),
@@ -84,7 +84,7 @@ Page({
       wx.navigateTo({
         url: `/subCourse/campDetail/campDetail?id=${data.product_id}`,
       })
-    } else if (this.data.curentIndex == 2) {
+    } else if (this.data.curentIndex == 1) {
       // 跳往课程详情
       let data = e.currentTarget.dataset.item.order_item_list[0]
       wx.navigateTo({
