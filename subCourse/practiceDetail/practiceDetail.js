@@ -224,8 +224,7 @@ Page({
 					// 检查用户等级
 					if (response.user_grade > (this.data.accountInfo.user_grade || 0)) {
 						this.setData({
-							btnText: `Lv ${response.user_grade} 等级开启`,
-							isDownloading: true // 禁止用户点击按钮
+							btnText: `Lv ${response.user_grade} 等级开启`
 						})
 					} else {
 						this.setData({
