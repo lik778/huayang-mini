@@ -2,13 +2,20 @@
 <view class="video-course" wx:if="courseData!==''">
   <!-- 视频区域 -->
   <view class="video">
-    <video id="myVideo" bindplay="playVideo" src="{{videoSrc}}" poster="{{showVideoCover?courseData.cover_pic:''}}"
-      style="{{videoHeight}}" bindpause="pause" controls="{{showLock?false:true}}" show-center-play-btn="{{false}}"
-      bindended="endVideo" object-fit="fill"></video>
-    <view class="video-cover" wx:if="{{showVideoCover&&buttonType===6}}" bindtap="play">
+    <video id="myVideo" bindplay="playVideo" src="{{videoSrc}}" style="{{videoHeight}}" bindpause="pause"
+      controls="{{showLock?false:true}}" show-center-play-btn="{{false}}" bindended="endVideo">
+      <!-- <cover-image wx:if="{{showVideoCover}}" src="{{showVideoCover?courseData.cover_pic:''}}" mode="widthFix">
+      </cover-image> -->
+    </video>
+    <view class="video-cover-one" wx:if="{{showVideoCover}}">
+      <image src="{{courseData.cover_pic}}"></image>
+    </view>
+    <view class="video-cover"
+      wx:if="{{(showVideoCover&&buttonType===6)||(buttonType!==1&&courseData.video_detail[0].canReplay)}}"
+      bindtap="play">
       <image src="/assets/images/common/play.png"></image>
     </view>
-    <view class="video-cover" wx:if="{{showVideoCover&&buttonType!==6}}">
+    <view class="video-cover" wx:if="{{showVideoCover&&buttonType!==6&&!courseData.video_detail[0].canReplay}}">
       <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597224125GjluUS.jpg"></image>
     </view>
   </view>
