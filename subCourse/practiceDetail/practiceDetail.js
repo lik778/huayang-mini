@@ -235,8 +235,7 @@ Page({
 					}
 				} else {
 					this.setData({
-						btnText: "开始练习",
-						isDownloading: true // 禁止用户点击按钮
+						btnText: "开始练习"
 					})
 				}
 			}

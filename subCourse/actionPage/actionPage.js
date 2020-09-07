@@ -151,7 +151,14 @@ Page({
 				isPlayMainPointAudioPlaying: false // 释放要领正在播放中的状态
 			})
 
-			collectError({page: "actionPage.mainPointAudio", error_code: err.errCode, error_message: err.errMsg})
+			collectError({
+				page: "actionPage.mainPointAudio", 
+				error_code: err.errCode, 
+				error_message: err.errMsg,
+				err_target_link: link, 
+				err_target_name: self.data.targetActionObj.name,
+				systemInfo: getLocalStorage(GLOBAL_KEY.systemParams)
+			})
 		})
 
 		// 监听小程序切后台事件
@@ -428,6 +435,7 @@ Page({
 	 * @returns {Promise}
 	 */
 	playTempBgAudio(link) {
+		let self = this
 		let audio = this.data.bgAudio
 		audio.title = "花样百姓"
 		// 解决华为P30处理音频地址完全相同时无法正常播放问题
@@ -445,7 +453,14 @@ Page({
 
 			// 兼容外置播放器解析音频报错问题
 			audio.onError((err) => {
-				collectError({page: "actionPage.bgAudio", error_code: err.errCode, error_message: {...err.errMsg, err_link: link}})
+				collectError({
+					page: "actionPage.bgAudio", 
+					error_code: err.errCode, 
+					error_message: err.errMsg,
+					err_target_link: link, 
+					err_target_name: self.data.targetActionObj.name,
+					systemInfo: getLocalStorage(GLOBAL_KEY.systemParams)
+			})
 				resolve()
 			})
 		})
