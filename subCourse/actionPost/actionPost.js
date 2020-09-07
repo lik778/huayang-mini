@@ -350,7 +350,12 @@ Page({
 					resolve(result)
 				},
 				fail(err) {
-					collectError({page: "actionPost.canvasToTempFilePath", error_code: 400, error_message: err.errMsg})
+					collectError({
+						page: "actionPost.canvasToTempFilePath", 
+						error_code: 400, 
+						error_message: err.errMsg,
+						systemInfo: getLocalStorage(GLOBAL_KEY.systemParams)
+					})
 					reject(err)
 				}
 			})
