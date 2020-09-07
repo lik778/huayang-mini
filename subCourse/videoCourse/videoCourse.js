@@ -32,7 +32,7 @@ Page({
     buttonType: 1, //按钮类型
     tabIndex: 0, //tab切换index
     lock: true, //请求接口lock
-    videoId: "", //视频id
+    videoId: "", //视频课程id
     courseData: '', //视频详情数据
     videoLock: true, //视频锁控制显示
     closeCover: false, //关闭封面图
@@ -361,7 +361,7 @@ Page({
     })
     // pv打点
     bxPoint("series_detail", {
-      series_id: this.data.courseData.id
+      series_id: options.videoId
     })
     this.checkIsjoined()
   },
