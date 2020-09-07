@@ -103,10 +103,23 @@
   vertical-align: bottom;
 }
 
+/* 添加班主任微信 */
+.invite-to {
+  margin: 0 30rpx;
+  padding-top: 32rpx;
+}
+
+.invite-to image {
+  width: 100%;
+  height: 88rpx;
+  vertical-align: bottom;
+}
+
 /* 内容简介区域 */
 .info {
   padding: 0 30rpx;
   padding-top: 60rpx;
+  padding-bottom: 28rpx;
 }
 
 .info-title {
@@ -156,7 +169,7 @@
 
 /* 课程内容 */
 .course {
-  padding: 100rpx 30rpx 50rpx 30rpx;
+  padding: 72rpx 30rpx 50rpx 30rpx;
 }
 
 .course-title {
@@ -171,6 +184,57 @@
   font-weight: 400;
   color: #000000;
   line-height: 52rpx;
+}
+
+.course-title-login-left {
+  width: 50%;
+  padding-left: 110rpx;
+  box-sizing: border-box;
+  font-size: 48rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 48rpx;
+}
+
+.tab-active,
+.tab-active-one {
+  font-weight: 600;
+  font-family: PingFangSC-Medium, PingFang SC;
+  position: relative;
+}
+
+.tab-active::after {
+  content: '';
+  position: absolute;
+  left: 116rpx;
+  bottom: -14rpx;
+  width: 84rpx;
+  height: 8rpx;
+  border-radius: 4rpx;
+  background: #CC0000;
+}
+
+.tab-active-one::after {
+  content: '';
+  position: absolute;
+  left: 146rpx;
+  bottom: -14rpx;
+  width: 84rpx;
+  height: 8rpx;
+  border-radius: 4rpx;
+  background: #CC0000;
+}
+
+.course-title-login-right {
+  width: 50%;
+  padding-left: 140rpx;
+  box-sizing: border-box;
+  font-size: 48rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 48rpx;
 }
 
 .course-title-right {
