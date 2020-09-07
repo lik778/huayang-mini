@@ -6,7 +6,7 @@
       controls="{{showLock?false:true}}" show-center-play-btn="{{false}}" bindended="endVideo">
     </video>
     <view class="video-cover-one" wx:if="{{showVideoCover}}">
-      <image src="{{courseData.cover_pic}}"></image>
+      <image src="{{courseData.video_pic}}"></image>
     </view>
     <view class="video-cover"
       wx:if="{{(showVideoCover&&buttonType===6)||(showVideoCover&&buttonType!==1&&courseData.video_detail[0].canReplay)}}"
@@ -29,7 +29,7 @@
     </view>
   </view>
   <!-- 引导私域部分 -->
-  <view class="invite-to" bindtap="toLink">
+  <view class="invite-to" bindtap="toLink" wx:if="{{buttonType===6}}">
     <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599472362RzdPlv.jpg"></image>
     <!-- <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599462262MAYCRv.jpg"></image> -->
   </view>
