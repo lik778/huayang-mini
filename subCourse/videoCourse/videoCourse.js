@@ -120,7 +120,9 @@ Page({
             lock: false
           })
           if (res === 'success') {
-            this.checkIsjoined()
+            this.backFun({
+              type: "success"
+            })
           } else if (res.num) {
             payCourse({
               id: res.id,

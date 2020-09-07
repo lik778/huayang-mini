@@ -23,7 +23,7 @@ Page({
     statusHeight: 0,
     noUserInfo: true,
     nodata: true,
-    taskList: [],
+    taskList: '',
     canShow: false,
     processStyle: "width:0%;",
     taskStyle: "",

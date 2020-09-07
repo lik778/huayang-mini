@@ -4,7 +4,7 @@
   <view class="video">
     <video id="myVideo" bindplay="playVideo" src="{{videoSrc}}" poster="{{showVideoCover?courseData.cover_pic:''}}"
       style="{{videoHeight}}" bindpause="pause" controls="{{showLock?false:true}}" show-center-play-btn="{{false}}"
-      bindended="endVideo"></video>
+      bindended="endVideo" object-fit="fill"></video>
     <view class="video-cover" wx:if="{{showVideoCover&&buttonType===6}}" bindtap="play">
       <image src="/assets/images/common/play.png"></image>
     </view>

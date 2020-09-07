@@ -1,5 +1,5 @@
 <!--pages/userCenter/userCenter.wxml-->
-<view class="user-center">
+<view class="user-center" wx:if='taskList!==""'>
 	<view class="banner">
 		<!-- 背景图 -->
 		<image src="/assets/images/common/banner-bg.png"></image>
@@ -7,7 +7,8 @@
 		<view class="message">
 			<image wx:if="{{!nodata}}" src="{{userInfo.avatar_url}}"></image>
 			<text wx:if="{{!nodata}}">{{userInfo.nick_name||userInfo.nickname}}</text>
-			<image wx:if="{{nodata}}" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599186470WlQVNm.jpg" bindtap="getAuth"></image>
+			<image wx:if="{{nodata}}" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599186470WlQVNm.jpg"
+				bindtap="getAuth"></image>
 			<text wx:if="{{nodata}}" bindtap="getAuth">点击登录</text>
 		</view>
 		<!-- 经验条 -->
