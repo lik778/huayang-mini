@@ -134,9 +134,9 @@
             <view class="video-practice-item-right">
                 <view class="video-practice-item-right-top">{{item.kecheng_series.name}}</view>
                 <view class="video-practice-item-right-bottom">
-                    <text wx:if="{{item.last_visit_num!==0}}">学习至：第{{item.last_visit_num}}课</text>
+                    <text class="video-practice-item-right-bottom-text" wx:if="{{item.last_visit_num!==0}}">学习至：第{{item.last_visit_num}}课</text>
                     <text wx:else></text>
-                    <text>共{{item.videoList}}节课</text>
+                    <text class="video-practice-item-right-bottom-text-one">共{{item.videoList}}节课</text>
                 </view>
             </view>
         </view>
