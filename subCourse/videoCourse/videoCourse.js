@@ -327,8 +327,9 @@ Page({
   },
   // 点击添加班主任微信
   toLink() {
+    let link = this.data.articleLink
     wx.navigateTo({
-      url: this.data.articleLink,
+      url: `/pages/webViewCommon/webViewCommon?link=${link}`,
     })
   },
   // 滚动至课程详情
