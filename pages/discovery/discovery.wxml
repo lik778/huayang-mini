@@ -39,14 +39,17 @@
 				<view class="video-course-title-right" bindtap="toVideoList">更多课程 ›</view>
 			</view>
 			<view class="video-course-main">
-				<view class="video-course-main-left" bindtap="toVideoList" data-index="2">
+				<view class="video-course-main-left" bindtap="toVideoList" data-index="2"
+					data-item='{{videoBannerList[0].link}}'>
 					<image src="{{videoBannerList[0].pic_url}}"></image>
 				</view>
 				<view class="video-course-main-right">
-					<view class="video-course-main-right-top" bindtap="toVideoList" data-index="1">
+					<view class="video-course-main-right-top" bindtap="toVideoList" data-index="1"
+						data-item='{{videoBannerList[1].link}}'>
 						<image src="{{videoBannerList[1].pic_url}}"></image>
 					</view>
-					<view class="video-course-main-right-bottom" bindtap="toVideoList" data-index="3">
+					<view class="video-course-main-right-bottom" bindtap="toVideoList" data-index="3"
+						data-item='{{videoBannerList[2].link}}'>
 						<image src="{{videoBannerList[2].pic_url}}"></image>
 					</view>
 				</view>
@@ -61,8 +64,11 @@
 						<view class="video-course-item-right-top">
 							{{item.name}}
 						</view>
-						<view class="video-course-item-right-bottom" wx:if="{{item.money!==''}}">
+						<view class="video-course-item-right-bottom" wx:if="{{item.money!=='免费'}}">
 							¥{{item.money}}
+						</view>
+						<view class="video-course-item-right-bottom" wx:else>
+							{{item.money}}
 						</view>
 					</view>
 				</view>
@@ -107,7 +113,7 @@
 		<view class="competition">
 			<view class="competition-title">大赛</view>
 			<view class="competition-list">
-				<view class="competition-item" bindtap="toModelCompetition" data-item='{{item}}'
+				<view class="competition-item" bindtap="toModelCompetition" data-item=' {{item}}'
 					wx:for="{{competitionBannerList}}" wx:key="index">
 					<image mode="aspectFill" src="{{item.pic_url}}"></image>
 					<view class="competition-item-title">{{item.title}}</view>

@@ -141,9 +141,9 @@ Page({
   // 跳往视频课程全部列表
   toVideoList(e) {
     if (e.currentTarget.dataset.index) {
-      let index = parseInt(e.currentTarget.dataset.index)
+      let link = e.currentTarget.dataset.item
       wx.navigateTo({
-        url: `/subCourse/videoCourseList/videoCourseList?index=${index}`
+        url: link
       })
     } else {
       wx.navigateTo({
@@ -168,14 +168,16 @@ Page({
     }).then(res => {
       res = res || []
       for (let i in res) {
-        if (res[i].price > 0 && res[i].discount_price === 0) {
-          res[i].money = ''
-        } else if (res[i].price > 0 && res[i].discount_price > 0) {
-          res[i].money = (res[i].discount_price / 100).toFixed(2)
-        } else if (res[i].price > 0 && res[i].discount_price === -1) {
+        if (res[i].discount_price < 0 && res[i].price <= 0) {
+          res[i].money = '免费'
+        } else if (res[i].discount_price === -1 && res[i].price > 0) {
           res[i].money = (res[i].price / 100).toFixed(2)
-        } else if (res[i].price <= 0 && res[i].discount_price === -1) {
-          res[i].money = ''
+        } else if (res[i].discount_price > 0 && res[i].price > 0) {
+          res[i].money = (res[i].discount_price / 100).toFixed(2)
+        } else if (res[i].discount_price === 0 && res[i].price > 0) {
+          res[i].money = '免费'
+        } else if (res[i].discount_price === 0 && res[i].price === 0) {
+          res[i].money = '免费'
         }
       }
       this.getVideoBanner()

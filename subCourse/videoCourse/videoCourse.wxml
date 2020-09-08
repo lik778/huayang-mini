@@ -6,7 +6,7 @@
       controls="{{showLock?false:true}}" show-center-play-btn="{{false}}" bindended="endVideo">
     </video>
     <view class="video-cover-one" wx:if="{{showVideoCover}}">
-      <image src="{{courseData.cover_pic}}"></image>
+      <image src="{{courseData.video_pic}}"></image>
     </view>
     <view class="video-cover"
       wx:if="{{(showVideoCover&&buttonType===6)||(showVideoCover&&buttonType!==1&&courseData.video_detail[0].canReplay)}}"
@@ -25,13 +25,13 @@
       <view class="info-title-right">共{{courseData.visit_count}}人练习</view>
     </view>
     <view class="info-main">
-      {{courseData.desc}}
+      <text>{{courseData.desc}}</text>
     </view>
   </view>
   <!-- 引导私域部分 -->
-  <view class="invite-to" bindtap="toLink">
-    <!-- <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599469267FjRuzy.jpg"></image> -->
-    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599462262MAYCRv.jpg"></image>
+  <view class="invite-to" bindtap="toLink" wx:if="{{buttonType===6}}">
+    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599472362RzdPlv.jpg"></image>
+    <!-- <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599462262MAYCRv.jpg"></image> -->
   </view>
   <!-- 课程列表 -->
   <view class="course" id="course">
@@ -89,7 +89,7 @@
   <!-- 课程详情 -->
   <view class="course-detail" id="course-detail" wx:if="{{tabIndex===1||buttonType!==6}}">
     <view class="course-detail-title">课程详情</view>
-    <image src="{{item}}" wx:for="{{courseData.detail_pics}}" wx:key="index"></image>
+    <image src="{{item}}" wx:for="{{courseData.detail_pics}}" wx:key="index" mode="widthFix"></image>
   </view>
   <!-- 按钮 -->
   <view class="button-line" wx:if="{{buttonType!==6}}">
