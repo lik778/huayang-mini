@@ -70,7 +70,8 @@ Page({
       this.setData({
         playIndex: playIndex,
         closeCover: true,
-        showVideoCover: false
+        showVideoCover: false,
+        videoSrc:this.data.videoListAll[playIndex].url
       })
     }
     // 记录学习到第几课
@@ -81,7 +82,7 @@ Page({
     // 学习课程打点
     bxPoint("series_content_click", {
       series_id: this.data.courseData.id,
-      kecheng_title: e.currentTarget.dataset.item.title
+      kecheng_title: this.data.videoListAll[playIndex].title
     }, false)
     setTimeout(() => {
       this.videoContext.play()
