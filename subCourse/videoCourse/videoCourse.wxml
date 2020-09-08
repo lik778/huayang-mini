@@ -25,7 +25,7 @@
       <view class="info-title-right">共{{courseData.visit_count}}人练习</view>
     </view>
     <view class="info-main">
-      {{courseData.desc}}
+      <text>{{courseData.desc}}</text>
     </view>
   </view>
   <!-- 引导私域部分 -->

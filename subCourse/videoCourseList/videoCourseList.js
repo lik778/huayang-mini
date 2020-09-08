@@ -79,8 +79,9 @@ Page({
       let arr = []
       let keyArr = []
       for (let i in res) {
-        arr.push(res[i])
-        keyArr.push(i)
+        console.log(res)
+        arr.push(res[i].value)
+        keyArr.push(res[i].key)
       }
       arr.unshift("全部")
       this.setData({
