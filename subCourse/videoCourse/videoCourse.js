@@ -25,6 +25,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    videoStyle: "",
+    showVideoLock: false,
     didShowAuth: false, //控制显示授权弹窗
     playIndex: -1, //当前播放视频index
     didShowAlert: false, //控制显示等级不够弹窗
@@ -240,6 +242,53 @@ Page({
         // 控制视频是否可以播放
         lock = false
       }
+      let canPlay = res.video_detail[0].canReplay
+      let showVideoCoverLock = this.data.showVideoCover
+      let hasLogin = this.data.hasLogin
+      let showVideoLock = false
+      if (showVideoCoverLock) {
+        let buttonType = button ? button : buttonType
+        // 显示遮罩层
+        console.log(buttonType)
+        if (buttonType === 1) {
+          // 未登录或者免费未加入
+          if (hasLogin) {
+            if (canPlay) {
+              showVideoLock = false
+            } else {
+              showVideoLock = true
+            }
+          } else {
+            if (canPlay) {
+              showVideoLock = false
+            } else {
+              showVideoLock = true
+            }
+          }
+        } else {
+          // 已登陆
+          if (hasLogin) {
+            if (canPlay) {
+              showVideoLock = false
+            } else {
+              if (buttonType === 6) {
+                showVideoLock = false
+              } else {
+                showVideoLock = true
+              }
+              console.log(showVideoLock)
+            }
+          } else {
+            if (canPlay) {
+              showVideoLock = false
+            } else {
+              showVideoLock = true
+            }
+          }
+        }
+      } else {
+        showVideoLock = false
+      }
       this.getArticleLink(res.id)
       this.setData({
         courseData: res,
@@ -247,6 +296,7 @@ Page({
         videoListAll: videoListAll,
         showMore: showMore,
         videoLock: lock,
+        showVideoLock: showVideoLock,
         buttonType: button ? button : buttonType,
         videoSrc: videoListAll[0].canReplay ? videoListAll[0].url : ''
       })
@@ -384,6 +434,12 @@ Page({
    */
   onReady: function () {
     this.videoContext = wx.createVideoContext('myVideo')
+    let width = wx.getSystemInfoSync().windowWidth
+    let height = parseInt(((width - 30) / 16) * 9)
+
+    this.setData({
+      videoStyle: `height:${height}px`,
+    })
   },
 
   /**
