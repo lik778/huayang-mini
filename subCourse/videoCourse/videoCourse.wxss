@@ -157,7 +157,7 @@
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #222222;
-  line-height: 44rpx;
+  line-height: 48rpx;
   /* text-overflow: -o-ellipsis-lastline;
   overflow: hidden;
   text-overflow: ellipsis;
