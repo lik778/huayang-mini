@@ -99,3 +99,24 @@
   border-radius: 8rpx;
   vertical-align: bottom;
 }
+
+.list-none {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.list-none image {
+  width: 550rpx;
+  height: 300rpx;
+  vertical-align: bottom;
+}
+
+.list-none-text {
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.4);
+  line-height: 36rpx;
+  padding-left: 24rpx;
+}

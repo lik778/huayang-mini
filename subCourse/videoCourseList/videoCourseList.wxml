@@ -6,7 +6,7 @@
       {{item}}
     </view>
   </view>
-  <view class="list-main">
+  <view class="list-main" wx:if="{{videoList.length>0}}">
     <view class="list-item" wx:for="{{videoList}}" wx:key="index" bindtap="toVideoCourseDetail" data-item="{{item}}">
       <view class="list-item-left">
         <image src="{{item.cover_pic}}" mode='aspectFill'></image>
@@ -16,6 +16,12 @@
         <view class="list-item-right-bottom" wx:if="{{item.money!=='免费'}}">¥{{item.money}}</view>
         <view class="list-item-right-bottom" wx:if="{{item.money==='免费'}}">{{item.money}}</view>
       </view>
+    </view>
+  </view>
+  <view class="list-main" wx:else>
+    <view class="list-none">
+      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599548149wNjJgb.jpg"></image>
+      <view class="list-none-text">课程努力制作中!</view>
     </view>
   </view>
 </view>
