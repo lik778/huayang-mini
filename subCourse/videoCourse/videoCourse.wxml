@@ -9,12 +9,12 @@
       <image src="{{courseData.video_pic}}"></image>
     </view>
     <view class="video-cover"
-      wx:if="{{(showVideoCover&&buttonType===6)||(showVideoCover&&buttonType!==1&&courseData.video_detail[0].canReplay)}}"
+      wx:if="{{(showVideoCover&&buttonType===6)||(showVideoCover&&courseData.video_detail[0].canReplay&&!hasLogin)||(showVideoCover&&buttonType!==1&&courseData.video_detail[0].canReplay)}}"
       bindtap="play">
       <image src="/assets/images/common/play.png"></image>
     </view>
     <view class="video-cover"
-      wx:if="{{(showVideoCover&&buttonType===1)||(showVideoCover&&buttonType!==6&&!courseData.video_detail[0].canReplay)}}">
+      wx:if="{{(showVideoCover&&buttonType===1&&hasLogin)||(showVideoCover&&!courseData.video_detail[0].canReplay&&!hasLogin)||(showVideoCover&&buttonType!==6&&hasLogin&&!courseData.video_detail[0].canReplay)}}">
       <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597224125GjluUS.jpg"></image>
     </view>
   </view>
