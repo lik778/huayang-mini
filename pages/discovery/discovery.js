@@ -163,9 +163,7 @@ Page({
   },
   // 获取视频课程列表
   getVideoCourse() {
-    getVideoCourseList({
-      limit: 2
-    }).then(res => {
+    getVideoCourseList().then(res => {
       res = res || []
       for (let i in res) {
         if (res[i].discount_price < 0 && res[i].price <= 0) {
