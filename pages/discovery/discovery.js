@@ -1,11 +1,25 @@
 // pages/ discovery/discovery.js
-import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage, simpleDurationSimple } from "../../utils/util"
-import { checkAuth } from "../../utils/auth"
-import { getActivityList, getCampList, getFindBanner, getShowCourseList } from "../../api/course/index"
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  setLocalStorage,
+  simpleDurationSimple
+} from "../../utils/util"
+import {
+  getActivityList,
+  getCampList,
+  getFindBanner,
+  getVideoCourseList,
+  getShowCourseList
+} from "../../api/course/index"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
-import request from "../../lib/request"
-import { getYouZanAppId } from "../../api/mall/index"
+import {
+  getYouZanAppId
+} from "../../api/mall/index"
 
 Page({
 
@@ -20,6 +34,7 @@ Page({
     bannerList: null,
     canShow: false,
     courseList: null,
+    videoList: '',
     modelBannerLink: "",
     activityList: null
   },
@@ -99,7 +114,8 @@ Page({
   // 处理是否显示模特大赛banner
   initModelBanner() {
     getFindBanner({
-      scene: 9
+      // scene: 9
+      scene: 11
     }).then(res => {
       this.setData({
         competitionBannerList: res,
@@ -122,7 +138,59 @@ Page({
     //   showModelBanner: show
     // })
   },
-
+  // 跳往视频课程全部列表
+  toVideoList(e) {
+    if (e.currentTarget.dataset.index) {
+      let link = e.currentTarget.dataset.item
+      wx.navigateTo({
+        url: link
+      })
+    } else {
+      wx.navigateTo({
+        url: `/subCourse/videoCourseList/videoCourseList`
+      })
+    }
+  },
+  // 获取视频课程列表banner
+  getVideoBanner() {
+    getFindBanner({
+      scene: 13
+    }).then(res => {
+      this.setData({
+        videoBannerList: res
+      })
+    })
+  },
+  // 获取视频课程列表
+  getVideoCourse() {
+    getVideoCourseList().then(res => {
+      res = res || []
+      for (let i in res) {
+        if (res[i].discount_price < 0 && res[i].price <= 0) {
+          res[i].money = '免费'
+        } else if (res[i].discount_price === -1 && res[i].price > 0) {
+          res[i].money = (res[i].price / 100).toFixed(2)
+        } else if (res[i].discount_price > 0 && res[i].price > 0) {
+          res[i].money = (res[i].discount_price / 100).toFixed(2)
+        } else if (res[i].discount_price === 0 && res[i].price > 0) {
+          res[i].money = '免费'
+        } else if (res[i].discount_price === 0 && res[i].price === 0) {
+          res[i].money = '免费'
+        }
+      }
+      this.getVideoBanner()
+      this.setData({
+        videoList: res
+      })
+    })
+  },
+  // 跳往视频详情页
+  toVideoDetail(e) {
+    let id = e.currentTarget.dataset.item.id
+    wx.navigateTo({
+      url: `/subCourse/videoCourse/videoCourse?videoId=${id}`,
+    })
+  },
   // 获取课程列表
   getCourseList() {
     getShowCourseList({
@@ -194,6 +262,7 @@ Page({
       this.setData({
         campList: res.list
       })
+      this.getVideoCourse()
       this.getBanner()
     })
   },
@@ -248,9 +317,7 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-
-  },
+  onReady: function () {},
 
   /**
    * 生命周期函数--监听页面显示
@@ -262,15 +329,8 @@ Page({
         selected: 0
       })
     }
-
-    checkAuth({
-      redirectPath: "/pages/discovery/discovery",
-      redirectType: "switch"
-    }).then(() => {
-      this.initModelBanner()
-      this.getCampList()
-    })
-
+    this.initModelBanner()
+    this.getCampList()
     bxPoint("applets_find", {
       from_uid: getApp().globalData.super_user_id,
       source: getApp().globalData.source,

@@ -328,7 +328,9 @@ Page({
   },
   // 获取引导私域地址
   getArticileLinkData() {
-    getArticileLink().then((res) => {
+    getArticileLink({
+      traincamp_id: this.data.campId
+    }).then((res) => {
       this.setData({
         articileLink: res,
       })

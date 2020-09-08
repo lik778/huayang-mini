@@ -1,21 +1,8 @@
-import {
-  wxGetUserInfoPromise,
-  wxLoginPromise
-} from "../../utils/auth"
-import {
-  bindUserInfo,
-  bindWxPhoneNumber,
-  getWxInfo
-} from "../../api/auth/index"
-import {
-  APP_LET_ID,
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  $notNull,
-  getLocalStorage,
-  setLocalStorage
-} from "../../utils/util"
+import { wxGetUserInfoPromise, wxLoginPromise } from "../../utils/auth"
+import { bindUserInfo, bindWxPhoneNumber, getWxInfo } from "../../api/auth/index"
+import { APP_LET_ID, GLOBAL_KEY } from "../../lib/config"
+import { $notNull, getLocalStorage, setLocalStorage } from "../../utils/util"
+import bxPoint from "../../utils/bxPoint"
 
 Component({
   /**
@@ -82,12 +69,15 @@ Component({
               }
               let originUserInfo = await bindUserInfo(params)
               setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
+              bxPoint("applets_auth_status", {auth_type: "weixin", auth_result: "success"}, false)
               this.checkLogin()
+            }).catch(() => {
+              // 用户取消微信授权
+              this.cancel()
+              bxPoint("applets_auth_status", {auth_type: "weixin", auth_result: "fail"}, false)
             })
           })
       } catch (error) {
-        // 用户取消微信授权
-        this.cancel()
       }
     },
     /**
@@ -118,9 +108,11 @@ Component({
           setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
         }
         this.complete()
+        bxPoint("applets_auth_status", {auth_type: "phone", auth_result: "success"}, false)
       } else {
         // 用户拒绝手机号授权
         this.cancel()
+        bxPoint("applets_auth_status", {auth_type: "phone", auth_result: "fail"}, false)
       }
     },
     jumpToPrivacy() {

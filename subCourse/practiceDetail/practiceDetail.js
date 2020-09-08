@@ -4,7 +4,7 @@ import {
 	getRecentVisitorList,
 	joinCourseInGuide
 } from "../../api/course/index"
-import { calculateExerciseTime, getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
+import { $notNull, calculateExerciseTime, getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
 import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 
@@ -16,6 +16,7 @@ Page({
 		statusHeight: 0,
 		screenWidth: 0,
 		parentBootCampId: 0, // 训练营id，有就传无则不传
+		options: {},
 		accountInfo: {},
 		CourseLevels,
 		courseId: 0, // 课程ID
@@ -38,7 +39,8 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: async function (options) {
-		let {scene, parentBootCampId = 0, courseId, source = '', formCampDetail, invite_user_id = ""} = options
+		this.setData({ options })
+		let {scene, source = '', invite_user_id = ""} = options
 		// 通过小程序码进入 scene=${source}
 		if (scene) {
 			let sceneAry = decodeURIComponent(scene).split('/')
@@ -59,22 +61,7 @@ Page({
 			}
 		}
 
-		// 检查是否是训练营付费会员
-		if (formCampDetail === "payUser") {
-			this.setData({didPayUser: true})
-		}
-
-		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
-		this.setData({
-			parentBootCampId,
-			courseId,
-			screenWidth: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth,
-			statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
-			accountInfo,
-			backPath: parentBootCampId ? `/subCourse/practiceDetail/practiceDetail?courseId=${courseId}&parentBootCampId=${parentBootCampId}` : `/subCourse/practiceDetail/practiceDetail?courseId=${courseId}`
-		})
-
-		this.initial()
+		this.start()
 
 		// 记录起始页面地址
 		if (!getApp().globalData.firstViewPage && getCurrentPages().length > 0) {
@@ -136,16 +123,48 @@ Page({
 		}
 	},
 
+	/**
+	 * 分享到朋友圈
+	 */
+	// onShareTimeline() {
+	// 	return {
+	// 		title: `我正在学习${this.data.courseInfoObj.name}，每天都有看的见的变化，快来试试`,
+	// 		query: `/subCourse/practiceDetail/practiceDetail?courseId=${this.data.courseId}&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`,
+	// 		imageUrl: ""
+	// 	}
+	// },
+
+	// 启动函数
+	start() {
+		let {parentBootCampId = 0, courseId, formCampDetail} = this.data.options
+
+		// 检查是否是训练营付费会员
+		if (formCampDetail === "payUser") {
+			this.setData({didPayUser: true})
+		}
+
+		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
+		this.setData({
+			parentBootCampId,
+			courseId,
+			screenWidth: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth,
+			statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
+			accountInfo,
+			backPath: parentBootCampId ? `/subCourse/practiceDetail/practiceDetail?courseId=${courseId}&parentBootCampId=${parentBootCampId}` : `/subCourse/practiceDetail/practiceDetail?courseId=${courseId}`
+		})
+
+		this.initial()
+	},
+
 	// 用户拒绝授权
 	authCancelEvent(e) {
 		this.setData({didShowAuth: false})
-		console.log('用户完成授权')
 	},
 
 	// 用户完成授权
 	authCompleteEvent(e) {
 		this.setData({didShowAuth: false})
-		console.log('用户完成授权')
+		this.start()
 	},
 
 	goToTask() {
@@ -201,11 +220,21 @@ Page({
 
 			// 检查是否付费用户
 			if (!this.data.didPayUser) {
-				// 检查用户等级
-				if (response.user_grade > (this.data.accountInfo.user_grade || 0)) {
+				if ($notNull(this.data.accountInfo)) {
+					// 检查用户等级
+					if (response.user_grade > (this.data.accountInfo.user_grade || 0)) {
+						this.setData({
+							btnText: `Lv ${response.user_grade} 等级开启`
+						})
+					} else {
+						this.setData({
+							btnText: "开始练习",
+							isDownloading: false
+						})
+					}
+				} else {
 					this.setData({
-						btnText: `Lv ${response.user_grade} 等级开启`,
-						isDownloading: true // 禁止用户点击按钮
+						btnText: "开始练习"
 					})
 				}
 			}
