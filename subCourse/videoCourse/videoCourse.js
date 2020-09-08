@@ -71,9 +71,13 @@ Page({
         playIndex: playIndex,
         closeCover: true,
         showVideoCover: false,
-        videoSrc:this.data.videoListAll[playIndex].url
+        videoSrc: this.data.videoListAll[playIndex].url
       })
     }
+    wx.pageScrollTo({
+      duration: 100,
+      scrollTop: 0
+    })
     // 记录学习到第几课
     recordStudy({
       kecheng_series_id: this.data.courseData.id,
@@ -416,6 +420,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: this.data.courseData.share_desc,
+      path: `/subCourse/videoCourse/videoCourse?videoId=${this.data.courseData.id}`
+    }
   }
 })
