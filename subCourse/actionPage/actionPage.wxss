@@ -13,16 +13,16 @@
     z-index: 1;
 }
 .content .main-cycle-time {
-    font: 700 104rpx/124rpx DIN Alternate,DIN Next Pro;
+    font: 700 104rpx/124rpx Condensed;
 }
 .content .sub-cycle-time {
     display: inline-block;
     font: 700 56rpx/124rpx PingFang SC;
-    margin-left: 30rpx;
+    color: rgba(0,0,0,0.8);
 }
 .content .operate {
     position: absolute;
-    bottom: 92rpx;
+    bottom: 50rpx;
     width: 100vw;
     box-sizing: border-box;
     padding: 0 100rpx;
@@ -30,6 +30,17 @@
     justify-content: space-between;
     align-items: center;
     z-index: 1;
+}
+.content .operate-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.operate-wrap > text {
+    display: block;
+    margin-top: 10rpx;
+    font: 32rpx/32rpx PingFangSC;
 }
 .arrow-left, .arrow-right {
     width: 28rpx;
@@ -93,7 +104,7 @@
 /*prepare-layer*/
 .action-count-down {
     margin: 108rpx 0 90rpx;
-    font: bold 372rpx/446rpx DIN Alternate,DIN Next Pro;
+    font: bold 372rpx/446rpx Condensed;
 }
 .action-count-down-ready-text {
     font-size: 200rpx;
@@ -111,7 +122,7 @@
 }
 .rest-time {
     margin: 90rpx 0 40rpx;
-    font: bold 142rpx/170rpx DIN Alternate,DIN Next Pro;
+    font: bold 142rpx/170rpx Condensed;
 }
 .next-action-info {
     display: flex;
@@ -121,11 +132,10 @@
     padding: 0 20rpx;
     font: 36rpx/36rpx PingFang SC;
 }
-.next-cover {
+#previewVideo {
     width: 390rpx;
-    height: 390rpx;
+    height: 448rpx;
     margin: 20rpx 0 58rpx;
-    object-fit: contain;
 }
 .next-info {
     display: flex;

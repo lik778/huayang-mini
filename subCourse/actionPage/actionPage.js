@@ -24,13 +24,18 @@ Page({
 		targetActionIndex: 0, // 正在执行的动作索引
 		targetLoopCount: 1, // 正在执行的动作的循环次数
 
+		video: null, // 视频实例
+		previewVideo: null, // 预览视频实例
+
+		backgroundMusicAudio: null, // 背景音频实例
+
 		mainPointAudio: null, // 要领播放器
 		isPlayMainPointAudioPlaying: false, // 要领语音是否正在播放
 		didPlayMainPointAudioInCurrentTargetAction: false, // 是否在当前动作生命周期中播放过要领语音
 
 		isRunning: true, // 动作是否正在进行
 
-		didShowPrepareLayer: false, // 预备层
+		didShowPrepareLayer: true, // 预备层
 		PrepareNumber: "准备", // 预备文案
 
 		didShowRestLayer: false, // 休息层
@@ -143,24 +148,31 @@ Page({
 		// 视频实例
 		this.data.video = wx.createVideoContext("actionVideo", this)
 
+		// 预览视频实例
+		this.data.previewVideo = wx.createVideoContext("previewVideo", this)
+
 		// 要领实例
 		this.data.mainPointAudio = wx.createInnerAudioContext()
+
+		// 背景音乐实例
+		this.data.backgroundMusicAudio = wx.createInnerAudioContext()
+		this.data.backgroundMusicAudio.onPause(() => {
+			console.log('--------暂停 backgroundMusicAudio--------')
+		})
 
 		// 背景音频实例
 		this.data.bgAudio = wx.getBackgroundAudioManager()
 		this.data.bgAudio.onPause(() => {
-			// console.log('---------暂停背景---------')
 			this.toggleAction("pause")
 		})
 		this.data.bgAudio.onStop(() => {
-			// console.log('---------停止背景---------')
-			wx.navigateBack()
 			this.destroyResource()
+			wx.navigateBack()
 		})
 
 
 		// 启动
-		// this.start()
+		this.start()
 
 
 		// 设置"要领"音频播放结束监听回调
@@ -228,7 +240,12 @@ Page({
 		if (this.data.mainPointAudio) {
 			this.data.mainPointAudio.destroy()
 		}
-		if (this.data.bgAudio) {
+
+		if (this.data.backgroundMusicAudio) {
+			this.data.backgroundMusicAudio.destroy()
+		}
+
+		if (this.data.bgAudio) {			
 			this.data.bgAudio.volume = 0
 			this.data.bgAudio = null
 		}
@@ -419,6 +436,7 @@ Page({
 				this.data.mainPointAudio && this.data.mainPointAudio.pause()
 			}
 			this.data.bgAudio.pause()
+			this.data.backgroundMusicAudio.pause()
 		} else {
 			// 全局计时器
 			this.setData({didPauseRecordGlobalTime: false})
@@ -428,6 +446,7 @@ Page({
 				this.data.mainPointAudio && this.data.mainPointAudio.play()
 			}
 			this.data.bgAudio.play()
+			this.data.backgroundMusicAudio.play()
 		}
 
 		this.setData({isRunning: status !== "pause"})
@@ -440,6 +459,7 @@ Page({
 		this.data.mainPointAudio.stop()
 		this.data.bgAudio.onCanplay(() => {
 			this.data.bgAudio.pause()
+			this.data.backgroundMusicAudio.pause()
 		})
 	},
 	/**
@@ -449,7 +469,7 @@ Page({
 	 */
 	playTempBgAudio(link) {
 		let audio = this.data.bgAudio
-		audio.title = "花样百姓"
+		audio.title = "花样百姓＋"
 		// 解决华为P30处理音频地址完全相同时无法正常播放问题
 		link = link + '?' + +new Date()
 		return new Promise(resolve => {
@@ -457,6 +477,7 @@ Page({
 			audio.onCanplay(() => {
 				if (!this.data.isRunning) {
 					audio.pause()
+					this.data.backgroundMusicAudio.pause()
 				}
 			})
 			audio.onEnded(() => {
@@ -528,6 +549,8 @@ Page({
 			this.setData({didShowRestLayer: true})
 			// 6. 「休息一下」
 			this.playTempBgAudio(LocaleVoice.lv5).then(() => {
+				// 开始预览视频播放
+				this.data.previewVideo.play()
 				// 休息完开始下一个动作
 				let restPromise = new Promise(resolve => {
 					let timer = null
@@ -542,6 +565,8 @@ Page({
 						// 立即结束休息阶段 ｜｜ 休息时间大于规定休息时间
 						if (this.data.didLeaveRestImmediate || doneTime > delayTime) {
 							clearInterval(timer)
+							// 停止预览视频播放
+							this.data.previewVideo.stop()
 							resolve()
 						}
 					}, 1000)
@@ -574,6 +599,8 @@ Page({
 				didShowResultLayer: true,
 				didPracticeDone: true
 			})
+			// 停止播放背景音乐
+			this.data.backgroundMusicAudio.stop()
 			// 停止全局记时器
 			clearInterval(this.data.globalRecordTimer)
 			// 上传训练记录
@@ -642,6 +669,12 @@ Page({
 	},
 
 	async start() {
+		// BGM
+		this.data.backgroundMusicAudio.src = "https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/1b3bff74-1746bb5cc2e/1b3bff74-1746bb5cc2e.3gp"
+		this.data.backgroundMusicAudio.loop = true
+		this.data.backgroundMusicAudio.volume = 0.3
+		this.data.backgroundMusicAudio.play()
+
 		// 全局计时器
 		this.data.globalRecordTimer = setInterval(() => {
 			// 是否暂停全局计时
