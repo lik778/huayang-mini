@@ -419,13 +419,27 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      videoId: options.videoId
-    })
-    // pv打点
-    bxPoint("series_detail", {
-      series_id: options.videoId
-    })
+    let {
+      scene,
+      source,
+      videoId
+    } = options
+
+    // 通过小程序码进入 scene=${source}
+    if (scene) {
+      let sceneAry = decodeURIComponent(scene).split('/');
+      let [sceneSource = '', sceneId = 0] = sceneAry;
+      if (sceneSource) {
+        getApp().globalData.source = sceneSource
+      }
+      this.setData({videoId: sceneId})
+    } else {
+      // 通过卡片进入
+      if (source) {
+        getApp().globalData.source = source
+      }
+      this.setData({videoId: videoId})
+    }
     this.checkIsjoined()
   },
 
@@ -436,7 +450,6 @@ Page({
     this.videoContext = wx.createVideoContext('myVideo')
     let width = wx.getSystemInfoSync().windowWidth
     let height = parseInt(((width - 30) / 16) * 9)
-
     this.setData({
       videoStyle: `height:${height}px`,
     })
@@ -446,7 +459,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    // pv打点
+    bxPoint("series_detail", {
+      series_id: this.data.videoId,
+      source: getApp().globalData.source,
+    })
   },
 
   /**
