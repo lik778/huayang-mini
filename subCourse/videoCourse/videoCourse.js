@@ -118,7 +118,7 @@ Page({
   // 加入课程
   join() {
     let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo) === undefined ? '' : JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-    let openid = getLocalStorage(GLOBAL_KEY.openId) === undefined ? '' : openid
+    let openid = getLocalStorage(GLOBAL_KEY.openId) === undefined ? '' : getLocalStorage(GLOBAL_KEY.openId)
     if (userInfo === '') {
       this.setData({
         didShowAuth: true
@@ -249,7 +249,6 @@ Page({
       if (showVideoCoverLock) {
         let buttonType = button ? button : buttonType
         // 显示遮罩层
-        console.log(buttonType)
         if (buttonType === 1) {
           // 未登录或者免费未加入
           if (hasLogin) {
@@ -276,7 +275,6 @@ Page({
               } else {
                 showVideoLock = true
               }
-              console.log(showVideoLock)
             }
           } else {
             if (canPlay) {
@@ -432,13 +430,17 @@ Page({
       if (sceneSource) {
         getApp().globalData.source = sceneSource
       }
-      this.setData({videoId: sceneId})
+      this.setData({
+        videoId: sceneId
+      })
     } else {
       // 通过卡片进入
       if (source) {
         getApp().globalData.source = source
       }
-      this.setData({videoId: videoId})
+      this.setData({
+        videoId: videoId
+      })
     }
     this.checkIsjoined()
   },
