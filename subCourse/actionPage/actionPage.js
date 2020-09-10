@@ -152,10 +152,10 @@ Page({
 			})
 
 			collectError({
-				page: "actionPage.mainPointAudio", 
-				error_code: err.errCode, 
+				page: "actionPage.mainPointAudio",
+				error_code: err.errCode,
 				error_message: err.errMsg,
-				err_target_link: link, 
+				err_target_link: self.data.targetActionObj.link,
 				err_target_name: self.data.targetActionObj.name,
 				systemInfo: getLocalStorage(GLOBAL_KEY.systemParams)
 			})
@@ -454,10 +454,10 @@ Page({
 			// 兼容外置播放器解析音频报错问题
 			audio.onError((err) => {
 				collectError({
-					page: "actionPage.bgAudio", 
-					error_code: err.errCode, 
+					page: "actionPage.bgAudio",
+					error_code: err.errCode,
 					error_message: err.errMsg,
-					err_target_link: link, 
+					err_target_link: link,
 					err_target_name: self.data.targetActionObj.name,
 					systemInfo: getLocalStorage(GLOBAL_KEY.systemParams)
 			})
