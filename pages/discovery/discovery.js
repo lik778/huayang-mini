@@ -161,9 +161,15 @@ Page({
       })
     })
   },
+  // 跳转至直播列表
+  toLiveList() {
+    wx.navigateTo({
+      url: '/pages/index/index',
+    })
+  },
   // 获取视频课程列表
   getVideoCourse() {
-    getVideoCourseList().then(res => {
+    getVideoCourseList({limit:50}).then(res => {
       res = res || []
       for (let i in res) {
         if (res[i].discount_price < 0 && res[i].price <= 0) {
@@ -362,7 +368,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    console.log(1)
   },
 
   /**

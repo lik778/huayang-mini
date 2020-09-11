@@ -11,15 +11,11 @@
 }
 
 .module-one {
-  padding-bottom: 25px;
-}
-
-.hidden {
-  padding-bottom: 200rpx;
+  padding-bottom: 30rpx;
 }
 
 .module-two {
-  padding-bottom: 180rpx;
+  padding-bottom: 200rpx;
 }
 
 /* banner */
@@ -69,7 +65,7 @@
 
 /* 训练营 */
 .camp {
-  padding-top: 72rpx;
+  padding-top: 80rpx;
 }
 
 .camp-title,
@@ -141,12 +137,40 @@
   line-height: 60rpx;
 }
 
+/* 直播 */
+.hidden {
+  padding-bottom: 200rpx;
+}
+
+.live {
+  border-top: 1px solid #E5E5E5;
+  height: 150rpx;
+  background: #fff;
+}
+
+.live-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 52rpx;
+  height: 150rpx;
+  margin: 0 30rpx;
+}
+
+.live-title-right {
+  font-size: 32rpx;
+  height: 150rpx;
+  line-height: 150rpx;
+  padding-left: 100rpx;
+}
+
+
 /* 走秀课 */
 .catwalk,
 .fashion,
 .competition,
 .activity {
-  padding-top: 80rpx;
+  padding-top: 100rpx;
 }
 
 
@@ -263,7 +287,6 @@
 /* 大赛 */
 .module-two {
   margin-top: 20rpx;
-
 }
 
 .competition {
@@ -372,7 +395,7 @@
 
 /* 视频课程 */
 .video-course {
-  padding-top: 100rpx;
+  padding-top: 72rpx;
   padding-bottom: 20rpx;
 }
 
@@ -430,10 +453,6 @@
   vertical-align: bottom;
 }
 
-.video-course-list {
-  padding-top: 12rpx;
-}
-
 .video-course-item {
   display: flex;
   justify-content: space-between;
@@ -459,7 +478,9 @@
   width: 450rpx;
 }
 
-.video-course-item-right-top {
+.video-course-item-right-top {}
+
+.video-course-name {
   font-size: 32rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
@@ -469,9 +490,35 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+
+.video-course-type {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  line-height: 28rpx;
+  border-radius: 1px 24rpx 1px 24rpx;
+  padding: 10rpx 20rpx;
+  width: fit-content;
+  margin-top: 20rpx;
+}
+
+.video-course-type-one {
+  color: #69440D;
+  background: rgba(240, 229, 212, 0.8);
+}
+
+.video-course-type-two {
+  color: rgba(114, 41, 17, 1);
+  background: rgba(245, 205, 192, 0.8);
+}
+
+.video-course-type-three {
+  color: rgba(12, 82, 68, 1);
+  background: rgba(202, 232, 212, 0.8);
 }
 
 .video-course-item-right-bottom {

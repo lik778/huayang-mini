@@ -12,7 +12,13 @@
         <image src="{{item.cover_pic}}" mode='aspectFill'></image>
       </view>
       <view class="list-item-right">
-        <view class="list-item-right-top">{{item.name}}</view>
+        <view class="list-item-right-top">
+          <view class="video-course-name">{{item.name}}</view>
+          <view
+								class="{{item.category==='fitness'?'video-course-type video-course-type-one':item.category==='fashion'?'video-course-type video-course-type-two':'video-course-type video-course-type-three'}}">
+								{{item.category==='fitness'?'健身':item.category==='fashion'?'时尚':'静心慢生活'}}
+							</view>
+        </view>
         <view class="list-item-right-bottom" wx:if="{{item.money!=='免费'}}">¥{{item.money}}</view>
         <view class="list-item-right-bottom" wx:if="{{item.money==='免费'}}">{{item.money}}</view>
       </view>
