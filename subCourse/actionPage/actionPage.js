@@ -25,6 +25,11 @@ Page({
 		targetActionIndex: 0, // 正在执行的动作索引
 		targetLoopCount: 1, // 正在执行的动作的循环次数
 
+		video: null, // 视频实例
+		previewVideo: null, // 预览视频实例
+
+		backgroundMusicAudio: null, // 背景音频实例
+
 		mainPointAudio: null, // 要领播放器
 		isPlayMainPointAudioPlaying: false, // 要领语音是否正在播放
 		didPlayMainPointAudioInCurrentTargetAction: false, // 是否在当前动作生命周期中播放过要领语音
@@ -68,15 +73,9 @@ Page({
 		const self = this
 		const eventChannel = this.getOpenerEventChannel()
 
-		this.setData({
-			statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
-			screenHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenHeight,
-			screenWidth: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth
-		})
-
-		eventChannel.on("transmitCourseMeta", function (data) {
-			// console.log(data)
-			let actionData = JSON.parse(data)
+		// TODO mock数据
+		if (!$notNull(eventChannel)) {
+			let actionData = [{"id":25,"name":"腹横肌激活","desc":"","meta_type":1,"teacher_id":11,"category":"fitness","link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/31583dca-173b812f0d6/31583dca-173b812f0d6.mp4","voice_link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.7nqzvn72tTCAbc7474bc5a573431793328013aca9e04.mp3","name_voice_link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2bffc527-173b8124879/2bffc527-173b8124879.mp3","cover":"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596521098YrAXfd.jpg","duration":12,"rank":99,"calories":30,"voice_type":"2_8","created_at":"2020-08-04","updated_at":"2020-08-13","deleted_at":null,"cycleTime":"12","restTime":"8","loopCount":2},{"id":8,"name":"引体向上","desc":"","meta_type":2,"teacher_id":14,"category":"fitness","link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/110d6ab9-173945b24ed/110d6ab9-173945b24ed.mp4","voice_link":"http://tmp/wx85d130227f745fc5.o6zAJs_TJ2EU9RmLDzP_bj42PGu8.LbcH4D0tGvZPbc7474bc5a573431793328013aca9e04.mp3","name_voice_link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3","cover":"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg","duration":2,"rank":3,"calories":10,"voice_type":"2_2","created_at":"2020-07-23","updated_at":"2020-08-13","deleted_at":null,"cycleTime":"12","restTime":"0","loopCount":2}]
 
 			let completedCourseMetaData = []
 			for (let i = 0; i < actionData.length; i++) {
@@ -91,11 +90,8 @@ Page({
 				actionData: completedCourseMetaData,
 				targetActionObj: completedCourseMetaData[0] // 默认设置第一项
 			})
-		})
 
-		eventChannel.on("transmitCourseInfo", function (data) {
-			// console.log(data)
-			let courseInfo = JSON.parse(data)
+			let courseInfo = {"id":3,"name":"健身强化课程","desc":"强化训练","share_desc":"","user_id":0,"level":1,"teacher_id":0,"category_id":0,"cover_pic":"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596521209ntPMkd.jpg","kecheng_type":3,"status":0,"rank":1,"vip_only":0,"link":"25,12,8##8,12,0","link_type":0,"room_id":0,"show_time":"","xiaoetong_url":"","price":0,"discount_price":0,"series_id":0,"duration":88,"calories":300,"cycle_count":2,"kecheng_meta":[{"id":8,"name":"引体向上","desc":"","meta_type":2,"teacher_id":14,"category":"fitness","link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/110d6ab9-173945b24ed/110d6ab9-173945b24ed.mp4","voice_link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/558e3a7d-173956a1808/558e3a7d-173956a1808.mp3","name_voice_link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2f616f05-173956c9583/2f616f05-173956c9583.mp3","cover":"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1595490234PiqJuF.jpg","duration":2,"rank":3,"calories":10,"voice_type":"2_2","created_at":"2020-07-23","updated_at":"2020-08-13","deleted_at":null},{"id":25,"name":"腹横肌激活","desc":"","meta_type":1,"teacher_id":11,"category":"fitness","link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/31583dca-173b812f0d6/31583dca-173b812f0d6.mp4","voice_link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/5c54eb15-173b813511c/5c54eb15-173b813511c.mp3","name_voice_link":"https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/2bffc527-173b8124879/2bffc527-173b8124879.mp3","cover":"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596521098YrAXfd.jpg","duration":12,"rank":99,"calories":30,"voice_type":"2_8","created_at":"2020-08-04","updated_at":"2020-08-13","deleted_at":null}],"visit_count":3240,"meta_count":2,"user_grade":0,"hidden":0,"qrcode":"https://huayang-img.oss-cn-shanghai.aliyuncs.com/dev_kecheng_pratice_qrcode_3.jpg","created_at":"2020-08-04","updated_at":"2020-09-07","deleted_at":null,"exerciseTime":1}
 			self.setData({
 				courseInfo
 			})
@@ -105,24 +101,74 @@ Page({
 				kecheng_id: courseInfo.id,
 				user_id: getLocalStorage(GLOBAL_KEY.userId)
 			})
+		} else {
+			// TODO 改造完后移动到 <位置1>
+			eventChannel.on("transmitCourseMeta", function (data) {
+				// console.log(data)
+				let actionData = JSON.parse(data)
+	
+				let completedCourseMetaData = []
+				for (let i = 0; i < actionData.length; i++) {
+					let item = actionData[i]
+					for (let j = 1; j <= item.loopCount; j++) {
+						completedCourseMetaData.push(item)
+					}
+				}
+	
+				self.setData({
+					originData: actionData,
+					actionData: completedCourseMetaData,
+					targetActionObj: completedCourseMetaData[0] // 默认设置第一项
+				})
+			})
+	
+			eventChannel.on("transmitCourseInfo", function (data) {
+				// console.log(data)
+				let courseInfo = JSON.parse(data)
+				self.setData({
+					courseInfo
+				})
+	
+				// 记录训练行为
+				recordPracticeBehavior({
+					kecheng_id: courseInfo.id,
+					user_id: getLocalStorage(GLOBAL_KEY.userId)
+				})
+			})
+		}
+		
+
+		this.setData({
+			statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
+			screenHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenHeight,
+			screenWidth: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth
 		})
+
+		// TODO <位置1>
 
 		// 视频实例
 		this.data.video = wx.createVideoContext("actionVideo", this)
 
+		// 预览视频实例
+		this.data.previewVideo = wx.createVideoContext("previewVideo", this)
+
 		// 要领实例
 		this.data.mainPointAudio = wx.createInnerAudioContext()
+
+		// 背景音乐实例
+		this.data.backgroundMusicAudio = wx.createInnerAudioContext()
+		this.data.backgroundMusicAudio.onPause(() => {
+			console.log('--------暂停 backgroundMusicAudio--------')
+		})
 
 		// 背景音频实例
 		this.data.bgAudio = wx.getBackgroundAudioManager()
 		this.data.bgAudio.onPause(() => {
-			// console.log('---------暂停背景---------')
 			this.toggleAction("pause")
 		})
 		this.data.bgAudio.onStop(() => {
-			// console.log('---------停止背景---------')
-			wx.navigateBack()
 			this.destroyResource()
+			wx.navigateBack()
 		})
 
 
@@ -215,7 +261,12 @@ Page({
 		if (this.data.mainPointAudio) {
 			this.data.mainPointAudio.destroy()
 		}
-		if (this.data.bgAudio) {
+
+		if (this.data.backgroundMusicAudio) {
+			this.data.backgroundMusicAudio.destroy()
+		}
+
+		if (this.data.bgAudio) {			
 			this.data.bgAudio.volume = 0
 			this.data.bgAudio = null
 		}
@@ -406,6 +457,7 @@ Page({
 				this.data.mainPointAudio && this.data.mainPointAudio.pause()
 			}
 			this.data.bgAudio.pause()
+			this.data.backgroundMusicAudio.pause()
 		} else {
 			// 全局计时器
 			this.setData({didPauseRecordGlobalTime: false})
@@ -415,6 +467,7 @@ Page({
 				this.data.mainPointAudio && this.data.mainPointAudio.play()
 			}
 			this.data.bgAudio.play()
+			this.data.backgroundMusicAudio.play()
 		}
 
 		this.setData({isRunning: status !== "pause"})
@@ -427,6 +480,7 @@ Page({
 		this.data.mainPointAudio.stop()
 		this.data.bgAudio.onCanplay(() => {
 			this.data.bgAudio.pause()
+			this.data.backgroundMusicAudio.pause()
 		})
 	},
 	/**
@@ -437,7 +491,7 @@ Page({
 	playTempBgAudio(link) {
 		let self = this
 		let audio = this.data.bgAudio
-		audio.title = "花样百姓"
+		audio.title = "花样百姓＋"
 		// 解决华为P30处理音频地址完全相同时无法正常播放问题
 		link = link + '?' + +new Date()
 		return new Promise(resolve => {
@@ -445,6 +499,7 @@ Page({
 			audio.onCanplay(() => {
 				if (!this.data.isRunning) {
 					audio.pause()
+					this.data.backgroundMusicAudio.pause()
 				}
 			})
 			audio.onEnded(() => {
@@ -529,6 +584,8 @@ Page({
 			this.setData({didShowRestLayer: true})
 			// 6. 「休息一下」
 			this.playTempBgAudio(LocaleVoice.lv5).then(() => {
+				// 开始预览视频播放
+				this.data.previewVideo.play()
 				// 休息完开始下一个动作
 				let restPromise = new Promise(resolve => {
 					let timer = null
@@ -543,6 +600,8 @@ Page({
 						// 立即结束休息阶段 ｜｜ 休息时间大于规定休息时间
 						if (this.data.didLeaveRestImmediate || doneTime > delayTime) {
 							clearInterval(timer)
+							// 停止预览视频播放
+							this.data.previewVideo.stop()
 							resolve()
 						}
 					}, 1000)
@@ -575,6 +634,8 @@ Page({
 				didShowResultLayer: true,
 				didPracticeDone: true
 			})
+			// 停止播放背景音乐
+			this.data.backgroundMusicAudio.stop()
 			// 停止全局记时器
 			clearInterval(this.data.globalRecordTimer)
 			// 上传训练记录
@@ -643,6 +704,12 @@ Page({
 	},
 
 	async start() {
+		// BGM
+		this.data.backgroundMusicAudio.src = "https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/1b3bff74-1746bb5cc2e/1b3bff74-1746bb5cc2e.3gp"
+		this.data.backgroundMusicAudio.loop = true
+		this.data.backgroundMusicAudio.volume = 0.3
+		this.data.backgroundMusicAudio.play()
+
 		// 全局计时器
 		this.data.globalRecordTimer = setInterval(() => {
 			// 是否暂停全局计时
