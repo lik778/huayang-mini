@@ -106,7 +106,7 @@ Page({
 			eventChannel.on("transmitCourseMeta", function (data) {
 				// console.log(data)
 				let actionData = JSON.parse(data)
-	
+
 				let completedCourseMetaData = []
 				for (let i = 0; i < actionData.length; i++) {
 					let item = actionData[i]
@@ -114,21 +114,21 @@ Page({
 						completedCourseMetaData.push(item)
 					}
 				}
-	
+
 				self.setData({
 					originData: actionData,
 					actionData: completedCourseMetaData,
 					targetActionObj: completedCourseMetaData[0] // 默认设置第一项
 				})
 			})
-	
+
 			eventChannel.on("transmitCourseInfo", function (data) {
 				// console.log(data)
 				let courseInfo = JSON.parse(data)
 				self.setData({
 					courseInfo
 				})
-	
+
 				// 记录训练行为
 				recordPracticeBehavior({
 					kecheng_id: courseInfo.id,
@@ -136,7 +136,7 @@ Page({
 				})
 			})
 		}
-		
+
 
 		this.setData({
 			statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
@@ -266,7 +266,7 @@ Page({
 			this.data.backgroundMusicAudio.destroy()
 		}
 
-		if (this.data.bgAudio) {			
+		if (this.data.bgAudio) {
 			this.data.bgAudio.volume = 0
 			this.data.bgAudio = null
 		}
@@ -416,6 +416,11 @@ Page({
 			this.checkoutNextAction(true)
 			// 显示预备页
 			this.setData({didShowPrepareLayer: true})
+
+			if (!this.data.isRunning) {
+				this.toggleAction("play")
+			}
+
 			// 下一个练习
 			await this.playTempBgAudio(LocaleVoice.lv15)
 			// 播报动作名称，并开始训练
@@ -432,6 +437,11 @@ Page({
 			this.checkoutNextAction()
 			// 显示预备页
 			this.setData({didShowPrepareLayer: true})
+
+			if (!this.data.isRunning) {
+				this.toggleAction("play")
+			}
+
 			if (this.data.currentActionIndex === this.data.actionData.length - 1) {
 				// 最后一个动作
 				await this.playTempBgAudio(LocaleVoice.lv16)
@@ -448,6 +458,8 @@ Page({
 	 * @param status ['pause' || 'play']
 	 */
 	toggleAction(status) {
+		if (this.data.didShowRestLayer) return ;
+
 		if (status === "pause") {
 			// 全局计时器
 			this.setData({didPauseRecordGlobalTime: true})
@@ -574,7 +586,7 @@ Page({
 	async prepareNextAction() {
 		// 停止视频
 		this.data.video.stop()
-		// 如何正在播放要领音频，停止要领播放
+		// 如果正在播放要领音频，停止要领播放
 		this.data.mainPointAudio.stop()
 		// 切换下一个动作
 		this.checkoutNextAction()
