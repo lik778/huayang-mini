@@ -121,7 +121,7 @@
 	<view class="{{showModelBanner?'live':'live hidden'}}">
 		<view class="live-title">
 			<view class="live-title-left">往期直播</view>
-			<view class="live-title-right" bindtap="toLiveList">30+直播课程 ›</view>
+			<view class="live-title-right" bindtap="toLiveList">{{liveNum}}+直播课程 ›</view>
 		</view>
 	</view>
 

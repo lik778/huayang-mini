@@ -11,7 +11,8 @@ import {
   getCampList,
   getFindBanner,
   getVideoCourseList,
-  getShowCourseList
+  getShowCourseList,
+  liveTotalNum
 } from "../../api/course/index"
 import {
   GLOBAL_KEY
@@ -198,14 +199,17 @@ Page({
       this.setData({
         courseList: res
       })
+
       setTimeout(() => {
         if (Number(getLocalStorage('needToScrollTop')) === 1) {
           let query = wx.createSelectorQuery()
           query.select('#camp').boundingClientRect((rect) => {
-            wx.pageScrollTo({
-              scrollTop: rect.top,
-              duration: 100,
-            })
+            if (rect.top !== 0) {
+              wx.pageScrollTo({
+                scrollTop: rect.top,
+                duration: 100,
+              })
+            }
             wx.removeStorageSync('needToScrollTop')
           }).exec()
         }
@@ -263,13 +267,12 @@ Page({
       this.getVideoCourse()
       this.getBanner()
       // 获取直播列表个数
-      // this.getLiveTotalNum()
+      this.getLiveTotalNum()
     })
   },
   // 获取直播列表个数
   getLiveTotalNum() {
-    getLiveTotalNum().then(res => {
-      console.log(res)
+    liveTotalNum().then(res => {
       this.setData({
         liveNum: res
       })
@@ -299,6 +302,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if (Number(getLocalStorage('needToScrollTop')) === 1) {
+      wx.pageScrollTo({
+        scrollTop: 0,
+        duration: 0,
+      })
+    }
     let {
       scene,
       invite_user_id = "",
