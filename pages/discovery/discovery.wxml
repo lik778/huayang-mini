@@ -2,9 +2,9 @@
 <view class="discovery" wx:if="{{canShow}}">
 	<!--  模块一 -->
 	<!-- <view class="module-one" style="padding-bottom:130px"> -->
-	<view class="{{showModelBanner?'module-one':'module-one hidden'}}">
+	<view class="module-one">
 		<!-- banner 滚动区域 -->
-		<view class="swiper-box" wx:if="{{bannerList.length!==0}}">
+		<view class="swiper-box" id="swiper-box" wx:if="{{bannerList.length!==0}}">
 			<swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}"
 				duration="{{500}}">
 				<swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="joinCampFrombanner" data-item="{{item}}">
@@ -18,27 +18,13 @@
 			</view>
 		</view>
 
-		<!-- 训练营 -->
-		<view class="camp" wx:if="{{campList.length!==0}}">
-			<view class="camp-title">训练营</view>
-			<view class="camp-list">
-				<view class="camp-item" wx:for="{{campList}}" wx:key="index" bindtap="joinCamp" data-index="{{item}}">
-					<image mode="aspectFill" src="{{item.cover_pic}}"></image>
-					<view class="camp-item-main">
-						<view class="camp-item-title">{{item.name}}</view>
-						<view class="camp-subtitle">{{item.summary}}</view>
-					</view>
-					<view class="camp-button">立即参加</view>
-				</view>
-			</view>
-		</view>
 		<!-- 视频课 -->
-		<view class="video-course">
+		<view class="video-course" id='video-course'>
 			<view class="video-course-title">
 				<view class="video-course-title-left">课程</view>
 				<view class="video-course-title-right" bindtap="toVideoList">更多课程 ›</view>
 			</view>
-			<view class="video-course-main">
+			<view class="video-course-main" wx:if="{{false}}">
 				<view class="video-course-main-left" bindtap="toVideoList" data-index="2"
 					data-item='{{videoBannerList[0].link}}'>
 					<image src="{{videoBannerList[0].pic_url}}"></image>
@@ -62,7 +48,11 @@
 					</view>
 					<view class="video-course-item-right">
 						<view class="video-course-item-right-top">
-							{{item.name}}
+							<view class="video-course-name">{{item.name}}</view>
+							<view
+								class="{{item.category==='fitness'?'video-course-type video-course-type-one':item.category==='fashion'?'video-course-type video-course-type-two':'video-course-type video-course-type-three'}}">
+								{{item.category==='fitness'?'健身':item.category==='fashion'?'时尚':'静心慢生活'}}
+							</view>
 						</view>
 						<view class="video-course-item-right-bottom" wx:if="{{item.money!=='免费'}}">
 							¥{{item.money}}
@@ -74,9 +64,25 @@
 				</view>
 			</view>
 		</view>
-		<!-- 走秀课 -->
+
+		<!-- 训练营 -->
+		<view class="camp" id='camp' wx:if="{{campList.length!==0}}">
+			<view class="camp-title">训练营</view>
+			<view class="camp-list">
+				<view class="camp-item" wx:for="{{campList}}" wx:key="index" bindtap="joinCamp" data-index="{{item}}">
+					<image mode="aspectFill" src="{{item.cover_pic}}"></image>
+					<view class="camp-item-main">
+						<view class="camp-item-title">{{item.name}}</view>
+						<view class="camp-subtitle">{{item.summary}}</view>
+					</view>
+					<view class="camp-button">立即参加</view>
+				</view>
+			</view>
+		</view>
+
+		<!-- 每日训练 -->
 		<view class="catwalk" wx:if="{{courseList.length!==0}}">
-			<view class="catwalk-title">走秀课</view>
+			<view class="catwalk-title">每日训练</view>
 			<view class="catwalk-list">
 				<view class="catwalk-item" wx:for="{{courseList}}" wx:key="index" bindtap="toCourse" data-item="{{item}}">
 					<image mode="aspectFill" src="{{item.cover_pic}}"></image>
@@ -93,6 +99,9 @@
 				</view>
 			</view>
 		</view>
+
+
+
 		<!-- 时尚课 -->
 		<view class="fashion" wx:if="{{false}}">
 			<view class="fashion-title">时尚课</view>
@@ -108,12 +117,21 @@
 		</view>
 	</view>
 	<!-- 模块二 -->
+	<!-- 往期直播 -->
+	<view class="{{showModelBanner?'live':'live hidden'}}">
+		<view class="live-title">
+			<view class="live-title-left">往期直播</view>
+			<view class="live-title-right" bindtap="toLiveList">{{liveNum}}+直播课程 ›</view>
+		</view>
+	</view>
+
+	<!-- 模块三 -->
 	<view class="module-two" wx:if="{{showModelBanner}}">
 		<!-- 大赛 -->
 		<view class="competition">
 			<view class="competition-title">大赛</view>
 			<view class="competition-list">
-				<view class="competition-item" bindtap="toModelCompetition" data-item=' {{item}}'
+				<view class="competition-item" bindtap="toModelCompetition" data-item='{{item}}'
 					wx:for="{{competitionBannerList}}" wx:key="index">
 					<image mode="aspectFill" src="{{item.pic_url}}"></image>
 					<view class="competition-item-title">{{item.title}}</view>

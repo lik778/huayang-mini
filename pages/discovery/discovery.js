@@ -11,7 +11,8 @@ import {
   getCampList,
   getFindBanner,
   getVideoCourseList,
-  getShowCourseList
+  getShowCourseList,
+  liveTotalNum
 } from "../../api/course/index"
 import {
   GLOBAL_KEY
@@ -28,6 +29,7 @@ Page({
    */
   data: {
     cureent: 0,
+    liveNum: 0,
     campList: null,
     showModelBanner: false,
     didShowAuth: false,
@@ -122,21 +124,6 @@ Page({
         showModelBanner: res.length === 0 ? false : true
       })
     })
-    // let show = false
-    // let isStage = true //正式上线后需要置为false
-    // if (request.baseUrl === 'https://huayang.baixing.cn') {
-    //   // 测试环境
-    //   show = true
-    // } else if (isStage) {
-    //   // 测试环境线上接口
-    //   show = true
-    // } else {
-    //   // 正式环境
-    //   show = false
-    // }
-    // this.setData({
-    //   showModelBanner: show
-    // })
   },
   // 跳往视频课程全部列表
   toVideoList(e) {
@@ -161,9 +148,17 @@ Page({
       })
     })
   },
+  // 跳转至直播列表
+  toLiveList() {
+    wx.navigateTo({
+      url: '/pages/index/index',
+    })
+  },
   // 获取视频课程列表
   getVideoCourse() {
-    getVideoCourseList().then(res => {
+    getVideoCourseList({
+      limit: 50
+    }).then(res => {
       res = res || []
       for (let i in res) {
         if (res[i].discount_price < 0 && res[i].price <= 0) {
@@ -204,17 +199,27 @@ Page({
       this.setData({
         courseList: res
       })
+
       setTimeout(() => {
         if (Number(getLocalStorage('needToScrollTop')) === 1) {
-          wx.pageScrollTo({
-            scrollTop: 0
-          })
-          wx.removeStorageSync('needToScrollTop')
+          let query = wx.createSelectorQuery()
+          let height = 0
+          query.select('#swiper-box').boundingClientRect((rect) => {
+            height = rect.height
+          }).exec()
+          query.select('#video-course').boundingClientRect((rect) => {
+            height += rect.height
+            wx.pageScrollTo({
+              duration: 100,
+              scrollTop: height
+            })
+            wx.removeStorageSync('needToScrollTop')
+          }).exec()
         }
         this.setData({
           canShow: true
         })
-      }, 20)
+      }, 100)
     })
   },
 
@@ -264,6 +269,16 @@ Page({
       })
       this.getVideoCourse()
       this.getBanner()
+      // 获取直播列表个数
+      this.getLiveTotalNum()
+    })
+  },
+  // 获取直播列表个数
+  getLiveTotalNum() {
+    liveTotalNum().then(res => {
+      this.setData({
+        liveNum: res
+      })
     })
   },
   // 跳转到训练营详情
@@ -340,9 +355,7 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
-
-  },
+  onHide: function () {},
 
   /**
    * 生命周期函数--监听页面卸载
@@ -361,9 +374,7 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-
-  },
+  onReachBottom: function () {},
 
   /**
    * 用户点击右上角分享

@@ -484,3 +484,13 @@ export function getVideoArticleLink(params) {
 		})
 	})
 }
+
+export function liveTotalNum(params) {
+	return new Promise(resolve => {
+		request._get(URL.liveTotalNum, params).then(({
+			data
+		}) => {
+			resolve(data)
+		})
+	})
+}
