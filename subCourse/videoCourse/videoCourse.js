@@ -25,6 +25,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    videoStyle: "",
+    showVideoLock: false,
     didShowAuth: false, //控制显示授权弹窗
     playIndex: -1, //当前播放视频index
     didShowAlert: false, //控制显示等级不够弹窗
@@ -56,6 +58,13 @@ Page({
   },
   // 播放
   play(e) {
+    if (!hasAccountInfo() ||
+      !hasUserInfo()) {
+      this.setData({
+        didShowAuth: true
+      })
+      return
+    }
     let playIndex = this.data.playIndex === -1 ? 0 : this.data.playIndex
     let index = e.currentTarget.dataset.index
     if (index !== undefined && index !== playIndex) {
@@ -70,9 +79,14 @@ Page({
       this.setData({
         playIndex: playIndex,
         closeCover: true,
-        showVideoCover: false
+        showVideoCover: false,
+        videoSrc: this.data.videoListAll[playIndex].url
       })
     }
+    wx.pageScrollTo({
+      duration: 100,
+      scrollTop: 0
+    })
     // 记录学习到第几课
     recordStudy({
       kecheng_series_id: this.data.courseData.id,
@@ -81,7 +95,7 @@ Page({
     // 学习课程打点
     bxPoint("series_content_click", {
       series_id: this.data.courseData.id,
-      kecheng_title: e.currentTarget.dataset.item.title
+      kecheng_title: this.data.videoListAll[playIndex].title
     }, false)
     setTimeout(() => {
       this.videoContext.play()
@@ -104,7 +118,7 @@ Page({
   // 加入课程
   join() {
     let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo) === undefined ? '' : JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-    let openid = getLocalStorage(GLOBAL_KEY.openId) === undefined ? '' : openid
+    let openid = getLocalStorage(GLOBAL_KEY.openId) === undefined ? '' : getLocalStorage(GLOBAL_KEY.openId)
     if (userInfo === '') {
       this.setData({
         didShowAuth: true
@@ -228,6 +242,51 @@ Page({
         // 控制视频是否可以播放
         lock = false
       }
+      let canPlay = res.video_detail[0].canReplay
+      let showVideoCoverLock = this.data.showVideoCover
+      let hasLogin = this.data.hasLogin
+      let showVideoLock = false
+      if (showVideoCoverLock) {
+        let buttonType = button ? button : buttonType
+        // 显示遮罩层
+        if (buttonType === 1) {
+          // 未登录或者免费未加入
+          if (hasLogin) {
+            if (canPlay) {
+              showVideoLock = false
+            } else {
+              showVideoLock = true
+            }
+          } else {
+            if (canPlay) {
+              showVideoLock = false
+            } else {
+              showVideoLock = true
+            }
+          }
+        } else {
+          // 已登陆
+          if (hasLogin) {
+            if (canPlay) {
+              showVideoLock = false
+            } else {
+              if (buttonType === 6) {
+                showVideoLock = false
+              } else {
+                showVideoLock = true
+              }
+            }
+          } else {
+            if (canPlay) {
+              showVideoLock = false
+            } else {
+              showVideoLock = true
+            }
+          }
+        }
+      } else {
+        showVideoLock = false
+      }
       this.getArticleLink(res.id)
       this.setData({
         courseData: res,
@@ -235,6 +294,7 @@ Page({
         videoListAll: videoListAll,
         showMore: showMore,
         videoLock: lock,
+        showVideoLock: showVideoLock,
         buttonType: button ? button : buttonType,
         videoSrc: videoListAll[0].canReplay ? videoListAll[0].url : ''
       })
@@ -327,8 +387,9 @@ Page({
   },
   // 点击添加班主任微信
   toLink() {
+    let link = this.data.articleLink
     wx.navigateTo({
-      url: this.data.articleLink,
+      url: `/pages/webViewCommon/webViewCommon?link=${link}`,
     })
   },
   // 滚动至课程详情
@@ -356,13 +417,31 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      videoId: options.videoId
-    })
-    // pv打点
-    bxPoint("series_detail", {
-      series_id: options.videoId
-    })
+    let {
+      scene,
+      source,
+      videoId
+    } = options
+
+    // 通过小程序码进入 scene=${source}
+    if (scene) {
+      let sceneAry = decodeURIComponent(scene).split('/');
+      let [sceneSource = '', sceneId = 0] = sceneAry;
+      if (sceneSource) {
+        getApp().globalData.source = sceneSource
+      }
+      this.setData({
+        videoId: sceneId
+      })
+    } else {
+      // 通过卡片进入
+      if (source) {
+        getApp().globalData.source = source
+      }
+      this.setData({
+        videoId: videoId
+      })
+    }
     this.checkIsjoined()
   },
 
@@ -371,13 +450,22 @@ Page({
    */
   onReady: function () {
     this.videoContext = wx.createVideoContext('myVideo')
+    let width = wx.getSystemInfoSync().windowWidth
+    let height = parseInt(((width - 30) / 16) * 9)
+    this.setData({
+      videoStyle: `height:${height}px`,
+    })
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    // pv打点
+    bxPoint("series_detail", {
+      series_id: this.data.videoId,
+      source: getApp().globalData.source,
+    })
   },
 
   /**
@@ -414,6 +502,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: this.data.courseData.share_desc,
+      path: `/subCourse/videoCourse/videoCourse?videoId=${this.data.courseData.id}`
+    }
   }
 })

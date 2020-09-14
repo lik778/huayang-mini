@@ -1,20 +1,17 @@
 <!--subCourse/videoCourse/videoCourse.wxml-->
 <view class="video-course" wx:if="courseData!==''">
   <!-- 视频区域 -->
-  <view class="video">
+  <view class="video" style="{{videoStyle}}">
     <video id="myVideo" bindplay="playVideo" src="{{videoSrc}}" style="{{videoHeight}}" bindpause="pause"
       controls="{{showLock?false:true}}" show-center-play-btn="{{false}}" bindended="endVideo">
     </video>
     <view class="video-cover-one" wx:if="{{showVideoCover}}">
       <image src="{{courseData.video_pic}}"></image>
     </view>
-    <view class="video-cover"
-      wx:if="{{(showVideoCover&&buttonType===6)||(showVideoCover&&buttonType!==1&&courseData.video_detail[0].canReplay)}}"
-      bindtap="play">
+    <view class="video-cover" wx:if="{{!showVideoLock&&showVideoCover}}" bindtap="play">
       <image src="/assets/images/common/play.png"></image>
     </view>
-    <view class="video-cover"
-      wx:if="{{(showVideoCover&&buttonType===1)||(showVideoCover&&buttonType!==6&&!courseData.video_detail[0].canReplay)}}">
+    <view class="video-cover" wx:if="{{showVideoLock&&showVideoCover}}">
       <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597224125GjluUS.jpg"></image>
     </view>
   </view>

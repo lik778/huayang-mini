@@ -472,13 +472,13 @@
     line-height: 32rpx;
 }
 
-.video-practice-item-right-bottom text:first-child {
+.video-practice-item-right-bottom-text{
     font-size: 32rpx;
     color: #000000;
+    padding-right: 20rpx;
 }
 
-.video-practice-item-right-bottom text:last-child {
+.video-practice-item-right-bottom-text-one {
     font-size: 28rpx;
     color: #888888;
-    padding-left: 20rpx;
 }
