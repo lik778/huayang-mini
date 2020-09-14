@@ -99,6 +99,7 @@
     </view>
     <view class="button-one" bindtap="join" wx:if="{{buttonType===4}}">立即加入 ¥{{courseData.price}}</view>
     <view class="button-one" bindtap="join" wx:if="{{buttonType===5}}">恢复练习</view>
+    <view class="button-one" bindtap="openToast" wx:if="{{buttonType===8}}">加入课程</view>
   </view>
   <!-- 分享微信好友 -->
   <view class="share" bindtap="share">
