@@ -4,7 +4,7 @@
 	<!-- <view class="module-one" style="padding-bottom:130px"> -->
 	<view class="module-one">
 		<!-- banner 滚动区域 -->
-		<view class="swiper-box" wx:if="{{bannerList.length!==0}}" id='swiper-box'>
+		<view class="swiper-box" id="swiper-box" wx:if="{{bannerList.length!==0}}">
 			<swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}"
 				duration="{{500}}">
 				<swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="joinCampFrombanner" data-item="{{item}}">
