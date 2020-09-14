@@ -203,13 +203,16 @@ Page({
       setTimeout(() => {
         if (Number(getLocalStorage('needToScrollTop')) === 1) {
           let query = wx.createSelectorQuery()
-          query.select('#camp').boundingClientRect((rect) => {
-            if (rect.top !== 0) {
-              wx.pageScrollTo({
-                scrollTop: rect.top,
-                duration: 100,
-              })
-            }
+          let height = 0
+          query.select('#swiper-box').boundingClientRect((rect) => {
+            height = rect.height
+          }).exec()
+          query.select('#video-course').boundingClientRect((rect) => {
+            height += rect.height
+            wx.pageScrollTo({
+              duration: 100,
+              scrollTop: height
+            })
             wx.removeStorageSync('needToScrollTop')
           }).exec()
         }
@@ -302,12 +305,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (Number(getLocalStorage('needToScrollTop')) === 1) {
-      wx.pageScrollTo({
-        scrollTop: 0,
-        duration: 0,
-      })
-    }
     let {
       scene,
       invite_user_id = "",
@@ -358,9 +355,7 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
-
-  },
+  onHide: function () {},
 
   /**
    * 生命周期函数--监听页面卸载
