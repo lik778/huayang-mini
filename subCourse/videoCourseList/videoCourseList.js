@@ -116,6 +116,10 @@ Page({
         limit: 10
       }
     })
+    wx.pageScrollTo({
+      duration: 100,
+      scrollTop: 0
+    })
     this.getVideoList(index)
   },
   /**
