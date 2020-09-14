@@ -61,7 +61,8 @@ Page({
 
 		bgAudio: null, // 背景音乐播放器
 
-		accordPause: false // 用户是否手动暂停
+		accordPause: false, // 用户是否手动暂停
+		commandDiffLock: false //  指令 暂停-播放 切换锁
 	},
 
 	/**
@@ -297,6 +298,8 @@ Page({
 	},
 	// 页面切换播放状态
 	checkoutPracticeStatus() {
+		if (this.data.commandDiffLock) return ;
+
 		if (this.data.isRunning) {
 			this.toggleAction("pause")
 			// 记录用户手动暂停，onShow时不会自动启动
@@ -349,6 +352,8 @@ Page({
 			let minutes = remainingTime / 60 | 0
 			let seconds = remainingTime % 60
 			return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`
+		} else if (remainingTime >= 3599) {
+			return "59:59"
 		} else {
 			return "00:00"
 		}
@@ -430,7 +435,7 @@ Page({
 		if (this.data.didShowRestLayer) return ;
 
 		if (status === "pause") {
-			// 全局计时器
+			// 启动全局计时器
 			this.setData({didPauseRecordGlobalTime: true})
 			this.data.video.pause()
 			// [要领播放中]&当前动作未播放过[要领]，则暂停
@@ -440,7 +445,7 @@ Page({
 			this.data.bgAudio.pause()
 			this.data.backgroundMusicAudio.pause()
 		} else {
-			// 全局计时器
+			// 结束全局计时器
 			this.setData({didPauseRecordGlobalTime: false})
 			this.data.video.play()
 			// [要领播放中]&当前动作未播放过[要领]，则继续播放
@@ -522,6 +527,9 @@ Page({
 	 * @param commands
 	 */
 	async playCommand(commands) {
+		// 关闭间隔锁
+		this.setData({commandDiffLock: false})
+
 		let link = ""
 		if (+this.data.targetActionObj.meta_type === 2) {
 			link = commands[this.data.targetActionIndex % commands.length]
@@ -548,6 +556,8 @@ Page({
 		} else {
 			this.prepareNextAction()
 		}
+		// 开启间隔锁
+		this.setData({ commandDiffLock: true })
 	},
 	/**
 	 * 筹备下个动作
@@ -644,6 +654,8 @@ Page({
 				}
 			})
 		}
+		// 关闭间隔锁
+		this.setData({commandDiffLock: false})
 	},
 	// 切换下个动作
 	checkoutNextAction(isPrevious = false) {
