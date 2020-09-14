@@ -28,6 +28,7 @@ Page({
    */
   data: {
     cureent: 0,
+    liveNum: 0,
     campList: null,
     showModelBanner: false,
     didShowAuth: false,
@@ -122,21 +123,6 @@ Page({
         showModelBanner: res.length === 0 ? false : true
       })
     })
-    // let show = false
-    // let isStage = true //正式上线后需要置为false
-    // if (request.baseUrl === 'https://huayang.baixing.cn') {
-    //   // 测试环境
-    //   show = true
-    // } else if (isStage) {
-    //   // 测试环境线上接口
-    //   show = true
-    // } else {
-    //   // 正式环境
-    //   show = false
-    // }
-    // this.setData({
-    //   showModelBanner: show
-    // })
   },
   // 跳往视频课程全部列表
   toVideoList(e) {
@@ -169,7 +155,9 @@ Page({
   },
   // 获取视频课程列表
   getVideoCourse() {
-    getVideoCourseList({limit:50}).then(res => {
+    getVideoCourseList({
+      limit: 50
+    }).then(res => {
       res = res || []
       for (let i in res) {
         if (res[i].discount_price < 0 && res[i].price <= 0) {
@@ -270,6 +258,16 @@ Page({
       })
       this.getVideoCourse()
       this.getBanner()
+      // this.getLiveTotalNum()
+    })
+  },
+  // 获取直播列表个数
+  getLiveTotalNum() {
+    getLiveTotalNum().then(res => {
+      console.log(res)
+      this.setData({
+        liveNum: res
+      })
     })
   },
   // 跳转到训练营详情
@@ -367,9 +365,7 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-    console.log(1)
-  },
+  onReachBottom: function () {},
 
   /**
    * 用户点击右上角分享
