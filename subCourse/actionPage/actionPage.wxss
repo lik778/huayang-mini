@@ -118,7 +118,7 @@
 }
 /*rest-layer*/
 .rest-layer {
-    background: #f5f5f5;
+    background: #fff;
 }
 .rest-time {
     margin: 90rpx 0 40rpx;

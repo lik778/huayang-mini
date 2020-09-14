@@ -4,6 +4,7 @@ import { GLOBAL_KEY } from "../../lib/config"
 import { LocaleVoice, voices_ary, voices_key, voices_number } from "../../lib/voices"
 import { completePractice, increaseExp, recordPracticeBehavior } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
+import { collectError } from "../../api/auth/index"
 
 Page({
 	/**
@@ -61,7 +62,6 @@ Page({
 		bgAudio: null, // 背景音乐播放器
 
 		accordPause: false, // 用户是否手动暂停
-		commandDiffLock: false //  指令 暂停-播放 切换锁
 	},
 
 	/**
@@ -150,6 +150,26 @@ Page({
 			}
 			self.setData({
 				isPlayMainPointAudioPlaying: false // 释放要领正在播放中的状态
+			})
+		})
+
+		// 兼容内置播放器解析音频报错
+		this.data.mainPointAudio.onError(function (err) {
+			// 还原口令音量
+			if (self.data.bgAudio) {
+				self.data.bgAudio.volume = 1
+			}
+			self.setData({
+				isPlayMainPointAudioPlaying: false // 释放要领正在播放中的状态
+			})
+
+			collectError({
+				page: "actionPage.mainPointAudio",
+				error_code: err.errCode,
+				error_message: err.errMsg,
+				err_target_link: self.data.targetActionObj.link,
+				err_target_name: self.data.targetActionObj.name,
+				systemInfo: getLocalStorage(GLOBAL_KEY.systemParams)
 			})
 		})
 
@@ -277,7 +297,7 @@ Page({
 	},
 	// 页面切换播放状态
 	checkoutPracticeStatus() {
-		if (this.data.commandDiffLock) return ;
+		if (this.data.didShowRestLayer) return ;
 
 		if (this.data.isRunning) {
 			this.toggleAction("pause")
@@ -366,14 +386,16 @@ Page({
 		if (this.data.currentActionIndex > 0) {
 			// console.log('上一个动作')
 			this.stopAllAction()
+
+			// 处理在暂停状态下切换上一个动作事件
+			if (!this.data.isRunning) {
+				this.setData({isRunning: true})
+				this.data.backgroundMusicAudio.play()
+			}
+
 			this.checkoutNextAction(true)
 			// 显示预备页
 			this.setData({didShowPrepareLayer: true})
-
-			if (!this.data.isRunning) {
-				this.toggleAction("play")
-			}
-
 			// 下一个练习
 			await this.playTempBgAudio(LocaleVoice.lv15)
 			// 播报动作名称，并开始训练
@@ -387,14 +409,16 @@ Page({
 		if (this.data.currentActionIndex < this.data.actionData.length - 1) {
 			// console.log('下一个练习')
 			this.stopAllAction()
+
+			// 处理在暂停状态下切换下一个动作事件
+			if (!this.data.isRunning) {
+				this.setData({isRunning: true})
+				this.data.backgroundMusicAudio.play()
+			}
+
 			this.checkoutNextAction()
 			// 显示预备页
 			this.setData({didShowPrepareLayer: true})
-
-			if (!this.data.isRunning) {
-				this.toggleAction("play")
-			}
-
 			if (this.data.currentActionIndex === this.data.actionData.length - 1) {
 				// 最后一个动作
 				await this.playTempBgAudio(LocaleVoice.lv16)
@@ -411,8 +435,6 @@ Page({
 	 * @param status ['pause' || 'play']
 	 */
 	toggleAction(status) {
-		if (this.data.didShowRestLayer) return ;
-
 		if (status === "pause") {
 			// 启动全局计时器
 			this.setData({didPauseRecordGlobalTime: true})
@@ -445,7 +467,6 @@ Page({
 		this.data.mainPointAudio.stop()
 		this.data.bgAudio.onCanplay(() => {
 			this.data.bgAudio.pause()
-			this.data.backgroundMusicAudio.pause()
 		})
 	},
 	/**
@@ -466,7 +487,21 @@ Page({
 					this.data.backgroundMusicAudio.pause()
 				}
 			})
+
 			audio.onEnded(() => {
+				resolve()
+			})
+
+			// 兼容外置播放器解析音频报错问题
+			audio.onError((err) => {
+				collectError({
+					page: "actionPage.bgAudio",
+					error_code: err.errCode,
+					error_message: err.errMsg,
+					err_target_link: link,
+					err_target_name: self.data.targetActionObj.name,
+					systemInfo: getLocalStorage(GLOBAL_KEY.systemParams)
+				})
 				resolve()
 			})
 		})
@@ -492,9 +527,6 @@ Page({
 	 * @param commands
 	 */
 	async playCommand(commands) {
-		// 关闭间隔锁
-		this.setData({commandDiffLock: false})
-
 		let link = ""
 		if (+this.data.targetActionObj.meta_type === 2) {
 			link = commands[this.data.targetActionIndex % commands.length]
@@ -521,8 +553,6 @@ Page({
 		} else {
 			this.prepareNextAction()
 		}
-		// 开启间隔锁
-		this.setData({ commandDiffLock: true })
 	},
 	/**
 	 * 筹备下个动作
@@ -537,7 +567,10 @@ Page({
 		// 检查是否是最后一个动作
 		if (this.data.currentActionIndex < this.data.actionData.length) {
 			// 显示休息层
-			this.setData({didShowRestLayer: true})
+			this.setData({
+				didShowRestLayer: true,
+				isRunning: true
+			})
 			// 6. 「休息一下」
 			this.playTempBgAudio(LocaleVoice.lv5).then(() => {
 				// 开始预览视频播放
@@ -603,9 +636,7 @@ Page({
 			})
 			// 「恭喜你完成练习」
 			await this.playTempBgAudio(LocaleVoice.lv6)
-			this.setData({
-				isRunning: false
-			})
+			this.setData({isRunning: false})
 			// 经验值提升弹窗
 			increaseExp({task_type: "task_pratice"}).then((data) => {
 				// 升级信息
@@ -619,8 +650,6 @@ Page({
 				}
 			})
 		}
-		// 关闭间隔锁
-		this.setData({commandDiffLock: false})
 	},
 	// 切换下个动作
 	checkoutNextAction(isPrevious = false) {

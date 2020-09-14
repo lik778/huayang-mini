@@ -111,3 +111,9 @@ export const checkBecomeVip=(params)=>{
 	})
 }
 
+// 抓取并上传问题
+export const collectError = (params) => {
+	params = { ...params, platform: "applets" }
+	request._post(URL.collectError, params)
+}
+
