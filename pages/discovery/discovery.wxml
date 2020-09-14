@@ -66,7 +66,7 @@
 		</view>
 
 		<!-- 训练营 -->
-		<view class="camp" wx:if="{{campList.length!==0}}">
+		<view class="camp" id='camp' wx:if="{{campList.length!==0}}">
 			<view class="camp-title">训练营</view>
 			<view class="camp-list">
 				<view class="camp-item" wx:for="{{campList}}" wx:key="index" bindtap="joinCamp" data-index="{{item}}">
@@ -131,7 +131,7 @@
 		<view class="competition">
 			<view class="competition-title">大赛</view>
 			<view class="competition-list">
-				<view class="competition-item" bindtap="toModelCompetition" data-item=' {{item}}'
+				<view class="competition-item" bindtap="toModelCompetition" data-item='{{item}}'
 					wx:for="{{competitionBannerList}}" wx:key="index">
 					<image mode="aspectFill" src="{{item.pic_url}}"></image>
 					<view class="competition-item-title">{{item.title}}</view>
