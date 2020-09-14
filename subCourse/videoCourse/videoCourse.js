@@ -10,6 +10,9 @@ import {
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 import {
+  checkFocusLogin
+} from "../../api/auth/index"
+import {
   checkJoinVideoCourse,
   getVideoCourseDetail,
   joinVideoCourse,
@@ -17,7 +20,8 @@ import {
   getVideoArticleLink
 } from "../../api/course/index"
 import {
-  GLOBAL_KEY
+  GLOBAL_KEY,
+  Version
 } from "../../lib/config"
 Page({
 
@@ -289,12 +293,18 @@ Page({
       }
       let buttonStyle = button ? button : buttonType
       this.getArticleLink(res.id)
-      // ios规则弹窗
-      wx.getSystemInfo({
-        success: function (res) {
-          if (res.platform == 'ios') {
-            buttonStyle = 8
-          }
+      checkFocusLogin({
+        app_version: Version
+      }).then(res => {
+        if (!res) {
+          // ios规则弹窗
+          wx.getSystemInfo({
+            success: function (res) {
+              if (res.platform == 'ios') {
+                buttonStyle = 8
+              }
+            }
+          })
         }
       })
       this.setData({

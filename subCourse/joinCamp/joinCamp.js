@@ -1,7 +1,13 @@
 // 加入训练营
 import {
-  GLOBAL_KEY
+  GLOBAL_KEY,
+  Version
 } from "../../lib/config"
+
+import {
+  checkFocusLogin
+} from "../../api/auth/index"
+
 import {
   getCampDetail,
   getHasJoinCamp,
@@ -138,11 +144,17 @@ Page({
             }
           }
         }
-        wx.getSystemInfo({
-          success: function (res) {
-            if (res.platform == 'ios') {
-              buttonType = 8
-            }
+        checkFocusLogin({
+          app_version: Version
+        }).then(res => {
+          if (!res) {
+            wx.getSystemInfo({
+              success: function (res) {
+                if (res.platform == 'ios') {
+                  buttonType = 8
+                }
+              }
+            })
           }
         })
         this.setData({
