@@ -200,15 +200,19 @@ Page({
       })
       setTimeout(() => {
         if (Number(getLocalStorage('needToScrollTop')) === 1) {
-          wx.pageScrollTo({
-            scrollTop: 0
-          })
-          wx.removeStorageSync('needToScrollTop')
+          let query = wx.createSelectorQuery()
+          query.select('#camp').boundingClientRect((rect) => {
+            wx.pageScrollTo({
+              scrollTop: rect.top,
+              duration: 100,
+            })
+            wx.removeStorageSync('needToScrollTop')
+          }).exec()
         }
         this.setData({
           canShow: true
         })
-      }, 20)
+      }, 100)
     })
   },
 
@@ -258,6 +262,7 @@ Page({
       })
       this.getVideoCourse()
       this.getBanner()
+      // 获取直播列表个数
       // this.getLiveTotalNum()
     })
   },
