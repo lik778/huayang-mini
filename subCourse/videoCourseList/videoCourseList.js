@@ -4,8 +4,13 @@ import {
   getVideoCourseList
 } from "../../api/course/index"
 import {
-  GLOBAL_KEY
+  checkFocusLogin
+} from "../../api/auth/index"
+import {
+  GLOBAL_KEY,
+  Version
 } from "../../lib/config"
+
 import {
   getLocalStorage
 } from "../../utils/util"
@@ -17,6 +22,7 @@ Page({
   data: {
     titleList: [],
     curentIndex: 0,
+    showMoney: true,
     keyArr: [],
     bottomLock: true,
     pageSize: {
@@ -122,6 +128,25 @@ Page({
     })
     this.getVideoList(index)
   },
+  // 检查ios环境
+  checkIos() {
+    checkFocusLogin({
+      app_version: Version
+    }).then(res1 => {
+      let _this = this
+      if (!res1) {
+        wx.getSystemInfo({
+          success: function (res2) {
+            if (res2.platform == 'ios') {
+              _this.setData({
+                showMoney: false
+              })
+            }
+          }
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -133,6 +158,8 @@ Page({
       })
     }
     this.getTabList(index)
+    // ios规则适配
+    this.checkIos()
   },
 
   /**

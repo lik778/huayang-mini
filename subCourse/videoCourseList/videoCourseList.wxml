@@ -19,8 +19,8 @@
 								{{item.category==='fitness'?'健身':item.category==='fashion'?'时尚':'静心慢生活'}}
 							</view>
         </view>
-        <view class="list-item-right-bottom" wx:if="{{item.money!=='免费'}}">¥{{item.money}}</view>
-        <view class="list-item-right-bottom" wx:if="{{item.money==='免费'}}">{{item.money}}</view>
+        <view class="list-item-right-bottom" wx:if="{{item.money!=='免费'&&showMoney}}">¥{{item.money}}</view>
+        <view class="list-item-right-bottom" wx:if="{{item.money==='免费'&&showMoney}}">{{item.money}}</view>
       </view>
     </view>
   </view>
