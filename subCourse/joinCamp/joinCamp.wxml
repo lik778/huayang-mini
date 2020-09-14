@@ -41,6 +41,12 @@
 			<!-- 未授权 -->
 			立即加入
 		</view>
+		<!-- ios用户 -->
+		<view class="button-six button-style-four" wx:if="{{buttonType===8}}" bindtap="openToast">
+			<!-- 免费的 -->
+			<view>({{hasJoinAll?timeJoin : joinTime}}开营)</view>
+			<view>立即加入</view>
+		</view>
 	</view>
 	<view class="level-alert" wx:if="{{didShowAlert}}" bindtap="openBox">
 		<view class="box">
@@ -53,4 +59,5 @@
 	<!-- 授权弹窗 -->
 	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
 	</authModule>
+	<!-- 规则弹窗 -->
 </view>

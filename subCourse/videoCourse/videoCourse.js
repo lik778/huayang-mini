@@ -287,7 +287,16 @@ Page({
       } else {
         showVideoLock = false
       }
+      let buttonStyle = button ? button : buttonType
       this.getArticleLink(res.id)
+      // ios规则弹窗
+      wx.getSystemInfo({
+        success: function (res) {
+          if (res.platform == 'ios') {
+            buttonStyle = 8
+          }
+        }
+      })
       this.setData({
         courseData: res,
         showMoreAll: showMoreAll,
@@ -295,7 +304,7 @@ Page({
         showMore: showMore,
         videoLock: lock,
         showVideoLock: showVideoLock,
-        buttonType: button ? button : buttonType,
+        buttonType: buttonStyle,
         videoSrc: videoListAll[0].canReplay ? videoListAll[0].url : ''
       })
     })
@@ -390,6 +399,14 @@ Page({
     let link = this.data.articleLink
     wx.navigateTo({
       url: `/pages/webViewCommon/webViewCommon?link=${link}`,
+    })
+  },
+  // ios规则
+  openToast() {
+    wx.showModal({
+      title: "提示",
+      content: "由于相关规范，ios功能暂不可用",
+      showCancel: false
     })
   },
   // 滚动至课程详情

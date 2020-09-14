@@ -138,6 +138,13 @@ Page({
             }
           }
         }
+        wx.getSystemInfo({
+          success: function (res) {
+            if (res.platform == 'ios') {
+              buttonType = 8
+            }
+          }
+        })
         this.setData({
           campDetailData: res,
           joinTime: pushTime,
@@ -147,6 +154,14 @@ Page({
           titleName: res.name.length > 8 ? res.name.slice(0, 8) + ".." : res.name
         })
       })
+    })
+  },
+  // ios规则弹窗
+  openToast() {
+    wx.showModal({
+      title: "提示",
+      content: "由于相关规范，ios功能暂不可用",
+      showCancel: false
     })
   },
   // 等级不够
