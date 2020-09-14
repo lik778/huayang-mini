@@ -295,28 +295,41 @@ Page({
       this.getArticleLink(res.id)
       checkFocusLogin({
         app_version: Version
-      }).then(res => {
-        if (!res) {
+      }).then(res1 => {
+        let _this = this
+        if (!res1) {
           // ios规则弹窗
           wx.getSystemInfo({
-            success: function (res) {
-              if (res.platform == 'ios') {
+            success: function (res2) {
+              if (res2.platform == 'ios') {
                 buttonStyle = 8
               }
+              _this.setData({
+                courseData: res,
+                showMoreAll: showMoreAll,
+                videoListAll: videoListAll,
+                showMore: showMore,
+                videoLock: lock,
+                showVideoLock: showVideoLock,
+                buttonType: buttonStyle,
+                videoSrc: videoListAll[0].canReplay ? videoListAll[0].url : ''
+              })
             }
+          })
+        } else {
+          _this.setData({
+            courseData: res,
+            showMoreAll: showMoreAll,
+            videoListAll: videoListAll,
+            showMore: showMore,
+            videoLock: lock,
+            showVideoLock: showVideoLock,
+            buttonType: buttonStyle,
+            videoSrc: videoListAll[0].canReplay ? videoListAll[0].url : ''
           })
         }
       })
-      this.setData({
-        courseData: res,
-        showMoreAll: showMoreAll,
-        videoListAll: videoListAll,
-        showMore: showMore,
-        videoLock: lock,
-        showVideoLock: showVideoLock,
-        buttonType: buttonStyle,
-        videoSrc: videoListAll[0].canReplay ? videoListAll[0].url : ''
-      })
+
     })
   },
   // 检查是否已经加入课程

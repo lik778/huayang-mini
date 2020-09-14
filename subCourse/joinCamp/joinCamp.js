@@ -146,25 +146,37 @@ Page({
         }
         checkFocusLogin({
           app_version: Version
-        }).then(res => {
-          if (!res) {
+        }).then(res1 => {
+          let _this=this
+          if (!res1) {
             wx.getSystemInfo({
-              success: function (res) {
-                if (res.platform == 'ios') {
+              success: function (res2) {
+                if (res2.platform == 'ios') {
                   buttonType = 8
                 }
+                _this.setData({
+                  campDetailData: res,
+                  joinTime: pushTime,
+                  buttonType: buttonType,
+                  endTime: startDate,
+                  campId: id,
+                  titleName: res.name.length > 8 ? res.name.slice(0, 8) + ".." : res.name
+                })
               }
             })
+          } else {
+            _this.setData({
+              campDetailData: res,
+              joinTime: pushTime,
+              buttonType: buttonType,
+              endTime: startDate,
+              campId: id,
+              titleName: res.name.length > 8 ? res.name.slice(0, 8) + ".." : res.name
+            })
           }
+
         })
-        this.setData({
-          campDetailData: res,
-          joinTime: pushTime,
-          buttonType: buttonType,
-          endTime: startDate,
-          campId: id,
-          titleName: res.name.length > 8 ? res.name.slice(0, 8) + ".." : res.name
-        })
+
       })
     })
   },
