@@ -174,7 +174,6 @@ Page({
               titleName: res.name.length > 8 ? res.name.slice(0, 8) + ".." : res.name
             })
           }
-
         })
 
       })

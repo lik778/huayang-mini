@@ -54,10 +54,10 @@
 								{{item.category==='fitness'?'健身':item.category==='fashion'?'时尚':'静心慢生活'}}
 							</view>
 						</view>
-						<view class="video-course-item-right-bottom" wx:if="{{item.money!=='免费'}}">
+						<view class="video-course-item-right-bottom" wx:if="{{item.money!=='免费'&&showMoney}}">
 							¥{{item.money}}
 						</view>
-						<view class="video-course-item-right-bottom" wx:else>
+						<view class="video-course-item-right-bottom" wx:if="{{item.money==='免费'&&showMoney}}">
 							{{item.money}}
 						</view>
 					</view>
