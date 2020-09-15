@@ -10,13 +10,16 @@
 				<text class="course-name">{{bannerPictureObject.name}}</text>
 				<view class="course-info">
 					<text class="author">{{bannerPictureObject.author}}</text>
-					<text class="course-no">{{bannerPictureObject.visitCount}}{{ bannerPictureObject.liveStatus === '直播中' || bannerPictureObject.liveStatus === '异常' ? '人在看' : '人看过' }}</text>
+					<text
+						class="course-no">{{bannerPictureObject.visitCount}}{{ bannerPictureObject.liveStatus === '直播中' || bannerPictureObject.liveStatus === '异常' ? '人在看' : '人看过' }}</text>
 				</view>
 			</view>
-			<image class="teacher" bindtap="navigateToCourse" data-item="{{bannerPictureObject}}" src="{{bannerPictureObject.bannerPicture}}"></image>
+			<image class="teacher" bindtap="navigateToCourse" data-item="{{bannerPictureObject}}"
+				src="{{bannerPictureObject.bannerPicture}}"></image>
 		</block>
 		<block wx:if="{{bannerPictureObject.officialRoomId == null}}">
-			<swiper class="swiper" indicator-dots="{{indicatorDots}}" bindtap="handleSwiperTap" data-item="{{bannerPictureObject}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+			<swiper class="swiper" indicator-dots="{{indicatorDots}}" bindtap="handleSwiperTap"
+				data-item="{{bannerPictureObject}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
 				<swiper-item wx:for="{{[bannerPictureObject]}}" wx:key="index">
 					<image mode="aspectFill" src="{{bannerPictureObject.bannerPicture}}"></image>
 				</swiper-item>
@@ -53,7 +56,8 @@
 		<text class="gift-text" bindtap="invite">邀请有礼</text>
 	</view>
 
-	<van-dialog title="提示" message="授权登录查看直播内容" show="{{ show }}" show-cancel-button confirmButtonText="立即授权" confirm-button-open-type="getPhoneNumber" bind:getphonenumber="getPhoneNumber"></van-dialog>
+	<van-dialog title="提示" message="授权登录查看直播内容" show="{{ show }}" show-cancel-button confirmButtonText="立即授权"
+		confirm-button-open-type="getPhoneNumber" bind:getphonenumber="getPhoneNumber"></van-dialog>
 	<van-overlay show="{{ showSuccess }}">
 		<view class="box">
 			<view class="box-img" bindtap="openPopup">
@@ -66,5 +70,6 @@
 	</van-overlay>
 
 	<van-dialog id="van-dialog" />
-
+	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCompleteEvent"
+		bind:authCompleteEvent="authCompleteEvent"></authModule>
 </view>
