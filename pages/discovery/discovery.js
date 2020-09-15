@@ -6,6 +6,7 @@ import {
   setLocalStorage,
   simpleDurationSimple
 } from "../../utils/util"
+
 import {
   getActivityList,
   getCampList,
@@ -15,8 +16,12 @@ import {
   liveTotalNum
 } from "../../api/course/index"
 import {
-  GLOBAL_KEY
+  GLOBAL_KEY,
+  Version
 } from "../../lib/config"
+import {
+  checkFocusLogin
+} from "../../api/auth/index"
 import bxPoint from "../../utils/bxPoint"
 import {
   getYouZanAppId
@@ -30,6 +35,7 @@ Page({
   data: {
     cureent: 0,
     liveNum: 0,
+    showMoney: true,
     campList: null,
     showModelBanner: false,
     didShowAuth: false,
@@ -301,6 +307,25 @@ Page({
       setLocalStorage('has_user_guide_page', 'yes')
     }
   },
+  // 检查ios环境
+  checkIos() {
+    checkFocusLogin({
+      app_version: Version
+    }).then(res1 => {
+      let _this = this
+      if (!res1) {
+        wx.getSystemInfo({
+          success: function (res2) {
+            if (res2.platform == 'ios') {
+              _this.setData({
+                showMoney: false
+              })
+            }
+          }
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -328,6 +353,8 @@ Page({
       }
     }
     this.checkUserGuide()
+    // 处理ios
+    this.checkIos()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

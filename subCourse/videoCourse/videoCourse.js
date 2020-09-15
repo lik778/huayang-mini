@@ -10,6 +10,9 @@ import {
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 import {
+  checkFocusLogin
+} from "../../api/auth/index"
+import {
   checkJoinVideoCourse,
   getVideoCourseDetail,
   joinVideoCourse,
@@ -17,7 +20,8 @@ import {
   getVideoArticleLink
 } from "../../api/course/index"
 import {
-  GLOBAL_KEY
+  GLOBAL_KEY,
+  Version
 } from "../../lib/config"
 Page({
 
@@ -287,17 +291,45 @@ Page({
       } else {
         showVideoLock = false
       }
+      let buttonStyle = button ? button : buttonType
       this.getArticleLink(res.id)
-      this.setData({
-        courseData: res,
-        showMoreAll: showMoreAll,
-        videoListAll: videoListAll,
-        showMore: showMore,
-        videoLock: lock,
-        showVideoLock: showVideoLock,
-        buttonType: button ? button : buttonType,
-        videoSrc: videoListAll[0].canReplay ? videoListAll[0].url : ''
+      checkFocusLogin({
+        app_version: Version
+      }).then(res1 => {
+        let _this = this
+        if (!res1) {
+          // ios规则弹窗
+          wx.getSystemInfo({
+            success: function (res2) {
+              if (res2.platform == 'ios') {
+                buttonStyle = 8
+              }
+              _this.setData({
+                courseData: res,
+                showMoreAll: showMoreAll,
+                videoListAll: videoListAll,
+                showMore: showMore,
+                videoLock: lock,
+                showVideoLock: showVideoLock,
+                buttonType: buttonStyle,
+                videoSrc: videoListAll[0].canReplay ? videoListAll[0].url : ''
+              })
+            }
+          })
+        } else {
+          _this.setData({
+            courseData: res,
+            showMoreAll: showMoreAll,
+            videoListAll: videoListAll,
+            showMore: showMore,
+            videoLock: lock,
+            showVideoLock: showVideoLock,
+            buttonType: buttonStyle,
+            videoSrc: videoListAll[0].canReplay ? videoListAll[0].url : ''
+          })
+        }
       })
+
     })
   },
   // 检查是否已经加入课程
@@ -390,6 +422,14 @@ Page({
     let link = this.data.articleLink
     wx.navigateTo({
       url: `/pages/webViewCommon/webViewCommon?link=${link}`,
+    })
+  },
+  // ios规则
+  openToast() {
+    wx.showModal({
+      title: "提示",
+      content: "由于相关规范，ios功能暂不可用",
+      showCancel: false
     })
   },
   // 滚动至课程详情
