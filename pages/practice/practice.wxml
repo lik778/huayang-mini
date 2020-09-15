@@ -93,7 +93,24 @@
     <view class="support-layer" wx:if="{{userJoinedClassesList.length <= 0}}">
         <view class="title recommend-title">推荐课程</view>
     </view>
-
+    <!-- 视频课程学习列表 -->
+    <view class="video-practice-list" wx:if="{{userJoinedClassesList.length <= 0}}">
+        <view class="video-practice-item" wx:for="{{videoPracticeList}}" bindtap="toVideoDetail" wx:key="index"
+            data-item="{{item}}">
+            <view class="video-practice-item-left">
+                <image src="{{item.kecheng_series.cover_pic}}"></image>
+            </view>
+            <view class="video-practice-item-right">
+                <view class="video-practice-item-right-top">{{item.kecheng_series.name}}</view>
+                <view class="video-practice-item-right-bottom">
+                    <text class="video-practice-item-right-bottom-text"
+                        wx:if="{{item.last_visit_num!==0}}">学习至：第{{item.last_visit_num}}课</text>
+                    <text wx:else></text>
+                    <text class="video-practice-item-right-bottom-text-one">共{{item.videoList}}节课</text>
+                </view>
+            </view>
+        </view>
+    </view>
     <!--  课程练习列表  -->
     <view class="today-practice-list">
         <view class="practice-item" wx:if="{{userJoinedClassesList.length > 0}}" wx:for="{{userJoinedClassesList}}"
@@ -125,7 +142,7 @@
     </view>
 
     <!-- 视频课程学习列表 -->
-    <view class="video-practice-list">
+    <view class="video-practice-list" wx:if="{{userJoinedClassesList.length > 0}}">
         <view class="video-practice-item" wx:for="{{videoPracticeList}}" bindtap="toVideoDetail" wx:key="index"
             data-item="{{item}}">
             <view class="video-practice-item-left">
@@ -134,7 +151,8 @@
             <view class="video-practice-item-right">
                 <view class="video-practice-item-right-top">{{item.kecheng_series.name}}</view>
                 <view class="video-practice-item-right-bottom">
-                    <text class="video-practice-item-right-bottom-text" wx:if="{{item.last_visit_num!==0}}">学习至：第{{item.last_visit_num}}课</text>
+                    <text class="video-practice-item-right-bottom-text"
+                        wx:if="{{item.last_visit_num!==0}}">学习至：第{{item.last_visit_num}}课</text>
                     <text wx:else></text>
                     <text class="video-practice-item-right-bottom-text-one">共{{item.videoList}}节课</text>
                 </view>

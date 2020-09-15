@@ -1,6 +1,15 @@
 // pages/live/live.js
-import { getLiveBannerList, getLiveList, getRemind, updateLiveStatus } from "../../api/live/index"
-import { GLOBAL_KEY, SHARE_PARAMS, WeChatLiveStatus } from '../../lib/config'
+import {
+	getLiveBannerList,
+	getLiveList,
+	getRemind,
+	updateLiveStatus
+} from "../../api/live/index"
+import {
+	GLOBAL_KEY,
+	SHARE_PARAMS,
+	WeChatLiveStatus
+} from '../../lib/config'
 import {
 	$notNull,
 	checkIdentity,
@@ -9,11 +18,19 @@ import {
 	removeLocalStorage,
 	setLocalStorage
 } from '../../utils/util'
-import { statisticsWatchNo } from "../../api/live/course"
-import { bindWxPhoneNumber } from "../../api/auth/index"
-import { checkAuth } from "../../utils/auth"
+import {
+	statisticsWatchNo
+} from "../../api/live/course"
+import {
+	bindWxPhoneNumber
+} from "../../api/auth/index"
+import {
+	checkAuth
+} from "../../utils/auth"
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog'
-import { getUserInfo } from "../../api/mine/index"
+import {
+	getUserInfo
+} from "../../api/mine/index"
 
 Page({
 	/**
@@ -30,6 +47,7 @@ Page({
 		WeChatLiveStatus,
 		schedule: [],
 		customParams: {},
+		didShowAuth: false, //授权弹窗
 		bannerPictureObject: null,
 		bannerList: [],
 		liveList: [],
@@ -45,13 +63,17 @@ Page({
 		autoplay: false,
 		interval: 2000,
 		duration: 500,
-		showInviteLine:true
+		showInviteLine: true
 
 	},
 	// 处理swiper点击回调
 	handleSwiperTap(e) {
-		let {bannerId} = e.currentTarget.dataset.item
-		wx.navigateTo({url: this.data.bannerPictureObject.bannerLink})
+		let {
+			bannerId
+		} = e.currentTarget.dataset.item
+		wx.navigateTo({
+			url: this.data.bannerPictureObject.bannerLink
+		})
 	},
 	// 关闭立即邀请
 	onClickHide() {
@@ -87,8 +109,16 @@ Page({
 	 * @param e
 	 */
 	navigateToLive(e) {
-		checkAuth({authPhone: true}).then(() => {
-			let {zhiboRoomId, roomId, link, status, vipOnly} = e.currentTarget.dataset.item
+		checkAuth({
+			authPhone: true
+		}).then(() => {
+			let {
+				zhiboRoomId,
+				roomId,
+				link,
+				status,
+				vipOnly
+			} = e.currentTarget.dataset.item
 			// 当前课程是否仅限VIP用户学习
 			if (vipOnly === 1) {
 				// 判断是否是会员/是否入学
@@ -98,7 +128,9 @@ Page({
 					zhiboRoomId
 				}).then((callbackString) => {
 					if (callbackString === 'no-phone-auth') {
-						this.setData({show: true})
+						this.setData({
+							show: true
+						})
 					} else if (callbackString === 'no-auth-daxue') {
 						Dialog.confirm({
 							title: '申请入学立即观看',
@@ -110,8 +142,7 @@ Page({
 						}).catch(() => {})
 					}
 				})
-			}
-			else {
+			} else {
 				statisticsWatchNo({
 					zhibo_room_id: zhiboRoomId, // 运营后台配置的课程ID
 					open_id: getLocalStorage(GLOBAL_KEY.openId)
@@ -140,26 +171,46 @@ Page({
 					}, 1000)
 				})
 			}
+		}).catch(() => {
+			this.setData({
+				didShowAuth: true
+			})
 		})
 	},
+	// 用户确认授权且成功
+	authCompleteEvent() {
+		this.setData({
+			didShowAuth: false
+		})
+	},
+	
 	/**
 	 * 跳转至课程列表
 	 */
 	navigateToCourse(e) {
-		let {zhiboRoomId, roomId, bannerId, vipOnly, status, link} = e.currentTarget.dataset.item
+		let {
+			zhiboRoomId,
+			roomId,
+			bannerId,
+			vipOnly,
+			status,
+			link
+		} = e.currentTarget.dataset.item
 		if (vipOnly == 1) {
 			let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 			if (!$notNull(accountInfo)) {
 				// 手机号鉴权
-				this.setData({show: true})
+				this.setData({
+					show: true
+				})
 				return false
 			}
 
 			if (!accountInfo.is_zhide_vip) {
 				Dialog.confirm({
-					title: '提示',
-					message: '该课程仅限会员观看，立即成为“花样汇”超级会员。'
-				})
+						title: '提示',
+						message: '该课程仅限会员观看，立即成为“花样汇”超级会员。'
+					})
 					.then(() => {
 						wx.navigateTo({
 							url: '/mine/joinVip/joinVip',
@@ -329,7 +380,9 @@ Page({
 		})
 	},
 	openPopup() {
-		let { link } = this.data.alertInfo
+		let {
+			link
+		} = this.data.alertInfo
 		if (link) {
 			wx.navigateTo({
 				url: link
@@ -352,7 +405,9 @@ Page({
 			removeLocalStorage(GLOBAL_KEY.popupTimestamp)
 		}
 		if (openId) {
-			let params = { open_id: openId }
+			let params = {
+				open_id: openId
+			}
 			params['normal_send'] = +didPopupInCurrentLifeCircle
 			if (userId) {
 				params['user_id'] = userId
@@ -366,7 +421,9 @@ Page({
 						}
 					}
 					this.setData({
-						alertInfo: { ...data },
+						alertInfo: {
+							...data
+						},
 						showSuccess: true
 					})
 				}
@@ -374,17 +431,17 @@ Page({
 		}
 	},
 	// 初始化邀请有礼浮窗
-	initInvite(){
+	initInvite() {
 		let soldOutTime = 1590940800000 //2020.06.01时间戳（毫秒）
 		let nowTime = Math.round(new Date())
 		if (nowTime >= soldOutTime) {
-				this.setData({
-						showInviteLine: false
-				})
+			this.setData({
+				showInviteLine: false
+			})
 		} else {
-				this.setData({
-						showInviteLine: true
-				})
+			this.setData({
+				showInviteLine: true
+			})
 		}
 	},
 	/**
