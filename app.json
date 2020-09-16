@@ -68,7 +68,8 @@
         "joinCamp/joinCamp",
         "actionPost/actionPost",
         "videoCourse/videoCourse",
-        "videoCourseList/videoCourseList"
+        "videoCourseList/videoCourseList",
+        "invitePage/invitePage"
       ]
     },
     {
