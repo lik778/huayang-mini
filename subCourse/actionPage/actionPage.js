@@ -218,6 +218,13 @@ Page({
 	onReachBottom: function () {
 
 	},
+	handleVideoPauseEvent() {
+		let { system = '' } = getLocalStorage(GLOBAL_KEY.systemParams)
+		console.error(!system.includes("iOS") && this.data.isRunning)
+		if (!system.includes("iOS") && this.data.isRunning) {
+			this.data.video.play()
+		}
+	},
 	// 页面退出前销毁所有实例
 	destroyResource() {
 		wx.offAppHide(this.onAppHideCallback)
@@ -453,7 +460,9 @@ Page({
 			if (this.data.isPlayMainPointAudioPlaying && this.data.isPlayMainPointAudioPlaying) {
 				this.data.mainPointAudio && this.data.mainPointAudio.play()
 			}
-			this.data.bgAudio.play()
+			this.data.bgAudio.onCanplay(() => {
+				this.data.bgAudio.play()
+			})
 			this.data.backgroundMusicAudio.play()
 		}
 
@@ -465,9 +474,7 @@ Page({
 	stopAllAction() {
 		this.data.video.stop()
 		this.data.mainPointAudio.stop()
-		this.data.bgAudio.onCanplay(() => {
-			this.data.bgAudio.pause()
-		})
+		this.data.bgAudio.pause()
 	},
 	/**
 	 * 临时播放器 播放音频
