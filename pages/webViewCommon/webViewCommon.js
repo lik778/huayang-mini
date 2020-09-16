@@ -13,13 +13,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let link = options.link
-    if (options.type === 'link') {
-      link = decodeURIComponent(link)
-    }
+    let link = decodeURIComponent(options.link)
     if (options.isModel === 'true') {
       this.setData({
-        baseUrl: decodeURIComponent(link),
+        baseUrl:link,
         isModel: true
       })
     }
