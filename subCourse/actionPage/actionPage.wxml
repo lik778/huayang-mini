@@ -57,7 +57,6 @@
                 autoplay="{{false}}"
                 loop="{{true}}"
                 src="{{targetActionObj.link}}"
-                bindpause="handleVideoPauseEvent"
         ></video>
 
         <!--  预备层  -->

@@ -80,7 +80,6 @@ Page({
 		})
 
 		eventChannel.on("transmitCourseMeta", function (data) {
-			// console.log(data)
 			let actionData = JSON.parse(data)
 
 			let completedCourseMetaData = []
@@ -99,7 +98,6 @@ Page({
 		})
 
 		eventChannel.on("transmitCourseInfo", function (data) {
-			// console.log(data)
 			let courseInfo = JSON.parse(data)
 			self.setData({
 				courseInfo
@@ -123,14 +121,11 @@ Page({
 
 		// 背景音乐实例
 		this.data.backgroundMusicAudio = wx.createInnerAudioContext()
-		this.data.backgroundMusicAudio.onPause(() => {
-			console.log('--------暂停 backgroundMusicAudio--------')
-		})
 
 		// 背景音频实例
 		this.data.bgAudio = wx.getBackgroundAudioManager()
 		this.data.bgAudio.onPause(() => {
-			this.toggleAction("pause")
+			console.log("bgAudio pause 触发")
 		})
 		this.data.bgAudio.onStop(() => {
 			this.destroyResource()
@@ -218,13 +213,6 @@ Page({
 	onReachBottom: function () {
 
 	},
-	handleVideoPauseEvent() {
-		let { system = '' } = getLocalStorage(GLOBAL_KEY.systemParams)
-		console.error(!system.includes("iOS") && this.data.isRunning)
-		if (!system.includes("iOS") && this.data.isRunning) {
-			this.data.video.play()
-		}
-	},
 	// 页面退出前销毁所有实例
 	destroyResource() {
 		wx.offAppHide(this.onAppHideCallback)
@@ -246,7 +234,6 @@ Page({
 	},
 	// 监听小程序切前台的回掉函数
 	onAppShowCallback() {
-		// console.log("------------小程序切 前台 事件------------")
 		// 用户非手动暂停时自动延续上次播放进度
 		if (!this.data.accordPause && !this.data.isRunning) {
 			this.toggleAction("play")
@@ -259,7 +246,6 @@ Page({
 	},
 	// 监听小程序切后台的回掉函数
 	onAppHideCallback() {
-		// console.log("------------小程序切 后台 事件------------")
 		// 在休息层 & 未暂停休息 => 暂停休息阶段
 		if (this.data.didShowRestLayer && !this.data.didPauseRest) {
 			this.pauseRestTime("pause")
@@ -330,7 +316,6 @@ Page({
 					bxPoint("course_operation", {event: "exit", action_num: self.data.targetActionObj.id}, false)
 					wx.navigateBack()
 				} else if (res.cancel) {
-					// console.log('取消')
 				}
 			}
 		})
@@ -391,12 +376,12 @@ Page({
 	 */
 	async switchPrevAction() {
 		if (this.data.currentActionIndex > 0) {
-			// console.log('上一个动作')
 			this.stopAllAction()
 
 			// 处理在暂停状态下切换上一个动作事件
 			if (!this.data.isRunning) {
-				this.setData({isRunning: true})
+				this.setData({isPlayMainPointAudioPlaying: false})
+				this.toggleAction("play")
 				this.data.backgroundMusicAudio.play()
 			}
 
@@ -414,12 +399,13 @@ Page({
 	 */
 	async switchNextAction() {
 		if (this.data.currentActionIndex < this.data.actionData.length - 1) {
-			// console.log('下一个练习')
 			this.stopAllAction()
 
 			// 处理在暂停状态下切换下一个动作事件
 			if (!this.data.isRunning) {
-				this.setData({isRunning: true})
+				// 释放要领正在播放中的状态
+				this.setData({isPlayMainPointAudioPlaying: false})
+				this.toggleAction("play")
 				this.data.backgroundMusicAudio.play()
 			}
 
@@ -447,7 +433,7 @@ Page({
 			this.setData({didPauseRecordGlobalTime: true})
 			this.data.video.pause()
 			// [要领播放中]&当前动作未播放过[要领]，则暂停
-			if (this.data.isPlayMainPointAudioPlaying && this.data.isPlayMainPointAudioPlaying) {
+			if (this.data.isPlayMainPointAudioPlaying) {
 				this.data.mainPointAudio && this.data.mainPointAudio.pause()
 			}
 			this.data.bgAudio.pause()
@@ -457,12 +443,10 @@ Page({
 			this.setData({didPauseRecordGlobalTime: false})
 			this.data.video.play()
 			// [要领播放中]&当前动作未播放过[要领]，则继续播放
-			if (this.data.isPlayMainPointAudioPlaying && this.data.isPlayMainPointAudioPlaying) {
+			if (this.data.isPlayMainPointAudioPlaying) {
 				this.data.mainPointAudio && this.data.mainPointAudio.play()
 			}
-			this.data.bgAudio.onCanplay(() => {
-				this.data.bgAudio.play()
-			})
+			this.data.bgAudio.play()
 			this.data.backgroundMusicAudio.play()
 		}
 
@@ -472,9 +456,10 @@ Page({
 	 * 停止动作
 	 */
 	stopAllAction() {
+		// 停止视频
 		this.data.video.stop()
+		// 如果正在播放要领音频，停止要领播放
 		this.data.mainPointAudio.stop()
-		this.data.bgAudio.pause()
 	},
 	/**
 	 * 临时播放器 播放音频
@@ -494,7 +479,6 @@ Page({
 					this.data.backgroundMusicAudio.pause()
 				}
 			})
-
 			audio.onEnded(() => {
 				resolve()
 			})
@@ -565,19 +549,13 @@ Page({
 	 * 筹备下个动作
 	 */
 	async prepareNextAction() {
-		// 停止视频
-		this.data.video.stop()
-		// 如果正在播放要领音频，停止要领播放
-		this.data.mainPointAudio.stop()
+		this.stopAllAction()
 		// 切换下一个动作
 		this.checkoutNextAction()
 		// 检查是否是最后一个动作
 		if (this.data.currentActionIndex < this.data.actionData.length) {
 			// 显示休息层
-			this.setData({
-				didShowRestLayer: true,
-				isRunning: true
-			})
+			this.setData({didShowRestLayer: true})
 			// 6. 「休息一下」
 			this.playTempBgAudio(LocaleVoice.lv5).then(() => {
 				// 开始预览视频播放
@@ -716,7 +694,6 @@ Page({
 			}
 		}, 1000)
 
-		this.setData({isRunning: true})
 		// 1.「准备好了吗 第一个动作」
 		await this.playTempBgAudio(LocaleVoice.lv1)
 		// 播报动作名称，并开始训练
