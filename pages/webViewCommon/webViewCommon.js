@@ -16,7 +16,7 @@ Page({
     let link = decodeURIComponent(options.link)
     if (options.isModel === 'true') {
       this.setData({
-        baseUrl: link,
+        baseUrl:link,
         isModel: true
       })
     }
