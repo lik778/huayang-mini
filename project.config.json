@@ -216,10 +216,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "subCourse/invitePage/invitePage",
-					"pathName": "subCourse/invitePage/invitePage",
-					"query": "videoCourseId=5",
+					"id": 21,
+					"name": "subCourse/receiveCourseList/receiveCourseList",
+					"pathName": "subCourse/receiveCourseList/receiveCourseList",
+					"query": "",
 					"scene": null
 				}
 			]

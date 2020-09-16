@@ -69,7 +69,8 @@
         "actionPost/actionPost",
         "videoCourse/videoCourse",
         "videoCourseList/videoCourseList",
-        "invitePage/invitePage"
+        "invitePage/invitePage",
+        "receiveCourseList/receiveCourseList"
       ]
     },
     {

@@ -1,0 +1,34 @@
+<view class="receive-course-list">
+    <view class="header">
+        <view class="txt-01">「精品好课免费领取」</view>
+        <view class="txt-02">请好友助力解锁，即可</view>
+        <view class="txt-02">免费观看精品好课</view>
+    </view>
+
+    <view class="section">
+        <view class="course-item">
+            <image class="course-image" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600240225NrIMHF.jpg"></image>
+              <view class="course-info">
+                  <text class="course-title">课程名称</text>
+                  <view class="course-tag">时尚</view>
+                  <text class="price">¥99.00</text>
+              </view>
+        </view>
+        <view class="course-item">
+            <image class="course-image" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600240225NrIMHF.jpg"></image>
+            <view class="course-info">
+                <text class="course-title">课程名称</text>
+                <view class="course-tag">时尚</view>
+                <text class="price">¥99.00</text>
+            </view>
+        </view>
+        <view class="course-item">
+            <image class="course-image" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600240225NrIMHF.jpg"></image>
+            <view class="course-info">
+                <text class="course-title">课程名称</text>
+                <view class="course-tag">时尚</view>
+                <text class="price">¥99.00</text>
+            </view>
+        </view>
+    </view>
+</view>

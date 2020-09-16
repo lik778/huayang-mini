@@ -1,3 +1,55 @@
 <view class="invite-page">
-    invite page
+   <view class="header">
+       <view class="view-01">已邀请 <text class="txt-01">4</text>人，还差<text class="txt-01">6</text>人</view>
+       <view class="view-02">免费学习课程</view>
+       <block wx:if="{{conclude}}">
+           <view class="conclude-box">
+               <image class="done-image" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600236038AYyEBF.jpg"></image>
+               <text>已完成</text>
+           </view>
+       </block>
+       <block wx:else>
+           <view class="process">
+               <view class="line">
+                   <view class="inner-line"></view>
+                   <view class="dot"></view>
+                   <image class="process-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600236038AYyEBF.jpg" mode="aspectFit"></image>
+               </view>
+               <view class="no">4/10</view>
+           </view>
+           <view class="wx-btn">
+               <image class="wx-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600236774jmQihb.jpg" mode="aspectFit"></image>
+               <text>立即邀请</text>
+           </view>
+       </block>
+   </view>
+    <view class="section">
+        <view class="view-03">
+            <view class="sub-line"></view>
+            <text>已邀请好友</text>
+            <view class="sub-line"></view>
+        </view>
+        <view class="invited-user">
+            <view class="invited-user-avatar"></view>
+            <view class="invited-user-avatar"></view>
+            <view class="invited-user-avatar"></view>
+            <view class="invited-user-avatar"></view>
+            <view class="invited-user-avatar"></view>
+            <view class="invited-user-avatar"></view>
+            <view class="invited-user-avatar"></view>
+            <view class="invited-user-avatar"></view>
+            <view class="invited-user-avatar"></view>
+            <view class="invited-user-avatar"></view>
+            <view class="invited-user-avatar"></view>
+            <view class="invited-user-avatar"></view>
+            <view class="invited-user-avatar"></view>
+            <view class="invited-user-avatar"></view>
+            <view class="invited-user-avatar"></view>
+            <image class="invited-user-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600238041eYGDxl.jpg"></image>
+        </view>
+    </view>
+    <view class="footer">
+        <text class="footer-txt">6折优惠购（暂未达成）</text>
+        <text class="price">¥41.40</text>
+    </view>
 </view>

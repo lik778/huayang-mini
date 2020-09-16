@@ -1,0 +1,42 @@
+.receive-course-list {
+    position: relative;
+}
+
+.header {
+    overflow: hidden;
+    height: 736rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600239587PuCMYp.jpg") no-repeat center;
+    background-size: cover;
+    text-align: center;
+    color: white;
+}
+
+.txt-01 {
+    margin: 226rpx 0 38rpx;
+    font: 600 68rpx/68rpx PingFangSC;
+}
+
+.txt-02 {
+    font: 40rpx/56rpx PingFangSC;
+}
+
+.section {
+    padding: 30rpx;
+    border-radius: 40rpx 40rpx 0 0;
+    background: white;
+}
+
+.course-item {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 30rpx 0;
+    border-bottom: 2rpx solid #F2F2F2;
+}
+.course-image {
+    width: 220rpx;
+    height: 220rpx;
+    font-size: 0;
+    border-radius: 8rpx;
+    margin-right: 24rpx;
+}
