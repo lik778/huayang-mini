@@ -61,14 +61,21 @@
     {
       "root": "subCourse",
       "pages": [
-        "detail/detail",
-        "category/category",
         "practiceDetail/practiceDetail",
         "actionPage/actionPage",
         "practiceManage/practiceManage",
         "campDetail/campDetail",
         "joinCamp/joinCamp",
-        "actionPost/actionPost"
+        "actionPost/actionPost",
+        "videoCourse/videoCourse",
+        "videoCourseList/videoCourseList"
+      ]
+    },
+    {
+      "root": "subMall",
+      "pages": [
+        "detail/detail",
+        "category/category"
       ]
     }
   ],

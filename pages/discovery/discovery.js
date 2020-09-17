@@ -1,11 +1,31 @@
 // pages/ discovery/discovery.js
-import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage, simpleDurationSimple } from "../../utils/util"
-import { checkAuth } from "../../utils/auth"
-import { getActivityList, getCampList, getFindBanner, getShowCourseList } from "../../api/course/index"
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  setLocalStorage,
+  simpleDurationSimple
+} from "../../utils/util"
+
+import {
+  getActivityList,
+  getCampList,
+  getFindBanner,
+  getVideoCourseList,
+  getShowCourseList,
+  liveTotalNum
+} from "../../api/course/index"
+import {
+  GLOBAL_KEY,
+  Version
+} from "../../lib/config"
+import {
+  checkFocusLogin
+} from "../../api/auth/index"
 import bxPoint from "../../utils/bxPoint"
-import request from "../../lib/request"
-import { getYouZanAppId } from "../../api/mall/index"
+import {
+  getYouZanAppId
+} from "../../api/mall/index"
 
 Page({
 
@@ -14,12 +34,15 @@ Page({
    */
   data: {
     cureent: 0,
+    liveNum: 0,
+    showMoney: true,
     campList: null,
     showModelBanner: false,
     didShowAuth: false,
     bannerList: null,
     canShow: false,
     courseList: null,
+    videoList: '',
     modelBannerLink: "",
     activityList: null
   },
@@ -99,30 +122,76 @@ Page({
   // 处理是否显示模特大赛banner
   initModelBanner() {
     getFindBanner({
-      scene: 9
+      // scene: 9
+      scene: 11
     }).then(res => {
       this.setData({
         competitionBannerList: res,
         showModelBanner: res.length === 0 ? false : true
       })
     })
-    // let show = false
-    // let isStage = true //正式上线后需要置为false
-    // if (request.baseUrl === 'https://huayang.baixing.cn') {
-    //   // 测试环境
-    //   show = true
-    // } else if (isStage) {
-    //   // 测试环境线上接口
-    //   show = true
-    // } else {
-    //   // 正式环境
-    //   show = false
-    // }
-    // this.setData({
-    //   showModelBanner: show
-    // })
   },
-
+  // 跳往视频课程全部列表
+  toVideoList(e) {
+    if (e.currentTarget.dataset.index) {
+      let link = e.currentTarget.dataset.item
+      wx.navigateTo({
+        url: link
+      })
+    } else {
+      wx.navigateTo({
+        url: `/subCourse/videoCourseList/videoCourseList`
+      })
+    }
+  },
+  // 获取视频课程列表banner
+  getVideoBanner() {
+    getFindBanner({
+      scene: 13
+    }).then(res => {
+      this.setData({
+        videoBannerList: res
+      })
+    })
+  },
+  // 跳转至直播列表
+  toLiveList() {
+    wx.navigateTo({
+      url: '/pages/index/index',
+    })
+  },
+  // 获取视频课程列表
+  getVideoCourse() {
+    getVideoCourseList({
+      limit: 50
+    }).then(res => {
+      res = res || []
+      for (let i in res) {
+        if (res[i].discount_price < 0 && res[i].price <= 0) {
+          res[i].money = '免费'
+        } else if (res[i].discount_price === -1 && res[i].price > 0) {
+          res[i].money = (res[i].price / 100).toFixed(2)
+        } else if (res[i].discount_price > 0 && res[i].price > 0) {
+          res[i].money = (res[i].discount_price / 100).toFixed(2)
+        } else if (res[i].discount_price === 0 && res[i].price > 0) {
+          res[i].money = '免费'
+        } else if (res[i].discount_price === 0 && res[i].price === 0) {
+          res[i].money = '免费'
+        }
+      }
+      this.getVideoBanner()
+      this.setData({
+        videoList: res
+      })
+    })
+  },
+  // 跳往视频详情页
+  toVideoDetail(e) {
+    let id = e.currentTarget.dataset.item.id
+    wx.navigateTo({
+      url: `/subCourse/videoCourse/videoCourse?videoId=${id}`,
+    })
+  },
   // 获取课程列表
   getCourseList() {
     getShowCourseList({
@@ -136,17 +205,27 @@ Page({
       this.setData({
         courseList: res
       })
+
       setTimeout(() => {
         if (Number(getLocalStorage('needToScrollTop')) === 1) {
-          wx.pageScrollTo({
-            scrollTop: 0
-          })
-          wx.removeStorageSync('needToScrollTop')
+          let query = wx.createSelectorQuery()
+          let height = 0
+          query.select('#swiper-box').boundingClientRect((rect) => {
+            height = rect.height
+          }).exec()
+          query.select('#video-course').boundingClientRect((rect) => {
+            height += rect.height
+            wx.pageScrollTo({
+              duration: 100,
+              scrollTop: height
+            })
+            wx.removeStorageSync('needToScrollTop')
+          }).exec()
         }
         this.setData({
           canShow: true
         })
-      }, 20)
+      }, 100)
     })
   },
 
@@ -194,7 +273,18 @@ Page({
       this.setData({
         campList: res.list
       })
+      this.getVideoCourse()
       this.getBanner()
+      // 获取直播列表个数
+      this.getLiveTotalNum()
+    })
+  },
+  // 获取直播列表个数
+  getLiveTotalNum() {
+    liveTotalNum().then(res => {
+      this.setData({
+        liveNum: res
+      })
     })
   },
   // 跳转到训练营详情
@@ -216,6 +306,25 @@ Page({
       })
       setLocalStorage('has_user_guide_page', 'yes')
     }
+  },
+  // 检查ios环境
+  checkIos() {
+    checkFocusLogin({
+      app_version: Version
+    }).then(res1 => {
+      let _this = this
+      if (!res1) {
+        wx.getSystemInfo({
+          success: function (res2) {
+            if (res2.platform == 'ios') {
+              _this.setData({
+                showMoney: false
+              })
+            }
+          }
+        })
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -244,13 +353,13 @@ Page({
       }
     }
     this.checkUserGuide()
+    // 处理ios
+    this.checkIos()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-
-  },
+  onReady: function () {},
 
   /**
    * 生命周期函数--监听页面显示
@@ -262,15 +371,8 @@ Page({
         selected: 0
       })
     }
-
-    checkAuth({
-      redirectPath: "/pages/discovery/discovery",
-      redirectType: "switch"
-    }).then(() => {
-      this.initModelBanner()
-      this.getCampList()
-    })
-
+    this.initModelBanner()
+    this.getCampList()
     bxPoint("applets_find", {
       from_uid: getApp().globalData.super_user_id,
       source: getApp().globalData.source,
@@ -280,9 +382,7 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
-
-  },
+  onHide: function () {},
 
   /**
    * 生命周期函数--监听页面卸载
@@ -301,9 +401,7 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-
-  },
+  onReachBottom: function () {},
 
   /**
    * 用户点击右上角分享

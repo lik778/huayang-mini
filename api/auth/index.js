@@ -10,8 +10,8 @@ import { getLocalStorage, setLocalStorage, toast } from "../../utils/util"
 export function getWxInfo(params) {
 	return new Promise(resolve => {
 		request._get(URL.getWxInfo, params).then(({
-			data
-		}) => {
+																								data
+																							}) => {
 			resolve(data)
 		})
 	})
@@ -25,9 +25,9 @@ export function getWxInfo(params) {
 export function bindUserInfo(params) {
 	return new Promise(resolve => {
 		request._post(URL.bindUserInfo, params).then(({
-			code,
-			data
-		}) => {
+																										code,
+																										data
+																									}) => {
 			if (code === 0) {
 				resolve(data)
 			}
@@ -43,9 +43,9 @@ export function bindUserInfo(params) {
 export function bindWxPhoneNumber(params) {
 	return new Promise(resolve => {
 		request._post(URL.bindWxPhoneNumber, params).then(({
-			data,
-			code
-		}) => {
+																												 data,
+																												 code
+																											 }) => {
 			// 服务端解析微信敏感数据失败
 			if (code === 112) {
 				toast('授权失败，请重试')
@@ -91,7 +91,7 @@ export async function getPhoneNumber(e) {
  */
 export function checkFocusLogin(params) {
 	return new Promise((resolve) => {
-		request._get(URL.checkFocusLogin, params).then(({ data, code }) => {
+		request._get(URL.checkFocusLogin, params).then(({data, code}) => {
 			if (code === 0) {
 				resolve(data)
 			}
@@ -101,9 +101,9 @@ export function checkFocusLogin(params) {
 
 
 // 检查是否刚成为会员需要弹窗
-export const checkBecomeVip=(params)=>{
+export const checkBecomeVip = (params) => {
 	return new Promise((resolve) => {
-		request._get(URL.checkBecomeVip+"?"+params).then(({ data, code }) => {
+		request._get(URL.checkBecomeVip + "?" + params).then(({data, code}) => {
 			if (code === 0) {
 				resolve(data)
 			}

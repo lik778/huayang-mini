@@ -1,6 +1,7 @@
 //app.js
 import { getLocalStorage, setLocalStorage } from './utils/util'
 import { GLOBAL_KEY } from './lib/config'
+import { collectError } from "./api/auth/index"
 
 App({
 	onLaunch: function () {
@@ -45,6 +46,9 @@ App({
 	onHide() {
 		// 小程序退出前清除提醒弹窗记录
 		this.globalData.didSendRemindWithUserId = false
+	},
+	onError(error) {
+		collectError({ error_code: 400, error_message: error })
 	},
 	globalData: {
 		didSendRemindWithUserId: false, // 是否携带userId调用过弹窗接口

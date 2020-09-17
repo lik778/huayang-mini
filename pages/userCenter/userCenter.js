@@ -23,7 +23,7 @@ Page({
     statusHeight: 0,
     noUserInfo: true,
     nodata: true,
-    taskList: [],
+    taskList: '',
     canShow: false,
     processStyle: "width:0%;",
     taskStyle: "",
@@ -64,13 +64,14 @@ Page({
   },
   // 用户授权取消
   authCancelEvent() {
+    this.run()
     this.setData({
       didShowAuth: false
     })
   },
   // 用户确认授权
   authCompleteEvent() {
-    this.initFun()
+    this.run()
     this.setData({
       didShowAuth: false,
       noUserInfo: false
@@ -290,6 +291,31 @@ Page({
       phoneNumber: e.currentTarget.dataset.mobile
     })
   },
+  run() {
+    if (hasUserInfo() && !hasAccountInfo()) {
+      // 有微信信息没有手机号信息
+      this.setData({
+        userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)),
+        noUserInfo: true,
+        nodata: false,
+        taskStyle: "top:-138rpx",
+        functionStyle: "top:-138rpx"
+      })
+    } else if (hasUserInfo() && hasAccountInfo()) {
+      // 有微信信息且有手机号信息
+      this.initFun()
+      this.setData({
+        noUserInfo: false,
+        nodata: false
+      })
+    } else {
+      // nothing
+      this.setData({
+        noUserInfo: true,
+        nodata: true
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -317,29 +343,7 @@ Page({
         selected: 2
       })
     }
-    if (hasUserInfo() && !hasAccountInfo()) {
-      // 有微信信息没有手机号信息
-      this.setData({
-        userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)),
-        noUserInfo: true,
-        nodata: false,
-        taskStyle: "top:-138rpx",
-        functionStyle: "top:-138rpx"
-      })
-    } else if (hasUserInfo() && hasAccountInfo()) {
-      // 有微信信息且有手机号信息
-      this.initFun()
-      this.setData({
-        noUserInfo: false,
-        nodata: false
-      })
-    } else {
-      // nothing
-      this.setData({
-        noUserInfo: true,
-        nodata: true
-      })
-    }
+    this.run()
     this.getTaskList()
     bxPoint("applets_mine", {})
   },

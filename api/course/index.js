@@ -1,5 +1,7 @@
 import request from "../../lib/request"
-import { URL } from "../../lib/config"
+import {
+	URL
+} from "../../lib/config"
 
 
 // 获取结构化练习海报背景图
@@ -102,7 +104,9 @@ export function queryUserHaveClassesInfo(params) {
 // 获取用户已加入的课程
 export function queryUserJoinedClasses(params) {
 	return new Promise(resolve => {
-		request._get(URL.getUserJoinedClasses, params).then(({data}) => {
+		request._get(URL.getUserJoinedClasses, params).then(({
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})
@@ -112,7 +116,9 @@ export function queryUserJoinedClasses(params) {
 // 在个人课程页 - 获取推荐课程
 export function queryRecommendCourseList(params) {
 	return new Promise(resolve => {
-		request._get(URL.getRecommendCourseList, params).then(({data}) => {
+		request._get(URL.getRecommendCourseList, params).then(({
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})
@@ -122,7 +128,9 @@ export function queryRecommendCourseList(params) {
 // 创建当日练习记录
 export function createPracticeRecordInToday(params) {
 	return new Promise(resolve => {
-		request._post(URL.recordPracticeInToday, params).then(({data}) => {
+		request._post(URL.recordPracticeInToday, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -386,6 +394,100 @@ export function getPhoneNumber(params) {
 export function getArticileLink(params) {
 	return new Promise(resolve => {
 		request._get(URL.getArticileLink, params).then(({
+			data
+		}) => {
+			resolve(data)
+		})
+	})
+}
+
+/***********视频课程*************/
+// 获取视频课程列表
+export function getVideoCourseList(params) {
+	return new Promise(resolve => {
+		request._get(URL.getVideoCourseList, params).then(({
+			data
+		}) => {
+			resolve(data)
+		})
+	})
+}
+// 获取视频课程详情
+export function getVideoCourseDetail(params) {
+	return new Promise(resolve => {
+		request._get(URL.getVideoCourseDetail, params).then(({
+			data
+		}) => {
+			resolve(data)
+		})
+	})
+}
+// 判断用户是否已经加入课程
+export function checkJoinVideoCourse(params) {
+	return new Promise(resolve => {
+		request._get(URL.checkJoinVideoCourse, params).then(({
+			data
+		}) => {
+			resolve(data)
+		})
+	})
+}
+
+// 用户加入课程
+export function joinVideoCourse(params) {
+	return new Promise(resolve => {
+		request._post(URL.joinVideoCourse, params).then(({
+			data
+		}) => {
+			resolve(data)
+		})
+	})
+}
+
+// 获取课程分类列表
+export function getVideoTypeList(params) {
+	return new Promise(resolve => {
+		request._get(URL.getVideoTypeList, params).then(({
+			data
+		}) => {
+			resolve(data)
+		})
+	})
+}
+// 练习页获取视频练习列表
+export function getVideoPracticeData(params) {
+	return new Promise(resolve => {
+		request._get(URL.getVideoPracticeData, params).then(({
+			data
+		}) => {
+			resolve(data)
+		})
+	})
+}
+// 记录学习到第几节课程
+export function recordStudy(params) {
+	return new Promise(resolve => {
+		request._post(URL.recordStudy, params).then(({
+			data
+		}) => {
+			resolve(data)
+		})
+	})
+}
+// 获取视频课引流私域文章link
+export function getVideoArticleLink(params) {
+	return new Promise(resolve => {
+		request._get(URL.getVideoArticleLink, params).then(({
+			data
+		}) => {
+			resolve(data)
+		})
+	})
+}
+
+export function liveTotalNum(params) {
+	return new Promise(resolve => {
+		request._get(URL.liveTotalNum, params).then(({
 			data
 		}) => {
 			resolve(data)

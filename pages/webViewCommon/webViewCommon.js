@@ -13,16 +13,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let link = options.link
-    if (options.type === 'link') {
-      link = decodeURIComponent(link)
-    }
+    let link = decodeURIComponent(options.link)
     if (options.isModel === 'true') {
       this.setData({
-        baseUrl: decodeURIComponent(link),
+        baseUrl:link,
         isModel: true
       })
     }
+    console.log(link)
     this.setData({
       link: link
     })
@@ -76,10 +74,9 @@ Page({
   onShareAppMessage: function () {
     if (this.data.isModel) {
       return {
-        title: "这里有好多好课，快来一起变美，变自信",
+        title: "2020上海花样时尚模特大赛投票正在火热进行中",
         path: `/pages/webViewCommon/webViewCommon?link=${this.data.baseUrl}&type=link`
       }
     }
-
   }
 })

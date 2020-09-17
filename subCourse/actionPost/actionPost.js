@@ -11,6 +11,7 @@ import {
 import { GLOBAL_KEY, WX_AUTH_TYPE } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import { increaseExp, queryPunchCardBg, queryPunchCardQrCode, queryUserHaveClassesInfo } from "../../api/course/index"
+import { collectError } from "../../api/auth/index"
 
 Page({
 
@@ -349,6 +350,12 @@ Page({
 					resolve(result)
 				},
 				fail(err) {
+					collectError({
+						page: "actionPost.canvasToTempFilePath", 
+						error_code: 400, 
+						error_message: err.errMsg,
+						systemInfo: getLocalStorage(GLOBAL_KEY.systemParams)
+					})
 					reject(err)
 				}
 			})

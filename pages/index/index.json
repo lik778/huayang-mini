@@ -2,6 +2,7 @@
   "navigationBarTitleText": "花样直播",
   "usingComponents": {
     "subscribe": "plugin-private://wx2b03c6e691cd7370/components/subscribe/subscribe",
-    "van-overlay": "../../miniprogram_npm/@vant/weapp/overlay/index"
+    "van-overlay": "../../miniprogram_npm/@vant/weapp/overlay/index",
+    "authModule": "../../components/auth/auth"
   }
 }
