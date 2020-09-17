@@ -62,6 +62,7 @@ Page({
 		bgAudio: null, // 背景音乐播放器
 
 		accordPause: false, // 用户是否手动暂停
+		accordPauseBgAudio: false // 记录是否用户主动暂停背景播放器运行
 	},
 
 	/**
@@ -125,7 +126,14 @@ Page({
 		// 背景音频实例
 		this.data.bgAudio = wx.getBackgroundAudioManager()
 		this.data.bgAudio.onPause(() => {
-			console.log("bgAudio pause 触发")
+			console.log("bgAudio pause 触发", "是否是手动暂停背景播放器 = "+ this.data.accordPauseBgAudio)
+			if (this.data.accordPauseBgAudio) {
+				// 还原主动暂停背景播放器标示
+				this.setData({accordPauseBgAudio: false})
+			} else {
+				// 兼容：部分高版本的iOS设备会自动暂停，检测如果不是用户主动暂停背景播放器播放时自动重启。
+				this.data.bgAudio.play()
+			}
 		})
 		this.data.bgAudio.onStop(() => {
 			this.destroyResource()
@@ -436,6 +444,8 @@ Page({
 			if (this.data.isPlayMainPointAudioPlaying) {
 				this.data.mainPointAudio && this.data.mainPointAudio.pause()
 			}
+			// 记录主动暂停背景播放器
+			this.setData({accordPauseBgAudio: true})
 			this.data.bgAudio.pause()
 			this.data.backgroundMusicAudio.pause()
 		} else {
@@ -475,6 +485,8 @@ Page({
 			audio.src = link
 			audio.onCanplay(() => {
 				if (!this.data.isRunning) {
+					// 记录主动暂停背景播放器
+					this.setData({accordPauseBgAudio: true})
 					audio.pause()
 					this.data.backgroundMusicAudio.pause()
 				}
