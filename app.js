@@ -1,13 +1,6 @@
 //app.js
-import {
-	batchDownloadFiles,
-	batchRemoveSavedFiles,
-	batchSaveFiles,
-	getLocalStorage,
-	setLocalStorage
-} from './utils/util'
+import { getLocalStorage, setLocalStorage } from './utils/util'
 import { GLOBAL_KEY } from './lib/config'
-import { voices_ary } from "./lib/voices"
 import { collectError } from "./api/auth/index"
 
 App({
@@ -29,25 +22,25 @@ App({
 		}
 
 		// 将"口令"包文件至本地缓存文件
-		wx.getSavedFileList({
-			success(res) {
-				if (res.errMsg === "getSavedFileList:ok") {
-					console.log('savedFilesSize = ' + res.fileList.length);
-					// return
-					if (res.fileList.length !== 13) {
-						// 清理所有本地缓存文件
-						batchRemoveSavedFiles(res.fileList).then(() => {
-							// 批量下载"口令"包
-							batchDownloadFiles(voices_ary).then((response) => {
-								batchSaveFiles(response).then((ary) => {
-									console.log(ary);
-								})
-							})
-						})
-					}
-				}
-			}
-		})
+		// wx.getSavedFileList({
+		// 	success(res) {
+		// 		if (res.errMsg === "getSavedFileList:ok") {
+		// 			console.log('savedFilesSize = ' + res.fileList.length);
+		// 			// return
+		// 			if (res.fileList.length !== 13) {
+		// 				// 清理所有本地缓存文件
+		// 				batchRemoveSavedFiles(res.fileList).then(() => {
+		// 					// 批量下载"口令"包
+		// 					batchDownloadFiles(voices_ary).then((response) => {
+		// 						batchSaveFiles(response).then((ary) => {
+		// 							console.log(ary);
+		// 						})
+		// 					})
+		// 				})
+		// 			}
+		// 		}
+		// 	}
+		// })
 	},
 	onUnload() {},
 	onHide() {
