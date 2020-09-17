@@ -126,7 +126,7 @@ Page({
 		// 背景音频实例
 		this.data.bgAudio = wx.getBackgroundAudioManager()
 		this.data.bgAudio.onPause(() => {
-			console.log("bgAudio pause 触发", "是否是手动暂停背景播放器 = "+ this.data.accordPauseBgAudio)
+			console.log("bgAudio pause 触发, 手动暂停背景播放器 ?= "+ this.data.accordPauseBgAudio)
 			if (this.data.accordPauseBgAudio) {
 				// 还原主动暂停背景播放器标示
 				this.setData({accordPauseBgAudio: false})
