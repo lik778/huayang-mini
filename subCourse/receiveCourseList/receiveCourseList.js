@@ -1,4 +1,6 @@
-import { queryFissionList } from "../../api/course/index"
+import { checkFissionTaskStatus, queryFissionList, unlockFissionTask } from "../../api/course/index"
+import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, toast } from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
 
 Page({
 
@@ -7,13 +9,31 @@ Page({
    */
   data: {
     list: [],
+    didShowUnlockAlert: false,
+    didHelped: false, // 当前用户是否已助过力
+    seriesInviteId: 0, // 助力邀请ID
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let {
+      series_invite_id = ''
+    } = options
 
+    // 是否帮别人助力
+    if (series_invite_id) {
+      checkFissionTaskStatus({
+        open_id: getLocalStorage(GLOBAL_KEY.openId),
+        invite_id: series_invite_id
+      }).then((result) => {
+        // 没数据说明未帮该好友助力，展示助力弹窗
+        if (!$notNull(result)) {
+          this.setData({ didShowUnlockAlert: true, seriesInviteId: series_invite_id })
+        }
+      })
+    }
   },
 
   /**
@@ -64,11 +84,20 @@ Page({
   onShareAppMessage: function () {
 
   },
+  // 授权弹窗确认回调
+  authCompleteEvent() {
+    this.setData({didShowAuth: false})
+    // this.handlerHelp()
+  },
+  // 授权弹窗取消回调
+  authCancelEvent() {
+    this.setData({didShowAuth: false})
+  },
   // 跳转至对应课程
   jumpToCourseDetail(e) {
     let {id} = e.currentTarget.dataset.item
 
-    wx.redirectTo({
+    wx.navigateTo({
       url: `/subCourse/videoCourse/videoCourse?videoId=${id}`,
     })
   },
@@ -95,6 +124,22 @@ Page({
         }
       })
       this.setData({list: handledList})
+    })
+  },
+  handlerHelp() {
+    // 检查权限
+    if (!(hasAccountInfo() && hasUserInfo())) {
+      this.setData({didShowAuth: true})
+      return
+    }
+    // 助力解锁
+    unlockFissionTask({
+      open_id: getLocalStorage(GLOBAL_KEY.openId),
+      user_id: getLocalStorage(GLOBAL_KEY.userId),
+      invite_id: this.data.seriesInviteId
+    }).then(() => {
+      this.setData({didShowUnlockAlert: false})
+      toast('助力成功', 1000)
     })
   }
 })

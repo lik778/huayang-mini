@@ -115,7 +115,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: "找到一个好课，请帮我解锁课程，和我一起来学习",
-      path: `/subCourse/videoCourse/videoCourse?videoId=${this.data.taskInfo.kecheng_series_id}&series_invite_id=${this.data.series_invite_id}`
+      path: `/subCourse/receiveCourseList/receiveCourseList?series_invite_id=${this.data.series_invite_id}`
     }
   },
   buy() {

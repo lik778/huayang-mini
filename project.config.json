@@ -212,14 +212,14 @@
 					"id": 20,
 					"name": "subCourse/videoCourse/videoCourse",
 					"pathName": "subCourse/videoCourse/videoCourse",
-					"query": "videoId=30&series_invite_id=2",
+					"query": "videoId=30",
 					"scene": null
 				},
 				{
 					"id": 21,
 					"name": "subCourse/receiveCourseList/receiveCourseList",
 					"pathName": "subCourse/receiveCourseList/receiveCourseList",
-					"query": "",
+					"query": "series_invite_id=2",
 					"scene": null
 				},
 				{

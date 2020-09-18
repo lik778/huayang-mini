@@ -1,28 +1,24 @@
 // subCourse/videoCourse/videoCourse.js
 import {
+  convertToChinaNum,
   getLocalStorage,
-  setLocalStorage,
   hasAccountInfo,
   hasUserInfo,
   payCourse,
-  convertToChinaNum,
-  secondToMinute, toast, $notNull,
+  secondToMinute,
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
-import {
-  checkFocusLogin
-} from "../../api/auth/index"
+import { checkFocusLogin } from "../../api/auth/index"
 import {
   checkJoinVideoCourse,
+  createFissionTask,
+  getVideoArticleLink,
   getVideoCourseDetail,
   joinVideoCourse,
-  recordStudy,
-  getVideoArticleLink, createFissionTask, unlockFissionTask, checkFissionTaskStatus
+  recordStudy
 } from "../../api/course/index"
-import {
-  GLOBAL_KEY,
-  Version
-} from "../../lib/config"
+import { GLOBAL_KEY, Version } from "../../lib/config"
+
 Page({
 
   /**
@@ -47,9 +43,6 @@ Page({
     showVideoCover: true, //是否显示视频播放按钮/封面
     hasLogin: false, //是否登录
     articleLink: '', //引导私域文章地址
-    didShowUnlockAlert: false,
-    didHelped: false, // 当前用户是否已助过力
-    seriesInviteId: 0, // 助力邀请ID
   },
   initFissionTask() {
     createFissionTask({
@@ -132,9 +125,7 @@ Page({
   // 暂停播放
   pause() {
     if (!this.data.closeCover) {
-      this.setData({
-        showVideoCover: true
-      })
+      this.setData({showVideoCover: true})
     }
   },
   // 加入课程
@@ -509,20 +500,6 @@ Page({
       })
     }
     this.checkIsjoined()
-
-    // 是否帮别人助力
-    if (series_invite_id) {
-      checkFissionTaskStatus({
-        open_id: getLocalStorage(GLOBAL_KEY.openId),
-        invite_id: series_invite_id
-      }).then((info) => {
-        // 没数据说明未帮该好友助力，展示助力弹窗
-        if (!$notNull(info)) {
-          this.setData({ didShowUnlockAlert: true, seriesInviteId: series_invite_id })
-        }
-      })
-    }
-
   },
 
   /**
@@ -586,21 +563,5 @@ Page({
       title: this.data.courseData.share_desc,
       path: `/subCourse/videoCourse/videoCourse?videoId=${this.data.courseData.id}`
     }
-  },
-  handlerHelp() {
-    // 检查权限
-    if (!(hasAccountInfo() && hasUserInfo())) {
-      this.setData({didShowAuth: true})
-      return
-    }
-    // 助力解锁
-    unlockFissionTask({
-      open_id: getLocalStorage(GLOBAL_KEY.openId),
-      user_id: getLocalStorage(GLOBAL_KEY.userId),
-      invite_id: this.data.seriesInviteId
-    }).then(() => {
-      this.setData({didShowUnlockAlert: false})
-      toast('助力成功', 1000)
-    })
   }
 })

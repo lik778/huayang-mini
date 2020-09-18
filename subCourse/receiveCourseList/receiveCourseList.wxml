@@ -10,9 +10,23 @@
             <image class="course-image" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600240225NrIMHF.jpg"></image>
               <view class="course-info">
                   <text class="course-title limit-two-line">{{item.name}}</text>
-                  <view class="course-tag"><text>{{item.category==='fitness'?'健身':item.category==='fashion'?'时尚':'静心慢生活'}}</text></view>
                   <text class="price">¥{{item.fission_price}}</text>
               </view>
+        </view>
+    </view>
+
+    <!-- 授权弹窗 -->
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
+    </authModule>
+
+    <!-- 解锁窗口 -->
+    <view class="unlock-alert" wx:if="{{didShowUnlockAlert}}">
+        <view class="unlock-wrap">
+            <view class="unlock-title">{{didHelped ? "提示" : "帮Ta解锁"}}</view>
+            <view class="unlock-content" wx:if="{{didHelped}}">您已帮好友解锁过该课程</view>
+            <view class="unlock-content" wx:if="{{didHelped}}">同一课程仅能帮好友解锁一次</view>
+            <view class="unlock-content" wx:if="{{!didHelped}}">授权以帮你的好友解锁课程</view>
+            <view class="unlock-btn" bindtap="handlerHelp">确定</view>
         </view>
     </view>
 </view>

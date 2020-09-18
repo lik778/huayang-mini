@@ -69,3 +69,46 @@
     font: 36rpx/50rpx PingFangSC;
     color: #CC0000;
 }
+
+.unlock-alert {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    background: rgba(0,0,0,0.3);
+    z-index: 30;
+}
+.unlock-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600rpx;
+    padding: 50rpx 30rpx;
+    box-sizing: border-box;
+    background: white;
+    border-radius: 16rpx;
+}
+.unlock-title {
+    margin-bottom: 50rpx;
+    font: 48rpx/48rpx PingFangSC;
+}
+.unlock-content {
+    font: 40rpx/56rpx PingFangSC;
+}
+.unlock-btn {
+    width: 500rpx;
+    height: 96rpx;
+    margin: 50rpx auto 0;
+    border-radius: 999rpx;
+    box-sizing: border-box;
+    border: 3rpx solid #CC0000;
+    color: #CC0000;
+    font: bold 40rpx/96rpx PingFangSC;
+}
+.unlock-btn:active {
+    opacity: 0.8;
+}
+
