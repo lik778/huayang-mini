@@ -1,4 +1,4 @@
-import { checkFissionTaskStatus, queryFissionList, unlockFissionTask } from "../../api/course/index"
+import { checkFissionTaskStatus, getFissionDetail, queryFissionList, unlockFissionTask } from "../../api/course/index"
 import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, toast } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
 
@@ -17,15 +17,20 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    let {
-      series_invite_id = ''
-    } = options
+  onLoad: async function (options) {
+    let {series_invite_id = ''} = options
 
     // 是否帮别人助力
     if (series_invite_id) {
+
+      let {kecheng_series_invite: taskInfo = {}} = await getFissionDetail({series_invite_id})
+      let userOpenId = getLocalStorage(GLOBAL_KEY.openId)
+
+      // 助力任务的发起人不能是助力人
+      if (taskInfo.open_id === userOpenId) return
+
       checkFissionTaskStatus({
-        open_id: getLocalStorage(GLOBAL_KEY.openId),
+        open_id: userOpenId,
         invite_id: series_invite_id
       }).then((result) => {
         // 没数据说明未帮该好友助力，展示助力弹窗
