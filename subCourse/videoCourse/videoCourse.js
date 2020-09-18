@@ -6,7 +6,7 @@ import {
   hasUserInfo,
   payCourse,
   convertToChinaNum,
-  secondToMinute,
+  secondToMinute, toast, $notNull,
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 import {
@@ -17,7 +17,7 @@ import {
   getVideoCourseDetail,
   joinVideoCourse,
   recordStudy,
-  getVideoArticleLink
+  getVideoArticleLink, createFissionTask, unlockFissionTask, checkFissionTaskStatus
 } from "../../api/course/index"
 import {
   GLOBAL_KEY,
@@ -46,7 +46,25 @@ Page({
     showMore: true, //展示课程列表更多
     showVideoCover: true, //是否显示视频播放按钮/封面
     hasLogin: false, //是否登录
-    articleLink: '' //引导私域文章地址
+    articleLink: '', //引导私域文章地址
+    didShowUnlockAlert: false,
+    didHelped: false, // 当前用户是否已助过力
+    seriesInviteId: 0, // 助力邀请ID
+  },
+  initFissionTask() {
+    createFissionTask({
+      user_id: getLocalStorage(GLOBAL_KEY.userId),
+      open_id: getLocalStorage(GLOBAL_KEY.openId),
+      kecheng_series_id: this.data.courseData.id,
+    }).then((fissionData) => {
+      let self = this
+      wx.navigateTo({
+        url:`/subCourse/invitePage/invitePage?series_invite_id=${fissionData.id}`,
+        success(res) {
+          res.eventChannel.emit('transmitCourseFissionPrice', JSON.stringify({fissionPrice: self.data.courseData.fission_price}))
+        }
+      })
+    })
   },
   // 等级不够关闭弹窗
   openBox() {
@@ -172,13 +190,10 @@ Page({
           }
         })
       }
-
     }
   },
   // 集中处理支付回调
-  backFun({
-    type
-  }) {
+  backFun({type}) {
     if (type === 'fail') {
       this.setData({
         lock: true
@@ -212,12 +227,22 @@ Page({
       if (res.discount_price === -1 && res.price > 0) {
         // 原价出售
         buttonType = 4
+        // 是否有营销活动
+        if (+res.invite_open === 1) {
+          res.fission_price = (+res.price * res.invite_discount / 10000).toFixed(2)
+          buttonType = 9
+        }
       } else if (res.discount_price === 0 && res.price > 0) {
         // 免费且没有等级限制
         buttonType = 1
       } else if (res.discount_price > 0 && res.price > 0) {
         // 收费但有折扣
         buttonType = 3
+        // 是否有营销活动
+        if (+res.invite_open === 1) {
+          res.fission_price = (+res.discount_price * res.invite_discount / 10000).toFixed(2)
+          buttonType = 9
+        }
       } else if (res.price <= 0) {
         // 免费
         if (res.user_grade > 0 && userGrade < res.user_grade) {
@@ -460,7 +485,8 @@ Page({
     let {
       scene,
       source,
-      videoId
+      videoId,
+      series_invite_id = ''
     } = options
 
     // 通过小程序码进入 scene=${source}
@@ -483,6 +509,20 @@ Page({
       })
     }
     this.checkIsjoined()
+
+    // 是否帮别人助力
+    if (series_invite_id) {
+      checkFissionTaskStatus({
+        open_id: getLocalStorage(GLOBAL_KEY.openId),
+        invite_id: series_invite_id
+      }).then((info) => {
+        // 没数据说明未帮该好友助力，展示助力弹窗
+        if (!$notNull(info)) {
+          this.setData({ didShowUnlockAlert: true, seriesInviteId: series_invite_id })
+        }
+      })
+    }
+
   },
 
   /**
@@ -546,5 +586,21 @@ Page({
       title: this.data.courseData.share_desc,
       path: `/subCourse/videoCourse/videoCourse?videoId=${this.data.courseData.id}`
     }
+  },
+  handlerHelp() {
+    // 检查权限
+    if (!(hasAccountInfo() && hasUserInfo())) {
+      this.setData({didShowAuth: true})
+      return
+    }
+    // 助力解锁
+    unlockFissionTask({
+      open_id: getLocalStorage(GLOBAL_KEY.openId),
+      user_id: getLocalStorage(GLOBAL_KEY.userId),
+      invite_id: this.data.seriesInviteId
+    }).then(() => {
+      this.setData({didShowUnlockAlert: false})
+      toast('助力成功', 1000)
+    })
   }
 })

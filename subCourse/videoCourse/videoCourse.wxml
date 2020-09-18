@@ -89,7 +89,7 @@
     <image src="{{item}}" wx:for="{{courseData.detail_pics}}" wx:key="index" mode="widthFix"></image>
   </view>
   <!-- 按钮 -->
-  <view class="button-line" wx:if="{{buttonType!==6}}">
+  <view class="button-line" wx:if="{{buttonType!==6 && buttonType!==9}}">
     <view class="button-one" bindtap="join" wx:if="{{buttonType===1}}">加入课程</view>
     <view class="button-one" bindtap="join" wx:if="{{buttonType===2}}">Lv {{courseData.user_grade}} 等级开启
     </view>
@@ -100,6 +100,16 @@
     <view class="button-one" bindtap="join" wx:if="{{buttonType===4}}">立即加入 ¥{{courseData.price}}</view>
     <view class="button-one" bindtap="join" wx:if="{{buttonType===5}}">恢复练习</view>
     <view class="button-one" bindtap="openToast" wx:if="{{buttonType===8}}">加入课程</view>
+  </view>
+  <view class="button-fission" wx:if="{{buttonType===9}}">
+    <view class="direct-btn" bindtap="join">
+      <text>直接购买</text>
+      <text class="direct-price">¥{{courseData.discount_price}}</text>
+    </view>
+    <view class="fission-btn" bindtap="initFissionTask">
+      <text>请好友助力解锁课程</text>
+      <text class="fission-price">¥{{courseData.fission_price}}</text>
+    </view>
   </view>
   <!-- 分享微信好友 -->
   <view class="share" bindtap="share">
@@ -118,6 +128,16 @@
       <view class="text-01">快去完成任务提升</view>
       <view class="text-01">等级解锁视频吧</view>
       <view class="alert-btn" bindtap="goToTask">去完成</view>
+    </view>
+  </view>
+  <!-- 解锁窗口 -->
+  <view class="unlock-alert" wx:if="{{didShowUnlockAlert}}">
+    <view class="unlock-wrap">
+      <view class="unlock-title">{{didHelped ? "提示" : "帮Ta解锁"}}</view>
+      <view class="unlock-content" wx:if="{{didHelped}}">您已帮好友解锁过该课程</view>
+      <view class="unlock-content" wx:if="{{didHelped}}">同一课程仅能帮好友解锁一次</view>
+      <view class="unlock-content" wx:if="{{!didHelped}}">授权以帮你的好友解锁课程</view>
+      <view class="unlock-btn" bindtap="handlerHelp">确定</view>
     </view>
   </view>
 </view>

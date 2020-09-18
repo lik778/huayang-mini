@@ -6,29 +6,13 @@
     </view>
 
     <view class="section">
-        <view class="course-item">
+        <view class="course-item" wx:for="{{list}}" wx:key="index" bindtap="jumpToCourseDetail" data-item="{{item}}">
             <image class="course-image" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600240225NrIMHF.jpg"></image>
               <view class="course-info">
-                  <text class="course-title">课程名称</text>
-                  <view class="course-tag">时尚</view>
-                  <text class="price">¥99.00</text>
+                  <text class="course-title limit-two-line">{{item.name}}</text>
+                  <view class="course-tag"><text>{{item.category==='fitness'?'健身':item.category==='fashion'?'时尚':'静心慢生活'}}</text></view>
+                  <text class="price">¥{{item.fission_price}}</text>
               </view>
-        </view>
-        <view class="course-item">
-            <image class="course-image" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600240225NrIMHF.jpg"></image>
-            <view class="course-info">
-                <text class="course-title">课程名称</text>
-                <view class="course-tag">时尚</view>
-                <text class="price">¥99.00</text>
-            </view>
-        </view>
-        <view class="course-item">
-            <image class="course-image" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600240225NrIMHF.jpg"></image>
-            <view class="course-info">
-                <text class="course-title">课程名称</text>
-                <view class="course-tag">时尚</view>
-                <text class="price">¥99.00</text>
-            </view>
         </view>
     </view>
 </view>

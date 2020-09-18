@@ -16,6 +16,7 @@
     font: bold 56rpx/80rpx PingFangSC;
 }
 .txt-01 {
+    margin: 0 16rpx;
     font: bold 73rpx/80rpx PingFangSC;
     color: #FFEDBD;
 }
@@ -39,30 +40,43 @@
 }
 .process {
     position: relative;
-    width: 588rpx;
-    margin: 86rpx auto 0;
+    width: 520rpx;
+    margin: 86rpx 0 0 80rpx;
 }
 .line {
-    width: 100%;
-    height: 8rpx;
-    background: #FFEDBD;
+    width: 520rpx;
+    height: 4px;
+    background: #AF0404;
 }
 .line::after {
     content: "";
     width: 100%;
     height: 100%;
-    background: #AF0404;
+}
+.inner-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: inherit;
+    background: #FFEDBD ;
 }
 .dot {
-
+    position: absolute;
+    transform: translate(-11px, -9px);
+    width: 22px;
+    height: 22px;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600323504EWqcWm.jpg") no-repeat center;
+    background-size: cover;
 }
 .process-icon {
     position: absolute;
     top: -44rpx;
-    right: -14rpx;
+    right: -68rpx;
     width: 92rpx;
     height: 88rpx;
     font-size: 0;
+    z-index: 10;
 }
 .no {
     margin-top: 48rpx;
@@ -87,6 +101,19 @@
 }
 .wx-btn:active {
     opacity: 0.98;
+}
+.share-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    width: inherit;
+    height: inherit;
+    background: transparent;
 }
 .wx-icon {
     width: 64rpx;
@@ -125,4 +152,32 @@
     border-radius: 999rpx;
     font-size: 0;
     background: #eee;
+}
+.footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 12rpx;
+    width: 690rpx;
+    height: 96rpx;
+    margin: 0 30rpx;
+    border-radius: 999rpx;
+    color: white;
+    background: #CDCDCD;
+}
+.footer:active {
+    opacity: 0.8;
+}
+.footer.active {
+    background: #CC0000;
+}
+.footer-txt {
+    display: block;
+    margin-bottom: 4rpx;
+    font: 500 40rpx/40rpx PingFangSC;
+}
+.price {
+    font: 32rpx/32rpx PingFangSC;
 }

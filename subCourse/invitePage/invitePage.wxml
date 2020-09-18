@@ -1,7 +1,8 @@
 <view class="invite-page">
    <view class="header">
-       <view class="view-01">已邀请 <text class="txt-01">4</text>人，还差<text class="txt-01">6</text>人</view>
-       <view class="view-02">免费学习课程</view>
+       <view class="view-01" wx:if="{{conclude}}">已成功达成邀请<text class="txt-01">{{alreadyInvitedNo}}</text>人</view>
+       <view class="view-01" wx:else>已邀请<text class="txt-01">{{alreadyInvitedNo}}</text>人，还差<text class="txt-01">{{diffInviteNo}}</text>人</view>
+       <view class="view-02">{{subTitle}}</view>
        <block wx:if="{{conclude}}">
            <view class="conclude-box">
                <image class="done-image" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600236038AYyEBF.jpg"></image>
@@ -11,15 +12,16 @@
        <block wx:else>
            <view class="process">
                <view class="line">
-                   <view class="inner-line"></view>
-                   <view class="dot"></view>
+                   <view class="inner-line" style="width:{{process}}%;"></view>
+                   <view class="dot" style="left:{{process}}%;"></view>
                    <image class="process-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600236038AYyEBF.jpg" mode="aspectFit"></image>
                </view>
-               <view class="no">4/10</view>
            </view>
+           <view class="no">{{alreadyInvitedNo}} / {{total}}</view>
            <view class="wx-btn">
                <image class="wx-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600236774jmQihb.jpg" mode="aspectFit"></image>
                <text>立即邀请</text>
+               <button open-type="share" bind:tap="handleShareTap" class="share-btn"></button>
            </view>
        </block>
    </view>
@@ -30,26 +32,13 @@
             <view class="sub-line"></view>
         </view>
         <view class="invited-user">
-            <view class="invited-user-avatar"></view>
-            <view class="invited-user-avatar"></view>
-            <view class="invited-user-avatar"></view>
-            <view class="invited-user-avatar"></view>
-            <view class="invited-user-avatar"></view>
-            <view class="invited-user-avatar"></view>
-            <view class="invited-user-avatar"></view>
-            <view class="invited-user-avatar"></view>
-            <view class="invited-user-avatar"></view>
-            <view class="invited-user-avatar"></view>
-            <view class="invited-user-avatar"></view>
-            <view class="invited-user-avatar"></view>
-            <view class="invited-user-avatar"></view>
-            <view class="invited-user-avatar"></view>
-            <view class="invited-user-avatar"></view>
-            <image class="invited-user-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600238041eYGDxl.jpg"></image>
+            <image class="invited-user-avatar" wx:for="{{invitedUserAry}}" wx:key="index" src="{{item.avatar}}">
+            </image>
+            <image class="invited-user-avatar" wx-if="{{invitedUserAry.length >= 15}}" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600238041eYGDxl.jpg"></image>
         </view>
     </view>
-    <view class="footer">
-        <text class="footer-txt">6折优惠购（暂未达成）</text>
-        <text class="price">¥41.40</text>
+    <view class="footer {{diffInviteNo === 0 ? 'active' : ''}}" bindtap="buy">
+        <text class="footer-txt">{{btnTitle}}{{diffInviteNo === 0 ? "" : "（暂未达成）"}}</text>
+        <text class="price">¥{{fissionPrice}}</text>
     </view>
 </view>

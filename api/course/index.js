@@ -494,3 +494,52 @@ export function liveTotalNum(params) {
 		})
 	})
 }
+
+export function createFissionTask(params) {
+	return new Promise(resolve => {
+		request._post(URL.fissionCreate, params).then(({data}) => {
+			resolve(data)
+		})
+	})
+}
+
+export function getFissionDetail(params) {
+	return new Promise(resolve => {
+		request._get(URL.fissionDetail, params).then(({data}) => {
+			resolve(data)
+		})
+	})
+}
+
+export function joinFissionTask(params) {
+	return new Promise(resolve => {
+		request._post(URL.fissionJoin, params).then(({data}) => {
+			resolve(data)
+		})
+	})
+}
+
+export function unlockFissionTask(params) {
+	return new Promise(resolve => {
+		request._post(URL.fissionUnlock, params).then(({data}) => {
+			resolve(data)
+		})
+	})
+}
+
+export function checkFissionTaskStatus(params) {
+	return new Promise(resolve => {
+		request._get(URL.fissionJudge, params).then(({data}) => {
+			resolve(data)
+		})
+	})
+}
+
+export function queryFissionList(params) {
+	return new Promise(resolve => {
+		request._get(URL.fissionCourseList, params).then(({data}) => {
+			data = data || []
+			resolve(data)
+		})
+	})
+}

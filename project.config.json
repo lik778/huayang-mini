@@ -21,8 +21,6 @@
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
 		"compileHotReLoad": false,
-		"useMultiFrameRuntime": false,
-		"useApiHook": true,
 		"babelSetting": {
 			"ignore": [],
 			"disablePlugins": [],
@@ -31,6 +29,8 @@
 		"useIsolateContext": true,
 		"useCompilerModule": false,
 		"userConfirmedUseCompilerModuleSwitch": false,
+		"useMultiFrameRuntime": false,
+		"useApiHook": true,
 		"packNpmManually": false,
 		"packNpmRelationList": []
 	},
@@ -212,7 +212,7 @@
 					"id": 20,
 					"name": "subCourse/videoCourse/videoCourse",
 					"pathName": "subCourse/videoCourse/videoCourse",
-					"query": "videoId=5",
+					"query": "videoId=30&series_invite_id=2",
 					"scene": null
 				},
 				{
@@ -220,6 +220,13 @@
 					"name": "subCourse/receiveCourseList/receiveCourseList",
 					"pathName": "subCourse/receiveCourseList/receiveCourseList",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": 22,
+					"name": "subCourse/invitePage/invitePage",
+					"pathName": "subCourse/invitePage/invitePage",
+					"query": "series_invite_id=2",
 					"scene": null
 				}
 			]
