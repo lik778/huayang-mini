@@ -20,7 +20,6 @@ Page({
         isModel: true
       })
     }
-    console.log(link,111)
     this.setData({
       link: link
     })
