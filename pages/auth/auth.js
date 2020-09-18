@@ -175,13 +175,11 @@ Page({
 		let {
 			invite_user_id = "", source = '', redirectPath, redirectType, fromWebView = 0
 		} = options
-		console.log(fromWebView === 0 ? true : false)
 		redirectPath = redirectPath ? redirectPath.replace(/\$/, "?") : ""
 		redirectPath = redirectPath ? redirectPath.replace(/#/ig, "=") : ""
 		if (Number(fromWebView) === 1) {
 			redirectPath = decodeURIComponent(redirectPath)
 		}
-		console.log(redirectPath)
 		this.setData({
 			invite_user_id,
 			redirectPath,
@@ -197,9 +195,20 @@ Page({
 
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 		if ($notNull(accountInfo) && hasUserInfo()) {
-			wx.switchTab({
-				url: '/pages/practice/practice'
-			})
+			if (Number(fromWebView) === 1) {
+				let user_id = getLocalStorage(GLOBAL_KEY.userId)
+				let user_grade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
+				let link = this.data.redirectPath.split("?link=")[1]
+				let rootUrl = '/pages/webViewCommon/webViewCommon?link='
+				link = encodeURIComponent(`${link}&user_id=${user_id}&user_grade=${user_grade}`)
+				wx.navigateTo({
+					url: `${rootUrl}${link}&type=link&isModel=true`,
+				})
+			} else {
+				wx.switchTab({
+					url: '/pages/practice/practice'
+				})
+			}
 			return
 		}
 	},
