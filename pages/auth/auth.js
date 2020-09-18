@@ -1,10 +1,31 @@
-import { wxGetUserInfoPromise } from '../../utils/auth.js'
-import { GLOBAL_KEY, Version } from '../../lib/config.js'
-import { bindUserInfo, bindWxPhoneNumber, checkFocusLogin, getWxInfo } from "../../api/auth/index"
-import { $notNull, getLocalStorage, hasUserInfo, setLocalStorage } from "../../utils/util"
-import { APP_LET_ID } from "../../lib/config"
-import { wxLoginPromise } from "../../utils/auth"
-import { checkUserDidNeedCoopen } from "../../api/course/index"
+import {
+	wxGetUserInfoPromise
+} from '../../utils/auth.js'
+import {
+	GLOBAL_KEY,
+	Version
+} from '../../lib/config.js'
+import {
+	bindUserInfo,
+	bindWxPhoneNumber,
+	checkFocusLogin,
+	getWxInfo
+} from "../../api/auth/index"
+import {
+	$notNull,
+	getLocalStorage,
+	hasUserInfo,
+	setLocalStorage
+} from "../../utils/util"
+import {
+	APP_LET_ID
+} from "../../lib/config"
+import {
+	wxLoginPromise
+} from "../../utils/auth"
+import {
+	checkUserDidNeedCoopen
+} from "../../api/course/index"
 
 Page({
 
@@ -15,6 +36,7 @@ Page({
 		redirectPath: "",
 		redirectType: "redirect",
 		invite_user_id: "",
+		fromWebView: true,
 		didGetPhoneNumber: false,
 		show: false
 	},
@@ -36,7 +58,10 @@ Page({
 			wxLoginPromise()
 				.then(async (code) => {
 					// 用code查询服务端是否有该用户信息，如果有更新本地用户信息，反之从微信获取用户信息保存到服务端
-					let wxOriginUserInfo = await getWxInfo({code, app_id: APP_LET_ID.tx})
+					let wxOriginUserInfo = await getWxInfo({
+						code,
+						app_id: APP_LET_ID.tx
+					})
 					// 缓存openId
 					setLocalStorage(GLOBAL_KEY.openId, wxOriginUserInfo.openid)
 
@@ -53,7 +78,9 @@ Page({
 						}
 						let originUserInfo = await bindUserInfo(params)
 						setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
-						this.setData({show: true})
+						this.setData({
+							show: true
+						})
 					})
 				})
 
@@ -72,7 +99,9 @@ Page({
 		} = e.detail
 
 		// 是否强制手机号授权
-		let didFocusLogin = await checkFocusLogin({app_version: Version})
+		let didFocusLogin = await checkFocusLogin({
+			app_version: Version
+		})
 
 		if (errMsg.includes('ok')) {
 			let open_id = getLocalStorage(GLOBAL_KEY.openId)
@@ -88,17 +117,34 @@ Page({
 				// 是否需要自定义调整页面
 				if (this.data.redirectPath) {
 					if (this.data.redirectType === "redirect") {
-						wx.redirectTo({url: this.data.redirectPath})
+						wx.redirectTo({
+							url: this.data.redirectPath
+						})
 					} else if (this.data.redirectType === "switch") {
-						wx.switchTab({url: this.data.redirectPath})
+						wx.switchTab({
+							url: this.data.redirectPath
+						})
+					} else if (!this.data.fromWebView) {
+						let user_id = getLocalStorage(GLOBAL_KEY.userId)
+						let user_grade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
+						let link = this.data.redirectPath.split("?link=")[1]
+						let rootUrl = '/pages/webViewCommon/webViewCommon?link='
+						link = encodeURIComponent(`${link}&user_id=${user_id}&user_grade=${user_grade}`)
+						wx.navigateTo({
+							url: `${rootUrl}${link}&type=link&isModel=true`,
+						})
 					} else {
-						wx.navigateTo({url: this.data.redirectPath})
+						wx.navigateTo({
+							url: this.data.redirectPath
+						})
 					}
 					return
 				}
 
 				// 判断用户是否需要引导加课程
-				checkUserDidNeedCoopen({user_id: originAccountInfo.id}).then((data) => {
+				checkUserDidNeedCoopen({
+					user_id: originAccountInfo.id
+				}).then((data) => {
 					// 1=>需要引导，2=>不需要引导
 					if (+data === 1) {
 						wx.navigateTo({
@@ -126,14 +172,19 @@ Page({
 	 * Lifecycle function--Called when page load
 	 */
 	onLoad: function (options) {
-		let {invite_user_id = "", source = '', redirectPath, redirectType} = options
-
+		let {
+			invite_user_id = "", source = '', redirectPath, redirectType, fromWebView = 0
+		} = options
 		redirectPath = redirectPath ? redirectPath.replace(/\$/, "?") : ""
 		redirectPath = redirectPath ? redirectPath.replace(/#/ig, "=") : ""
+		if (Number(fromWebView) === 1) {
+			redirectPath = decodeURIComponent(redirectPath)
+		}
 		this.setData({
 			invite_user_id,
 			redirectPath,
-			redirectType
+			redirectType,
+			fromWebView: fromWebView === 0 ? true : false
 		})
 		if (invite_user_id) {
 			getApp().globalData.super_user_id = invite_user_id
@@ -144,9 +195,20 @@ Page({
 
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 		if ($notNull(accountInfo) && hasUserInfo()) {
-			wx.switchTab({
-				url: '/pages/practice/practice'
-			})
+			if (Number(fromWebView) === 1) {
+				let user_id = getLocalStorage(GLOBAL_KEY.userId)
+				let user_grade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
+				let link = this.data.redirectPath.split("?link=")[1]
+				let rootUrl = '/pages/webViewCommon/webViewCommon?link='
+				link = encodeURIComponent(`${link}&user_id=${user_id}&user_grade=${user_grade}`)
+				wx.navigateTo({
+					url: `${rootUrl}${link}&type=link&isModel=true`,
+				})
+			} else {
+				wx.switchTab({
+					url: '/pages/practice/practice'
+				})
+			}
 			return
 		}
 	},
@@ -164,13 +226,18 @@ Page({
 	onShow: function () {
 		wxLoginPromise()
 			.then(async (code) => {
-				let originUserInfo = await getWxInfo({code, app_id: APP_LET_ID.tx})
+				let originUserInfo = await getWxInfo({
+					code,
+					app_id: APP_LET_ID.tx
+				})
 				if ($notNull(originUserInfo) && originUserInfo.nickname) {
 					// 缓存openId、userInfo
 					setLocalStorage(GLOBAL_KEY.openId, originUserInfo.openid)
 					setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
 					// 用户已完成微信授权，引导用户手机号授权
-					this.setData({didGetPhoneNumber: true})
+					this.setData({
+						didGetPhoneNumber: true
+					})
 				}
 			})
 			.catch((error) => {
@@ -188,8 +255,7 @@ Page({
 	/**
 	 * Lifecycle function--Called when page unload
 	 */
-	onUnload: function () {
-	},
+	onUnload: function () {},
 
 	/**
 	 * Page event handler function--Called when user drop down

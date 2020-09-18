@@ -1,5 +1,8 @@
 //app.js
-import { getLocalStorage, setLocalStorage } from './utils/util'
+import {
+	getLocalStorage,
+	setLocalStorage
+} from './utils/util'
 import { GLOBAL_KEY } from './lib/config'
 import { collectError } from "./api/auth/index"
 
