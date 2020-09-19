@@ -24,7 +24,7 @@ Page({
       // 通过activity_id判断是大赛banner解决分享问题
       let user_id = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id
       let user_grade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
-      if (link.indexOf("activity_id=") !== -1) {
+      if (link.indexOf("activity_id=") !== -1 && !options.isModel) {
         link += `&user_id=${user_id}&user_grade=${user_grade}`
       }
       this.setData({
