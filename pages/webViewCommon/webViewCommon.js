@@ -1,4 +1,10 @@
 // pages/webViewCommon/webViewCommon.js
+import {
+  getLocalStorage
+} from "../../utils/util"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 Page({
 
   /**
@@ -16,12 +22,17 @@ Page({
     let link = decodeURIComponent(options.link)
     if (options.isModel === 'true' || link.indexOf("activity_id=") !== -1) {
       // 通过activity_id判断是大赛banner解决分享问题
+      let user_id = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id
+      let user_grade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
+      if (link.indexOf("activity_id=") !== -1) {
+        link += `&user_id=${user_id}&user_grade=${user_grade}`
+      }
       this.setData({
         baseUrl: link,
         isModel: true
       })
     }
-    
+    console.log(link)
     this.setData({
       link: link
     })
