@@ -1,6 +1,6 @@
 <!--pages/auth/auth.wxml-->
 <view class="auth">
-    <view wx:if="{{fromWebView}}" class="ss">
+    <view wx:if="{{fromWebView}}">
         <naviBar title="" forceGoBackIndex="{{true}}"></naviBar>
     </view>
     <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596864989XYMBIc.jpg" class="logo"></image>
