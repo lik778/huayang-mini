@@ -14,12 +14,14 @@ Page({
    */
   onLoad: function (options) {
     let link = decodeURIComponent(options.link)
-    if (options.isModel === 'true') {
+    if (options.isModel === 'true' || link.indexOf("activity_id=") !== -1) {
+      // 通过activity_id判断是大赛banner解决分享问题
       this.setData({
-        baseUrl:link,
+        baseUrl: link,
         isModel: true
       })
     }
+    
     this.setData({
       link: link
     })
