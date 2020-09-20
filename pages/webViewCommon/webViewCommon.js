@@ -42,13 +42,12 @@ Page({
       if (link.indexOf("activity_id=") !== -1 && !options.isModel) {
         link += `&user_id=${user_id}&user_grade=${user_grade}`
       }
-      console.log(link, 22)
       this.setData({
         baseUrl: encodeURIComponent(link),
         isModel: true
       })
     }
-    console.log(link, 33)
+    console.log(link)
     this.setData({
       link: link
     })
