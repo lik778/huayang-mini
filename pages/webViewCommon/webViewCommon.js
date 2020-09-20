@@ -20,15 +20,30 @@ Page({
    */
   onLoad: function (options) {
     let link = decodeURIComponent(options.link)
+    if (!getLocalStorage(GLOBAL_KEY.accountInfo)) {
+      // 处理webview没授权时候
+      let authLink = "/pages/webViewCommon/webViewCommon?link=" + link
+      authLink = encodeURIComponent(authLink)
+      if (link.indexOf("activity_id=") !== -1 && !options.isModel) {
+        wx.navigateTo({
+          url: `/pages/auth/auth?redirectPath=${authLink}&fromWebView=1`,
+        })
+      } else {
+        wx.navigateTo({
+          url: `/pages/auth/auth?redirectPath=${authLink}&fromWebView=1`,
+        })
+      }
+    }
     if (options.isModel === 'true' || link.indexOf("activity_id=") !== -1) {
       // 通过activity_id判断是大赛banner解决分享问题
       let user_id = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id
+
       let user_grade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
       if (link.indexOf("activity_id=") !== -1 && !options.isModel) {
         link += `&user_id=${user_id}&user_grade=${user_grade}`
       }
       this.setData({
-        baseUrl: link,
+        baseUrl: encodeURIComponent(link),
         isModel: true
       })
     }
