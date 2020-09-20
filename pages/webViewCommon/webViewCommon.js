@@ -33,6 +33,7 @@ Page({
           url: `/pages/auth/auth?redirectPath=${authLink}&fromWebView=1`,
         })
       }
+      return
     }
     if (options.isModel === 'true' || link.indexOf("activity_id=") !== -1) {
       // 通过activity_id判断是大赛banner解决分享问题
@@ -41,6 +42,9 @@ Page({
       if (link.indexOf("activity_id=") !== -1 && !options.isModel) {
         if (link.indexOf("user_id=") === -1) {
           link += `&user_id=${user_id}&user_grade=${user_grade}`
+        } else {
+          let link1 = link.split("&user_id")[0]
+          link = link1 + `&user_id=${user_id}&user_grade=${user_grade}`
         }
       }
       this.setData({
@@ -48,7 +52,7 @@ Page({
         isModel: true
       })
     }
-    console.log(link)
+    // console.log(link)
     this.setData({
       link: link
     })

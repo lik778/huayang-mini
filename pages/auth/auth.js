@@ -130,11 +130,12 @@ Page({
 						let link = this.data.redirectPath.split("?link=")[1]
 						let rootUrl = '/pages/webViewCommon/webViewCommon?link='
 						if (link.indexOf("user_id") !== -1) {
-							link = encodeURIComponent(link)
+							let link1=link.split("&user_id")[0]
+							link1+=`&user_id=${user_id}&user_grade=${user_grade}`
+							link = encodeURIComponent(link1)
 						} else {
 							link = encodeURIComponent(`${link}&user_id=${user_id}&user_grade=${user_grade}`)
 						}
-						console.log(this.data.redirectPath.split("?link=")[1], "auth1")
 						wx.navigateTo({
 							url: `${rootUrl}${link}&type=link&isModel=true`,
 						})
