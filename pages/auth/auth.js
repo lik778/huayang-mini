@@ -129,7 +129,12 @@ Page({
 						let user_grade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
 						let link = this.data.redirectPath.split("?link=")[1]
 						let rootUrl = '/pages/webViewCommon/webViewCommon?link='
-						link = encodeURIComponent(`${link}&user_id=${user_id}&user_grade=${user_grade}`)
+						if (link.indexOf("user_id") !== -1) {
+							link = encodeURIComponent(link)
+						} else {
+							link = encodeURIComponent(`${link}&user_id=${user_id}&user_grade=${user_grade}`)
+						}
+						console.log(this.data.redirectPath.split("?link=")[1], "auth1")
 						wx.navigateTo({
 							url: `${rootUrl}${link}&type=link&isModel=true`,
 						})
