@@ -1,7 +1,7 @@
 <view class="receive-course-list">
     <view class="tab-bar" style="padding-top:{{statusBarHeight}}px;">
         <image class="tar-arrow" bindtap="goBack" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600666720nZPnxO.jpg"></image>
-        <text>邀请好友</text>
+        <text>课程免费领</text>
     </view>
     <view class="header">
         <view class="txt-01">「精品好课免费领取」</view>
@@ -15,9 +15,9 @@
               <view class="course-info">
                   <text class="course-title limit-two-line">{{item.name}}</text>
                   <view class="course-tag"><text class="{{item.category}}">{{item.category==='fitness'?'健身':item.category==='fashion'?'时尚':'静心慢生活'}}</text></view>
-                  <view class="price">
-                      <text class="{{item.fission_price == 0 ? 'free' : ''}}">¥{{item.fission_price}}</text>
-                      <text class="free-txt" wx:if="{{item.fission_price == 0}}">邀请好友助力免费学</text>
+                  <view class="price limit-one-line">
+                      <text class="free">¥{{item.price}}</text>
+                      <text class="free-txt">{{item.tipsText}}</text>
                   </view>
               </view>
         </view>

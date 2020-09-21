@@ -147,14 +147,16 @@ Page({
         payCourse({
           id: res.id,
           name: '加入视频课程'
-        }).then(res => {
+        })
+          .then(res => {
           // 设置顶部标题
           if (res.errMsg === "requestPayment:ok") {
             this.backFun({type: "success"})
           } else {
             this.backFun({type: "fail"})
           }
-        }).catch(err => {
+        })
+          .catch(err => {
           this.backFun({type: "fail"})
         })
       }
@@ -170,10 +172,16 @@ Page({
         duration: 2000
       })
     } else {
+      let self = this
       wx.showToast({
         title: '加入成功',
         icon: "success",
-        duration: 2000
+        duration: 2000,
+        success() {
+          setTimeout(() => {
+            wx.redirectTo({url: `/subCourse/videoCourse/videoCourse?videoId=${self.data.taskInfo.kecheng_series_id}`})
+          }, 2000)
+        }
       })
     }
   },
@@ -187,9 +195,9 @@ Page({
         total: taskInfo.invite_count,
         alreadyInvitedNo: taskInfo.current_count,
         diffInviteNo: parseInt(taskInfo.invite_count - taskInfo.current_count),
-        subTitle: taskInfo.invite_discount > 0 ? `${parseInt(taskInfo.invite_discount / 10)}折学习课程` : "免费学习课程",
-        btnTitle: taskInfo.invite_discount > 0 ? `${parseInt(taskInfo.invite_discount / 10)}折优惠购` : "加入课程",
-        process: parseInt(taskInfo.current_count / taskInfo.invite_count * 100),
+        subTitle: taskInfo.invite_discount > 0 ? `${(taskInfo.invite_discount / 10)}折学习课程` : "免费学习课程",
+        btnTitle: taskInfo.invite_discount > 0 ? `${(taskInfo.invite_discount / 10)}折优惠购` : "加入课程",
+        process: (taskInfo.current_count / taskInfo.invite_count * 100),
         conclude: +taskInfo.current_count === +taskInfo.invite_count
       })
     })

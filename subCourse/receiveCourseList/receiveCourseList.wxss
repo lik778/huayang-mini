@@ -9,7 +9,7 @@
     align-items: center;
     height: 44px;
     line-height: 44px;
-    position: fixed;
+    position: absolute;
     width: 100vw;
     left: 0;
     right: 0;

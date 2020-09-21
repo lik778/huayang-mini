@@ -95,7 +95,7 @@
   width: 440rpx;
   height: 96rpx;
   border-radius: 999rpx;
-  font: 500 40rpx/40rpx PingFangSC;
+  font: 500 36rpx/40rpx PingFangSC;
   background: #CC0000;
 }
 

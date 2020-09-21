@@ -245,7 +245,7 @@ Page({
             res.fission_price = (+res.price * res.invite_discount / 10000).toFixed(2)
             buttonType = ButtonType.fissionAndCountLimitAndDiscountLimit
           }
-          res.discountNo = (res.invite_discount / 10).toFixed(0)
+          res.discountNo = (res.invite_discount / 10)
         }
       } else if (res.discount_price === 0 && res.price > 0) {
         // 免费且没有等级限制
@@ -268,7 +268,7 @@ Page({
             res.fission_price = (+res.discount_price * res.invite_discount / 10000).toFixed(2)
             buttonType = ButtonType.fissionAndCountLimitAndDiscountLimit
           }
-          res.discountNo = (res.invite_discount / 10).toFixed(0)
+          res.discountNo = (res.invite_discount / 10)
         }
       } else if (res.price <= 0) {
         // 免费
