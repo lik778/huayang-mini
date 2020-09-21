@@ -70,12 +70,6 @@
       ]
     },
     {
-      "root": "competition",
-      "pages": [
-        "performance/performance"
-      ]
-    },
-    {
       "root": "subMall",
       "pages": [
         "detail/detail",
