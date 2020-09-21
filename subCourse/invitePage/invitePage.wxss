@@ -3,6 +3,29 @@
     background: white;
     color: white;
 }
+.tab-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 44px;
+    line-height: 44px;
+    position: fixed;
+    width: 100vw;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    color: white;
+}
+.tar-arrow {
+    position: absolute;
+    left: 8px;
+    width: 31px;
+    height: 31px;
+}
+.tar-arrow:active {
+    opacity: 0.8;
+}
 .header {
     position: relative;
     padding-top: 178rpx;
@@ -177,7 +200,4 @@
     display: block;
     margin-bottom: 4rpx;
     font: 500 40rpx/40rpx PingFangSC;
-}
-.price {
-    font: 32rpx/32rpx PingFangSC;
 }

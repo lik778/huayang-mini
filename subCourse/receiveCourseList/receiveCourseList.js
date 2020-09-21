@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    statusBarHeight: 0,
     list: [],
     didShowUnlockAlert: false,
     didHelped: false, // 当前用户是否已助过力
@@ -47,6 +48,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    this.setData({statusBarHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight})
     this.queryList()
   },
 
@@ -91,6 +93,14 @@ Page({
   onShareAppMessage: function () {
 
   },
+  goBack() {
+    let historyRoute = getCurrentPages()
+    if (historyRoute.length > 1) {
+      wx.navigateBack()
+    } else {
+      wx.switchTab({url: "/pages/discovery/discovery"})
+    }
+  },
   // 授权弹窗确认回调
   authCompleteEvent() {
     this.setData({didShowAuth: false})
@@ -117,7 +127,7 @@ Page({
           if (+res.invite_open === 1) {
             res.fission_price = (+res.price * res.invite_discount / 10000).toFixed(2)
           }
-        } else if (res.discount_price > 0 && res.price > 0) {
+        } else if (res.discount_price >= 0 && res.price > 0) {
           // 收费但有折扣
           // 是否有营销活动
           if (+res.invite_open === 1) {

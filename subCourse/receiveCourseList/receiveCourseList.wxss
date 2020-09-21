@@ -3,6 +3,30 @@
     position: relative;
 }
 
+.tab-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 44px;
+    line-height: 44px;
+    position: fixed;
+    width: 100vw;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    color: white;
+}
+.tar-arrow {
+    position: absolute;
+    left: 8px;
+    width: 31px;
+    height: 31px;
+}
+.tar-arrow:active {
+    opacity: 0.8;
+}
+
 .header {
     overflow: hidden;
     height: 736rpx;
@@ -60,14 +84,30 @@
 .course-tag > text {
     box-sizing: border-box;
     padding: 10rpx 20rpx;
-    border-radius: 48rpx 4rpx 48rpx 4rpx;
+    border-radius: 24rpx 2rpx 24rpx 2rpx;
     font: 28rpx/28rpx PingFangSC;
+    background: #CAE8D4;
+    color: #0C5244;
+}
+.course-tag > text.fitness {
+    background: #F5CDC0;
+    color: #722911;
+}
+.course-tag > text.fashion {
     background: #F0E5D4;
     color: #69440D;
 }
+
 .price {
-    font: 36rpx/50rpx PingFangSC;
+    font: 32rpx/44rpx PingFangSC;
     color: #CC0000;
+}
+.free {
+    text-decoration: line-through;
+    color: rgba(0,0,0,0.5)
+}
+.free-txt {
+    margin-left: 20rpx;
 }
 
 .unlock-alert {
@@ -111,4 +151,3 @@
 .unlock-btn:active {
     opacity: 0.8;
 }
-

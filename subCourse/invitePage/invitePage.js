@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    statusBarHeight: 0,
     conclude: false, // 用户是否已经完成邀请任务
     series_invite_id: 0,
     taskInfo: {},
@@ -60,7 +61,7 @@ Page({
 
     let self = this
     eventChannel.on("transmitCourseFissionPrice", function (data) {
-      let {fissionPrice} = JSON.parse(data)
+      let {fissionPrice = 0} = JSON.parse(data)
       self.setData({ fissionPrice })
     })
 
@@ -71,7 +72,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    this.setData({statusBarHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight})
   },
 
   /**
@@ -116,6 +117,14 @@ Page({
     return {
       title: "找到一个好课，请帮我解锁课程，和我一起来学习",
       path: `/subCourse/receiveCourseList/receiveCourseList?series_invite_id=${this.data.series_invite_id}`
+    }
+  },
+  goBack() {
+    let historyRoute = getCurrentPages()
+    if (historyRoute.length > 1) {
+      wx.navigateBack()
+    } else {
+      wx.switchTab({url: "/pages/discovery/discovery"})
     }
   },
   buy() {
