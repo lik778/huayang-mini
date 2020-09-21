@@ -108,6 +108,15 @@
     </view>
     <view class="fission-btn" bindtap="initFissionTask">
       <text>请好友助力解锁课程</text>
+    </view>
+  </view>
+  <view class="button-fission" wx:if="{{buttonType===10}}">
+    <view class="direct-btn" bindtap="join">
+      <text>直接购买</text>
+      <text class="direct-price">¥{{courseData.discount_price}}</text>
+    </view>
+    <view class="fission-btn" bindtap="initFissionTask">
+      <text>请好友助力{{courseData.discountNo}}折优惠购</text>
       <text class="fission-price">¥{{courseData.fission_price}}</text>
     </view>
   </view>

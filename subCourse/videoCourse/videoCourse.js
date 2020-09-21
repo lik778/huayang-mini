@@ -19,6 +19,17 @@ import {
 } from "../../api/course/index"
 import { GLOBAL_KEY, Version } from "../../lib/config"
 
+const ButtonType = {
+  freeAndNoLevelLimit: 1, // 免费且没有等级限制
+  freeAndLevelLimit: 2, // 免费且有等级限制
+  chargeAndDiscounts: 3, // 收费但有优惠
+  originPrice: 4, // 原价出售
+  restore: 5, // 恢复练习
+  normal: 6, // 正常状态
+  fissionAndCountLimitAndFreeDiscount: 9, // 营销活动 & 需要助力 & 0折
+  fissionAndCountLimitAndDiscountLimit: 10, // 营销活动 & 需要助力 & N折（N>0）
+}
+
 Page({
 
   /**
@@ -43,6 +54,7 @@ Page({
     showVideoCover: true, //是否显示视频播放按钮/封面
     hasLogin: false, //是否登录
     articleLink: '', //引导私域文章地址
+    didResetDiscountPrice: false, // 是否重置优惠价格
   },
   initFissionTask() {
     createFissionTask({
@@ -208,7 +220,7 @@ Page({
     getVideoCourseDetail({
       series_id: this.data.videoId
     }).then(res => {
-      let buttonType = 1
+      let buttonType = ButtonType.freeAndNoLevelLimit
       let showMore = false
       let showMoreAll = false
       let videoListAll = null
@@ -217,32 +229,58 @@ Page({
       res.detail_pics = res.detail_pics.split(",")
       if (res.discount_price === -1 && res.price > 0) {
         // 原价出售
-        buttonType = 4
+        buttonType = ButtonType.originPrice
         // 是否有营销活动
         if (+res.invite_open === 1) {
-          res.fission_price = (+res.price * res.invite_discount / 10000).toFixed(2)
-          buttonType = 9
+          if (res.invite_count > 0 && +res.invite_discount === 0) {
+            // 邀请人数不为0 & 优惠价格为0
+            buttonType = ButtonType.fissionAndCountLimitAndFreeDiscount
+          } else if (+res.invite_count === 0 && res.invite_discount > 0) {
+            // 邀请人数为0 & 优惠价格不为0
+            res.discount_price = (+res.price * res.invite_discount / 10000).toFixed(2)
+            buttonType = ButtonType.chargeAndDiscounts
+            this.setData({didResetDiscountPrice: true})
+          } else if (res.invite_count > 0 && res.invite_discount > 0) {
+            // 邀请人数不为0 & 优惠折扣不为0
+            res.fission_price = (+res.price * res.invite_discount / 10000).toFixed(2)
+            buttonType = ButtonType.fissionAndCountLimitAndDiscountLimit
+          }
+          res.discountNo = (res.invite_discount / 10).toFixed(0)
         }
       } else if (res.discount_price === 0 && res.price > 0) {
         // 免费且没有等级限制
-        buttonType = 1
+        buttonType = ButtonType.freeAndNoLevelLimit
       } else if (res.discount_price > 0 && res.price > 0) {
         // 收费但有折扣
-        buttonType = 3
+        buttonType = ButtonType.chargeAndDiscounts
         // 是否有营销活动
         if (+res.invite_open === 1) {
-          res.fission_price = (+res.discount_price * res.invite_discount / 10000).toFixed(2)
-          buttonType = 9
+          if (res.invite_count > 0 && +res.invite_discount === 0) {
+            // 邀请人数不为0 & 优惠价格为0
+            buttonType = ButtonType.fissionAndCountLimitAndFreeDiscount
+          } else if (+res.invite_count === 0 && res.invite_discount > 0) {
+            // 邀请人数为0 & 优惠价格不为0
+            res.discount_price = (+res.discount_price * res.invite_discount / 10000).toFixed(2)
+            buttonType = ButtonType.chargeAndDiscounts
+            this.setData({didResetDiscountPrice: true})
+          } else if (res.invite_count > 0 && res.invite_discount > 0) {
+            // 邀请人数不为0 & 优惠折扣不为0
+            res.fission_price = (+res.discount_price * res.invite_discount / 10000).toFixed(2)
+            buttonType = ButtonType.fissionAndCountLimitAndDiscountLimit
+          }
+          res.discountNo = (res.invite_discount / 10).toFixed(0)
         }
       } else if (res.price <= 0) {
         // 免费
         if (res.user_grade > 0 && userGrade < res.user_grade) {
           // 免费但有等级限制
-          buttonType = 2
+          buttonType = ButtonType.freeAndLevelLimit
         }
       }
       res.price = (res.price / 100).toFixed(2)
-      res.discount_price = (res.discount_price / 100).toFixed(2)
+      if (!this.data.didResetDiscountPrice) {
+        res.discount_price = (res.discount_price / 100).toFixed(2)
+      }
       videoListAll = JSON.parse(res.video_detail)
       for (let i in videoListAll) {
         // 处理课程视频长度以及第xx节课
@@ -366,9 +404,9 @@ Page({
           // 加入过
           let buttonType = ""
           if (res.status === 2) {
-            buttonType = 5
+            buttonType = ButtonType.restore
           } else {
-            buttonType = 6
+            buttonType = ButtonType.normal
           }
           this.getVideoDetail(buttonType)
         }

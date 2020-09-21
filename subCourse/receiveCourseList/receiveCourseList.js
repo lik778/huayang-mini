@@ -36,6 +36,8 @@ Page({
         // 没数据说明未帮该好友助力，展示助力弹窗
         if (!$notNull(result)) {
           this.setData({ didShowUnlockAlert: true, seriesInviteId: series_invite_id })
+        } else {
+          this.setData({ didShowUnlockAlert: true, seriesInviteId: series_invite_id, didHelped: true })
         }
       })
     }
@@ -137,14 +139,18 @@ Page({
       this.setData({didShowAuth: true})
       return
     }
-    // 助力解锁
-    unlockFissionTask({
-      open_id: getLocalStorage(GLOBAL_KEY.openId),
-      user_id: getLocalStorage(GLOBAL_KEY.userId),
-      invite_id: this.data.seriesInviteId
-    }).then(() => {
-      this.setData({didShowUnlockAlert: false})
-      toast('助力成功', 1000)
-    })
+
+    if (!this.data.didHelped) {
+      // 助力解锁
+      unlockFissionTask({
+        open_id: getLocalStorage(GLOBAL_KEY.openId),
+        user_id: getLocalStorage(GLOBAL_KEY.userId),
+        invite_id: this.data.seriesInviteId
+      }).then(() => {
+        toast('助力成功', 1000)
+      })
+    }
+    this.setData({didShowUnlockAlert: false})
+
   }
 })
