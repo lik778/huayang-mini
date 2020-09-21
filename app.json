@@ -23,14 +23,12 @@
     "pages/privacy/privacy",
     "pages/service/service",
     "pages/coopen/coopen",
-    "components/levelAlert/levelAlert",
-    "pages/webViewCommon/webViewCommon"
+    "components/levelAlert/levelAlert"
   ],
   "requiredBackgroundModes": [
     "audio"
   ],
-  "subpackages": [
-    {
+  "subpackages": [{
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -72,6 +70,12 @@
       ]
     },
     {
+      "root": "competition",
+      "pages": [
+        "performance/performance"
+      ]
+    },
+    {
       "root": "subMall",
       "pages": [
         "detail/detail",
@@ -88,8 +92,7 @@
   },
   "tabBar": {
     "custom": true,
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/discovery/discovery"
       },
       {
