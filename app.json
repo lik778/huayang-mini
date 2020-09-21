@@ -17,6 +17,7 @@
     "pages/discovery/discovery",
     "pages/practice/practice",
     "pages/userCenter/userCenter",
+    "pages/auth/auth",
     "pages/index/index",
     "pages/mine/mine",
     "pages/mall/mall",

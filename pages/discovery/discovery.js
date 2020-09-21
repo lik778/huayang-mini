@@ -1,31 +1,18 @@
 // pages/ discovery/discovery.js
-import {
-  getLocalStorage,
-  hasAccountInfo,
-  hasUserInfo,
-  setLocalStorage,
-  simpleDurationSimple
-} from "../../utils/util"
+import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage, simpleDurationSimple } from "../../utils/util"
 
 import {
   getActivityList,
   getCampList,
   getFindBanner,
-  getVideoCourseList,
   getShowCourseList,
+  getVideoCourseList,
   liveTotalNum
 } from "../../api/course/index"
-import {
-  GLOBAL_KEY,
-  Version
-} from "../../lib/config"
-import {
-  checkFocusLogin
-} from "../../api/auth/index"
+import { GLOBAL_KEY, Version } from "../../lib/config"
+import { checkFocusLogin } from "../../api/auth/index"
 import bxPoint from "../../utils/bxPoint"
-import {
-  getYouZanAppId
-} from "../../api/mall/index"
+import { getYouZanAppId } from "../../api/mall/index"
 
 Page({
 
@@ -197,6 +184,7 @@ Page({
   // 跳往视频详情页
   toVideoDetail(e) {
     let id = e.currentTarget.dataset.item.id
+    bxPoint("series_discovery_click", {series_id: id}, false)
     wx.navigateTo({
       url: `/subCourse/videoCourse/videoCourse?videoId=${id}`,
     })
