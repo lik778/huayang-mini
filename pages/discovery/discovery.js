@@ -39,6 +39,7 @@ Page({
     campList: null,
     showModelBanner: false,
     didShowAuth: false,
+    isModelLink: true,
     bannerList: null,
     canShow: false,
     courseList: null,
@@ -100,9 +101,16 @@ Page({
     // let baseUrl = `${request.baseUrl}/#/modelCompetition/introduce?activity_id=${activity_id}&user_id=${user_id}&user_grade=${user_grade}`
     let baseUrl = `${this.data.modelBannerLink}&user_id=${user_id}&user_grade=${user_grade}`
     baseUrl = encodeURIComponent(baseUrl)
-    wx.navigateTo({
-      url: `/pages/webViewCommon/webViewCommon?link=${baseUrl}&type=link&isModel=true`,
-    })
+    if (this.data.isModelLink) {
+      wx.navigateTo({
+        url: `/pages/webViewCommon/webViewCommon?link=${baseUrl}&type=link&isModel=true`,
+      })
+    } else {
+      wx.navigateTo({
+        url: this.data.modelBannerLink,
+      })
+    }
+
   },
   // 跳转到模特大赛
   toModelCompetition(e) {
@@ -114,6 +122,7 @@ Page({
     } else {
       this.setData({
         didShowAuth: true,
+        isModelLink: true,
         modelBannerLink: e.currentTarget.dataset.item.link
       })
     }
@@ -231,6 +240,17 @@ Page({
 
   // 处理轮播点击事件
   joinCampFrombanner(e) {
+    if (e.currentTarget.dataset.item.need_auth === 1) {
+      if (!hasUserInfo() || !hasAccountInfo()) {
+        let link = e.currentTarget.dataset.item.link
+        this.setData({
+          didShowAuth: true,
+          modelBannerLink: link,
+          isModelLink: false
+        })
+        return
+      }
+    }
     let {
       link,
       link_type
