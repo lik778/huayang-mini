@@ -69,13 +69,6 @@ Page({
 	onReachBottom: function () {
 
 	},
-
-	/**
-	 * 用户点击右上角分享
-	 */
-	onShareAppMessage: function () {
-
-	},
 	// 帮助好友助力课程
 	async helpFriendGetCourse() {
 		let {series_invite_id = ''} = this.data.options
@@ -175,6 +168,7 @@ Page({
 
 		// 查看邀请进度
 		if (this.data.didUserSelf) {
+			this.setData({didShowUnlockAlert: false})
 			wx.navigateTo({url: `/subCourse/videoCourse/videoCourse?videoId=${this.data.taskInfo.kecheng_series_id}`})
 			return
 		}
