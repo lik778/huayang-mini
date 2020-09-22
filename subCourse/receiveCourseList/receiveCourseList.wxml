@@ -31,9 +31,14 @@
     <view class="unlock-alert" wx:if="{{didShowUnlockAlert}}">
         <view class="unlock-wrap">
             <view class="unlock-title">{{didHelped ? "提示" : "帮Ta解锁"}}</view>
-            <view class="unlock-content" wx:if="{{didHelped}}">您已帮好友解锁过该课程</view>
-            <view class="unlock-content" wx:if="{{didHelped}}">同一课程仅能帮好友解锁一次</view>
-            <view class="unlock-content" wx:if="{{!didHelped}}">授权以帮你的好友解锁课程</view>
+            <block wx:if="{{didUserSelf}}">
+                <view class="unlock-content">立即查看邀请进度</view>
+            </block>
+            <block wx:else>
+                <view class="unlock-content" wx:if="{{didHelped}}">您已帮好友解锁过该课程</view>
+                <view class="unlock-content" wx:if="{{didHelped}}">同一课程仅能帮好友解锁一次</view>
+                <view class="unlock-content" wx:if="{{!didHelped}}">授权以帮你的好友解锁课程</view>
+            </block>
             <view class="unlock-btn" bindtap="handlerHelp">确定</view>
         </view>
     </view>

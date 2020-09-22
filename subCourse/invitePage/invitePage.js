@@ -1,4 +1,4 @@
-import { getFissionDetail, joinFissionTask } from "../../api/course/index"
+import { getFissionDetail, getVideoCourseDetail, joinFissionTask } from "../../api/course/index"
 import { getLocalStorage, hasAccountInfo, hasUserInfo, payCourse } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
 
@@ -11,6 +11,7 @@ Page({
     statusBarHeight: 0,
     conclude: false, // 用户是否已经完成邀请任务
     series_invite_id: 0,
+    videoId: 0,
     taskInfo: {},
     invitedUserAry: [],
     total: 0,
@@ -20,7 +21,8 @@ Page({
     btnTitle: "加入课程",
     process: 0,
     fissionPrice: 0,
-    lock: false
+    lock: false,
+    courseName: "花样好课"
   },
 
   /**
@@ -33,7 +35,8 @@ Page({
       scene,
       invite_user_id = "",
       source,
-      series_invite_id = ""
+      series_invite_id = "",
+      videoId = 0
     } = options
     // 通过小程序码进入 scene=${source}
     if (scene) {
@@ -56,7 +59,7 @@ Page({
       if (source) {
         getApp().globalData.source = source
       }
-      this.setData({series_invite_id})
+      this.setData({series_invite_id, videoId})
     }
 
     let self = this
@@ -65,6 +68,7 @@ Page({
       self.setData({ fissionPrice })
     })
 
+    this.getCourseInfo()
     this.getFissionInfo()
   },
 
@@ -186,6 +190,10 @@ Page({
     }
   },
   handleShareTap() {},
+  getCourseInfo() {
+    getVideoCourseDetail({series_id: this.data.videoId})
+      .then((info) => {this.setData({ courseName: info.name })})
+  },
   getFissionInfo() {
     getFissionDetail({series_invite_id: this.data.series_invite_id}).then((data) => {
       let {kecheng_series_invite: taskInfo = {}, series_invite_user_list: invitedUserAry = []} = data

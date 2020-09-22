@@ -7,20 +7,15 @@
     </view>
   </view>
   <view class="list-main" wx:if="{{videoList.length>0}}">
-    <view class="list-item" wx:for="{{videoList}}" wx:key="index" bindtap="toVideoCourseDetail" data-item="{{item}}">
-      <view class="list-item-left">
-        <image src="{{item.cover_pic}}" mode='aspectFill'></image>
-      </view>
-      <view class="list-item-right">
-        <view class="list-item-right-top">
-          <view class="video-course-name">{{item.name}}</view>
-          <view
-								class="{{item.category==='fitness'?'video-course-type video-course-type-one':item.category==='fashion'?'video-course-type video-course-type-two':'video-course-type video-course-type-three'}}">
-								{{item.category==='fitness'?'健身':item.category==='fashion'?'时尚':'静心慢生活'}}
-							</view>
+    <view class="course-item" wx:for="{{videoList}}" wx:key="index" bindtap="toVideoCourseDetail" data-item="{{item}}">
+      <image class="course-image" src="{{item.cover_pic}}"></image>
+      <view class="course-info">
+        <text class="course-title limit-two-line">{{item.name}}</text>
+        <view class="course-tag"><text class="{{item.category}}">{{item.category==='fitness'?'健身':item.category==='fashion'?'时尚':'静心慢生活'}}</text></view>
+        <view class="price limit-one-line">
+          <text class="free">¥{{item.price}}</text>
+          <text class="free-txt">{{item.tipsText}}</text>
         </view>
-        <view class="list-item-right-bottom" wx:if="{{item.money!=='免费'&&showMoney}}">¥{{item.money}}</view>
-        <view class="list-item-right-bottom" wx:if="{{item.money==='免费'&&showMoney}}">{{item.money}}</view>
       </view>
     </view>
   </view>
