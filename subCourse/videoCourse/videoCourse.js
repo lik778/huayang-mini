@@ -62,12 +62,8 @@ Page({
       open_id: getLocalStorage(GLOBAL_KEY.openId),
       kecheng_series_id: this.data.courseData.id,
     }).then((fissionData) => {
-      let self = this
       wx.navigateTo({
-        url: `/subCourse/invitePage/invitePage?series_invite_id=${fissionData.id}&videoId=${this.data.courseData.id}`,
-        success(res) {
-          res.eventChannel.emit('transmitCourseFissionPrice', JSON.stringify({fissionPrice: self.data.courseData.fission_price}))
-        }
+        url: `/subCourse/invitePage/invitePage?series_invite_id=${fissionData.id}&videoId=${this.data.courseData.id}&fissionPrice=${this.data.courseData.fission_price}`
       })
     })
   },
@@ -141,7 +137,7 @@ Page({
     }
   },
   // 加入课程
-  1() {
+  join() {
     let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo) === undefined ? '' : JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
     let openid = getLocalStorage(GLOBAL_KEY.openId) === undefined ? '' : getLocalStorage(GLOBAL_KEY.openId)
     if (userInfo === '') {
