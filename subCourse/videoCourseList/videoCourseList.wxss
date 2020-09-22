@@ -1,5 +1,4 @@
-/* subCourse/videoCourseList/videoCourseList.wxss */
-
+@import "../../assets/css/common.wxss";
 .type-list {
   display: flex;
   align-items: center;
@@ -50,84 +49,6 @@
   padding-top: 116rpx;
   width: calc(100% - 60rpx);
 }
-
-.list-item {
-  height: 300rpx;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #F2F2F2;
-}
-
-.list-item-right {
-  height: 220rpx;
-  width: calc(100% - 240rpx);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.list-item-right-top {}
-
-.video-course-name {
-  font-size: 32rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: #000000;
-  line-height: 44rpx;
-  text-overflow: -o-ellipsis-lastline;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
-
-.video-course-type {
-  font-size: 28rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  line-height: 28rpx;
-  border-radius: 1px 24rpx 1px 24rpx;
-  padding: 10rpx 20rpx;
-  width: fit-content;
-  margin-top: 20rpx;
-}
-
-.video-course-type-one {
-  color: #69440D;
-  background: rgba(240, 229, 212, 0.8);
-}
-
-.video-course-type-two {
-  color: rgba(114, 41, 17, 1);
-  background: rgba(245, 205, 192, 0.8);
-}
-
-.video-course-type-three {
-  color: rgba(12, 82, 68, 1);
-  background: rgba(202, 232, 212, 0.8);
-}
-
-.list-item-right-bottom {
-  font-size: 36rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: #CC0000;
-  line-height: 50rpx;
-}
-
-.list-item-left {
-  width: 240rpx;
-}
-
-.list-item-left image {
-  width: 220rpx;
-  height: 220rpx;
-  border-radius: 8rpx;
-  vertical-align: bottom;
-}
-
 .list-none {
   display: flex;
   flex-direction: column;
@@ -147,4 +68,63 @@
   color: rgba(0, 0, 0, 0.4);
   line-height: 36rpx;
   padding-left: 24rpx;
+}
+
+
+.course-item {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 30rpx 0;
+  border-bottom: 2rpx solid #F2F2F2;
+}
+.course-item:active {
+  opacity: 0.9;
+}
+.course-image {
+  width: 220rpx;
+  height: 220rpx;
+  font-size: 0;
+  border-radius: 8rpx;
+  margin-right: 24rpx;
+}
+.course-info {
+  width: 446rpx;
+  height: 220rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.course-title {
+  font: 32rpx/44rpx PingFangSC;
+}
+.course-tag {
+}
+.course-tag > text {
+  box-sizing: border-box;
+  padding: 10rpx 20rpx;
+  border-radius: 24rpx 2rpx 24rpx 2rpx;
+  font: 28rpx/28rpx PingFangSC;
+  background: #CAE8D4;
+  color: #0C5244;
+}
+.course-tag > text.fitness {
+  background: #F5CDC0;
+  color: #722911;
+}
+.course-tag > text.fashion {
+  background: #F0E5D4;
+  color: #69440D;
+}
+
+.price {
+  font: 32rpx/44rpx PingFangSC;
+  color: #CC0000;
+}
+.free {
+  text-decoration: line-through;
+  color: rgba(0,0,0,0.5)
+}
+.free-txt {
+  margin-left: 20rpx;
 }

@@ -1,0 +1,56 @@
+<view class="invite-page">
+    <view class="tab-bar" style="padding-top:{{statusBarHeight}}px;">
+        <image class="tar-arrow" bindtap="goBack" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600666720nZPnxO.jpg"></image>
+        <text>邀请好友</text>
+    </view>
+    <view class="header">
+        <view class="view-txt-02 limit-two-line">「 {{courseName}} 」</view>
+        <view class="view-01" wx:if="{{conclude}}">已成功达成邀请<text class="txt-01">{{alreadyInvitedNo}}</text>人
+        </view>
+        <view class="view-01" wx:else>已邀请<text class="txt-01">{{alreadyInvitedNo}}</text>人，还差<text class="txt-01">{{diffInviteNo}}</text>人
+        </view>
+        <view class="view-02">{{subTitle}}</view>
+        <block wx:if="{{conclude}}">
+            <view class="conclude-box">
+                <image class="done-image"
+                       src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600236038AYyEBF.jpg"></image>
+                <text>已完成</text>
+            </view>
+        </block>
+        <block wx:else>
+            <view class="process">
+                <view class="line">
+                    <view class="inner-line" style="width:{{process}}%;"></view>
+                    <view class="dot" style="left:{{process}}%;"></view>
+                    <image class="process-icon"
+                           src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600236038AYyEBF.jpg"
+                           mode="aspectFit"></image>
+                </view>
+            </view>
+            <view class="no">{{alreadyInvitedNo}} / {{total}}</view>
+            <view class="wx-btn">
+                <image class="wx-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600236774jmQihb.jpg"
+                       mode="aspectFit"></image>
+                <text>立即邀请</text>
+                <button open-type="share" bind:tap="handleShareTap" class="share-btn"></button>
+            </view>
+        </block>
+    </view>
+    <view class="section">
+        <view class="view-03">
+            <view class="sub-line"></view>
+            <text>已邀请好友</text>
+            <view class="sub-line"></view>
+        </view>
+        <view class="invited-user">
+            <image class="invited-user-avatar" wx:for="{{invitedUserAry}}" wx:key="index" src="{{item.avatar}}">
+            </image>
+            <image class="invited-user-avatar" wx-if="{{invitedUserAry.length >= 15}}"
+                   src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600238041eYGDxl.jpg"></image>
+        </view>
+    </view>
+    <view class="footer {{diffInviteNo === 0 ? 'active' : ''}}" bindtap="buy">
+        <text class="footer-txt">{{btnTitle}}{{diffInviteNo === 0 ? "" : "（暂未达成）"}}</text>
+        <text class="price" wx:if="{{fissionPrice > 0}}">¥{{fissionPrice}}</text>
+    </view>
+</view>

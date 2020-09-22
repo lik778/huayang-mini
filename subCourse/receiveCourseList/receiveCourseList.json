@@ -1,0 +1,6 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "authModule": "../../components/auth/auth"
+  }
+}

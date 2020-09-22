@@ -1,31 +1,18 @@
 // pages/ discovery/discovery.js
-import {
-  getLocalStorage,
-  hasAccountInfo,
-  hasUserInfo,
-  setLocalStorage,
-  simpleDurationSimple
-} from "../../utils/util"
+import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage, simpleDurationSimple } from "../../utils/util"
 
 import {
   getActivityList,
   getCampList,
   getFindBanner,
-  getVideoCourseList,
   getShowCourseList,
+  getVideoCourseList,
   liveTotalNum
 } from "../../api/course/index"
-import {
-  GLOBAL_KEY,
-  Version
-} from "../../lib/config"
-import {
-  checkFocusLogin
-} from "../../api/auth/index"
+import { GLOBAL_KEY, Version } from "../../lib/config"
+import { checkFocusLogin } from "../../api/auth/index"
 import bxPoint from "../../utils/bxPoint"
-import {
-  getYouZanAppId
-} from "../../api/mall/index"
+import { getYouZanAppId } from "../../api/mall/index"
 
 Page({
 
@@ -173,30 +160,44 @@ Page({
   getVideoCourse() {
     getVideoCourseList({
       limit: 50
-    }).then(res => {
-      res = res || []
-      for (let i in res) {
-        if (res[i].discount_price < 0 && res[i].price <= 0) {
-          res[i].money = '免费'
-        } else if (res[i].discount_price === -1 && res[i].price > 0) {
-          res[i].money = (res[i].price / 100).toFixed(2)
-        } else if (res[i].discount_price > 0 && res[i].price > 0) {
-          res[i].money = (res[i].discount_price / 100).toFixed(2)
-        } else if (res[i].discount_price === 0 && res[i].price > 0) {
-          res[i].money = '免费'
-        } else if (res[i].discount_price === 0 && res[i].price === 0) {
-          res[i].money = '免费'
+    }).then(list => {
+      let handledList = list.map((res) => {
+        res.price = (res.price / 100).toFixed(2)
+        if (res.discount_price === -1 && res.price > 0) {
+          // 原价出售
+          // 是否有营销活动
+          if (+res.invite_open === 1) {
+            res.fission_price = (+res.price * res.invite_discount / 10000).toFixed(2)
+          }
         }
-      }
-      this.getVideoBanner()
-      this.setData({
-        videoList: res
+        else if (res.discount_price >= 0 && res.price > 0) {
+          // 收费但有折扣
+          res.discount_price = (res.discount_price / 100).toFixed(2)
+          // 是否有营销活动
+          if (+res.invite_open === 1) {
+            res.fission_price = (+res.discount_price * res.invite_discount / 10000).toFixed(2)
+          }
+        } else if (+res.discount_price === -1 && +res.price === 0) {
+          res.discount_price = 0
+        }
+
+        // 只显示开启营销活动的数据
+        if (+res.invite_open === 1) {
+          res.tipsText = res.fission_price == 0 ? "邀请好友助力免费学" : `邀请好友助力${(res.invite_discount / 10)}折购`
+        } else {
+          res.tipsText = `¥${res.discount_price == 0 ? "免费" : Number(res.discount_price).toFixed(2)}`
+        }
+
+        return res
       })
+      this.getVideoBanner()
+      this.setData({videoList: handledList})
     })
   },
   // 跳往视频详情页
   toVideoDetail(e) {
     let id = e.currentTarget.dataset.item.id
+    bxPoint("series_discovery_click", {series_id: id}, false)
     wx.navigateTo({
       url: `/subCourse/videoCourse/videoCourse?videoId=${id}`,
     })
