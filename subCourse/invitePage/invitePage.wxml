@@ -4,8 +4,7 @@
         <text>邀请好友</text>
     </view>
     <view class="header">
-        <view class="view-txt-01">正在解锁</view>
-        <view class="view-txt-02 limit-one-line">「{{courseName}}」</view>
+        <view class="view-txt-02 limit-two-line">「 {{courseName}} 」</view>
         <view class="view-01" wx:if="{{conclude}}">已成功达成邀请<text class="txt-01">{{alreadyInvitedNo}}</text>人
         </view>
         <view class="view-01" wx:else>已邀请<text class="txt-01">{{alreadyInvitedNo}}</text>人，还差<text class="txt-01">{{diffInviteNo}}</text>人

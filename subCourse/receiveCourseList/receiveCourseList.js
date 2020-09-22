@@ -89,8 +89,13 @@ Page({
 		// 是否帮别人助力
 		if (series_invite_id) {
 
-			let {kecheng_series_invite: taskInfo = {}} = await getFissionDetail({series_invite_id})
+			let {kecheng_series_invite: taskInfo = {}} = await getFissionDetail({series_invite_id}) || {}
 			let userOpenId = getLocalStorage(GLOBAL_KEY.openId)
+
+			// 没有查到订单数据则不执行后续操作
+			if (!$notNull(taskInfo)) {
+				return
+			}
 
 			this.setData({taskInfo})
 
