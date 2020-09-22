@@ -8,8 +8,7 @@
         <view class="view-txt-02 limit-one-line">「{{courseName}}」</view>
         <view class="view-01" wx:if="{{conclude}}">已成功达成邀请<text class="txt-01">{{alreadyInvitedNo}}</text>人
         </view>
-        <view class="view-01" wx:else>已邀请<text class="txt-01">{{alreadyInvitedNo}}</text>人，还差<text class="txt-01">
-            {{diffInviteNo}}</text>人
+        <view class="view-01" wx:else>已邀请<text class="txt-01">{{alreadyInvitedNo}}</text>人，还差<text class="txt-01">{{diffInviteNo}}</text>人
         </view>
         <view class="view-02">{{subTitle}}</view>
         <block wx:if="{{conclude}}">
