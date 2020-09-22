@@ -1,4 +1,10 @@
-import { checkFissionTaskStatus, getFissionDetail, queryFissionList, unlockFissionTask } from "../../api/course/index"
+import {
+	checkFissionTaskStatus,
+	checkJoinVideoCourse,
+	getFissionDetail,
+	queryFissionList,
+	unlockFissionTask
+} from "../../api/course/index"
 import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, toast } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
 
@@ -17,6 +23,8 @@ Page({
 		seriesInviteId: 0, // 助力邀请ID
 		didUserSelf: false, // 是否是发起人自己
 		fissionPrice: 0,
+		selfTipText: "立即查看邀请进度",
+		didUserHadJoinedVideoCourse: false
 	},
 
 	/**
@@ -70,6 +78,10 @@ Page({
 	onReachBottom: function () {
 
 	},
+	// 关闭助力弹窗
+	cancelUnlockAlert() {
+		this.setData({didShowUnlockAlert: false})
+	},
 	// 帮助好友助力课程
 	async helpFriendGetCourse() {
 		let {series_invite_id = '', fissionPrice = 0} = this.data.options
@@ -84,7 +96,21 @@ Page({
 
 			// 助力任务的发起人不能是助力人
 			if (taskInfo.open_id === userOpenId) {
-				this.setData({didShowUnlockAlert: true, didUserSelf: true})
+				let wantToJoinedCourseInfo = null
+				if (hasAccountInfo() && hasUserInfo()) {
+					wantToJoinedCourseInfo = await checkJoinVideoCourse({kecheng_series_id: this.data.taskInfo.kecheng_series_id})
+				}
+				if ($notNull(wantToJoinedCourseInfo)) {
+					this.setData({
+						selfTipText: "您成功已获取该课程",
+						didUserHadJoinedVideoCourse: $notNull(wantToJoinedCourseInfo),
+					})
+				}
+				this.setData({
+					didShowUnlockAlert: true,
+					didUserSelf: true,
+				})
+
 				return
 			}
 
@@ -142,8 +168,7 @@ Page({
 					if (+res.invite_open === 1) {
 						res.fission_price = (+res.price * res.invite_discount / 10000).toFixed(2)
 					}
-				}
-				else if (res.discount_price >= 0 && res.price > 0) {
+				} else if (res.discount_price >= 0 && res.price > 0) {
 					// 收费但有折扣
 					// 是否有营销活动
 					if (+res.invite_open === 1) {
@@ -160,7 +185,7 @@ Page({
 			this.setData({list: handledList})
 		})
 	},
-	handlerHelp() {
+	async handlerHelp() {
 		// 检查权限
 		if (!(hasAccountInfo() && hasUserInfo())) {
 			this.setData({didShowAuth: true})
@@ -172,7 +197,8 @@ Page({
 			this.setData({didShowUnlockAlert: false})
 
 			// 如果用户自己已经完成了邀请任务，关闭弹窗停留在本页面，反之查看进度
-			if (this.data.taskInfo.current_count >= this.data.taskInfo.invite_count) {
+			if (this.data.didUserHadJoinedVideoCourse) {
+				wx.navigateTo({url: `/subCourse/videoCourse/videoCourse?videoId=${this.data.taskInfo.kecheng_series_id}`})
 			} else {
 				wx.navigateTo({
 					url: `/subCourse/invitePage/invitePage?series_invite_id=${this.data.options.series_invite_id}&videoId=${this.data.taskInfo.kecheng_series_id}&fissionPrice=${this.data.options.fissionPrice}`
