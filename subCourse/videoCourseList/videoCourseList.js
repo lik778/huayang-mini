@@ -1,19 +1,8 @@
 // subCourse/videoCourseList/videoCourseList.js
-import {
-  getVideoTypeList,
-  getVideoCourseList
-} from "../../api/course/index"
-import {
-  checkFocusLogin
-} from "../../api/auth/index"
-import {
-  GLOBAL_KEY,
-  Version
-} from "../../lib/config"
+import { getVideoCourseList, getVideoTypeList } from "../../api/course/index"
+import { checkFocusLogin } from "../../api/auth/index"
+import { Version } from "../../lib/config"
 
-import {
-  getLocalStorage
-} from "../../utils/util"
 Page({
 
   /**
@@ -50,31 +39,44 @@ Page({
       offset: this.data.pageSize.offset,
       limit: this.data.pageSize.limit,
       category: category
-    }).then(res => {
+    }).then(list => {
       let bottomLock = true
-      if (res.length < 10) {
+      if (list.length < 10) {
         bottomLock = false
       }
-      for (let i in res) {
-        if (res[i].discount_price < 0 && res[i].price <= 0) {
-          res[i].money = '免费'
-        } else if (res[i].discount_price === -1 && res[i].price > 0) {
-          res[i].money = (res[i].price / 100).toFixed(2)
-        } else if (res[i].discount_price > 0 && res[i].price > 0) {
-          res[i].money = (res[i].discount_price / 100).toFixed(2)
-        } else if (res[i].discount_price === 0 && res[i].price > 0) {
-          res[i].money = '免费'
-        } else if (res[i].discount_price === 0 && res[i].price === 0) {
-          res[i].money = '免费'
+      let handledList = list.map((res) => {
+        res.price = (res.price / 100).toFixed(2)
+        if (res.discount_price === -1 && res.price > 0) {
+          // 原价出售
+          // 是否有营销活动
+          if (+res.invite_open === 1) {
+            res.fission_price = (+res.price * res.invite_discount / 10000).toFixed(2)
+          }
         }
-      }
+        else if (res.discount_price >= 0 && res.price > 0) {
+          // 收费但有折扣
+          // 是否有营销活动
+          if (+res.invite_open === 1) {
+            res.fission_price = (+res.discount_price * res.invite_discount / 10000).toFixed(2)
+          }
+        }
+
+        // 只显示开启营销活动的数据
+        if (+res.invite_open === 1) {
+          res.tipsText = res.fission_price == 0 ? "邀请好友助力免费学" : `邀请好友助力${(res.invite_discount / 10)}折购`
+        } else {
+          res.tipsText = `¥${res.discount_price.toFixed(2)}`
+        }
+
+        return res
+      })
       if (refresh) {
-        res = res
+        handledList = [...handledList]
       } else {
-        res = this.data.videoList.concat(res)
+        handledList = this.data.videoList.concat(handledList)
       }
       this.setData({
-        videoList: res,
+        videoList: handledList,
         bottomLock: bottomLock
       })
     })
@@ -85,7 +87,6 @@ Page({
       let arr = []
       let keyArr = []
       for (let i in res) {
-        console.log(res)
         arr.push(res[i].value)
         keyArr.push(res[i].key)
       }

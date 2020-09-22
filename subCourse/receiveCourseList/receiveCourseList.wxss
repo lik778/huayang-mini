@@ -1,0 +1,153 @@
+@import "../../assets/css/common.wxss";
+.receive-course-list {
+    position: relative;
+}
+
+.tab-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 44px;
+    line-height: 44px;
+    position: absolute;
+    width: 100vw;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    color: white;
+}
+.tar-arrow {
+    position: absolute;
+    left: 8px;
+    width: 31px;
+    height: 31px;
+}
+.tar-arrow:active {
+    opacity: 0.8;
+}
+
+.header {
+    overflow: hidden;
+    height: 736rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600239587PuCMYp.jpg") no-repeat center;
+    background-size: cover;
+    text-align: center;
+    color: white;
+}
+
+.txt-01 {
+    margin: 226rpx 0 38rpx;
+    font: 600 68rpx/68rpx PingFangSC;
+}
+
+.txt-02 {
+    font: 40rpx/56rpx PingFangSC;
+}
+
+.section {
+    padding: 30rpx;
+    margin-top: -96rpx;
+    border-radius: 40rpx 40rpx 0 0;
+    background: white;
+}
+
+.course-item {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 30rpx 0;
+    border-bottom: 2rpx solid #F2F2F2;
+}
+.course-item:active {
+    opacity: 0.9;
+}
+.course-image {
+    width: 220rpx;
+    height: 220rpx;
+    font-size: 0;
+    border-radius: 8rpx;
+    margin-right: 24rpx;
+}
+.course-info {
+    width: 446rpx;
+    height: 220rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.course-title {
+    font: 32rpx/44rpx PingFangSC;
+}
+.course-tag {
+}
+.course-tag > text {
+    box-sizing: border-box;
+    padding: 10rpx 20rpx;
+    border-radius: 24rpx 2rpx 24rpx 2rpx;
+    font: 28rpx/28rpx PingFangSC;
+    background: #CAE8D4;
+    color: #0C5244;
+}
+.course-tag > text.fitness {
+    background: #F5CDC0;
+    color: #722911;
+}
+.course-tag > text.fashion {
+    background: #F0E5D4;
+    color: #69440D;
+}
+
+.price {
+    font: 32rpx/44rpx PingFangSC;
+    color: #CC0000;
+}
+.free {
+    text-decoration: line-through;
+    color: rgba(0,0,0,0.5)
+}
+.free-txt {
+    margin-left: 20rpx;
+}
+
+.unlock-alert {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    background: rgba(0,0,0,0.3);
+    z-index: 30;
+}
+.unlock-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600rpx;
+    padding: 50rpx 30rpx;
+    box-sizing: border-box;
+    background: white;
+    border-radius: 16rpx;
+}
+.unlock-title {
+    margin-bottom: 50rpx;
+    font: 48rpx/48rpx PingFangSC;
+}
+.unlock-content {
+    font: 40rpx/56rpx PingFangSC;
+}
+.unlock-btn {
+    width: 500rpx;
+    height: 96rpx;
+    margin: 50rpx auto 0;
+    border-radius: 999rpx;
+    box-sizing: border-box;
+    border: 3rpx solid #CC0000;
+    color: #CC0000;
+    font: bold 40rpx/96rpx PingFangSC;
+}
+.unlock-btn:active {
+    opacity: 0.8;
+}

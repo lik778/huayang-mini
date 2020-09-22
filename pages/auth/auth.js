@@ -1,31 +1,11 @@
-import {
-	wxGetUserInfoPromise
-} from '../../utils/auth.js'
-import {
-	GLOBAL_KEY,
-	Version
-} from '../../lib/config.js'
-import {
-	bindUserInfo,
-	bindWxPhoneNumber,
-	checkFocusLogin,
-	getWxInfo
-} from "../../api/auth/index"
-import {
-	$notNull,
-	getLocalStorage,
-	hasUserInfo,
-	setLocalStorage
-} from "../../utils/util"
-import {
-	APP_LET_ID
-} from "../../lib/config"
-import {
-	wxLoginPromise
-} from "../../utils/auth"
-import {
-	checkUserDidNeedCoopen
-} from "../../api/course/index"
+import { wxGetUserInfoPromise } from '../../utils/auth.js'
+import { GLOBAL_KEY, Version } from '../../lib/config.js'
+import { bindUserInfo, bindWxPhoneNumber, checkFocusLogin, getWxInfo } from "../../api/auth/index"
+import { $notNull, getLocalStorage, hasUserInfo, setLocalStorage } from "../../utils/util"
+import { APP_LET_ID } from "../../lib/config"
+import { wxLoginPromise } from "../../utils/auth"
+import { checkUserDidNeedCoopen } from "../../api/course/index"
+import bxPoint from "../../utils/bxPoint"
 
 Page({
 
@@ -78,14 +58,17 @@ Page({
 						}
 						let originUserInfo = await bindUserInfo(params)
 						setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
+						bxPoint("applets_auth_status", {auth_type: "weixin", auth_result: "success"}, false)
 						this.setData({
 							show: true
 						})
+					}).catch(() => {
+						// 用户取消微信授权
+						this.cancel()
+						bxPoint("applets_auth_status", {auth_type: "weixin", auth_result: "fail"}, false)
 					})
 				})
-
 		} catch (error) {
-			console.log('用户取消微信授权')
 		}
 	},
 	/**
@@ -113,7 +96,7 @@ Page({
 					invite_user_id: this.data.invite_user_id
 				})
 				setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
-
+				bxPoint("applets_auth_status", {auth_type: "phone", auth_result: "success"}, false)
 				// 是否需要自定义调整页面
 				if (this.data.redirectPath) {
 					if (this.data.redirectType === "redirect") {
@@ -137,13 +120,7 @@ Page({
 						let user_grade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
 						let link = this.data.redirectPath.split("?link=")[1]
 						let rootUrl = '/pages/webViewCommon/webViewCommon?link='
-						if (link.indexOf("user_id") !== -1) {
-							let link1 = link.split("&user_id")[0]
-							link1 += `&user_id=${user_id}&user_grade=${user_grade}`
-							link = encodeURIComponent(link1)
-						} else {
-							link = encodeURIComponent(`${link}&user_id=${user_id}&user_grade=${user_grade}`)
-						}
+						link = encodeURIComponent(`${link}&user_id=${user_id}&user_grade=${user_grade}`)
 						wx.navigateTo({
 							url: `${rootUrl}${link}&type=link&isModel=true`,
 						})
@@ -172,6 +149,7 @@ Page({
 				})
 			}
 		} else {
+			bxPoint("applets_auth_status", {auth_type: "phone", auth_result: "fail"}, false)
 			if (didFocusLogin) {
 				// 强制授权请继续授权
 			} else {
@@ -270,7 +248,8 @@ Page({
 	/**
 	 * Lifecycle function--Called when page unload
 	 */
-	onUnload: function () {},
+	onUnload: function () {
+	},
 
 	/**
 	 * Page event handler function--Called when user drop down
