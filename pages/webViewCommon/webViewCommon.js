@@ -24,37 +24,27 @@ Page({
       // 处理webview没授权时候
       let authLink = "/pages/webViewCommon/webViewCommon?link=" + link
       authLink = encodeURIComponent(authLink)
-      if (link.indexOf("activity_id=") !== -1 && !options.isModel) {
-        wx.navigateTo({
-          url: `/pages/auth/auth?redirectPath=${authLink}&fromWebView=1`,
-        })
-      } else {
-        wx.navigateTo({
-          url: `/pages/auth/auth?redirectPath=${authLink}&fromWebView=1`,
-        })
-      }
-      return
+      wx.navigateTo({
+        url: `/pages/auth/auth?redirectPath=${authLink}&fromWebView=1`,
+      })
     }
     if (options.isModel === 'true' || link.indexOf("activity_id=") !== -1) {
       // 通过activity_id判断是大赛banner解决分享问题
       let user_id = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id
       let user_grade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
       if (link.indexOf("activity_id=") !== -1 && !options.isModel) {
-        if (link.indexOf("user_id=") === -1) {
-          link += `&user_id=${user_id}&user_grade=${user_grade}`
-        } else {
-          let link1 = link.split("&user_id")[0]
-          link = link1 + `&user_id=${user_id}&user_grade=${user_grade}`
-        }
+        link += `&user_id=${user_id}&user_grade=${user_grade}`
       }
       this.setData({
         baseUrl: encodeURIComponent(link),
         isModel: true
       })
     }
+    console.log(link)
     this.setData({
       link: link
     })
+
   },
 
   /**
