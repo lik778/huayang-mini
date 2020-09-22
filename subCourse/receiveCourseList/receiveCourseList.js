@@ -11,9 +11,11 @@ Page({
 		statusBarHeight: 0,
 		list: [],
 		options: {},
+		taskInfo: {},
 		didShowUnlockAlert: false,
 		didHelped: false, // 当前用户是否已助过力
 		seriesInviteId: 0, // 助力邀请ID
+		didUserSelf: false, // 是否是发起人自己
 	},
 
 	/**
@@ -67,13 +69,6 @@ Page({
 	onReachBottom: function () {
 
 	},
-
-	/**
-	 * 用户点击右上角分享
-	 */
-	onShareAppMessage: function () {
-
-	},
 	// 帮助好友助力课程
 	async helpFriendGetCourse() {
 		let {series_invite_id = ''} = this.data.options
@@ -84,8 +79,13 @@ Page({
 			let {kecheng_series_invite: taskInfo = {}} = await getFissionDetail({series_invite_id})
 			let userOpenId = getLocalStorage(GLOBAL_KEY.openId)
 
+			this.setData({taskInfo})
+
 			// 助力任务的发起人不能是助力人
-			if (taskInfo.open_id === userOpenId) return
+			if (taskInfo.open_id === userOpenId) {
+				this.setData({didShowUnlockAlert: true, didUserSelf: true})
+				return
+			}
 
 			// 用户如果未完全授权，展示助力弹窗
 			if (!(hasAccountInfo() && hasUserInfo())) {
@@ -141,7 +141,8 @@ Page({
 					if (+res.invite_open === 1) {
 						res.fission_price = (+res.price * res.invite_discount / 10000).toFixed(2)
 					}
-				} else if (res.discount_price >= 0 && res.price > 0) {
+				}
+				else if (res.discount_price >= 0 && res.price > 0) {
 					// 收费但有折扣
 					// 是否有营销活动
 					if (+res.invite_open === 1) {
@@ -162,6 +163,13 @@ Page({
 		// 检查权限
 		if (!(hasAccountInfo() && hasUserInfo())) {
 			this.setData({didShowAuth: true})
+			return
+		}
+
+		// 查看邀请进度
+		if (this.data.didUserSelf) {
+			this.setData({didShowUnlockAlert: false})
+			wx.navigateTo({url: `/subCourse/videoCourse/videoCourse?videoId=${this.data.taskInfo.kecheng_series_id}`})
 			return
 		}
 

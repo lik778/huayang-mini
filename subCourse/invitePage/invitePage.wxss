@@ -1,3 +1,4 @@
+@import "../../assets/css/common.wxss";
 .invite-page {
     min-height: 100vh;
     background: white;
@@ -34,6 +35,13 @@
     text-align: center;
     background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600235547rgeTbk.jpg") no-repeat center;
     background-size: cover;
+}
+.view-txt-01 {
+    font: 40rpx/40rpx PingFangSC;
+}
+.view-txt-02 {
+    margin: 30rpx 0 16rpx;
+    font: 500 56rpx/56rpx PingFangSC;
 }
 .view-01 {
     font: bold 56rpx/80rpx PingFangSC;

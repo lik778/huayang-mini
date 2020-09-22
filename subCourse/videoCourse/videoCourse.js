@@ -64,7 +64,7 @@ Page({
     }).then((fissionData) => {
       let self = this
       wx.navigateTo({
-        url:`/subCourse/invitePage/invitePage?series_invite_id=${fissionData.id}`,
+        url: `/subCourse/invitePage/invitePage?series_invite_id=${fissionData.id}&videoId=${this.data.courseData.id}`,
         success(res) {
           res.eventChannel.emit('transmitCourseFissionPrice', JSON.stringify({fissionPrice: self.data.courseData.fission_price}))
         }
@@ -141,7 +141,7 @@ Page({
     }
   },
   // 加入课程
-  join() {
+  1() {
     let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo) === undefined ? '' : JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
     let openid = getLocalStorage(GLOBAL_KEY.openId) === undefined ? '' : getLocalStorage(GLOBAL_KEY.openId)
     if (userInfo === '') {
@@ -244,6 +244,9 @@ Page({
             // 邀请人数不为0 & 优惠折扣不为0
             res.fission_price = (+res.price * res.invite_discount / 10000).toFixed(2)
             buttonType = ButtonType.fissionAndCountLimitAndDiscountLimit
+          } else if (+res.invite_count === 0 && +res.invite_discount === 0) {
+            // 邀请人数为0 & 优惠折扣为0
+            buttonType = ButtonType.freeAndNoLevelLimit
           }
           res.discountNo = (res.invite_discount / 10)
         }
@@ -267,6 +270,9 @@ Page({
             // 邀请人数不为0 & 优惠折扣不为0
             res.fission_price = (+res.discount_price * res.invite_discount / 10000).toFixed(2)
             buttonType = ButtonType.fissionAndCountLimitAndDiscountLimit
+          } else if (+res.invite_count === 0 && +res.invite_discount === 0) {
+            // 邀请人数为0 & 优惠折扣为0
+            buttonType = ButtonType.freeAndNoLevelLimit
           }
           res.discountNo = (res.invite_discount / 10)
         }
