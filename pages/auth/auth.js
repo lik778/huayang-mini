@@ -64,7 +64,6 @@ Page({
 						})
 					}).catch(() => {
 						// 用户取消微信授权
-						this.cancel()
 						bxPoint("applets_auth_status", {auth_type: "weixin", auth_result: "fail"}, false)
 					})
 				})

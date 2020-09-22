@@ -31,7 +31,7 @@
     position: relative;
     padding-top: 178rpx;
     box-sizing: border-box;
-    height: 672rpx;
+    height: 790rpx;
     text-align: center;
     background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600235547rgeTbk.jpg") no-repeat center;
     background-size: cover;

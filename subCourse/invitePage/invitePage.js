@@ -29,14 +29,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const eventChannel = this.getOpenerEventChannel()
-
     let {
       scene,
       invite_user_id = "",
       source,
       series_invite_id = "",
-      videoId = 0
+      videoId = 0,
+      fissionPrice = 0
     } = options
     // 通过小程序码进入 scene=${source}
     if (scene) {
@@ -62,11 +61,7 @@ Page({
       this.setData({series_invite_id, videoId})
     }
 
-    let self = this
-    eventChannel.on("transmitCourseFissionPrice", function (data) {
-      let {fissionPrice = 0} = JSON.parse(data)
-      self.setData({ fissionPrice })
-    })
+    this.setData({ fissionPrice: (+fissionPrice).toFixed(2) })
 
     this.getCourseInfo()
     this.getFissionInfo()
@@ -120,7 +115,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: "找到一个好课，请帮我解锁课程，和我一起来学习",
-      path: `/subCourse/receiveCourseList/receiveCourseList?series_invite_id=${this.data.series_invite_id}`
+      path: `/subCourse/receiveCourseList/receiveCourseList?series_invite_id=${this.data.series_invite_id}&fissionPrice=${this.data.fissionPrice}`
     }
   },
   goBack() {

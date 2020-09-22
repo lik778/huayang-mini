@@ -172,17 +172,20 @@ Page({
         }
         else if (res.discount_price >= 0 && res.price > 0) {
           // 收费但有折扣
+          res.discount_price = (res.discount_price / 100).toFixed(2)
           // 是否有营销活动
           if (+res.invite_open === 1) {
             res.fission_price = (+res.discount_price * res.invite_discount / 10000).toFixed(2)
           }
+        } else if (+res.discount_price === -1 && +res.price === 0) {
+          res.discount_price = 0
         }
 
         // 只显示开启营销活动的数据
         if (+res.invite_open === 1) {
           res.tipsText = res.fission_price == 0 ? "邀请好友助力免费学" : `邀请好友助力${(res.invite_discount / 10)}折购`
         } else {
-          res.tipsText = `¥${res.discount_price.toFixed(2)}`
+          res.tipsText = `¥${res.discount_price == 0 ? "免费" : Number(res.discount_price).toFixed(2)}`
         }
 
         return res
