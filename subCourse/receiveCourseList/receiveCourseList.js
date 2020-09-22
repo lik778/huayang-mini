@@ -16,6 +16,7 @@ Page({
 		didHelped: false, // 当前用户是否已助过力
 		seriesInviteId: 0, // 助力邀请ID
 		didUserSelf: false, // 是否是发起人自己
+		fissionPrice: 0,
 	},
 
 	/**
@@ -71,8 +72,8 @@ Page({
 	},
 	// 帮助好友助力课程
 	async helpFriendGetCourse() {
-		let {series_invite_id = ''} = this.data.options
-
+		let {series_invite_id = '', fissionPrice = 0} = this.data.options
+		this.setData({fissionPrice})
 		// 是否帮别人助力
 		if (series_invite_id) {
 
@@ -169,7 +170,14 @@ Page({
 		// 查看邀请进度
 		if (this.data.didUserSelf) {
 			this.setData({didShowUnlockAlert: false})
-			wx.navigateTo({url: `/subCourse/videoCourse/videoCourse?videoId=${this.data.taskInfo.kecheng_series_id}`})
+
+			// 如果用户自己已经完成了邀请任务，关闭弹窗停留在本页面，反之查看进度
+			if (this.data.taskInfo.current_count >= this.data.taskInfo.invite_count) {
+			} else {
+				wx.navigateTo({
+					url: `/subCourse/invitePage/invitePage?series_invite_id=${this.data.options.series_invite_id}&videoId=${this.data.taskInfo.kecheng_series_id}&fissionPrice=${this.data.options.fissionPrice}`
+				})
+			}
 			return
 		}
 
