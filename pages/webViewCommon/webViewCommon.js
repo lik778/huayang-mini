@@ -27,6 +27,7 @@ Page({
       wx.navigateTo({
         url: `/pages/auth/auth?redirectPath=${authLink}&fromWebView=1`,
       })
+      return
     }
     if (options.isModel === 'true' || link.indexOf("activity_id=") !== -1) {
       // 通过activity_id判断是大赛banner解决分享问题
@@ -40,11 +41,9 @@ Page({
         isModel: true
       })
     }
-    console.log(link)
     this.setData({
       link: link
     })
-
   },
 
   /**
