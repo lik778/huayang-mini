@@ -26,6 +26,7 @@ const ButtonType = {
   originPrice: 4, // 原价出售
   restore: 5, // 恢复练习
   normal: 6, // 正常状态
+  thoughIOSVirtualPay: 8, // 过审核iOS虚拟支付
   fissionAndCountLimitAndFreeDiscount: 9, // 营销活动 & 需要助力 & 0折
   fissionAndCountLimitAndDiscountLimit: 10, // 营销活动 & 需要助力 & N折（N>0）
 }
@@ -358,7 +359,7 @@ Page({
           wx.getSystemInfo({
             success: function (res2) {
               if (res2.platform == 'ios') {
-                buttonStyle = 8
+                buttonStyle = ButtonType.thoughIOSVirtualPay
               }
               _this.setData({
                 courseData: res,
