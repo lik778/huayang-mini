@@ -3,9 +3,13 @@ import {
   GLOBAL_KEY
 } from "../../lib/config"
 import {
+  getUserInfo
+} from "../../api/mine/index"
+import {
   getLocalStorage,
   hasAccountInfo,
-  hasUserInfo
+  hasUserInfo,
+  setLocalStorage
 } from "../../utils/util"
 Page({
 
@@ -17,6 +21,17 @@ Page({
     shareLink: "", //分享地址
   },
 
+  // 确保webview用户信息是最新的
+  getUserSingerInfo() {
+    return new Promise(resolve => {
+      getUserInfo('scene=zhide').then(res => {
+        setLocalStorage(GLOBAL_KEY.accountInfo, res)
+        resolve()
+      })
+    })
+  },
+
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -24,12 +39,14 @@ Page({
     let link = decodeURIComponent(options.link)
     let shareLink = options.link
     if (hasAccountInfo() && hasUserInfo()) {
-      let userId = JSON.parse(getLocalStorage(GLOBAL_KEY.userId))
-      let userGrade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
-      // 授过权了
-      let allLink = link.indexOf('?') !== -1 ? `${link}&user_id=${userId}&user_grade=${userGrade}` : `${link}?user_id=${userId}&user_grade=${userGrade}`
-      this.setData({
-        webViewLink: allLink
+      this.getUserSingerInfo().then(() => {
+        let userId = JSON.parse(getLocalStorage(GLOBAL_KEY.userId))
+        let userGrade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
+        // 授过权了
+        let allLink = link.indexOf('?') !== -1 ? `${link}&user_id=${userId}&user_grade=${userGrade}` : `${link}?user_id=${userId}&user_grade=${userGrade}`
+        this.setData({
+          webViewLink: allLink
+        })
       })
     } else {
       // 未授权
