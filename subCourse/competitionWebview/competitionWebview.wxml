@@ -1,0 +1,4 @@
+<!--subCourse/competitionWebview/competitionWebview.wxml-->
+<view>
+  <web-view src="{{webViewLink}}"></web-view>
+</view>

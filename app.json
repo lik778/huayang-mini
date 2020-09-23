@@ -24,8 +24,7 @@
     "pages/privacy/privacy",
     "pages/service/service",
     "pages/coopen/coopen",
-    "components/levelAlert/levelAlert",
-    "pages/webViewCommon/webViewCommon"
+    "components/levelAlert/levelAlert"
   ],
   "requiredBackgroundModes": [
     "audio"
@@ -70,6 +69,7 @@
         "actionPost/actionPost",
         "videoCourse/videoCourse",
         "videoCourseList/videoCourseList",
+        "competitionWebview/competitionWebview",
         "invitePage/invitePage",
         "receiveCourseList/receiveCourseList"
       ]
