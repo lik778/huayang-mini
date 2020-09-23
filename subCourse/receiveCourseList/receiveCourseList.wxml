@@ -1,0 +1,46 @@
+<view class="receive-course-list">
+    <view class="tab-bar" style="padding-top:{{statusBarHeight}}px;">
+        <image class="tar-arrow" bindtap="goBack" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600666720nZPnxO.jpg"></image>
+        <text>课程免费领</text>
+    </view>
+    <view class="header">
+        <view class="txt-01">「精品好课免费领取」</view>
+        <view class="txt-02">请好友助力解锁，即可</view>
+        <view class="txt-02">免费观看精品好课</view>
+    </view>
+
+    <view class="section">
+        <view class="course-item" wx:for="{{list}}" wx:key="index" bindtap="jumpToCourseDetail" data-item="{{item}}">
+            <image class="course-image" src="{{item.cover_pic}}"></image>
+              <view class="course-info">
+                  <text class="course-title limit-two-line">{{item.name}}</text>
+                  <view class="course-tag"><text class="{{item.category}}">{{item.category==='fitness'?'健身':item.category==='fashion'?'时尚':'静心慢生活'}}</text></view>
+                  <view class="price limit-one-line">
+                      <text class="free">¥{{item.price}}</text>
+                      <text class="free-txt">{{item.tipsText}}</text>
+                  </view>
+              </view>
+        </view>
+    </view>
+
+    <!-- 授权弹窗 -->
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
+    </authModule>
+
+    <!-- 解锁窗口 -->
+    <view class="unlock-alert" wx:if="{{didShowUnlockAlert}}" bindtap="cancelUnlockAlert">
+        <view class="unlock-wrap">
+            <block wx:if="{{didUserSelf}}">
+                <view class="unlock-title">提示</view>
+                <view class="unlock-content">{{selfTipText}}</view>
+            </block>
+            <block wx:else>
+                <view class="unlock-title">{{didHelped ? "提示" : "帮Ta解锁"}}</view>
+                <view class="unlock-content" wx:if="{{didHelped}}">您已帮好友解锁过该课程</view>
+                <view class="unlock-content" wx:if="{{didHelped}}">同一课程仅能帮好友解锁一次</view>
+                <view class="unlock-content" wx:if="{{!didHelped}}">授权以帮你的好友解锁课程</view>
+            </block>
+            <view class="unlock-btn" catch:tap="handlerHelp">确定</view>
+        </view>
+    </view>
+</view>

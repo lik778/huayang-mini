@@ -17,6 +17,7 @@
     "pages/discovery/discovery",
     "pages/practice/practice",
     "pages/userCenter/userCenter",
+    "pages/auth/auth",
     "pages/index/index",
     "pages/mine/mine",
     "pages/mall/mall",
@@ -68,7 +69,9 @@
         "joinCamp/joinCamp",
         "actionPost/actionPost",
         "videoCourse/videoCourse",
-        "videoCourseList/videoCourseList"
+        "videoCourseList/videoCourseList",
+        "invitePage/invitePage",
+        "receiveCourseList/receiveCourseList"
       ]
     },
     {
