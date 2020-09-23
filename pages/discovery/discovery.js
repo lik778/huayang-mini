@@ -103,6 +103,7 @@ Page({
   toModelCompetition(e) {
     if (hasUserInfo() && hasAccountInfo()) {
       this.setData({
+        isModelLink: true,
         modelBannerLink: e.currentTarget.dataset.item.link
       })
       this.initToCompetitonFun()
