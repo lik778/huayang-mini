@@ -31,7 +31,7 @@
     position: relative;
     padding-top: 178rpx;
     box-sizing: border-box;
-    height: 672rpx;
+    height: 790rpx;
     text-align: center;
     background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600235547rgeTbk.jpg") no-repeat center;
     background-size: cover;
@@ -40,8 +40,10 @@
     font: 40rpx/40rpx PingFangSC;
 }
 .view-txt-02 {
+    box-sizing: border-box;
+    padding: 0 45rpx;
     margin: 30rpx 0 16rpx;
-    font: 500 56rpx/56rpx PingFangSC;
+    font: 500 48rpx/66rpx PingFangSC;
 }
 .view-01 {
     font: bold 56rpx/80rpx PingFangSC;

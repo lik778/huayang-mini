@@ -219,7 +219,7 @@
 					"id": 21,
 					"name": "subCourse/receiveCourseList/receiveCourseList",
 					"pathName": "subCourse/receiveCourseList/receiveCourseList",
-					"query": "series_invite_id=2",
+					"query": "series_invite_id=11",
 					"scene": null
 				},
 				{
