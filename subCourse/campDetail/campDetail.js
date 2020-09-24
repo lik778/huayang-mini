@@ -1,11 +1,6 @@
 // subCourse/campDetail/campDetail.js
-import {
-  GLOBAL_KEY
-} from '../../lib/config'
-import {
-  getProductInfo,
-  getYouZanAppId
-} from '../../api/mall/index'
+import { GLOBAL_KEY } from '../../lib/config'
+import { getProductInfo, getYouZanAppId } from '../../api/mall/index'
 import {
   getArticileLink,
   getCampDetail,

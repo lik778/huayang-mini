@@ -13,7 +13,7 @@
         <text class="course-title limit-two-line">{{item.name}}</text>
         <view class="course-tag"><text class="{{item.category}}">{{item.category==='fitness'?'健身':item.category==='fashion'?'时尚':'静心慢生活'}}</text></view>
         <view class="price limit-one-line" wx:if="{{showMoney}}">
-          <text class="free">¥{{item.price}}</text>
+          <text class="free" wx:if="{{item.price > 0}}">¥{{item.price}}</text>
           <text class="free-txt">{{item.tipsText}}</text>
         </view>
       </view>
