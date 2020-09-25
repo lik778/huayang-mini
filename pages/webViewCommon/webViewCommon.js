@@ -1,7 +1,11 @@
 // pages/webViewCommon/webViewCommon.js
 import {
-  getLocalStorage
+  getLocalStorage,
+  setLocalStorage
 } from "../../utils/util"
+import {
+  getUserInfo
+} from "../../api/mine/index"
 import {
   GLOBAL_KEY
 } from "../../lib/config"
@@ -13,6 +17,16 @@ Page({
   data: {
     link: "",
     isModel: false
+  },
+
+  // 确保webview用户信息是最新的
+  getUserSingerInfo() {
+    return new Promise(resolve => {
+      getUserInfo('scene=zhide').then(res => {
+        setLocalStorage(GLOBAL_KEY.accountInfo, res)
+        resolve()
+      })
+    })
   },
 
   /**
@@ -27,24 +41,25 @@ Page({
       wx.navigateTo({
         url: `/pages/auth/auth?redirectPath=${authLink}&fromWebView=1`,
       })
+      return
     }
-    if (options.isModel === 'true' || link.indexOf("activity_id=") !== -1) {
-      // 通过activity_id判断是大赛banner解决分享问题
-      let user_id = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id
-      let user_grade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
-      if (link.indexOf("activity_id=") !== -1 && !options.isModel) {
-        link += `&user_id=${user_id}&user_grade=${user_grade}`
+    this.getUserSingerInfo().then(() => {
+      if (options.isModel === 'true' || link.indexOf("activity_id=") !== -1) {
+        // 通过activity_id判断是大赛banner解决分享问题
+        let user_id = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).id
+        let user_grade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
+        if (link.indexOf("activity_id=") !== -1 && !options.isModel) {
+          link += `&user_id=${user_id}&user_grade=${user_grade}`
+        }
+        this.setData({
+          baseUrl: encodeURIComponent(link),
+          isModel: true
+        })
       }
       this.setData({
-        baseUrl: encodeURIComponent(link),
-        isModel: true
+        link: link
       })
-    }
-    console.log(link)
-    this.setData({
-      link: link
     })
-
   },
 
   /**

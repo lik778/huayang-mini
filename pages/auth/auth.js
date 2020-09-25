@@ -106,6 +106,13 @@ Page({
 						wx.switchTab({
 							url: this.data.redirectPath
 						})
+					} else if (this.data.redirectType === 'navigation') {
+						// 表演赛
+						let link = this.data.redirectPath.split("?link=")[1]
+						let naviLink="/subCourse/competitionWebview/competitionWebview"
+						wx.navigateTo({
+							url: this.data.redirectPath
+						})
 					} else if (!this.data.fromWebView) {
 						let user_id = getLocalStorage(GLOBAL_KEY.userId)
 						let user_grade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade

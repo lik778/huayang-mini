@@ -70,6 +70,7 @@
         "actionPost/actionPost",
         "videoCourse/videoCourse",
         "videoCourseList/videoCourseList",
+        "competitionWebview/competitionWebview",
         "invitePage/invitePage",
         "receiveCourseList/receiveCourseList"
       ]

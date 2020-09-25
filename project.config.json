@@ -21,16 +21,16 @@
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
-    "useMultiFrameRuntime": false,
-    "useApiHook": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
     },
     "useIsolateContext": true,
-    "useCompilerModule": true,
+    "useCompilerModule": false,
     "userConfirmedUseCompilerModuleSwitch": false,
+    "useMultiFrameRuntime": false,
+    "useApiHook": true,
     "packNpmManually": false,
     "packNpmRelationList": []
   },
@@ -219,7 +219,7 @@
           "id": 21,
           "name": "subCourse/receiveCourseList/receiveCourseList",
           "pathName": "subCourse/receiveCourseList/receiveCourseList",
-          "query": "series_invite_id=11",
+          "query": "series_invite_id=2",
           "scene": null
         },
         {
