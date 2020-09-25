@@ -151,11 +151,6 @@ Page({
       })
     })
   },
-  toWebview(){
-    wx.navigateTo({
-      url: `/subCourse/competitionWebview/competitionWebview?link=https://huayang.baixing.com/#/home/list`,
-    })
-  },
   // 跳转至直播列表
   toLiveList() {
     wx.navigateTo({
