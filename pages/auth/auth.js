@@ -108,7 +108,6 @@ Page({
 						})
 					} else if (this.data.redirectType === 'navigation') {
 						// 表演赛
-						console.log(this.data.redirectPath,11)
 						let link = this.data.redirectPath.split("?link=")[1]
 						let naviLink="/subCourse/competitionWebview/competitionWebview"
 						wx.navigateTo({
@@ -169,7 +168,6 @@ Page({
 		redirectPath = redirectPath ? redirectPath.replace(/\$/, "?") : ""
 		redirectPath = redirectPath ? redirectPath.replace(/#/ig, "=") : ""
 		if (Number(fromWebView) === 1) {
-			console.log(redirectPath,'ss')
 			redirectPath = decodeURIComponent(redirectPath)
 		}
 		this.setData({
