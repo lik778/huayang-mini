@@ -120,7 +120,8 @@ Page({
   initModelBanner() {
     getFindBanner({
       // scene: 9
-      scene: 11
+      scene: 11,
+      is_all:1
     }).then(res => {
       this.setData({
         competitionBannerList: res,
@@ -278,7 +279,8 @@ Page({
   getBanner() {
     getFindBanner({
       scene: 8,
-      is_all: 0
+      // is_all: 0,
+      is_all:1
     }).then(res => {
       this.setData({
         bannerList: res
