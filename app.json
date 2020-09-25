@@ -24,7 +24,8 @@
     "pages/privacy/privacy",
     "pages/service/service",
     "pages/coopen/coopen",
-    "components/levelAlert/levelAlert"
+    "components/levelAlert/levelAlert",
+    "pages/webViewCommon/webViewCommon"
   ],
   "requiredBackgroundModes": [
     "audio"
