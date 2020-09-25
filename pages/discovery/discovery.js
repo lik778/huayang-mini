@@ -277,8 +277,7 @@ Page({
   // 获取banner列表
   getBanner() {
     getFindBanner({
-      scene: 8,
-      is_all: 0
+      scene: 8
     }).then(res => {
       this.setData({
         bannerList: res
