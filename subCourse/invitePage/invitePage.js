@@ -192,16 +192,18 @@ Page({
   getFissionInfo() {
     getFissionDetail({series_invite_id: this.data.series_invite_id}).then((data) => {
       let {kecheng_series_invite: taskInfo = {}, series_invite_user_list: invitedUserAry = []} = data
+      let {invite_count = 0, current_count = 0, invite_discount = 0} = taskInfo;
+      let diffInviteNumber = parseInt(invite_count - current_count);
       this.setData({
         taskInfo,
         invitedUserAry: invitedUserAry.slice(0, 15),
-        total: taskInfo.invite_count,
-        alreadyInvitedNo: taskInfo.current_count,
-        diffInviteNo: parseInt(taskInfo.invite_count - taskInfo.current_count),
-        subTitle: taskInfo.invite_discount > 0 ? `${(taskInfo.invite_discount / 10)}折学习课程` : "免费学习课程",
-        btnTitle: taskInfo.invite_discount > 0 ? `${(taskInfo.invite_discount / 10)}折优惠购` : "加入课程",
-        process: (taskInfo.current_count / taskInfo.invite_count * 100),
-        conclude: +taskInfo.current_count === +taskInfo.invite_count
+        total: invite_count,
+        alreadyInvitedNo: current_count > invite_count ? invite_count : current_count,
+        diffInviteNo: diffInviteNumber <= 0 ? 0 : diffInviteNumber,
+        subTitle: invite_discount > 0 ? `${(invite_discount / 10)}折学习课程` : "免费学习课程",
+        btnTitle: invite_discount > 0 ? `${(invite_discount / 10)}折优惠购` : "加入课程",
+        process: (current_count % invite_count / invite_count * 100),
+        conclude: +current_count >= +invite_count
       })
     })
   }
