@@ -40,7 +40,7 @@
                 <view>训练时长</view>
                 <view>{{globalRecordTimeText}}</view>
             </view>
-            <view class="bar"
+            <view class="bar subject-bg-color"
                         style="width: {{ (currentActionIndex / actionData.length) * screenWidth }}px"></view>
         </view>
 

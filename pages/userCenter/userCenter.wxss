@@ -1,4 +1,6 @@
 /* pages/userCenter/userCenter.wxss */
+@import "../../assets/css/common.wxss";
+
 .user-center {
   background: #F9F9F9;
   padding-bottom: 100rpx;
@@ -101,7 +103,6 @@
   top: 0;
   height: 12rpx;
   border-radius: 6rpx 200rpx 200rpx 6rpx;
-  background: #CC0000;
 }
 
 .full-message {
@@ -253,7 +254,6 @@
 }
 
 .task-item-middle view:last-child text:nth-child(2) {
-  color: #CC0000;
   padding-top: 8rpx;
 }
 

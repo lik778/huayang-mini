@@ -1,4 +1,6 @@
 /* subCourse/videoCourse/videoCourse.wxss */
+@import "../../assets/css/common.wxss";
+
 .video-course {
   padding-bottom: 140rpx;
 }
@@ -9,7 +11,6 @@
   left: 30rpx;
   height: 96rpx;
   bottom: 12rpx;
-  background: #CC0000;
   border-radius: 999rpx;
 }
 
@@ -68,16 +69,16 @@
   width: 240rpx;
   height: 96rpx;
   border-radius: 999rpx;
-  border: 2rpx solid rgba(0,0,0, 0.7);
+  border: 2rpx solid rgba(0, 0, 0, 0.7);
   box-sizing: border-box;
-  color: rgba(0,0,0,0.7);
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .direct-btn:active {
   opacity: 0.8;
 }
 
-.direct-btn > text {
+.direct-btn>text {
   display: block;
   margin-bottom: 4rpx;
   font: 500 40rpx/40rpx pingFangSC;
@@ -96,7 +97,6 @@
   height: 96rpx;
   border-radius: 999rpx;
   font: 500 36rpx/40rpx PingFangSC;
-  background: #CC0000;
 }
 
 .fission-btn:active {
@@ -327,13 +327,9 @@
 
 .course-item-active {
   border: 1px solid #CC0000;
-  color: #CC0000;
   box-sizing: border-box;
 }
 
-.course-item-active .course-item-right {
-  color: #CC0000;
-}
 
 .course-item-left {
   display: flex;
@@ -477,7 +473,6 @@
 .alert-btn {
   font: 500 40rpx/48rpx PingFang SC;
   color: white;
-  background: #CC0000;
   padding: 24rpx 120rpx;
   border-radius: 999rpx;
   margin-top: 38rpx;

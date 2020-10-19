@@ -6,6 +6,7 @@
     left: 0;
     background: transparent;
 }
+
 .hidden-button::after {
     border: 0 none;
 }
@@ -24,4 +25,13 @@
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+}
+
+/* 主题色 */
+.subject-font-color {
+    color: #CC0000;
+}
+
+.subject-bg-color {
+    background-color: #CC0000;
 }

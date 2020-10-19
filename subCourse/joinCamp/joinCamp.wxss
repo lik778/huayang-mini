@@ -1,4 +1,6 @@
 /* subCourse/joinCamp/joinCamp.wxss */
+@import "../../assets/css/common.wxss";
+
 .detail {
   padding-bottom: 160rpx;
 }
@@ -30,7 +32,6 @@
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
   color: rgba(255, 255, 255, 1);
-  background: #CC0000;
 }
 
 .button .button-style-one {
@@ -110,7 +111,6 @@
 
 
 .pay {
-  background: #CC0000;
   font-size: 40rpx;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
@@ -161,7 +161,6 @@
 .alert-btn {
   font: 500 40rpx/48rpx PingFang SC;
   color: white;
-  background: #CC0000;
   padding: 24rpx 120rpx;
   border-radius: 999rpx;
   margin-top: 38rpx;

@@ -45,7 +45,7 @@
     <view class="course-detail-box" wx:if="{{tabIndex===0}}">
       <view class="course-list">
         <view wx:for="{{courseData.video_detail}}" wx:key="index">
-          <view class="{{playIndex===index?'course-item course-item-active':'course-item'}}"
+          <view class="{{playIndex===index?'course-item course-item-active subject-bg-color':'course-item'}}"
             bindtap="{{hasLogin?buttonType===6?'play':item.canReplay?'play':'':'join'}}" data-item="{{item}}"
             data-index="{{index}}">
             <view class="course-item-left">
@@ -61,10 +61,10 @@
                 <view class="item-left-bottom">{{item.title}}</view>
               </view>
             </view>
-            <view class="course-item-right" wx:if="{{playIndex===index}}">
+            <view class="course-item-right subject-font-color" wx:if="{{playIndex===index}}">
               正在播放
             </view>
-            <view class="course-item-right" wx:else>
+            <view class="course-item-right subject-font-color" wx:else>
               {{item.time}}
             </view>
           </view>
@@ -89,7 +89,7 @@
     <image src="{{item}}" wx:for="{{courseData.detail_pics}}" wx:key="index" mode="widthFix"></image>
   </view>
   <!-- 按钮 -->
-  <view class="button-line" wx:if="{{buttonType!==6 && buttonType!==9}}">
+  <view class="button-line subject-bg-color" wx:if="{{buttonType!==6 && buttonType!==9}}">
     <view class="button-one" bindtap="join" wx:if="{{buttonType===1}}">加入课程</view>
     <view class="button-one" bindtap="join" wx:if="{{buttonType===2}}">Lv {{courseData.user_grade}} 等级开启
     </view>
@@ -106,7 +106,7 @@
       <text>直接购买</text>
       <text class="direct-price">¥{{courseData.discount_price}}</text>
     </view>
-    <view class="fission-btn" bindtap="initFissionTask">
+    <view class="fission-btn subject-bg-color" bindtap="initFissionTask">
       <text>请好友助力解锁课程</text>
     </view>
   </view>
@@ -115,7 +115,7 @@
       <text>直接购买</text>
       <text class="direct-price">¥{{courseData.discount_price}}</text>
     </view>
-    <view class="fission-btn" bindtap="initFissionTask">
+    <view class="fission-btn subject-bg-color" bindtap="initFissionTask">
       <text>请好友助力{{courseData.discountNo}}折优惠购</text>
       <text class="fission-price">¥{{courseData.fission_price}}</text>
     </view>
@@ -136,7 +136,7 @@
       <image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596513575jAcfBN.jpg"></image>
       <view class="text-01">快去完成任务提升</view>
       <view class="text-01">等级解锁视频吧</view>
-      <view class="alert-btn" bindtap="goToTask">去完成</view>
+      <view class="alert-btn subject-bg-color" bindtap="goToTask">去完成</view>
     </view>
   </view>
 </view>

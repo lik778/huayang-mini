@@ -35,7 +35,6 @@
   border-radius: 48rpx;
   font-size: 36rpx;
   font-weight: 600;
-  background: #CC0000;
   color: white;
 }
 

@@ -129,7 +129,6 @@
 .btn {
     height: inherit;
     width: inherit;
-    background: #CC0000;
 }
 .btn.downloading {
     background: #222;
@@ -143,7 +142,6 @@
     left: 0;
     display: block;
     height: 96rpx;
-    background: #CC0000;
     z-index: 1;
 }
 .btn-text {
@@ -191,7 +189,6 @@
 .alert-btn {
     font: 500 40rpx/48rpx PingFang SC;
     color: white;
-    background: #CC0000;
     padding: 24rpx 120rpx;
     border-radius: 999rpx;
     margin-top: 38rpx;

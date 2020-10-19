@@ -1,5 +1,6 @@
 <view>
-    <naviBar title="花样百姓+" style="padding-top:{{statusHeight+44}}px;" forceGoBackIndex="{{didGoBackToDiscovery}}" color="#fff" titleColor="#000000"></naviBar>
+    <naviBar title="花样百姓+" style="padding-top:{{statusHeight+44}}px;" forceGoBackIndex="{{didGoBackToDiscovery}}"
+        color="#fff" titleColor="#000000"></naviBar>
     <view class="practice-detail" style="padding-top:{{statusHeight+44+30}}px;">
         <!--  介绍  -->
         <view class="intro">
@@ -7,7 +8,7 @@
                 <text class="name">{{courseInfoObj.name}}</text>
                 <view class="share-box" wx:if="{{courseInfoObj.hidden == 0}}">
                     <image class="share-icon" mode="aspectFit"
-                           src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596088034GMJhzX.jpg"></image>
+                        src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596088034GMJhzX.jpg"></image>
                     <button open-type="share" bind:tap="handleShareTap" class="share-btn"></button>
                 </view>
             </view>
@@ -31,8 +32,7 @@
             </view>
             <scroll-view class="scroller" scroll-x="{{true}}">
                 <view class="scroll-box" wx:for="{{actionQueue}}" wx:key="index">
-                    <image class="scroll-item" mode="aspectFill"
-                           src="{{item.cover}}"></image>
+                    <image class="scroll-item" mode="aspectFill" src="{{item.cover}}"></image>
                     <view class="scroll-item-name limit-one-line">{{item.name}}</view>
                     <view class="scroll-item-count">{{item.cycleTime}}{{item.meta_type == 2 ? '次' : '秒'}}</view>
                 </view>
@@ -49,8 +49,8 @@
 
         <!--  练习按钮  -->
         <view class="btn-container" bind:tap="startPractice">
-            <view class="process" style="width:{{hasDoneFilePercent*screenWidth/100}}px;"></view>
-            <view class="btn {{isDownloading ? 'downloading' : ''}}"></view>
+            <view class="process subject-bg-color" style="width:{{hasDoneFilePercent*screenWidth/100}}px;"></view>
+            <view class="btn subject-bg-color {{isDownloading ? 'downloading' : ''}}"></view>
             <view class="btn-text">{{btnText}}</view>
         </view>
     </view>
@@ -60,9 +60,10 @@
             <image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596513575jAcfBN.jpg"></image>
             <view class="text-01">快去完成任务提升</view>
             <view class="text-01">等级解锁课程吧</view>
-            <view class="alert-btn" bindtap="goToTask">去完成</view>
+            <view class="alert-btn subject-bg-color" bindtap="goToTask">去完成</view>
         </view>
     </view>
 
-    <auth show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></auth>
+    <auth show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
+    </auth>
 </view>

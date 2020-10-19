@@ -3,7 +3,7 @@
     <view>
         <view class="item" wx:for="{{userJoinedBootCamp}}" wx:key="index" bind:tap="quitBootCamp" data-index="{{item.id}}">
             <text>{{item.kecheng_traincamp.name}}</text>
-            <text class="quit">放弃训练</text>
+            <text class="quit subject-font-color">放弃训练</text>
         </view>
     </view>
 
@@ -11,7 +11,7 @@
     <view>
         <view class="item" wx:for="{{userJoinedClassesList}}" wx:key="index" bind:tap="quitCourse" data-index="{{item.id}}">
             <text>{{item.kecheng.name}}</text>
-            <text class="quit">放弃训练</text>
+            <text class="quit subject-font-color">放弃训练</text>
         </view>
     </view>
 </view>

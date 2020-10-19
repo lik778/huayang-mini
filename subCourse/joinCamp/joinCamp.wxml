@@ -9,40 +9,40 @@
 	</view>
 	<!-- 按钮区域6种状态 -->
 	<view class="button">
-		<view class="button-one button-style-one" wx:if="{{buttonType===1}}">
+		<view class="button-one button-style-one subject-bg-color" wx:if="{{buttonType===1}}">
 			<!-- 没有开营日期 -->
 			即将开营
 		</view>
-		<view class="button-two button-style-four" wx:if="{{buttonType===2}}" bindtap="joinCamp">
+		<view class="button-two button-style-four subject-bg-color" wx:if="{{buttonType===2}}" bindtap="joinCamp">
 			<!-- 立即加入+价格（没有折扣） -->
 			<view>({{hasJoinAll?timeJoin : joinTime}}开营)</view>
 			<view>立即加入 ¥{{campDetailData.price/100}}</view>
 		</view>
-		<view class="button-three button-style-four" wx:if="{{buttonType===3}}" bindtap="joinCamp">
+		<view class="button-three button-style-four subject-bg-color" wx:if="{{buttonType===3}}" bindtap="joinCamp">
 			<!-- 立即支付+折扣价+原价 -->
 			<view>({{hasJoinAll?timeJoin : joinTime}}开营)</view>
 			<view>立即加入 ¥{{campDetailData.discount_price/100}}<text>原价 ¥{{campDetailData.price/100}}</text></view>
 		</view>
-		<view class="button-four button-style-two" wx:if="{{buttonType===4}}" bindtap="joinCamp">
+		<view class="button-four button-style-two subject-bg-color" wx:if="{{buttonType===4}}" bindtap="joinCamp">
 			<!-- 放弃的训练营且营没有过期 -->
 			恢复练习
 		</view>
-		<view class="button-five button-style-three" wx:if="{{buttonType===5}}" bindtap="joinCamp">
+		<view class="button-five button-style-three subject-bg-color" wx:if="{{buttonType===5}}" bindtap="joinCamp">
 			<!-- 免费的 -->
 			<view>({{hasJoinAll?timeJoin : joinTime}}开营)</view>
 			<view>立即加入</view>
 		</view>
-		<view class="button-six button-style-four" wx:if="{{buttonType===6}}" bindtap="openBox">
+		<view class="button-six button-style-four subject-bg-color" wx:if="{{buttonType===6}}" bindtap="openBox">
 			<!-- 免费有等级 -->
 			<view>({{hasJoinAll?timeJoin : joinTime}}开营)</view>
 			<view>LV {{campDetailData.user_grade}} 等级开启</view>
 		</view>
-		<view class="button-six button-style-two" wx:if="{{buttonType===7}}" bindtap="joinCamp">
+		<view class="button-six button-style-two subject-bg-color" wx:if="{{buttonType===7}}" bindtap="joinCamp">
 			<!-- 未授权 -->
 			立即加入
 		</view>
 		<!-- ios用户 -->
-		<view class="button-four button-style-two" wx:if="{{buttonType===8}}" bindtap="openToast">
+		<view class="button-four button-style-two subject-bg-color" wx:if="{{buttonType===8}}" bindtap="openToast">
 			立即加入
 		</view>
 	</view>
@@ -51,7 +51,7 @@
 			<image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596513575jAcfBN.jpg"></image>
 			<view class="text-01">快去完成任务提升</view>
 			<view class="text-01">等级解锁训练营吧</view>
-			<view class="alert-btn" bindtap="goToTask">去完成</view>
+			<view class="alert-btn subject-bg-color" bindtap="goToTask">去完成</view>
 		</view>
 	</view>
 	<!-- 授权弹窗 -->
