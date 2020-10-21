@@ -4,9 +4,13 @@ import {
   getLotteryActivityData
 } from "../../api/course/index"
 import {
+  getLocalStorage,
   hasAccountInfo,
   hasUserInfo
 } from "../../utils/util"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 Page({
   /**
    * 页面的初始数据
@@ -33,15 +37,16 @@ Page({
       // 判断授权信息
       if (hasAccountInfo() && hasUserInfo()) {
         let link = ''
+        let userId = JSON.parse(getLocalStorage(GLOBAL_KEY.userId))
         if (request.baseUrl === 'https://huayang.baixing.cn') {
           // 测试环境
           if (res.win_type === 'laohuji') {
-            link = `https://huayang.baixing.cn/#/home/miniprogram/lottery?activity_id=${activity_id}`
+            link = `https://huayang.baixing.cn/#/home/miniprogram/lottery?activity_id=${activity_id}&user_id=${userId}`
           }
         } else {
           // 生产环境
           if (res.win_type === 'laohuji') {
-            link = `https://huayang.baixing.com/#/home/miniprogram/lottery?activity_id=${activity_id}`
+            link = `https://huayang.baixing.com/#/home/miniprogram/lottery?activity_id=${activity_id}&user_id=${userId}`
           }
         }
         this.setData({
