@@ -6,7 +6,7 @@ import {
   setLocalStorage,
   simpleDurationSimple
 } from "../../utils/util"
-
+import request from "../../lib/request"
 import {
   getActivityList,
   getCampList,
