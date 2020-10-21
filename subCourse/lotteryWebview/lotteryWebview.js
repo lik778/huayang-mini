@@ -38,15 +38,16 @@ Page({
       if (hasAccountInfo() && hasUserInfo()) {
         let link = ''
         let userId = JSON.parse(getLocalStorage(GLOBAL_KEY.userId))
+        let mobile = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).mobile
         if (request.baseUrl === 'https://huayang.baixing.cn') {
           // 测试环境
           if (res.win_type === 'laohuji') {
-            link = `https://huayang.baixing.cn/#/home/miniprogram/lottery?activity_id=${activity_id}&user_id=${userId}`
+            link = `https://huayang.baixing.cn/#/home/miniprogram/lottery?activity_id=${activity_id}&user_id=${userId}&mobile=${mobile}`
           }
         } else {
           // 生产环境
           if (res.win_type === 'laohuji') {
-            link = `https://huayang.baixing.com/#/home/miniprogram/lottery?activity_id=${activity_id}&user_id=${userId}`
+            link = `https://huayang.baixing.com/#/home/miniprogram/lottery?activity_id=${activity_id}&user_id=${userId}&mobile=${mobile}`
           }
         }
         this.setData({
