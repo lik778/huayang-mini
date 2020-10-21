@@ -21,7 +21,7 @@
 		<!-- 视频课 -->
 		<view class="video-course" id='video-course'>
 			<view class="video-course-title">
-				<view class="video-course-title-left">课程</view>
+				<view class="video-course-title-left" bindtap="toWebview">课程</view>
 				<view class="video-course-title-right" bindtap="toVideoList">更多课程 ›</view>
 			</view>
 			<view class="video-course-main" wx:if="{{false}}">
