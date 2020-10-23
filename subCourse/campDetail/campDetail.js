@@ -8,6 +8,7 @@ import {
   getCurentDayData,
   getHasJoinCamp,
   getMenyCourseList,
+  getWxRoomData
 } from '../../api/course/index'
 import {
   countDay,
@@ -423,14 +424,17 @@ Page({
         if (res.id) {
           if (res.kecheng_type === 0) {
             // 直播
-            wx.navigateTo({
-              url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${res.room_id}`,
+            getWxRoomData({zhibo_room_id:res.room_id}).then(res=>{
+              console.log(res)
             })
+            // wx.navigateTo({
+            //   url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${res.room_id}`,
+            // })
           } else if (res.kecheng_type === 1) {
             // 回看
-            wx.navigateTo({
-              url: `/subLive/review/review?zhiboRoomId=${res.room_id}`,
-            })
+            // wx.navigateTo({
+            //   url: `/subLive/review/review?zhiboRoomId=${res.room_id}`,
+            // })
           } else if (res.kecheng_type === 2) {
             // 小额通
             wx.navigateTo({
