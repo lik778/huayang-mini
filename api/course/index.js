@@ -568,8 +568,6 @@ export const getLotteryActivityData = (params) => {
 	})
 }
 
-
-// 获取微信直播间信息
 export const getWxRoomData = (params) => {
 	return new Promise(resolve => {
 		request._get(URL.getWxRoomData, params).then(({

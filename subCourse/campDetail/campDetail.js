@@ -1,6 +1,11 @@
 // subCourse/campDetail/campDetail.js
-import { GLOBAL_KEY } from '../../lib/config'
-import { getProductInfo, getYouZanAppId } from '../../api/mall/index'
+import {
+  GLOBAL_KEY
+} from '../../lib/config'
+import {
+  getProductInfo,
+  getYouZanAppId
+} from '../../api/mall/index'
 import {
   getArticileLink,
   getCampDetail,
@@ -33,6 +38,7 @@ Page({
     realNowDay: '',
     endTime: '',
     bgStyle: '',
+    arrayData: [],
     bgImgStyle: "",
     backIndex: false,
     cureentDay: '', //当前日期
@@ -190,7 +196,7 @@ Page({
 
   // 获取当前天的课程
   toCureentDay(e) {
-
+    console.log(e)
     let dayNum = ''
     let day = ''
     if (e.currentTarget) {
@@ -377,7 +383,68 @@ Page({
       showVideoCover: true,
     })
   },
-
+  // 获取多个训练营信息
+  getManyCourse() {
+    getMenyCourseList({
+      day_num_str: '0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28',
+      traincamp_id: this.data.campId
+    }).then(res => {
+      this.setData({
+        arrayData: res || []
+      })
+    })
+  },
+  bindPickerChange(e) {
+    let dayNum = Number(e.detail.value)
+    dayNum = this.data.arrayData[dayNum].day_num
+    this.setData({
+      videoSrc: '',
+      posterSrc: '',
+    })
+    getCurentDayData({
+        day_num: dayNum,
+        traincamp_id: this.data.campId,
+      })
+      .then((res) => {
+        if (res.length !== 0) {
+          res.content = JSON.parse(res.content)
+          for (let i in res.content) {
+            if (res.content[i].type === 'kecheng') {
+              getCourseData({
+                kecheng_id: res.content[i].kecheng_id,
+              }).then((res1) => {
+                if (res1.length === 0) {
+                  res.content[i].duration = 0 + '分钟'
+                } else {
+                  res.content[i].duration = simpleDurationSimple(res1.duration)
+                }
+                this.setData({
+                  courseList: res,
+                })
+              })
+            }
+            if (res.content[i].type === 'video' && this.data.videoSrc === '') {
+              this.setData({
+                videoSrc: res.content[i].video,
+                posterSrc: res.content[i].cover,
+              })
+            }
+          }
+          this.setData({
+            courseList: res,
+          })
+        } else {
+          this.setData({
+            courseList: [],
+          })
+        }
+      })
+      .catch(() => {
+        this.setData({
+          courseList: [],
+        })
+      })
+  },
   // 播放结束初始化
   initVideo() {
     this.setData({
@@ -424,17 +491,22 @@ Page({
         if (res.id) {
           if (res.kecheng_type === 0) {
             // 直播
-            getWxRoomData({zhibo_room_id:res.room_id}).then(res=>{
-              console.log(res)
+            getWxRoomData({
+              zhibo_room_id: res.room_id
+            }).then(res => {
+              wx.navigateTo({
+                url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${res.zhibo_room.num}`,
+              })
             })
-            // wx.navigateTo({
-            //   url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${res.room_id}`,
-            // })
           } else if (res.kecheng_type === 1) {
             // 回看
-            // wx.navigateTo({
-            //   url: `/subLive/review/review?zhiboRoomId=${res.room_id}`,
-            // })
+            getWxRoomData({
+              zhibo_room_id: res.room_id
+            }).then(res => {
+              wx.navigateTo({
+                url: `/pages/webViewCommon/webViewCommon?link=${res.zhibo_room.link}`,
+              })
+            })
           } else if (res.kecheng_type === 2) {
             // 小额通
             wx.navigateTo({
@@ -518,6 +590,8 @@ Page({
     this.setData({
       campId: id
     })
+    // 临时测试
+    // this.getManyCourse()
 
     // 记录起始页面地址
     if (!getApp().globalData.firstViewPage && getCurrentPages().length > 0) {
