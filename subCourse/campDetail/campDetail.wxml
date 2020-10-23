@@ -12,8 +12,9 @@
 		<view class="bg-subtitle">第 {{campDetailData.nowDay}}/{{campDetailData.period}} 天</view>
 	</view>
 	<!-- 临时测试 -->
-	<view class="test-now">
-		<picker bindchange="bindPickerChange" data-selecthx="{{item}}" range-key="day_num" value="{{item}}" range="{{arrayData}}" mode="selector">
+	<view class="test-now" wx:if="{{false}}">
+		<picker bindchange="bindPickerChange" data-selecthx="{{item}}" range-key="day_num" value="{{item}}"
+			range="{{arrayData}}" mode="selector">
 			<view class="picker">
 				当前选择：{{array[index]}}
 			</view>
@@ -62,7 +63,8 @@
 					<view class="course-item-right">
 						<view class="course-item-right-left">
 							<text>{{item.name?item.name:item.title}}</text>
-							<text wx:if="{{item.type==='kecheng'}}" class="course-time">{{item.duration}}</text>
+							<text wx:if="{{item.type==='kecheng'&&item.duration!=='0秒'}}"
+								class="course-time">{{item.duration}}</text>
 						</view>
 						<view class="course-item-right-right" wx:if="{{!showLock}}">
 							<text wx:if="{{item.type==='kecheng'||item.type==='video'}}" bindtap="toDetail"

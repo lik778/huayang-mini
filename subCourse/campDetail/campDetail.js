@@ -13,6 +13,7 @@ import {
   getCurentDayData,
   getHasJoinCamp,
   getMenyCourseList,
+  getWxRoomData
 } from '../../api/course/index'
 import {
   countDay,
@@ -388,7 +389,6 @@ Page({
       day_num_str: '0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28',
       traincamp_id: this.data.campId
     }).then(res => {
-      console.log(res)
       this.setData({
         arrayData: res || []
       })
@@ -488,17 +488,24 @@ Page({
       getCourseData({
         kecheng_id: data.kecheng_id,
       }).then((res) => {
-        console.log(res,111)
         if (res.id) {
           if (res.kecheng_type === 0) {
             // 直播
-            wx.navigateTo({
-              url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${res.room_id}`,
+            getWxRoomData({
+              zhibo_room_id: res.room_id
+            }).then(res => {
+              wx.navigateTo({
+                url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${res.zhibo_room.num}`,
+              })
             })
           } else if (res.kecheng_type === 1) {
             // 回看
-            wx.navigateTo({
-              url: `/subLive/review/review?zhiboRoomId=${res.room_id}`,
+            getWxRoomData({
+              zhibo_room_id: res.room_id
+            }).then(res => {
+              wx.navigateTo({
+                url: `/pages/webViewCommon/webViewCommon?link=${res.zhibo_room.link}`,
+              })
             })
           } else if (res.kecheng_type === 2) {
             // 小额通
@@ -583,7 +590,8 @@ Page({
     this.setData({
       campId: id
     })
-    this.getManyCourse()
+    // 临时测试
+    // this.getManyCourse()
 
     // 记录起始页面地址
     if (!getApp().globalData.firstViewPage && getCurrentPages().length > 0) {
