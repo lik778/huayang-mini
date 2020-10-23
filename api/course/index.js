@@ -567,3 +567,14 @@ export const getLotteryActivityData = (params) => {
 		})
 	})
 }
+
+export const getWxRoomData = (params) => {
+	return new Promise(resolve => {
+		request._get(URL.getWxRoomData, params).then(({
+			data
+		}) => {
+			data = data || []
+			resolve(data)
+		})
+	})
+}
