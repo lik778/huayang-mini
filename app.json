@@ -72,7 +72,8 @@
         "videoCourseList/videoCourseList",
         "competitionWebview/competitionWebview",
         "invitePage/invitePage",
-        "receiveCourseList/receiveCourseList"
+        "receiveCourseList/receiveCourseList",
+        "lotteryWebview/lotteryWebview"
       ]
     },
     {

@@ -1,6 +1,12 @@
 // pages/ discovery/discovery.js
-import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage, simpleDurationSimple } from "../../utils/util"
-
+import {
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  setLocalStorage,
+  simpleDurationSimple
+} from "../../utils/util"
+import request from "../../lib/request"
 import {
   getActivityList,
   getCampList,
@@ -9,10 +15,17 @@ import {
   getVideoCourseList,
   liveTotalNum
 } from "../../api/course/index"
-import { GLOBAL_KEY, Version } from "../../lib/config"
-import { checkFocusLogin } from "../../api/auth/index"
+import {
+  GLOBAL_KEY,
+  Version
+} from "../../lib/config"
+import {
+  checkFocusLogin
+} from "../../api/auth/index"
 import bxPoint from "../../utils/bxPoint"
-import { getYouZanAppId } from "../../api/mall/index"
+import {
+  getYouZanAppId
+} from "../../api/mall/index"
 
 Page({
 
@@ -170,8 +183,7 @@ Page({
           if (+res.invite_open === 1) {
             res.fission_price = (+res.price * res.invite_discount / 10000).toFixed(2)
           }
-        }
-        else if (res.discount_price >= 0 && res.price > 0) {
+        } else if (res.discount_price >= 0 && res.price > 0) {
           // 收费但有折扣
           res.discount_price = (res.discount_price / 100).toFixed(2)
           // 是否有营销活动
@@ -192,13 +204,17 @@ Page({
         return res
       })
       this.getVideoBanner()
-      this.setData({videoList: handledList})
+      this.setData({
+        videoList: handledList
+      })
     })
   },
   // 跳往视频详情页
   toVideoDetail(e) {
     let id = e.currentTarget.dataset.item.id
-    bxPoint("series_discovery_click", {series_id: id}, false)
+    bxPoint("series_discovery_click", {
+      series_id: id
+    }, false)
     wx.navigateTo({
       url: `/subCourse/videoCourse/videoCourse?videoId=${id}`,
     })
@@ -273,7 +289,14 @@ Page({
       })
     }
   },
-
+  // 临时跳转至抽奖工具
+  toWebview() {
+    if (request.baseUrl === 'https://huayang.baixing.cn') {
+      wx.navigateTo({
+        url: '/subCourse/lotteryWebview/lotteryWebview?activity_id=2',
+      })
+    }
+  },
   // 获取banner列表
   getBanner() {
     getFindBanner({
