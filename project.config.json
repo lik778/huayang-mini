@@ -128,10 +128,9 @@
           "scene": null
         },
         {
-          "id": 10,
           "name": "subCourse/campDetail/campDetail",
           "pathName": "subCourse/campDetail/campDetail",
-          "query": "id=14",
+          "query": "id=5",
           "scene": null
         },
         {

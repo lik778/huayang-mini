@@ -1,10 +1,14 @@
+@import "../../assets/css/common.wxss";
+
 .practice-manage {
     padding: 0 30rpx;
 }
+
 .title {
     padding: 60rpx 0 20rpx;
     font: 52rpx/52rpx PingFang SC;
 }
+
 .item {
     display: flex;
     justify-content: space-between;
@@ -13,9 +17,11 @@
     font: 36rpx/40rpx PingFang SC;
     border-bottom: 2rpx solid #f1f1f1;
 }
+
 .quit {
     font-size: 32rpx;
 }
+
 .quit:active {
     opacity: 0.8;
 }

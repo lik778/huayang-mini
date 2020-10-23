@@ -6,9 +6,18 @@
 	</view> -->
 	<!-- 背景层 -->
 	<view class="bg" style="{{bgStyle}}">
-		<image class="backLast" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597131543zKwtZa.jpg" bindtap="toLast" style="{{bgImgStyle}}"></image>
+		<image class="backLast" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597131543zKwtZa.jpg" bindtap="toLast"
+			style="{{bgImgStyle}}"></image>
 		<view class="bg-title">{{campDetailData.name}}</view>
 		<view class="bg-subtitle">第 {{campDetailData.nowDay}}/{{campDetailData.period}} 天</view>
+	</view>
+	<!-- 临时测试 -->
+	<view class="test-now">
+		<picker bindchange="bindPickerChange" data-selecthx="{{item}}" range-key="day_num" value="{{item}}" range="{{arrayData}}" mode="selector">
+			<view class="picker">
+				当前选择：{{array[index]}}
+			</view>
+		</picker>
 	</view>
 	<!-- 主体-->
 	<view class="main">
