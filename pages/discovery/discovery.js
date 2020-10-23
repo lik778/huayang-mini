@@ -247,6 +247,12 @@ Page({
 
   // 处理轮播点击事件
   joinCampFrombanner(e) {
+
+    wx.navigateTo({
+      url: "/pages/temp/temp"
+    })
+    return
+
     if (e.currentTarget.dataset.item.need_auth === 1) {
       if (!hasUserInfo() || !hasAccountInfo()) {
         let link = e.currentTarget.dataset.item.link
