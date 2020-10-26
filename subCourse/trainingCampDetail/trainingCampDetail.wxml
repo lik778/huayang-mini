@@ -1,0 +1,79 @@
+<!--subCourse/trainingCampDetail/trainingCampDetail.wxml-->
+<view class="container" wx:if="{{campData!==''}}">
+  <!-- 返回按钮 -->
+  <view class="back-icon">
+    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597131543zKwtZa.jpg"></image>
+  </view>
+  <!-- banner -->
+  <view class="banner">
+    <view class="banner-img">
+      <image src="{{campData.cover_pic}}"></image>
+    </view>
+    <view class="camp-title">
+      100天走秀训练营
+    </view>
+    <view class="camp-subtitle">
+      第 30/100 天
+    </view>
+  </view>
+  <!-- 广告位 -->
+  <view class="advertising">
+    <swiper circular autoplay interval="3000" bindchange="changeAdvertisingIndex">
+      <block wx:for="{{advertisingList}}" wx:key="*this">
+        <swiper-item>
+          <image src="{{item}}"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="dot-list" wx:if="{{advertisingList.length>1}}">
+      <view wx:for="{{advertisingList}}" wx:key="{{index}}"
+        class="{{index===advertisingIndex?'dot-item dot-active-item':'dot-item'}}"></view>
+    </view>
+  </view>
+  <!-- 主体 -->
+  <view class="main">
+    <!-- 日历切换 -->
+    <view class="calendar">
+      <view class="calendar-left">
+        今日：2020-10-22
+      </view>
+      <view class="calendar-right subject-font-color" bindtap="toChangeDate">
+        查看更多课程
+      </view>
+    </view>
+    <!-- 视频播放器 -->
+    <view class="video-player">
+      <view class="video-box">
+        <video id="video" show-center-play-btn="{{false}}" bindfullscreenchange="enterFull"
+          src="https://preview.qiantucdn.com/27/80/18/9858picOOOPICb2.mp4?e=1603768769&token=OyzEe_0O8H433pm7zVEjtnSy5dVdfpsIawO2nx3f:8zVVnLtHv-PS8utkY8LrxftiNUo="></video>
+        <image src="{{campData.cover_pic}}" wx:if="{{showCover}}" class="video-cover"></image>
+        <image src="/assets/images/common/play.png" wx:if="{{showPlayIcon}}" class="video-play" bindtap="playVideo">
+        </image>
+      </view>
+    </view>
+    <!-- 课程列表 -->
+    <view class="course-list">
+      <view class="course-item">
+        <view class="course-item-left">
+          <image src="{{iconSrcList.course}}"></image>
+          <!-- <image src="{{iconSrcList.video}}"></image>
+          <image src="{{iconSrcList.product}}"></image>
+          <image src="{{iconSrcList.url}}"></image> -->
+        </view>
+        <view class="course-item-right">
+          <view class="course-item-msg">
+            <view class="course-item-right-top">站姿练习</view>
+            <view class="course-item-right-bottom">20分钟</view>
+          </view>
+          <view class="course-item-study subject-bg-color">练习</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 添加班主任 -->
+  <view class="publicity">
+    <image src="/assets/images/common/wechat.png"></image>
+    <text>点击添加班主任微信</text>
+  </view>
+
+</view>

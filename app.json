@@ -30,8 +30,7 @@
   "requiredBackgroundModes": [
     "audio"
   ],
-  "subpackages": [
-    {
+  "subpackages": [{
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -73,7 +72,9 @@
         "competitionWebview/competitionWebview",
         "invitePage/invitePage",
         "receiveCourseList/receiveCourseList",
-        "lotteryWebview/lotteryWebview"
+        "lotteryWebview/lotteryWebview",
+        "trainingCampDetail/trainingCampDetail",
+        "campPeriodList/campPeriodList"
       ]
     },
     {
@@ -93,8 +94,7 @@
   },
   "tabBar": {
     "custom": true,
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/discovery/discovery"
       },
       {

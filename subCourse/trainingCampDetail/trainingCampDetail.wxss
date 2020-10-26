@@ -1,0 +1,278 @@
+/* subCourse/trainingCampDetail/trainingCampDetail.wxss */
+@import "../../assets/css/common.wxss";
+
+.container {
+  background: #FFFFFF;
+  padding-bottom: 110rpx;
+}
+
+.back-icon {
+  position: fixed;
+  left: 16rpx;
+  top: 50rpx;
+  width: 62rpx;
+  height: 62rpx;
+  z-index: 10;
+}
+
+.back-icon image {
+  width: 62rpx;
+  height: 62rpx;
+  vertical-align: bottom;
+}
+
+.banner {
+  width: 100vw;
+  height: 400rpx;
+  position: relative;
+}
+
+.banner-img {
+  width: 100vw;
+  height: 400rpx;
+}
+
+.banner-img image {
+  width: 100vw;
+  height: 400rpx;
+}
+
+.camp-title {
+  position: absolute;
+  left: 30rpx;
+  bottom: 116rpx;
+  font-size: 52rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 74rpx;
+}
+
+.camp-subtitle {
+  position: absolute;
+  left: 30rpx;
+  bottom: 40rpx;
+  font-size: 40rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 56rpx;
+}
+
+
+.calendar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 120rpx;
+  padding: 0 30rpx;
+}
+
+.calendar-left {
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 56rpx;
+}
+
+.calendar-right {
+  width: 280rpx;
+  height: 72rpx;
+  border: 1px solid #cc0000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 38rpx;
+  font-size: 36rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #CC0000;
+}
+
+.video-box {
+  width: calc(100vw - 114rpx);
+  position: relative;
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.video-player {
+  padding-top: 32rpx;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.video-player video {
+  width: 100%;
+  height: 290rpx;
+  position: relative;
+}
+
+.video-cover {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  z-index: 20;
+  vertical-align: bottom;
+}
+
+.video-play {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130rpx;
+  height: 130rpx;
+  top: 74rpx;
+  z-index: 30;
+  vertical-align: bottom;
+}
+
+
+.course-list {}
+
+.course-item {
+  display: flex;
+  align-items: center;
+  padding-left: 50rpx;
+  height: 144rpx;
+}
+
+.course-item-left {
+  padding-right: 15rpx;
+}
+
+.course-item-left image {
+  width: 62rpx;
+  height: 62rpx;
+  vertical-align: bottom;
+}
+
+.course-item:last-child .course-item-right {
+  border-bottom: none;
+}
+
+.course-item-right {
+  width: calc(100% - 92rpx);
+  padding-right: 50rpx;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #F2F2F2;
+}
+
+.course-item-msg {}
+
+.course-item-right-top {
+  font-size: 40rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 56rpx;
+}
+
+.course-item-right-bottom {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 32rpx;
+  padding-top: 10rpx;
+}
+
+.course-item-study {
+  width: 130rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  border-radius: 32rpx;
+}
+
+
+.publicity {
+  position: fixed;
+  left: 50%;
+  margin-left: -345rpx;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 56rpx;
+  background: #00BB66;
+  width: calc(100% - 60rpx);
+  border-radius: 48rpx;
+  height: 96rpx;
+  animation: share 0.6s linear alternate infinite;
+}
+
+.publicity image {
+  width: 62rpx;
+  height: 50rpx;
+  vertical-align: bottom;
+  margin-right: 20rpx;
+}
+
+.advertising {
+  padding: 30rpx 0;
+  padding-bottom: 40rpx;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.dot-list {
+  position: absolute;
+  left: 50%;
+  bottom: 12rpx;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+}
+
+.dot-item {
+  width: 22rpx;
+  height: 8rpx;
+  background: #D8D8D8;
+  border-radius: 4rpx;
+  margin-right: 8rpx;
+}
+
+.dot-active-item {
+  background: #3A3C48;
+}
+
+
+.advertising swiper {
+  width: calc(100vw - 60rpx);
+  height: 138rpx;
+}
+
+.advertising image {
+  width: 100%;
+  height: 100%;
+  vertical-align: bottom;
+}
+
+@keyframes share {
+  0% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

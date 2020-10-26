@@ -1,0 +1,15 @@
+<!--subCourse/campPeriodList/campPeriodList.wxml-->
+<view class="container">
+  <!-- 周期列表 -->
+  <view class="list">
+    <view class="item" wx:for="{{periodList}}" wx:key="{{index}}">
+      <view class="item-left">
+        <text>第{{item}}天课程</text>
+        <text wx:if="{{false}}">今日课程</text>
+      </view>
+      <view class="item-right subject-font-color">去学习</view>
+    </view>
+  </view>
+  <!-- 返回 -->
+  <view class="back subject-bg-color" bindtap="backCampDetail">返回</view>
+</view>
