@@ -1,10 +1,31 @@
-import { wxGetUserInfoPromise } from '../../utils/auth.js'
-import { GLOBAL_KEY, Version } from '../../lib/config.js'
-import { bindUserInfo, bindWxPhoneNumber, checkFocusLogin, getWxInfo } from "../../api/auth/index"
-import { $notNull, getLocalStorage, hasUserInfo, setLocalStorage } from "../../utils/util"
-import { APP_LET_ID } from "../../lib/config"
-import { wxLoginPromise } from "../../utils/auth"
-import { checkUserDidNeedCoopen } from "../../api/course/index"
+import {
+	wxGetUserInfoPromise
+} from '../../utils/auth.js'
+import {
+	GLOBAL_KEY,
+	Version
+} from '../../lib/config.js'
+import {
+	bindUserInfo,
+	bindWxPhoneNumber,
+	checkFocusLogin,
+	getWxInfo
+} from "../../api/auth/index"
+import {
+	$notNull,
+	getLocalStorage,
+	hasUserInfo,
+	setLocalStorage
+} from "../../utils/util"
+import {
+	APP_LET_ID
+} from "../../lib/config"
+import {
+	wxLoginPromise
+} from "../../utils/auth"
+import {
+	checkUserDidNeedCoopen
+} from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -58,17 +79,22 @@ Page({
 						}
 						let originUserInfo = await bindUserInfo(params)
 						setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
-						bxPoint("applets_auth_status", {auth_type: "weixin", auth_result: "success"}, false)
+						bxPoint("applets_auth_status", {
+							auth_type: "weixin",
+							auth_result: "success"
+						}, false)
 						this.setData({
 							show: true
 						})
 					}).catch(() => {
 						// 用户取消微信授权
-						bxPoint("applets_auth_status", {auth_type: "weixin", auth_result: "fail"}, false)
+						bxPoint("applets_auth_status", {
+							auth_type: "weixin",
+							auth_result: "fail"
+						}, false)
 					})
 				})
-		} catch (error) {
-		}
+		} catch (error) {}
 	},
 	/**
 	 * 一键获取微信手机号
@@ -95,7 +121,10 @@ Page({
 					invite_user_id: this.data.invite_user_id
 				})
 				setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
-				bxPoint("applets_auth_status", {auth_type: "phone", auth_result: "success"}, false)
+				bxPoint("applets_auth_status", {
+					auth_type: "phone",
+					auth_result: "success"
+				}, false)
 				// 是否需要自定义调整页面
 				if (this.data.redirectPath) {
 					if (this.data.redirectType === "redirect") {
@@ -108,9 +137,8 @@ Page({
 						})
 					} else if (this.data.redirectType === 'navigation') {
 						// 表演赛
-						console.log(this.data.redirectPath,11)
 						let link = this.data.redirectPath.split("?link=")[1]
-						let naviLink="/subCourse/competitionWebview/competitionWebview"
+						let naviLink = "/subCourse/competitionWebview/competitionWebview"
 						wx.navigateTo({
 							url: this.data.redirectPath
 						})
@@ -124,6 +152,7 @@ Page({
 							url: `${rootUrl}${link}&type=link&isModel=true`,
 						})
 					} else {
+						console.log(this.data.redirectPath)
 						wx.navigateTo({
 							url: this.data.redirectPath
 						})
@@ -148,7 +177,10 @@ Page({
 				})
 			}
 		} else {
-			bxPoint("applets_auth_status", {auth_type: "phone", auth_result: "fail"}, false)
+			bxPoint("applets_auth_status", {
+				auth_type: "phone",
+				auth_result: "fail"
+			}, false)
 			if (didFocusLogin) {
 				// 强制授权请继续授权
 			} else {
@@ -164,12 +196,16 @@ Page({
 	 */
 	onLoad: function (options) {
 		let {
-			invite_user_id = "", source = '', redirectPath, redirectType, fromWebView = 0
+			invite_user_id = "", source = '', redirectPath, redirectType, fromWebView = 0,
+				needDecode = false
 		} = options
-		redirectPath = redirectPath ? redirectPath.replace(/\$/, "?") : ""
-		redirectPath = redirectPath ? redirectPath.replace(/#/ig, "=") : ""
+		if (needDecode) {
+			redirectPath = decodeURIComponent(redirectPath)
+		} else {
+			redirectPath = redirectPath ? redirectPath.replace(/\$/, "?") : ""
+			redirectPath = redirectPath ? redirectPath.replace(/#/ig, "=") : ""
+		}
 		if (Number(fromWebView) === 1) {
-			console.log(redirectPath,'ss')
 			redirectPath = decodeURIComponent(redirectPath)
 		}
 		this.setData({
@@ -247,8 +283,7 @@ Page({
 	/**
 	 * Lifecycle function--Called when page unload
 	 */
-	onUnload: function () {
-	},
+	onUnload: function () {},
 
 	/**
 	 * Page event handler function--Called when user drop down

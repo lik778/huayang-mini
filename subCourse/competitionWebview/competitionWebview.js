@@ -106,7 +106,7 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: "2020上海花样时尚模特大赛投票正在火热进行中",
+      title: "2020上海花样时尚风采秀正在火热进行中",
       path: `/subCourse/competitionWebview/competitionWebview?link=${this.data.shareLink}`
     }
   }

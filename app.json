@@ -25,6 +25,7 @@
     "pages/service/service",
     "pages/coopen/coopen",
     "components/levelAlert/levelAlert",
+    "pages/webViewCommon/webViewCommon",
     "pages/temp/temp"
   ],
   "requiredBackgroundModes": [
@@ -72,7 +73,8 @@
         "videoCourseList/videoCourseList",
         "competitionWebview/competitionWebview",
         "invitePage/invitePage",
-        "receiveCourseList/receiveCourseList"
+        "receiveCourseList/receiveCourseList",
+        "lotteryWebview/lotteryWebview"
       ]
     },
     {
