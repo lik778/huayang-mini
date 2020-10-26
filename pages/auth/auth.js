@@ -1,31 +1,10 @@
-import {
-	wxGetUserInfoPromise
-} from '../../utils/auth.js'
-import {
-	GLOBAL_KEY,
-	Version
-} from '../../lib/config.js'
-import {
-	bindUserInfo,
-	bindWxPhoneNumber,
-	checkFocusLogin,
-	getWxInfo
-} from "../../api/auth/index"
-import {
-	$notNull,
-	getLocalStorage,
-	hasUserInfo,
-	setLocalStorage
-} from "../../utils/util"
-import {
-	APP_LET_ID
-} from "../../lib/config"
-import {
-	wxLoginPromise
-} from "../../utils/auth"
-import {
-	checkUserDidNeedCoopen
-} from "../../api/course/index"
+import { wxGetUserInfoPromise } from '../../utils/auth.js'
+import { GLOBAL_KEY, Version } from '../../lib/config.js'
+import { bindUserInfo, bindWxPhoneNumber, checkFocusLogin, getWxInfo } from "../../api/auth/index"
+import { $notNull, getLocalStorage, hasUserInfo, setLocalStorage } from "../../utils/util"
+import { APP_LET_ID } from "../../lib/config"
+import { wxLoginPromise } from "../../utils/auth"
+import { checkUserDidNeedCoopen } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
 
 Page({

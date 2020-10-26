@@ -1,11 +1,5 @@
 // pages/ discovery/discovery.js
-import {
-  getLocalStorage,
-  hasAccountInfo,
-  hasUserInfo,
-  setLocalStorage,
-  simpleDurationSimple
-} from "../../utils/util"
+import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage, simpleDurationSimple } from "../../utils/util"
 import request from "../../lib/request"
 import {
   getActivityList,
@@ -15,17 +9,10 @@ import {
   getVideoCourseList,
   liveTotalNum
 } from "../../api/course/index"
-import {
-  GLOBAL_KEY,
-  Version
-} from "../../lib/config"
-import {
-  checkFocusLogin
-} from "../../api/auth/index"
+import { GLOBAL_KEY, Version } from "../../lib/config"
+import { checkFocusLogin } from "../../api/auth/index"
 import bxPoint from "../../utils/bxPoint"
-import {
-  getYouZanAppId
-} from "../../api/mall/index"
+import { getYouZanAppId } from "../../api/mall/index"
 
 Page({
 
@@ -204,17 +191,13 @@ Page({
         return res
       })
       this.getVideoBanner()
-      this.setData({
-        videoList: handledList
-      })
+      this.setData({videoList: handledList})
     })
   },
   // 跳往视频详情页
   toVideoDetail(e) {
     let id = e.currentTarget.dataset.item.id
-    bxPoint("series_discovery_click", {
-      series_id: id
-    }, false)
+    bxPoint("series_discovery_click", {series_id: id}, false)
     wx.navigateTo({
       url: `/subCourse/videoCourse/videoCourse?videoId=${id}`,
     })
@@ -258,12 +241,6 @@ Page({
 
   // 处理轮播点击事件
   joinCampFrombanner(e) {
-
-    wx.navigateTo({
-      url: "/pages/temp/temp"
-    })
-    return
-
     if (e.currentTarget.dataset.item.need_auth === 1) {
       if (!hasUserInfo() || !hasAccountInfo()) {
         let link = e.currentTarget.dataset.item.link
