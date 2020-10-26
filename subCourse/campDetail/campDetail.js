@@ -196,7 +196,6 @@ Page({
 
   // 获取当前天的课程
   toCureentDay(e) {
-    console.log(e)
     let dayNum = ''
     let day = ''
     if (e.currentTarget) {
