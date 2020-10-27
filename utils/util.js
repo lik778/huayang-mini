@@ -851,3 +851,46 @@ export const secondToMinute = (s) => {
 	s = (s.length == 1) ? '0' + s : s;
 	return h + ':' + s;
 }
+
+
+
+/**
+ * [dateAddDays 从某个日期增加n天后的日期]
+ * @param  {[string]} dateStr  [日期字符串]
+ * @param  {[int]} addTime [增加的秒数]
+ * @param  returnFormat "yyyy-MM-dd HH:mm:ss" // "yyyy-MM-dd"
+ * @return {[string]}[增加n天后的日期字符串]
+ */
+export const dateAddDays = (dateStr, addTime, returnFormat) => {
+	let tempDate = new Date(dateStr.replace(/-/g, "/")); //把日期字符串转换成日期格式
+	tempDate = tempDate / 1000 + addTime
+	let resultDate = new Date(tempDate * 1000); //增加n天后的日期
+	Date.prototype.dateFormat = function (fmt) {
+		var o = {
+			"M+": this.getMonth() + 1, //月份
+			"d+": this.getDate(), //日
+			"H+": this.getHours(), //小时
+			"m+": this.getMinutes(), //分
+			"s+": this.getSeconds(), //秒
+			"q+": Math.floor((this.getMonth() + 3) / 3),
+			"S": this.getMilliseconds() //毫秒
+		};
+		if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+		for (var k in o)
+			if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+		return fmt;
+	}
+	return resultDate.dateFormat(returnFormat);
+}
+
+
+// 计算两个日期相差n天
+export const computeDate = (date2, date1) => {
+	// nowDate当前日期时间戳，totalDate目标日期时间戳
+	let date3 = Math.ceil((date2 - date1) / (1000 * 60 * 60 * 24))
+	if (date3 < 0) {
+		// 还没开营的
+		date3 = 0
+	}
+	return Math.abs(date3)
+}
