@@ -163,6 +163,7 @@ Page({
       getProductInfo({
         product_id: item.product_id,
       }).then((res) => {
+        console.log(this.data.appId)
         wx.navigateToMiniProgram({
           appId: this.data.appId,
           path: res.product.third_link,
@@ -340,6 +341,7 @@ Page({
       campId,
       choosedDay
     })
+    this.getAppId()
     this.getArticileLinkData()
     this.getBanner()
     this.isJoinCamp().then(() => {
