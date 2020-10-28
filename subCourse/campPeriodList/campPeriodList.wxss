@@ -14,12 +14,31 @@
   border-bottom: 1px solid #F1F1F1;
 }
 
-.item-left text {
+.item-left {
+  display: flex;
+  align-items: center;
+}
+
+.item-left-text {
   font-size: 36rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #000000;
   line-height: 40rpx;
+}
+
+.today-course {
+  display: inline-block;
+  width: 160rpx;
+  height: 48rpx;
+  border-radius: 24rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #FFFFFF;
+  text-align: center;
+  line-height: 48rpx;
+  margin-left: 24rpx;
 }
 
 .item-right {

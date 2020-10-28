@@ -3,7 +3,9 @@ import {
   getCampDetail
 } from "../../api/course/index"
 import {
-  convertToChinaNum
+  convertToChinaNum,
+  dateAddDays,
+  computeDate
 } from "../../utils/util"
 Page({
 
@@ -14,6 +16,8 @@ Page({
     campData: "",
     campId: "",
     courseList: "",
+    joinDate: '',
+    whatDay: "",
     periodList: []
   },
 
@@ -45,6 +49,19 @@ Page({
       this.setData({
         campData: res
       })
+      let oneDaySecond = 86400
+      let formatType = 'yyyy-MM-dd'
+      let nowDate = new Date().getTime()
+      let startDate = new Date(this.data.joinDate).getTime()
+      let endDateStr = dateAddDays(this.data.joinDate, res.period * oneDaySecond, formatType)
+      let endDate = new Date(endDateStr).getTime()
+      if (nowDate >= startDate && nowDate <= endDate) {
+        // 开营中
+        let whatDay = computeDate(new Date().getTime(), new Date(this.data.joinDate).getTime())
+        this.setData({
+          whatDay
+        })
+      }
       this.getManyCamoData(res.period)
     })
   },
@@ -77,10 +94,12 @@ Page({
    */
   onLoad: function (options) {
     let {
-      campId
+      campId,
+      joinDate
     } = options
     this.setData({
-      campId
+      campId,
+      joinDate
     })
     this.getCampDetailData(campId)
   },

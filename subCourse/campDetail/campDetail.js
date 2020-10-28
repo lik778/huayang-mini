@@ -5,8 +5,13 @@ import {
   getHasJoinCamp,
   getCourseData,
   getFindBanner,
+  getWxRoomData,
   getArticileLink
 } from "../../api/course/index"
+import {
+  getProductInfo,
+  getYouZanAppId
+} from "../../api/mall/index"
 import {
   dateAddDays,
   computeDate,
@@ -51,6 +56,9 @@ Page({
     endDateStr: "", //训练营结束日期
     showDate: "", //切换日期显示
     backIndex: false, //点击返回返回首页
+    statusBarHeight: "", //状态栏高度
+    videoHeight: "", //视频高度
+    appId: "", //appid
   },
 
   // 返回
@@ -64,6 +72,15 @@ Page({
         delta: 0,
       })
     }
+  },
+
+  // 获取有赞id
+  getAppId() {
+    getYouZanAppId().then((appId) => {
+      this.setData({
+        appId,
+      })
+    })
   },
 
   // 获取引导私域地址
@@ -90,12 +107,72 @@ Page({
   toCoursedetail(e) {
     let item = e.currentTarget.dataset.item
     if (item.type === 'video') {
+      // 视频课程
       this.playVideo()
       this.setData({
         videoData: {
           src: item.video,
           pic: item.cover
         }
+      })
+    } else if (item.type === 'kecheng') {
+      // 课程
+      getCourseData({
+        kecheng_id: item.kecheng_id,
+      }).then((res) => {
+        if (res.id) {
+          if (res.kecheng_type === 0) {
+            // 直播
+            getWxRoomData({
+              zhibo_room_id: res.room_id
+            }).then(res => {
+              wx.navigateTo({
+                url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${res.zhibo_room.num}`,
+              })
+            })
+          } else if (res.kecheng_type === 1) {
+            // 回看
+            getWxRoomData({
+              zhibo_room_id: res.room_id
+            }).then(res => {
+              wx.navigateTo({
+                url: `/pages/webViewCommon/webViewCommon?link=${res.zhibo_room.link}`,
+              })
+            })
+          } else if (res.kecheng_type === 2) {
+            // 小额通
+            wx.navigateTo({
+              url: `/pages/webViewCommon/webViewCommon?link=${res.xiaoetong_url}`,
+            })
+          } else {
+            // 结构化
+            wx.navigateTo({
+              url: `/subCourse/practiceDetail/practiceDetail?courseId=${res.id}&parentBootCampId=${this.data.campId}&formCampDetail=payUser`,
+            })
+          }
+        } else {
+          wx.showToast({
+            title: '课程不存在',
+            icon: 'none',
+            duration: 3000,
+          })
+        }
+      })
+    } else if (item.type === 'product') {
+      // 商品
+      getProductInfo({
+        product_id: item.product_id,
+      }).then((res) => {
+        wx.navigateToMiniProgram({
+          appId: this.data.appId,
+          path: res.product.third_link,
+        })
+      })
+    } else if (item.type === 'url') {
+      // url
+      let link = encodeURIComponent(item.url)
+      wx.navigateTo({
+        url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
       })
     }
   },
@@ -161,7 +238,7 @@ Page({
       let formatType = 'yyyy-MM-dd'
       let startDate = new Date(this.data.joinDate).getTime()
       let nowDate = new Date().getTime()
-      let endDateStr = dateAddDays(this.data.joinDate, res.period * oneDaySecond, formatType)
+      let endDateStr = dateAddDays(this.data.joinDate, (res.period - 1) * oneDaySecond, formatType)
       let endDate = new Date(endDateStr).getTime()
       let hasStartCampType = ''
       let todayDate = ''
@@ -178,14 +255,10 @@ Page({
         todayDate = getNowDate('-')
       }
       if (this.data.choosedDay) {
-        showDate = dateAddDays(this.data.joinDate, this.data.choosedDay * oneDaySecond, formatType)
-        // hasStartCampType === 1 ? joinDate : hasStartCampType === 2 ? todayDate : endDateStr
+        showDate = dateAddDays(this.data.joinDate, (this.data.choosedDay - 1) * oneDaySecond, formatType)
       } else {
         showDate = hasStartCampType === 1 ? this.data.joinDate : hasStartCampType === 2 ? todayDate : endDateStr
       }
-      console.log(endDateStr)
-      console.log(nowDate, startDate, this.data.joinDate)
-
       this.setData({
         campData: res,
         endDateStr,
@@ -233,14 +306,7 @@ Page({
   // 跳转至训练营日期切换
   toChangeDate() {
     wx.navigateTo({
-      url: `/subCourse/campPeriodList/campPeriodList?campId=${this.data.campId}`,
-    })
-  },
-
-  // 设置导航栏标题
-  setTitile() {
-    wx.setNavigationBarTitle({
-      title: this.data.campData.name
+      url: `/subCourse/campPeriodList/campPeriodList?campId=${this.data.campId}&joinDate=${this.data.joinDate}`,
     })
   },
 
@@ -258,12 +324,11 @@ Page({
     })
   },
 
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let choosedDay = Number(options.dayNum)
+    let choosedDay = options.dayNum === undefined ? options.dayNum : Number(options.dayNum)
     let campId = options.id
     let oneDaySecond = 86400
     let formatType = 'yyyy-MM-dd'
@@ -279,8 +344,8 @@ Page({
     this.getBanner()
     this.isJoinCamp().then(() => {
       let whatDay = computeDate(new Date().getTime(), new Date(this.data.joinDate).getTime())
-      if (choosedDay && choosedDay !== 0) {
-        let endDate = dateAddDays(this.data.joinDate, choosedDay * oneDaySecond, formatType).replace(/-/g, '/')
+      if (choosedDay !== undefined && choosedDay !== 0) {
+        let endDate = dateAddDays(this.data.joinDate, (choosedDay - 1) * oneDaySecond, formatType).replace(/-/g, '/')
         let endDateNum = new Date(endDate).getTime()
         if (new Date().getTime() < endDateNum) {
           // 当前查看的日期大于当天日期,锁住
@@ -289,6 +354,8 @@ Page({
           })
         }
         this.getNowCourse(choosedDay)
+      } else if (choosedDay !== undefined && choosedDay === 0) {
+        this.getNowCourse(0)
       } else {
         this.getNowCourse(whatDay)
       }
@@ -317,13 +384,25 @@ Page({
    */
   onReady: function () {
     this.videoContext = wx.createVideoContext('video')
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    bxPoint('camp_calendar', {
+      from_uid: getApp().globalData.super_user_id,
+    })
+    let height = parseInt(
+      ((JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth - 114) /
+        16) *
+      9
+    )
+    this.setData({
+      statusBarHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
+      videoHeight: height,
+    })
   },
 
   /**

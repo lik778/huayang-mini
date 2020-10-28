@@ -1,7 +1,7 @@
 <!--subCourse/trainingCampDetail/trainingCampDetail.wxml-->
 <view class="container" wx:if="{{campData!==''}}">
   <!-- 返回按钮 -->
-  <view class="back-icon" bindtap="back">
+  <view class="back-icon" bindtap="back" style="padding-top:{{statusBarHeight}}px">
     <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597131543zKwtZa.jpg"></image>
   </view>
   <!-- banner -->
@@ -40,8 +40,11 @@
   <view class="main">
     <!-- 日历切换 -->
     <view class="calendar">
-      <view class="calendar-left">
-        {{hasStartCampType===2?'今日':'日期'}}：{{showDate}}
+      <view class="calendar-left" wx:if="{{choosedDay!==0}}">
+        {{hasStartCampType===2?todayDate===showDate?'今日':'日期':'日期'}}：{{showDate}}
+      </view>
+      <view class="calendar-left" wx:else>
+        预告课程
       </view>
       <view class="calendar-right subject-font-color" bindtap="toChangeDate">
         查看更多课程
@@ -50,8 +53,8 @@
     <!-- 视频播放器 -->
     <view class="video-player" wx:if="{{videoData.src!==''}}">
       <view class="video-box">
-        <video id="video" show-center-play-btn="{{false}}" bindfullscreenchange="enterFull"
-          src="{{videoData.src}}"></video>
+        <video id="video" show-center-play-btn="{{false}}" bindfullscreenchange="enterFull" src="{{videoData.src}}"
+          style="height:{{videoHeight}}px"></video>
         <image src="{{videoData.pic}}" wx:if="{{showCover}}" class="video-cover"></image>
         <image src="/assets/images/common/play.png" wx:if="{{showPlayIcon}}" class="video-play" bindtap="playVideo"
           wx:if="{{!showLock}}"></image>
