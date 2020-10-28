@@ -92,9 +92,19 @@
   </view>
   <!-- 添加班主任 -->
   <view class="add-teacher">
-    <view class="publicity" bindtap="toArticleLink">
-      <image src="/assets/images/common/wechat.png"></image>
-      <text>点击添加班主任微信</text>
+  </view>
+  <view class="publicity" bindtap="toArticleLink">
+    <image src="/assets/images/common/wechat.png"></image>
+    <text>点击添加班主任微信</text>
+  </view>
+  <!-- 遮罩层 -->
+  <view class="cover-bg" wx:if="{{showCover}}" bindtap="closeCover">
+    <view class="cover-bg-box">
+      <view class="cover-text">
+        <view>请务必添加班主任</view>
+        <view>否则无法参与学习</view>
+      </view>
+      <image src="/assets/images/common/long-down-arrow.png"></image>
     </view>
   </view>
 </view>

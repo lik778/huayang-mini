@@ -17,7 +17,8 @@ import {
   computeDate,
   simpleDurationSimple,
   getNowDate,
-  getLocalStorage
+  getLocalStorage,
+  setLocalStorage
 } from "../../utils/util"
 import bxPoint from '../../utils/bxPoint'
 import {
@@ -59,6 +60,14 @@ Page({
     statusBarHeight: "", //状态栏高度
     videoHeight: "", //视频高度
     appId: "", //appid
+    showCover: false, //显示指引弹窗
+  },
+
+  // 关闭引导私域蒙板
+  closeCover() {
+    this.setData({
+      showCover: false
+    })
   },
 
   // 返回
@@ -327,6 +336,30 @@ Page({
     })
   },
 
+  // 控制是否显示遮罩层
+  initCoverShow(id) {
+    let showIdList =
+      getLocalStorage(GLOBAL_KEY.campHasShowList) === undefined ?
+      undefined :
+      JSON.parse(getLocalStorage(GLOBAL_KEY.campHasShowList))
+    let showCover = true
+    if (showIdList === undefined) {
+      setLocalStorage(GLOBAL_KEY.campHasShowList, [id])
+      showCover = true
+    } else {
+      if (showIdList.indexOf(id) !== -1) {
+        showCover = false
+      } else {
+        showIdList.push(id)
+        setLocalStorage(GLOBAL_KEY.campHasShowList, showIdList)
+        showCover = true
+      }
+    }
+    this.setData({
+      showCover
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -346,6 +379,7 @@ Page({
     this.getAppId()
     this.getArticileLinkData()
     this.getBanner()
+    this.initCoverShow(campId)
     this.isJoinCamp().then(() => {
       let whatDay = computeDate(new Date().getTime(), new Date(this.data.joinDate).getTime())
       if (choosedDay !== undefined && choosedDay !== 0) {
