@@ -208,12 +208,20 @@
   color: #FFFFFF;
 }
 
-.publicity {
+.add-teacher {
   position: fixed;
-  left: 50%;
-  margin-left: -345rpx;
+  left: 0%;
+  width: 100vw;
+  height: 136rpx;
+  background: #fff;
   bottom: 0;
   z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.publicity {
   display: flex;
   align-items: center;
   justify-content: center;

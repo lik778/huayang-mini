@@ -91,8 +91,10 @@
     </view>
   </view>
   <!-- 添加班主任 -->
-  <view class="publicity" bindtap="toArticleLink">
-    <image src="/assets/images/common/wechat.png"></image>
-    <text>点击添加班主任微信</text>
+  <view class="add-teacher">
+    <view class="publicity" bindtap="toArticleLink">
+      <image src="/assets/images/common/wechat.png"></image>
+      <text>点击添加班主任微信</text>
+    </view>
   </view>
 </view>
