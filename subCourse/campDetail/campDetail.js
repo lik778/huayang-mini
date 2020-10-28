@@ -60,13 +60,13 @@ Page({
     statusBarHeight: "", //状态栏高度
     videoHeight: "", //视频高度
     appId: "", //appid
-    showCover: false, //显示指引弹窗
+    showAddTeacherCover: false, //显示指引弹窗
   },
 
   // 关闭引导私域蒙板
   closeCover() {
     this.setData({
-      showCover: false
+      showAddTeacherCover: false
     })
   },
 

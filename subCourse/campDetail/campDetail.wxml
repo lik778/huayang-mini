@@ -98,7 +98,7 @@
     <text>点击添加班主任微信</text>
   </view>
   <!-- 遮罩层 -->
-  <view class="cover-bg" wx:if="{{showCover}}" bindtap="closeCover">
+  <view class="cover-bg" wx:if="{{showAddTeacherCover}}" bindtap="closeCover">
     <view class="cover-bg-box">
       <view class="cover-text">
         <view>请务必添加班主任</view>
