@@ -310,13 +310,16 @@ Page({
           // 训练营未过期
           if (res.status === 2) {
             // 代表是已经加入过放弃的
-            let pushTime = res.date.split("/")[1] + "月" + res.date.split("/")[2] + "日"
-            this.setData({
-              hasJoinAll: true,
-              hasAllTime: res.date.replace(/\//g, "-"),
-              timeJoin: pushTime
+            // let pushTime = res.date.split("/")[1] + "月" + res.date.split("/")[2] + "日"
+            // this.setData({
+            //   hasJoinAll: true,
+            //   hasAllTime: res.date.replace(/\//g, "-"),
+            //   timeJoin: pushTime
+            // })
+            // this.getCampDetail(id)
+            wx.redirectTo({
+              url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
             })
-            this.getCampDetail(id)
           } else {
             wx.redirectTo({
               url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
