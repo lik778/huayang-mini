@@ -356,7 +356,7 @@ Page({
       }
     }
     this.setData({
-      showCover
+      showAddTeacherCover: showCover
     })
   },
 
@@ -382,6 +382,7 @@ Page({
     this.initCoverShow(campId)
     this.isJoinCamp().then(() => {
       let whatDay = computeDate(new Date().getTime(), new Date(this.data.joinDate).getTime())
+
       if (choosedDay !== undefined && choosedDay !== 0) {
         let endDate = dateAddDays(this.data.joinDate, (choosedDay - 1) * oneDaySecond, formatType).replace(/-/g, '/')
         let endDateNum = new Date(endDate).getTime()
@@ -397,6 +398,13 @@ Page({
       } else {
         this.getNowCourse(whatDay)
       }
+      let nowDate = new Date().getTime()
+      let startDate = new Date(this.data.joinDate).getTime()
+      if (nowDate < startDate) {
+        this.setData({
+          choosedDay: choosedDay === undefined ? 0 : choosedDay
+        })
+      }
       this.setData({
         whatDay
       })
@@ -409,6 +417,7 @@ Page({
         getApp().globalData.source = sceneSource
       }
     }
+    
     // 分享直接进入的
     if (share) {
       this.setData({
