@@ -4,14 +4,20 @@ import {
   getCurentDayData,
   getHasJoinCamp,
   getCourseData,
+  getFindBanner,
   getArticileLink
 } from "../../api/course/index"
 import {
   dateAddDays,
   computeDate,
-  simpleDurationSimple
+  simpleDurationSimple,
+  getNowDate,
+  getLocalStorage
 } from "../../utils/util"
 import bxPoint from '../../utils/bxPoint'
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 Page({
 
   /**
@@ -27,7 +33,7 @@ Page({
       video: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925iFZICS.jpg',
       product: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925fmEUmR.jpg',
       url: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597130925KAfZPv.jpg',
-      lock: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596613255fHAzmw.jpg',
+      lock: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603852364xDjojH.jpg",
     }, //课程icon地址
     advertisingIndex: 0, //广告下标
     advertisingList: ['https://goss.veer.com/creative/vcg/veer/800water/veer-360547308.jpg', 'https://goss.veer.com/creative/vcg/veer/800water/veer-353816507.jpg', 'https://goss.veer.com/creative/vcg/veer/800water/veer-351568172.jpg'], //广告地址列表
@@ -40,6 +46,24 @@ Page({
       pic: ""
     }, //视频地址以及封面
     articileLink: "", //引导私欲文章地址
+    showLock: false, //显示播放锁
+    todayDate: "", //今日日期
+    endDateStr: "", //训练营结束日期
+    showDate: "", //切换日期显示
+    backIndex: false, //点击返回返回首页
+  },
+
+  // 返回
+  back() {
+    if (this.data.backIndex) {
+      wx.switchTab({
+        url: '/pages/discovery/discovery',
+      })
+    } else {
+      wx.navigateBack({
+        delta: 0,
+      })
+    }
   },
 
   // 获取引导私域地址
@@ -56,7 +80,7 @@ Page({
   // 添加班主任微信
   toArticleLink() {
     bxPoint('guide_wx', {}, false)
-    let link = encodeURIComponent('https://www.baidu.com')
+    let link = encodeURIComponent(this.data.articileLink)
     wx.navigateTo({
       url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
     })
@@ -83,6 +107,15 @@ Page({
     })
   },
 
+  // 广告位跳转
+  toAdvertising(e) {
+    let item = e.currentTarget.dataset.item
+    let link = encodeURIComponent(item.link)
+    wx.navigateTo({
+      url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
+    })
+  },
+
   // 视频播放
   playVideo() {
     this.setData({
@@ -106,13 +139,16 @@ Page({
 
   // 判断是否加入训练营
   isJoinCamp() {
-    getHasJoinCamp({
-      traincamp_id: this.data.campId
-    }).then(res => {
-      this.setData({
-        joinDate: res.date
+    return new Promise(resolve => {
+      getHasJoinCamp({
+        traincamp_id: this.data.campId
+      }).then(res => {
+        this.setData({
+          joinDate: res.date
+        })
+        this.getCampDetailData()
+        resolve()
       })
-      this.getCampDetailData()
     })
   },
 
@@ -121,12 +157,15 @@ Page({
     getCampDetail({
       traincamp_id: this.data.campId
     }).then(res => {
+      let oneDaySecond = 86400
+      let formatType = 'yyyy-MM-dd'
       let startDate = new Date(this.data.joinDate).getTime()
       let nowDate = new Date().getTime()
-      let endDateStr = dateAddDays(this.data.joinDate, res.period * 24 * 60 * 60, 'yyyy-MM-dd')
+      let endDateStr = dateAddDays(this.data.joinDate, res.period * oneDaySecond, formatType)
       let endDate = new Date(endDateStr).getTime()
-      let whatDay = computeDate(new Date().getTime(), new Date(this.data.joinDate).getTime())
       let hasStartCampType = ''
+      let todayDate = ''
+      let showDate = ''
       if (nowDate < startDate) {
         // 未开营
         hasStartCampType = 1
@@ -136,12 +175,22 @@ Page({
       } else {
         // 开营中
         hasStartCampType = 2
+        todayDate = getNowDate('-')
       }
-      console.log(nowDate, startDate, whatDay, this.data.joinDate)
-      this.getNowCourse(whatDay)
+      if (this.data.choosedDay) {
+        showDate = dateAddDays(this.data.joinDate, this.data.choosedDay * oneDaySecond, formatType)
+        // hasStartCampType === 1 ? joinDate : hasStartCampType === 2 ? todayDate : endDateStr
+      } else {
+        showDate = hasStartCampType === 1 ? this.data.joinDate : hasStartCampType === 2 ? todayDate : endDateStr
+      }
+      console.log(endDateStr)
+      console.log(nowDate, startDate, this.data.joinDate)
+
       this.setData({
         campData: res,
-        whatDay,
+        endDateStr,
+        showDate,
+        todayDate,
         hasStartCampType
       })
     })
@@ -175,13 +224,16 @@ Page({
           }
         }
       }
+      this.setData({
+        courseList: list
+      })
     })
   },
 
   // 跳转至训练营日期切换
   toChangeDate() {
     wx.navigateTo({
-      url: '/subCourse/campPeriodList/campPeriodList',
+      url: `/subCourse/campPeriodList/campPeriodList?campId=${this.data.campId}`,
     })
   },
 
@@ -192,16 +244,72 @@ Page({
     })
   },
 
+  // 获取广告图
+  getBanner() {
+    let userId = JSON.parse(getLocalStorage(GLOBAL_KEY.userId))
+    getFindBanner({
+      scene: 15,
+      user_id: userId,
+      traincamp_id: this.data.campId
+    }).then(res => {
+      this.setData({
+        advertisingList: res || []
+      })
+    })
+  },
+
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let choosedDay = Number(options.dayNum)
+    let campId = options.id
+    let oneDaySecond = 86400
+    let formatType = 'yyyy-MM-dd'
+    let {
+      scene,
+      share
+    } = options
     this.setData({
-      campId: options.id
+      campId,
+      choosedDay
     })
-    this.isJoinCamp()
     this.getArticileLinkData()
+    this.getBanner()
+    this.isJoinCamp().then(() => {
+      let whatDay = computeDate(new Date().getTime(), new Date(this.data.joinDate).getTime())
+      if (choosedDay && choosedDay !== 0) {
+        let endDate = dateAddDays(this.data.joinDate, choosedDay * oneDaySecond, formatType).replace(/-/g, '/')
+        let endDateNum = new Date(endDate).getTime()
+        if (new Date().getTime() < endDateNum) {
+          // 当前查看的日期大于当天日期,锁住
+          this.setData({
+            showLock: true
+          })
+        }
+        this.getNowCourse(choosedDay)
+      } else {
+        this.getNowCourse(whatDay)
+      }
+      this.setData({
+        whatDay
+      })
+    })
+    // 通过小程序码进入 scene=${source}
+    if (scene) {
+      let sceneAry = decodeURIComponent(scene).split('/')
+      let [sceneSource = ''] = sceneAry
+      if (sceneSource) {
+        getApp().globalData.source = sceneSource
+      }
+    }
+    // 分享直接进入的
+    if (share) {
+      this.setData({
+        backIndex: true,
+      })
+    }
   },
 
   /**

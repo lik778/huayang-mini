@@ -894,3 +894,23 @@ export const computeDate = (date2, date1) => {
 	}
 	return Math.abs(date3)
 }
+
+// 获取当天日期
+//显示日期在页面上  yyy-MM-dd
+export const getNowDate = (linkIcon) => {
+	let date = new Date();
+	//年
+	let year = date.getFullYear();
+	//月
+	let month = date.getMonth() + 1;
+	//日
+	let day = date.getDate();
+	//时
+	let hh = date.getHours();
+	//分
+	let mm = date.getMinutes();
+	//秒
+	let ss = date.getSeconds();
+	let rq = year + linkIcon + month + linkIcon + day 
+	return rq
+}

@@ -135,19 +135,22 @@ Page({
           }
           if (this.data.hasJoinAll) {
             // 中途退出
-            if (this.data.overdue) {
-              // 过期
-              buttonType = 1
-            } else {
-              // 未过期
-              buttonType = 4
-            }
+            // if (this.data.overdue) {
+            //   // 过期
+            //   buttonType = 1
+            // } else {
+            //   // 未过期
+            //   buttonType = 4
+            // }
+            wx.navigateTo({
+              url: `/subCourse/campDetail/campDetail?id=${this.data.campId}&share=true`,
+            })
           }
         }
         checkFocusLogin({
           app_version: Version
         }).then(res1 => {
-          let _this=this
+          let _this = this
           if (!res1) {
             wx.getSystemInfo({
               success: function (res2) {

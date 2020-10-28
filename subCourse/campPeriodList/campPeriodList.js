@@ -22,6 +22,21 @@ Page({
     wx.navigateBack()
   },
 
+  // 选中某一天日期
+  toDetail(e) {
+    let index = e.currentTarget.dataset.item
+    let pageLength = getCurrentPages()
+    if (pageLength.length > 8) {
+      wx.redirectTo({
+        url: `/subCourse/campDetail/campDetail?id=${this.data.campId}&dayNum=${index}`,
+      })
+    } else {
+      wx.navigateTo({
+        url: `/subCourse/campDetail/campDetail?id=${this.data.campId}&dayNum=${index}`,
+      })
+    }
+  },
+
   // 获取训练营数据
   getCampDetailData(id) {
     getCampDetail({
@@ -36,7 +51,7 @@ Page({
 
   // 获取多个训练营数据
   getManyCamoData(period) {
-    let result = this.getAllNum(0, 30);
+    let result = this.getAllNum(0, period);
     this.setData({
       periodList: result
     })
@@ -44,12 +59,17 @@ Page({
 
   // 取某个区间内的所有正整数(0-8含8)
   getAllNum(min, max) {
-    let num = []
+    let chinaNum = []
+    let num1 = []
     for (let i = min; i < max + 1; i++) {
       let a = convertToChinaNum(i)
-      num.push(a)
+      num1.push(i)
+      chinaNum.push(a)
     }
-    return num
+    return {
+      chinaNum,
+      num1
+    }
   },
 
   /**

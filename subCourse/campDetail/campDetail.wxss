@@ -197,6 +197,10 @@
   border-radius: 32rpx;
 }
 
+.course-item-study-lock {
+  background: #CDCDCD;
+  color: #FFFFFF;
+}
 
 .publicity {
   position: fixed;
