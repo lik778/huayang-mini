@@ -441,6 +441,11 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: `我正在参加${this.data.campData.name}，每天都有看的见的变化，快来试试`,
+      path: '/subCourse/joinCamp/joinCamp?id=' +
+        this.data.campId +
+        `&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}&share=true`,
+    }
   }
 })
