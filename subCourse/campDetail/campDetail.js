@@ -188,6 +188,9 @@ Page({
   toAdvertising(e) {
     let item = e.currentTarget.dataset.item
     let link = encodeURIComponent(item.link)
+    bxPoint("applets_banner", {
+      position: 'subCourse/campDetail/campDetail'
+    }, false)
     wx.navigateTo({
       url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
     })
