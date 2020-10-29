@@ -297,42 +297,48 @@ Page({
     }).then(res => {
       if (res.id) {
         // 已经加入过
-        res.date = res.date.replace(/-/g, "/")
-        let oneDayTime = 86400000 * res.period //一天毫秒数
-        let dateDay = new Date(res.date).getTime() //加入日期
-        let date = new Date();
-        let year = date.getFullYear()
-        let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1
-        let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
-        let nowDate = year + "/" + month + "/" + day
-        let nowDay = new Date(nowDate).getTime()
-        if (dateDay + oneDayTime > nowDay) {
-          // 训练营未过期
-          if (res.status === 2) {
-            // 代表是已经加入过放弃的
-            // let pushTime = res.date.split("/")[1] + "月" + res.date.split("/")[2] + "日"
-            // this.setData({
-            //   hasJoinAll: true,
-            //   hasAllTime: res.date.replace(/\//g, "-"),
-            //   timeJoin: pushTime
-            // })
-            // this.getCampDetail(id)
-            wx.redirectTo({
-              url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
-            })
-          } else {
-            wx.redirectTo({
-              url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
-            })
-          }
-        } else {
-          this.setData({
-            overdue: true
-          })
-          this.getCampDetail(
-            id
-          )
-        }
+        wx.redirectTo({
+          url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
+        })
+        // res.date = res.date.replace(/-/g, "/")
+        // let oneDayTime = 86400000 * res.period //一天毫秒数
+        // let dateDay = new Date(res.date).getTime() //加入日期
+        // let date = new Date();
+        // let year = date.getFullYear()
+        // let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1
+        // let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
+        // let nowDate = year + "/" + month + "/" + day
+        // let nowDay = new Date(nowDate).getTime()
+        // if (dateDay + oneDayTime > nowDay) {
+        //   // 训练营未过期
+        //   if (res.status === 2) {
+        //     // 代表是已经加入过放弃的
+        //     // let pushTime = res.date.split("/")[1] + "月" + res.date.split("/")[2] + "日"
+        //     // this.setData({
+        //     //   hasJoinAll: true,
+        //     //   hasAllTime: res.date.replace(/\//g, "-"),
+        //     //   timeJoin: pushTime
+        //     // })
+        //     // this.getCampDetail(id)
+        //     wx.redirectTo({
+        //       url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
+        //     })
+        //   } else {
+        //     wx.redirectTo({
+        //       url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
+        //     })
+        //   }
+        // } else {
+        //   this.setData({
+        //     overdue: true
+        //   })
+        //   this.getCampDetail(
+        //     id
+        //   )
+        //   wx.redirectTo({
+        //     url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
+        //   })
+        // }
       } else {
         // 未加入过
         this.getCampDetail(id)
