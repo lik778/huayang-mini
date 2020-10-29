@@ -196,13 +196,20 @@ Page({
   // 广告位跳转
   toAdvertising(e) {
     let item = e.currentTarget.dataset.item
-    let link = encodeURIComponent(item.link)
+    // let link = encodeURIComponent(item.link)
     bxPoint("applets_banner", {
       position: 'subCourse/campDetail/campDetail'
     }, false)
-    wx.navigateTo({
-      url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
-    })
+    if (item.link_type === 'youzan') {
+      wx.navigateToMiniProgram({
+        appId: this.data.appId,
+        path: link,
+      })
+    } else {
+      wx.navigateTo({
+        url: item.link
+      })
+    }
   },
 
   // 视频播放
@@ -382,7 +389,6 @@ Page({
     this.initCoverShow(campId)
     this.isJoinCamp().then(() => {
       let whatDay = computeDate(new Date().getTime(), new Date(this.data.joinDate).getTime())
-
       if (choosedDay !== undefined && choosedDay !== 0) {
         let endDate = dateAddDays(this.data.joinDate, (choosedDay - 1) * oneDaySecond, formatType).replace(/-/g, '/')
         let endDateNum = new Date(endDate).getTime()
@@ -417,7 +423,6 @@ Page({
         getApp().globalData.source = sceneSource
       }
     }
-    
     // 分享直接进入的
     if (share) {
       this.setData({

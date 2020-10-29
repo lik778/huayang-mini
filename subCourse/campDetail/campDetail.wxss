@@ -336,3 +336,14 @@
   width: 52rpx;
   height: 126rpx;
 }
+
+.no-course-module {
+  text-align: center;
+  padding-top: 100rpx;
+}
+
+.no-course-module image {
+  width: 440rpx;
+  height: 236rpx;
+  vertical-align: bottom;
+}

@@ -50,44 +50,49 @@
         查看更多课程
       </view>
     </view>
-    <!-- 视频播放器 -->
-    <view class="video-player" wx:if="{{videoData.src!==''}}">
-      <view class="video-box">
-        <video id="video" show-center-play-btn="{{false}}" bindfullscreenchange="enterFull" src="{{videoData.src}}"
-          style="height:{{videoHeight}}px"></video>
-        <image src="{{videoData.pic}}" wx:if="{{showCover}}" class="video-cover"></image>
-        <image src="/assets/images/common/play.png" wx:if="{{showPlayIcon}}" class="video-play" bindtap="playVideo"
-          wx:if="{{!showLock}}"></image>
-        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603853206UOIXkK.jpg" wx:else class="video-play">
-        </image>
+    <view class="course-module" wx:if="{{courseList.length>0}}">
+      <!-- 视频播放器 -->
+      <view class="video-player" wx:if="{{videoData.src!==''}}">
+        <view class="video-box">
+          <video id="video" show-center-play-btn="{{false}}" bindfullscreenchange="enterFull" src="{{videoData.src}}"
+            style="height:{{videoHeight}}px"></video>
+          <image src="{{videoData.pic}}" wx:if="{{showCover}}" class="video-cover"></image>
+          <image src="/assets/images/common/play.png" wx:if="{{showPlayIcon}}" class="video-play" bindtap="playVideo"
+            wx:if="{{!showLock}}"></image>
+          <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603853206UOIXkK.jpg" wx:else class="video-play">
+          </image>
+        </view>
+      </view>
+      <!-- 课程列表 -->
+      <view class="course-list">
+        <view class="course-item" wx:for="{{courseList}}" wx:key="*this" bindtap="{{showLock?'':'toCoursedetail'}}"
+          data-item="{{item}}">
+          <view class="course-item-left">
+            <block wx:if="{{!showLock}}">
+              <image src="{{iconSrcList.course}}" wx:if="{{item.type==='kecheng'}}"></image>
+              <image src="{{iconSrcList.video}}" wx:if="{{item.type==='video'}}"></image>
+              <image src="{{iconSrcList.product}}" wx:if="{{item.type==='product'}}"></image>
+              <image src="{{iconSrcList.url}}" wx:if="{{item.type==='url'}}"></image>
+            </block>
+            <image src="{{iconSrcList.lock}}" wx:else></image>
+          </view>
+          <view class="course-item-right">
+            <view class="course-item-msg">
+              <view class="course-item-right-top" wx:if="{{item.type==='url'}}">{{item.title}}</view>
+              <view class="course-item-right-top" wx:else>{{item.name}}</view>
+              <view class="course-item-right-bottom" wx:if='{{item.type==="kecheng"}}'>{{item.duration}}</view>
+            </view>
+            <view class="{{showLock?'course-item-study course-item-study-lock':'course-item-study subject-bg-color'}}"
+              wx:if="{{item.type==='url'}}">前往</view>
+            <view class="{{showLock?'course-item-study course-item-study-lock':'course-item-study subject-bg-color'}}"
+              wx:else>练习
+            </view>
+          </view>
+        </view>
       </view>
     </view>
-    <!-- 课程列表 -->
-    <view class="course-list">
-      <view class="course-item" wx:for="{{courseList}}" wx:key="*this" bindtap="{{showLock?'':'toCoursedetail'}}"
-        data-item="{{item}}">
-        <view class="course-item-left">
-          <block wx:if="{{!showLock}}">
-            <image src="{{iconSrcList.course}}" wx:if="{{item.type==='kecheng'}}"></image>
-            <image src="{{iconSrcList.video}}" wx:if="{{item.type==='video'}}"></image>
-            <image src="{{iconSrcList.product}}" wx:if="{{item.type==='product'}}"></image>
-            <image src="{{iconSrcList.url}}" wx:if="{{item.type==='url'}}"></image>
-          </block>
-          <image src="{{iconSrcList.lock}}" wx:else></image>
-        </view>
-        <view class="course-item-right">
-          <view class="course-item-msg">
-            <view class="course-item-right-top" wx:if="{{item.type==='url'}}">{{item.title}}</view>
-            <view class="course-item-right-top" wx:else>{{item.name}}</view>
-            <view class="course-item-right-bottom" wx:if='{{item.type==="kecheng"}}'>{{item.duration}}</view>
-          </view>
-          <view class="{{showLock?'course-item-study course-item-study-lock':'course-item-study subject-bg-color'}}"
-            wx:if="{{item.type==='url'}}">前往</view>
-          <view class="{{showLock?'course-item-study course-item-study-lock':'course-item-study subject-bg-color'}}"
-            wx:else>练习
-          </view>
-        </view>
-      </view>
+    <view class="no-course-module" wx:else>
+      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603939139IRFtxM.jpg"></image>
     </view>
   </view>
   <!-- 添加班主任 -->
