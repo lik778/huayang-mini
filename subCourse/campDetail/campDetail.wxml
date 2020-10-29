@@ -80,7 +80,8 @@
             <view class="course-item-msg">
               <view class="course-item-right-top" wx:if="{{item.type==='url'}}">{{item.title}}</view>
               <view class="course-item-right-top" wx:else>{{item.name}}</view>
-              <view class="course-item-right-bottom" wx:if='{{item.type==="kecheng"}}'>{{item.duration}}</view>
+              <view class="course-item-right-bottom" wx:if='{{item.type==="kecheng"&&item.duration!=="NaN分钟"}}'>
+                {{item.duration}}</view>
             </view>
             <view class="{{showLock?'course-item-study course-item-study-lock':'course-item-study subject-bg-color'}}"
               wx:if="{{item.type==='url'}}">前往</view>
