@@ -84,7 +84,7 @@
                 {{item.duration}}</view>
             </view>
             <view class="{{showLock?'course-item-study course-item-study-lock':'course-item-study subject-bg-color'}}"
-              wx:if="{{item.type==='url'}}">前往</view>
+              wx:if="{{item.type==='url'||item.type==='product'}}">前往</view>
             <view class="{{showLock?'course-item-study course-item-study-lock':'course-item-study subject-bg-color'}}"
               wx:else>练习
             </view>
