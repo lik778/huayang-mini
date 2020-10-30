@@ -47,7 +47,7 @@
         预告课程
       </view>
       <view class="calendar-right subject-font-color" bindtap="toChangeDate">
-        查看更多课程
+        查看课表
       </view>
     </view>
     <view class="course-module" wx:if="{{courseList.length>0}}">
