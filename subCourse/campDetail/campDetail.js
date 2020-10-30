@@ -73,30 +73,9 @@ Page({
 
   // 返回
   back() {
-    if (this.data.fromPage === 'order') {
-      // 订单页过来的
-      wx.redirectTo({
-        url: '/mine/mineOrder/mineOrder',
-      })
-      return
-    } else if (this.data.fromPage === 'practice') {
-      // 练习页过来的
-      wx.switchTab({
-        url: '/pages/practice/practice',
-      })
-      return
-    } else if (this.data.backIndex) {
-      // 分享进来或者发现页/加入页
-      wx.switchTab({
-        url: '/pages/discovery/discovery',
-      })
-      return
-    } else {
-      wx.navigateBack({
-        delta: 0,
-      })
-      return
-    }
+    wx.switchTab({
+      url: '/pages/practice/practice',
+    })
   },
 
   // 获取有赞id
