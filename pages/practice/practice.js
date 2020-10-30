@@ -297,7 +297,7 @@ Page({
 		} = e.currentTarget.dataset.item
 		if (status !== 3) {
 			wx.navigateTo({
-				url: "/subCourse/campDetail/campDetail?id=" + bootCampId
+				url: "/subCourse/campDetail/campDetail?id=" + bootCampId + "&from=practice"
 			})
 		}
 	},

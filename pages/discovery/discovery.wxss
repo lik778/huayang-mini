@@ -492,14 +492,6 @@
   background: rgba(202, 232, 212, 0.8);
 }
 
-.video-course-item-right-bottom {
-  font-size: 36rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: #CC0000;
-  line-height: 50rpx;
-}
-
 
 .course-item {
   display: flex;
@@ -549,7 +541,6 @@
 
 .price {
   font: 32rpx/44rpx PingFangSC;
-  color: #CC0000;
 }
 .free {
   margin-right: 20rpx;

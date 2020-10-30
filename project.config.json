@@ -128,10 +128,9 @@
           "scene": null
         },
         {
-          "id": 10,
           "name": "subCourse/campDetail/campDetail",
           "pathName": "subCourse/campDetail/campDetail",
-          "query": "id=14",
+          "query": "id=29",
           "scene": null
         },
         {
@@ -149,10 +148,9 @@
           "scene": null
         },
         {
-          "id": 13,
           "name": "subCourse/campDetail/campDetail",
           "pathName": "subCourse/campDetail/campDetail",
-          "query": "id=21",
+          "query": "id=29",
           "scene": null
         },
         {
@@ -222,6 +220,12 @@
           "name": "抽奖webview",
           "pathName": "subCourse/lotteryWebview/lotteryWebview",
           "query": "activity_id=1",
+          "scene": null
+        },
+        {
+          "name": "subCourse/campPeriodList/campPeriodList",
+          "pathName": "subCourse/campPeriodList/campPeriodList",
+          "query": "campId=29",
           "scene": null
         }
       ]

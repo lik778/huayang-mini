@@ -1,9 +1,11 @@
 @import "../../assets/css/common.wxss";
+
 .invite-page {
     min-height: 100vh;
     background: white;
     color: white;
 }
+
 .tab-bar {
     display: flex;
     justify-content: center;
@@ -18,15 +20,18 @@
     z-index: 1;
     color: white;
 }
+
 .tar-arrow {
     position: absolute;
     left: 8px;
     width: 31px;
     height: 31px;
 }
+
 .tar-arrow:active {
     opacity: 0.8;
 }
+
 .header {
     position: relative;
     padding-top: 178rpx;
@@ -36,27 +41,33 @@
     background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600235547rgeTbk.jpg") no-repeat center;
     background-size: cover;
 }
+
 .view-txt-01 {
     font: 40rpx/40rpx PingFangSC;
 }
+
 .view-txt-02 {
     box-sizing: border-box;
     padding: 0 45rpx;
     margin: 30rpx 0 16rpx;
     font: 500 48rpx/66rpx PingFangSC;
 }
+
 .view-01 {
     font: bold 56rpx/80rpx PingFangSC;
 }
+
 .txt-01 {
     margin: 0 16rpx;
     font: bold 73rpx/80rpx PingFangSC;
     color: #FFEDBD;
 }
+
 .view-02 {
     margin-top: 6rpx;
     font: 40rpx/56rpx PingFangSC;
 }
+
 .conclude-box {
     display: flex;
     flex-direction: column;
@@ -65,35 +76,41 @@
     margin-top: 44rpx;
     font: 500 40rpx/50rpx PingFangSC;
 }
+
 .done-image {
     width: 160rpx;
     height: 160rpx;
     margin-bottom: 20rpx;
     font-size: 0;
 }
+
 .process {
     position: relative;
     width: 520rpx;
     margin: 86rpx 0 0 80rpx;
 }
+
 .line {
     width: 520rpx;
     height: 4px;
     background: #AF0404;
 }
+
 .line::after {
     content: "";
     width: 100%;
     height: 100%;
 }
+
 .inner-line {
     position: absolute;
     top: 0;
     left: 0;
     width: 0;
     height: inherit;
-    background: #FFEDBD ;
+    background: #FFEDBD;
 }
+
 .dot {
     position: absolute;
     transform: translate(-11px, -9px);
@@ -102,6 +119,7 @@
     background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600323504EWqcWm.jpg") no-repeat center;
     background-size: cover;
 }
+
 .process-icon {
     position: absolute;
     top: -44rpx;
@@ -111,11 +129,13 @@
     font-size: 0;
     z-index: 10;
 }
+
 .no {
     margin-top: 48rpx;
     text-align: center;
     font: 36rpx/36rpx PingFangSC;
 }
+
 .wx-btn {
     position: absolute;
     bottom: -58rpx;
@@ -132,9 +152,11 @@
     font: 500 40rpx/56rpx PingFangSC;
     background: #00BB66;
 }
+
 .wx-btn:active {
     opacity: 0.98;
 }
+
 .share-btn {
     position: absolute;
     top: 0;
@@ -148,36 +170,43 @@
     height: inherit;
     background: transparent;
 }
+
 .wx-icon {
     width: 64rpx;
     height: 50rpx;
     font-size: 0;
     margin-right: 20rpx;
 }
+
 .section {
     margin-top: 122rpx;
     font: 40rpx/40rpx PingFangSC;
     color: black;
 }
+
 .view-03 {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.view-03 > text {
+
+.view-03>text {
     margin: 0 20rpx;
 }
+
 .sub-line {
     width: 160rpx;
     height: 2rpx;
-    background: rgba(0,0,0,.2);
+    background: rgba(0, 0, 0, .2);
 }
+
 .invited-user {
     padding: 60rpx 38rpx 0;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
 }
+
 .invited-user-avatar {
     width: 64rpx;
     height: 64rpx;
@@ -186,6 +215,7 @@
     font-size: 0;
     background: #eee;
 }
+
 .footer {
     display: flex;
     flex-direction: column;
@@ -200,12 +230,11 @@
     color: white;
     background: #CDCDCD;
 }
+
 .footer:active {
     opacity: 0.8;
 }
-.footer.active {
-    background: #CC0000;
-}
+
 .footer-txt {
     display: block;
     margin-bottom: 4rpx;

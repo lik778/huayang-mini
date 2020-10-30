@@ -49,7 +49,7 @@
                    src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1600238041eYGDxl.jpg"></image>
         </view>
     </view>
-    <view class="footer {{diffInviteNo === 0 ? 'active' : ''}}" bindtap="buy">
+    <view class="footer {{diffInviteNo === 0 ? 'active subject-bg-color' : ''}}" bindtap="buy">
         <text class="footer-txt">{{btnTitle}}{{diffInviteNo === 0 ? "" : "（暂未达成）"}}</text>
         <text class="price" wx:if="{{fissionPrice > 0}}">¥{{fissionPrice}}</text>
     </view>

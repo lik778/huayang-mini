@@ -1,4 +1,6 @@
 /* mine/mineOrder/mineOrder.wxss */
+@import "../../assets/css/common.wxss";
+
 .mine-order {}
 
 .main {
@@ -78,6 +80,7 @@
 
 .main-item-right {
   padding-left: 24rpx;
+  width: calc(100% - 184rpx);
 }
 
 .item-top {
@@ -125,7 +128,6 @@
   font-size: 16px;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
-  color: #CC0000;
   margin-left: 62rpx;
 }
 

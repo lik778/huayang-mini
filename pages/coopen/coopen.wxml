@@ -25,7 +25,7 @@
 <!--                </view>-->
 <!--            </block>-->
 <!--        </view>-->
-<!--        <view class="btn" bind:tap="joinCourse">加入课程</view>-->
+<!--        <view class="btn subject-bg-color" bind:tap="joinCourse">加入课程</view>-->
 <!--        <view class="more" bind:tap="moreCourse">查看更多课程</view>-->
 <!--    </view>-->
 </view>

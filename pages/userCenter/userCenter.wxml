@@ -23,7 +23,7 @@
 				</view>
 			</view>
 			<view class="experience-process">
-				<view class="experience-process-active" style="{{processStyle}}"></view>
+				<view class="experience-process-active subject-bg-color" style="{{processStyle}}"></view>
 			</view>
 		</view>
 	</view>
@@ -51,7 +51,7 @@
 						<view>{{item.Desc}}</view>
 						<view>
 							<text>{{item.textData1}}</text>
-							<text>{{item.textData2}}</text>
+							<text class="subject-font-color">{{item.textData2}}</text>
 							<text>{{item.textData3}}</text>
 						</view>
 					</view>

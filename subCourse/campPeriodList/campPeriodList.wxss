@@ -1,0 +1,67 @@
+/* subCourse/campPeriodList/campPeriodList.wxss */
+@import "../../assets/css/common.wxss";
+
+.list {
+  padding-bottom: 216rpx;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 120rpx;
+  margin: 0 30rpx;
+  border-bottom: 1px solid #F1F1F1;
+}
+
+.item-left {
+  display: flex;
+  align-items: center;
+}
+
+.item-left-text {
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 40rpx;
+}
+
+.today-course {
+  display: inline-block;
+  width: 160rpx;
+  height: 48rpx;
+  border-radius: 24rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #FFFFFF;
+  text-align: center;
+  line-height: 48rpx;
+  margin-left: 24rpx;
+}
+
+.item-right {
+  font-size: 32rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  line-height: 40rpx;
+}
+
+.back {
+  width: 502rpx;
+  height: 96rpx;
+  border-radius: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 56rpx;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 60rpx;
+}
