@@ -75,7 +75,7 @@ Page({
   back() {
     if (this.data.fromPage === 'order') {
       // 订单页过来的
-      wx.navigateTo({
+      wx.redirectTo({
         url: '/mine/mineOrder/mineOrder',
       })
       return
