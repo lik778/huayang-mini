@@ -61,6 +61,7 @@ Page({
     videoHeight: "", //视频高度
     appId: "", //appid
     showAddTeacherCover: false, //显示指引弹窗
+    fromPage: '' //页面来源
   },
 
   // 关闭引导私域蒙板
@@ -72,14 +73,29 @@ Page({
 
   // 返回
   back() {
-    if (this.data.backIndex) {
+    if (this.data.fromPage === 'order') {
+      // 订单页过来的
+      wx.navigateTo({
+        url: '/mine/mineOrder/mineOrder',
+      })
+      return
+    } else if (this.data.fromPage === 'practice') {
+      // 练习页过来的
+      wx.switchTab({
+        url: '/pages/practice/practice',
+      })
+      return
+    } else if (this.data.backIndex) {
+      // 分享进来或者发现页/加入页
       wx.switchTab({
         url: '/pages/discovery/discovery',
       })
+      return
     } else {
       wx.navigateBack({
         delta: 0,
       })
+      return
     }
   },
 
@@ -324,9 +340,16 @@ Page({
 
   // 跳转至训练营日期切换
   toChangeDate() {
-    wx.navigateTo({
-      url: `/subCourse/campPeriodList/campPeriodList?campId=${this.data.campId}&joinDate=${this.data.joinDate}`,
-    })
+    let pageLength = getCurrentPages()
+    if (pageLength.length > 8) {
+      wx.redirectTo({
+        url: `/subCourse/campPeriodList/campPeriodList?campId=${this.data.campId}&joinDate=${this.data.joinDate}`,
+      })
+    } else {
+      wx.navigateTo({
+        url: `/subCourse/campPeriodList/campPeriodList?campId=${this.data.campId}&joinDate=${this.data.joinDate}`,
+      })
+    }
   },
 
   // 获取广告图
@@ -372,6 +395,7 @@ Page({
    */
   onLoad: function (options) {
     let choosedDay = options.dayNum === undefined ? options.dayNum : Number(options.dayNum)
+    let fromPage = options.from === undefined ? '' : options.from
     let campId = options.id
     let oneDaySecond = 86400
     let formatType = 'yyyy-MM-dd'
@@ -381,7 +405,8 @@ Page({
     } = options
     this.setData({
       campId,
-      choosedDay
+      choosedDay,
+      fromPage
     })
     this.getAppId()
     this.getArticileLinkData()
@@ -422,6 +447,9 @@ Page({
       if (sceneSource) {
         getApp().globalData.source = sceneSource
       }
+      this.setData({
+        backIndex: true,
+      })
     }
     // 分享直接进入的
     if (share) {
@@ -436,7 +464,6 @@ Page({
    */
   onReady: function () {
     this.videoContext = wx.createVideoContext('video')
-
   },
 
   /**
