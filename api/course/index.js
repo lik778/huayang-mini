@@ -1,7 +1,5 @@
 import request from "../../lib/request"
-import {
-	URL
-} from "../../lib/config"
+import { URL } from "../../lib/config"
 
 
 // 获取结构化练习海报背景图
@@ -542,4 +540,13 @@ export function queryFissionList(params) {
 			resolve(data)
 		})
 	})
+}
+
+/**
+ * 查询订单信息
+ * @param params
+ * @returns {Promise | Promise<unknown>}
+ */
+export function queryOrderDetail(params) {
+	return request._get(URL.getOrderDetail, params)
 }

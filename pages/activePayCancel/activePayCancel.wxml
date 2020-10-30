@@ -1,0 +1,10 @@
+<view class="active-pay-cancel">
+    <image class="icon" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603865633QirOWC.jpg"></image>
+    <view class="txt-01">支付失败</view>
+    <view class="content">
+        <view>您还未支付哦</view>
+        <view>请点击继续支付完成活动报名</view>
+    </view>
+    <view class="btn" bindtap="continuePay">继续支付</view>
+    <view class="btn goBack" bindtap="back">返回</view>
+</view>

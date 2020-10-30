@@ -1,0 +1,19 @@
+<view class="person-bootcamp">
+    <block wx:if="{{recommendList.length > 0}}">
+        <view class="no-data-tips">
+            <image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603951961KBNQXM.jpg"></image>
+            <text>您还没有学习课程</text>
+            <text>快去学习吧！</text>
+        </view>
+        <view class="layout">课程推荐</view>
+    </block>
+    <view class="video-course-list">
+        <view class="course-item" wx:for="{{courseList.length > 0 ? courseList : recommendList}}" wx:key="index" bindtap="viewCourseDetail" data-item="{{item}}">
+            <image class="course-image" src="{{item.cover_pic}}"></image>
+            <view class="course-info">
+                <text class="course-title limit-two-line">{{item.name}}</text>
+                <view class="continue-btn" wx:if="{{courseList.length > 0}}">继续学习</view>
+            </view>
+        </view>
+    </view>
+</view>

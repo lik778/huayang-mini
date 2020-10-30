@@ -55,14 +55,5 @@
         </view>
     </view>
 
-    <view class="level-alert" wx:if="{{didShowAlert}}">
-        <view class="box">
-            <image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596513575jAcfBN.jpg"></image>
-            <view class="text-01">快去完成任务提升</view>
-            <view class="text-01">等级解锁课程吧</view>
-            <view class="alert-btn" bindtap="goToTask">去完成</view>
-        </view>
-    </view>
-
     <auth show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></auth>
 </view>

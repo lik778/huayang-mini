@@ -184,56 +184,96 @@
     background: #990000;
     z-index: 15;
 }
-.result-text-01 {
-    margin: 96rpx 0 14rpx;
-    font: 40rpx/56rpx PingFang SC;
+.star-layer {
+    margin: 20rpx auto 0;
+    width: 714rpx;
+    height: 318rpx;
+    font-size: 0;
+    transform-origin: bottom center;
+    animation: moveUp 300ms ease forwards;
+    animation-delay: 80ms;
+    -webkit-animation-delay: 80ms;
+    animation-fill-mode: backwards!important;
+    -webkit-animation-fill-mode: backwards!important;
 }
-.result-text-02 {
-    margin-bottom: 88rpx;
-    font: bold 56rpx/80rpx PingFang SC;
+.result-content {
+    position: absolute;
+    top: 294rpx;
+    width: 670rpx;
+    margin: -20rpx 40rpx 0;
+    padding: 60rpx 40rpx;
+    border-radius: 24rpx;
+    box-sizing: border-box;
+    background: white;
+    color: #000000;
+    animation: fadeIn 300ms ease-in forwards;
 }
-.global-record-time-text {
-    font: bold 128rpx/154rpx Condensed;
+.txt-01 {
+    display: block;
+    margin-bottom: 20rpx;
+    font: 600 68rpx/96rpx PingFangSC;
 }
-.result-text-03 {
-    margin-bottom: 126rpx;
-    font: 48rpx/48rpx PingFang SC;
+.txt-02 {
+    font: 600 52rpx/74rpx PingFangSC;
 }
-.action-list {
-    display: flex;
-    flex-direction: column;
-    padding: 0 120rpx;
-}
-.action-item {
+.result-data {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 94rpx 72rpx 132rpx;
 }
-.action-item-text {
-    font: 32rpx/70rpx PingFang SC;
-    text-align: left;
+.result-data-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font: 40rpx/56rpx PingFangSC;
+    color: #999999;
 }
-.action-item-text-left {
-    width: 70%;
-    text-align: left;
+.result-data-item-01 {
+    font: 600 64rpx/76rpx Condensed;
+    color: #000000;
 }
-.action-item-text-right {
-    width: 30%;
-    text-align: right;
+.split-line {
+    width: 2rpx;
+    height: 120rpx;
+    background: #E5E5E5;
 }
-.result-btn {
-    position: fixed;
-    bottom: 12rpx;
-    left: 0;
-    right: 0;
-    width: 690rpx;
+.clockIn {
+    width: 590rpx;
     height: 96rpx;
-    margin: 0 auto;
     border-radius: 999rpx;
-    color: #990000;
-    font: 500 40rpx/96rpx PingFang SC;
-    background: white;
+    background: #CC0000;
+    color: white;
+    font: 600 40rpx/96rpx PingFangSC;
 }
-.result-btn:active {
+.clockIn:active {
     opacity: 0.8;
+}
+
+@keyframes fadeIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    70% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes moveUp {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    90% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
