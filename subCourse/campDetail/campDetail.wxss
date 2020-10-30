@@ -59,6 +59,10 @@
   line-height: 56rpx;
 }
 
+.main {
+  padding-top: 20rpx;
+}
+
 
 .calendar {
   display: flex;
@@ -91,14 +95,14 @@
 }
 
 .video-box {
-  width: calc(100vw - 114rpx);
+  width: calc(100vw - 228rpx);
   position: relative;
   border-radius: 8rpx;
   overflow: hidden;
 }
 
 .video-player {
-  padding-top: 32rpx;
+  padding-top: 20rpx;
   display: flex;
   justify-content: center;
   position: relative;
@@ -127,10 +131,10 @@
 .video-play {
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   width: 130rpx;
   height: 130rpx;
-  top: 74rpx;
+  top: 50%;
   z-index: 30;
   vertical-align: bottom;
   border-radius: 8rpx;
@@ -174,11 +178,12 @@
 .course-item-msg {}
 
 .course-item-right-top {
-  font-size: 40rpx;
+  font-size: 36rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #000000;
   line-height: 56rpx;
+  width: 380rpx;
 }
 
 .course-item-right-bottom {

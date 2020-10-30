@@ -78,8 +78,8 @@
           </view>
           <view class="course-item-right">
             <view class="course-item-msg">
-              <view class="course-item-right-top" wx:if="{{item.type==='url'}}">{{item.title}}</view>
-              <view class="course-item-right-top" wx:else>{{item.name}}</view>
+              <view class="course-item-right-top limit-one-line" wx:if="{{item.type==='url'}}">{{item.title}}</view>
+              <view class="course-item-right-top  limit-one-line" wx:else>{{item.name}}</view>
               <view class="course-item-right-bottom" wx:if='{{item.type==="kecheng"&&item.duration!=="NaN分钟"}}'>
                 {{item.duration}}</view>
             </view>

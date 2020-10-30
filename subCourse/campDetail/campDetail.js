@@ -478,6 +478,7 @@ Page({
         16) *
       9
     )
+    console.log(height)
     this.setData({
       statusBarHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
       videoHeight: height,
