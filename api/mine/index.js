@@ -157,3 +157,12 @@ export function getActivityInMine(params) {
     })
   })
 }
+
+// 获取活动详情
+export function getActivityDetail(params) {
+  return new Promise((resolve) => {
+    request._get(URL.queryActivityDetail, params).then(({data}) => {
+      resolve(data)
+    })
+  })
+}

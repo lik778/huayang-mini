@@ -156,10 +156,13 @@ Page({
 	 */
 	onLoad: function (options) {
 		let {
-			invite_user_id = "", source = '', redirectPath, redirectType, fromWebView = 0
+			invite_user_id = "", source = '', redirectPath, redirectType, fromWebView = 0, didNeedDecode = 0
 		} = options
-		redirectPath = redirectPath ? redirectPath.replace(/\$/, "?") : ""
-		redirectPath = redirectPath ? redirectPath.replace(/#/ig, "=") : ""
+
+		if (+didNeedDecode === 1) {
+			redirectPath = decodeURIComponent(redirectPath)
+		}
+
 		if (Number(fromWebView) === 1) {
 			redirectPath = decodeURIComponent(redirectPath)
 		}
