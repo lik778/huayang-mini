@@ -32,11 +32,6 @@
 			<view>({{hasJoinAll?timeJoin : joinTime}}开营)</view>
 			<view>立即加入</view>
 		</view>
-		<view class="button-six button-style-four subject-bg-color" wx:if="{{buttonType===6}}" bindtap="openBox">
-			<!-- 免费有等级 -->
-			<view>({{hasJoinAll?timeJoin : joinTime}}开营)</view>
-			<view>LV {{campDetailData.user_grade}} 等级开启</view>
-		</view>
 		<view class="button-six button-style-two subject-bg-color" wx:if="{{buttonType===7}}" bindtap="joinCamp">
 			<!-- 未授权 -->
 			立即加入
@@ -44,14 +39,6 @@
 		<!-- ios用户 -->
 		<view class="button-four button-style-two subject-bg-color" wx:if="{{buttonType===8}}" bindtap="openToast">
 			立即加入
-		</view>
-	</view>
-	<view class="level-alert" wx:if="{{didShowAlert}}" bindtap="openBox">
-		<view class="box">
-			<image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596513575jAcfBN.jpg"></image>
-			<view class="text-01">快去完成任务提升</view>
-			<view class="text-01">等级解锁训练营吧</view>
-			<view class="alert-btn subject-bg-color" bindtap="goToTask">去完成</view>
 		</view>
 	</view>
 	<!-- 授权弹窗 -->
