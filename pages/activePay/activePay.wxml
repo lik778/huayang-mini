@@ -1,0 +1,42 @@
+<view class="order">
+    <view class="order-affirm">
+        <view class="time-remaining">
+            <view wx:if="{{overtime}}">等待用户支付</view>
+            <view wx:else class="overtime">{{ btnName }}</view>
+            <view class="count-down" wx:if="{{overtime}}">{{ payData.residueTime }} 后自动取消订单</view>
+        </view>
+        <view class="activity-message">
+            <view class="activity-name">{{ payData.activityName }}</view>
+            <view class="activity-time activity-common">
+                <view class="activity-message-left">活动时间：</view>
+                <text class="activity-message-right">{{ payData.activityTime }}</text>
+            </view>
+            <view
+                    class="activity-site activity-common"
+                    wx:if="{{payData.activitySite !== ''}}"
+            >
+                <view class="activity-message-left">活动地点：</view>
+                <text class="activity-message-right">{{ payData.activitySite }}</text>
+            </view>
+            <view class="activity-price activity-common">
+                <view class="activity-message-left">金额：</view>
+                <text class="activity-message-right">￥{{ payData.activityPrice }}</text>
+            </view>
+        </view>
+        <view class="apply-message">
+            <view class="apply-message-name apply-message-common" wx:if="{{payData.activityUserName && activity_key !== 'zhide_vip_proxy'}}">
+                <text class="apply-message-left apply-message-common-left">姓名：</text>
+                <text class="apply-message-right apply-message-common-right">{{ payData.activityUserName }}</text>
+            </view>
+            <view class="apply-message-phone apply-message-common" wx:if="{{payData.phoneNum}}">
+                <text class="apply-message-left apply-message-common-left">{{ activity_key !== "zhide_vip_proxy" ? "电话" : "受赠人电话" }}：</text>
+                <text class="apply-message-right apply-message-common-right">{{ payData.phoneNum }}</text>
+            </view>
+        </view>
+        <view class="pay-btn">
+            <view class="price">￥{{ payData.activityPrice }}</view>
+            <view class="button" bindtap="pay" wx:if="{{overtime}}">立即支付</view>
+            <view class="button-forbid" bindtap="back" wx:else>{{ btnName === "支付超时" ? "返回" : btnName }}</view>
+        </view>
+    </view>
+</view>

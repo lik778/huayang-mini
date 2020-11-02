@@ -105,7 +105,7 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: this.data.activityData.title,
+      title: this.data.activityData.share_desc,
       path: `/subCourse/lotteryWebview/lotteryWebview?activity_id=${this.data.activityData.id}`
     }
   }

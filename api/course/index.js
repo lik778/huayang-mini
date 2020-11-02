@@ -565,3 +565,23 @@ export const getLotteryActivityData = (params) => {
 		})
 	})
 }
+
+export const getWxRoomData = (params) => {
+	return new Promise(resolve => {
+		request._get(URL.getWxRoomData, params).then(({
+			data
+		}) => {
+			data = data || []
+			resolve(data)
+		})
+	})
+}
+
+/**
+ * 查询订单信息
+ * @param params
+ * @returns {Promise | Promise<unknown>}
+ */
+export function queryOrderDetail(params) {
+	return request._get(URL.getOrderDetail, params)
+}

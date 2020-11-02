@@ -1,24 +1,10 @@
 // 加入训练营
-import {
-  GLOBAL_KEY,
-  Version
-} from "../../lib/config"
+import { GLOBAL_KEY, Version } from "../../lib/config"
 
-import {
-  checkFocusLogin
-} from "../../api/auth/index"
+import { checkFocusLogin } from "../../api/auth/index"
 
-import {
-  getCampDetail,
-  getHasJoinCamp,
-  joinCamp
-} from "../../api/course/index"
-import {
-  getLocalStorage,
-  hasAccountInfo,
-  hasUserInfo,
-  payCourse
-} from "../../utils/util"
+import { getCampDetail, getHasJoinCamp, joinCamp } from "../../api/course/index"
+import { getLocalStorage, hasAccountInfo, hasUserInfo, payCourse } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -27,7 +13,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    didShowAlert: false,
     statusHeight: 0,
     didShowAuth: false,
     campId: 0,
@@ -105,15 +90,8 @@ Page({
               // 不折扣
               buttonType = 2
             } else if (res.discount_price === 0) {
-              // 有折扣价且为0
-              let userData = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-              if (userData.user_grade < res.user_grade) {
-                // 免费但是等级不够
-                buttonType = 6
-              } else {
-                // 免费且等级够了
-                buttonType = 5
-              }
+              // 有折扣价且为0，免费
+              buttonType = 5
             } else {
               // 无折扣价
               buttonType = 2
@@ -121,13 +99,7 @@ Page({
           } else {
             // 免费
             let userData = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-            if (userData.user_grade < res.user_grade) {
-              // 免费但是等级不够
-              buttonType = 6
-            } else {
-              // 免费且等级够了
-              buttonType = 5
-            }
+            buttonType = 5
           }
           if (startDate === '') {
             // 后续没有训练营开营日期了
@@ -135,19 +107,22 @@ Page({
           }
           if (this.data.hasJoinAll) {
             // 中途退出
-            if (this.data.overdue) {
-              // 过期
-              buttonType = 1
-            } else {
-              // 未过期
-              buttonType = 4
-            }
+            // if (this.data.overdue) {
+            //   // 过期
+            //   buttonType = 1
+            // } else {
+            //   // 未过期
+            //   buttonType = 4
+            // }
+            wx.navigateTo({
+              url: `/subCourse/campDetail/campDetail?id=${this.data.campId}&share=true`,
+            })
           }
         }
         checkFocusLogin({
           app_version: Version
         }).then(res1 => {
-          let _this=this
+          let _this = this
           if (!res1) {
             wx.getSystemInfo({
               success: function (res2) {
@@ -185,18 +160,6 @@ Page({
       title: "提示",
       content: "由于相关规范，ios功能暂不可用",
       showCancel: false
-    })
-  },
-  // 等级不够
-  openBox() {
-    this.setData({
-      didShowAlert: !this.data.didShowAlert
-    })
-  },
-  // 跳往任务页
-  goToTask() {
-    wx.switchTab({
-      url: '/pages/userCenter/userCenter',
     })
   },
   // 用户授权取消
@@ -294,39 +257,48 @@ Page({
     }).then(res => {
       if (res.id) {
         // 已经加入过
-        res.date = res.date.replace(/-/g, "/")
-        let oneDayTime = 86400000 * res.period //一天毫秒数
-        let dateDay = new Date(res.date).getTime() //加入日期
-        let date = new Date();
-        let year = date.getFullYear()
-        let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1
-        let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
-        let nowDate = year + "/" + month + "/" + day
-        let nowDay = new Date(nowDate).getTime()
-        if (dateDay + oneDayTime > nowDay) {
-          // 训练营未过期
-          if (res.status === 2) {
-            // 代表是已经加入过放弃的
-            let pushTime = res.date.split("/")[1] + "月" + res.date.split("/")[2] + "日"
-            this.setData({
-              hasJoinAll: true,
-              hasAllTime: res.date.replace(/\//g, "-"),
-              timeJoin: pushTime
-            })
-            this.getCampDetail(id)
-          } else {
-            wx.redirectTo({
-              url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
-            })
-          }
-        } else {
-          this.setData({
-            overdue: true
-          })
-          this.getCampDetail(
-            id
-          )
-        }
+        wx.redirectTo({
+          url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
+        })
+        // res.date = res.date.replace(/-/g, "/")
+        // let oneDayTime = 86400000 * res.period //一天毫秒数
+        // let dateDay = new Date(res.date).getTime() //加入日期
+        // let date = new Date();
+        // let year = date.getFullYear()
+        // let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1
+        // let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
+        // let nowDate = year + "/" + month + "/" + day
+        // let nowDay = new Date(nowDate).getTime()
+        // if (dateDay + oneDayTime > nowDay) {
+        //   // 训练营未过期
+        //   if (res.status === 2) {
+        //     // 代表是已经加入过放弃的
+        //     // let pushTime = res.date.split("/")[1] + "月" + res.date.split("/")[2] + "日"
+        //     // this.setData({
+        //     //   hasJoinAll: true,
+        //     //   hasAllTime: res.date.replace(/\//g, "-"),
+        //     //   timeJoin: pushTime
+        //     // })
+        //     // this.getCampDetail(id)
+        //     wx.redirectTo({
+        //       url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
+        //     })
+        //   } else {
+        //     wx.redirectTo({
+        //       url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
+        //     })
+        //   }
+        // } else {
+        //   this.setData({
+        //     overdue: true
+        //   })
+        //   this.getCampDetail(
+        //     id
+        //   )
+        //   wx.redirectTo({
+        //     url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
+        //   })
+        // }
       } else {
         // 未加入过
         this.getCampDetail(id)

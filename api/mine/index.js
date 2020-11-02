@@ -1,7 +1,5 @@
 import request from "../../lib/request"
-import {
-  URL
-} from "../../lib/config"
+import { URL } from "../../lib/config"
 // 获取用户信息
 export const getUserInfo = (params) => {
   return new Promise((resolve, reject) => {
@@ -136,6 +134,35 @@ export const withDrawFun = (params) => {
       }
     }).catch(err=>{
       reject(err)
+    })
+  })
+}
+
+// 在我的模块，获取推荐训练营列表
+export function getRecommendBootcampInMine(params) {
+  return new Promise((resolve, reject) => {
+    request._get(URL.queryRecommendBootcampInMine, params).then(({data}) => {
+      data = data || []
+      resolve(data)
+    })
+  })
+}
+
+// 在我的模块，获取活动列表
+export function getActivityInMine(params) {
+  return new Promise((resolve, reject) => {
+    request._get(URL.queryActivityInMine, params).then(({data}) => {
+      data = data || []
+      resolve(data)
+    })
+  })
+}
+
+// 获取活动详情
+export function getActivityDetail(params) {
+  return new Promise((resolve) => {
+    request._get(URL.queryActivityDetail, params).then(({data}) => {
+      resolve(data)
     })
   })
 }

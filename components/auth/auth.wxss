@@ -1,3 +1,4 @@
+@import "../../assets/css/common.wxss";
 .auth {
     position: fixed;
     top: 0;
@@ -60,7 +61,6 @@
     font: 500 40rpx/96rpx PingFang SC;
     text-align: center;
     border-radius: 48rpx;
-    background: #CC0000;
     color: white;
 }
 

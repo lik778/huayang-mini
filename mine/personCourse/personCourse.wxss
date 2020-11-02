@@ -1,0 +1,58 @@
+@import "../../assets/css/common.wxss";
+.no-data-tips {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.no-data-tips > image {
+    margin-top: 100rpx;
+    width: 320rpx;
+    height: 230rpx;
+    font-size: 0;
+}
+.no-data-tips > text {
+    font: 36rpx/44rpx Helvetica;
+    color: #999;
+}
+.layout {
+    margin: 80rpx 0 10rpx 30rpx;
+    font:  500 44rpx/60rpx PingFangSC;
+}
+.course-item {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 20rpx 30rpx;
+    border-bottom: 2rpx solid #F2F2F2;
+}
+.course-item:active {
+    opacity: 0.9;
+}
+.course-image {
+    width: 220rpx;
+    height: 220rpx;
+    font-size: 0;
+    border-radius: 8rpx;
+    margin-right: 24rpx;
+}
+.course-info {
+    width: 446rpx;
+    height: 220rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.course-title {
+    font: 32rpx/44rpx PingFangSC;
+}
+.continue-btn {
+    width: 200rpx;
+    height: 64rpx;
+    box-sizing: border-box;
+    border-radius: 999rpx;
+    border: 2rpx soLId #CC0000;
+    text-align: center;
+    font: 500 32rpx/60rpx PingFangSC;
+    color: #CC0000;
+}

@@ -1,8 +1,7 @@
-// subCourse/actionPage/actionPage.js
 import { $notNull, getLocalStorage } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
 import { LocaleVoice, voices_ary, voices_key, voices_number } from "../../lib/voices"
-import { completePractice, increaseExp, recordPracticeBehavior } from "../../api/course/index"
+import { completePractice, recordPracticeBehavior } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
 import { collectError } from "../../api/auth/index"
 
@@ -51,11 +50,6 @@ Page({
 		didPauseRecordGlobalTime: false, // 是否停止全局计时器
 
 		didShowResultLayer: false, // 结果层
-
-		didShowLevelAlert: false, // 等级经验弹窗
-		hasGrade: false, // 是否升级
-		levelNumber: 0, // 升级等级/经验
-		nextLevelText: "", // 升下一级所需经验
 
 		didPracticeDone: false, // 整个练习是否结束
 
@@ -634,18 +628,6 @@ Page({
 			// 「恭喜你完成练习」
 			await this.playTempBgAudio(LocaleVoice.lv6)
 			this.setData({isRunning: false})
-			// 经验值提升弹窗
-			increaseExp({task_type: "task_pratice"}).then((data) => {
-				// 升级信息
-				if ($notNull(data)) {
-					this.setData({
-						didShowLevelAlert: true,
-						hasGrade: data.has_grade,
-						levelNumber: data.has_grade ? data.level : 10,
-						nextLevelText: data.level < 3 ? `还差${data.next_experience - data.experience}升至Lv${data.level + 1}解锁` : ""
-					})
-				}
-			})
 		}
 	},
 	// 切换下个动作

@@ -15,7 +15,7 @@
               <view class="course-info">
                   <text class="course-title limit-two-line">{{item.name}}</text>
                   <view class="course-tag"><text class="{{item.category}}">{{item.category==='fitness'?'健身':item.category==='fashion'?'时尚':'静心慢生活'}}</text></view>
-                  <view class="price limit-one-line">
+                  <view class="price limit-one-line subject-font-color">
                       <text class="free">¥{{item.price}}</text>
                       <text class="free-txt">{{item.tipsText}}</text>
                   </view>
@@ -40,7 +40,7 @@
                 <view class="unlock-content" wx:if="{{didHelped}}">同一课程仅能帮好友解锁一次</view>
                 <view class="unlock-content" wx:if="{{!didHelped}}">授权以帮你的好友解锁课程</view>
             </block>
-            <view class="unlock-btn" catch:tap="handlerHelp">确定</view>
+            <view class="unlock-btn subject-font-color" catch:tap="handlerHelp">确定</view>
         </view>
     </view>
 </view>

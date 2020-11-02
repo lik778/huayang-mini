@@ -11,7 +11,8 @@ import {
 	queryUserJoinedBootCamp,
 	queryUserJoinedClasses,
 	queryUserRecentPracticeLog,
-	getVideoPracticeData
+	getVideoPracticeData,
+	getWxRoomData
 } from "../../api/course/index"
 import {
 	CourseLevels,
@@ -225,15 +226,23 @@ Page({
 				switch (item.kecheng_type) {
 					case 0: {
 						// 直播
-						wx.navigateTo({
-							url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${item.room_id}`
+						getWxRoomData({
+							zhibo_room_id: item.room_id
+						}).then(res => {
+							wx.navigateTo({
+								url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${res.zhibo_room.num}`
+							})
 						})
 						return
 					}
 					case 1: {
 						// 回看
-						wx.navigateTo({
-							url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${item.room_id}`
+						getWxRoomData({
+							zhibo_room_id: item.room_id
+						}).then(res => {
+							wx.navigateTo({
+								url: `/pages/webViewCommon/webViewCommon?link=${res.zhibo_room.link}`,
+							})
 						})
 						return
 					}
@@ -288,7 +297,7 @@ Page({
 		} = e.currentTarget.dataset.item
 		if (status !== 3) {
 			wx.navigateTo({
-				url: "/subCourse/campDetail/campDetail?id=" + bootCampId
+				url: "/subCourse/campDetail/campDetail?id=" + bootCampId + "&from=practice"
 			})
 		}
 	},

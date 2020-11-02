@@ -74,8 +74,8 @@
                 <view class="failure" wx:else>
                     <text>抱歉，您的训练营已到期，您可以：</text>
                     <view class="failure-btn">
-                        <view class="choose-other" bind:tap="goToDiscovery">选择其他</view>
-                        <view class="choose-restart" bind:tap="restartToBootCamp" data-item="{{item}}">重新开始</view>
+                        <view class="choose-other subject-font-color subject-bg-color" bind:tap="goToDiscovery">选择其他</view>
+                        <view class="choose-restart subject-bg-color" bind:tap="restartToBootCamp" data-item="{{item}}">重新开始</view>
                     </view>
                 </view>
             </block>

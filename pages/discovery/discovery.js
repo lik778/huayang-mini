@@ -276,7 +276,7 @@ Page({
   toWebview() {
     if (request.baseUrl === 'https://huayang.baixing.cn') {
       wx.navigateTo({
-        url: '/subCourse/lotteryWebview/lotteryWebview?activity_id=1',
+        url: '/subCourse/lotteryWebview/lotteryWebview?activity_id=2',
       })
     }
   },
