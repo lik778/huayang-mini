@@ -495,7 +495,9 @@ export function liveTotalNum(params) {
 
 export function createFissionTask(params) {
 	return new Promise(resolve => {
-		request._post(URL.fissionCreate, params).then(({data}) => {
+		request._post(URL.fissionCreate, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -503,7 +505,9 @@ export function createFissionTask(params) {
 
 export function getFissionDetail(params) {
 	return new Promise(resolve => {
-		request._get(URL.fissionDetail, params).then(({data}) => {
+		request._get(URL.fissionDetail, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -511,7 +515,9 @@ export function getFissionDetail(params) {
 
 export function joinFissionTask(params) {
 	return new Promise(resolve => {
-		request._post(URL.fissionJoin, params).then(({data}) => {
+		request._post(URL.fissionJoin, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -519,7 +525,9 @@ export function joinFissionTask(params) {
 
 export function unlockFissionTask(params) {
 	return new Promise(resolve => {
-		request._post(URL.fissionUnlock, params).then(({data}) => {
+		request._post(URL.fissionUnlock, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -527,7 +535,9 @@ export function unlockFissionTask(params) {
 
 export function checkFissionTaskStatus(params) {
 	return new Promise(resolve => {
-		request._get(URL.fissionJudge, params).then(({data}) => {
+		request._get(URL.fissionJudge, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -535,7 +545,32 @@ export function checkFissionTaskStatus(params) {
 
 export function queryFissionList(params) {
 	return new Promise(resolve => {
-		request._get(URL.fissionCourseList, params).then(({data}) => {
+		request._get(URL.fissionCourseList, params).then(({
+			data
+		}) => {
+			data = data || []
+			resolve(data)
+		})
+	})
+}
+
+// 获取抽奖活动信息
+export const getLotteryActivityData = (params) => {
+	return new Promise(resolve => {
+		request._get(URL.getLotteryActivityData, params).then(({
+			data
+		}) => {
+			data = data || []
+			resolve(data)
+		})
+	})
+}
+
+export const getWxRoomData = (params) => {
+	return new Promise(resolve => {
+		request._get(URL.getWxRoomData, params).then(({
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})

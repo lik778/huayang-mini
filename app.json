@@ -71,13 +71,18 @@
         "practiceDetail/practiceDetail",
         "actionPage/actionPage",
         "practiceManage/practiceManage",
-        "campDetail/campDetail",
+        "campDetails/campDetails",
         "joinCamp/joinCamp",
         "actionPost/actionPost",
         "videoCourse/videoCourse",
         "videoCourseList/videoCourseList",
+        "competitionWebview/competitionWebview",
         "invitePage/invitePage",
-        "receiveCourseList/receiveCourseList"
+        "receiveCourseList/receiveCourseList",
+        "lotteryWebview/lotteryWebview",
+        "campDetail/campDetail",
+        "campPeriodList/campPeriodList",
+        "noAuthWebview/noAuthWebview"
       ]
     },
     {

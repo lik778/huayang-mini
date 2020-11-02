@@ -33,8 +33,8 @@
         </view>
     </view>
     <view class="operate">
-        <button open-type="share" class="share-btn" bind:tap="punchCard">分享到群内打卡</button>
-        <view class="save" bind:tap="saveToLocal">保存海报到相册</view>
+        <button open-type="share" class="share-btn subject-font-color" bind:tap="punchCard">分享到群内打卡</button>
+        <view class="save subject-bg-color" bind:tap="saveToLocal">保存海报到相册</view>
     </view>
     <canvas style="height:480px;width:300px;" id="canvas-order" canvas-id="actionOrder"></canvas>
 </view>

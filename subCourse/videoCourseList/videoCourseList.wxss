@@ -1,4 +1,5 @@
 @import "../../assets/css/common.wxss";
+
 .type-list {
   display: flex;
   align-items: center;
@@ -49,6 +50,7 @@
   padding-top: 116rpx;
   width: calc(100% - 60rpx);
 }
+
 .list-none {
   display: flex;
   flex-direction: column;
@@ -78,9 +80,11 @@
   padding: 30rpx 0;
   border-bottom: 2rpx solid #F2F2F2;
 }
+
 .course-item:active {
   opacity: 0.9;
 }
+
 .course-image {
   width: 220rpx;
   height: 220rpx;
@@ -88,6 +92,7 @@
   border-radius: 8rpx;
   margin-right: 24rpx;
 }
+
 .course-info {
   width: 446rpx;
   height: 220rpx;
@@ -95,12 +100,14 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
 .course-title {
   font: 32rpx/44rpx PingFangSC;
 }
-.course-tag {
-}
-.course-tag > text {
+
+.course-tag {}
+
+.course-tag>text {
   box-sizing: border-box;
   padding: 10rpx 20rpx;
   border-radius: 24rpx 2rpx 24rpx 2rpx;
@@ -108,23 +115,25 @@
   background: #CAE8D4;
   color: #0C5244;
 }
-.course-tag > text.fitness {
+
+.course-tag>text.fitness {
   background: #F5CDC0;
   color: #722911;
 }
-.course-tag > text.fashion {
+
+.course-tag>text.fashion {
   background: #F0E5D4;
   color: #69440D;
 }
 
 .price {
   font: 32rpx/44rpx PingFangSC;
-  color: #CC0000;
 }
+
 .free {
   margin-right: 20rpx;
   text-decoration: line-through;
-  color: rgba(0,0,0,0.5)
+  color: rgba(0, 0, 0, 0.5)
 }
-.free-txt {
-}
+
+.free-txt {}

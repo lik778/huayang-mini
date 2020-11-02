@@ -106,6 +106,13 @@ Page({
 						wx.switchTab({
 							url: this.data.redirectPath
 						})
+					} else if (this.data.redirectType === 'navigation') {
+						// 表演赛
+						let link = this.data.redirectPath.split("?link=")[1]
+						let naviLink = "/subCourse/competitionWebview/competitionWebview"
+						wx.navigateTo({
+							url: this.data.redirectPath
+						})
 					} else if (!this.data.fromWebView) {
 						let user_id = getLocalStorage(GLOBAL_KEY.userId)
 						let user_grade = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).user_grade
@@ -116,6 +123,7 @@ Page({
 							url: `${rootUrl}${link}&type=link&isModel=true`,
 						})
 					} else {
+						console.log(this.data.redirectPath)
 						wx.navigateTo({
 							url: this.data.redirectPath
 						})
@@ -156,10 +164,14 @@ Page({
 	 */
 	onLoad: function (options) {
 		let {
-			invite_user_id = "", source = '', redirectPath, redirectType, fromWebView = 0, didNeedDecode = 0
+			invite_user_id = "", source = '', redirectPath, redirectType, fromWebView = 0, didNeedDecode = 0, needDecode = false
 		} = options
 
 		if (+didNeedDecode === 1) {
+			redirectPath = decodeURIComponent(redirectPath)
+		}
+
+		if (needDecode) {
 			redirectPath = decodeURIComponent(redirectPath)
 		}
 
@@ -241,8 +253,7 @@ Page({
 	/**
 	 * Lifecycle function--Called when page unload
 	 */
-	onUnload: function () {
-	},
+	onUnload: function () {},
 
 	/**
 	 * Page event handler function--Called when user drop down

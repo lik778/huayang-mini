@@ -1,0 +1,4 @@
+<!--subCourse/lotteryWebview/lotteryWebview.wxml-->
+<view>
+  <web-view src="{{src}}"></web-view>
+</view>

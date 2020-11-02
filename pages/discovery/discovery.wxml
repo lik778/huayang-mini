@@ -21,7 +21,7 @@
 		<!-- 视频课 -->
 		<view class="video-course" id='video-course'>
 			<view class="video-course-title">
-				<view class="video-course-title-left">课程</view>
+				<view class="video-course-title-left" bindtap="toWebview">课程</view>
 				<view class="video-course-title-right" bindtap="toVideoList">更多课程 ›</view>
 			</view>
 			<view class="video-course-main" wx:if="{{false}}">
@@ -46,7 +46,7 @@
 					<view class="course-info">
 						<text class="course-title limit-two-line">{{item.name}}</text>
 						<view class="course-tag"><text class="{{item.category}}">{{item.category==='fitness'?'健身':item.category==='fashion'?'时尚':'静心慢生活'}}</text></view>
-						<view class="price limit-one-line" wx:if="{{showMoney}}">
+						<view class="price limit-one-line subject-font-color" wx:if="{{showMoney}}">
 							<text class="free" wx:if="{{item.price > 0}}">¥{{item.price}}</text>
 							<text class="free-txt">{{item.tipsText}}</text>
 						</view>

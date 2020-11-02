@@ -1,0 +1,4 @@
+<!--subCourse/noAuthWebview/noAuthWebview.wxml-->
+<view>
+  <web-view src="{{link}}"></web-view>
+</view>

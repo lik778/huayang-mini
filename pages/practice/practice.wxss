@@ -208,8 +208,11 @@
     border-radius: 999rpx;
     font: 500 36rpx/72rpx PingFang SC;
     text-align: center;
+
+}
+
+.choose-restart {
     color: white;
-    background: #CC0000;
 }
 
 .choose-other:active,
@@ -222,7 +225,6 @@
     box-sizing: border-box;
     border: 2rpx solid #CC0000;
     font-weight: 400;
-    color: #CC0000;
     background: white;
 }
 
@@ -472,7 +474,7 @@
     line-height: 32rpx;
 }
 
-.video-practice-item-right-bottom-text{
+.video-practice-item-right-bottom-text {
     font-size: 32rpx;
     color: #000000;
     padding-right: 20rpx;

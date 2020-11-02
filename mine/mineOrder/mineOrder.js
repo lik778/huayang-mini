@@ -82,7 +82,7 @@ Page({
       // 眺望训练营
       let data = e.currentTarget.dataset.item.order_item_list[0]
       wx.navigateTo({
-        url: `/subCourse/campDetail/campDetail?id=${data.product_id}`,
+        url: `/subCourse/campDetail/campDetail?id=${data.product_id}&from=order`,
       })
     } else if (this.data.curentIndex == 0) {
       // 跳往课程详情
