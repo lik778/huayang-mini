@@ -72,6 +72,7 @@
   margin-bottom: 40rpx;
 }
 .content-element {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -103,6 +104,18 @@
   font: 500 32rpx/52rpx PingFangSC;
   color: #CC0000;
   text-align: center;
+}
+.ele-no {
+  position: absolute;
+  top: -18rpx;
+  right: -18rpx;
+  width: 44rpx;
+  height: 44rpx;
+  color: white;
+  text-align: center;
+  font: 500 32rpx/44rpx PingFangSC;
+  border-radius: 999rpx;
+  background: #CC0000;
 }
 .add-btn {
   width: 630rpx;

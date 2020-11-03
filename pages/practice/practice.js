@@ -1,49 +1,19 @@
 import {
-	getBannerList,
-	getYouZanAppId
-} from "../../api/mall/index"
-import {
-	createPracticeRecordInToday,
 	getCourseData,
-	queryBootCampContentInToday,
-	queryRecommendCourseList,
-	queryUserHaveClassesInfo,
-	queryUserJoinedBootCamp,
-	queryUserJoinedClasses,
-	queryUserRecentPracticeLog,
-	getVideoPracticeData,
-	getWxRoomData
+	getUserPracticeRecentRecord,
+	getWxRoomData,
+	queryBootCampContentInToday
 } from "../../api/course/index"
-import {
-	CourseLevels,
-	GLOBAL_KEY
-} from "../../lib/config"
+import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
-import {
-	$notNull,
-	calculateExerciseTime,
-	getLocalStorage,
-	hasAccountInfo,
-	setLocalStorage
-} from "../../utils/util"
+import { $notNull, getLocalStorage, hasAccountInfo, setLocalStorage } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
-const TagImageUrls = {
-	// done 今日完成
-	done: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596262295sLZtTc.jpg",
-	// none 今日未完成
-	none: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596446506oAldMH.jpg",
-	// gone 之前完成
-	gone: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596262385rBoLOO.jpg",
-	// forget 未完成
-	forget: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596446539AZlUwr.jpg"
-}
-
 const CourseTypeImage = {
-	kecheng: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596352654quOqYe.jpg",
-	video: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596352666EUnLUw.jpg",
-	url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596352721XfdrJj.jpg",
-	product: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596352734UhOOIu.jpg"
+	kecheng: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604371266ssIXdS.jpg",
+	video: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604371293cxSwya.jpg",
+	url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604371371aIBDqI.jpg",
+	product: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604371414cXAdkH.jpg"
 }
 
 Page({
@@ -52,19 +22,11 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
-		TagImageUrls,
 		CourseLevels,
 		CourseTypeImage,
-		bannerList: [],
-		videoPracticeList: [],
-		userHaveClassesInfo: {}, // 用户的学习数据统计
-		userJoinedClassesList: [], // 用户加入的课程列表
-		recommendList: [], // 推荐课程列表
-		weeklyLog: [], // 本周打卡记录
-		bootCampList: [], // 训练营
+		handledData: [],
+		resultData: [],
 		didShowTipsLay: false, // 显示提示收藏蒙层
-		currentBannerItem: 0,
-		exerciseTime: 0 // 训练时间
 	},
 
 	/**
@@ -101,7 +63,8 @@ Page({
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
-	onReady: function () {},
+	onReady: function () {
+	},
 
 	/**
 	 * 生命周期函数--监听页面显示
@@ -156,29 +119,7 @@ Page({
 	onShareAppMessage: function () {
 		return {
 			title: '跟着花样一起变美，变自信',
-			path: `/pages/practice/practice?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
-		}
-	},
-	// 处理轮播点击事件
-	jumpToLink(e) {
-		let {
-			link,
-			link_type
-		} = e.currentTarget.dataset.item
-		bxPoint("applets_banner", {
-			position: 'page/practice/practice'
-		}, false)
-		if (link_type === 'youzan') {
-			getYouZanAppId().then(appId => {
-				wx.navigateToMiniProgram({
-					appId,
-					path: link,
-				})
-			})
-		} else {
-			wx.navigateTo({
-				url: link
-			})
+			path: `/pages/discovery/discovery?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
 		}
 	},
 	hiddenTipMask() {
@@ -198,12 +139,6 @@ Page({
 			setLocalStorage(key, now + buf)
 		}
 	},
-	// swiper切换
-	changeSwiperIndex(e) {
-		this.setData({
-			currentBannerItem: e.detail.current
-		})
-	},
 	// 处理点击课程事件
 	handleCourseTap(e) {
 		wx.navigateTo({
@@ -216,10 +151,6 @@ Page({
 			item,
 			parent
 		} = e.currentTarget.dataset
-		if (item.type !== "kecheng" && item.kecheng_type !== 3) {
-			// 创建用户当日练习记录
-			createPracticeRecordInToday()
-		}
 		bxPoint("practice_start", {}, false)
 		switch (item.type) {
 			case 'kecheng': {
@@ -283,12 +214,6 @@ Page({
 			}
 		}
 	},
-	// 课程管理
-	goToPracticeManage() {
-		wx.navigateTo({
-			url: "/subCourse/practiceManage/practiceManage"
-		})
-	},
 	// 查看训练营详情
 	goToBootCamp(e) {
 		let {
@@ -317,34 +242,6 @@ Page({
 			url: '/pages/discovery/discovery'
 		})
 	},
-	// 生成本周打卡日志
-	generateWeeklyLog() {
-		let now = dayjs()
-		let todayDate = now.date()
-		let mondayDateInThisWeek = now.day(0)
-		return new Array(7).fill("").map((item, index) => {
-			let date = mondayDateInThisWeek.add(index, 'day').date()
-			return {
-				date,
-				dateText: date === todayDate ? '今天' : "周" + "日一二三四五六".charAt(index),
-				status: date === todayDate ? 'none' : 'forget'
-			}
-		})
-	},
-	// 获取视频课程学历列表
-	getVideoPracticeList() {
-		getVideoPracticeData().then(res => {
-			if (res.length > 0) {
-				for (let i in res) {
-					res[i].kecheng_series.video_detail = JSON.parse(res[i].kecheng_series.video_detail)
-					res[i].videoList = res[i].kecheng_series.video_detail.length
-				}
-			}
-			this.setData({
-				videoPracticeList: res
-			})
-		})
-	},
 	// 跳往视频课程详情
 	toVideoDetail(e) {
 		let id = e.currentTarget.dataset.item.kecheng_series.id
@@ -352,120 +249,123 @@ Page({
 			url: `/subCourse/videoCourse/videoCourse?videoId=${id}`,
 		})
 	},
-	// 推荐课程
-	queryRecommendClasses() {
-		queryRecommendCourseList({
-			scene: 'zhide_kecheng_pratice'
-		}).then((recommendList) => {
-			recommendList.filter(r => r).forEach(recommendItem => {
-				recommendItem.exerciseTime = calculateExerciseTime(recommendItem.duration)
-			})
-			this.setData({
-				recommendList
-			})
-		})
-	},
 	async initial() {
-		// banner
-		getBannerList({
-			scene: 7
-		}).then((bannerList) => {
-			this.setData({
-				bannerList
-			})
-		})
-
 		if (hasAccountInfo()) {
-			// 用户加入的课程
-			queryUserJoinedClasses().then((userJoinedClassesList) => {
-				userJoinedClassesList.filter(c => c.kecheng).forEach(classItem => {
-					classItem.kecheng.exerciseTime = calculateExerciseTime(classItem.kecheng.duration)
-				})
-				if (userJoinedClassesList.length > 0) {
-					this.setData({
-						userJoinedClassesList
-					})
-				} else {
-					this.queryRecommendClasses()
-				}
-			})
-			// 获取加入的视频课程
-			this.getVideoPracticeList()
-			// 用户学习数据统计
-			queryUserHaveClassesInfo().then((userHaveClassesInfo) => {
-				this.setData({
-					userHaveClassesInfo,
-					exerciseTime: calculateExerciseTime(userHaveClassesInfo.study_time)
-				})
-			})
-
-			// 用户最近7天的打卡记录
-			let userRecentPracticeLog = await queryUserRecentPracticeLog({
-				limit: 7
-			})
-			let weeklyLog = this.generateWeeklyLog()
-			let now = dayjs()
-			weeklyLog.forEach((dayItem, index) => {
-				let target = userRecentPracticeLog.find(n => Number(String(n.date).slice(-2)) === dayItem.date)
-				if ($notNull(target)) {
-					dayItem.status = Number(String(target.date).slice(-2)) === now.date() ? 'done' : 'gone'
-				}
-			})
-			this.setData({
-				weeklyLog
-			})
-
-			// 获取训练营列表
-			let bootCampList = await queryUserJoinedBootCamp()
-			bootCampList = bootCampList.filter(item => +item.status !== 2 && +item.status !== 0)
-			let handlerBootCampList = []
-			for (const {
-					kecheng_traincamp_id,
-					date,
-					status,
-					kecheng_traincamp: {
-						name
-					}
-				} of bootCampList) {
-				// 根据训练营查找对应的课程
-				let dayDiff = dayjs().diff(dayjs(date), 'day', true)
-				let dayNum = dayDiff | 0
-				if (parseFloat(dayDiff) >= 0) {
-					dayNum += 1
-				} else {
-					dayNum = 0
-				}
-				let bootCampInfo = await queryBootCampContentInToday({
-					traincamp_id: kecheng_traincamp_id,
-					day_num: dayNum
-				})
-
-				let content = bootCampInfo && bootCampInfo.content ? JSON.parse(bootCampInfo.content) : []
-
-				// 解析课程详情
-				for (let index = 0; index < content.length; index++) {
-					let c = content[index]
-					if (c.kecheng_id) {
-						let kechengInfo = await getCourseData({
-							kecheng_id: c.kecheng_id
+			getUserPracticeRecentRecord({user_id: getLocalStorage(GLOBAL_KEY.userId)}).then(async (originData) => {
+				let handledData = []
+				for (let item of originData) {
+					if (item.hasOwnProperty("kecheng_traincamp")) {
+						// 训练营
+						let {kecheng_traincamp_id, date, status, kecheng_traincamp: {name}} = item
+						// 根据训练营查找对应的课程
+						let dayDiff = dayjs().diff(dayjs(date), 'day', true)
+						let dayNum = dayDiff | 0
+						if (parseFloat(dayDiff) >= 0) {
+							dayNum += 1
+						} else {
+							dayNum = 0
+						}
+						let bootCampInfo = await queryBootCampContentInToday({
+							traincamp_id: kecheng_traincamp_id,
+							day_num: dayNum
 						})
-						c.kecheng_type = kechengInfo.kecheng_type
-						c.room_id = kechengInfo.room_id
+
+						let content = bootCampInfo && bootCampInfo.content ? JSON.parse(bootCampInfo.content) : []
+
+						// 解析课程详情
+						for (let index = 0; index < content.length; index++) {
+							let c = content[index]
+							if (c.kecheng_id) {
+								let kechengInfo = await getCourseData({
+									kecheng_id: c.kecheng_id
+								})
+								c.kecheng_type = kechengInfo.kecheng_type
+								c.room_id = kechengInfo.room_id
+							}
+						}
+
+						handledData.push({
+							bootCampId: kecheng_traincamp_id,
+							name: name,
+							content,
+							status: +status,
+							visitAt: +dayjs(item.visit_at),
+							_mark: "bootcamp"
+						})
+					} else if (item.hasOwnProperty("kecheng_series")) {
+						// 视频课
+						item.kecheng_series.video_detail = JSON.parse(item.kecheng_series.video_detail)
+						item.videoList = item.kecheng_series.video_detail.length
+						handledData.push({
+							...item,
+							visitAt: +dayjs(item.visit_at),
+							_mark: "course"
+						})
 					}
 				}
 
-				handlerBootCampList.push({
-					bootCampId: kecheng_traincamp_id,
-					name: name,
-					content,
-					status: +status
+				handledData = handledData.sort((a, b) => b.visitAt - a.visitAt)
+
+				let now = dayjs()
+				let lastWeekTimestamp = +now.subtract(7, 'day')
+				let resultData = []
+				handledData.forEach(item => {
+					if (item.visitAt >= lastWeekTimestamp) {
+						// 7日内
+						let diffDay = now.diff(dayjs(item.visitAt).format("YYYY-MM-DD"), "day")
+						let key = ""
+						switch (+diffDay) {
+							case 0: {
+								key = "今天"
+								break;
+							}
+							case 1: {
+								key = "昨天"
+								break;
+							}
+							case 2: {
+								key = "3天前"
+								break;
+							}
+							case 3: {
+								key = "4天前"
+								break;
+							}
+							case 4: {
+								key = "5天前"
+								break;
+							}
+							case 5: {
+								key = "6天前"
+								break;
+							}
+							case 6: {
+								key = "7天前"
+								break;
+							}
+						}
+						let target = resultData.find(n => n.key === key)
+						if (!$notNull(target)) {
+							resultData.push({key, content: []})
+						}
+						target = resultData.find(n => n.key === key)
+						target.content.push(item)
+					} else {
+						// 超过7天
+						let key = dayjs(item.visitAt).format("YYYY-MM-DD")
+						let target = resultData.find(n => n.key === key)
+						if (!$notNull(target)) {
+							resultData.push({key, content: []})
+						}
+						target = resultData.find(n => n.key === key)
+						target.content.push(item)
+					}
 				})
-			}
-			this.setData({
-				bootCampList: handlerBootCampList.slice()
+
+				this.setData({
+					resultData
+				})
 			})
-		} else {
-			this.queryRecommendClasses()
 		}
 	}
 })

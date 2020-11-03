@@ -51,7 +51,8 @@
         "withdraw/withdraw",
         "personActivity/personActivity",
         "personBootcamp/personBootcamp",
-        "personCourse/personCourse"
+        "personCourse/personCourse",
+        "normal-web-view/normal-web-view"
       ]
     },
     {

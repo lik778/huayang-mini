@@ -1,11 +1,5 @@
 // pages/ discovery/discovery.js
-import {
-  getLocalStorage,
-  hasAccountInfo,
-  hasUserInfo,
-  setLocalStorage,
-  simpleDurationSimple
-} from "../../utils/util"
+import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage, simpleDurationSimple } from "../../utils/util"
 import request from "../../lib/request"
 import {
   getActivityList,
@@ -15,17 +9,10 @@ import {
   getVideoCourseList,
   liveTotalNum
 } from "../../api/course/index"
-import {
-  GLOBAL_KEY,
-  Version
-} from "../../lib/config"
-import {
-  checkFocusLogin
-} from "../../api/auth/index"
+import { GLOBAL_KEY, Version } from "../../lib/config"
+import { checkFocusLogin } from "../../api/auth/index"
 import bxPoint from "../../utils/bxPoint"
-import {
-  getYouZanAppId
-} from "../../api/mall/index"
+import { getYouZanAppId } from "../../api/mall/index"
 
 Page({
 
@@ -238,10 +225,10 @@ Page({
           let query = wx.createSelectorQuery()
           let height = 0
           query.select('#swiper-box').boundingClientRect((rect) => {
-            height = rect.height
+            height = rect ? rect.height : 0
           }).exec()
           query.select('#video-course').boundingClientRect((rect) => {
-            height += rect.height
+            height = rect ? rect.height : 0
             wx.pageScrollTo({
               duration: 100,
               scrollTop: height

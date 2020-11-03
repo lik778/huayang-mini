@@ -166,3 +166,23 @@ export function getActivityDetail(params) {
     })
   })
 }
+
+// 获取用户主题营、课程、活动数量
+export function getUserOwnerClasses(params) {
+  return new Promise((resolve) => {
+    request._get(URL.queryUserOwnerClasses, params).then(({data}) => {
+      data = data || {}
+      resolve(data)
+    })
+  })
+}
+
+// 获取用户中心引导私域链接
+export function getUserGuideLink() {
+  return new Promise((resolve) => {
+    request._get(URL.queryUserGuideLink).then(({data}) => {
+      data = data || []
+      resolve(data)
+    })
+  })
+}

@@ -1,5 +1,6 @@
 import { queryUserJoinedBootCamp } from "../../api/course/index"
 import { getRecommendBootcampInMine } from "../../api/mine/index"
+import dayjs from "dayjs"
 
 Page({
 
@@ -67,12 +68,8 @@ Page({
       this.main()
     }
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  more() {
+    wx.switchTab({url: "/pages/discovery/discovery"})
   },
   // 跳转到训练营详情
   joinCamp(e) {
@@ -90,9 +87,24 @@ Page({
 
       let oldOffset = this.data.offset
       let oldList = this.data.campList
-      list = list.map(t => t.kecheng_traincamp)
+      list = list.map(t => {
+        return {
+          ...t.kecheng_traincamp,
+          date: t.date
+        }
+      })
 
-      this.setData({campList: [...oldList, ...list], offset: oldOffset + list.length})
+      let resultCampList = [...oldList, ...list]
+
+      resultCampList = resultCampList.map((item) => {
+        // 判断训练营是否还未开始
+        if (dayjs(item.date).isAfter(dayjs(dayjs().format("YYYY-MM-DD")))) {
+          item._slut = true // 即将开营
+        }
+        return item
+      })
+
+      this.setData({campList: resultCampList, offset: oldOffset + list.length})
       // this.setData({campList: [], offset: 0})
 
       if (this.data.campList.length === 0) {

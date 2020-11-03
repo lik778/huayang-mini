@@ -125,7 +125,7 @@
                 </view>
             </view>
 
-            <view class="clockIn" bind:tap="show">打卡</view>
+            <view class="clockIn" bind:tap="show">分享</view>
         </view>
     </view>
 </view>
