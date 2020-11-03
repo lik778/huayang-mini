@@ -29,9 +29,9 @@
 
 /* 主题色 */
 .subject-font-color {
-    color: #CC0000;
+    color: #CC0000 !important;
 }
 
 .subject-bg-color {
-    background-color: #CC0000;
+    background-color: #CC0000 !important;
 }

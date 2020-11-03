@@ -155,7 +155,7 @@
     border-radius: 999rpx;
     box-sizing: border-box;
     font: 500 32rpx/96rpx PingFang SC;
-    color: white;
+
 }
 
 .share-btn:active,
@@ -165,6 +165,10 @@
 
 .share-btn {
     background: white;
+}
+
+.save {
+    color: white;
 }
 
 #canvas-order {
