@@ -1,0 +1,30 @@
+<!--mine/wallet/wallet.wxml-->
+<view class="wollet">
+	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+		<naviBar title="我的分销"></naviBar>
+	</view>
+	钱包
+	<button bindtap="tokeout">提现</button>
+	<button>我的推广</button>
+	<!-- tab切换 -->
+	<view class="tab-list">
+		<view wx:for='{{tabList}}' data-item="{{item}}">{{item.name}}</view>
+	</view>
+	<!-- 列表 -->
+	<view class="list">
+		<view class="item" wx:for="{{listData.traincamp_list}}">
+			<view class="item-title">训练营标题：{{item.name}}</view>
+			<view class="item-subtitle">训练营介绍：{{item.summary}}</view>
+			<view class="item-price">训练营价格：{{item.price/100}}元</view>
+			<view class="item-promotion-num">推广奖金：{{item.price/100*(item.distribution_ratio/100)}}元</view>
+			<button>立即推广</button>
+		</view>
+		<view class="item" wx:for="{{listData.series_list}}">
+			<view class="item-title">课程标题：{{item.name}}</view>
+			<view class="item-subtitle">课程介绍：{{item.desc}}</view>
+			<view class="item-price">课程价格：{{item.discount_price/100}}元</view>
+			<view class="item-promotion-num">推广奖金：{{item.discount_price/100*(item.distribution_ratio/100)}}元</view>
+			<button>立即推广</button>
+		</view>
+	</view>
+</view>

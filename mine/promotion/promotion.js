@@ -1,7 +1,10 @@
-// mine/withdraw/withdraw.js
+// mine/wallet/wallet.js
 import {
-  getLocalStorage,
+  getLocalStorage
 } from "../../utils/util"
+import {
+  getTakeoutList
+} from "../../api/markting/course"
 import {
   GLOBAL_KEY
 } from "../../lib/config"
@@ -11,20 +14,53 @@ Page({
    * 页面的初始数据
    */
   data: {
-    statusHeight: 0,
+    statusHeight: "",
+    listData: "",
+    tabList: [{
+      name: "全部",
+      index: 0
+    }, {
+      name: "训练营",
+      index: 1
+    }, {
+      name: "课程",
+      index: 2
+    }],
+    pageData: {
+      offset: 0,
+      limit: 10
+    }
   },
 
-  // 提现结果
-  toWithdrawResult() {
+  // 提现
+  tokeout() {
     wx.navigateTo({
-      url: '/mine/withdrawResult/withdrawResult',
+      url: '/mine/withdraw/withdraw',
     })
   },
 
+  // 去推广记录
+
+  // 获取推荐列表
+  getList(type) {
+    let params = {
+      offset: this.data.pageData.offset,
+      limit: this.data.pageData.limit,
+      show_type: type
+    }
+    getTakeoutList(params).then(res => {
+      console.log(res.data)
+      this.setData({
+        listData: res.data
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {},
+  onLoad: function (options) {
+    this.getList(0)
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -68,6 +104,5 @@ Page({
    */
   onReachBottom: function () {
 
-  },
-
+  }
 })
