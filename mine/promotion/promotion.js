@@ -32,6 +32,18 @@ Page({
     }
   },
 
+  // 切换tab分支
+  changeTab(e) {
+    let item = e.currentTarget.dataset.item
+    if (item.name === "训练营") {
+      this.getList(2)
+    } else if (item.name === "课程") {
+      this.getList(1)
+    } else if (item.name === "全部") {
+      this.getList(0)
+    }
+  },
+
   // 提现
   tokeout() {
     wx.navigateTo({
@@ -43,11 +55,19 @@ Page({
 
   // 获取推荐列表
   getList(type) {
-    let params = {
-      offset: this.data.pageData.offset,
-      limit: this.data.pageData.limit,
-      show_type: type
+    let params = ''
+    if (type !== 2) {
+      params = {
+        offset: this.data.pageData.offset,
+        limit: this.data.pageData.limit,
+        show_type: type
+      }
+    } else {
+      params = {
+        show_type: type
+      }
     }
+
     getTakeoutList(params).then(res => {
       console.log(res.data)
       this.setData({

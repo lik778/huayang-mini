@@ -8,7 +8,7 @@
 	<button>我的推广</button>
 	<!-- tab切换 -->
 	<view class="tab-list">
-		<view wx:for='{{tabList}}' data-item="{{item}}">{{item.name}}</view>
+		<view wx:for='{{tabList}}' data-item="{{item}}" bindtap="changeTab">{{item.name}}</view>
 	</view>
 	<!-- 列表 -->
 	<view class="list">
