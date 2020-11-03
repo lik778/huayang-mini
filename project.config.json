@@ -66,6 +66,12 @@
         {
           "name": "我的分销",
           "pathName": "mine/promotion/promotion",
+          "query": "promote_uid=331",
+          "scene": null
+        },
+        {
+          "name": "提现",
+          "pathName": "mine/withdraw/withdraw",
           "query": "",
           "scene": null
         }

@@ -11,3 +11,12 @@ export const getTakeoutList = params => {
     })
   })
 }
+
+// 提现
+export const kechengTakeout = params => {
+  return new Promise(resolve => {
+    request._get(URL.kechengTakeout, params).then(res => {
+      resolve(res)
+    })
+  })
+}

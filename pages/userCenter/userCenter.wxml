@@ -15,7 +15,7 @@
 		<view class="experience" wx:if="{{!noUserInfo}}">
 			<view class="experience-title">
 				<view class="experience-title-left">
-					<text class="experience-title-left-one">我的等级</text>
+					<text class="experience-title-left-one" bindtap="toTakeout">我的等级</text>
 					<text class="experience-title-left-two">Lv {{userInfo.user_grade}}</text>
 				</view>
 				<view class="experience-title-right">

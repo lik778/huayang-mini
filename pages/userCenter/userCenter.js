@@ -1,4 +1,6 @@
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 import request from "../../lib/request"
 import {
   getPhoneNumber,
@@ -8,8 +10,15 @@ import {
   needUpdateUserInfo,
   taskCheckIn
 } from "../../api/course/index"
-import { getUserInfo } from "../../api/mine/index"
-import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage } from "../../utils/util"
+import {
+  getUserInfo
+} from "../../api/mine/index"
+import {
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  setLocalStorage
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -41,6 +50,12 @@ Page({
       text03: "",
       showLevelAlert: false
     }
+  },
+  // 跳转至提现页
+  toTakeout() {
+    wx.navigateTo({
+      url: '/mine/promotion/promotion',
+    })
   },
   // 获取用户信息
   getUserSingerInfo() {
