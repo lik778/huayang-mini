@@ -16,6 +16,7 @@ Page({
   data: {
     statusHeight: "",
     listData: "",
+    accountInfo: "",
     tabList: [{
       name: "全部",
       index: 0
@@ -67,7 +68,6 @@ Page({
         show_type: type
       }
     }
-
     getTakeoutList(params).then(res => {
       console.log(res.data)
       this.setData({
@@ -94,7 +94,8 @@ Page({
    */
   onShow: function () {
     this.setData({
-      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
+      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
+      accountInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
     })
   },
 

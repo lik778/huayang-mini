@@ -4,6 +4,7 @@
 		<naviBar title="我的分销"></naviBar>
 	</view>
 	钱包
+	<view>感谢金金额：{{accountInfo.kecheng_user.deposit}}</view>
 	<button bindtap="tokeout">提现</button>
 	<button>我的推广</button>
 	<!-- tab切换 -->
