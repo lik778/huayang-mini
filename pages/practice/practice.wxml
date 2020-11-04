@@ -93,4 +93,8 @@
         </view>
         <view class="tip-line tip-text-02">收藏好课，每日练习找得到</view>
     </view>
+
+    <!-- 授权弹窗 -->
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
+    </authModule>
 </view>

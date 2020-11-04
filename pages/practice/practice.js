@@ -7,7 +7,7 @@ import {
 } from "../../api/course/index"
 import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
-import { $notNull, getLocalStorage, hasAccountInfo, setLocalStorage } from "../../utils/util"
+import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 const CourseTypeImage = {
@@ -29,6 +29,7 @@ Page({
 		resultData: [],
 		didShowTipsLay: false, // 显示提示收藏蒙层
 		didNeedScrollTop: false, // 是否需要将页面滑动到顶部
+		didShowAuth: false
 	},
 
 	/**
@@ -131,6 +132,15 @@ Page({
 			path: `/pages/discovery/discovery?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
 		}
 	},
+	// 用户确认授权
+	authCompleteEvent() {
+		this.setData({didShowAuth: false})
+		this.initial()
+	},
+	// 用户授权取消
+	authCancelEvent() {
+		this.setData({didShowAuth: false})
+	},
 	hiddenTipMask() {
 		this.setData({
 			didShowTipsLay: false
@@ -228,19 +238,15 @@ Page({
 	},
 	// 查看训练营详情
 	goToBootCamp(e) {
-		let {
-			bootCampId,
-			status
-		} = e.currentTarget.dataset.item
-		if (status !== 3) {
-			let self = this
-			wx.navigateTo({
-				url: "/subCourse/campDetail/campDetail?id=" + bootCampId + "&from=practice",
-				success() {
-					self.setData({didNeedScrollTop: true})
-				}
-			})
-		}
+		let {bootCampId} = e.currentTarget.dataset.item
+		this.setData({didNeedScrollTop: true})
+		let self = this
+		wx.navigateTo({
+			url: "/subCourse/campDetail/campDetail?id=" + bootCampId + "&from=practice",
+			success() {
+				self.setData({didNeedScrollTop: true})
+			}
+		})
 	},
 	restartToBootCamp(e) {
 		let {
@@ -254,9 +260,14 @@ Page({
 	goToDiscovery() {
 		bxPoint("parctice_choose", {}, false)
 		setLocalStorage("needToScrollTop", "1")
-		wx.switchTab({
-			url: '/pages/discovery/discovery'
-		})
+
+		if (hasUserInfo() && hasAccountInfo()) {
+			wx.switchTab({
+				url: '/pages/discovery/discovery'
+			})
+		} else {
+			this.setData({didShowAuth: true})
+		}
 	},
 	// 跳往视频课程详情
 	toVideoDetail(e) {

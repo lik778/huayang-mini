@@ -12,8 +12,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let { commonLink } = options
-    this.setData({commonLink})
+    let { link } = options
+    this.setData({commonLink: link})
   },
 
   /**

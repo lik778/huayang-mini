@@ -38,7 +38,7 @@ Page({
   joinPrivateDomain() {
     getUserGuideLink().then((link) => {
       wx.navigateTo({
-        url: `/mine/normal-web-view/normal-web-view?commonLink=${link}`,
+        url: `/mine/normal-web-view/normal-web-view?link=${link}`,
         fail() {
           wx.switchTab({url: "pages/userCenter/userCenter"})
         }
