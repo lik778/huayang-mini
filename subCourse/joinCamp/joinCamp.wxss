@@ -1,4 +1,3 @@
-/* subCourse/joinCamp/joinCamp.wxss */
 @import "../../assets/css/common.wxss";
 
 .detail {
@@ -105,11 +104,6 @@
   text-decoration: none;
 }
 
-
-
-
-
-
 .pay {
   font-size: 40rpx;
   font-family: PingFangSC-Medium, PingFang SC;
@@ -118,54 +112,4 @@
   line-height: 96rpx;
   border-radius: 48rpx;
   text-align: center;
-}
-
-.level-alert {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  background: rgba(0, 0, 0, .5);
-  z-index: 20;
-}
-
-.box {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-  border-radius: 16rpx;
-  box-sizing: border-box;
-  padding: 110rpx 70rpx 50rpx;
-  background: white;
-}
-
-.box image {
-  position: absolute;
-  left: 50%;
-  top: -50rpx;
-  transform: translateX(-50%);
-  width: 110rpx;
-  height: 134rpx;
-}
-
-.text-01 {
-  font: 44rpx/60rpx PingFang SC;
-}
-
-.alert-btn {
-  font: 500 40rpx/48rpx PingFang SC;
-  color: white;
-  padding: 24rpx 120rpx;
-  border-radius: 999rpx;
-  margin-top: 38rpx;
-}
-
-.alert-btn:active {
-  opacity: 0.8;
 }

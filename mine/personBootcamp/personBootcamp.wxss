@@ -1,4 +1,7 @@
 @import "../../assets/css/common.wxss";
+.person-bootcamp {
+    padding-bottom: 210rpx;
+}
 .no-data-tips {
     display: flex;
     flex-direction: column;
@@ -74,4 +77,21 @@
     color: rgba(255, 255, 255, 1);
     text-align: center;
     line-height: 60rpx;
+}
+.more-btn {
+    position: fixed;
+    bottom: 60rpx;
+    left: 0;
+    right: 0;
+    width: 690rpx;
+    height: 96rpx;
+    margin: 0 auto;
+    border-radius: 999rpx;
+    background: #CC0000;
+    color: white;
+    font: 500 40rpx/96rpx PingFangSC;
+    text-align: center;
+}
+.more-btn:active {
+    opacity: 0.8;
 }

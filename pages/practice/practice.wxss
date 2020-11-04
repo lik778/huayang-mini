@@ -2,149 +2,83 @@
 
 .practice {
     position: relative;
-    padding: 15rpx 30rpx 180rpx;
-}
-
-/*banner*/
-.banner {
-    overflow: hidden;
-    width: 100%;
-    height: 320rpx;
-    margin-bottom: 100rpx;
-}
-
-.swiper-item {
-    height: inherit;
-    border-radius: 8rpx;
-}
-
-.swiper-dot {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 356rpx;
-    left: 0;
-    right: 0;
-}
-
-.swiper-dot-item {
-    width: 22rpx;
-    height: 8rpx;
-    border-radius: 4rpx;
-    background: rgba(216, 216, 216, 1);
-    margin-right: 8rpx;
-}
-
-.active {
-    background: #3A3C48;
-}
-
-.banner image {
-    width: inherit;
-    height: inherit;
+    padding: 30rpx 30rpx 180rpx;
+    min-height: calc(100vh - 120rpx);
+    box-sizing: border-box;
+    background: #F9F9F9;
 }
 
 /*support-layer*/
 .support-layer {
-    font: 52rpx/52rpx PingFang SC;
+    margin-bottom: 30rpx;
+    font: 500 44rpx/60rpx PingFang SC;
 }
 
 .title {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin: 84rpx 0 36rpx;
-    font: 52rpx/52rpx PingFang SC;
+    font: 500 44rpx/60rpx PingFang SC;
 }
 
-.manage {
-    font: 32rpx/44rpx PingFang SC;
-    color: #748BBE;
+/*recent-record*/
+.recent-record {
 }
 
-.manage:active {
-    opacity: 0.8;
-}
-
-.exercise-time {
-    margin: 40rpx 0 84rpx;
-}
-
-.time {
-    font: 96rpx/96rpx Condensed;
-}
-
-.unit {
-    margin-left: 20rpx;
-    font: 32rpx/72rpx PingFang SC;
-}
-
-/*week line*/
-.week-line {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 50rpx;
-}
-
-.week-line::after {
-    position: absolute;
-    bottom: 18rpx;
-    left: 30rpx;
-    right: 30rpx;
-    content: "";
-    box-sizing: border-box;
-    height: 2rpx;
-    border-bottom: 2rpx dashed #d5d5d5;
-}
-
-.day-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font: 32rpx/32rpx PingFang SC;
-    color: #666;
-}
-
-.day-icon {
-    margin-top: 22rpx;
-    width: 36rpx;
-    height: 36rpx;
-    z-index: 2;
-}
-
-/*today-boot-camp-plan*/
-.today-boot-camp-plan {}
-
-.boot-camp {
+.record-box {
+    padding: 30rpx;
     margin-bottom: 40rpx;
+    box-sizing: border-box;
+    border-radius: 8rpx;
+    box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.1);
+    background: #fff;
+}
+
+.record-layout {
+    font: 500 36rpx/50rpx PingFangSC;
+}
+
+.record-in-box {
+    margin-top: 30rpx;
+}
+
+/*训练营*/
+.boot-camp {
     border-radius: 8rpx;
     overflow: hidden;
-    box-shadow: 0 0 12rpx 0 rgba(0, 0, 0, 0.1);
+    border: 2rpx solid #F2F2F2;
 }
-
-.boot-camp-no-shadow {
-    box-shadow: none;
-}
-
+/*空页面*/
 .no-camp {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 348rpx;
-    font: 44rpx/60rpx PingFang SC;
-    background: #f9f9f9;
+    font: 500 36rpx/50rpx PingFang SC;
+    color: #999;
+}
+
+.empty-image {
+    margin-top: 80rpx;
+    width: 320rpx;
+    height: 230rpx;
+    font-size: 0;
+}
+
+.empty-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .find-camp-btn {
-    margin-top: 40rpx;
-    padding: 20rpx 56rpx;
-    font: 500 36rpx/36rpx PingFanf SC;
+    width: 522rpx;
+    height: 96rpx;
+    margin-top: 70rpx;
+    font: 500 40rpx/96rpx PingFangSC;
     border-radius: 999rpx;
+    text-align: center;
     background: #c00;
     color: white;
 }
@@ -158,7 +92,11 @@
     justify-content: space-between;
     align-items: center;
     padding: 40rpx 30rpx;
-    font: bold 36rpx/36rpx PingFang SC;
+    font: 500 36rpx/36rpx PingFang SC;
+}
+
+.boot-camp-name-text {
+    width: 410rpx;
 }
 
 .segmentation {
@@ -231,7 +169,9 @@
 .all-boot-camp {
     position: relative;
     margin-right: 20rpx;
+    width: 128rpx;
     font: 400 32rpx/44rpx PingFang SC;
+    color: #CC0000;
 }
 
 .all-boot-camp:active {
@@ -245,14 +185,14 @@
     top: 10rpx;
     width: 14rpx;
     height: 24rpx;
-    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596349810BPOvPr.jpg") no-repeat center;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604371210XGeKxD.jpg") no-repeat center;
     background-size: contain;
 }
 
 .boot-camp-content {
     display: flex;
     flex-direction: column;
-    padding: 30rpx;
+    padding: 30rpx 30rpx 30rpx 12rpx;
 }
 
 .boot-camp-course {
@@ -280,112 +220,33 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 56rpx;
-    height: 56rpx;
+    width: 62rpx;
+    height: 62rpx;
     margin-right: 10rpx;
     border-radius: 999rpx;
-    background: #F4F4F4;
 }
 
-.icon-kecheng {
-    width: 26rpx;
-    height: 32rpx;
+.icon-box > image {
+    font-size: 0;
+    width: 62rpx;
+    height: 62rpx;
 }
 
-.icon-video {
-    width: 34rpx;
-    height: 22rpx;
-}
-
-.icon-url,
-.icon-product {
-    width: 24rpx;
-    height: 28rpx;
+.boot-camp-content-name {
+    width: 360rpx;
+    font: 30rpx/42rpx PingFangSC;
 }
 
 .boot-camp-start {
+    width: 128rpx;
+    height: 56rpx;
     text-align: center;
     border-radius: 999rpx;
-    padding: 12rpx 24rpx;
-    color: white;
-    font: 28rpx/28rpx PingFang SC;
-    background: #c00;
-}
-
-/*today-practice-list*/
-.today-practice-list {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 50rpx;
-}
-
-.practice-item {
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 200rpx;
-    padding: 30rpx;
-    margin-bottom: 30rpx;
+    color: #c00;
+    border: 2rpx solid #c00;
     box-sizing: border-box;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    border-radius: 8rpx;
-    color: white;
-}
-
-.practice-item::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.15);
-    z-index: 0;
-}
-
-.practice-item:last-child {
-    margin-bottom: 0;
-}
-
-.practice-item:active {
-    opacity: 0.8;
-}
-
-.practice-item view {
-    z-index: 1;
-}
-
-.practice-name {
-    font: bold 44rpx/60rpx Helvetica;
-}
-
-.practice-sub {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font: 32rpx/44rpx PingFang SC;
-}
-
-.practice-desc text {
-    margin-right: 30rpx;
-}
-
-.practice-desc text:last-child {
-    margin-right: 0;
-}
-
-.join-now {
-    padding: 8rpx 36rpx;
-    border: 3rpx solid white;
-    border-radius: 999rpx;
-}
-
-.recommend-title {
-    margin: 100rpx 0 40rpx;
+    font: 500 32rpx/52rpx PingFang SC;
+    background: white;
 }
 
 .tip-mask {
@@ -423,16 +284,13 @@
     margin-right: 62rpx;
 }
 
-/* 视频学习列表 */
+/* 视频课 */
 .video-practice-list {
     margin-top: 10rpx;
-
 }
 
 .video-practice-item {
-    margin-bottom: 30rpx;
     display: flex;
-
 }
 
 .video-practice-item-left {
@@ -454,33 +312,27 @@
 }
 
 .video-practice-item-right-top {
-    font-size: 32rpx;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
+    font: 32rpx/44rpx PingFangSC;
     color: #000000;
-    line-height: 44rpx;
     text-overflow: -o-ellipsis-lastline;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    -webkit-box-orient: vertical;
 }
 
 .video-practice-item-right-bottom {
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
-    line-height: 32rpx;
+    font: 28rpx/32rpx PingFangSC;
+    color: #666666;
 }
 
-.video-practice-item-right-bottom-text {
-    font-size: 32rpx;
-    color: #000000;
-    padding-right: 20rpx;
-}
-
-.video-practice-item-right-bottom-text-one {
-    font-size: 28rpx;
-    color: #888888;
+.video-practice-btn {
+    width: 180rpx;
+    height: 56rpx;
+    border: 2rpx solid #c00;
+    border-radius: 999rpx;
+    background: white;
+    color: #c00;
+    box-sizing: border-box;
+    font: 500 32rpx/52rpx PingFangSC;
+    text-align: center;
 }

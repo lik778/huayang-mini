@@ -1,7 +1,7 @@
 import { GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
 import { getPhoneNumber } from "../../api/course/index"
-import { getUserInfo } from "../../api/mine/index"
+import { getUserGuideLink, getUserInfo, getUserOwnerClasses } from "../../api/mine/index"
 import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
@@ -16,14 +16,36 @@ Page({
     statusHeight: 0,
     nodata: true,
     phoneNumber: "",
-    existNo: undefined
+    existNo: undefined,
+    activity_count: 0,
+    kecheng_count: 0,
+    traincamp_count: 0
+  },
+  // 获取用户主题营、课程、活动数量数据
+  queryContentInfo() {
+    if (hasUserInfo() && hasAccountInfo()) {
+      getUserOwnerClasses({user_id: getLocalStorage(GLOBAL_KEY.userId)}).then((data) => {
+        let {activity_count = 0, kecheng_count = 0, traincamp_count = 0} = data
+        this.setData({
+          activity_count,
+          kecheng_count,
+          traincamp_count
+        })
+      })
+    }
   },
   // 加私域
   joinPrivateDomain() {
-    let link = "https://mp.weixin.qq.com/s?__biz=MzU0NTI4NTQ3Nw==&mid=2247485649&idx=1&sn=31b40c6c3bb150b6ce1461270ada4be1&chksm=fb6e7cdbcc19f5cd6e148a7fac98de41f1dfdc1f662699d89efee035ef6786795574cc0a4881&mpshare=1&scene=1&srcid=1030Nx16EZ577iU60ZhOvI6W&sharer_sharetime=1604035718221&sharer_shareid=2fab58baf43a77081216e27730e2e0a9&version=3.0.31.6162&platform=mac&rd2werd=1#wechat_redirect"
-    wx.navigateTo({
-      url: `/pages/webViewCommon/webViewCommon?link=${encodeURIComponent(link)}`,
+    getUserGuideLink().then((link) => {
+      wx.navigateTo({
+        url: `/mine/normal-web-view/normal-web-view?link=${link}`,
+        fail() {
+          wx.switchTab({url: "pages/userCenter/userCenter"})
+        }
+      })
     })
+
+    bxPoint("mine_sign_in_private_group", {}, false)
   },
   // 计算用户帐号创建日期
   calcUserCreatedTime() {
@@ -81,6 +103,7 @@ Page({
   // 用户确认授权
   authCompleteEvent() {
     this.run()
+    this.queryContentInfo()
     this.setData({didShowAuth: false})
   },
   // 获取个人信息
@@ -157,6 +180,8 @@ Page({
     }
     this.calcUserCreatedTime()
     bxPoint("applets_mine", {})
+
+    this.queryContentInfo()
   },
 
   /**

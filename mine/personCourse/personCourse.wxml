@@ -1,4 +1,4 @@
-<view class="person-bootcamp">
+<view class="person-course">
     <block wx:if="{{recommendList.length > 0}}">
         <view class="no-data-tips">
             <image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603951961KBNQXM.jpg"></image>
@@ -16,4 +16,5 @@
             </view>
         </view>
     </view>
+    <view class="more-btn" bindtap="more" wx:if="{{recommendList.length > 0}}">更多课程</view>
 </view>

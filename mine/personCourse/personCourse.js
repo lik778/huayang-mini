@@ -67,18 +67,15 @@ Page({
     }
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  more() {
+    wx.reLaunch({url: "/pages/discovery/discovery"})
   },
   // 跳转到训练营详情
   viewCourseDetail(e) {
     let { id } = e.currentTarget.dataset.item
-    if (id) {
-      wx.navigateTo({url: `/subCourse/joinCamp/joinCamp?id=${id}`})
-    }
+    wx.navigateTo({
+      url: `/subCourse/videoCourse/videoCourse?videoId=${id}`,
+    })
   },
   main() {
     getVideoPracticeData({offset: this.data.offset, limit: this.data.limit}).then((list) => {

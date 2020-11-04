@@ -69,18 +69,11 @@ Page({
       this.main()
     }
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
   // 查看活动详情
   viewActivityDetail(e) {
     let { id } = e.currentTarget.dataset.item
     if (id) {
-      let link = `${request.baseUrl}/#/home/detail/${id}?platform=applet&userId=${getLocalStorage(GLOBAL_KEY.userId)}`
+      let link = `${request.baseUrl}/#/home/detail/${id}`
       wx.navigateTo({url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}`})
     }
   },

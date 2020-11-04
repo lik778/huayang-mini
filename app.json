@@ -1,7 +1,7 @@
 {
   "plugins": {
     "live-player-plugin": {
-      "version": "1.1.7",
+      "version": "1.2.2",
       "provider": "wx2b03c6e691cd7370"
     }
   },
@@ -48,7 +48,11 @@
         "vipWelfare/vipWelfare",
         "withdrawResult/withdrawResult",
         "contact/contact",
-        "withdraw/withdraw"
+        "withdraw/withdraw",
+        "personActivity/personActivity",
+        "personBootcamp/personBootcamp",
+        "personCourse/personCourse",
+        "normal-web-view/normal-web-view"
       ]
     },
     {

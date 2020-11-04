@@ -221,10 +221,10 @@ Page({
           let query = wx.createSelectorQuery()
           let height = 0
           query.select('#swiper-box').boundingClientRect((rect) => {
-            height = rect.height
+            height = rect ? rect.height : 0
           }).exec()
           query.select('#video-course').boundingClientRect((rect) => {
-            height += rect.height
+            height = rect ? rect.height : 0
             wx.pageScrollTo({
               duration: 100,
               scrollTop: height

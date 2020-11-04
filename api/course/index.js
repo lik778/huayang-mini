@@ -585,3 +585,26 @@ export const getWxRoomData = (params) => {
 export function queryOrderDetail(params) {
 	return request._get(URL.getOrderDetail, params)
 }
+
+/**
+ * 查询用户最近学习记录
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export function getUserPracticeRecentRecord(params) {
+	return new Promise((resolve) => {
+		request._get(URL.queryUserPracticeRecentRecord, params).then(({data}) => {
+			data = data || []
+			resolve(data)
+		})
+	})
+}
+
+/**
+ * 训练营学习时间更新
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export function updateBootcampStudyTime(params) {
+	return request._post(URL.setBootcampStudyTime, params)
+}

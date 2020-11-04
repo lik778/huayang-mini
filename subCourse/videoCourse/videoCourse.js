@@ -41,7 +41,6 @@ Page({
     showVideoLock: false,
     didShowAuth: false, //控制显示授权弹窗
     playIndex: -1, //当前播放视频index
-    didShowAlert: false, //控制显示等级不够弹窗
     videoSrc: "", //视频播放地址
     buttonType: 1, //按钮类型
     tabIndex: 0, //tab切换index
@@ -66,18 +65,6 @@ Page({
       wx.navigateTo({
         url: `/subCourse/invitePage/invitePage?series_invite_id=${fissionData.id}&videoId=${this.data.courseData.id}&fissionPrice=${this.data.courseData.fission_price}`
       })
-    })
-  },
-  // 等级不够关闭弹窗
-  openBox() {
-    this.setData({
-      didShowAlert: !this.data.didShowAlert
-    })
-  },
-  // 等级不够完成任务跳往任务页
-  goToTask() {
-    wx.switchTab({
-      url: '/pages/userCenter/userCenter',
     })
   },
   // 播放
@@ -146,10 +133,6 @@ Page({
         didShowAuth: true
       })
       return
-    } else if (userInfo && userInfo.user_grade < this.data.courseData.user_grade) {
-      this.setData({
-        didShowAlert: true
-      })
     } else {
       if (this.data.lock) {
         // 加入课程
@@ -215,7 +198,8 @@ Page({
   // 获取课程详情
   getVideoDetail(button) {
     getVideoCourseDetail({
-      series_id: this.data.videoId
+      series_id: this.data.videoId,
+      user_id: getLocalStorage(GLOBAL_KEY.userId)
     }).then(res => {
       let buttonType = ButtonType.freeAndNoLevelLimit
       let showMore = false

@@ -9,6 +9,7 @@ Page({
    */
 
   data: {
+    originLink: "",
     link: ""
   },
 
@@ -17,12 +18,16 @@ Page({
    */
   onLoad: function (options) {
     let { link = "" } = options
-
+    while (link.includes("%")) {
+      link = decodeURIComponent(link)
+    }
+    this.setData({originLink: link})
+    link += `?platform=applet&userId=${getLocalStorage(GLOBAL_KEY.userId)}`
     if (hasUserInfo() && hasAccountInfo()) {
-      this.setData({link: decodeURIComponent(link)})
+      this.setData({link})
     } else {
-      let url = "/pages/activePlatform/activePlatform?link=" + decodeURIComponent(link)
-      wx.navigateTo({url: `/pages/auth/auth?redirectType=redirect&didNeedDecode=1&redirectPath=${encodeURIComponent(url)}`})
+      let url = "/pages/activePlatform/activePlatform?link=" + link
+      wx.redirectTo({url: `/pages/auth/auth?redirectType=redirect&didNeedDecode=1&redirectPath=${encodeURIComponent(url)}`})
     }
   },
 
@@ -78,10 +83,10 @@ Page({
       let detail = await getActivityDetail({activity_id: mats[1], user_id: getLocalStorage(GLOBAL_KEY.userId)})
       title = detail.share_title
     }
-
+    console.error("share.originLink = ", this.data.link)
     return {
       title,
-      link: "/pages/activePlatform/activePlatform?link=" + encodeURIComponent(this.data.link)
+      link: "/pages/activePlatform/activePlatform?link=" + this.data.originLink
     }
   }
 })

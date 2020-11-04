@@ -8,14 +8,14 @@ Component({
         "pagePath": "/pages/discovery/discovery",
         "selectedIconPath": "../assets/images/common/homeActive.png",
         "iconPath": "../assets/images/common/home.png",
-        "text": "发现",
+        "text": "首页",
         isDIY: false
       },
       {
         "pagePath": "/pages/practice/practice",
         "selectedIconPath": "../assets/images/common/practiceActive.png",
         "iconPath": "../assets/images/common/practice.png",
-        "text": "练习",
+        "text": "学习",
         isDIY: false
       },
       {

@@ -1,24 +1,19 @@
-// pages/activePayCancel/activePayCancel.js
+// mine/normal-web-view/normal-web-view.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    successUrl: "",
-    orderId: 0
+    commonLink: ""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let { successUrl, orderId } = options;
-
-    if (successUrl) {
-      successUrl = decodeURIComponent(successUrl)
-      this.setData({successUrl, orderId})
-    }
+    let { link } = options
+    this.setData({commonLink: link})
   },
 
   /**
@@ -63,18 +58,10 @@ Page({
 
   },
 
-  continuePay() {
-    wx.redirectTo({url: "/pages/activePay/activePay?orderId=" + this.data.orderId})
-  },
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
 
-  back() {
-    if (this.data.successUrl) {
-      wx.redirectTo({
-				url: this.data.successUrl,
-				fail() {
-					wx.switchTab({url: "/pages/discovery/discovery"})
-				}
-      })
-    }
   }
 })

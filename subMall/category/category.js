@@ -1,4 +1,4 @@
-import { getCategory, getProductListByCategory } from "../../api/mall"
+import { getCategory, getProductListByCategory } from "../../api/mall/index"
 import { checkAuth } from "../../utils/auth"
 
 Page({
