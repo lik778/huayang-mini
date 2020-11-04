@@ -100,6 +100,7 @@
   width: 128rpx;
   height: 56rpx;
   border-radius: 999rpx;
+  box-sizing: border-box;
   border: 2rpx solid #CC0000;
   font: 500 32rpx/52rpx PingFangSC;
   color: #CC0000;

@@ -110,8 +110,8 @@
         <image class="star-layer" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604035220YUWYhD.jpg"></image>
         <view class="result-content">
             <view class="result-header">
-                <text class="txt-01">哇，您太棒了！</text>
-                <text class="txt-02">恭喜您完成了练习！</text>
+                <text class="txt-01">哇，您太棒了!</text>
+                <text class="txt-02">恭喜您完成了练习</text>
             </view>
             <view class="result-data">
                 <view class="result-data-item">

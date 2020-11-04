@@ -293,15 +293,23 @@ Page({
 				for (let item of originData) {
 					if (item.hasOwnProperty("kecheng_traincamp")) {
 						// 训练营
-						let {kecheng_traincamp_id, date, status, kecheng_traincamp: {name}} = item
+						let {kecheng_traincamp_id, date, status, kecheng_traincamp: {name, period}} = item
 						// 根据训练营查找对应的课程
 						let dayDiff = dayjs().diff(dayjs(date), 'day', true)
 						let dayNum = dayDiff | 0
-						if (parseFloat(dayDiff) >= 0) {
-							dayNum += 1
+						if (dayDiff >= 0) {
+							// dayNum += 1
 						} else {
 							dayNum = 0
 						}
+
+						// 如果训练营已经过期，则显示该训练营最后一天的课程内容
+						let endDate = dayjs(date).add(period, "day")
+						let nowDate = dayjs().format("YYYY-MM-DD")
+						if (endDate.isBefore(dayjs(nowDate))) {
+							dayNum = period
+						}
+
 						let bootCampInfo = await queryBootCampContentInToday({
 							traincamp_id: kecheng_traincamp_id,
 							day_num: dayNum

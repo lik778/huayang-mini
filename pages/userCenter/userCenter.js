@@ -44,6 +44,8 @@ Page({
         }
       })
     })
+
+    bxPoint("mine_sign_in_private_group", {}, false)
   },
   // 计算用户帐号创建日期
   calcUserCreatedTime() {

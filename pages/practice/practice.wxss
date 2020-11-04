@@ -46,7 +46,7 @@
 .boot-camp {
     border-radius: 8rpx;
     overflow: hidden;
-    border: 2px solid #F2F2F2;
+    border: 2rpx solid #F2F2F2;
 }
 /*空页面*/
 .no-camp {
@@ -321,9 +321,6 @@
 }
 
 .video-practice-item-right-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     font: 28rpx/32rpx PingFangSC;
     color: #666666;
 }
