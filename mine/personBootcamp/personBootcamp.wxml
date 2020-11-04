@@ -1,0 +1,21 @@
+<view class="person-bootcamp">
+    <block wx:if="{{recommendList.length > 0}}">
+        <view class="no-data-tips">
+            <image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603951961KBNQXM.jpg"></image>
+            <text>您还没有参加主题营</text>
+            <text>快去参加吧！</text>
+        </view>
+        <view class="layout">主题营推荐</view>
+    </block>
+    <view class="camp-list">
+        <view class="camp-item" wx:for="{{campList.length > 0 ? campList : recommendList}}" wx:key="index" bindtap="joinCamp" data-index="{{item}}">
+            <image mode="aspectFill" src="{{item.cover_pic}}"></image>
+            <view class="camp-item-main">
+                <view class="camp-item-title">{{item.name}}</view>
+                <view class="camp-subtitle">{{item.summary}}</view>
+            </view>
+            <view class="camp-button">{{campList.length > 0 ? (item._slut ? "即将开营" : "继续学习") : "立即参加"}}</view>
+        </view>
+    </view>
+    <view class="more-btn" bindtap="more" wx:if="{{recommendList.length > 0}}">更多主题营</view>
+</view>

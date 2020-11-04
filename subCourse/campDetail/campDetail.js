@@ -1,29 +1,25 @@
 // subCourse/trainingCampDetail/trainingCampDetail.js
 import {
-  getCampDetail,
-  getCurentDayData,
-  getHasJoinCamp,
-  getCourseData,
-  getFindBanner,
-  getWxRoomData,
-  getArticileLink
+	getArticileLink,
+	getCampDetail,
+	getCourseData,
+	getCurentDayData,
+	getFindBanner,
+	getHasJoinCamp,
+	getWxRoomData
 } from "../../api/course/index"
+import { getProductInfo, getYouZanAppId } from "../../api/mall/index"
 import {
-  getProductInfo,
-  getYouZanAppId
-} from "../../api/mall/index"
-import {
-  dateAddDays,
-  computeDate,
-  simpleDurationSimple,
-  getNowDate,
-  getLocalStorage,
-  setLocalStorage
+	computeDate,
+	dateAddDays,
+	getLocalStorage,
+	getNowDate,
+	setLocalStorage,
+	simpleDurationSimple
 } from "../../utils/util"
 import bxPoint from '../../utils/bxPoint'
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { GLOBAL_KEY } from "../../lib/config"
+
 Page({
 
   /**
@@ -246,7 +242,8 @@ Page({
   // 获取训练营详情
   getCampDetailData() {
     getCampDetail({
-      traincamp_id: this.data.campId
+      traincamp_id: this.data.campId,
+      user_id: getLocalStorage(GLOBAL_KEY.userId)
     }).then(res => {
       let oneDaySecond = 86400
       let formatType = 'yyyy-MM-dd'

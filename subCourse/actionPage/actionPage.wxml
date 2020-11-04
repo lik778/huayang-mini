@@ -2,8 +2,10 @@
     <!--  自定义头部  -->
     <cover-view class="navigation" style="padding-top:{{statusHeight+43}}px;">
         <naviBar title="{{didShowResultLayer ? '训练结束' : targetActionObj.name}}"
-            hideIcon="{{didShowPrepareLayer || didShowResultLayer || didShowRestLayer}}"
-            color="{{didShowResultLayer?'#990000':''}}" titleColor="{{didShowResultLayer?'white':''}}"></naviBar>
+                 hideIcon="{{didShowPrepareLayer || didShowResultLayer || didShowRestLayer}}"
+                 color="{{didShowResultLayer?'#990000':''}}"
+                 titleColor="{{didShowResultLayer?'white':''}}"
+        ></naviBar>
     </cover-view>
 
     <view class="content" wx:if="{{!didShowResultLayer}}" style="height:{{screenHeight-statusHeight-43}}px;">
@@ -19,19 +21,17 @@
 
         <view class="operate">
             <image class="arrow-left {{currentActionIndex > 0 ? '': 'disabled'}}" bind:tap="switchPrevAction"
-                src="../../assets/images/common/arrow-left.png"></image>
+                         src="../../assets/images/common/arrow-left.png"></image>
             <view class="operate-wrap">
-                <image class="pause" bind:tap="checkoutPracticeStatus"
-                    src="{{isRunning ? '../../assets/images/common/pause.png': '../../assets/images/common/start.png'}}">
-                </image>
+                <image class="pause" bind:tap="checkoutPracticeStatus" src="{{isRunning ? '../../assets/images/common/pause.png': '../../assets/images/common/start.png'}}"></image>
                 <text>{{isRunning ? '暂停' : '开始'}}</text>
             </view>
-            <view class="operate-wrap" wx:if="{{!isRunning}}">
+            <view class="operate-wrap" wx:if="{{!isRunning}}" >
                 <image class="stop" bind:tap="exit" src="../../assets/images/common/stop.png"></image>
                 <text>结束</text>
             </view>
-            <image class="arrow-right {{currentActionIndex < actionData.length - 1 ? '': 'disabled'}}"
-                bind:tap="switchNextAction" src="../../assets/images/common/arrow-right.png"></image>
+            <image class="arrow-right {{currentActionIndex < actionData.length - 1 ? '': 'disabled'}}" bind:tap="switchNextAction"
+                         src="../../assets/images/common/arrow-right.png"></image>
         </view>
 
         <!--    进度条    -->
@@ -40,19 +40,28 @@
                 <view>训练时长</view>
                 <view>{{globalRecordTimeText}}</view>
             </view>
-            <view class="bar subject-bg-color"
-                style="width: {{ (currentActionIndex / actionData.length) * screenWidth }}px"></view>
+            <view class="bar"
+                        style="width: {{ (currentActionIndex / actionData.length) * screenWidth }}px"></view>
         </view>
 
         <!--    视频    -->
-        <video id="actionVideo" controls="{{false}}" custom-cache="{{false}}" object-fit="cover"
-            enable-play-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}"
-            show-play-btn="{{false}}" autoplay="{{false}}" loop="{{true}}" src="{{targetActionObj.link}}"></video>
+        <video
+                id="actionVideo"
+                controls="{{false}}"
+                custom-cache="{{false}}"
+                object-fit="cover"
+                enable-play-gesture="{{false}}"
+                play-btn-position="top"
+                show-center-play-btn="{{false}}"
+                show-play-btn="{{false}}"
+                autoplay="{{false}}"
+                loop="{{true}}"
+                src="{{targetActionObj.link}}"
+        ></video>
 
         <!--  预备层  -->
         <view class="prepare-layer" wx:if="{{didShowPrepareLayer}}">
-            <view class="action-count-down {{PrepareNumber === '准备' ? 'action-count-down-ready-text' : ''}}">
-                {{PrepareNumber}}</view>
+            <view class="action-count-down {{PrepareNumber === '准备' ? 'action-count-down-ready-text' : ''}}">{{PrepareNumber}}</view>
             <view class="action-name">{{targetActionObj.name}}</view>
             <view class="action-cycle-time">
                 {{targetActionObj.cycleTime}}{{targetActionObj.meta_type == 2 ? '次' : '秒'}}
@@ -64,9 +73,17 @@
             <view class="rest-time">{{restTimeText}}</view>
             <view class="next-action-info">
                 <view class="next-action-cycle">下一个练习</view>
-                <video id="previewVideo" controls="{{false}}" custom-cache="{{false}}" object-fit="cover"
-                    enable-play-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}"
-                    show-play-btn="{{false}}" autoplay="{{false}}" loop="{{true}}"
+                <video
+                    id="previewVideo"
+                    controls="{{false}}"
+                    custom-cache="{{false}}"
+                    object-fit="cover"
+                    enable-play-gesture="{{false}}"
+                    play-btn-position="top"
+                    show-center-play-btn="{{false}}"
+                    show-play-btn="{{false}}"
+                    autoplay="{{false}}"
+                    loop="{{true}}"
                     src="{{targetActionObj.link}}"></video>
                 <view class="next-info">
                     <view class="next-action-name limit-two-line">{{targetActionObj.name}}</view>
@@ -77,34 +94,38 @@
             </view>
             <view class="operate-lay">
                 <image class="arrow-left" bind:tap="switchPrevActionInRestTime"
-                    src="../../assets/images/common/arrow-left.png"></image>
+                       src="../../assets/images/common/arrow-left.png"></image>
                 <image class="pause" bind:tap="checkoutRestStatus"
-                    src="{{didPauseRest ? '../../assets/images/common/start.png': '../../assets/images/common/pause.png'}}">
-                </image>
-                <image class="stop" wx:if="{{didPauseRest}}" bind:tap="exit" src="../../assets/images/common/stop.png">
-                </image>
+                       src="{{didPauseRest ? '../../assets/images/common/start.png': '../../assets/images/common/pause.png'}}"></image>
+                <image class="stop" wx:if="{{didPauseRest}}" bind:tap="exit"
+                       src="../../assets/images/common/stop.png"></image>
                 <image class="arrow-right" bind:tap="switchNextActionInRestTime"
-                    src="../../assets/images/common/arrow-right.png"></image>
+                       src="../../assets/images/common/arrow-right.png"></image>
             </view>
         </view>
     </view>
 
     <!-- 结果层 -->
     <view class="result-layer" wx:if="{{didShowResultLayer}}" style="min-height: {{screenHeight-statusHeight-43}}px;">
-        <view class="result-text-01">恭喜您完成</view>
-        <view class="result-text-02">{{courseInfo.name}}</view>
-        <view class="global-record-time-text">{{globalRecordTimeText}}</view>
-        <view class="result-text-03">训练时长</view>
-        <view class="action-list">
-            <view class="action-item" wx:for="{{originData}}" wx:key="index">
-                <view class="action-item-text action-item-text-left limit-one-line">{{ item.name }}</view>
-                <view class="action-item-text action-item-text-right">
-                    x{{ item.cycleTime }}{{ item.meta_type == 2 ? '次' : '秒' }}</view>
+        <image class="star-layer" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604035220YUWYhD.jpg"></image>
+        <view class="result-content">
+            <view class="result-header">
+                <text class="txt-01">哇，您太棒了!</text>
+                <text class="txt-02">恭喜您完成了练习</text>
             </view>
-        </view>
-        <view class="result-btn" bind:tap="show">分享</view>
-    </view>
+            <view class="result-data">
+                <view class="result-data-item">
+                    <text class="result-data-item-01">{{globalRecordTimeText}}</text>
+                    <text>训练时长</text>
+                </view>
+                <view class="split-line"></view>
+                <view class="result-data-item">
+                    <text class="result-data-item-01">{{originData.length || 0}}</text>
+                    <text>完成动作</text>
+                </view>
+            </view>
 
-    <levelAlert didShow="{{didShowLevelAlert}}" hasGrade="{{hasGrade}}" number="{{levelNumber}}"
-        text03="{{nextLevelText}}"></levelAlert>
+            <view class="clockIn" bind:tap="show">分享</view>
+        </view>
+    </view>
 </view>

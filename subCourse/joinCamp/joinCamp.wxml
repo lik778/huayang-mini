@@ -32,11 +32,6 @@
 			<view>({{hasJoinAll?timeJoin : joinTime}}开营)</view>
 			<view>立即加入</view>
 		</view>
-		<view class="button-six button-style-four subject-bg-color" wx:if="{{buttonType===6}}" bindtap="openBox">
-			<!-- 免费有等级 -->
-			<view>({{hasJoinAll?timeJoin : joinTime}}开营)</view>
-			<view>LV {{campDetailData.user_grade}} 等级开启</view>
-		</view>
 		<view class="button-six button-style-two subject-bg-color" wx:if="{{buttonType===7}}" bindtap="joinCamp">
 			<!-- 未授权 -->
 			立即加入
@@ -46,18 +41,14 @@
 			立即加入
 		</view>
 	</view>
-	<view class="level-alert" wx:if="{{didShowAlert}}" bindtap="openBox">
-		<view class="box">
-			<image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596513575jAcfBN.jpg"></image>
-			<view class="text-01">快去完成任务提升</view>
-			<view class="text-01">等级解锁训练营吧</view>
-			<view class="alert-btn subject-bg-color" bindtap="goToTask">去完成</view>
-		</view>
-	</view>
 	<!-- 授权弹窗 -->
 	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
 	</authModule>
 	<!-- 规则弹窗 -->
+<<<<<<< HEAD
 	<!-- 分享按钮 -->
 	<button wx:if="{{isPromoter&&campDetailData.sharePrice>0}}">分享得{{campDetailData.sharePrice}}元</button>
 </view>
+=======
+</view>
+>>>>>>> master

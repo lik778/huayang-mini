@@ -1,4 +1,4 @@
-import { getProductInfo, getYouZanAppId } from "../../api/mall"
+import { getProductInfo, getYouZanAppId } from "../../api/mall/index"
 import { checkAuth } from "../../utils/auth"
 import { changeTwoDecimal_f } from "../../utils/util"
 

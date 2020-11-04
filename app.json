@@ -1,7 +1,7 @@
 {
   "plugins": {
     "live-player-plugin": {
-      "version": "1.1.7",
+      "version": "1.2.2",
       "provider": "wx2b03c6e691cd7370"
     }
   },
@@ -25,7 +25,10 @@
     "pages/service/service",
     "pages/coopen/coopen",
     "components/levelAlert/levelAlert",
-    "pages/webViewCommon/webViewCommon"
+    "pages/webViewCommon/webViewCommon",
+    "pages/activePlatform/activePlatform",
+    "pages/activePay/activePay",
+    "pages/activePayCancel/activePayCancel"
   ],
   "requiredBackgroundModes": [
     "audio"
@@ -45,7 +48,11 @@
         "withdrawResult/withdrawResult",
         "contact/contact",
         "withdraw/withdraw",
-        "promotionRecord/promotionRecord"
+        "promotionRecord/promotionRecord",
+        "personActivity/personActivity",
+        "personBootcamp/personBootcamp",
+        "personCourse/personCourse",
+        "normal-web-view/normal-web-view"
       ]
     },
     {

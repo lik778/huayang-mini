@@ -4,7 +4,7 @@ import {
 	getRecentVisitorList,
 	joinCourseInGuide
 } from "../../api/course/index"
-import { $notNull, calculateExerciseTime, getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
+import { calculateExerciseTime, getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
 import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 
@@ -28,8 +28,6 @@ Page({
 		btnText: "开始练习", // 按钮文案
 		isDownloading: false, // 是否正在下载
 		hasDoneFilePercent: 0, // 已经下载完的文件数量
-		didShowAlert: false,
-		didPayUser: false, // 是否是付费用户
 		backPath: "", // 自定义导航栏返回路径
 		didShowAuth: false, // 授权弹窗
 		didGoBackToDiscovery: false // 是否返回发现页
@@ -138,11 +136,6 @@ Page({
 	start() {
 		let {parentBootCampId = 0, courseId, formCampDetail} = this.data.options
 
-		// 检查是否是训练营付费会员
-		if (formCampDetail === "payUser") {
-			this.setData({didPayUser: true})
-		}
-
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 		this.setData({
 			parentBootCampId,
@@ -165,12 +158,6 @@ Page({
 	authCompleteEvent(e) {
 		this.setData({didShowAuth: false})
 		this.start()
-	},
-
-	goToTask() {
-		wx.switchTab({
-			url: "/pages/userCenter/userCenter"
-		})
 	},
 
 	/**
@@ -218,26 +205,8 @@ Page({
 				})
 			}
 
-			// 检查是否付费用户
-			if (!this.data.didPayUser) {
-				if ($notNull(this.data.accountInfo)) {
-					// 检查用户等级
-					if (response.user_grade > (this.data.accountInfo.user_grade || 0)) {
-						this.setData({
-							btnText: `Lv ${response.user_grade} 等级开启`
-						})
-					} else {
-						this.setData({
-							btnText: "开始练习",
-							isDownloading: false
-						})
-					}
-				} else {
-					this.setData({
-						btnText: "开始练习"
-					})
-				}
-			}
+			this.setData({btnText: "开始练习"})
+
 			response.exerciseTime = calculateExerciseTime(response.duration)
 			this.setData({
 				courseInfoObj: {...response},
@@ -293,17 +262,6 @@ Page({
 
 		bxPoint("practice_begin", {keChengId: this.data.courseId}, false)
 		createPracticeRecordInToday()
-
-		// 检查是否是付费用户，是=>跳过用户等级检查，否=>检查用户等级
-		if (!this.data.didPayUser) {
-			// 检查用户等级
-			if (this.data.courseInfoObj.user_grade > this.data.accountInfo.user_grade) {
-				this.setData({
-					didShowAlert: true
-				})
-				return
-			}
-		}
 
 		const self = this
 		let cookedCourseMetaData = this.data.actionQueue.slice()
