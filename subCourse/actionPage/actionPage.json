@@ -1,8 +1,7 @@
 {
   "navigationStyle":"custom",
   "usingComponents": {
-    "naviBar": "../../components/actionNavBar/actionNavBar",
-    "levelAlert": "../../components/levelAlert/levelAlert"
+    "naviBar": "../../components/actionNavBar/actionNavBar"
   },
   "pageOrientation": "portrait"
 }

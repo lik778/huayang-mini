@@ -1,7 +1,5 @@
 import request from "../../lib/request"
-import {
-	URL
-} from "../../lib/config"
+import { URL } from "../../lib/config"
 
 
 // 获取结构化练习海报背景图
@@ -577,4 +575,36 @@ export const getWxRoomData = (params) => {
 			resolve(data)
 		})
 	})
+}
+
+/**
+ * 查询订单信息
+ * @param params
+ * @returns {Promise | Promise<unknown>}
+ */
+export function queryOrderDetail(params) {
+	return request._get(URL.getOrderDetail, params)
+}
+
+/**
+ * 查询用户最近学习记录
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export function getUserPracticeRecentRecord(params) {
+	return new Promise((resolve) => {
+		request._get(URL.queryUserPracticeRecentRecord, params).then(({data}) => {
+			data = data || []
+			resolve(data)
+		})
+	})
+}
+
+/**
+ * 训练营学习时间更新
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export function updateBootcampStudyTime(params) {
+	return request._post(URL.setBootcampStudyTime, params)
 }

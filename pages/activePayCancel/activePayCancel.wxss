@@ -1,0 +1,40 @@
+.active-pay-cancel {
+    padding-top: 84rpx;
+    min-height: 100vh;
+    text-align: center;
+    box-sizing: border-box;
+}
+.icon {
+    width: 145rpx;
+    height: 145rpx;
+}
+.txt-01 {
+    margin: 20rpx 0 0;
+    font: 500 40rpx/56rpx PingFangSC;
+    color: #FA5051;
+}
+.content {
+    margin: 80rpx 0;
+    font: 32rpx/44rpx PingFangSC;
+    color: #333;
+}
+.btn {
+    width: 520rpx;
+    height: 96rpx;
+    margin: 0 auto;
+    border-radius: 999rpx;
+    color: white;
+    font: 40rpx/96rpx PingFangSC;
+    background: #00BB66;
+}
+.btn:active {
+    opacity: 0.8;
+}
+.goBack {
+    margin-top:  40rpx;
+    box-sizing: border-box;
+    border: 4rpx solid #00BB66;
+    line-height: 88rpx;
+    background: white;
+    color: #00BB66;
+}

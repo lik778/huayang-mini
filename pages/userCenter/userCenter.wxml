@@ -1,86 +1,42 @@
 <!--pages/userCenter/userCenter.wxml-->
-<view class="user-center" wx:if='taskList!==""'>
+<view class="user-center">
 	<view class="banner">
 		<!-- 背景图 -->
 		<image src="/assets/images/common/banner-bg.png"></image>
 		<!-- 个人信息 -->
 		<view class="message">
-			<image wx:if="{{!nodata}}" src="{{userInfo.avatar_url}}"></image>
-			<text wx:if="{{!nodata}}">{{userInfo.nick_name||userInfo.nickname}}</text>
-			<image wx:if="{{nodata}}" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599186470WlQVNm.jpg"
-				bindtap="getAuth"></image>
+			<image src="{{nodata ? 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599186470WlQVNm.jpg' : userInfo.avatar_url}}" bindtap="getAuth"></image>
 			<text wx:if="{{nodata}}" bindtap="getAuth">点击登录</text>
-		</view>
-		<!-- 经验条 -->
-		<view class="experience" wx:if="{{!noUserInfo}}">
-			<view class="experience-title">
-				<view class="experience-title-left">
-					<text class="experience-title-left-one">我的等级</text>
-					<text class="experience-title-left-two">Lv {{userInfo.user_grade}}</text>
-				</view>
-				<view class="experience-title-right">
-					<text>成长值：{{userInfo.user_experience}}/{{userInfo.next_level_experience}}</text>
-				</view>
-			</view>
-			<view class="experience-process">
-				<view class="experience-process-active subject-bg-color" style="{{processStyle}}"></view>
+			<view wx:else class="user-info">
+				<text>{{userInfo.nick_name||userInfo.nickname}}</text>
+				<text class="lifetime" wx:if="{{existNo}}">您已在花样第{{existNo}}天</text>
 			</view>
 		</view>
 	</view>
-	<!-- 完善个人资料 -->
-	<view class="full-message" wx:if="{{showMessage&&showAll}}" bindtap="fullSelfMsg">
-		<view class="full-message-cover-one"></view>
-		<view class="full-message-cover"></view>
-		<view class="full-message-left">
-			<view class="full-message-top">完善个人资料 ›</view>
-			<view class="full-message-bottom"><text class="tetx-num">+100</text>成长值 开启更多课程权益</view>
-		</view>
-		<view class="full-message-right">
-			<image src="/assets/images/common/id.png"></image>
-		</view>
-	</view>
-	<!-- 每日任务 -->
-	<view class="task" style="{{taskStyle}}" wx:if="{{taskList.length!==0}}">
-		<view class="task-title">每日任务</view>
-		<view class="task-list">
-			<view class="task-item" wx:for="{{taskList}}" wx:key="index">
-				<view class="task-item-left">
-					<image src="{{item.Icon}}"></image>
-					<view class="task-item-middle">
-						<view>{{item.Name}}</view>
-						<view>{{item.Desc}}</view>
-						<view>
-							<text>{{item.textData1}}</text>
-							<text class="subject-font-color">{{item.textData2}}</text>
-							<text>{{item.textData3}}</text>
-						</view>
-					</view>
-				</view>
-				<view class="task-item-right" wx:if="{{item.TaskType==='task_checkin'&&!hasCheckIn}}" data-type="{{item}}"
-					bindtap="{{noUserInfo?'getAuth':'checkin'}}">
-					签到
-				</view>
-				<view class="task-item-right-one" wx:if="{{item.TaskType==='task_checkin'&&hasCheckIn}}">
-					已签到
-				</view>
-				<view class="task-item-right" wx:if="{{item.TaskType==='task_pratice'}}" bindtap="pratice">
-					去训练
-				</view>
-				<view class="task-item-right" wx:if="{{item.TaskType==='task_pratice_playbill'}}" bindtap="pratice">
-					去打卡
-				</view>
-				<view class="task-item-right" wx:if="{{item.TaskType==='task_invite'&&noUserInfo}}" bindtap="getAuth">
-					去邀请
-				</view>
-				<view class="task-item-right" wx:if="{{item.TaskType==='task_invite'&&!noUserInfo}}" bindtap="invite">
-					去邀请
-					<button open-type='share'></button>
-				</view>
+	<!-- 我的 -->
+	<view class="person">
+		<view class="layout">我的</view>
+		<view class="person-content">
+			<view class="content-element" bindtap="handleCardTap" data-ele="bootcamp">
+				<view class="ele-no">{{traincamp_count}}</view>
+				<view class="ele-title">主题营</view>
+				<view class="ele-btn">查看</view>
+			</view>
+			<view class="content-element" bindtap="handleCardTap" data-ele="course">
+				<view class="ele-no">{{kecheng_count}}</view>
+				<view class="ele-title">课程</view>
+				<view class="ele-btn">查看</view>
+			</view>
+			<view class="content-element" bindtap="handleCardTap" data-ele="activity">
+				<view class="ele-no">{{activity_count}}</view>
+				<view class="ele-title">活动</view>
+				<view class="ele-btn">查看</view>
 			</view>
 		</view>
+		<image bindtap="joinPrivateDomain" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603873700ScBmHI.jpg" class="add-btn"></image>
 	</view>
 	<!-- 功能栏 -->
-	<view class="function" style="{{functionStyle}}">
+	<view class="function">
 		<view class="function-list">
 			<view class="function-item" bindtap="toOrder">
 				<view class="function-item-left">
@@ -104,10 +60,6 @@
 			</view>
 		</view>
 	</view>
-	<!-- 提升经验值弹窗 -->
-	<levelAlert text02="{{gradeData.text02}}" text03="{{gradeData.text03}}" number="{{gradeData.experNum}}"
-		hasGrade="{{gradeData.upgrade}}" didShow="{{gradeData.showLevelAlert}}" wx:if="{{gradeData.showLevelAlert}}">
-	</levelAlert>
 	<!-- 授权弹窗 -->
 	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
 	</authModule>

@@ -1,0 +1,107 @@
+@import "../../assets/css/common.wxss";
+.no-data-tips {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 60rpx;
+}
+.no-data-tips > image {
+    margin-top: 100rpx;
+    width: 320rpx;
+    height: 230rpx;
+    font-size: 0;
+}
+.no-data-tips > text {
+    font: 500 36rpx/50rpx Helvetica;
+    color: #333;
+}
+/* 活动 */
+.activity-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 20rpx 30rpx;
+    border-radius: 4rpx;
+    border-bottom: 2rpx solid #F2F2F2;
+}
+.activity-image {
+    width: 220rpx;
+    height: 220rpx;
+    border-radius: 8rpx;
+    font-size: 0;
+    margin-right: 24rpx;
+}
+.activity-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 220rpx;
+}
+.activity-title {
+    font: 600 32rpx/44rpx PingFangSC;
+}
+.activity-info .info > view {
+    margin-top: 16rpx;
+    font: 28rpx/28rpx PingFangSC;
+}
+.apply-success {
+    color: #CC0000;
+}
+
+/* 训练营 */
+.camp-item {
+    position: relative;
+    height: 320rpx;
+    margin: 20rpx 30rpx;
+    border-radius: 4rpx;
+}
+.camp-item:last-child {
+    margin-bottom: 0;
+}
+
+.camp-item>image {
+    width: 100%;
+    height: 100%;
+    border-radius: 8rpx;
+}
+
+.camp-item-main {
+    width: calc(100% - 60rpx);
+    position: absolute;
+    left: 30rpx;
+    top: 52rpx;
+}
+
+.camp-item-title {
+    font-size: 44rpx;
+    font-family: PingFang-SC-Bold, PingFang-SC;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 1);
+    line-height: 44rpx;
+    padding-bottom: 30rpx;
+}
+
+.camp-subtitle {
+    font-size: 30rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 1);
+    line-height: 32rpx;
+}
+
+.camp-button {
+    position: absolute;
+    left: 30rpx;
+    bottom: 52rpx;
+    width: 200rpx;
+    height: 60rpx;
+    border-radius: 999rpx;
+    border: 3rpx solid rgba(255, 255, 255, 1);
+    font-size: 16px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 1);
+    text-align: center;
+    line-height: 60rpx;
+}

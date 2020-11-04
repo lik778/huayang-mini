@@ -37,7 +37,5 @@
         <view class="save subject-bg-color" bind:tap="saveToLocal">保存海报到相册</view>
     </view>
     <canvas style="height:480px;width:300px;" id="canvas-order" canvas-id="actionOrder"></canvas>
-
-    <levelAlert didShow="{{didShowLevelAlert}}" hasGrade="{{hasGrade}}" text02="完成打卡" number="{{levelNumber}}" text03="{{nextLevelText}}"></levelAlert>
 </view>
 

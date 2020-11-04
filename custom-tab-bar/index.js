@@ -15,7 +15,7 @@ Component({
         "pagePath": "/pages/practice/practice",
         "selectedIconPath": "../assets/images/common/practiceActive.png",
         "iconPath": "../assets/images/common/practice.png",
-        "text": "练习",
+        "text": "学习",
         isDIY: false
       },
       {

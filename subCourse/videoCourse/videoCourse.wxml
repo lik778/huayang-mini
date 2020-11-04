@@ -130,13 +130,4 @@
   <!-- 授权弹窗 -->
   <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
   </authModule>
-  <!-- 等级不够弹窗 -->
-  <view class="level-alert" wx:if="{{didShowAlert}}" bindtap="openBox">
-    <view class="box">
-      <image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596513575jAcfBN.jpg"></image>
-      <view class="text-01">快去完成任务提升</view>
-      <view class="text-01">等级解锁视频吧</view>
-      <view class="alert-btn subject-bg-color" bindtap="goToTask">去完成</view>
-    </view>
-  </view>
 </view>

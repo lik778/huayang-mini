@@ -1,6 +1,4 @@
-// subCourse/actionPost/actionPost.js
 import {
-	$notNull,
 	batchDownloadFiles,
 	calcStringLen,
 	getLocalStorage,
@@ -10,7 +8,7 @@ import {
 } from "../../utils/util"
 import { GLOBAL_KEY, WX_AUTH_TYPE } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
-import { increaseExp, queryPunchCardBg, queryPunchCardQrCode, queryUserHaveClassesInfo } from "../../api/course/index"
+import { queryPunchCardBg, queryPunchCardQrCode, queryUserHaveClassesInfo } from "../../api/course/index"
 import { collectError } from "../../api/auth/index"
 
 Page({
@@ -26,10 +24,6 @@ Page({
 		_didDrawCanvasDone: false, // 绘制canvas是否已经结束
 
 		didPunchedCard: false, // 当前页面生命周期内是否打过卡
-		didShowLevelAlert: false, // 等级经验弹窗
-		hasGrade: false, // 是否升级
-		levelNumber: 0, // 升级等级/经验
-		nextLevelText: "", // 升下一级所需经验
 		endTimer: null
 	},
 
@@ -128,18 +122,6 @@ Page({
 	punchCard() {
 		if (this.data.didPunchedCard) return
 		this.setData({didPunchedCard: true})
-		// 经验值提升弹窗
-		increaseExp({task_type: "task_pratice_playbill"}).then((data) => {
-			// 升级信息
-			if ($notNull(data)) {
-				this.setData({
-					didShowLevelAlert: true,
-					hasGrade: data.has_grade,
-					levelNumber: data.has_grade ? data.level : 10,
-					nextLevelText: data.level < 3 ? `还差${data.next_experience - data.experience}升至Lv${data.level + 1}解锁` : ""
-				})
-			}
-		})
 	},
 	// 绘制直线
 	drawLine(context, color, height, beginX, beginY, endX, endY) {
@@ -351,8 +333,8 @@ Page({
 				},
 				fail(err) {
 					collectError({
-						page: "actionPost.canvasToTempFilePath", 
-						error_code: 400, 
+						page: "actionPost.canvasToTempFilePath",
+						error_code: 400,
 						error_message: err.errMsg,
 						systemInfo: getLocalStorage(GLOBAL_KEY.systemParams)
 					})
