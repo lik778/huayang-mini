@@ -8,7 +8,7 @@ Component({
         "pagePath": "/pages/discovery/discovery",
         "selectedIconPath": "../assets/images/common/homeActive.png",
         "iconPath": "../assets/images/common/home.png",
-        "text": "首页",
+        "text": "发现",
         isDIY: false
       },
       {
