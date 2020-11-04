@@ -18,22 +18,19 @@
 		<view class="layout">我的</view>
 		<view class="person-content">
 			<view class="content-element" bindtap="handleCardTap" data-ele="bootcamp">
-				<image class="ele-icon" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603873344VdhdJr.jpg"></image>
+				<view class="ele-no">{{traincamp_count}}</view>
 				<view class="ele-title">主题营</view>
 				<view class="ele-btn">查看</view>
-				<view class="ele-no" wx:if="{{traincamp_count != 0}}">{{traincamp_count}}</view>
 			</view>
 			<view class="content-element" bindtap="handleCardTap" data-ele="course">
-				<image class="ele-icon" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603873365TxHSaT.jpg"></image>
+				<view class="ele-no">{{kecheng_count}}</view>
 				<view class="ele-title">课程</view>
 				<view class="ele-btn">查看</view>
-				<view class="ele-no" wx:if="{{kecheng_count != 0}}">{{kecheng_count}}</view>
 			</view>
 			<view class="content-element" bindtap="handleCardTap" data-ele="activity">
-				<image class="ele-icon" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603873384ttpDnF.jpg"></image>
+				<view class="ele-no">{{activity_count}}</view>
 				<view class="ele-title">活动</view>
 				<view class="ele-btn">查看</view>
-				<view class="ele-no" wx:if="{{activity_count != 0}}">{{activity_count}}</view>
 			</view>
 		</view>
 		<image bindtap="joinPrivateDomain" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603873700ScBmHI.jpg" class="add-btn"></image>

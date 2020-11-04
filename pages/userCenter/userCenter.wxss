@@ -75,11 +75,10 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 192rpx;
   height: 244rpx;
-  padding: 24rpx 0 30rpx;
   border-radius: 20rpx;
   box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
@@ -94,6 +93,7 @@
   font-size: 0;
 }
 .ele-title {
+  margin: 4rpx 0 12rpx;
   font: 36rpx/44rpx Helvetica;
 }
 .ele-btn {
@@ -107,16 +107,8 @@
   text-align: center;
 }
 .ele-no {
-  position: absolute;
-  top: -18rpx;
-  right: -18rpx;
-  width: 44rpx;
-  height: 44rpx;
-  color: white;
-  text-align: center;
-  font: 500 32rpx/44rpx PingFangSC;
-  border-radius: 999rpx;
-  background: #CC0000;
+  font: 500 56rpx/80rpx PingFangSC;
+  color: #333;
 }
 .add-btn {
   width: 630rpx;

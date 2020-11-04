@@ -267,9 +267,8 @@ Page({
 	// 去发现页
 	goToDiscovery() {
 		bxPoint("parctice_choose", {}, false)
-		setLocalStorage("needToScrollTop", "1")
-
 		if (hasUserInfo() && hasAccountInfo()) {
+			setLocalStorage("needToScrollTop", "1")
 			wx.switchTab({url: '/pages/discovery/discovery'})
 		} else {
 			this.setData({didShowAuth: true})
@@ -414,6 +413,7 @@ Page({
 				// 用户首次授权成功，如果该用户没有任何课程则自动跳转至发现页
 				if (getLocalStorage("hy_dd_auth_done_in_practice") === "yes" && resultData.length === 0) {
 					removeLocalStorage("hy_dd_auth_done_in_practice")
+					setLocalStorage("needToScrollTop", "1")
 					wx.reLaunch({url: '/pages/discovery/discovery'})
 				}
 			})
