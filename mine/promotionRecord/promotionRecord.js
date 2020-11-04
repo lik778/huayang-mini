@@ -13,6 +13,7 @@ Page({
       offset: 0,
       limit: 10
     },
+    isAll: false,
     list: ""
   },
 
@@ -24,9 +25,9 @@ Page({
   },
 
   // 获取推广记录
-  getList() {
+  getList(e) {
     getPromotionRecord(this.data.pageData).then(res => {
-      let list = res.data.list
+      let list = e ? this.data.list.concat(res.data.list) : res.data.list
       if (list.kecheng_promote_record !== null) {
         list.map(item => {
           if (item.kecheng_promote_record !== null) {
@@ -35,7 +36,8 @@ Page({
         })
       }
       this.setData({
-        list: list
+        list,
+        isAll: res.data.list.length < 10 ? true : false
       })
     })
   },
@@ -87,6 +89,15 @@ Page({
    */
   onReachBottom: function () {
 
-  },
+    if (!this.data.isAll) {
+      this.setData({
+        pageData: {
+          offset: this.data.pageData.offset + this.data.pageData.limit,
+          limit: this.data.pageData.limit,
+        }
+      })
+      this.getList(true)
+    }
 
+  },
 })
