@@ -16,5 +16,5 @@
             </view>
         </view>
     </view>
-    <view class="more-btn" bindtap="more">更多课程</view>
+    <view class="more-btn" bindtap="more" wx:if="{{recommendList.length > 0}}">更多课程</view>
 </view>

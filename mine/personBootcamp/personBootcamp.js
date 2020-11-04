@@ -69,7 +69,7 @@ Page({
     }
   },
   more() {
-    wx.switchTab({url: "/pages/discovery/discovery"})
+    wx.reLaunch({url: "/pages/discovery/discovery"})
   },
   // 跳转到训练营详情
   joinCamp(e) {

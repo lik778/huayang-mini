@@ -7,7 +7,14 @@ import {
 } from "../../api/course/index"
 import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
-import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage } from "../../utils/util"
+import {
+	$notNull,
+	getLocalStorage,
+	hasAccountInfo,
+	hasUserInfo,
+	removeLocalStorage,
+	setLocalStorage
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 const CourseTypeImage = {
@@ -135,6 +142,7 @@ Page({
 	// 用户确认授权
 	authCompleteEvent() {
 		this.setData({didShowAuth: false})
+		setLocalStorage("hy_dd_auth_done_in_practice", "yes")
 		this.initial()
 	},
 	// 用户授权取消
@@ -256,15 +264,13 @@ Page({
 			url: "/subCourse/joinCamp/joinCamp?id=" + bootCampId
 		})
 	},
-	// 发现页
+	// 去发现页
 	goToDiscovery() {
 		bxPoint("parctice_choose", {}, false)
 		setLocalStorage("needToScrollTop", "1")
 
 		if (hasUserInfo() && hasAccountInfo()) {
-			wx.switchTab({
-				url: '/pages/discovery/discovery'
-			})
+			wx.switchTab({url: '/pages/discovery/discovery'})
 		} else {
 			this.setData({didShowAuth: true})
 		}
@@ -396,6 +402,12 @@ Page({
 				this.setData({
 					resultData
 				})
+
+				// 用户首次授权成功，如果该用户没有任何课程则自动跳转至发现页
+				if (getLocalStorage("hy_dd_auth_done_in_practice") === "yes" && resultData.length === 0) {
+					removeLocalStorage("hy_dd_auth_done_in_practice")
+					wx.reLaunch({url: '/pages/discovery/discovery'})
+				}
 			})
 		}
 	}
