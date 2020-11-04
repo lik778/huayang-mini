@@ -24,6 +24,7 @@ Page({
     listData: "",
     accountInfo: "",
     tabIndex: 0,
+    promoteUid: "",
     tabList: [{
       name: "全部",
       index: 0
@@ -54,16 +55,43 @@ Page({
   // 跳往详情页
   toDetail(e) {
     let data = e.currentTarget.dataset
+    let userId = getLocalStorage(GLOBAL_KEY.userId) ? Number(getLocalStorage(GLOBAL_KEY.userId)) : ""
+    let linkData = ''
+    if (this.data.promoteUid !== '') {
+      if (userId !== '') {
+        if (Number(this.data.promoteUid) && Number(userId)) {
+          linkData = ''
+        } else {
+          linkData = Number(this.data.promoteUid)
+        }
+      } else {
+        linkData = Number(this.data.promoteUid)
+      }
+    }
+
     if (data.type === "course") {
       // 课程
-      wx.navigateTo({
-        url: `/subCourse/videoCourse/videoCourse?videoId=${data.item.id}`,
-      })
+      if (linkData === '') {
+        wx.navigateTo({
+          url: `/subCourse/videoCourse/videoCourse?videoId=${data.item.id}`,
+        })
+      } else {
+        wx.navigateTo({
+          url: `/subCourse/videoCourse/videoCourse?videoId=${data.item.id}&promote_uid=${linkData}`,
+        })
+      }
+
     } else if (data.type === "camp") {
       // 训练营
-      wx.navigateTo({
-        url: `/subCourse/joinCamp/joinCamp?id=${data.item.id}`,
-      })
+      if (linkData === '') {
+        wx.navigateTo({
+          url: `/subCourse/joinCamp/joinCamp?id=${data.item.id}`,
+        })
+      } else {
+        wx.navigateTo({
+          url: `/subCourse/joinCamp/joinCamp?id=${data.item.id}&promote_uid=${linkData}`,
+        })
+      }
     }
   },
 
@@ -121,7 +149,6 @@ Page({
       }
       for (let i in list.series_list) {
         let data = list.series_list
-        console.log(list.series_list[i])
         if (data[i].discount_price > 0 && data[i].distribution_ratio > 0) {
           data[i].sharePrice = ((data[i].discount_price / 100) * (data[i].distribution_ratio / 100)).toFixed(2)
           list.series_list = data
@@ -131,7 +158,6 @@ Page({
       }
       for (let i in list.traincamp_list) {
         let data = list.traincamp_list
-        console.log(list.traincamp_list[i])
         if (data[i].discount_price > 0 && data[i].distribution_ratio > 0) {
           data[i].sharePrice = ((data[i].discount_price / 100) * (data[i].distribution_ratio / 100)).toFixed(2)
           list.traincamp_list = data
@@ -178,9 +204,17 @@ Page({
     } = options
     this.setData({
       promoteUid: promote_uid,
-      isShare: promote_uid === "" ? false : true
+      isShare: promote_uid !== "" ? false : true
     })
     if (promote_uid !== '') {
+      if (getLocalStorage(GLOBAL_KEY.userId)) {
+        if (Number(getLocalStorage(GLOBAL_KEY.userId)) === Number(promote_uid)) {
+          this.setData({
+            isShare: true,
+
+          })
+        }
+      }
       this.getShareUserInfo()
     } else {
       this.setData({
@@ -202,8 +236,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-    userInfo.kecheng_user.deposit = Number((userInfo.kecheng_user.deposit / 100).toFixed(2))
+    let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : ""
+    if (userInfo !== '') {
+      userInfo.kecheng_user.deposit = Number((userInfo.kecheng_user.deposit / 100).toFixed(2))
+    }
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
       accountInfo: userInfo

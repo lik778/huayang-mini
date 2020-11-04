@@ -26,9 +26,16 @@ Page({
   // 获取推广记录
   getList() {
     getPromotionRecord(this.data.pageData).then(res => {
-      res.data.list.map(item => item.amount = (item.amount / 100).toFixed(2))
+      let list = res.data.list
+      if (list.kecheng_promote_record !== null) {
+        list.map(item => {
+          if (item.kecheng_promote_record !== null) {
+            item.kecheng_promote_record.amount = (item.kecheng_promote_record.amount / 100).toFixed(2)
+          }
+        })
+      }
       this.setData({
-        list: res.data.list || []
+        list: list
       })
     })
   },

@@ -1,6 +1,10 @@
 // mine/withdrawResult/withdrawResult.js
 import {
-  getLocalStorage
+  getUserInfo
+} from "../../api/mine/index"
+import {
+  getLocalStorage,
+  setLocalStorage
 } from "../../utils/util"
 import {
   GLOBAL_KEY
@@ -17,7 +21,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    getUserInfo('scene=zhide').then(res => {
+      setLocalStorage(GLOBAL_KEY.accountInfo, res)
+    })
   },
 
   /**

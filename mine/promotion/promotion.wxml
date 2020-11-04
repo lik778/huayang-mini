@@ -93,7 +93,7 @@
 	<view class="by-promoter" wx:else style="padding-top:{{statusHeight+43}}px">
 		<!-- 标题 -->
 		<view class="share-title">
-			<view class="share-main-title">小草草</view>
+			<view class="share-main-title">{{shareUserInfo.nick_name}}</view>
 			<view class="share-sub-title">为您推荐花样精品课程</view>
 		</view>
 		<!-- tab列表 -->
@@ -104,7 +104,8 @@
 					{{item.name}}</view>
 			</view>
 			<view class="share-camp-module">
-				<view class="share-camp-item" wx:for="{{listData.traincamp_list}}" wx:key="{{index}}">
+				<view class="share-camp-item" wx:for="{{listData.traincamp_list}}" wx:key="{{index}}" bindtap="toDetail"
+					data-item="{{item}}" data-type="camp">
 					<view class="share-camp-item-box">
 						<view class="share-camp-cover"></view>
 						<view class="share-camp-logo">
@@ -119,7 +120,8 @@
 				</view>
 			</view>
 			<view class="share-course-module">
-				<view class="share-course-item" wx:for="{{listData.series_list}}" wx:key="{{index}}">
+				<view class="share-course-item" wx:for="{{listData.series_list}}" wx:key="{{index}}" bindtap="toDetail"
+					data-item="{{item}}" data-type="course">
 					<view class="share-course-item-box">
 						<view class="share-course-item-logo">
 							<image src="{{item.cover_pic}}"></image>
@@ -138,5 +140,4 @@
 			</view>
 		</view>
 	</view>
-
 </view>

@@ -34,6 +34,13 @@ Page({
     kecheng_count: 0,
     traincamp_count: 0
   },
+  // 跳往我的推广
+  toPromotion() {
+    wx.navigateTo({
+      url: '/mine/promotion/promotion',
+    })
+  },
+
   // 获取用户主题营、课程、活动数量数据
   queryContentInfo() {
     if (hasUserInfo() && hasAccountInfo()) {

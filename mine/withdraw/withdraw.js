@@ -82,7 +82,8 @@ Page({
       })
       kechengTakeout({
         user_id: getLocalStorage(GLOBAL_KEY.userId),
-        takeout_num: this.data.takeoutNum * 100
+        takeout_num: this.data.takeoutNum * 100,
+        open_id: getLocalStorage(GLOBAL_KEY.openId),
       }).then(res => {
         if (res.code === 0) {
           wx.navigateTo({

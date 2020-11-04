@@ -8,7 +8,9 @@ import {
   secondToMinute,
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
-import { checkFocusLogin } from "../../api/auth/index"
+import {
+  checkFocusLogin
+} from "../../api/auth/index"
 import {
   checkJoinVideoCourse,
   createFissionTask,
@@ -17,7 +19,10 @@ import {
   joinVideoCourse,
   recordStudy
 } from "../../api/course/index"
-import { GLOBAL_KEY, Version } from "../../lib/config"
+import {
+  GLOBAL_KEY,
+  Version
+} from "../../lib/config"
 
 const ButtonType = {
   freeAndNoLevelLimit: 1, // 免费且没有等级限制
@@ -121,7 +126,9 @@ Page({
   // 暂停播放
   pause() {
     if (!this.data.closeCover) {
-      this.setData({showVideoCover: true})
+      this.setData({
+        showVideoCover: true
+      })
     }
   },
   // 加入课程
@@ -176,7 +183,9 @@ Page({
     }
   },
   // 集中处理支付回调
-  backFun({type}) {
+  backFun({
+    type
+  }) {
     if (type === 'fail') {
       this.setData({
         lock: true
@@ -220,7 +229,9 @@ Page({
             // 邀请人数为0 & 优惠价格不为0
             res.discount_price = (+res.price * res.invite_discount / 10000).toFixed(2)
             buttonType = ButtonType.chargeAndDiscounts
-            this.setData({didResetDiscountPrice: true})
+            this.setData({
+              didResetDiscountPrice: true
+            })
           } else if (res.invite_count > 0 && res.invite_discount > 0) {
             // 邀请人数不为0 & 优惠折扣不为0
             res.fission_price = (+res.price * res.invite_discount / 10000).toFixed(2)
@@ -246,7 +257,9 @@ Page({
             // 邀请人数为0 & 优惠价格不为0
             res.discount_price = (+res.discount_price * res.invite_discount / 10000).toFixed(2)
             buttonType = ButtonType.chargeAndDiscounts
-            this.setData({didResetDiscountPrice: true})
+            this.setData({
+              didResetDiscountPrice: true
+            })
           } else if (res.invite_count > 0 && res.invite_discount > 0) {
             // 邀请人数不为0 & 优惠折扣不为0
             res.fission_price = (+res.discount_price * res.invite_discount / 10000).toFixed(2)
@@ -502,9 +515,10 @@ Page({
       scene,
       source,
       videoId,
+      promote_uid = '',
       series_invite_id = ''
     } = options
-
+    console.log(promote_uid)
     // 通过小程序码进入 scene=${source}
     if (scene) {
       let sceneAry = decodeURIComponent(scene).split('/');

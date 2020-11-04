@@ -1,8 +1,22 @@
-import { GLOBAL_KEY } from "../../lib/config"
-import { getLocalStorage, payVip, setLocalStorage } from "../../utils/util"
-import { bindWxPhoneNumber } from "../../api/auth/index"
-import { getUserInfo, getVipBg, pointjoinVipFrom } from "../../api/mine/index"
-import { checkAuth } from "../../utils/auth"
+import {
+    GLOBAL_KEY
+} from "../../lib/config"
+import {
+    getLocalStorage,
+    payVip,
+    setLocalStorage
+} from "../../utils/util"
+import {
+    bindWxPhoneNumber
+} from "../../api/auth/index"
+import {
+    getUserInfo,
+    getVipBg,
+    pointjoinVipFrom
+} from "../../api/mine/index"
+import {
+    checkAuth
+} from "../../utils/auth"
 
 Page({
 
@@ -262,8 +276,7 @@ Page({
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function () {
-    },
+    onShow: function () {},
 
     /**
      * 生命周期函数--监听页面隐藏

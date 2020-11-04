@@ -1,10 +1,24 @@
 // 加入训练营
-import { GLOBAL_KEY, Version } from "../../lib/config"
+import {
+  GLOBAL_KEY,
+  Version
+} from "../../lib/config"
 
-import { checkFocusLogin } from "../../api/auth/index"
+import {
+  checkFocusLogin
+} from "../../api/auth/index"
 
-import { getCampDetail, getHasJoinCamp, joinCamp } from "../../api/course/index"
-import { getLocalStorage, hasAccountInfo, hasUserInfo, payCourse } from "../../utils/util"
+import {
+  getCampDetail,
+  getHasJoinCamp,
+  joinCamp
+} from "../../api/course/index"
+import {
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  payCourse
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -322,6 +336,7 @@ Page({
       promote_uid = "",
       share
     } = options
+    console.log(promote_uid)
     let campId = id
     // 通过小程序码进入 scene=${source}/${id}/${share}
     if (scene) {
