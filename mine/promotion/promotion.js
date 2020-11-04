@@ -23,6 +23,7 @@ Page({
     statusHeight: "",
     listData: "",
     accountInfo: "",
+    tabIndex: 0,
     tabList: [{
       name: "全部",
       index: 0
@@ -43,6 +44,29 @@ Page({
     shareUserInfo: ""
   },
 
+  // 返回
+  back() {
+    wx.switchTab({
+      url: '/pages/userCenter/userCenter',
+    })
+  },
+
+  // 跳往详情页
+  toDetail(e) {
+    let data = e.currentTarget.dataset
+    if (data.type === "course") {
+      // 课程
+      wx.navigateTo({
+        url: `/subCourse/videoCourse/videoCourse?videoId=${data.item.id}`,
+      })
+    } else if (data.type === "camp") {
+      // 训练营
+      wx.navigateTo({
+        url: `/subCourse/joinCamp/joinCamp?id=${data.item.id}`,
+      })
+    }
+  },
+
   // 切换tab分支
   changeTab(e) {
     let item = e.currentTarget.dataset.item
@@ -59,7 +83,8 @@ Page({
         offset: 0,
         limit: 10,
         show_type: type
-      }
+      },
+      tabIndex: item.index
     })
     this.getList()
   },
@@ -70,8 +95,6 @@ Page({
       url: '/mine/withdraw/withdraw',
     })
   },
-
-  // 去推广记录
 
   // 获取推荐列表
   getList(e) {
@@ -96,6 +119,26 @@ Page({
       } else {
         list = res.data
       }
+      for (let i in list.series_list) {
+        let data = list.series_list
+        console.log(list.series_list[i])
+        if (data[i].discount_price > 0 && data[i].distribution_ratio > 0) {
+          data[i].sharePrice = ((data[i].discount_price / 100) * (data[i].distribution_ratio / 100)).toFixed(2)
+          list.series_list = data
+        } else {
+          list.series_list[i].sharePrice = ''
+        }
+      }
+      for (let i in list.traincamp_list) {
+        let data = list.traincamp_list
+        console.log(list.traincamp_list[i])
+        if (data[i].discount_price > 0 && data[i].distribution_ratio > 0) {
+          data[i].sharePrice = ((data[i].discount_price / 100) * (data[i].distribution_ratio / 100)).toFixed(2)
+          list.traincamp_list = data
+        } else {
+          list.traincamp_list[i].sharePrice = ''
+        }
+      }
       this.setData({
         listData: list,
         hasAll: res.data.series_list ? res.data.series_list.length < 10 ? true : false : true
@@ -106,10 +149,23 @@ Page({
   // 获取分享人用户信息
   getShareUserInfo() {
     getUniversityCode(`user_id=${this.data.promoteUid}`).then(res => {
-      console.log(res.data)
       this.setData({
         shareUserInfo: res.data
       })
+    })
+  },
+
+  // 去往推广记录
+  toRecord() {
+    wx.navigateTo({
+      url: '/mine/promotionRecord/promotionRecord',
+    })
+  },
+
+  // 去往提现页
+  toWithdraw() {
+    wx.navigateTo({
+      url: '/mine/withdraw/withdraw',
     })
   },
 
@@ -120,7 +176,6 @@ Page({
     let {
       promote_uid = ''
     } = options
-    console.log(promote_uid)
     this.setData({
       promoteUid: promote_uid,
       isShare: promote_uid === "" ? false : true
@@ -147,9 +202,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+    userInfo.kecheng_user.deposit = Number((userInfo.kecheng_user.deposit / 100).toFixed(2))
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
-      accountInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+      accountInfo: userInfo
     })
   },
 
@@ -190,7 +247,6 @@ Page({
     }
   },
   onShareAppMessage: function (res) {
-    console.log(this.data.shareUserInfo)
     return {
       title: `${this.data.shareUserInfo.nick_name}为您推荐了花样精选课程`,
       path: `/mine/promotion/promotion?promote_uid=${this.data.promoteUid}`

@@ -28,9 +28,11 @@
       "disablePlugins": [],
       "outputPath": ""
     },
+    "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": false,
     "userConfirmedUseCompilerModuleSwitch": false,
+    "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
     "minifyWXSS": true
@@ -72,6 +74,18 @@
         {
           "name": "提现",
           "pathName": "mine/withdraw/withdraw",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "提现成功",
+          "pathName": "mine/withdrawResult/withdrawResult",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "推广记录",
+          "pathName": "mine/promotionRecord/promotionRecord",
           "query": "",
           "scene": null
         }

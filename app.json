@@ -30,8 +30,7 @@
   "requiredBackgroundModes": [
     "audio"
   ],
-  "subpackages": [
-    {
+  "subpackages": [{
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -45,7 +44,8 @@
         "vipWelfare/vipWelfare",
         "withdrawResult/withdrawResult",
         "contact/contact",
-        "withdraw/withdraw"
+        "withdraw/withdraw",
+        "promotionRecord/promotionRecord"
       ]
     },
     {
@@ -96,8 +96,7 @@
   },
   "tabBar": {
     "custom": true,
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/discovery/discovery"
       },
       {

@@ -1,9 +1,33 @@
 <!--mine/withdraw/withdraw.wxml-->
 <view class="withdraw">
 	<!-- navibar -->
-	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
-		<naviBar title="我的钱包" color="rgba(250,250,250,0)"></naviBar>
+	<view class="back" style="padding-top:{{statusHeight}}px">
+		<view class="back-module">
+			<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604458365vukBeP.jpg" bindtap="back"></image>
+			<text>提现申请</text>
+		</view>
 	</view>
-	<input type="text" placeholder="请输入提现金额" bindinput="changeInputValue" type="number" />
-	<button bindtap="toWithdrawResult">立即提现</button>
+	<!-- 主体 -->
+	<view class="main" style="padding-top:{{statusHeight+64}}px">
+		<view class="withdraw-box">
+			<view class="withdraw-title">提现金额</view>
+			<view class="withdraw-input">
+				<view class="withdraw-input-left">
+					<text class="sign">¥</text>
+					<input type="number" placeholder="20元起提" bindinput="changeInputValue" placeholder-class="input-place" value="{{takeoutNum}}"/>
+				</view>
+				<text class="all-withdraw subject-font-color" bindtap="withdrawAll">全部提现</text>
+			</view>
+			<view class="withdraw-text">
+				<text>最多可提现余额：</text>
+				<text class="subject-font-color">¥{{userInfo.kecheng_user.deposit}}</text>
+			</view>
+		</view>
+		<view class="withdraw-button-module">
+			<view class="button subject-bg-color" bindtap="toWithdrawResult">提交</view>
+			<view class="withdraw-introduce">
+				提交提现申请后会在3个工作日内审核，审核通过后会直接打款到微信中。
+			</view>
+		</view>
+	</view>
 </view>

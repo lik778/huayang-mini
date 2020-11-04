@@ -58,4 +58,6 @@
 	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
 	</authModule>
 	<!-- 规则弹窗 -->
+	<!-- 分享按钮 -->
+	<button wx:if="{{isPromoter&&campDetailData.sharePrice>0}}">分享得{{campDetailData.sharePrice}}元</button>
 </view>

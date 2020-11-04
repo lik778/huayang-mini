@@ -1,7 +1,9 @@
 <!--mine/withdrawResult/withdrawResult.wxml-->
 <view class="withdraw-result">
-	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
-		<naviBar title="提现申请" color="rgba(250,250,250,0)"></naviBar>
+	<view class="banner">
+		<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604474096VjMoPN.jpg"></image>
 	</view>
-	<button bindtap="backPromotion">继续推广</button>
+	<view class="result-title">您已申请成功！</view>
+	<view class="result-text">我们会在3个工作日内审核完成，审核通过后会直接打款到您的微信支付账户中，请留意。感谢您对花样精品课程的推广支持。</view>
+	<view class="promote-again subject-bg-color" bindtap="backPromotion">继续推广</view>
 </view>

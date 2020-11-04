@@ -20,3 +20,11 @@ export const kechengTakeout = params => {
     })
   })
 }
+// 获取推广记录
+export const getPromotionRecord = params => {
+  return new Promise(resolve => {
+    request._get(URL.getPromotionRecord, params).then(res => {
+      resolve(res)
+    })
+  })
+}

@@ -1,0 +1,148 @@
+@import "../../assets/css/common.wxss";
+
+.withdraw {
+  background: #F8F8F8;
+  min-height: 100vh;
+}
+
+/* 返回 */
+.back {
+  position: fixed;
+  left: 14rpx;
+  top: 10rpx;
+  width: calc(100% - 14rpx);
+  z-index: 50;
+}
+
+.back-module {
+  position: relative;
+  width: 100vw;
+  left: -14rpx;
+}
+
+.back image {
+  width: 64rpx;
+  height: 64rpx;
+  margin-left: 14rpx;
+}
+
+.back-module text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 34rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000;
+  line-height: 38rpx;
+}
+
+/* 提现框 */
+.main {}
+
+.withdraw-box {
+  background: #fff;
+  width: calc(100% - 80rpx);
+  margin: 0 auto;
+  border-radius: 8rpx;
+  box-sizing: border-box;
+  padding: 40rpx 30rpx 40rpx 40rpx;
+}
+
+.withdraw-title {
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 56rpx;
+}
+
+.withdraw-input {
+  display: flex;
+  padding-top: 50rpx;
+  height: 96rpx;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #EFEFEF;
+}
+
+.withdraw-input-left {
+  display: flex;
+  align-items: center;
+}
+
+.sign {
+  font-size: 68rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 96rpx;
+}
+
+.withdraw-input input {
+  height: 100%;
+  -webkit-appearance: none;
+  font-size: 68rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 96rpx;
+  width: 400rpx;
+  margin-left: 12rpx;
+}
+
+.input-place {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #999999;
+  line-height: 44rpx;
+
+}
+
+.all-withdraw {
+
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #CC0000;
+  line-height: 44rpx;
+}
+
+.withdraw-text {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #999999;
+  line-height: 40rpx;
+  padding-top: 30rpx;
+}
+
+.withdraw-button-module {
+  padding-top: 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  width: 476rpx;
+  height: 96rpx;
+  text-align: center;
+  color: #fff;
+  line-height: 96rpx;
+  border-radius: 999rpx;
+}
+
+.withdraw-introduce {
+  width: 630rpx;
+  text-align: center;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #999999;
+  line-height: 40rpx;
+  padding-top: 40rpx;
+}

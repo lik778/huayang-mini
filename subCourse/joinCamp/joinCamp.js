@@ -42,7 +42,9 @@ Page({
     lock: true,
     campDetailData: {},
     timeJoin: '',
-    backIndex: false
+    promote_uid: "",
+    backIndex: false,
+    isPromoter: false
   },
   // 生成当前天的日期
   getCurrentDate(currentDate) {
@@ -151,6 +153,9 @@ Page({
           app_version: Version
         }).then(res1 => {
           let _this = this
+          if (res.discount_price > 0 && res.distribution_ratio > 0) {
+            res.sharePrice = (res.discount_price * (res.distribution_ratio / 100)) / 100
+          }
           if (!res1) {
             wx.getSystemInfo({
               success: function (res2) {
@@ -354,6 +359,7 @@ Page({
       invite_user_id = "",
       source,
       id,
+      promote_uid = "",
       share
     } = options
     let campId = id
@@ -385,9 +391,11 @@ Page({
 
     if (hasUserInfo() && hasAccountInfo()) {
       let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
+      let isPromoter = userInfo.kecheng_user.is_promoter === 1 ? true : false
       this.setData({
         campId,
-        userInfo: userInfo
+        userInfo: userInfo,
+        isPromoter
       })
       // id代表训练营ID
       this.checkCamp(this.data.campId)
@@ -398,7 +406,9 @@ Page({
       // id代表训练营ID
       this.getCampDetail(campId)
     }
-
+    setTimeout(() => {
+      console.log(this.data.campDetailData)
+    }, 5000)
     // 记录起始页面地址
     if (!getApp().globalData.firstViewPage && getCurrentPages().length > 0) {
       getApp().globalData.firstViewPage = getCurrentPages()[0].route
@@ -458,9 +468,13 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    let shareLink = "/subCourse/joinCamp/joinCamp?id=" + this.data.campId + `&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
+    if (this.data.isPromoter) {
+      shareLink = shareLink + `&promote_uid=${this.data.userInfo.id}`
+    }
     return {
       title: `我正在参加${this.data.campDetailData.name}，每天都有看的见的变化，快来试试`,
-      path: "/subCourse/joinCamp/joinCamp?id=" + this.data.campId + `&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
+      path: shareLink
     }
   }
 })

@@ -1,6 +1,7 @@
 // mine/withdraw/withdraw.js
 import {
   getLocalStorage,
+  checkIsPrice
 } from "../../utils/util"
 import {
   GLOBAL_KEY
@@ -17,18 +18,35 @@ Page({
   data: {
     statusHeight: 0,
     takeoutNum: "",
-    lock: true
+    lock: true,
+    userInfo: ""
+  },
+
+  // 返回
+  back() {
+    wx.redirectTo({
+      url: '/mine/promotion/promotion',
+    })
   },
 
   // 实时更新输入框文字
   changeInputValue(e) {
+    let text = e.detail.value
     this.setData({
-      takeoutNum: e.detail.value
+      takeoutNum: Number(text)
+    })
+  },
+
+  // 全部提现
+  withdrawAll() {
+    this.setData({
+      takeoutNum: Number(this.data.userInfo.kecheng_user.deposit)
     })
   },
 
   // 提现结果
   toWithdrawResult() {
+    console.log(this.data.takeoutNum, this.data.userInfo.kecheng_user.deposit)
     if (this.data.takeoutNum === '') {
       wx.showModal({
         title: '提示',
@@ -40,6 +58,20 @@ Page({
       wx.showModal({
         title: '提示',
         content: '提现金额不能低于20元',
+        showCancel: false
+      })
+      return
+    } else if (!checkIsPrice(this.data.takeoutNum)) {
+      wx.showModal({
+        title: '提示',
+        content: '提现金额错误',
+        showCancel: false
+      })
+      return
+    } else if (this.data.takeoutNum > this.data.userInfo.kecheng_user.deposit) {
+      wx.showModal({
+        title: '提示',
+        content: '提现金额不能超过感谢金余额',
         showCancel: false
       })
       return
@@ -75,7 +107,13 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {},
+  onLoad: function (options) {
+    let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+    userInfo.kecheng_user.deposit = Number((userInfo.kecheng_user.deposit / 100).toFixed(2))
+    this.setData({
+      userInfo
+    })
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

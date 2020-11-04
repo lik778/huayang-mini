@@ -1,0 +1,46 @@
+<!--mine/promotionRrecord/promotionRrecord.wxml-->
+<view class="container">
+  <view class="main">
+    <!-- 有推广记录 -->
+    <view class="list" wx:if="{{list.length>0}}">
+      <view class="camp-list">
+        <view class="camp-item" wx:for="{{list}}" wx:key="{{index}}"
+          wx:if="{{item.content_type===1||item.content_type===2}}">
+          <view class="camp-item-left">
+            <view class="camp-item-title">{{item.nick_name}}</view>
+            <view class="camp-item-subtitle">{{item.content_name}}</view>
+            <view class="camp-item-time">{{item.record_time}}</view>
+          </view>
+          <view class="camp-itme-right">+{{item.amount}}</view>
+        </view>
+      </view>
+      <view class="withdraw-list">
+        <view class="withdraw-item" wx:for="{{list}}" wx:key="{{index}}" wx:if="{{item.content_type===3}}">
+          <view class="withdraw-item-left">
+            <view class="withdraw-item-title">提现</view>
+            <view class="withdraw-item-status withdraw-item-status-one" wx:if="{{item.status===0}}">审核中</view>
+            <view class="withdraw-item-status withdraw-item-status-two subject-font-color" wx:if="{{item.status===2}}">
+              <text>审核失败</text>
+              <text>{{item.reject_message}}</text>
+            </view>
+            <view class="withdraw-item-status withdraw-item-status-three" wx:if="{{item.status===1}}">提现成功</view>
+            <view class="withdraw-item-time">{{item.record_time}}</view>
+          </view>
+          <view class="withdraw-item-right">
+            -{{item.amount}}
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 无推广记录 -->
+    <view class="no-list" wx:else>
+      <view class="no-icon">
+        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604486211tIslxp.jpg"></image>
+      </view>
+      <view class="no-text">您还没有推广过花样课程
+        快去分享知识，赚些小钱吧！</view>
+      <view class="share-btn subject-bg-color" bindtap="toPromotion">我要推广</view>
+    </view>
+  </view>
+
+</view>
