@@ -2,7 +2,8 @@ import {
 	getCourseData,
 	getUserPracticeRecentRecord,
 	getWxRoomData,
-	queryBootCampContentInToday
+	queryBootCampContentInToday,
+	updateBootcampStudyTime
 } from "../../api/course/index"
 import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
@@ -27,6 +28,7 @@ Page({
 		handledData: [],
 		resultData: [],
 		didShowTipsLay: false, // 显示提示收藏蒙层
+		didNeedScrollTop: false, // 是否需要将页面滑动到顶部
 	},
 
 	/**
@@ -64,6 +66,7 @@ Page({
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
+		this.initial()
 	},
 
 	/**
@@ -90,6 +93,12 @@ Page({
 	 */
 	onHide: function () {
 
+		// 是否需要将页面滑动到顶部
+		if (this.data.didNeedScrollTop) {
+			// 将页面滑动到顶部
+			wx.pageScrollTo({scrollTop: 0, duration: 0})
+			this.setData({didNeedScrollTop: false})
+		}
 	},
 
 	/**
@@ -152,6 +161,9 @@ Page({
 			parent
 		} = e.currentTarget.dataset
 		bxPoint("practice_start", {}, false)
+		this.setData({didNeedScrollTop: true})
+		// 训练营学习时间更新
+		updateBootcampStudyTime({traincamp_id: parent.bootCampId, user_id: getLocalStorage(GLOBAL_KEY.userId)})
 		switch (item.type) {
 			case 'kecheng': {
 				switch (item.kecheng_type) {
@@ -221,8 +233,12 @@ Page({
 			status
 		} = e.currentTarget.dataset.item
 		if (status !== 3) {
+			let self = this
 			wx.navigateTo({
-				url: "/subCourse/campDetail/campDetail?id=" + bootCampId + "&from=practice"
+				url: "/subCourse/campDetail/campDetail?id=" + bootCampId + "&from=practice",
+				success() {
+					self.setData({didNeedScrollTop: true})
+				}
 			})
 		}
 	},
@@ -245,8 +261,12 @@ Page({
 	// 跳往视频课程详情
 	toVideoDetail(e) {
 		let id = e.currentTarget.dataset.item.kecheng_series.id
+		let self = this
 		wx.navigateTo({
 			url: `/subCourse/videoCourse/videoCourse?videoId=${id}`,
+			success() {
+				self.setData({didNeedScrollTop: true})
+			}
 		})
 	},
 	async initial() {

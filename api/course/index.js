@@ -599,3 +599,12 @@ export function getUserPracticeRecentRecord(params) {
 		})
 	})
 }
+
+/**
+ * 训练营学习时间更新
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export function updateBootcampStudyTime(params) {
+	return request._post(URL.setBootcampStudyTime, params)
+}
