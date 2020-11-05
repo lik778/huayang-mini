@@ -1,8 +1,10 @@
 // mine/wallet/wallet.js
 import {
   getLocalStorage,
-  setLocalStorage
+  setLocalStorage,
+  getNowDateAll
 } from "../../utils/util"
+import bxPoint from "../../utils/bxPoint"
 import {
   getUniversityCode,
   getUserInfo
@@ -203,6 +205,25 @@ Page({
     })
   },
 
+  // 打点
+  setPoint() {
+    let isShare = this.data.promoteUid === "" ? false : true
+    if (isShare) {
+      // 被分享进来的
+      bxPoint("promotion_page", {
+        userId: this.data.promoteUid,
+        time: getNowDateAll("-")
+      })
+    } else {
+      // 分享人进来的
+      bxPoint("promotion_page", {
+        promoterId: this.data.promoteUid,
+        userId: getLocalStorage(GLOBAL_KEY.userId) ? getLocalStorage(GLOBAL_KEY.userId) : "",
+        open_id: getLocalStorage(GLOBAL_KEY.openId) ? getLocalStorage(GLOBAL_KEY.openId) : "",
+      })
+    }
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -231,6 +252,7 @@ Page({
       })
     }
     this.getList()
+    this.setPoint()
   },
 
   /**
@@ -303,6 +325,7 @@ Page({
   onShareAppMessage: function (res) {
     return {
       title: `${this.data.shareUserInfo.nick_name}为您推荐了花样精选课程`,
+      imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604563106LfDcOh.jpg",
       path: `/mine/promotion/promotion?promote_uid=${this.data.promoteUid}`
     }
   }

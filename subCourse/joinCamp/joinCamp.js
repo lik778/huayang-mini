@@ -45,6 +45,16 @@ Page({
     backIndex: false,
     isPromoter: false //是否是分销人
   },
+
+  // 打点
+  shareNow() {
+    bxPoint({
+      open_id: getLocalStorage(GLOBAL_KEY.openId),
+      user_id: getLocalStorage(GLOBAL_KEY.userId),
+      isPromoter: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).kecheng_user.is_promoter === 1 ? true : false
+    })
+  },
+
   // 生成当前天的日期
   getCurrentDate(currentDate) {
     return new Promise(resolve => {
@@ -140,7 +150,7 @@ Page({
         }).then(res1 => {
           let _this = this
           if (res.discount_price > 0 && res.distribution_ratio > 0) {
-            res.sharePrice = (res.discount_price * (res.distribution_ratio / 100)) / 100
+            res.sharePrice = ((res.discount_price * (res.distribution_ratio / 100)) / 100).toFixed(2)
           }
           if (!res1) {
             wx.getSystemInfo({

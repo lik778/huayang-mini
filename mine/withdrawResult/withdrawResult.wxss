@@ -44,3 +44,36 @@
   color: #fff;
   margin: 0 auto;
 }
+
+/* 返回 */
+.back {
+  position: fixed;
+  left: 14rpx;
+  top: 10rpx;
+  width: calc(100% - 14rpx);
+  z-index: 50;
+}
+
+.back-module {
+  position: relative;
+  width: 100vw;
+  left: -14rpx;
+}
+
+.back image {
+  width: 64rpx;
+  height: 64rpx;
+  margin-left: 14rpx;
+}
+
+.back-module text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 34rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 38rpx;
+}

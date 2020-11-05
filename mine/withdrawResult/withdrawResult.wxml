@@ -1,6 +1,13 @@
 <!--mine/withdrawResult/withdrawResult.wxml-->
 <view class="withdraw-result">
-	<view class="banner">
+	<!-- 返回 -->
+	<view class="back" style="padding-top:{{statusHeight}}px">
+		<view class="back-module">
+			<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604458365vukBeP.jpg" bindtap="backPromotion"></image>
+			<text>提现申请</text>
+		</view>
+	</view>
+	<view class="banner" style="padding-top:{{statusHeight+64}}px">
 		<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604474096VjMoPN.jpg"></image>
 	</view>
 	<view class="result-title">您已申请成功！</view>

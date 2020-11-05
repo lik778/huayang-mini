@@ -1,8 +1,12 @@
 // mine/withdraw/withdraw.js
 import {
   getLocalStorage,
+  setLocalStorage,
   checkIsPrice
 } from "../../utils/util"
+import {
+  getUserInfo
+} from "../../api/mine/index"
 import {
   GLOBAL_KEY
 } from "../../lib/config"
@@ -109,11 +113,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-    userInfo.kecheng_user.deposit = Number((userInfo.kecheng_user.deposit / 100).toFixed(2))
-    this.setData({
-      userInfo
-    })
+
   },
 
   /**
@@ -127,6 +127,14 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    getUserInfo('scene=zhide').then(res => {
+      setLocalStorage(GLOBAL_KEY.accountInfo, res)
+      res.kecheng_user.deposit = (res.kecheng_user.deposit / 100).toFixed(2)
+      console.log(res)
+      this.setData({
+        userInfo: res
+      })
+    })
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })

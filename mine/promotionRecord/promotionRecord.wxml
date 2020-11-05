@@ -4,35 +4,27 @@
     <!-- 有推广记录 -->
     <view class="list" wx:if="{{list.length>0}}">
       <view class="camp-list">
-        <view class="camp-item" wx:for="{{list}}" wx:key="{{index}}"
-          wx:if="{{item.kecheng_promote_record.content_type===1||item.kecheng_promote_record.content_type===2}}">
+        <view class="camp-item" wx:for="{{list}}" wx:key="{{index}}">
           <view class="camp-item-left">
-            <view class="camp-item-title">{{item.user.nick_name}}</view>
-            <view class="camp-item-subtitle">{{item.kecheng_promote_record.content_name}}</view>
+            <view class="camp-item-title limit-one-line ">
+              {{item.kecheng_promote_record.content_type===3?"提现":item.user.nick_name}}
+            </view>
+            <!-- 提现 -->
+            <view class="withdraw-status" wx:if="{{item.kecheng_promote_record.content_type===3}}">
+              <view class="withdraw-item-status withdraw-item-status-one"
+                wx:if="{{item.kecheng_takeout_record.status===0}}">审核中</view>
+              <view class="withdraw-item-status withdraw-item-status-two subject-font-color"
+                wx:if="{{item.kecheng_takeout_record.status===2}}">
+                <text>审核失败</text>
+                <text>{{item.kecheng_takeout_record.reject_message}}</text>
+              </view>
+              <view class="withdraw-item-status withdraw-item-status-three"
+                wx:if="{{item.kecheng_takeout_record.status===1}}">提现成功</view>
+            </view>
+            <view class="camp-item-subtitle" wx:else>{{item.kecheng_promote_record.content_name}}</view>
             <view class="camp-item-time">{{item.kecheng_promote_record.created_at}}</view>
           </view>
           <view class="camp-itme-right">+{{item.kecheng_promote_record.amount}}</view>
-        </view>
-      </view>
-      <view class="withdraw-list">
-        <view class="withdraw-item" wx:for="{{list}}" wx:key="{{index}}"
-          wx:if="{{item.kecheng_promote_record.content_type===3}}">
-          <view class="withdraw-item-left">
-            <view class="withdraw-item-title">提现</view>
-            <view class="withdraw-item-status withdraw-item-status-one"
-              wx:if="{{item.kecheng_takeout_record.status===0}}">审核中</view>
-            <view class="withdraw-item-status withdraw-item-status-two subject-font-color"
-              wx:if="{{item.kecheng_takeout_record.status===2}}">
-              <text>审核失败</text>
-              <text>{{item.kecheng_takeout_record.reject_message}}</text>
-            </view>
-            <view class="withdraw-item-status withdraw-item-status-three"
-              wx:if="{{item.kecheng_takeout_record.status===1}}">提现成功</view>
-            <view class="withdraw-item-time">{{item.kecheng_takeout_record.created_at}}</view>
-          </view>
-          <view class="withdraw-item-right">
-            -{{item.kecheng_promote_record.amount}}
-          </view>
         </view>
       </view>
     </view>

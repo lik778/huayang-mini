@@ -219,6 +219,15 @@ Page({
     this.videoContext.requestFullScreen()
   },
 
+  // 分销打点
+  shareCamp() {
+    bxPoint({
+      open_id: getLocalStorage(GLOBAL_KEY.openId),
+      user_id: getLocalStorage(GLOBAL_KEY.userId),
+      isPromoter: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).kecheng_user.is_promoter === 1 ? true : false
+    })
+  },
+
   // 进/退全屏
   enterFull(e) {
     if (e.detail.fullscreen === false) {
@@ -252,7 +261,7 @@ Page({
       user_id: getLocalStorage(GLOBAL_KEY.userId)
     }).then(res => {
       if (res.discount_price > 0 && res.distribution_ratio > 0) {
-        res.sharePrice = (res.discount_price * (res.distribution_ratio / 100)) / 100
+        res.sharePrice = ((res.discount_price * (res.distribution_ratio / 100)) / 100).toFixed(2)
       }
       let oneDaySecond = 86400
       let formatType = 'yyyy-MM-dd'

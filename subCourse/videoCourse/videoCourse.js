@@ -349,6 +349,11 @@ Page({
         showVideoLock = false
       }
       let buttonStyle = button ? button : buttonType
+      if (res.discount_price > 0 && res.distribution_ratio > 0) {
+        res.sharePrice = ((res.discount_price * (res.distribution_ratio / 100))).toFixed(2)
+      }
+
+      console.log(res)
       this.getArticleLink(res.id)
       checkFocusLogin({
         app_version: Version
@@ -508,9 +513,17 @@ Page({
         })
       }).exec()
     }
-
-
   },
+
+  // 分销打点
+  shareCourse() {
+    bxPoint({
+      open_id: getLocalStorage(GLOBAL_KEY.openId),
+      user_id: getLocalStorage(GLOBAL_KEY.userId),
+      isPromoter: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).kecheng_user.is_promoter === 1 ? true : false
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
