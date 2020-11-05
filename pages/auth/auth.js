@@ -175,6 +175,7 @@ Page({
 			redirectPath = decodeURIComponent(redirectPath)
 		}
 
+		console.log(redirectPath)
 		if (Number(fromWebView) === 1) {
 			redirectPath = decodeURIComponent(redirectPath)
 		}

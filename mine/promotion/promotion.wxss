@@ -48,7 +48,7 @@
   height: 420rpx;
 }
 
-.banner-bg image{
+.banner-bg image {
   position: absolute;
   left: 0;
   top: 0;
@@ -61,7 +61,7 @@
 .my-price {
   position: absolute;
   left: 68rpx;
-  bottom: 154rpx;
+  bottom: 160rpx;
   font-size: 86rpx;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
@@ -76,7 +76,7 @@
 .my-price-text {
   position: absolute;
   left: 68rpx;
-  bottom: 80rpx;
+  bottom: 88rpx;
   font-size: 52rpx;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
@@ -101,11 +101,11 @@
 }
 
 .banner-module-right-one {
-  bottom: 164rpx;
+  bottom: 190rpx;
 }
 
 .banner-module-right-two {
-  bottom: 54rpx;
+  bottom: 86rpx;
 }
 
 /* 我要推广区域 */

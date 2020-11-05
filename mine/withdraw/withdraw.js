@@ -33,7 +33,7 @@ Page({
   changeInputValue(e) {
     let text = e.detail.value
     this.setData({
-      takeoutNum: Number(text)
+      takeoutNum: e.detail.value === "" ? "" : Number(text)
     })
   },
 

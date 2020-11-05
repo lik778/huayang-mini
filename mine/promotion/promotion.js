@@ -24,6 +24,7 @@ Page({
     accountInfo: "",
     tabIndex: 0,
     promoteUid: "",
+    shareTitle: "",
     tabList: [{
       name: "全部",
       index: 0
@@ -44,11 +45,25 @@ Page({
     shareUserInfo: ""
   },
 
+  // 改变分享
+  changeShare() {
+    // console.log(e)
+    this.setData({
+      shareTitle: "121"
+    })
+  },
+
   // 返回
   back() {
-    wx.switchTab({
-      url: '/pages/userCenter/userCenter',
-    })
+    if (this.data.promoteUid !== '') {
+      wx.switchTab({
+        url: '/pages/discovery/discovery',
+      })
+    } else {
+      wx.switchTab({
+        url: '/pages/userCenter/userCenter',
+      })
+    }
   },
 
   // 跳往详情页
@@ -229,14 +244,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
-
-
     let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : ""
     if (userInfo !== '') {
       userInfo.kecheng_user.deposit = Number((userInfo.kecheng_user.deposit / 100).toFixed(2))
       getUserInfo('scene=zhide').then(res => {
         setLocalStorage(GLOBAL_KEY.accountInfo, res)
+        res.kecheng_user.deposit = (res.kecheng_user.deposit / 100).toFixed(2)
         this.setData({
           accountInfo: res
         })
