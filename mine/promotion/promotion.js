@@ -59,7 +59,7 @@ Page({
     let linkData = ''
     if (this.data.promoteUid !== '') {
       if (userId !== '') {
-        if (Number(this.data.promoteUid) && Number(userId)) {
+        if (Number(this.data.promoteUid) === Number(userId)) {
           linkData = ''
         } else {
           linkData = Number(this.data.promoteUid)
@@ -68,30 +68,24 @@ Page({
         linkData = Number(this.data.promoteUid)
       }
     }
-
     if (data.type === "course") {
+      let link = `/subCourse/videoCourse/videoCourse?videoId=${data.item.id}`
       // 课程
-      if (linkData === '') {
-        wx.navigateTo({
-          url: `/subCourse/videoCourse/videoCourse?videoId=${data.item.id}`,
-        })
-      } else {
-        wx.navigateTo({
-          url: `/subCourse/videoCourse/videoCourse?videoId=${data.item.id}&promote_uid=${linkData}`,
-        })
+      if (linkData !== '') {
+        link = link + `&promote_uid=${linkData}`
       }
-
+      wx.navigateTo({
+        url: link,
+      })
     } else if (data.type === "camp") {
       // 训练营
-      if (linkData === '') {
-        wx.navigateTo({
-          url: `/subCourse/joinCamp/joinCamp?id=${data.item.id}`,
-        })
-      } else {
-        wx.navigateTo({
-          url: `/subCourse/joinCamp/joinCamp?id=${data.item.id}&promote_uid=${linkData}`,
-        })
+      let link = `/subCourse/joinCamp/joinCamp?id=${data.item.id}`
+      if (linkData !== '') {
+        link = link + `&promote_uid=${linkData}`
       }
+      wx.navigateTo({
+        url: link,
+      })
     }
   },
 

@@ -35,15 +35,15 @@ Page({
     joinTime: "",
     hasJoinAll: false, //代表加入过
     endTime: "",
-    userInfo: "",
+    userInfo: "", //用户信息
     hasAllTime: "",
     buttonType: 1,
     lock: true,
     campDetailData: {},
     timeJoin: '',
-    promote_uid: "",
+    promoteUid: "", //分销邀请人id
     backIndex: false,
-    isPromoter: false
+    isPromoter: false //是否是分销人
   },
   // 生成当前天的日期
   getCurrentDate(currentDate) {
@@ -206,7 +206,8 @@ Page({
         joinCamp({
           open_id: getLocalStorage(GLOBAL_KEY.openId),
           date: this.data.hasJoinAll ? this.data.hasAllTime : this.data.endTime,
-          traincamp_id: this.data.campId
+          traincamp_id: this.data.campId,
+          promoteUid: this.data.promoteUid
         }).then((res) => {
           if (res.id) {
             payCourse({
@@ -336,7 +337,13 @@ Page({
       promote_uid = "",
       share
     } = options
-    console.log(promote_uid)
+    console.log(promote_uid, "邀请人id")
+    // 设置邀请人id
+    if (promote_uid !== '') {
+      this.setData({
+        promoteUid: promote_uid
+      })
+    }
     let campId = id
     // 通过小程序码进入 scene=${source}/${id}/${share}
     if (scene) {
@@ -366,11 +373,10 @@ Page({
 
     if (hasUserInfo() && hasAccountInfo()) {
       let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
-      let isPromoter = userInfo.kecheng_user.is_promoter === 1 ? true : false
+      // let isPromoter = userInfo.kecheng_user.is_promoter === 1 ? true : false
       this.setData({
         campId,
-        userInfo: userInfo,
-        isPromoter
+        userInfo: userInfo
       })
       // id代表训练营ID
       this.checkCamp(this.data.campId)
@@ -381,9 +387,6 @@ Page({
       // id代表训练营ID
       this.getCampDetail(campId)
     }
-    setTimeout(() => {
-      console.log(this.data.campDetailData)
-    }, 5000)
     // 记录起始页面地址
     if (!getApp().globalData.firstViewPage && getCurrentPages().length > 0) {
       getApp().globalData.firstViewPage = getCurrentPages()[0].route

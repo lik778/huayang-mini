@@ -60,6 +60,8 @@ Page({
     hasLogin: false, //是否登录
     articleLink: '', //引导私域文章地址
     didResetDiscountPrice: false, // 是否重置优惠价格
+    promoteUid: "", //分销分享人ID
+    userInfo: "", //用户信息
   },
   initFissionTask() {
     createFissionTask({
@@ -145,7 +147,8 @@ Page({
         // 加入课程
         joinVideoCourse({
           open_id: openid,
-          series_id: this.data.courseData.id
+          series_id: this.data.courseData.id,
+          promote_uid: this.data.promoteUid
         }).then(res => {
           this.setData({
             lock: false
@@ -392,7 +395,8 @@ Page({
       hasUserInfo()) {
       // 已经登录
       this.setData({
-        hasLogin: true
+        hasLogin: true,
+        userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
       })
       checkJoinVideoCourse({
         kecheng_series_id: this.data.videoId
@@ -518,7 +522,12 @@ Page({
       promote_uid = '',
       series_invite_id = ''
     } = options
-    console.log(promote_uid)
+    console.log(promote_uid, "邀请人id")
+    if (promote_uid !== '') {
+      this.setData({
+        promoteUid: promote_uid
+      })
+    }
     // 通过小程序码进入 scene=${source}
     if (scene) {
       let sceneAry = decodeURIComponent(scene).split('/');
