@@ -911,6 +911,15 @@ export const getNowDate = (linkIcon) => {
 	let mm = date.getMinutes();
 	//秒
 	let ss = date.getSeconds();
-	let rq = year + linkIcon + month + linkIcon + day 
+	let rq = year + linkIcon + month + linkIcon + day
 	return rq
 }
+
+//检查价格
+export const checkIsPrice = e => {
+	if (/(^[-+]?[1-9]\d*(\.\d{1,2})?$)|(^[-+]?[0]{1}(\.\d{1,2})?$)/.test(e)) {
+		return true;
+	} else {
+		return false;
+	}
+};

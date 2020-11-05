@@ -9,7 +9,7 @@
 	</view>
 	<!-- 按钮区域6种状态 -->
 	<view class="button">
-		<view class="button-one button-style-one subject-bg-color" wx:if="{{buttonType===1}}">
+		<view class="button-one button-style-one" wx:if="{{buttonType===1}}">
 			<!-- 没有开营日期 -->
 			即将开营
 		</view>
@@ -45,4 +45,7 @@
 	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
 	</authModule>
 	<!-- 规则弹窗 -->
+	<!-- 分享按钮 -->
+	<button wx:if="{{isPromoter&&campDetailData.sharePrice>0}}">分享得{{campDetailData.sharePrice}}元</button>
+	{{userInfo!==""&&userInfo.kecheng_user.is_promoter===1?"是分享者":"不是分享者"}}
 </view>

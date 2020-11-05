@@ -130,4 +130,5 @@
   <!-- 授权弹窗 -->
   <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
   </authModule>
+  {{userInfo!==""&&userInfo.kecheng_user.is_promoter===1?"是分享者":"不是分享者"}}
 </view>

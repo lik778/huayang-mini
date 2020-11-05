@@ -1,24 +1,29 @@
 // subCourse/trainingCampDetail/trainingCampDetail.js
 import {
-	getArticileLink,
-	getCampDetail,
-	getCourseData,
-	getCurentDayData,
-	getFindBanner,
-	getHasJoinCamp,
-	getWxRoomData
+  getArticileLink,
+  getCampDetail,
+  getCourseData,
+  getCurentDayData,
+  getFindBanner,
+  getHasJoinCamp,
+  getWxRoomData
 } from "../../api/course/index"
-import { getProductInfo, getYouZanAppId } from "../../api/mall/index"
 import {
-	computeDate,
-	dateAddDays,
-	getLocalStorage,
-	getNowDate,
-	setLocalStorage,
-	simpleDurationSimple
+  getProductInfo,
+  getYouZanAppId
+} from "../../api/mall/index"
+import {
+  computeDate,
+  dateAddDays,
+  getLocalStorage,
+  getNowDate,
+  setLocalStorage,
+  simpleDurationSimple
 } from "../../utils/util"
 import bxPoint from '../../utils/bxPoint'
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 
 Page({
 
@@ -57,7 +62,8 @@ Page({
     videoHeight: "", //视频高度
     appId: "", //appid
     showAddTeacherCover: false, //显示指引弹窗
-    fromPage: '' //页面来源
+    fromPage: '', //页面来源
+    userInfo: "" //用户信息
   },
 
   // 关闭引导私域蒙板
@@ -377,7 +383,7 @@ Page({
     let formatType = 'yyyy-MM-dd'
     let {
       scene,
-      share
+      share,
     } = options
     this.setData({
       campId,
@@ -433,6 +439,10 @@ Page({
         backIndex: true,
       })
     }
+    // 存储用户信息
+    this.setData({
+      userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+    })
   },
 
   /**
@@ -454,7 +464,6 @@ Page({
         16) *
       9
     )
-    console.log(height)
     this.setData({
       statusBarHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
       videoHeight: height,
@@ -493,11 +502,12 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    let shareLink = '/subCourse/joinCamp/joinCamp?id=' +
+      this.data.campId +
+      `&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}&share=true`
     return {
       title: `我正在参加${this.data.campData.name}，每天都有看的见的变化，快来试试`,
-      path: '/subCourse/joinCamp/joinCamp?id=' +
-        this.data.campId +
-        `&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}&share=true`,
+      path: shareLink
     }
   }
 })

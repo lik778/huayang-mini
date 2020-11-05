@@ -113,4 +113,5 @@
       <image src="/assets/images/common/long-down-arrow.png"></image>
     </view>
   </view>
+  {{userInfo!==""&&userInfo.kecheng_user.is_promoter===1?"是分享者":"不是分享者"}}
 </view>
