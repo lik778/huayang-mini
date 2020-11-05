@@ -607,9 +607,13 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    let shareLink = `/subCourse/videoCourse/videoCourse?videoId=${this.data.courseData.id}`
+    if (this.data.userInfo !== '' && this.data.userInfo.kecheng_user.is_promoter === 1) {
+      shareLink += `&promote_uid=${this.data.userInfo.id}`
+    }
     return {
       title: this.data.courseData.share_desc,
-      path: `/subCourse/videoCourse/videoCourse?videoId=${this.data.courseData.id}`
+      path: shareLink
     }
   }
 })

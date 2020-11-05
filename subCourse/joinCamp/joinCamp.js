@@ -207,7 +207,7 @@ Page({
           open_id: getLocalStorage(GLOBAL_KEY.openId),
           date: this.data.hasJoinAll ? this.data.hasAllTime : this.data.endTime,
           traincamp_id: this.data.campId,
-          promoteUid: this.data.promoteUid
+          promote_uid: this.data.promoteUid
         }).then((res) => {
           if (res.id) {
             payCourse({
@@ -447,8 +447,8 @@ Page({
    */
   onShareAppMessage: function () {
     let shareLink = "/subCourse/joinCamp/joinCamp?id=" + this.data.campId + `&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
-    if (this.data.isPromoter) {
-      shareLink = shareLink + `&promote_uid=${this.data.userInfo.id}`
+    if (this.data.userInfo !== '' && this.data.userInfo.kecheng_user.is_promoter === 1) {
+      shareLink += `&promote_uid=${this.data.userInfo.id}`
     }
     return {
       title: `我正在参加${this.data.campDetailData.name}，每天都有看的见的变化，快来试试`,

@@ -251,6 +251,9 @@ Page({
       traincamp_id: this.data.campId,
       user_id: getLocalStorage(GLOBAL_KEY.userId)
     }).then(res => {
+      if (res.discount_price > 0 && res.distribution_ratio > 0) {
+        res.sharePrice = (res.discount_price * (res.distribution_ratio / 100)) / 100
+      }
       let oneDaySecond = 86400
       let formatType = 'yyyy-MM-dd'
       let startDate = new Date(this.data.joinDate).getTime()
@@ -276,6 +279,7 @@ Page({
       } else {
         showDate = hasStartCampType === 1 ? this.data.joinDate : hasStartCampType === 2 ? todayDate : endDateStr
       }
+      console.log(res)
       this.setData({
         campData: res,
         endDateStr,
@@ -505,6 +509,9 @@ Page({
     let shareLink = '/subCourse/joinCamp/joinCamp?id=' +
       this.data.campId +
       `&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}&share=true`
+    if (this.data.userInfo !== '' && this.data.userInfo.kecheng_user.is_promoter === 1) {
+      shareLink += `&promote_uid=${this.data.userInfo.id}`
+    }
     return {
       title: `我正在参加${this.data.campData.name}，每天都有看的见的变化，快来试试`,
       path: shareLink
