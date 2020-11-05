@@ -279,7 +279,14 @@ Page({
       } else {
         showDate = hasStartCampType === 1 ? this.data.joinDate : hasStartCampType === 2 ? todayDate : endDateStr
       }
-      console.log(res)
+      // 处理日期补0
+      let dateStr = showDate.split("-")
+      for (let i in dateStr) {
+        if (Number(dateStr[i]) < 10 && dateStr[i].indexOf("0") !== 0) {
+          dateStr[i] = "0" + dateStr[i]
+        }
+      }
+      showDate = dateStr.join("-")
       this.setData({
         campData: res,
         endDateStr,

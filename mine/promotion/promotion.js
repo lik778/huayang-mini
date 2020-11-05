@@ -1,16 +1,15 @@
 // mine/wallet/wallet.js
 import {
-  getLocalStorage
+  getLocalStorage,
+  setLocalStorage
 } from "../../utils/util"
 import {
-  getUniversityCode
+  getUniversityCode,
+  getUserInfo
 } from "../../api/mine/index"
 import {
   getTakeoutList
 } from "../../api/markting/course"
-import {
-  getUserInfo
-} from "../../api/mine/index"
 import {
   GLOBAL_KEY
 } from "../../lib/config"
@@ -230,13 +229,25 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+
+
+
     let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : ""
     if (userInfo !== '') {
       userInfo.kecheng_user.deposit = Number((userInfo.kecheng_user.deposit / 100).toFixed(2))
+      getUserInfo('scene=zhide').then(res => {
+        setLocalStorage(GLOBAL_KEY.accountInfo, res)
+        this.setData({
+          accountInfo: res
+        })
+      })
+    } else {
+      this.setData({
+        accountInfo: userInfo
+      })
     }
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
-      accountInfo: userInfo
     })
   },
 

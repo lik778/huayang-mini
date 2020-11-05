@@ -60,9 +60,9 @@
     "miniprogram": {
       "list": [
         {
-          "name": "subCourse/campDetail/campDetail",
+          "name": "训练营详情",
           "pathName": "subCourse/campDetail/campDetail",
-          "query": "id=14",
+          "query": "id=29",
           "scene": null
         },
         {
