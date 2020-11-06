@@ -352,6 +352,8 @@ Page({
       let buttonStyle = button ? button : buttonType
       if (res.discount_price > 0 && res.distribution_ratio > 0) {
         res.sharePrice = ((res.discount_price * (res.distribution_ratio / 100))).toFixed(2)
+      } else {
+        res.sharePrice = ''
       }
       this.getArticleLink(res.id)
       checkFocusLogin({
