@@ -1,21 +1,21 @@
 // subCourse/trainingCampDetail/trainingCampDetail.js
 import {
-	getArticileLink,
-	getCampDetail,
-	getCourseData,
-	getCurentDayData,
-	getFindBanner,
-	getHasJoinCamp,
-	getWxRoomData
+  getArticileLink,
+  getCampDetail,
+  getCourseData,
+  getCurentDayData,
+  getFindBanner,
+  getHasJoinCamp,
+  getWxRoomData
 } from "../../api/course/index"
 import { getProductInfo, getYouZanAppId } from "../../api/mall/index"
 import {
-	computeDate,
-	dateAddDays,
-	getLocalStorage,
-	getNowDate,
-	setLocalStorage,
-	simpleDurationSimple
+  computeDate,
+  dateAddDays,
+  getLocalStorage,
+  getNowDate,
+  setLocalStorage,
+  simpleDurationSimple
 } from "../../utils/util"
 import bxPoint from '../../utils/bxPoint'
 import { GLOBAL_KEY } from "../../lib/config"
@@ -189,12 +189,13 @@ Page({
     let item = e.currentTarget.dataset.item
     // let link = encodeURIComponent(item.link)
     bxPoint("applets_banner", {
-      position: 'subCourse/campDetail/campDetail'
+      position: 'subCourse/campDetail/campDetail',
+      bannerId: item.id || ""
     }, false)
     if (item.link_type === 'youzan') {
       wx.navigateToMiniProgram({
         appId: this.data.appId,
-        path: link,
+        path: item.link,
       })
     } else {
       wx.navigateTo({

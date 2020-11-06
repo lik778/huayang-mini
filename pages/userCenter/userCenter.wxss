@@ -93,7 +93,7 @@
   font-size: 0;
 }
 .ele-title {
-  margin: 4rpx 0 12rpx;
+  margin: 4rpx 0 16rpx;
   font: 36rpx/44rpx Helvetica;
 }
 .ele-btn {
