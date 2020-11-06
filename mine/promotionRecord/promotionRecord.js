@@ -33,14 +33,6 @@ Page({
         }
       }
       let list = e ? this.data.list.concat(res.data.list) : res.data.list
-      // if (list.kecheng_promote_record !== null) {
-      //   list.map(item => {
-      //     if (item.kecheng_promote_record !== null) {
-      //       item.kecheng_promote_record.amount = (item.kecheng_promote_record.amount / 100).toFixed(2)
-      //     }
-      //   })
-      // }
-      console.log(list)
       this.setData({
         list,
         isAll: res.data.list.length < 10 ? true : false

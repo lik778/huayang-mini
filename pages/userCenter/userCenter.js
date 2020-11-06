@@ -32,12 +32,20 @@ Page({
     existNo: undefined,
     activity_count: 0,
     kecheng_count: 0,
-    traincamp_count: 0
+    traincamp_count: 0,
+    showPromotion: true
   },
   // 跳往我的推广
   toPromotion() {
-    wx.navigateTo({
-      url: '/mine/promotion/promotion',
+    getUserInfo("scene=zhide").then(res => {
+      setLocalStorage(GLOBAL_KEY.accountInfo, res)
+      wx.navigateTo({
+        url: '/mine/promotion/promotion',
+      })
+    }).catch(() => {
+      this.setData({
+        showPromotion: false
+      })
     })
   },
 
@@ -199,7 +207,8 @@ Page({
       // 有微信信息且有手机号信息
       this.kingOfTheWorld()
       this.setData({
-        nodata: false
+        nodata: false,
+        showPromotion: true
       })
     } else {
       // nothing

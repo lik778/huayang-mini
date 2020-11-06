@@ -63,7 +63,8 @@ Page({
     appId: "", //appid
     showAddTeacherCover: false, //显示指引弹窗
     fromPage: '', //页面来源
-    userInfo: "" //用户信息
+    userInfo: "", //用户信息
+    promoteUid: "" //分销人id
   },
 
   // 关闭引导私域蒙板
@@ -404,7 +405,14 @@ Page({
     let {
       scene,
       share,
+      promote_uid = "",
     } = options
+    // 设置邀请人id
+    if (promote_uid !== '') {
+      this.setData({
+        promoteUid: promote_uid
+      })
+    }
     this.setData({
       campId,
       choosedDay,
@@ -525,8 +533,12 @@ Page({
     let shareLink = '/subCourse/joinCamp/joinCamp?id=' +
       this.data.campId +
       `&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}&share=true`
-    if (this.data.userInfo !== '' && this.data.userInfo.kecheng_user.is_promoter === 1) {
-      shareLink += `&promote_uid=${this.data.userInfo.id}`
+    if (this.data.promoteUid !== '') {
+      shareLink += `&promote_uid=${this.data.promoteUid}`
+    } else {
+      if (this.data.userInfo !== '' && this.data.userInfo.kecheng_user.is_promoter === 1) {
+        shareLink += `&promote_uid=${this.data.userInfo.id}`
+      }
     }
     return {
       title: `我正在参加${this.data.campData.name}，每天都有看的见的变化，快来试试`,

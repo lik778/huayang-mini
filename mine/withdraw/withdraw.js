@@ -130,7 +130,6 @@ Page({
     getUserInfo('scene=zhide').then(res => {
       setLocalStorage(GLOBAL_KEY.accountInfo, res)
       res.kecheng_user.deposit = (res.kecheng_user.deposit / 100).toFixed(2)
-      console.log(res)
       this.setData({
         userInfo: res
       })

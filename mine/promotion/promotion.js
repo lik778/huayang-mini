@@ -47,14 +47,6 @@ Page({
     shareUserInfo: ""
   },
 
-  // 改变分享
-  changeShare() {
-    // console.log(e)
-    this.setData({
-      shareTitle: "121"
-    })
-  },
-
   // 返回
   back() {
     if (this.data.promoteUid !== '') {
