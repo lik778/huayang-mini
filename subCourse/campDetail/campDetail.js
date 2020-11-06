@@ -267,7 +267,6 @@ Page({
       } else {
         res.sharePrice = ''
       }
-      console.log(res.sharePrice !== '')
       let oneDaySecond = 86400
       let formatType = 'yyyy-MM-dd'
       let startDate = new Date(this.data.joinDate).getTime()
