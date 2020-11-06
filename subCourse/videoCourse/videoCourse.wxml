@@ -120,8 +120,15 @@
       <text class="fission-price">¥{{courseData.fission_price}}</text>
     </view>
   </view>
+  <!-- 分销按钮 -->
+  <view class="share-friend" bindtap="share" wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1}}">
+    <view class="share-friend-box">
+      <button open-type="share">推广成功赚5元</button>
+      <view class="share-text subject-bg-color">推广成功赚5元</view>
+    </view>
+  </view>
   <!-- 分享微信好友 -->
-  <view class="share" bindtap="share">
+  <view class="share" bindtap="share" wx:else>
     <view class="share-box">
       <button open-type="share"></button>
       <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599118170RBWnFr.jpg"></image>

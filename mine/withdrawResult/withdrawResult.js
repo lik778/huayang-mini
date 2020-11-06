@@ -1,6 +1,10 @@
 // mine/withdrawResult/withdrawResult.js
 import {
-  getLocalStorage
+  getUserInfo
+} from "../../api/mine/index"
+import {
+  getLocalStorage,
+  setLocalStorage
 } from "../../utils/util"
 import {
   GLOBAL_KEY
@@ -11,23 +15,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    money: "",
-    titleText: "提现成功",
     statusHeight: 0
-  },
-  // 返回
-  backMine(){
-    wx.switchTab({
-      url: '/pages/mine/mine',
-    })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      money: options.money,
-      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
+    getUserInfo('scene=zhide').then(res => {
+      setLocalStorage(GLOBAL_KEY.accountInfo, res)
     })
   },
 
@@ -38,11 +33,20 @@ Page({
 
   },
 
+  // 返回推广页
+  backPromotion() {
+    wx.redirectTo({
+      url: '/mine/promotion/promotion',
+    })
+  },
+
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
+    })
   },
 
   /**

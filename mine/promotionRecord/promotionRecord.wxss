@@ -1,0 +1,117 @@
+/* mine/promotionRrecord/promotionRrecord.wxss */
+@import "../../assets/css/common.wxss";
+
+.container {
+  padding-top: 40rpx;
+}
+
+.main {}
+
+.list {
+  width: calc(100% - 80rpx);
+  margin: 0 auto;
+}
+
+.camp-list {}
+
+.camp-item,
+.withdraw-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 200rpx;
+  border-bottom: 1px solid #EFEFEF;
+}
+
+.camp-item-title,
+.withdraw-item-title {
+  font-size: 44rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 60rpx;
+}
+
+.camp-item-subtitle,
+withdraw-item-status {
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 44rpx;
+  padding-top: 10rpx;
+}
+
+.camp-item-time,
+.withdraw-item-time {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #999999;
+  line-height: 40rpx;
+  padding-top: 12rpx;
+}
+
+.camp-itme-right,
+.withdraw-item-right {
+  font-size: 48rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 66rpx;
+}
+
+.withdraw-item-status-one {
+  color: #EEA156;
+}
+
+.withdraw-item-status-two text:last-child {
+  font-size: 28rpx;
+  font-weight: 400;
+  margin-left: 16rpx;
+}
+
+.withdraw-item-status-three {
+  color: #40A100;
+}
+
+/* 无推广记录 */
+.no-list {}
+
+.no-icon {
+  padding-top: 70rpx;
+  text-align: center;
+}
+
+.no-icon image {
+  width: 320rpx;
+  height: 230rpx;
+  vertical-align: bottom;
+}
+
+.no-text {
+  width: 534rpx;
+  text-align: center;
+  font-size: 36rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #999999;
+  line-height: 50rpx;
+  margin: 0 auto;
+}
+
+.share-btn {
+  width: 476rpx;
+  height: 96rpx;
+  line-height: 96rpx;
+  text-align: center;
+  margin: 0 auto;
+  color: #fff;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  border-radius: 999rpx;
+  margin-top: 100rpx;
+}
