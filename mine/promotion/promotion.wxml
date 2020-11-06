@@ -8,7 +8,7 @@
 		</view>
 	</view>
 	<!-- 推广人 -->
-	<view class="promoter" wx:if="{{false}}">
+	<view class="promoter" wx:if="{{isShare}}">
 		<!-- 顶部banner -->
 		<view class="banner" style="height:{{210+statusHeight}}px">
 			<view class="banner-module" style="height:{{210+statusHeight}}px">
