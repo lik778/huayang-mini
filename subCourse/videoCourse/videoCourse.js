@@ -519,7 +519,7 @@ Page({
 
   // 分销打点
   shareCourse() {
-    bxPoint({
+    bxPoint('promotion_videoCourse_page',{
       open_id: getLocalStorage(GLOBAL_KEY.openId),
       user_id: getLocalStorage(GLOBAL_KEY.userId),
       isPromoter: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).kecheng_user.is_promoter === 1 ? true : false

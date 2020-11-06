@@ -48,7 +48,7 @@ Page({
 
   // 打点
   shareNow() {
-    bxPoint({
+    bxPoint("promotion_camp_joinpage",{
       open_id: getLocalStorage(GLOBAL_KEY.openId),
       user_id: getLocalStorage(GLOBAL_KEY.userId),
       isPromoter: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).kecheng_user.is_promoter === 1 ? true : false
