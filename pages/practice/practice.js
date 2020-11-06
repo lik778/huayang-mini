@@ -36,7 +36,8 @@ Page({
 		resultData: [],
 		didShowTipsLay: false, // 显示提示收藏蒙层
 		didNeedScrollTop: false, // 是否需要将页面滑动到顶部
-		didShowAuth: false
+		didShowAuth: false,
+		didShowNoDataLayout: false
 	},
 
 	/**
@@ -74,7 +75,6 @@ Page({
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
-		this.initial()
 	},
 
 	/**
@@ -287,6 +287,7 @@ Page({
 	},
 	async initial() {
 		if (hasAccountInfo()) {
+			this.setData({didShowNoDataLayout: false})
 			getUserPracticeRecentRecord({user_id: getLocalStorage(GLOBAL_KEY.userId)}).then(async (originData) => {
 				let handledData = []
 				for (let item of originData) {
@@ -406,9 +407,7 @@ Page({
 					}
 				})
 
-				this.setData({
-					resultData
-				})
+				this.setData({resultData, didShowNoDataLayout: true})
 
 				// 用户首次授权成功，如果该用户没有任何课程则自动跳转至发现页
 				if (getLocalStorage("hy_dd_auth_done_in_practice") === "yes" && resultData.length === 0) {
@@ -417,6 +416,8 @@ Page({
 					wx.reLaunch({url: '/pages/discovery/discovery'})
 				}
 			})
+		} else {
+			this.setData({didShowNoDataLayout: true})
 		}
 	}
 })
