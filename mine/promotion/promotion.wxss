@@ -71,6 +71,7 @@
 
 .my-price text:last-child {
   font-size: 40rpx;
+  margin-left: 8rpx;
 }
 
 .my-price-text {

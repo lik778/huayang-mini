@@ -68,7 +68,7 @@
         {
           "name": "我的分销",
           "pathName": "mine/promotion/promotion",
-          "query": "",
+          "query": "promote_uid=267",
           "scene": null
         },
         {

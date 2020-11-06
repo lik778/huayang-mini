@@ -4,7 +4,7 @@
 	<view class="back" style="padding-top:{{statusHeight}}px">
 		<view class="back-module">
 			<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604458365vukBeP.jpg" bindtap="back"></image>
-			<text style="color:{{isShare?'#fff':'#000'}}">{{isShare?"我的推广":"课程推荐"}}</text>
+			<text>{{isShare?"我的推广":"课程推荐"}}</text>
 		</view>
 	</view>
 	<!-- 推广人 -->

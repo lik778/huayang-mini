@@ -44,13 +44,13 @@ Page({
     },
     isShare: false,
     hasAll: false,
-    shareUserInfo: ""
+    shareUserInfo: "",
+    backDiscovery: false
   },
 
   // 返回
   back() {
-    console.log(this.data.promoteUid)
-    if (this.data.promoteUid !== '') {
+    if (this.data.backDiscovery) {
       wx.switchTab({
         url: '/pages/discovery/discovery',
       })
@@ -237,10 +237,14 @@ Page({
           })
         }
       }
+      this.setData({
+        backDiscovery: true
+      })
       this.getShareUserInfo()
     } else {
       this.setData({
-        shareUserInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+        shareUserInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)),
+        promoteUid: JSON.parse(getLocalStorage(GLOBAL_KEY.userId)),
       })
     }
     this.getList()
@@ -269,12 +273,12 @@ Page({
       }
       this.getShareUserInfo()
     }
-
     if (userInfo !== '') {
-      userInfo.kecheng_user.deposit = Number((userInfo.kecheng_user.deposit / 100).toFixed(2))
+      userInfo.kecheng_user.deposit = Number((userInfo.kecheng_user.deposit / 100).toFixed(2)) === "0.00" ? '0' : Number((userInfo.kecheng_user.deposit / 100).toFixed(2))
       getUserInfo('scene=zhide').then(res => {
         setLocalStorage(GLOBAL_KEY.accountInfo, res)
-        res.kecheng_user.deposit = (res.kecheng_user.deposit / 100).toFixed(2)
+        res.kecheng_user.deposit = (res.kecheng_user.deposit / 100).toFixed(2) === '0.00' ? 0 : (res.kecheng_user.deposit / 100).toFixed(2)
+        console.log(res.kecheng_user.deposit)
         this.setData({
           accountInfo: res
         })

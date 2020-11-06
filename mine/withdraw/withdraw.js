@@ -37,76 +37,81 @@ Page({
   changeInputValue(e) {
     let text = e.detail.value
     this.setData({
-      takeoutNum: e.detail.value === "" ? "" : Number(text)
+      takeoutNum: text
     })
   },
 
   // 全部提现
   withdrawAll() {
-    this.setData({
-      takeoutNum: Number(this.data.userInfo.kecheng_user.deposit)
-    })
+    if (parseInt(this.data.userInfo.kecheng_user.deposit) > 0) {
+      this.setData({
+        takeoutNum: this.data.userInfo.kecheng_user.deposit
+      })
+    }
   },
 
   // 提现结果
   toWithdrawResult() {
-    console.log(this.data.takeoutNum, this.data.userInfo.kecheng_user.deposit)
-    if (this.data.takeoutNum === '') {
-      wx.showModal({
-        title: '提示',
-        content: '提现金额不能为空',
-        showCancel: false
-      })
-      return
-    } else if (this.data.takeoutNum < 20) {
-      wx.showModal({
-        title: '提示',
-        content: '提现金额不能低于20元',
-        showCancel: false
-      })
-      return
-    } else if (!checkIsPrice(this.data.takeoutNum)) {
-      wx.showModal({
-        title: '提示',
-        content: '提现金额错误',
-        showCancel: false
-      })
-      return
-    } else if (this.data.takeoutNum > this.data.userInfo.kecheng_user.deposit) {
-      wx.showModal({
-        title: '提示',
-        content: '提现金额不能超过感谢金余额',
-        showCancel: false
-      })
-      return
-    }
-    if (this.data.lock) {
-      this.setData({
-        lock: false
-      })
-      kechengTakeout({
-        user_id: getLocalStorage(GLOBAL_KEY.userId),
-        takeout_num: this.data.takeoutNum * 100,
-        open_id: getLocalStorage(GLOBAL_KEY.openId),
-      }).then(res => {
-        if (res.code === 0) {
-          wx.navigateTo({
-            url: '/mine/withdrawResult/withdrawResult',
-          })
-        } else {
-          wx.showToast({
-            title: res.message,
-            icon: 'none',
-            duration: 2000
-          })
-          setTimeout(() => {
-            this.setData({
-              lock: true
+    setTimeout(() => {
+      if (this.data.takeoutNum === '') {
+        wx.showModal({
+          title: '提示',
+          content: '提现金额不能为空',
+          showCancel: false
+        })
+        return
+      } else if (this.data.takeoutNum < 20) {
+
+        wx.showModal({
+          title: '提示',
+          content: '提现金额不能低于20元',
+          showCancel: false
+        })
+        return
+      } else if (!checkIsPrice(this.data.takeoutNum)) {
+        wx.showModal({
+          title: '提示',
+          content: '提现金额错误',
+          showCancel: false
+        })
+        return
+      } else if (parseFloat(this.data.takeoutNum) > parseFloat(this.data.userInfo.kecheng_user.deposit)) {
+        wx.showModal({
+          title: '提示',
+          content: '提现金额不能超过感谢金余额',
+          showCancel: false
+        })
+        return
+      }
+      if (this.data.lock) {
+        this.setData({
+          lock: false
+        })
+        console.log(`提现金额${this.data.takeoutNum}`, `余额${this.data.userInfo.kecheng_user.deposit}`)
+        kechengTakeout({
+          user_id: getLocalStorage(GLOBAL_KEY.userId),
+          takeout_num: this.data.takeoutNum * 100,
+          open_id: getLocalStorage(GLOBAL_KEY.openId),
+        }).then(res => {
+          if (res.code === 0) {
+            wx.navigateTo({
+              url: '/mine/withdrawResult/withdrawResult',
             })
-          }, 1500)
-        }
-      })
-    }
+          } else {
+            wx.showToast({
+              title: res.message,
+              icon: 'none',
+              duration: 2000
+            })
+            setTimeout(() => {
+              this.setData({
+                lock: true
+              })
+            }, 1500)
+          }
+        })
+      }
+    }, 100)
   },
 
   /**

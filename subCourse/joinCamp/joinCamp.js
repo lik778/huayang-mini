@@ -35,6 +35,7 @@ Page({
     joinTime: "",
     hasJoinAll: false, //代表加入过
     endTime: "",
+    showPromotion: true, //分销分享按钮
     userInfo: "", //用户信息
     hasAllTime: "",
     buttonType: 1,
@@ -48,7 +49,7 @@ Page({
 
   // 打点
   shareNow() {
-    bxPoint("promotion_camp_joinpage",{
+    bxPoint("promotion_camp_joinpage", {
       open_id: getLocalStorage(GLOBAL_KEY.openId),
       user_id: getLocalStorage(GLOBAL_KEY.userId),
       isPromoter: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).kecheng_user.is_promoter === 1 ? true : false
@@ -337,6 +338,10 @@ Page({
         // 未加入过
         this.getCampDetail(id)
       }
+    }).catch(() => {
+      this.setData({
+        showPromotion: false
+      })
     })
   },
   /**

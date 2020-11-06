@@ -35,8 +35,7 @@
       <view class="no-icon">
         <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604486211tIslxp.jpg"></image>
       </view>
-      <view class="no-text">您还没有推广过花样课程
-        快去分享知识，赚些小钱吧！</view>
+      <view class="no-text">您还没有推广过花样课程快去分享知识，收获感谢金吧！</view>
       <view class="share-btn subject-bg-color" bindtap="toPromotion">我要推广</view>
     </view>
   </view>
