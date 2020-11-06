@@ -199,9 +199,13 @@ Page({
   },
   // 用户确认授权
   authCompleteEvent() {
-    this.setData({
-      didShowAuth: false,
-    })
+    setTimeout(() => {
+      let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+      this.setData({
+        didShowAuth: false,
+        userInfo
+      })
+    }, 200)
     this.checkCamp(this.data.campId)
     // this.joinCamp()
   },

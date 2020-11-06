@@ -457,8 +457,10 @@ Page({
   authCompleteEvent() {
     this.checkIsjoined()
     setTimeout(() => {
+      let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
       this.setData({
         didShowAuth: false,
+        userInfo
       })
     }, 200)
   },

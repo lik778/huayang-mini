@@ -8,7 +8,7 @@
 		</view>
 	</view>
 	<!-- 推广人 -->
-	<view class="promoter" wx:if="{{isShare}}">
+	<view class="promoter" wx:if="{{false}}">
 		<!-- 顶部banner -->
 		<view class="banner" style="height:{{210+statusHeight}}px">
 			<view class="banner-module" style="height:{{210+statusHeight}}px">
@@ -93,9 +93,13 @@
 		</view>
 	</view>
 	<!-- 被推广者 -->
-	<view class="by-promoter" wx:else style="padding-top:{{statusHeight+43}}px">
+	<view class="by-promoter" wx:else>
 		<!-- 标题 -->
 		<view class="share-title">
+			<view class="banner-image" style="height:{{210+statusHeight}}px">
+				<image style="height:{{210+statusHeight}}px"
+					src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604485471qvOyEr.jpg"></image>
+			</view>
 			<view class="share-main-title">{{shareUserInfo.nick_name}}</view>
 			<view class="share-sub-title">为您推荐花样精品课程</view>
 		</view>

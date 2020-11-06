@@ -24,7 +24,9 @@
             <view class="camp-item-subtitle" wx:else>{{item.kecheng_promote_record.content_name}}</view>
             <view class="camp-item-time">{{item.kecheng_promote_record.created_at}}</view>
           </view>
-          <view class="camp-itme-right">+{{item.kecheng_promote_record.amount}}</view>
+          <view class="camp-itme-right" wx:if="{{item.kecheng_promote_record.content_type===3}}">
+            -{{item.kecheng_promote_record.amount}}</view>
+          <view class="camp-itme-right" wx:else>+{{item.kecheng_promote_record.amount}}</view>
         </view>
       </view>
     </view>

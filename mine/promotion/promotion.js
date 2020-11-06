@@ -259,6 +259,17 @@ Page({
    */
   onShow: function () {
     let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : ""
+    if (this.data.promoteUid !== '') {
+      if (getLocalStorage(GLOBAL_KEY.userId)) {
+        if (Number(getLocalStorage(GLOBAL_KEY.userId)) === Number(this.data.promoteUid)) {
+          this.setData({
+            isShare: true,
+          })
+        }
+      }
+      this.getShareUserInfo()
+    }
+
     if (userInfo !== '') {
       userInfo.kecheng_user.deposit = Number((userInfo.kecheng_user.deposit / 100).toFixed(2))
       getUserInfo('scene=zhide').then(res => {
@@ -317,7 +328,7 @@ Page({
   onShareAppMessage: function (res) {
     return {
       title: `${this.data.shareUserInfo.nick_name}为您推荐了花样精选课程`,
-      imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604563106LfDcOh.jpg",
+      imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604635714bjNCqs.jpg",
       path: `/mine/promotion/promotion?promote_uid=${this.data.promoteUid}`
     }
   }
