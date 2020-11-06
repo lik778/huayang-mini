@@ -410,6 +410,7 @@
   font-weight: 600;
   color: #FFFFFF;
   line-height: 84rpx;
+  width: calc(100% - 100rpx);
 }
 
 .share-sub-title {
