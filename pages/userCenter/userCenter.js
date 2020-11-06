@@ -1,8 +1,21 @@
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 import dayjs from "dayjs"
-import { getPhoneNumber } from "../../api/course/index"
-import { getUserGuideLink, getUserInfo, getUserOwnerClasses } from "../../api/mine/index"
-import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage } from "../../utils/util"
+import {
+  getPhoneNumber
+} from "../../api/course/index"
+import {
+  getUserGuideLink,
+  getUserInfo,
+  getUserOwnerClasses
+} from "../../api/mine/index"
+import {
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  setLocalStorage
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -19,13 +32,32 @@ Page({
     existNo: undefined,
     activity_count: 0,
     kecheng_count: 0,
-    traincamp_count: 0
+    traincamp_count: 0,
+    showPromotion: true
   },
+  // 跳往我的推广
+  toPromotion() {
+    getUserInfo("scene=zhide").then(res => {
+      setLocalStorage(GLOBAL_KEY.accountInfo, res)
+      wx.navigateTo({
+        url: '/mine/promotion/promotion',
+      })
+    }).catch(() => {
+      this.setData({
+        showPromotion: false
+      })
+    })
+  },
+
   // 获取用户主题营、课程、活动数量数据
   queryContentInfo() {
     if (hasUserInfo() && hasAccountInfo()) {
-      getUserOwnerClasses({user_id: getLocalStorage(GLOBAL_KEY.userId)}).then((data) => {
-        let {activity_count = 0, kecheng_count = 0, traincamp_count = 0} = data
+      getUserOwnerClasses({
+        user_id: getLocalStorage(GLOBAL_KEY.userId)
+      }).then((data) => {
+        let {
+          activity_count = 0, kecheng_count = 0, traincamp_count = 0
+        } = data
         this.setData({
           activity_count,
           kecheng_count,
@@ -40,7 +72,9 @@ Page({
       wx.navigateTo({
         url: `/mine/normal-web-view/normal-web-view?link=${link}`,
         fail() {
-          wx.switchTab({url: "pages/userCenter/userCenter"})
+          wx.switchTab({
+            url: "pages/userCenter/userCenter"
+          })
         }
       })
     })
@@ -50,10 +84,14 @@ Page({
   // 计算用户帐号创建日期
   calcUserCreatedTime() {
     if (hasUserInfo() && hasAccountInfo()) {
-      let { created_at } = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+      let {
+        created_at
+      } = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
       let nowDate = dayjs()
       let no = nowDate.diff(created_at, "day")
-      this.setData({existNo: no || 1})
+      this.setData({
+        existNo: no || 1
+      })
     }
   },
   // 处理用户卡片点击
@@ -62,35 +100,47 @@ Page({
       switch (e.currentTarget.dataset.ele) {
         case "bootcamp": {
           bxPoint("applet_mine_click_bootcamp", {}, false)
-          wx.navigateTo({url: "/mine/personBootcamp/personBootcamp"})
+          wx.navigateTo({
+            url: "/mine/personBootcamp/personBootcamp"
+          })
           return
         }
         case "course": {
           bxPoint("applet_mine_click_course", {}, false)
-          wx.navigateTo({url: "/mine/personCourse/personCourse"})
+          wx.navigateTo({
+            url: "/mine/personCourse/personCourse"
+          })
           return
         }
         case "activity": {
           bxPoint("applet_mine_click_activity", {}, false)
-          wx.navigateTo({url: "/mine/personActivity/personActivity"})
+          wx.navigateTo({
+            url: "/mine/personActivity/personActivity"
+          })
           return
         }
       }
     } else {
-      this.setData({didShowAuth: true})
+      this.setData({
+        didShowAuth: true
+      })
     }
   },
   // 获取用户信息
   getUserSingerInfo() {
     getUserInfo('scene=zhide').then(res => {
       setLocalStorage(GLOBAL_KEY.accountInfo, res)
-      this.setData({userInfo: res})
+      this.setData({
+        userInfo: res
+      })
     })
   },
   // 获取授权
   getAuth() {
     if (this.data.nodata) {
-      this.setData({didShowAuth: true})
+      this.setData({
+        didShowAuth: true
+      })
     }
   },
   // 用户授权取消
@@ -104,11 +154,15 @@ Page({
   authCompleteEvent() {
     this.run()
     this.queryContentInfo()
-    this.setData({didShowAuth: false})
+    this.setData({
+      didShowAuth: false
+    })
   },
   // 获取个人信息
   getUserInfo() {
-    this.setData({userInfo: getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}})
+    this.setData({
+      userInfo: getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
+    })
   },
   // 我的订单
   toOrder() {
@@ -117,13 +171,17 @@ Page({
         url: '/mine/mineOrder/mineOrder',
       })
     } else {
-      this.setData({didShowAuth: true})
+      this.setData({
+        didShowAuth: true
+      })
     }
   },
   // 获取客服号码
   getNumber() {
     getPhoneNumber().then(phoneNumber => {
-      this.setData({phoneNumber})
+      this.setData({
+        phoneNumber
+      })
     })
   },
   // 公用方法
@@ -148,10 +206,15 @@ Page({
     } else if (hasUserInfo() && hasAccountInfo()) {
       // 有微信信息且有手机号信息
       this.kingOfTheWorld()
-      this.setData({nodata: false})
+      this.setData({
+        nodata: false,
+        showPromotion: true
+      })
     } else {
       // nothing
-      this.setData({nodata: true})
+      this.setData({
+        nodata: true
+      })
     }
 
     this.calcUserCreatedTime()
@@ -161,7 +224,9 @@ Page({
    */
   onLoad: function (options) {
     let data = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
-    this.setData({statusHeight: data})
+    this.setData({
+      statusHeight: data
+    })
   },
 
   /**
@@ -176,7 +241,9 @@ Page({
    */
   onShow: function () {
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().setData({selected: 2})
+      this.getTabBar().setData({
+        selected: 2
+      })
     }
     this.calcUserCreatedTime()
     bxPoint("applets_mine", {})

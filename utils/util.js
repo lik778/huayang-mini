@@ -911,6 +911,35 @@ export const getNowDate = (linkIcon) => {
 	let mm = date.getMinutes();
 	//秒
 	let ss = date.getSeconds();
-	let rq = year + linkIcon + month + linkIcon + day 
+	let rq = year + linkIcon + month + linkIcon + day
 	return rq
 }
+
+// 获取当天日期
+//显示日期在页面上  yyy-MM-dd
+export const getNowDateAll = (linkIcon) => {
+	let date = new Date();
+	//年
+	let year = date.getFullYear();
+	//月
+	let month = date.getMonth() + 1 < 10 ? "0" + date.getMonth() : date.getMonth();
+	//日
+	let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+	//时
+	let hh = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+	//分
+	let mm = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()
+	//秒
+	let ss = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+	let rq = year + linkIcon + month + linkIcon + day + " " + hh + ":" + mm + ":" + ss
+	return rq
+}
+
+//检查价格
+export const checkIsPrice = e => {
+	if (/(^[-+]?[1-9]\d*(\.\d{1,2})?$)|(^[-+]?[0]{1}(\.\d{1,2})?$)/.test(e)) {
+		return true;
+	} else {
+		return false;
+	}
+};

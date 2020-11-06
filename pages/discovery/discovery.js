@@ -191,17 +191,13 @@ Page({
         return res
       })
       this.getVideoBanner()
-      this.setData({
-        videoList: handledList
-      })
+      this.setData({videoList: handledList})
     })
   },
   // 跳往视频详情页
   toVideoDetail(e) {
     let id = e.currentTarget.dataset.item.id
-    bxPoint("series_discovery_click", {
-      series_id: id
-    }, false)
+    bxPoint("series_discovery_click", {series_id: id}, false)
     wx.navigateTo({
       url: `/subCourse/videoCourse/videoCourse?videoId=${id}`,
     })

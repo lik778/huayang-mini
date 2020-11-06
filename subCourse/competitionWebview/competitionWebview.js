@@ -1,16 +1,8 @@
 // subCourse/competitionWebview/competitionWebview.js
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  getUserInfo
-} from "../../api/mine/index"
-import {
-  getLocalStorage,
-  hasAccountInfo,
-  hasUserInfo,
-  setLocalStorage
-} from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
+import { getUserInfo } from "../../api/mine/index"
+import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage } from "../../utils/util"
+
 Page({
 
   /**
