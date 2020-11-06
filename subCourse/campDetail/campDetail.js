@@ -196,12 +196,13 @@ Page({
     let item = e.currentTarget.dataset.item
     // let link = encodeURIComponent(item.link)
     bxPoint("applets_banner", {
-      position: 'subCourse/campDetail/campDetail'
+      position: 'subCourse/campDetail/campDetail',
+      bannerId: item.id || ""
     }, false)
     if (item.link_type === 'youzan') {
       wx.navigateToMiniProgram({
         appId: this.data.appId,
-        path: link,
+        path: item.link,
       })
     } else {
       wx.navigateTo({

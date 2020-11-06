@@ -254,10 +254,12 @@ Page({
     }
     let {
       link,
-      link_type
+      link_type,
+      id
     } = e.currentTarget.dataset.item
     bxPoint("applets_banner", {
-      position: 'page/discovery/discovery'
+      position: 'page/discovery/discovery',
+      bannerId: id || ""
     }, false)
     if (link_type === 'youzan') {
       getYouZanAppId().then(appId => {

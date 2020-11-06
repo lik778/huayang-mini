@@ -72,7 +72,7 @@
     </view>
 
     <!--  兜底  -->
-    <view class="no-camp" wx:if="{{resultData.length === 0}}">
+    <view class="no-camp" wx:if="{{didShowNoDataLayout && resultData.length === 0}}">
         <image class="empty-image" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604374394mmtUvd.jpg" mode="aspectFit"></image>
         <view class="empty-text">
             <text>您还未学习</text>
