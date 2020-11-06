@@ -49,6 +49,7 @@ Page({
 
   // 返回
   back() {
+    console.log(this.data.promoteUid)
     if (this.data.promoteUid !== '') {
       wx.switchTab({
         url: '/pages/discovery/discovery',
@@ -239,8 +240,7 @@ Page({
       this.getShareUserInfo()
     } else {
       this.setData({
-        shareUserInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)),
-        promoteUid: JSON.parse(getLocalStorage(GLOBAL_KEY.userId)),
+        shareUserInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
       })
     }
     this.getList()
