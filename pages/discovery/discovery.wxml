@@ -1,8 +1,8 @@
 <!--发现主页-->
-<view class="discovery">
+<view class="discovery" bindtouchmove="touchMove">
     <view class="tabs tabs-fixed" wx:if="{{didFixedTab}}">
         <view class="tab {{tabIndex===item.id ? 'tab-active' : ''}} tab-ep" wx:for="{{tabs}}" wx:key="{{item.id}}"
-              data-index="{{item.id}}" bindtap="handleTab">{{item.name}}
+              data-item="{{item}}" bindtap="handleTab">{{item.name}}
         </view>
         <view class="tab-underline" style="left: {{tabsOffsetLeftAry[tabIndex]}}px;"></view>
     </view>
@@ -24,18 +24,17 @@
         </view>
     </view>
 
-    <view class="tabs">
+    <view class="tabs" id="tabs">
         <view class="tab {{tabIndex===item.id ? 'tab-active' : ''}} tab-ep" wx:for="{{tabs}}" wx:key="{{item.id}}"
-              data-index="{{item.id}}" bindtap="handleTab">{{item.name}}
+              data-item="{{item}}" bindtap="handleTab">{{item.name}}
         </view>
         <view class="tab-underline" style="left: {{tabsOffsetLeftAry[tabIndex]}}px;"></view>
     </view>
 
     <view class="tab-pane" wx:if="{{tabIndex === 0}}">
         <!-- 训练营 -->
-        <view class="card {{'card-' + index}}" wx:for="{{campList}}" wx:key="index" data-index="{{item}}"
-              bindtap="joinCamp">
-            <image class="bootcampCardItem" wx:if="{{!item.show && !item.intro_video_link}}" mode="aspectFill"
+        <view class="card {{'card-' + index}}" wx:for="{{campList}}" wx:key="index" data-index="{{item}}" bindtap="joinCamp">
+            <image class="bootcampCardItem" wx:if="{{!item.show}}" mode="aspectFill"
                    src="{{item.intro_video_cover_pic || item.cover_pic}}"></image>
             <video
                     wx:else
@@ -69,8 +68,8 @@
                 <view class="bootcamp-next-date">{{item.next_bootcamp_start_date === "即将开营" ? "即将开营" : "下一期开营时间：" + item.next_bootcamp_start_date}}</view>
                 <view class="bootcamp-operate">
                     <view class="bootcamp-operate-price">
-                        <text class="bootcamp-operate-discount-price">¥{{item.price}}</text><text
-                            class="bootcamp-operate-sub-price">¥{{item.discount_price}}</text>
+                        <text class="bootcamp-operate-discount-price">¥{{item.discount_price}}</text><text
+                            class="bootcamp-operate-sub-price">¥{{item.price}}</text>
                     </view>
                     <view class="bootcamp-operate-btn">立即参加</view>
                 </view>
@@ -152,7 +151,7 @@
         <!-- 训练营 -->
         <view class="card {{'card-' + index}}" wx:for="{{campList}}" wx:key="index" data-index="{{item}}"
               bindtap="joinCamp">
-            <image class="bootcampCardItem" wx:if="{{!item.show && !item.intro_video_link}}" mode="aspectFill"
+            <image class="bootcampCardItem" wx:if="{{!item.show}}" mode="aspectFill"
                    src="{{item.intro_video_cover_pic || item.cover_pic}}"></image>
             <video
                     wx:else
@@ -183,11 +182,11 @@
                         <text>{{featureItem.value}}</text>
                     </view>
                 </view>
-                <view class="bootcamp-next-date">下一期开营时间：{{item.next_bootcamp_start_date}}</view>
+                <view class="bootcamp-next-date">{{item.next_bootcamp_start_date === "即将开营" ? "即将开营" : "下一期开营时间：" + item.next_bootcamp_start_date}}</view>
                 <view class="bootcamp-operate">
                     <view class="bootcamp-operate-price">
-                        <text class="bootcamp-operate-discount-price">¥{{item.price}}</text><text
-                            class="bootcamp-operate-sub-price">¥{{item.discount_price}}</text>
+                        <text class="bootcamp-operate-discount-price">¥{{item.discount_price}}</text><text
+                            class="bootcamp-operate-sub-price">¥{{item.price}}</text>
                     </view>
                     <view class="bootcamp-operate-btn">立即参加</view>
                 </view>

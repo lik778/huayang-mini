@@ -1,4 +1,4 @@
-<view class="temporary" bindtouchstart="touchStart" bindtouchend="touchEnd" bindtouchmove="touchMove">
+<view class="temporary">
     <view class="card {{'card-' + index}}" wx:for="{{list}}" wx:key="index">
         <image class="temporaryVideo" wx:if="{{!item.show}}" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604652917PdWubN.jpg"></image>
         <video

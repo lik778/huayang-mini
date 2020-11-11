@@ -152,14 +152,14 @@ Page({
 
 	},
 	onPageScroll(e) {
-		// this.setData({scrollTop: e.scrollTop, scrollIng: true})
-		// let timer = setTimeout(() => {
-		// 	if (this.data.scrollTop === e.scrollTop) {
-		// 		this.setData({scrollTop: e.scrollTop, scrollIng: false})
-		// 		this.setData({list: this.data.cacheList.slice()})
-		// 		clearTimeout(timer)
-		// 	}
-		// }, 200)
+		this.setData({scrollTop: e.scrollTop, scrollIng: true})
+		let timer = setTimeout(() => {
+			if (this.data.scrollTop === e.scrollTop) {
+				this.setData({scrollTop: e.scrollTop, scrollIng: false})
+				this.setData({list: this.data.cacheList.slice()})
+				clearTimeout(timer)
+			}
+		}, 460)
 	},
 
 	/**
@@ -168,22 +168,13 @@ Page({
 	onShareAppMessage: function () {
 
 	},
-	touchStart(e) {
-		this.setData({scrollIng: true})
-	},
-	touchMove(e) {
-		console.log("move", e);
-	},
-	touchEnd(e) {
-		this.setData({scrollIng: false, list: this.data.cacheList.slice()})
-	},
 	onError(e) {
 		console.error(e)
 	},
 	calc() {
 		for (let index = 0; index < this.data.list.length; index++) {
 			wx.createIntersectionObserver()
-				.relativeToViewport({bottom: 100})
+				.relativeToViewport({top: -70, bottom: -80})
 				.observe('.card-' + index, res => {
 					let list = this.data.cacheList.length > 0 ? this.data.cacheList.slice() : this.data.list.slice()
 					if (res && res.intersectionRatio > 0) {

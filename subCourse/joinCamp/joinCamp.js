@@ -123,9 +123,12 @@ Page({
         }
         checkFocusLogin({app_version: Version}).then(async res1 => {
           let _this = this
-          let campInfo = await getHasJoinCamp({traincamp_id: id})
-          if ($notNull(campInfo)) {
-            buttonType = 10
+          // 用户已登录，检查用户是否加入过当前训练营
+          if (hasUserInfo() && hasAccountInfo()) {
+            let campInfo = await getHasJoinCamp({traincamp_id: id})
+            if ($notNull(campInfo)) {
+              buttonType = 10
+            }
           }
           if (!res1) {
             wx.getSystemInfo({
@@ -254,15 +257,6 @@ Page({
   // 跳转到训练营详情
   checkCamp(id) {
     this.getCampDetail(id)
-
-    // getHasJoinCamp({traincamp_id: id}).then(res => {
-    //   if (res.id) {
-    //     // 已经加入过
-    //   } else {
-    //     // 未加入过
-    //   }
-    // })
-
   },
   /**
    * 生命周期函数--监听页面加载

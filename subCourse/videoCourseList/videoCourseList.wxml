@@ -8,7 +8,7 @@
     </view>
     <view class="list-main" wx:if="{{videoList.length>0}}">
 
-        <view class="course-item" wx:for="{{videoList}}" wx:key="index" bindtap="toVideoDetail" data-item="{{item}}">
+        <view class="course-item" wx:for="{{videoList}}" wx:key="index" bindtap="toVideoCourseDetail" data-item="{{item}}">
             <image class="course-image" src="{{item.cover_pic}}"></image>
             <view class="course-info">
                 <text class="course-title limit-two-line">{{item.name}}</text>

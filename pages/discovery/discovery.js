@@ -46,27 +46,31 @@ Page({
 		scrollIng: false,
 		didFirstLoad: true,
 		tabsOffsetLeftAry: [],
-		featureList: []
+		featureList: [],
+		didFixedTab: false,
+		tabsDomOffsetTopNo: 0
 	},
-	touchStart(e) {
-		this.setData({scrollIng: true})
+	calcTabsOffset() {
+		let self = this
+		let tabQuery = wx.createSelectorQuery()
+		tabQuery.select("#tabs").boundingClientRect()
+		tabQuery.exec(function (res) {
+			self.setData({didFixedTab: res[0].top <= 0})
+		})
 	},
 	touchMove(e) {
-		console.log("move", e);
-	},
-	touchEnd(e) {
-		this.setData({scrollIng: false, list: this.data.cacheCampList.slice()})
+		this.calcTabsOffset()
 	},
 	initBootcampListener() {
 		for (let index = 0; index < this.data.campList.length; index++) {
-			wx.createIntersectionObserver({top: 100})
-				.relativeToViewport()
+			wx.createIntersectionObserver()
+				.relativeToViewport({top: -50, bottom: -50})
 				.observe('.card-' + index, res => {
 					let campList = this.data.cacheCampList.length > 0 ? this.data.cacheCampList.slice() : this.data.campList.slice()
 					if (res && res.intersectionRatio > 0) {
 						// 进入可视区域
 						campList = campList.map((item, itemIndex) => {
-							if (itemIndex === index) {
+							if (itemIndex === index && item.intro_video_cover_pic && item.intro_video_link) {
 								item.show = true
 							}
 							return item
@@ -108,23 +112,29 @@ Page({
 		}
 	},
 	handleTab(e) {
-		let index = e.currentTarget.dataset.index
-		this.setData({tabIndex: index})
-		switch (index) {
+		let { id, name } = e.currentTarget.dataset.item
+		this.setData({tabIndex: id})
+		switch (id) {
 			case 2: {
 				this.getVideoCourse()
 				break
 			}
 			default: {
+				this.setData({didFirstLoad: true})
 				this.getRecommendList()
 				break
 			}
 		}
 
-		wx.pageScrollTo({
-			duration: 100,
-			scrollTop: 0
-		})
+		bxPoint("discovery_tab", {tabName: name}, false)
+
+		if (this.data.scrollTop >= 190) {
+			let scrollTop = this.data.tabsDomOffsetTopNo
+			wx.pageScrollTo({
+				duration: 0,
+				scrollTop
+			})
+		}
 	},
 	initTabOffset() {
 		let self = this
@@ -138,6 +148,13 @@ Page({
 				tabsOffsetLeftAry.push(item.left + diff)
 			})
 			self.setData({tabsOffsetLeftAry})
+		})
+
+		// 计算tabs的scrollTop位置
+		let tabQuery = wx.createSelectorQuery()
+		tabQuery.select("#tabs").boundingClientRect()
+		tabQuery.exec(function (res) {
+			self.setData({tabsDomOffsetTopNo: res[0].top})
 		})
 	},
 	// 获取授权
@@ -246,6 +263,7 @@ Page({
 				break
 			}
 		}
+		bxPoint("discovery_more_college_info", {collegeName: key}, false)
 		wx.navigateTo({
 			url: `/subCourse/videoCourseList/videoCourseList?index=${activeIndex}`
 		})
@@ -461,9 +479,10 @@ Page({
 			// 获取直播列表个数
 			this.getLiveTotalNum()
 
-			setTimeout(() => {
+			let temp = setTimeout(() => {
 				// 监听每个video标签在视口的位置
 				this.initBootcampListener()
+				clearTimeout(temp)
 			}, 500)
 		})
 	},
@@ -561,7 +580,6 @@ Page({
 	onReady: function () {
 		// 计算tab偏移位置
 		this.initTabOffset()
-
 		// 获取推荐数据
 		this.getRecommendList()
 	},
@@ -609,18 +627,15 @@ Page({
 	onReachBottom: function () {
 	},
 	onPageScroll(e) {
-		this.setData({
-			scrollTop: e.scrollTop,
-			scrollIng: true,
-			didFixedTab: e.scrollTop >= 190
-		})
+		this.setData({scrollTop: e.scrollTop, scrollIng: true})
+		this.calcTabsOffset()
 		let timer = setTimeout(() => {
 			if (this.data.scrollTop === e.scrollTop) {
 				this.setData({scrollTop: e.scrollTop, scrollIng: false})
-				this.setData({list: this.data.cacheCampList.slice()})
+				this.setData({campList: this.data.cacheCampList.slice()})
 				clearTimeout(timer)
 			}
-		}, 200)
+		}, 300)
 	},
 	/**
 	 * 用户点击右上角分享
