@@ -90,7 +90,8 @@
       "root": "subMall",
       "pages": [
         "detail/detail",
-        "category/category"
+        "category/category",
+        "temporary/temporary"
       ]
     }
   ],

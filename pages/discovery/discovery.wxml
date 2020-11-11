@@ -1,155 +1,230 @@
 <!--发现主页-->
-<view class="discovery" wx:if="{{canShow}}">
-	<!--  模块一 -->
-	<!-- <view class="module-one" style="padding-bottom:130px"> -->
-	<view class="module-one">
-		<!-- banner 滚动区域 -->
-		<view class="swiper-box" id="swiper-box" wx:if="{{bannerList.length!==0}}">
-			<swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}"
-				duration="{{500}}">
-				<swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="joinCampFrombanner" data-item="{{item}}">
-					<view class="swiper-cover"></view>
-					<image mode="cover" src="{{item.pic_url}}"></image>
-				</swiper-item>
-			</swiper>
-			<view class="swiper-dot">
-				<view wx:for="{{bannerList}}" wx:key="index" wx:if="{{bannerList.length>1}}"
-					class="{{cureent===index?'active swiper-dot-item':'swiper-dot-item'}}"></view>
-			</view>
-		</view>
+<view class="discovery">
+    <view class="tabs tabs-fixed" wx:if="{{didFixedTab}}">
+        <view class="tab {{tabIndex===item.id ? 'tab-active' : ''}} tab-ep" wx:for="{{tabs}}" wx:key="{{item.id}}"
+              data-index="{{item.id}}" bindtap="handleTab">{{item.name}}
+        </view>
+        <view class="tab-underline" style="left: {{tabsOffsetLeftAry[tabIndex]}}px;"></view>
+    </view>
+    <!--  推广位 -->
+    <view class="promotion">
+        <!-- banner 滚动区域 -->
+        <view class="swiper-box" id="swiper-box" wx:if="{{bannerList.length!==0}}">
+            <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}"
+                    duration="{{500}}">
+                <swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="joinCampFromBanner" data-item="{{item}}">
+                    <view class="swiper-cover"></view>
+                    <image mode="cover" src="{{item.pic_url}}"></image>
+                </swiper-item>
+            </swiper>
+            <view class="swiper-dot">
+                <view wx:for="{{bannerList}}" wx:key="index" wx:if="{{bannerList.length>1}}"
+                      class="{{current===index?'active swiper-dot-item':'swiper-dot-item'}}"></view>
+            </view>
+        </view>
+    </view>
 
-		<!-- 视频课 -->
-		<view class="video-course" id='video-course'>
-			<view class="video-course-title">
-				<view class="video-course-title-left" bindtap="toWebview">课程</view>
-				<view class="video-course-title-right" bindtap="toVideoList">更多课程 ›</view>
-			</view>
-			<view class="video-course-main" wx:if="{{false}}">
-				<view class="video-course-main-left" bindtap="toVideoList" data-index="2"
-					data-item='{{videoBannerList[0].link}}'>
-					<image src="{{videoBannerList[0].pic_url}}"></image>
-				</view>
-				<view class="video-course-main-right">
-					<view class="video-course-main-right-top" bindtap="toVideoList" data-index="1"
-						data-item='{{videoBannerList[1].link}}'>
-						<image src="{{videoBannerList[1].pic_url}}"></image>
-					</view>
-					<view class="video-course-main-right-bottom" bindtap="toVideoList" data-index="3"
-						data-item='{{videoBannerList[2].link}}'>
-						<image src="{{videoBannerList[2].pic_url}}"></image>
-					</view>
-				</view>
-			</view>
-			<view class="video-course-list">
-				<view class="course-item" wx:for="{{videoList}}" wx:key="index" bindtap="toVideoDetail" data-item="{{item}}">
-					<image class="course-image" src="{{item.cover_pic}}"></image>
-					<view class="course-info">
-						<text class="course-title limit-two-line">{{item.name}}</text>
-						<view class="course-tag"><text class="{{item.category}}">{{item.category==='fitness'?'健身':item.category==='fashion'?'时尚':'静心慢生活'}}</text></view>
-						<view class="price limit-one-line subject-font-color" wx:if="{{showMoney}}">
-							<text class="free" wx:if="{{item.price > 0}}">¥{{item.price}}</text>
-							<text class="free-txt">{{item.tipsText}}</text>
-						</view>
-					</view>
-				</view>
-			</view>
-		</view>
+    <view class="tabs">
+        <view class="tab {{tabIndex===item.id ? 'tab-active' : ''}} tab-ep" wx:for="{{tabs}}" wx:key="{{item.id}}"
+              data-index="{{item.id}}" bindtap="handleTab">{{item.name}}
+        </view>
+        <view class="tab-underline" style="left: {{tabsOffsetLeftAry[tabIndex]}}px;"></view>
+    </view>
 
-		<!-- 训练营 -->
-		<view class="camp" id='camp' wx:if="{{campList.length!==0}}">
-			<view class="camp-title">训练营</view>
-			<view class="camp-list">
-				<view class="camp-item" wx:for="{{campList}}" wx:key="index" bindtap="joinCamp" data-index="{{item}}">
-					<image mode="aspectFill" src="{{item.cover_pic}}"></image>
-					<view class="camp-item-main">
-						<view class="camp-item-title">{{item.name}}</view>
-						<view class="camp-subtitle">{{item.summary}}</view>
-					</view>
-					<view class="camp-button">立即参加</view>
-				</view>
-			</view>
-		</view>
+    <view class="tab-pane" wx:if="{{tabIndex === 0}}">
+        <!-- 训练营 -->
+        <view class="card {{'card-' + index}}" wx:for="{{campList}}" wx:key="index" data-index="{{item}}"
+              bindtap="joinCamp">
+            <image class="bootcampCardItem" wx:if="{{!item.show && !item.intro_video_link}}" mode="aspectFill"
+                   src="{{item.intro_video_cover_pic || item.cover_pic}}"></image>
+            <video
+                    wx:else
+                    id="{{'video-' + index}}"
+                    class="bootcampCardItem"
+                    controls="{{false}}"
+                    poster="{{item.intro_video_cover_pic}}"
+                    object-fit="cover"
+                    enable-play-gesture="{{false}}"
+                    play-btn-position="top"
+                    show-center-play-btn="{{false}}"
+                    show-play-btn="{{false}}"
+                    autoplay="{{true}}"
+                    muted="{{true}}"
+                    loop="{{true}}"
+                    enable-progress-gesture="{{false}}"
+                    binderror="onError"
+                    src="{{item.intro_video_link}}">
+            </video>
+            <view class="fixText">
+                <view class="bootcamp-title limit-one-line">{{item.name}}</view>
+                <view class="bootcamp-summary limit-one-line">{{item.summary}}</view>
+            </view>
+            <view class="bootcamp-content">
+                <view class="bootcamp-feature">
+                    <view class="feature-tag" wx:for="{{item.feature}}" wx:for-item="featureItem" wx:key="index">
+                        <image class="feature-icon" src="{{featureItem.icon}}"></image>
+                        <text>{{featureItem.value}}</text>
+                    </view>
+                </view>
+                <view class="bootcamp-next-date">{{item.next_bootcamp_start_date === "即将开营" ? "即将开营" : "下一期开营时间：" + item.next_bootcamp_start_date}}</view>
+                <view class="bootcamp-operate">
+                    <view class="bootcamp-operate-price">
+                        <text class="bootcamp-operate-discount-price">¥{{item.price}}</text><text
+                            class="bootcamp-operate-sub-price">¥{{item.discount_price}}</text>
+                    </view>
+                    <view class="bootcamp-operate-btn">立即参加</view>
+                </view>
+            </view>
+        </view>
 
-		<!-- 每日训练 -->
-		<view class="catwalk" wx:if="{{courseList.length!==0}}">
-			<view class="catwalk-title">每日训练</view>
-			<view class="catwalk-list">
-				<view class="catwalk-item" wx:for="{{courseList}}" wx:key="index" bindtap="toCourse" data-item="{{item}}">
-					<image mode="aspectFill" src="{{item.cover_pic}}"></image>
-					<view class="atwalk-item-cover"></view>
-					<view class="catwalk-item-title">{{item.name}}</view>
-					<view class="catwalk-item-subtitle">
-						<text wx:if="{{item.level===1}}">初级</text>
-						<text wx:if="{{item.level===2}}">中级</text>
-						<text wx:if="{{item.level===3}}">高级</text>
-						<text>{{item.duration}}</text>
-						<text>{{item.listNum}}个动作</text>
-					</view>
-					<view class="catwalk-item-button">立即参加</view>
-				</view>
-			</view>
-		</view>
+        <!-- 视频课 -->
+        <block wx:for="{{recommendCourseList}}" wx:key="index" wx:for-item="recommendCourseItem">
+            <view class="course-layout">{{recommendCourseItem.key}}</view>
+            <view class="course-item" wx:for="{{recommendCourseItem.content}}" wx:key="index" bindtap="toVideoDetail" data-item="{{item}}">
+                <image class="course-image" src="{{item.cover_pic}}"></image>
+                <view class="course-info">
+                    <text class="course-title limit-two-line">{{item.name}}</text>
+                    <view class="course-visit-count">共{{item.visit_count}}人学习</view>
+                    <view class="course-operate">
+                        <view class="price limit-one-line" wx:if="{{showMoney}}">
+                            <block wx:if="{{item.tipsText}}">
+                                <text class="price-two">¥{{item.price}}</text>
+                                <text class="price-three">{{item.tipsText}}</text>
+                            </block>
+                            <block wx:else>
+                                <text class="price-one">
+                                    <text wx:if="{{item.didBought}}">已购</text>
+                                    <text wx:else>{{item.discount_price ? '¥'+item.discount_price : '免费'}}</text>
+                                </text>
+                                <text class="price-two" style="text-decoration: {{item.didBought?'none':'line-through'}};">
+                                    <text wx:if="{{item.didBought}}">去学习</text>
+                                    <text wx:else>¥{{item.price}}</text>
+                                </text>
+                            </block>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="course-item-more-btn" bindtap="toVideoList" data-item="{{recommendCourseItem}}">查看更多学院课程</view>
+        </block>
 
+        <!-- 往期直播 -->
+        <view class="{{showModelBanner?'live':'live hidden'}}" bindtap="toLiveList">
+            <view class="live-title-left">往期直播</view>
+            <view class="live-title-right">{{liveNum}}+直播课程 ›</view>
+        </view>
 
+        <!-- 大赛&活动 -->
+        <view class="other-activity" wx:if="{{showModelBanner}}">
+            <!-- 大赛 -->
+            <view class="competition">
+                <view class="competition-title">大赛</view>
+                <view class="competition-list">
+                    <view class="competition-item" bindtap="toModelCompetition" data-item='{{item}}'
+                          wx:for="{{competitionBannerList}}" wx:key="index">
+                        <image mode="aspectFill" src="{{item.pic_url}}"></image>
+                        <view class="competition-item-title">{{item.title}}</view>
+                    </view>
+                </view>
+            </view>
+            <!-- 活动 -->
+            <view class="activity" wx:if="{{activityList.length!==0&&activityList!==null}}">
+                <view class="activity-title">活动</view>
+                <view class="activity-list">
+                    <view class="activity-item" wx:for="{{activityList}}" wx:key="index">
+                        <image mode="aspectFill" src="{{item.cover_url}}"></image>
+                        <view class="activity-item-desc">
+                            <view class="activity-item-desc-title">{{item.title}}</view>
+                            <view class="activity-item-desc-time">{{item.start_time}}</view>
+                            <view class="activity-item-desc-area">{{item.address}}</view>
+                            <view class="activity-item-desc-price" wx:if="{{item.discount_price!==-1}}">
+                                <text>¥{{item.price}}</text>
+                                <text>¥{{item.discount_price}}</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
 
-		<!-- 时尚课 -->
-		<view class="fashion" wx:if="{{false}}">
-			<view class="fashion-title">时尚课</view>
-			<view class="fashion-list">
-				<view class="fashion-item">
-					<image mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596007646ojVZsT.jpg"></image>
-					<view class="fashion-item-right">
-						<view class="fashion-item-right-top">明星美妆师精心打造专属美妆入门课，全面解决50+人群常见妆容问题！</view>
-						<view class="fashion-item-right-bottom">¥99.00</view>
-					</view>
-				</view>
-			</view>
-		</view>
-	</view>
-	<!-- 模块二 -->
-	<!-- 往期直播 -->
-	<view class="{{showModelBanner?'live':'live hidden'}}">
-		<view class="live-title">
-			<view class="live-title-left">往期直播</view>
-			<view class="live-title-right" bindtap="toLiveList">{{liveNum}}+直播课程 ›</view>
-		</view>
-	</view>
+    <view class="tab-pane" wx:if="{{tabIndex === 1}}">
+        <!-- 训练营 -->
+        <view class="card {{'card-' + index}}" wx:for="{{campList}}" wx:key="index" data-index="{{item}}"
+              bindtap="joinCamp">
+            <image class="bootcampCardItem" wx:if="{{!item.show && !item.intro_video_link}}" mode="aspectFill"
+                   src="{{item.intro_video_cover_pic || item.cover_pic}}"></image>
+            <video
+                    wx:else
+                    id="{{'video-' + index}}"
+                    class="bootcampCardItem"
+                    controls="{{false}}"
+                    poster="{{item.intro_video_cover_pic}}"
+                    object-fit="cover"
+                    enable-play-gesture="{{false}}"
+                    play-btn-position="top"
+                    show-center-play-btn="{{false}}"
+                    show-play-btn="{{false}}"
+                    autoplay="{{true}}"
+                    muted="{{true}}"
+                    loop="{{true}}"
+                    enable-progress-gesture="{{false}}"
+                    binderror="onError"
+                    src="{{item.intro_video_link}}">
+            </video>
+            <view class="fixText">
+                <view class="bootcamp-title limit-one-line">{{item.name}}</view>
+                <view class="bootcamp-summary limit-one-line">{{item.summary}}</view>
+            </view>
+            <view class="bootcamp-content">
+                <view class="bootcamp-feature">
+                    <view class="feature-tag" wx:for="{{item.feature}}" wx:for-item="featureItem" wx:key="index">
+                        <image class="feature-icon" src="{{featureItem.icon}}"></image>
+                        <text>{{featureItem.value}}</text>
+                    </view>
+                </view>
+                <view class="bootcamp-next-date">下一期开营时间：{{item.next_bootcamp_start_date}}</view>
+                <view class="bootcamp-operate">
+                    <view class="bootcamp-operate-price">
+                        <text class="bootcamp-operate-discount-price">¥{{item.price}}</text><text
+                            class="bootcamp-operate-sub-price">¥{{item.discount_price}}</text>
+                    </view>
+                    <view class="bootcamp-operate-btn">立即参加</view>
+                </view>
+            </view>
+        </view>
+    </view>
 
-	<!-- 模块三 -->
-	<view class="module-two" wx:if="{{showModelBanner}}">
-		<!-- 大赛 -->
-		<view class="competition">
-			<view class="competition-title">大赛</view>
-			<view class="competition-list">
-				<view class="competition-item" bindtap="toModelCompetition" data-item='{{item}}'
-					wx:for="{{competitionBannerList}}" wx:key="index">
-					<image mode="aspectFill" src="{{item.pic_url}}"></image>
-					<view class="competition-item-title">{{item.title}}</view>
-				</view>
-			</view>
-		</view>
-		<!-- 活动 -->
-		<view class="activity" wx:if="{{activityList.length!==0&&activityList!==null}}">
-			<view class="activity-title">活动</view>
-			<view class="activity-list">
-				<view class="activity-item" wx:for="{{activityList}}" wx:key="index">
-					<image mode="aspectFill" src="{{item.cover_url}}"></image>
-					<view class="activity-item-desc">
-						<view class="activity-item-desc-title">{{item.title}}</view>
-						<view class="activity-item-desc-time">{{item.start_time}}</view>
-						<view class="activity-item-desc-area">{{item.address}}</view>
-						<view class="activity-item-desc-price" wx:if="{{item.discount_price!==-1}}">
-							<text>¥{{item.price}}</text>
-							<text>¥{{item.discount_price}}</text>
-						</view>
-					</view>
-				</view>
-			</view>
-		</view>
-		<!-- 授权弹窗 -->
-		<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent"
-			bind:authCompleteEvent="authCompleteEvent">
-		</authModule>
-	</view>
+    <view class="tab-pane" wx:if="{{tabIndex === 2}}">
+        <view class="course-item" wx:for="{{courseList}}" wx:key="index" bindtap="toVideoDetail" data-item="{{item}}">
+            <image class="course-image" src="{{item.cover_pic}}"></image>
+            <view class="course-info">
+                <text class="course-title limit-two-line">{{item.name}}</text>
+                <view class="course-visit-count">共{{item.visit_count}}人学习</view>
+                <view class="course-operate">
+                    <view class="price limit-one-line" wx:if="{{showMoney}}">
+                        <block wx:if="{{item.tipsText}}">
+                            <text class="price-two">¥{{item.price}}</text>
+                            <text class="price-three">{{item.tipsText}}</text>
+                        </block>
+                        <block wx:else>
+                            <text class="price-one">
+                                <text wx:if="{{item.didBought}}">已购</text>
+                                <text wx:else>{{item.discount_price ? '¥'+item.discount_price : '免费'}}</text>
+                            </text>
+                            <text class="price-two" style="text-decoration: {{item.didBought?'none':'line-through'}};">
+                                <text wx:if="{{item.didBought}}">去学习</text>
+                                <text wx:else>¥{{item.price}}</text>
+                            </text>
+                        </block>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
 
+    <!-- 授权弹窗 -->
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent"
+                bind:authCompleteEvent="authCompleteEvent">
+    </authModule>
 </view>

@@ -4,7 +4,7 @@ import { GLOBAL_KEY, Version } from "../../lib/config"
 import { checkFocusLogin } from "../../api/auth/index"
 
 import { getCampDetail, getHasJoinCamp, joinCamp } from "../../api/course/index"
-import { getLocalStorage, hasAccountInfo, hasUserInfo, payCourse } from "../../utils/util"
+import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, payCourse } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -29,6 +29,9 @@ Page({
     timeJoin: '',
     backIndex: false
   },
+  toBootcampDetailPage() {
+    wx.navigateTo({url: `/subCourse/campDetail/campDetail?id=${this.data.campId}&share=true`})
+  },
   // 生成当前天的日期
   getCurrentDate(currentDate) {
     return new Promise(resolve => {
@@ -42,9 +45,7 @@ Page({
   },
   // 获取训练营详情
   getCampDetail(id) {
-    getCampDetail({
-      traincamp_id: id
-    }).then(res => {
+    getCampDetail({traincamp_id: id}).then(res => {
       let dateList = res.start_date.split(',')
       let startDate = ''
       let pushTime = ''
@@ -79,7 +80,8 @@ Page({
         if (!hasUserInfo() || !hasAccountInfo()) {
           // 没有授权
           buttonType = 7
-        } else {
+        }
+        else {
           // 受过权了
           if (res.price > 0) {
             // 收费
@@ -119,10 +121,12 @@ Page({
             })
           }
         }
-        checkFocusLogin({
-          app_version: Version
-        }).then(res1 => {
+        checkFocusLogin({app_version: Version}).then(async res1 => {
           let _this = this
+          let campInfo = await getHasJoinCamp({traincamp_id: id})
+          if ($notNull(campInfo)) {
+            buttonType = 10
+          }
           if (!res1) {
             wx.getSystemInfo({
               success: function (res2) {
@@ -150,7 +154,6 @@ Page({
             })
           }
         })
-
       })
     })
   },
@@ -224,9 +227,7 @@ Page({
 
   },
   // 集中处理支付回调
-  backFun({
-    type
-  }) {
+  backFun({type}) {
     if (type === 'fail') {
       this.setData({
         lock: true
@@ -252,58 +253,16 @@ Page({
 
   // 跳转到训练营详情
   checkCamp(id) {
-    getHasJoinCamp({
-      traincamp_id: id
-    }).then(res => {
-      if (res.id) {
-        // 已经加入过
-        wx.redirectTo({
-          url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
-        })
-        // res.date = res.date.replace(/-/g, "/")
-        // let oneDayTime = 86400000 * res.period //一天毫秒数
-        // let dateDay = new Date(res.date).getTime() //加入日期
-        // let date = new Date();
-        // let year = date.getFullYear()
-        // let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1
-        // let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
-        // let nowDate = year + "/" + month + "/" + day
-        // let nowDay = new Date(nowDate).getTime()
-        // if (dateDay + oneDayTime > nowDay) {
-        //   // 训练营未过期
-        //   if (res.status === 2) {
-        //     // 代表是已经加入过放弃的
-        //     // let pushTime = res.date.split("/")[1] + "月" + res.date.split("/")[2] + "日"
-        //     // this.setData({
-        //     //   hasJoinAll: true,
-        //     //   hasAllTime: res.date.replace(/\//g, "-"),
-        //     //   timeJoin: pushTime
-        //     // })
-        //     // this.getCampDetail(id)
-        //     wx.redirectTo({
-        //       url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
-        //     })
-        //   } else {
-        //     wx.redirectTo({
-        //       url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
-        //     })
-        //   }
-        // } else {
-        //   this.setData({
-        //     overdue: true
-        //   })
-        //   this.getCampDetail(
-        //     id
-        //   )
-        //   wx.redirectTo({
-        //     url: `/subCourse/campDetail/campDetail?id=${id}&share=true`,
-        //   })
-        // }
-      } else {
-        // 未加入过
-        this.getCampDetail(id)
-      }
-    })
+    this.getCampDetail(id)
+
+    // getHasJoinCamp({traincamp_id: id}).then(res => {
+    //   if (res.id) {
+    //     // 已经加入过
+    //   } else {
+    //     // 未加入过
+    //   }
+    // })
+
   },
   /**
    * 生命周期函数--监听页面加载

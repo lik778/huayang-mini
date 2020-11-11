@@ -6,212 +6,30 @@
     height: 100vh;
 }
 
-.page-01,
-.page-02 {
-    position: absolute;
+.full-screen-image {
+    position: fixed;
     top: 0;
+    right: 0;
     left: 0;
     bottom: 0;
-    right: 0;
-    background: #990000;
-    z-index: 2;
-}
-
-.prospect,
-.skip {
-    font: 40rpx/116rpx PingFang SC;
-    color: white;
-}
-
-.prospect {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-top: 136rpx;
+    width: 100vw;
+    height: 100vh;
 }
 
 .skip {
     position: fixed;
-    bottom: 104rpx;
-    left: 0;
-    right: 0;
-    font: 36rpx/50rpx PingFang SC;
-    color: rgba(255, 255, 255, 0.8);
+    bottom: 60rpx;
+    right: 40rpx;
+    width: 180rpx;
+    height: 68rpx;
+    border-radius: 999rpx;
+    box-sizing: border-box;
     text-align: center;
-    text-decoration: underline;
+    font: 40rpx/68rpx PingFangSC;
+    color: white;
+    background: rgba(102, 102, 102, 0.5);
 }
 
 .skip:active {
     opacity: 0.8;
-}
-
-/*page-01*/
-.move-animate {
-    animation: fadeIn 1s forwards;
-    -webkit-animation: fadeIn 1s forwards;
-}
-
-.delay1 {
-    animation-delay: 1s;
-    -webkit-animation-delay: 1s;
-    animation-fill-mode: backwards !important;
-    -webkit-animation-fill-mode: backwards !important;
-}
-
-.delay2 {
-    animation-delay: 2.5s;
-    -webkit-animation-delay: 2.5s;
-    animation-fill-mode: backwards !important;
-    -webkit-animation-fill-mode: backwards !important;
-}
-
-.delay3 {
-    animation-delay: 4s;
-    -webkit-animation-delay: 4s;
-    animation-fill-mode: backwards !important;
-    -webkit-animation-fill-mode: backwards !important;
-}
-
-.delay4 {
-    animation-delay: 5.5s;
-    -webkit-animation-delay: 5.5s;
-    animation-fill-mode: backwards !important;
-    -webkit-animation-fill-mode: backwards !important;
-}
-
-.delay5 {
-    animation-delay: 8s;
-    -webkit-animation-delay: 8s;
-    animation-fill-mode: backwards !important;
-    -webkit-animation-fill-mode: backwards !important;
-}
-
-.bg-animate {
-    animation: bg 1s 7s forwards;
-    -webkit-animation: bg 1s 7s forwards;
-}
-
-/*page-02*/
-.page-02 {
-    background: white;
-    z-index: 1;
-}
-
-.page-02-title {
-    font: 48rpx/66rpx PingFang SC;
-    text-align: center;
-}
-
-.recommend-course-list {
-    padding: 40rpx 30rpx;
-}
-
-.course-item {
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 20rpx;
-    height: 190rpx;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    padding: 36rpx 30rpx;
-    box-sizing: border-box;
-    border-radius: 8rpx;
-    color: white;
-}
-
-.course-item:active {
-    opacity: 0.8;
-}
-
-.course-item:last-child {
-    margin-bottom: 0;
-}
-
-.course-name {
-    font: bold 44rpx/60rpx PingFang SC;
-}
-
-.course-info {
-    font: 28rpx/40rpx PingFang SC;
-}
-
-.course-info text {
-    margin-right: 30rpx;
-}
-
-.course-info text:last-child {
-    margin-right: 0;
-}
-
-.course-select {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 72rpx;
-    height: 72rpx;
-    border-bottom-left-radius: 72rpx;
-    background: rgba(80, 80, 80, 0.8);
-}
-
-.course-select image {
-    position: absolute;
-    top: 18rpx;
-    right: 10rpx;
-    width: 34rpx;
-    height: 26rpx;
-}
-
-.btn {
-    margin: 0 30rpx;
-    height: 96rpx;
-    font: 500 40rpx/96rpx PingFang SC;
-    border-radius: 999rpx;
-    text-align: center;
-    color: white;
-}
-
-.btn:active {
-    opacity: 0.8;
-}
-
-.more {
-    margin-top: 28rpx;
-    font: 32rpx/44rpx PingFang SC;
-    text-align: center;
-    color: #748BBE;
-}
-
-.more:active {
-    opacity: 0.8;
-}
-
-@keyframes bg {
-    0% {
-        background: rgb(153, 0, 0);
-        opacity: 1;
-    }
-
-    100% {
-        background: rgb(255, 255, 255);
-        opacity: 0;
-    }
-}
-
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-        -webkit-transform: translateY(40px);
-        transform: translateY(40px);
-    }
-
-    100% {
-        opacity: 1;
-        -webkit-transform: translateY(0);
-        transform: translateY(0);
-    }
 }
