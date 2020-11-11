@@ -8,9 +8,7 @@ import {
   secondToMinute,
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
-import {
-  checkFocusLogin
-} from "../../api/auth/index"
+import { checkFocusLogin } from "../../api/auth/index"
 import {
   checkJoinVideoCourse,
   createFissionTask,
@@ -19,10 +17,7 @@ import {
   joinVideoCourse,
   recordStudy
 } from "../../api/course/index"
-import {
-  GLOBAL_KEY,
-  Version
-} from "../../lib/config"
+import { GLOBAL_KEY, Version } from "../../lib/config"
 
 const ButtonType = {
   freeAndNoLevelLimit: 1, // 免费且没有等级限制
@@ -62,6 +57,7 @@ Page({
     didResetDiscountPrice: false, // 是否重置优惠价格
     promoteUid: "", //分销分享人ID
     userInfo: "", //用户信息
+    showPromotion: true, //分销分享按钮
   },
   initFissionTask() {
     createFissionTask({
@@ -349,6 +345,11 @@ Page({
         showVideoLock = false
       }
       let buttonStyle = button ? button : buttonType
+      if (res.discount_price > 0 && res.distribution_ratio > 0) {
+        res.sharePrice = ((res.discount_price * (res.distribution_ratio / 100))).toFixed(2)
+      } else {
+        res.sharePrice = ''
+      }
       this.getArticleLink(res.id)
       checkFocusLogin({
         app_version: Version
@@ -401,24 +402,34 @@ Page({
       checkJoinVideoCourse({
         kecheng_series_id: this.data.videoId
       }).then(res => {
-        if (res === null) {
+        if (res.code === -2) {
+          this.setData({
+            showPromotion: false
+          })
+        }
+        if (res.data === null) {
           // 未加入过
           this.getVideoDetail()
         } else {
           // 加入过
           let buttonType = ""
-          if (res.status === 2) {
+          if (res.data.status === 2) {
             buttonType = ButtonType.restore
           } else {
             buttonType = ButtonType.normal
           }
           this.getVideoDetail(buttonType)
         }
+      }).catch(() => {
+        this.setData({
+          showPromotion: false
+        })
       })
     } else {
       // 未登陆
       this.setData({
-        hasLogin: false
+        hasLogin: false,
+        showPromotion: false
       })
       this.getVideoDetail(1)
     }
@@ -452,8 +463,10 @@ Page({
   authCompleteEvent() {
     this.checkIsjoined()
     setTimeout(() => {
+      let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
       this.setData({
         didShowAuth: false,
+        userInfo
       })
     }, 200)
   },
@@ -508,9 +521,17 @@ Page({
         })
       }).exec()
     }
-
-
   },
+
+  // 分销打点
+  shareCourse() {
+    bxPoint('promotion_videoCourse_page', {
+      open_id: getLocalStorage(GLOBAL_KEY.openId),
+      user_id: getLocalStorage(GLOBAL_KEY.userId),
+      isPromoter: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).kecheng_user.is_promoter === 1 ? true : false
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -522,7 +543,6 @@ Page({
       promote_uid = '',
       series_invite_id = ''
     } = options
-    console.log(promote_uid, "邀请人id")
     if (promote_uid !== '') {
       this.setData({
         promoteUid: promote_uid
@@ -608,9 +628,14 @@ Page({
    */
   onShareAppMessage: function () {
     let shareLink = `/subCourse/videoCourse/videoCourse?videoId=${this.data.courseData.id}`
-    if (this.data.userInfo !== '' && this.data.userInfo.kecheng_user.is_promoter === 1) {
-      shareLink += `&promote_uid=${this.data.userInfo.id}`
+    if (this.data.promoteUid !== '') {
+      shareLink += `&promote_uid=${this.data.promoteUid}`
+    } else {
+      if (this.data.userInfo !== '' && this.data.userInfo.kecheng_user.is_promoter === 1) {
+        shareLink += `&promote_uid=${this.data.userInfo.id}`
+      }
     }
+
     return {
       title: this.data.courseData.share_desc,
       path: shareLink
