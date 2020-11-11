@@ -4,16 +4,17 @@
 	<view class="back" style="padding-top:{{statusHeight}}px">
 		<view class="back-module">
 			<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604458365vukBeP.jpg" bindtap="back"></image>
-			<text style="color:{{isShare?'#fff':'#000'}}">{{isShare?"我的推广":"课程推荐"}}</text>
+			<text>{{isShare?"我的推广":"课程推荐"}}</text>
 		</view>
 	</view>
 	<!-- 推广人 -->
 	<view class="promoter" wx:if="{{isShare}}">
 		<!-- 顶部banner -->
-		<view class="banner">
-			<view class="banner-module">
+		<view class="banner" style="height:{{210+statusHeight}}px">
+			<view class="banner-module" style="height:{{210+statusHeight}}px">
 				<view class="banner-bg">
-					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604485471qvOyEr.jpg"></image>
+					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604485471qvOyEr.jpg"
+						style="height:{{210+statusHeight}}px"></image>
 				</view>
 				<view class="banner-module-left">
 					<view class="my-price">
@@ -42,12 +43,13 @@
 			</view>
 			<view class="list-module">
 				<view class="camp-module">
-					<view class="camp-item" wx:for="{{listData.traincamp_list}}" wx:key="{{index}}">
+					<view class="camp-item" bindtap="toDetail" data-item="{{item}}" data-type="camp"
+						wx:for="{{listData.traincamp_list}}" wx:key="{{index}}">
 						<view class="camp-item-box">
 							<view class="camp-item-bg">
 								<image src="{{item.cover_pic}}"></image>
 							</view>
-							<view class="camp-cover1" bindtap="toDetail" data-item="{{item}}" data-type="camp"></view>
+							<view class="camp-cover1"></view>
 							<view class="camp-cover"></view>
 							<view class="camp-item-title">{{item.name}}</view>
 							<view class="camp-item-subtitle">{{item.summary}}</view>
@@ -57,7 +59,7 @@
 									<text wx:if="{{item.sharePrice!==''}}">推广成功</text>
 									<text class="subject-font-color" wx:if="{{item.sharePrice!==''}}">赚{{item.sharePrice}}元</text>
 								</view>
-								<button open-type="share" class="camp-item-bottom-text-right subject-bg-color">
+								<button class="camp-item-bottom-text-right subject-bg-color">
 									立即推广
 								</button>
 							</view>
@@ -65,8 +67,9 @@
 					</view>
 				</view>
 				<view class="course-module">
-					<view class="course-item" wx:for="{{listData.series_list}}" wx:key="{{index}}">
-						<view class="course-item-box" bindtap="toDetail" data-item="{{item}}" data-type="course">
+					<view bindtap="toDetail" data-item="{{item}}" data-type="course" class="course-item"
+						wx:for="{{listData.series_list}}" wx:key="{{index}}">
+						<view class="course-item-box">
 							<view class="course-item-left">
 								<image src="{{item.cover_pic}}"></image>
 							</view>
@@ -83,17 +86,21 @@
 							</view>
 
 						</view>
-						<button open-type="share" class="course-item-bottom-right subject-bg-color">立即推广</button>
+						<button class="course-item-bottom-right subject-bg-color">立即推广</button>
 					</view>
 				</view>
 			</view>
 		</view>
 	</view>
 	<!-- 被推广者 -->
-	<view class="by-promoter" wx:else style="padding-top:{{statusHeight+43}}px">
+	<view class="by-promoter" wx:else>
 		<!-- 标题 -->
 		<view class="share-title">
-			<view class="share-main-title">{{shareUserInfo.nick_name}}</view>
+			<view class="banner-image" style="height:{{210+statusHeight}}px">
+				<image style="height:{{210+statusHeight}}px"
+					src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604485471qvOyEr.jpg"></image>
+			</view>
+			<view class="share-main-title limit-one-line">{{shareUserInfo.nick_name}}</view>
 			<view class="share-sub-title">为您推荐花样精品课程</view>
 		</view>
 		<!-- tab列表 -->

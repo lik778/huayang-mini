@@ -49,7 +49,8 @@
 	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
 	</authModule>
 	<!-- 分销按钮 -->
-	<view class="share-friend" bindtap="share" wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1}}">
+	<view class="share-friend" bindtap="shareNow"
+		wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&showPromotion&&campDetailData.sharePrice!==''}}">
 		<view class="share-friend-box">
 			<button open-type="share">推广成功赚5元</button>
 			<view class="share-text subject-bg-color">推广成功赚{{campDetailData.sharePrice}}元</view>

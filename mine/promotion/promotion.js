@@ -1,8 +1,10 @@
 // mine/wallet/wallet.js
 import {
   getLocalStorage,
-  setLocalStorage
+  setLocalStorage,
+  getNowDateAll
 } from "../../utils/util"
+import bxPoint from "../../utils/bxPoint"
 import {
   getUniversityCode,
   getUserInfo
@@ -24,6 +26,7 @@ Page({
     accountInfo: "",
     tabIndex: 0,
     promoteUid: "",
+    shareTitle: "",
     tabList: [{
       name: "全部",
       index: 0
@@ -41,14 +44,21 @@ Page({
     },
     isShare: false,
     hasAll: false,
-    shareUserInfo: ""
+    shareUserInfo: "",
+    backDiscovery: false
   },
 
   // 返回
   back() {
-    wx.switchTab({
-      url: '/pages/userCenter/userCenter',
-    })
+    if (this.data.backDiscovery) {
+      wx.switchTab({
+        url: '/pages/discovery/discovery',
+      })
+    } else {
+      wx.switchTab({
+        url: '/pages/userCenter/userCenter',
+      })
+    }
   },
 
   // 跳往详情页
@@ -188,6 +198,25 @@ Page({
     })
   },
 
+  // 打点
+  setPoint() {
+    let isShare = this.data.promoteUid === "" ? false : true
+    if (isShare) {
+      // 被分享进来的
+      bxPoint("promotion_page", {
+        userId: this.data.promoteUid,
+        time: getNowDateAll("-")
+      })
+    } else {
+      // 分享人进来的
+      bxPoint("promotion_page", {
+        promoterId: this.data.promoteUid,
+        userId: getLocalStorage(GLOBAL_KEY.userId) ? getLocalStorage(GLOBAL_KEY.userId) : "",
+        open_id: getLocalStorage(GLOBAL_KEY.openId) ? getLocalStorage(GLOBAL_KEY.openId) : "",
+      })
+    }
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -208,6 +237,9 @@ Page({
           })
         }
       }
+      this.setData({
+        backDiscovery: true
+      })
       this.getShareUserInfo()
     } else {
       this.setData({
@@ -216,6 +248,7 @@ Page({
       })
     }
     this.getList()
+    this.setPoint()
   },
 
   /**
@@ -229,14 +262,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
-
-
     let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : ""
+    if (this.data.promoteUid !== '') {
+      if (getLocalStorage(GLOBAL_KEY.userId)) {
+        if (Number(getLocalStorage(GLOBAL_KEY.userId)) === Number(this.data.promoteUid)) {
+          this.setData({
+            isShare: true,
+          })
+        }
+      }
+      this.getShareUserInfo()
+    }
     if (userInfo !== '') {
-      userInfo.kecheng_user.deposit = Number((userInfo.kecheng_user.deposit / 100).toFixed(2))
+      userInfo.kecheng_user.deposit = Number((userInfo.kecheng_user.deposit / 100).toFixed(2)) === "0.00" ? '0' : Number((userInfo.kecheng_user.deposit / 100).toFixed(2))
       getUserInfo('scene=zhide').then(res => {
         setLocalStorage(GLOBAL_KEY.accountInfo, res)
+        res.kecheng_user.deposit = (res.kecheng_user.deposit / 100).toFixed(2) === '0.00' ? 0 : (res.kecheng_user.deposit / 100).toFixed(2)
+        console.log(res.kecheng_user.deposit)
         this.setData({
           accountInfo: res
         })
@@ -290,6 +332,7 @@ Page({
   onShareAppMessage: function (res) {
     return {
       title: `${this.data.shareUserInfo.nick_name}为您推荐了花样精选课程`,
+      imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604635714bjNCqs.jpg",
       path: `/mine/promotion/promotion?promote_uid=${this.data.promoteUid}`
     }
   }

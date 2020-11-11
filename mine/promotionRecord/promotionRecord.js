@@ -27,14 +27,12 @@ Page({
   // 获取推广记录
   getList(e) {
     getPromotionRecord(this.data.pageData).then(res => {
-      let list = e ? this.data.list.concat(res.data.list) : res.data.list
-      if (list.kecheng_promote_record !== null) {
-        list.map(item => {
-          if (item.kecheng_promote_record !== null) {
-            item.kecheng_promote_record.amount = (item.kecheng_promote_record.amount / 100).toFixed(2)
-          }
-        })
+      if (res.data.list.length > 0) {
+        for (let i in res.data.list) {
+          res.data.list[i].kecheng_promote_record.amount = (res.data.list[i].kecheng_promote_record.amount / 100).toFixed(2)
+        }
       }
+      let list = e ? this.data.list.concat(res.data.list) : res.data.list
       this.setData({
         list,
         isAll: res.data.list.length < 10 ? true : false

@@ -4,7 +4,8 @@ import { GLOBAL_KEY, Version } from "../../lib/config"
 import { checkFocusLogin } from "../../api/auth/index"
 
 import { getCampDetail, getHasJoinCamp, joinCamp } from "../../api/course/index"
-import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, payCourse } from "../../utils/util"
+import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, payCourse
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -33,6 +34,15 @@ Page({
   },
   toBootcampDetailPage() {
     wx.navigateTo({url: `/subCourse/campDetail/campDetail?id=${this.data.campId}&share=true`})
+  },
+
+  // 打点
+  shareNow() {
+    bxPoint("promotion_camp_joinpage", {
+      open_id: getLocalStorage(GLOBAL_KEY.openId),
+      user_id: getLocalStorage(GLOBAL_KEY.userId),
+      isPromoter: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).kecheng_user.is_promoter === 1 ? true : false
+    })
   },
   // 生成当前天的日期
   getCurrentDate(currentDate) {
@@ -126,7 +136,9 @@ Page({
         checkFocusLogin({app_version: Version}).then(async res1 => {
           let _this = this
           if (res.discount_price > 0 && res.distribution_ratio > 0) {
-            res.sharePrice = (res.discount_price * (res.distribution_ratio / 100)) / 100
+            res.sharePrice = ((res.discount_price * (res.distribution_ratio / 100)) / 100).toFixed(2)
+          } else {
+            res.sharePrice = ''
           }
           // 用户已登录，检查用户是否加入过当前训练营
           if (hasUserInfo() && hasAccountInfo()) {
@@ -181,9 +193,13 @@ Page({
   },
   // 用户确认授权
   authCompleteEvent() {
-    this.setData({
-      didShowAuth: false,
-    })
+    setTimeout(() => {
+      let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+      this.setData({
+        didShowAuth: false,
+        userInfo
+      })
+    }, 200)
     this.checkCamp(this.data.campId)
     // this.joinCamp()
   },
@@ -385,9 +401,14 @@ Page({
    */
   onShareAppMessage: function () {
     let shareLink = "/subCourse/joinCamp/joinCamp?id=" + this.data.campId + `&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
-    if (this.data.userInfo !== '' && this.data.userInfo.kecheng_user.is_promoter === 1) {
-      shareLink += `&promote_uid=${this.data.userInfo.id}`
+    if (this.data.promoteUid !== '') {
+      shareLink += `&promote_uid=${this.data.promoteUid}`
+    } else {
+      if (this.data.userInfo !== '' && this.data.userInfo.kecheng_user.is_promoter === 1) {
+        shareLink += `&promote_uid=${this.data.userInfo.id}`
+      }
     }
+
     return {
       title: `我正在参加${this.data.campDetailData.name}，每天都有看的见的变化，快来试试`,
       path: shareLink

@@ -114,9 +114,10 @@
     </view>
   </view>
   <!-- 分销按钮 -->
-  <view class="share-friend" bindtap="share" wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1}}">
+  <view class="share-friend" bindtap="shareCamp"
+    wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&campData.sharePrice!==''}}">
     <view class="share-friend-box">
-      <button open-type="share">推广成功赚5元</button>
+      <button open-type="share">推广成功赚{{campData.sharePrice}}元</button>
       <view class="share-text subject-bg-color">推广成功赚{{campData.sharePrice}}元</view>
     </view>
   </view>

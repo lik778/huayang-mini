@@ -433,10 +433,8 @@ export function getVideoCourseDetail(params) {
 // 判断用户是否已经加入课程
 export function checkJoinVideoCourse(params) {
 	return new Promise(resolve => {
-		request._get(URL.checkJoinVideoCourse, params).then(({
-			data
-		}) => {
-			resolve(data)
+		request._get(URL.checkJoinVideoCourse, params).then((res) => {
+			resolve(res)
 		})
 	})
 }
