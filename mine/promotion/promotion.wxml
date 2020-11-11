@@ -1,0 +1,150 @@
+<!--mine/wallet/wallet.wxml-->
+<view class="promotion">
+	<!-- 返回 -->
+	<view class="back" style="padding-top:{{statusHeight}}px">
+		<view class="back-module">
+			<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604458365vukBeP.jpg" bindtap="back"></image>
+			<text>{{isShare?"我的推广":"课程推荐"}}</text>
+		</view>
+	</view>
+	<!-- 推广人 -->
+	<view class="promoter" wx:if="{{isShare}}">
+		<!-- 顶部banner -->
+		<view class="banner" style="height:{{210+statusHeight}}px">
+			<view class="banner-module" style="height:{{210+statusHeight}}px">
+				<view class="banner-bg">
+					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604485471qvOyEr.jpg"
+						style="height:{{210+statusHeight}}px"></image>
+				</view>
+				<view class="banner-module-left">
+					<view class="my-price">
+						<text>{{accountInfo.kecheng_user.deposit}}</text>
+						<text>元</text>
+					</view>
+					<view class="my-price-text">感谢金</view>
+				</view>
+				<view class="banner-module-right">
+					<view class="banner-module-right-one banner-common-button" bindtap="toRecord">推广记录</view>
+					<view class="banner-module-right-two banner-common-button" bindtap="toWithdraw">提现</view>
+				</view>
+			</view>
+		</view>
+		<!-- 我要推广区域 -->
+		<view class="promote-module">
+			<view class="promote-text">分享花样课，收获感谢金</view>
+			<button open-type="share" class="promote-button subject-bg-color">我要推广</button>
+		</view>
+		<!-- tab列表区域 -->
+		<view class="main">
+			<view class="tab-module">
+				<view class="{{tabIndex===index?'tab-item tab-item-active':'tab-item'}}" wx:for="{{tabList}}"
+					data-item="{{item}}" bindtap="changeTab" wx:key="{{index}}">
+					{{item.name}}</view>
+			</view>
+			<view class="list-module">
+				<view class="camp-module">
+					<view class="camp-item" bindtap="toDetail" data-item="{{item}}" data-type="camp"
+						wx:for="{{listData.traincamp_list}}" wx:key="{{index}}">
+						<view class="camp-item-box">
+							<view class="camp-item-bg">
+								<image src="{{item.cover_pic}}"></image>
+							</view>
+							<view class="camp-cover1"></view>
+							<view class="camp-cover"></view>
+							<view class="camp-item-title">{{item.name}}</view>
+							<view class="camp-item-subtitle">{{item.summary}}</view>
+							<view class="camp-item-price">售价：{{item.discount_price/100}}元</view>
+							<view class="camp-item-bottom-text">
+								<view class="camp-item-bottom-text-left">
+									<text wx:if="{{item.sharePrice!==''}}">推广成功</text>
+									<text class="subject-font-color" wx:if="{{item.sharePrice!==''}}">赚{{item.sharePrice}}元</text>
+								</view>
+								<button class="camp-item-bottom-text-right subject-bg-color">
+									立即推广
+								</button>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="course-module">
+					<view bindtap="toDetail" data-item="{{item}}" data-type="course" class="course-item"
+						wx:for="{{listData.series_list}}" wx:key="{{index}}">
+						<view class="course-item-box">
+							<view class="course-item-left">
+								<image src="{{item.cover_pic}}"></image>
+							</view>
+							<view class="course-item-right">
+								<view class="course-item-title limit-two-line ">{{item.name}}
+								</view>
+								<view class="course-item-price">售价：{{item.discount_price/100}}元</view>
+								<view class="course-item-bottom" wx:if="{{item.sharePrice!==''}}">
+									<view class="course-item-bottom-left">
+										<text>推广成功</text>
+										<text class="subject-font-color">赚{{item.sharePrice}}元</text>
+									</view>
+								</view>
+							</view>
+
+						</view>
+						<button class="course-item-bottom-right subject-bg-color">立即推广</button>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<!-- 被推广者 -->
+	<view class="by-promoter" wx:else>
+		<!-- 标题 -->
+		<view class="share-title">
+			<view class="banner-image" style="height:{{210+statusHeight}}px">
+				<image style="height:{{210+statusHeight}}px"
+					src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604485471qvOyEr.jpg"></image>
+			</view>
+			<view class="share-main-title limit-one-line">{{shareUserInfo.nick_name}}</view>
+			<view class="share-sub-title">为您推荐花样精品课程</view>
+		</view>
+		<!-- tab列表 -->
+		<view class="share-main">
+			<view class="tab-module">
+				<view class="{{tabIndex===index?'tab-item tab-item-active':'tab-item'}}" wx:for="{{tabList}}"
+					data-item="{{item}}" bindtap="changeTab" wx:key="{{index}}">
+					{{item.name}}</view>
+			</view>
+			<view class="share-camp-module">
+				<view class="share-camp-item" wx:for="{{listData.traincamp_list}}" wx:key="{{index}}" bindtap="toDetail"
+					data-item="{{item}}" data-type="camp">
+					<view class="share-camp-item-box">
+						<view class="share-camp-cover"></view>
+						<view class="share-camp-logo">
+							<image src="{{item.cover_pic}}"></image>
+						</view>
+						<view class="share-camp-title">{{item.name}}</view>
+						<view class="share-camp-subtitle">{{item.summary}}</view>
+						<view class="share-camp-button">
+							<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604470076FBOtCZ.jpg"></image>
+						</view>
+					</view>
+				</view>
+			</view>
+			<view class="share-course-module">
+				<view class="share-course-item" wx:for="{{listData.series_list}}" wx:key="{{index}}" bindtap="toDetail"
+					data-item="{{item}}" data-type="course">
+					<view class="share-course-item-box">
+						<view class="share-course-item-logo">
+							<image src="{{item.cover_pic}}"></image>
+						</view>
+						<view class="share-course-item-right">
+							<view class="share-course-item-title limit-two-line ">{{item.name}}</view>
+							<view
+								class="share-course-item-sign {{tem.category==='fitness'?'share-course-item-sign-fitness':item.category==='slow_life'?'share-course-item-sign-life':'share-course-item-sign-fashion'}}">
+								{{item.category==='fitness'?"健身":item.category==='slow_life'?"静心慢生活":"时尚"}}</view>
+							<view class="share-course-item-bottom">
+								<view class="share-course-item-price">¥{{item.discount_price/100}}</view>
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</view>

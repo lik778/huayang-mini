@@ -1,55 +1,79 @@
-/* mine/withdrawResult/withdrawResult.wxss */
-.main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 356rpx;
-}
+@import "../../assets/css/common.wxss";
 
-.main-title {
-  font-size: 34px;
-  font-family: PingFangSC-Semibold, PingFang SC;
-  font-weight: 600;
-  color: rgba(5, 197, 98, 1);
-  line-height: 34px;
-  padding-bottom: 80rpx;
-}
+.withdraw-result {}
 
-.money-line text:first-child {
-  font-size: 20px;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: rgba(153, 153, 153, 1);
-  line-height: 20px;
-}
-
-.money-line text:last-child {
-  font-size: 34px;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: rgba(0, 0, 0, 1);
-  line-height: 34px;
-}
-
-.note {
-  font-size: 18px;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: rgba(153, 153, 153, 1);
-  line-height: 18px;
+.banner {
+  text-align: center;
   padding-top: 40rpx;
 }
 
-.backMine {
-  width: 252px;
-  height: 47px;
-  border-radius: 48rpx;
-  border: 2px solid rgba(255, 68, 51, 1);
-  text-align: center;
-  line-height: 47px;
-  font-size: 18px;
-  font-family: PingFangSC-Semibold, PingFang SC;
+.banner image {
+  width: 200rpx;
+  height: 200rpx;
+  vertical-align: bottom;
+}
+
+.result-title {
+  font-size: 44rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
-  color: rgba(255, 68, 51, 1);
-  margin-top: 60rpx;
+  color: #000000;
+  line-height: 60rpx;
+  text-align: center;
+  padding-top: 30rpx;
+}
+
+.result-text {
+  width: calc(100% - 184rpx);
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #999999;
+  line-height: 40rpx;
+  margin: 0 auto;
+  padding-top: 42rpx;
+  padding-bottom: 100rpx;
+}
+
+.promote-again {
+  width: 476rpx;
+  height: 96rpx;
+  border-radius: 999rpx;
+  text-align: center;
+  line-height: 96rpx;
+  color: #fff;
+  margin: 0 auto;
+}
+
+/* 返回 */
+.back {
+  position: fixed;
+  left: 14rpx;
+  top: 10rpx;
+  width: calc(100% - 14rpx);
+  z-index: 50;
+}
+
+.back-module {
+  position: relative;
+  width: 100vw;
+  left: -14rpx;
+}
+
+.back image {
+  width: 64rpx;
+  height: 64rpx;
+  margin-left: 14rpx;
+}
+
+.back-module text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 34rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 38rpx;
 }

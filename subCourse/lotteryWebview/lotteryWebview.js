@@ -1,16 +1,9 @@
 // subCourse/lotteryWebview/lotteryWebview.js
 import request from "../../lib/request"
-import {
-  getLotteryActivityData
-} from "../../api/course/index"
-import {
-  getLocalStorage,
-  hasAccountInfo,
-  hasUserInfo
-} from "../../utils/util"
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { getLotteryActivityData } from "../../api/course/index"
+import { getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
+
 Page({
   /**
    * 页面的初始数据

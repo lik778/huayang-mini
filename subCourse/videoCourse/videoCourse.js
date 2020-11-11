@@ -8,7 +8,9 @@ import {
   secondToMinute,
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
-import { checkFocusLogin } from "../../api/auth/index"
+import {
+  checkFocusLogin
+} from "../../api/auth/index"
 import {
   checkJoinVideoCourse,
   createFissionTask,
@@ -17,7 +19,10 @@ import {
   joinVideoCourse,
   recordStudy
 } from "../../api/course/index"
-import { GLOBAL_KEY, Version } from "../../lib/config"
+import {
+  GLOBAL_KEY,
+  Version
+} from "../../lib/config"
 
 const ButtonType = {
   freeAndNoLevelLimit: 1, // 免费且没有等级限制
@@ -55,6 +60,9 @@ Page({
     hasLogin: false, //是否登录
     articleLink: '', //引导私域文章地址
     didResetDiscountPrice: false, // 是否重置优惠价格
+    promoteUid: "", //分销分享人ID
+    userInfo: "", //用户信息
+    showPromotion: true, //分销分享按钮
   },
   initFissionTask() {
     createFissionTask({
@@ -121,7 +129,9 @@ Page({
   // 暂停播放
   pause() {
     if (!this.data.closeCover) {
-      this.setData({showVideoCover: true})
+      this.setData({
+        showVideoCover: true
+      })
     }
   },
   // 加入课程
@@ -138,7 +148,8 @@ Page({
         // 加入课程
         joinVideoCourse({
           open_id: openid,
-          series_id: this.data.courseData.id
+          series_id: this.data.courseData.id,
+          promote_uid: this.data.promoteUid
         }).then(res => {
           this.setData({
             lock: false
@@ -176,7 +187,9 @@ Page({
     }
   },
   // 集中处理支付回调
-  backFun({type}) {
+  backFun({
+    type
+  }) {
     if (type === 'fail') {
       this.setData({
         lock: true
@@ -220,7 +233,9 @@ Page({
             // 邀请人数为0 & 优惠价格不为0
             res.discount_price = (+res.price * res.invite_discount / 10000).toFixed(2)
             buttonType = ButtonType.chargeAndDiscounts
-            this.setData({didResetDiscountPrice: true})
+            this.setData({
+              didResetDiscountPrice: true
+            })
           } else if (res.invite_count > 0 && res.invite_discount > 0) {
             // 邀请人数不为0 & 优惠折扣不为0
             res.fission_price = (+res.price * res.invite_discount / 10000).toFixed(2)
@@ -246,7 +261,9 @@ Page({
             // 邀请人数为0 & 优惠价格不为0
             res.discount_price = (+res.discount_price * res.invite_discount / 10000).toFixed(2)
             buttonType = ButtonType.chargeAndDiscounts
-            this.setData({didResetDiscountPrice: true})
+            this.setData({
+              didResetDiscountPrice: true
+            })
           } else if (res.invite_count > 0 && res.invite_discount > 0) {
             // 邀请人数不为0 & 优惠折扣不为0
             res.fission_price = (+res.discount_price * res.invite_discount / 10000).toFixed(2)
@@ -333,6 +350,11 @@ Page({
         showVideoLock = false
       }
       let buttonStyle = button ? button : buttonType
+      if (res.discount_price > 0 && res.distribution_ratio > 0) {
+        res.sharePrice = ((res.discount_price * (res.distribution_ratio / 100))).toFixed(2)
+      } else {
+        res.sharePrice = ''
+      }
       this.getArticleLink(res.id)
       checkFocusLogin({
         app_version: Version
@@ -379,29 +401,40 @@ Page({
       hasUserInfo()) {
       // 已经登录
       this.setData({
-        hasLogin: true
+        hasLogin: true,
+        userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
       })
       checkJoinVideoCourse({
         kecheng_series_id: this.data.videoId
       }).then(res => {
-        if (res === null) {
+        if (res.code === -2) {
+          this.setData({
+            showPromotion: false
+          })
+        }
+        if (res.data === null) {
           // 未加入过
           this.getVideoDetail()
         } else {
           // 加入过
           let buttonType = ""
-          if (res.status === 2) {
+          if (res.data.status === 2) {
             buttonType = ButtonType.restore
           } else {
             buttonType = ButtonType.normal
           }
           this.getVideoDetail(buttonType)
         }
+      }).catch(() => {
+        this.setData({
+          showPromotion: false
+        })
       })
     } else {
       // 未登陆
       this.setData({
-        hasLogin: false
+        hasLogin: false,
+        showPromotion: false
       })
       this.getVideoDetail(1)
     }
@@ -435,8 +468,10 @@ Page({
   authCompleteEvent() {
     this.checkIsjoined()
     setTimeout(() => {
+      let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
       this.setData({
         didShowAuth: false,
+        userInfo
       })
     }, 200)
   },
@@ -491,9 +526,17 @@ Page({
         })
       }).exec()
     }
-
-
   },
+
+  // 分销打点
+  shareCourse() {
+    bxPoint('promotion_videoCourse_page', {
+      open_id: getLocalStorage(GLOBAL_KEY.openId),
+      user_id: getLocalStorage(GLOBAL_KEY.userId),
+      isPromoter: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).kecheng_user.is_promoter === 1 ? true : false
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -502,9 +545,14 @@ Page({
       scene,
       source,
       videoId,
+      promote_uid = '',
       series_invite_id = ''
     } = options
-
+    if (promote_uid !== '') {
+      this.setData({
+        promoteUid: promote_uid
+      })
+    }
     // 通过小程序码进入 scene=${source}
     if (scene) {
       let sceneAry = decodeURIComponent(scene).split('/');
@@ -584,9 +632,18 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    let shareLink = `/subCourse/videoCourse/videoCourse?videoId=${this.data.courseData.id}`
+    if (this.data.promoteUid !== '') {
+      shareLink += `&promote_uid=${this.data.promoteUid}`
+    } else {
+      if (this.data.userInfo !== '' && this.data.userInfo.kecheng_user.is_promoter === 1) {
+        shareLink += `&promote_uid=${this.data.userInfo.id}`
+      }
+    }
+
     return {
       title: this.data.courseData.share_desc,
-      path: `/subCourse/videoCourse/videoCourse?videoId=${this.data.courseData.id}`
+      path: shareLink
     }
   }
 })

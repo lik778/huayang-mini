@@ -1,5 +1,4 @@
 {
-  "navigationBarTitleText": "提现申请",
   "navigationStyle": "custom",
   "usingComponents": {
     "naviBar": "../../components/navibar/navibar"

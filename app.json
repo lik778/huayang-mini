@@ -33,14 +33,13 @@
   "requiredBackgroundModes": [
     "audio"
   ],
-  "subpackages": [
-    {
+  "subpackages": [{
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
         "joinSchool/joinSchool",
         "invite/invite",
-        "wallet/wallet",
+        "promotion/promotion",
         "joinResult/joinResult",
         "buyAgreement/buyAgreement",
         "beanExplain/beanExplain",
@@ -49,6 +48,7 @@
         "withdrawResult/withdrawResult",
         "contact/contact",
         "withdraw/withdraw",
+        "promotionRecord/promotionRecord",
         "personActivity/personActivity",
         "personBootcamp/personBootcamp",
         "personCourse/personCourse",
@@ -104,8 +104,7 @@
   },
   "tabBar": {
     "custom": true,
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/discovery/discovery"
       },
       {

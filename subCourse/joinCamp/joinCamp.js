@@ -21,16 +21,27 @@ Page({
     joinTime: "",
     hasJoinAll: false, //代表加入过
     endTime: "",
-    userInfo: "",
+    showPromotion: true, //分销分享按钮
+    userInfo: "", //用户信息
     hasAllTime: "",
     buttonType: 1,
     lock: true,
     campDetailData: {},
     timeJoin: '',
-    backIndex: false
+    promoteUid: "", //分销邀请人id
+    backIndex: false,
+    isPromoter: false //是否是分销人
   },
   toBootcampDetailPage() {
     wx.navigateTo({url: `/subCourse/campDetail/campDetail?id=${this.data.campId}&share=true`})
+  },
+  // 打点
+  shareNow() {
+    bxPoint("promotion_camp_joinpage", {
+      open_id: getLocalStorage(GLOBAL_KEY.openId),
+      user_id: getLocalStorage(GLOBAL_KEY.userId),
+      isPromoter: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).kecheng_user.is_promoter === 1 ? true : false
+    })
   },
   // 生成当前天的日期
   getCurrentDate(currentDate) {
@@ -123,6 +134,11 @@ Page({
         }
         checkFocusLogin({app_version: Version}).then(async res1 => {
           let _this = this
+          if (res.discount_price > 0 && res.distribution_ratio > 0) {
+            res.sharePrice = ((res.discount_price * (res.distribution_ratio / 100)) / 100).toFixed(2)
+          } else {
+            res.sharePrice = ''
+          }
           // 用户已登录，检查用户是否加入过当前训练营
           if (hasUserInfo() && hasAccountInfo()) {
             let campInfo = await getHasJoinCamp({traincamp_id: id})
@@ -176,9 +192,13 @@ Page({
   },
   // 用户确认授权
   authCompleteEvent() {
-    this.setData({
-      didShowAuth: false,
-    })
+    setTimeout(() => {
+      let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+      this.setData({
+        didShowAuth: false,
+        userInfo
+      })
+    }, 200)
     this.checkCamp(this.data.campId)
     // this.joinCamp()
   },
@@ -193,7 +213,8 @@ Page({
         joinCamp({
           open_id: getLocalStorage(GLOBAL_KEY.openId),
           date: this.data.hasJoinAll ? this.data.hasAllTime : this.data.endTime,
-          traincamp_id: this.data.campId
+          traincamp_id: this.data.campId,
+          promote_uid: this.data.promoteUid
         }).then((res) => {
           if (res.id) {
             payCourse({
@@ -267,8 +288,16 @@ Page({
       invite_user_id = "",
       source,
       id,
+      promote_uid = "",
       share
     } = options
+    console.log(promote_uid, "邀请人id")
+    // 设置邀请人id
+    if (promote_uid !== '') {
+      this.setData({
+        promoteUid: promote_uid
+      })
+    }
     let campId = id
     // 通过小程序码进入 scene=${source}/${id}/${share}
     if (scene) {
@@ -311,7 +340,6 @@ Page({
       // id代表训练营ID
       this.getCampDetail(campId)
     }
-
     // 记录起始页面地址
     if (!getApp().globalData.firstViewPage && getCurrentPages().length > 0) {
       getApp().globalData.firstViewPage = getCurrentPages()[0].route
@@ -371,9 +399,18 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    let shareLink = "/subCourse/joinCamp/joinCamp?id=" + this.data.campId + `&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
+    if (this.data.promoteUid !== '') {
+      shareLink += `&promote_uid=${this.data.promoteUid}`
+    } else {
+      if (this.data.userInfo !== '' && this.data.userInfo.kecheng_user.is_promoter === 1) {
+        shareLink += `&promote_uid=${this.data.userInfo.id}`
+      }
+    }
+
     return {
       title: `我正在参加${this.data.campDetailData.name}，每天都有看的见的变化，快来试试`,
-      path: "/subCourse/joinCamp/joinCamp?id=" + this.data.campId + `&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
+      path: shareLink
     }
   }
 })

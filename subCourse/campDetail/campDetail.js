@@ -8,7 +8,10 @@ import {
   getHasJoinCamp,
   getWxRoomData
 } from "../../api/course/index"
-import { getProductInfo, getYouZanAppId } from "../../api/mall/index"
+import {
+  getProductInfo,
+  getYouZanAppId
+} from "../../api/mall/index"
 import {
   computeDate,
   dateAddDays,
@@ -18,7 +21,9 @@ import {
   simpleDurationSimple
 } from "../../utils/util"
 import bxPoint from '../../utils/bxPoint'
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 
 Page({
 
@@ -57,7 +62,9 @@ Page({
     videoHeight: "", //视频高度
     appId: "", //appid
     showAddTeacherCover: false, //显示指引弹窗
-    fromPage: '' //页面来源
+    fromPage: '', //页面来源
+    userInfo: "", //用户信息
+    promoteUid: "" //分销人id
   },
 
   // 关闭引导私域蒙板
@@ -214,6 +221,15 @@ Page({
     this.videoContext.requestFullScreen()
   },
 
+  // 分销打点
+  shareCamp() {
+    bxPoint('promotion_camp_detailpage', {
+      open_id: getLocalStorage(GLOBAL_KEY.openId),
+      user_id: getLocalStorage(GLOBAL_KEY.userId),
+      isPromoter: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).kecheng_user.is_promoter === 1 ? true : false
+    })
+  },
+
   // 进/退全屏
   enterFull(e) {
     if (e.detail.fullscreen === false) {
@@ -246,6 +262,11 @@ Page({
       traincamp_id: this.data.campId,
       user_id: getLocalStorage(GLOBAL_KEY.userId)
     }).then(res => {
+      if (res.discount_price > 0 && res.distribution_ratio > 0) {
+        res.sharePrice = ((res.discount_price * (res.distribution_ratio / 100)) / 100).toFixed(2)
+      } else {
+        res.sharePrice = ''
+      }
       let oneDaySecond = 86400
       let formatType = 'yyyy-MM-dd'
       let startDate = new Date(this.data.joinDate).getTime()
@@ -271,6 +292,14 @@ Page({
       } else {
         showDate = hasStartCampType === 1 ? this.data.joinDate : hasStartCampType === 2 ? todayDate : endDateStr
       }
+      // 处理日期补0
+      let dateStr = showDate.split("-")
+      for (let i in dateStr) {
+        if (Number(dateStr[i]) < 10 && dateStr[i].indexOf("0") !== 0) {
+          dateStr[i] = "0" + dateStr[i]
+        }
+      }
+      showDate = dateStr.join("-")
       this.setData({
         campData: res,
         endDateStr,
@@ -378,8 +407,15 @@ Page({
     let formatType = 'yyyy-MM-dd'
     let {
       scene,
-      share
+      share,
+      promote_uid = "",
     } = options
+    // 设置邀请人id
+    if (promote_uid !== '') {
+      this.setData({
+        promoteUid: promote_uid
+      })
+    }
     this.setData({
       campId,
       choosedDay,
@@ -434,6 +470,10 @@ Page({
         backIndex: true,
       })
     }
+    // 存储用户信息
+    this.setData({
+      userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+    })
   },
 
   /**
@@ -455,7 +495,6 @@ Page({
         16) *
       9
     )
-    console.log(height)
     this.setData({
       statusBarHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
       videoHeight: height,
@@ -494,11 +533,19 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    let shareLink = '/subCourse/joinCamp/joinCamp?id=' +
+      this.data.campId +
+      `&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}&share=true`
+    if (this.data.promoteUid !== '') {
+      shareLink += `&promote_uid=${this.data.promoteUid}`
+    } else {
+      if (this.data.userInfo !== '' && this.data.userInfo.kecheng_user.is_promoter === 1) {
+        shareLink += `&promote_uid=${this.data.userInfo.id}`
+      }
+    }
     return {
       title: `我正在参加${this.data.campData.name}，每天都有看的见的变化，快来试试`,
-      path: '/subCourse/joinCamp/joinCamp?id=' +
-        this.data.campId +
-        `&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}&share=true`,
+      path: shareLink
     }
   }
 })
