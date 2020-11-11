@@ -40,11 +40,14 @@
 		<view class="button-four button-style-two subject-bg-color" wx:if="{{buttonType===8}}" bindtap="openToast">
 			立即加入
 		</view>
+		<!-- 已购买，继续学习 -->
+		<view class="button-four button-style-two subject-bg-color" wx:if="{{buttonType===10}}" bindtap="toBootcampDetailPage">
+			继续学习
+		</view>
 	</view>
 	<!-- 授权弹窗 -->
 	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
 	</authModule>
-	<!-- 规则弹窗 -->
 	<!-- 分销按钮 -->
 	<view class="share-friend" bindtap="share" wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1}}">
 		<view class="share-friend-box">

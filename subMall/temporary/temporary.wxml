@@ -1,0 +1,31 @@
+<view class="temporary">
+    <view class="card {{'card-' + index}}" wx:for="{{list}}" wx:key="index">
+        <image class="temporaryVideo" wx:if="{{!item.show}}" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604652917PdWubN.jpg"></image>
+        <video
+                wx:else
+                id="{{'video-' + index}}"
+                class="temporaryVideo"
+                controls="{{false}}"
+                poster="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604652917PdWubN.jpg"
+                object-fit="cover"
+                enable-play-gesture="{{false}}"
+                play-btn-position="top"
+                show-center-play-btn="{{false}}"
+                show-play-btn="{{false}}"
+                autoplay="{{true}}"
+                muted="{{true}}"
+                loop="{{true}}"
+                enable-progress-gesture="{{false}}"
+                binderror="onError"
+                src="{{item.src}}">
+        </video>
+        <view class="fix">
+            <view>{{item.title}}</view>
+            <view class="tag">{{item.tag}}</view>
+        </view>
+        <view class="content">
+            <view class="price">¥{{item.price}}/¥{{item.discount_price}}</view>
+            <view class="btn">立即购买</view>
+        </view>
+    </view>
+</view>
