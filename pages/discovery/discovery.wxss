@@ -311,11 +311,15 @@
 .course-item-more-btn {
   width: 690rpx;
   height: 88rpx;
-  font: 500 40rpx/88rpx PingFangSC;
-  color: white;
-  background: #CC0000;
+  font: 500 36rpx/88rpx PingFangSC;
   text-align: center;
   border-radius: 999rpx;
+  box-sizing: border-box;
+  color: black;
+  background: white;
+  border: 1rpx solid #ccc;
+  /*color: white;*/
+  /*background: #CC0000;*/
 }
 .course-item-more-btn.course-tab {
   margin-bottom: 80rpx;

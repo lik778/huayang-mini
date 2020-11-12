@@ -104,7 +104,7 @@
                     </view>
                 </view>
             </view>
-            <view class="course-item-more-btn" bindtap="toVideoList" data-item="{{recommendCourseItem}}">查看更多学院课程</view>
+            <view class="course-item-more-btn" bindtap="toVideoList" data-item="{{recommendCourseItem}}">查看更多学院课程 ›</view>
         </block>
 
         <!-- 往期直播 -->
@@ -227,7 +227,7 @@
                     </view>
                 </view>
             </view>
-            <view class="course-item-more-btn course-tab" bindtap="toVideoList" data-item="{{recommendCourseItem}}">查看更多学院课程</view>
+            <view class="course-item-more-btn course-tab" bindtap="toVideoList" data-item="{{recommendCourseItem}}">查看更多学院课程 ›</view>
         </block>
     </view>
 
