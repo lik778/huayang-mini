@@ -59,20 +59,20 @@ Page({
         bottomLock = false
       }
       let handledList = list.map((res) => {
-        res.price = (res.price / 100).toFixed(2)
+        res.price = (res.price / 100) // .toFixed(2)
         if (res.discount_price === -1 && res.price > 0) {
           // 原价出售
           // 是否有营销活动
           if (+res.invite_open === 1) {
-            res.fission_price = (+res.price * res.invite_discount / 10000).toFixed(2)
+            res.fission_price = (+res.price * res.invite_discount / 10000) // .toFixed(2)
           }
         }
         else if (res.discount_price >= 0 && res.price > 0) {
           // 收费但有折扣
-          res.discount_price = (res.discount_price / 100).toFixed(2)
+          res.discount_price = (res.discount_price / 100) // .toFixed(2)
           // 是否有营销活动
           if (+res.invite_open === 1) {
-            res.fission_price = (+res.discount_price * res.invite_discount / 10000).toFixed(2)
+            res.fission_price = (+res.discount_price * res.invite_discount / 10000) // .toFixed(2)
           }
         } else if (+res.discount_price === -1 && +res.price === 0) {
           res.discount_price = 0

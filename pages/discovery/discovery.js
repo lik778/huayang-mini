@@ -143,7 +143,7 @@ Page({
 
 		bxPoint("discovery_tab", {tabName: name}, false)
 
-		if (this.data.scrollTop >= 190) {
+		if (this.data.scrollTop >= this.data.tabsDomOffsetTopNo) {
 			let scrollTop = this.data.tabsDomOffsetTopNo
 			wx.pageScrollTo({
 				duration: 0,
@@ -307,19 +307,19 @@ Page({
 						})
 					}
 					let handledList = data.map((res) => {
-						res.price = (res.price / 100).toFixed(2)
+						res.price = (res.price / 100) // .toFixed(2)
 						if (res.discount_price === -1 && res.price > 0) {
 							// 原价出售
 							// 是否有营销活动
 							if (+res.invite_open === 1) {
-								res.fission_price = (+res.price * res.invite_discount / 10000).toFixed(2)
+								res.fission_price = (+res.price * res.invite_discount / 10000) // .toFixed(2)
 							}
 						} else if (res.discount_price >= 0 && res.price > 0) {
 							// 收费但有折扣
-							res.discount_price = (res.discount_price / 100).toFixed(2)
+							res.discount_price = (res.discount_price / 100) // .toFixed(2)
 							// 是否有营销活动
 							if (+res.invite_open === 1) {
-								res.fission_price = (+res.discount_price * res.invite_discount / 10000).toFixed(2)
+								res.fission_price = (+res.discount_price * res.invite_discount / 10000) // .toFixed(2)
 							}
 						} else if (+res.discount_price === -1 && +res.price === 0) {
 							res.discount_price = 0
@@ -423,8 +423,8 @@ Page({
 				})
 
 				// 处理训练营价格单位
-				item.price = (item.price / 100).toFixed(2)
-				item.discount_price = (item.discount_price / 100).toFixed(2)
+				item.price = (item.price / 100) // .toFixed(2)
+				item.discount_price = (item.discount_price / 100) // .toFixed(2)
 
 				// 计算下次开营时间
 				item.next_bootcamp_start_date = "即将开营"
@@ -562,13 +562,11 @@ Page({
 		this.checkUserGuide()
 		// 处理ios
 		this.checkIos()
-		console.log("onLoad");
 	},
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
-		console.log("onReady");
 		// 计算tab偏移位置
 		this.initTabOffset()
 	},

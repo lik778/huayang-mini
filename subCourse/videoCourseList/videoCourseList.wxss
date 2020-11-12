@@ -40,7 +40,7 @@
 /* 视频课程列表 */
 .list-main {
   margin: 0 auto;
-  padding-top: 130rpx;
+  padding: 130rpx 0 50rpx;
   width: calc(100% - 60rpx);
 }
 

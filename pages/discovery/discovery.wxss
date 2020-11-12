@@ -1,6 +1,5 @@
 @import "../../assets/css/common.wxss";
 .discovery {
-  position: relative;
   background: #fff;
 }
 
@@ -50,7 +49,7 @@
 }
 
 .tab-pane {
-  padding: 32rpx 30rpx 200rpx;
+  padding: 32rpx 30rpx 240rpx;
   background: #fff;
 }
 

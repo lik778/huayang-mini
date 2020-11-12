@@ -26,7 +26,7 @@
                             </text>
                             <text class="price-two" style="text-decoration: {{item.didBought?'none':'line-through'}};">
                                 <text wx:if="{{item.didBought}}">去学习</text>
-                                <text wx:else>¥{{item.price}}</text>
+                                <text wx:else>{{item.price>0?"¥"+item.price:""}}</text>
                             </text>
                         </block>
                     </view>

@@ -1,9 +1,9 @@
 <!--发现主页-->
 <view class="discovery" bindtouchmove="touchMove" style="visibility: {{canShow?'visible':'hidden'}};">
-    <cover-view class="tabs tabs-fixed" wx:if="{{didFixedTab}}">
-        <cover-view class="tab {{tabIndex===item.id ? 'tab-active' : ''}} tab-ep" wx:for="{{tabs}}" wx:key="{{item.id}}" data-item="{{item}}" bindtap="handleTab">{{item.name}}</cover-view>
-        <cover-view class="tab-underline" style="left: {{tabsOffsetLeftAry[tabIndex]}}px;"></cover-view>
-    </cover-view>
+    <view class="tabs tabs-fixed" wx:if="{{didFixedTab}}">
+        <view class="tab {{tabIndex===item.id ? 'tab-active' : ''}} tab-ep" wx:for="{{tabs}}" wx:key="{{item.id}}" data-item="{{item}}" bindtap="handleTab">{{item.name}}</view>
+        <view class="tab-underline" style="left: {{tabsOffsetLeftAry[tabIndex]}}px;"></view>
+    </view>
     <!--  推广位 -->
     <view class="promotion">
         <!-- banner 滚动区域 -->
@@ -95,7 +95,7 @@
                                 </text>
                                 <text class="price-two" style="text-decoration: {{item.didBought?'none':'line-through'}};">
                                     <text wx:if="{{item.didBought}}">去学习</text>
-                                    <text wx:else>¥{{item.price}}</text>
+                                    <text wx:else>{{item.price>0?"¥"+item.price:""}}</text>
                                 </text>
                             </block>
                         </view>
@@ -213,7 +213,7 @@
                                 </text>
                                 <text class="price-two" style="text-decoration: {{item.didBought?'none':'line-through'}};">
                                     <text wx:if="{{item.didBought}}">去学习</text>
-                                    <text wx:else>¥{{item.price}}</text>
+                                    <text wx:else>{{item.price>0?"¥"+item.price:""}}</text>
                                 </text>
                             </block>
                         </view>
