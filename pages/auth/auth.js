@@ -4,7 +4,6 @@ import { bindUserInfo, bindWxPhoneNumber, checkFocusLogin, getWxInfo } from "../
 import { $notNull, getLocalStorage, hasUserInfo, setLocalStorage } from "../../utils/util"
 import { APP_LET_ID } from "../../lib/config"
 import { wxLoginPromise } from "../../utils/auth"
-import { checkUserDidNeedCoopen } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -130,22 +129,6 @@ Page({
 					}
 					return
 				}
-
-				// 判断用户是否需要引导加课程
-				checkUserDidNeedCoopen({
-					user_id: originAccountInfo.id
-				}).then((data) => {
-					// 1=>需要引导，2=>不需要引导
-					if (+data === 1) {
-						wx.navigateTo({
-							url: "/pages/coopen/coopen?invite_user_id=" + this.data.invite_user_id
-						})
-					} else {
-						wx.switchTab({
-							url: "/pages/practice/practice"
-						})
-					}
-				})
 			}
 		} else {
 			bxPoint("applets_auth_status", {auth_type: "phone", auth_result: "fail"}, false)

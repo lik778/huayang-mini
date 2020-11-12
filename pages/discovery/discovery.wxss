@@ -39,17 +39,18 @@
   width: 44px;
   border-radius: 999rpx;
   background: #CC0000;
-  /*transition: left ease 300ms;*/
+  /*transition: all ease 200ms;*/
 }
 
 .tab-active {
-  /*font: 500 52rpx/74rpx PingFangSC;*/
+  position: relative;
+  font: 500 52rpx/74rpx PingFangSC;
   color: #CC0000;
 }
 
 .tab-pane {
   padding: 32rpx 30rpx 200rpx;
-  background: #F9F9F9;
+  background: #fff;
 }
 
 /* banner */
@@ -234,6 +235,9 @@
   font: 500 52rpx/52rpx PingFangSC;
   margin: 80rpx 0 40rpx;
 }
+.course-layout.course-tab {
+  margin: 0 0 40rpx;
+}
 .course-item {
   display: flex;
   align-items: center;
@@ -300,6 +304,9 @@
   text-align: center;
   border-radius: 999rpx;
 }
+.course-item-more-btn.course-tab {
+  margin-bottom: 80rpx;
+}
 .course-item-more-btn:active {
   opacity: 0.8;
 }
@@ -331,7 +338,7 @@
 }
 .fixText {
   position: absolute;
-  top: 186rpx;
+  top: 180rpx;
   left: 30rpx;
   width: 630rpx;
   color: white;
@@ -339,10 +346,10 @@
 }
 .bootcamp-title {
   font: 600 44rpx/60rpx PingFangSC;
-  margin-top: 10rpx;
 }
 .bootcamp-summary {
-  font: 32rpx/44rpx PingFangSC;
+  margin-top: 12rpx;
+  font: 32rpx/32rpx PingFangSC;
 }
 .bootcamp-content {
   position: absolute;
@@ -358,7 +365,7 @@
   display: flex;
   align-items: center;
   margin-right: 30rpx;
-  font: 24rpx/34rpx PingFangSC;
+  font: 24rpx/40rpx PingFangSC;
   color: #666666;
 }
 .feature-icon {

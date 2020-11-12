@@ -33,6 +33,7 @@ Page({
     isPromoter: false //是否是分销人
   },
   toBootcampDetailPage() {
+    bxPoint("camp_join", {}, false)
     wx.navigateTo({url: `/subCourse/campDetail/campDetail?id=${this.data.campId}&share=true`})
   },
   // 打点

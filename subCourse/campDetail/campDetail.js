@@ -1,29 +1,24 @@
 // subCourse/trainingCampDetail/trainingCampDetail.js
 import {
-  getArticileLink,
-  getCampDetail,
-  getCourseData,
-  getCurentDayData,
-  getFindBanner,
-  getHasJoinCamp,
-  getWxRoomData
+	getArticileLink,
+	getCampDetail,
+	getCourseData,
+	getCurentDayData,
+	getFindBanner,
+	getHasJoinCamp,
+	getWxRoomData
 } from "../../api/course/index"
+import { getProductInfo, getYouZanAppId } from "../../api/mall/index"
 import {
-  getProductInfo,
-  getYouZanAppId
-} from "../../api/mall/index"
-import {
-  computeDate,
-  dateAddDays,
-  getLocalStorage,
-  getNowDate,
-  setLocalStorage,
-  simpleDurationSimple
+	computeDate,
+	dateAddDays,
+	getLocalStorage,
+	getNowDate,
+	setLocalStorage,
+	simpleDurationSimple
 } from "../../utils/util"
 import bxPoint from '../../utils/bxPoint'
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { GLOBAL_KEY } from "../../lib/config"
 
 Page({
 
@@ -489,12 +484,9 @@ Page({
   onShow: function () {
     bxPoint('camp_calendar', {
       from_uid: getApp().globalData.super_user_id,
+      bootcampId: this.data.campId
     })
-    let height = parseInt(
-      ((JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth - 114) /
-        16) *
-      9
-    )
+    let height = parseInt(((JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth - 114) / 16) * 9)
     this.setData({
       statusBarHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
       videoHeight: height,
