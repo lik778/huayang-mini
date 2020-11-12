@@ -28,23 +28,24 @@
 }
 
 .tab {
+  height: 100rpx;
   margin-right: 60rpx;
-  font: 500 44rpx/60rpx PingFangSC;
+  font: 500 44rpx/100rpx PingFangSC;
 }
 
 .tab-underline {
   position: absolute;
-  bottom: 0;
+  bottom: 12rpx;
   height: 8rpx;
   width: 44px;
   border-radius: 999rpx;
   background: #CC0000;
-  /*transition: all ease 200ms;*/
+  /*transition: left ease-in 300ms;*/
 }
 
 .tab-active {
   position: relative;
-  font: 500 52rpx/74rpx PingFangSC;
+  /*font: 500 52rpx/74rpx PingFangSC;*/
   color: #CC0000;
 }
 
@@ -279,7 +280,7 @@
 }
 .price-one {
   margin-right: 20rpx;
-  font: 500 32rpx/44rpx PingFangSC;
+  font: 32rpx/44rpx PingFangSC;
   color: #CC0000;
 }
 
@@ -290,8 +291,8 @@
 }
 
 .price-three {
-  margin-left: 20rpx;
-  font: 500 32rpx/32rpx PingFangSC;
+  margin-right: 20rpx;
+  font: 32rpx/32rpx PingFangSC;
   color: #CC0000;
 }
 
@@ -314,7 +315,7 @@
 /*主题营*/
 .card {
   position: relative;
-  height: 570rpx;
+  height: 560rpx;
 }
 .bootcampCardItem {
   overflow: hidden;
@@ -338,7 +339,7 @@
 }
 .fixText {
   position: absolute;
-  top: 180rpx;
+  top: 186rpx;
   left: 30rpx;
   width: 630rpx;
   color: white;
@@ -348,7 +349,7 @@
   font: 600 44rpx/60rpx PingFangSC;
 }
 .bootcamp-summary {
-  margin-top: 12rpx;
+  margin-top: 14rpx;
   font: 32rpx/32rpx PingFangSC;
 }
 .bootcamp-content {
@@ -365,8 +366,11 @@
   display: flex;
   align-items: center;
   margin-right: 30rpx;
-  font: 24rpx/40rpx PingFangSC;
   color: #666666;
+}
+.feature-tag > text {
+  height: 40rpx;
+  font: 24rpx/44rpx PingFangSC;
 }
 .feature-icon {
   margin-right: 6rpx;
@@ -387,7 +391,7 @@
 .bootcamp-operate-price {
 }
 .bootcamp-operate-discount-price {
-  margin-right: 12rpx;
+  margin-right: 20rpx;
   font: 500 44rpx/60rpx PingFangSC;
   color: #CC0000;
 }

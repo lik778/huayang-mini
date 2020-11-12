@@ -16,8 +16,8 @@
                 <view class="course-operate">
                     <view class="price limit-one-line" wx:if="{{showMoney}}">
                         <block wx:if="{{item.tipsText}}">
-                            <text class="price-two">¥{{item.price}}</text>
                             <text class="price-three">{{item.tipsText}}</text>
+                            <text class="price-two">¥{{item.price}}</text>
                         </block>
                         <block wx:else>
                             <text class="price-one">

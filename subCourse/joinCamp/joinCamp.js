@@ -292,7 +292,6 @@ Page({
       promote_uid = "",
       share
     } = options
-    console.log(promote_uid, "邀请人id")
     // 设置邀请人id
     if (promote_uid !== '') {
       this.setData({

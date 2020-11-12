@@ -475,28 +475,38 @@ Page({
 	},
 	// 检查用户是否引导
 	checkUserGuide() {
-		if (getApp().globalData.firstViewPage) return
-		if (getApp().globalData.didVisibleCooPenPage) return
+		if (getApp().globalData.firstViewPage) {
+			this._toggleView(100)
+			return
+		}
+		if (getApp().globalData.didVisibleCooPenPage) {
+			this._toggleView(100)
+			return
+		}
 
-		getFindBanner({scene: 16}).then((data) => {
-			if (data.length > 0) {
-				wx.navigateTo({
-					url: "/pages/coopen/coopen",
-					success(res) {
-						getApp().globalData.didVisibleCooPenPage = true
-					}
-				})
-			}
-			let t = setTimeout(() => {
-				this.setData({canShow: true})
-				clearTimeout(t)
-			}, 300)
-		}).catch(() => {
-			let t = setTimeout(() => {
-				this.setData({canShow: true})
-				clearTimeout(t)
-			}, 300)
-		})
+		try {
+			getFindBanner({scene: 16}).then((data) => {
+				if (data.length > 0) {
+					wx.navigateTo({
+						url: "/pages/coopen/coopen",
+						success(res) {
+							getApp().globalData.didVisibleCooPenPage = true
+						}
+					})
+				}
+				this._toggleView()
+			}).catch(() => {
+				this._toggleView()
+			})
+		} catch (e) {
+			this._toggleView()
+		}
+	},
+	_toggleView(timeNo = 300) {
+		let t = setTimeout(() => {
+			this.setData({canShow: true})
+			clearTimeout(t)
+		}, timeNo)
 	},
 	// 检查ios环境
 	checkIos() {
@@ -552,11 +562,13 @@ Page({
 		this.checkUserGuide()
 		// 处理ios
 		this.checkIos()
+		console.log("onLoad");
 	},
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
+		console.log("onReady");
 		// 计算tab偏移位置
 		this.initTabOffset()
 	},
