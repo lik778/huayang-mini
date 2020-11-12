@@ -73,12 +73,12 @@
 
     <!--  兜底  -->
     <view class="no-camp" wx:if="{{didShowNoDataLayout && resultData.length === 0}}">
-        <image class="empty-image" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604374394mmtUvd.jpg" mode="aspectFit"></image>
+        <image class="empty-image" src="{{didSignIn?'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604374394mmtUvd.jpg':'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1605161111pOWrOX.jpg'}}" mode="aspectFit"></image>
         <view class="empty-text">
-            <text>您还未学习</text>
-            <text>快去挑选课程吧!</text>
+            <text>{{didSignIn?"您还未学习":"您还未登录"}}</text>
+            <text>{{didSignIn?"快去挑选课程吧!":"点击下方按钮登录吧！"}}</text>
         </view>
-        <text class="find-camp-btn" bind:tap="goToDiscovery">挑选课程</text>
+        <text class="find-camp-btn" bind:tap="goToDiscovery">{{didSignIn ? "挑选课程" : "授权登录"}}</text>
     </view>
 
     <!--  提示  -->

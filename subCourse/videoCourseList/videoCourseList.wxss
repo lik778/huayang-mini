@@ -4,18 +4,15 @@
   display: flex;
   align-items: center;
   position: fixed;
-  background: #fff;
   width: calc(100% - 80rpx);
   padding: 32rpx 50rpx 10rpx 30rpx;
+  background: #fff;
 }
 
 .main-title-item {
-  font-size: 44rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: rgba(0, 0, 0, 1);
-  line-height: 60rpx;
   margin-right: 60rpx;
+  font: 500 44rpx/60rpx PingFangSC;
+  color: rgba(0, 0, 0, 1);
 }
 
 .main-title-item:last-child {
@@ -23,13 +20,9 @@
 }
 
 .active {
-  font-size: 44rpx;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 600;
-  color: rgba(0, 0, 0, 1);
-  line-height: 60rpx;
   position: relative;
-
+  font: 500 44rpx/60rpx PingFangSC;
+  color: #CC0000;
 }
 
 .active::after {
@@ -47,7 +40,7 @@
 /* 视频课程列表 */
 .list-main {
   margin: 0 auto;
-  padding-top: 116rpx;
+  padding: 130rpx 0 50rpx;
   width: calc(100% - 60rpx);
 }
 
@@ -64,27 +57,20 @@
 }
 
 .list-none-text {
-  font-size: 36rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: rgba(0, 0, 0, 0.4);
-  line-height: 36rpx;
+  font: 36rpx/36rpx PingFangSC;
   padding-left: 24rpx;
+  color: rgba(0, 0, 0, 0.4);
 }
-
 
 .course-item {
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  padding: 30rpx 0;
-  border-bottom: 2rpx solid #F2F2F2;
+  margin-bottom: 30rpx;
 }
-
 .course-item:active {
   opacity: 0.9;
 }
-
 .course-image {
   width: 220rpx;
   height: 220rpx;
@@ -92,7 +78,6 @@
   border-radius: 8rpx;
   margin-right: 24rpx;
 }
-
 .course-info {
   width: 446rpx;
   height: 220rpx;
@@ -100,40 +85,36 @@
   flex-direction: column;
   justify-content: space-between;
 }
-
 .course-title {
   font: 32rpx/44rpx PingFangSC;
+  color: #000;
 }
-
-.course-tag {}
-
-.course-tag>text {
-  box-sizing: border-box;
-  padding: 10rpx 20rpx;
-  border-radius: 24rpx 2rpx 24rpx 2rpx;
-  font: 28rpx/28rpx PingFangSC;
-  background: #CAE8D4;
-  color: #0C5244;
+.course-operate {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-
-.course-tag>text.fitness {
-  background: #F5CDC0;
-  color: #722911;
+.course-visit-count {
+  font: 28rpx/40rpx PingFangSC;
+  color: #666;
 }
-
-.course-tag>text.fashion {
-  background: #F0E5D4;
-  color: #69440D;
-}
-
 .price {
   font: 32rpx/44rpx PingFangSC;
 }
-
-.free {
+.price-one {
   margin-right: 20rpx;
-  text-decoration: line-through;
-  color: rgba(0, 0, 0, 0.5)
+  font: 32rpx/44rpx PingFangSC;
+  color: #CC0000;
 }
 
-.free-txt {}
+.price-two {
+  font: 28rpx/40rpx PingFangSC;
+  color: #666;
+  text-decoration: line-through;
+}
+
+.price-three {
+  margin-right: 20rpx;
+  font: 32rpx/32rpx PingFangSC;
+  color: #CC0000;
+}

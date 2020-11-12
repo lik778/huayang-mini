@@ -8,7 +8,7 @@
 		<image src="{{item}}" wx:for="{{campDetailData.desc}}" mode="widthFix" wx:key="index"></image>
 	</view>
 	<!-- 按钮区域6种状态 -->
-	<view class="button">
+	<view class="button {{adapter ? 'adapter' : ''}}">
 		<view class="button-one button-style-one" wx:if="{{buttonType===1}}">
 			<!-- 没有开营日期 -->
 			即将开营
@@ -40,11 +40,14 @@
 		<view class="button-four button-style-two subject-bg-color" wx:if="{{buttonType===8}}" bindtap="openToast">
 			立即加入
 		</view>
+		<!-- 已购买，继续学习 -->
+		<view class="button-four button-style-two subject-bg-color" wx:if="{{buttonType===10}}" bindtap="toBootcampDetailPage">
+			继续学习
+		</view>
 	</view>
 	<!-- 授权弹窗 -->
 	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
 	</authModule>
-	<!-- 规则弹窗 -->
 	<!-- 分销按钮 -->
 	<view class="share-friend" bindtap="shareNow"
 		wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&showPromotion&&campDetailData.sharePrice!==''}}">

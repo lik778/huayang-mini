@@ -1,7 +1,8 @@
 // subCourse/videoCourseList/videoCourseList.js
-import { getVideoCourseList, getVideoTypeList } from "../../api/course/index"
+import { getVideoTypeList, queryVideoCourseListByBuyTag } from "../../api/course/index"
 import { checkFocusLogin } from "../../api/auth/index"
-import { Version } from "../../lib/config"
+import { GLOBAL_KEY, Version } from "../../lib/config"
+import { getLocalStorage } from "../../utils/util"
 
 Page({
 
@@ -10,7 +11,7 @@ Page({
    */
   data: {
     titleList: [],
-    curentIndex: 0,
+    currentIndex: 0,
     showMoney: true,
     keyArr: [],
     bottomLock: true,
@@ -35,30 +36,43 @@ Page({
     } else {
       category = this.data.keyArr[index - 1]
     }
-    getVideoCourseList({
+    let params = {
       offset: this.data.pageSize.offset,
       limit: this.data.pageSize.limit,
       category: category
-    }).then(list => {
+    }
+    if (getLocalStorage(GLOBAL_KEY.userId)) {
+      params.user_id = getLocalStorage(GLOBAL_KEY.userId)
+    }
+    queryVideoCourseListByBuyTag(params).then(list => {
+      if (getLocalStorage(GLOBAL_KEY.userId)) {
+        list = list.map(_ => {
+          return {
+            ..._.kecheng_series,
+            didBought: _.buy_tag === "已购",
+            buy_tag: _.buy_tag
+          }
+        })
+      }
       let bottomLock = true
       if (list.length < 10) {
         bottomLock = false
       }
       let handledList = list.map((res) => {
-        res.price = (res.price / 100).toFixed(2)
+        res.price = (res.price / 100) // .toFixed(2)
         if (res.discount_price === -1 && res.price > 0) {
           // 原价出售
           // 是否有营销活动
           if (+res.invite_open === 1) {
-            res.fission_price = (+res.price * res.invite_discount / 10000).toFixed(2)
+            res.fission_price = (+res.price * res.invite_discount / 10000) // .toFixed(2)
           }
         }
         else if (res.discount_price >= 0 && res.price > 0) {
           // 收费但有折扣
-          res.discount_price = (res.discount_price / 100).toFixed(2)
+          res.discount_price = (res.discount_price / 100) // .toFixed(2)
           // 是否有营销活动
           if (+res.invite_open === 1) {
-            res.fission_price = (+res.discount_price * res.invite_discount / 10000).toFixed(2)
+            res.fission_price = (+res.discount_price * res.invite_discount / 10000) // .toFixed(2)
           }
         } else if (+res.discount_price === -1 && +res.price === 0) {
           res.discount_price = 0
@@ -67,8 +81,6 @@ Page({
         // 只显示开启营销活动的数据
         if (+res.invite_open === 1) {
           res.tipsText = res.fission_price == 0 ? "邀请好友助力免费学" : `邀请好友助力${(res.invite_discount / 10)}折购`
-        } else {
-          res.tipsText = `${res.discount_price == 0 ? "免费" : "¥" + Number(res.discount_price).toFixed(2)}`
         }
 
         return res
@@ -115,7 +127,7 @@ Page({
         index = e
       }
       this.setData({
-        curentIndex: index
+        currentIndex: index
       })
     } else {
       index = 0
@@ -158,9 +170,14 @@ Page({
     let index = options.index ? parseInt(options.index) : ""
     if (options.index) {
       this.setData({
-        curentIndex: index
+        currentIndex: index
       })
     }
+
+    if (options.invite_user_id) {
+      getApp().globalData.super_user_id = options.invite_user_id
+    }
+
     this.getTabList(index)
     // ios规则适配
     this.checkIos()
@@ -212,7 +229,7 @@ Page({
           limit: this.data.pageSize.limit
         }
       })
-      this.getVideoList(this.data.curentIndex, false)
+      this.getVideoList(this.data.currentIndex, false)
     }
   },
 
@@ -220,6 +237,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "这里有好多好课，快来一起变美，变自信",
+      path: `/subCourse/videoCourseList/videoCourseList?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
+    }
   }
 })

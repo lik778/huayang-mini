@@ -1,31 +1,4 @@
-<view class="coopen" wx:if="{{visible}}">
-    <view class="page-01" wx:if="{{!didSkip}}" style="padding-top:{{statusHeight+44}}px;">
-        <view class="prospect">
-            <text class="move-animate delay1">朋友您好，很高兴与您相遇</text>
-            <text class="move-animate delay2">我们是花样百姓</text>
-            <text class="move-animate delay3">我们致力于提升50+身心幸福指数</text>
-            <text class="move-animate delay4">我们为您精心挑选了这些课程</text>
-        </view>
-        <view class="skip" bind:tap="skip">跳过</view>
-    </view>
-
-<!--    <view class="page-02 move-animate {{didSkip ? '' : 'delay5'}}" style="padding-top:{{statusHeight+44}}px;">-->
-<!--        <view class="page-02-title">为您精心挑选了这些课程</view>-->
-<!--        <view class="recommend-course-list">-->
-<!--            <block wx:for="{{recommendCourseList}}" wx:key="index">-->
-<!--                <view class="course-item" style="background-image:url('{{item.cover_pic}}')" bindtap="handleTap" data-index="{{index}}">-->
-<!--                    <view class="course-name limit-one-line">{{item.name}}</view>-->
-<!--                    <view class="course-info">-->
-<!--                        <text>{{CourseLevels[item.level]}}</text>-->
-<!--                        <text>{{item.duration}}分钟</text>-->
-<!--                        <text>{{item.meta_count}}个动作</text>-->
-<!--                        <text>共{{item.visit_count}}人练习</text>-->
-<!--                        <view class="course-select" style="display: {{item.selected === 1 ? '': 'none'}};"><image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596179431bqvvWB.jpg"></image></view>-->
-<!--                    </view>-->
-<!--                </view>-->
-<!--            </block>-->
-<!--        </view>-->
-<!--        <view class="btn subject-bg-color" bind:tap="joinCourse">加入课程</view>-->
-<!--        <view class="more" bind:tap="moreCourse">查看更多课程</view>-->
-<!--    </view>-->
+<view class="coopen">
+    <image class="full-screen-image" mode="aspectFill" src="{{cover}}" bindtap="handleAd"></image>
+    <view class="skip" bindtap="skip">跳过 {{countdownNo}}</view>
 </view>
