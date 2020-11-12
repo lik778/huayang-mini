@@ -1,9 +1,9 @@
 <!--发现主页-->
 <view class="discovery" bindtouchmove="touchMove" style="visibility: {{canShow?'visible':'hidden'}};">
-    <view class="tabs tabs-fixed" wx:if="{{didFixedTab}}">
-        <view class="tab {{tabIndex===item.id ? 'tab-active' : ''}} tab-ep" wx:for="{{tabs}}" wx:key="{{item.id}}" data-item="{{item}}" bindtap="handleTab">{{item.name}}</view>
-        <view class="tab-underline" style="left: {{tabsOffsetLeftAry[tabIndex]}}px;"></view>
-    </view>
+    <cover-view class="tabs tabs-fixed" wx:if="{{didFixedTab}}">
+        <cover-view class="tab {{tabIndex===item.id ? 'tab-active' : ''}} tab-ep" wx:for="{{tabs}}" wx:key="{{item.id}}" data-item="{{item}}" bindtap="handleTab">{{item.name}}</cover-view>
+        <cover-view class="tab-underline" style="left: {{tabsOffsetLeftAry[tabIndex]}}px;"></cover-view>
+    </cover-view>
     <!--  推广位 -->
     <view class="promotion">
         <!-- banner 滚动区域 -->
@@ -66,8 +66,10 @@
                 <view class="bootcamp-next-date">{{item.next_bootcamp_start_date === "即将开营" ? "即将开营" : "下一期开营时间：" + item.next_bootcamp_start_date}}</view>
                 <view class="bootcamp-operate">
                     <view class="bootcamp-operate-price">
-                        <text class="bootcamp-operate-discount-price">¥{{item.discount_price}}</text><text
-                            class="bootcamp-operate-sub-price">¥{{item.price}}</text>
+                        <block wx:if="{{showMoney}}">
+                            <text class="bootcamp-operate-discount-price">¥{{item.discount_price}}</text><text
+                                class="bootcamp-operate-sub-price">¥{{item.price}}</text>
+                        </block>
                     </view>
                     <view class="bootcamp-operate-btn">立即参加</view>
                 </view>
@@ -82,8 +84,8 @@
                 <view class="course-info">
                     <text class="course-title limit-two-line">{{item.name}}</text>
                     <view class="course-visit-count">共{{item.visit_count}}人学习</view>
-                    <view class="course-operate">
-                        <view class="price limit-one-line" wx:if="{{showMoney}}">
+                    <view class="course-operate" wx:if="{{showMoney}}">
+                        <view class="price limit-one-line">
                             <block wx:if="{{item.tipsText}}">
                                 <text class="price-three">{{item.tipsText}}</text>
                                 <text class="price-two">¥{{item.price}}</text>
@@ -110,6 +112,9 @@
             <view class="live-title-left">往期直播</view>
             <view class="live-title-right">{{liveNum}}+直播课程 ›</view>
         </view>
+
+        <!-- 分隔 -->
+        <view class="separate-line"></view>
 
         <!-- 大赛&活动 -->
         <view class="other-activity" wx:if="{{showModelBanner}}">
@@ -183,8 +188,10 @@
                 <view class="bootcamp-next-date">{{item.next_bootcamp_start_date === "即将开营" ? "即将开营" : "下一期开营时间：" + item.next_bootcamp_start_date}}</view>
                 <view class="bootcamp-operate">
                     <view class="bootcamp-operate-price">
-                        <text class="bootcamp-operate-discount-price">¥{{item.discount_price}}</text><text
-                            class="bootcamp-operate-sub-price">¥{{item.price}}</text>
+                        <block wx:if="{{showMoney}}">
+                            <text class="bootcamp-operate-discount-price">¥{{item.discount_price}}</text><text
+                                class="bootcamp-operate-sub-price">¥{{item.price}}</text>
+                        </block>
                     </view>
                     <view class="bootcamp-operate-btn">立即参加</view>
                 </view>
@@ -200,8 +207,8 @@
                 <view class="course-info">
                     <text class="course-title limit-two-line">{{item.name}}</text>
                     <view class="course-visit-count">共{{item.visit_count}}人学习</view>
-                    <view class="course-operate">
-                        <view class="price limit-one-line" wx:if="{{showMoney}}">
+                    <view class="course-operate" wx:if="{{showMoney}}">
+                        <view class="price limit-one-line">
                             <block wx:if="{{item.tipsText}}">
                                 <text class="price-three">{{item.tipsText}}</text>
                                 <text class="price-two">¥{{item.price}}</text>

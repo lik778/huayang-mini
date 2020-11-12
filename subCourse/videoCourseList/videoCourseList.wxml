@@ -13,8 +13,8 @@
             <view class="course-info">
                 <text class="course-title limit-two-line">{{item.name}}</text>
                 <view class="course-visit-count">共{{item.visit_count}}人学习</view>
-                <view class="course-operate">
-                    <view class="price limit-one-line" wx:if="{{showMoney}}">
+                <view class="course-operate" wx:if="{{showMoney}}">
+                    <view class="price limit-one-line">
                         <block wx:if="{{item.tipsText}}">
                             <text class="price-three">{{item.tipsText}}</text>
                             <text class="price-two">¥{{item.price}}</text>

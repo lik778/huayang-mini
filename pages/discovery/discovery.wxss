@@ -1,5 +1,6 @@
 @import "../../assets/css/common.wxss";
 .discovery {
+  padding-top: 16rpx;
   background: #fff;
 }
 
@@ -122,12 +123,24 @@
   padding-top: 100rpx;
 }
 .other-activity {}
-.competition-title,
+
 .activity-title {
   margin: 70rpx 0 20rpx;
   height: 76rpx;
   font: 500 52rpx/76rpx PingFangSC;
   color: rgba(0, 0, 0, 1);
+}
+
+.competition-title {
+  margin: 40rpx 0 20rpx;
+  height: 76rpx;
+  font: 500 52rpx/76rpx PingFangSC;
+  color: rgba(0, 0, 0, 1);
+}
+
+.separate-line {
+  height: 20rpx;
+  background: #F9F9F9;
 }
 
 .competition {
@@ -279,7 +292,7 @@
 }
 .price-one {
   margin-right: 20rpx;
-  font: 32rpx/44rpx PingFangSC;
+  font: 500 32rpx/44rpx PingFangSC;
   color: #CC0000;
 }
 
@@ -291,7 +304,7 @@
 
 .price-three {
   margin-right: 20rpx;
-  font: 32rpx/32rpx PingFangSC;
+  font: 500 32rpx/32rpx PingFangSC;
   color: #CC0000;
 }
 
@@ -379,7 +392,7 @@
 }
 .bootcamp-next-date {
   margin: 20rpx 0 10rpx;
-  font: 28rpx/40rpx PingFangSC;
+  font: 32rpx/40rpx PingFangSC;
   color: #000;
 }
 .bootcamp-operate {

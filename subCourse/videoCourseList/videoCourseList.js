@@ -173,6 +173,11 @@ Page({
         currentIndex: index
       })
     }
+
+    if (options.invite_user_id) {
+      getApp().globalData.super_user_id = options.invite_user_id
+    }
+
     this.getTabList(index)
     // ios规则适配
     this.checkIos()
@@ -232,6 +237,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "这里有好多好课，快来一起变美，变自信",
+      path: `/subCourse/videoCourseList/videoCourseList?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
+    }
   }
 })

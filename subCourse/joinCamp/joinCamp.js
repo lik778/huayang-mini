@@ -30,7 +30,8 @@ Page({
     timeJoin: '',
     promoteUid: "", //分销邀请人id
     backIndex: false,
-    isPromoter: false //是否是分销人
+    isPromoter: false, //是否是分销人
+    adapter: false
   },
   toBootcampDetailPage() {
     bxPoint("camp_join", {}, false)
@@ -344,6 +345,9 @@ Page({
     if (!getApp().globalData.firstViewPage && getCurrentPages().length > 0) {
       getApp().globalData.firstViewPage = getCurrentPages()[0].route
     }
+
+    let systemInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
+    this.setData({adapter: /iphone x/i.test(systemInfo.model) || /iPhone11/i.test(systemInfo.model)})
   },
 
   /**
