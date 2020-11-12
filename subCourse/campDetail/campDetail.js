@@ -6,7 +6,8 @@ import {
   getCurentDayData,
   getFindBanner,
   getHasJoinCamp,
-  getWxRoomData
+  getWxRoomData,
+  studyLogCreate
 } from "../../api/course/index"
 import {
   getProductInfo,
@@ -113,6 +114,15 @@ Page({
   // 跳往课程详情
   toCoursedetail(e) {
     let item = e.currentTarget.dataset.item
+    let params = {
+      user_id: this.data.userInfo.id,
+      traincamp_id: this.data.campId,
+      start_date: this.data.joinDate,
+      date: this.data.showDate,
+    }
+    studyLogCreate(params).then(res => {
+      console.log(res)
+    })
     if (item.type === 'video') {
       // 视频课程
       this.playVideo()

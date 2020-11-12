@@ -21,23 +21,24 @@
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
-    "useMultiFrameRuntime": false,
-    "useApiHook": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
     },
+    "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": true,
     "userConfirmedUseCompilerModuleSwitch": false,
     "packNpmManually": false,
-    "packNpmRelationList": []
+    "packNpmRelationList": [],
+    "useMultiFrameRuntime": false,
+    "useApiHook": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.12.0",
   "appid": "wx85d130227f745fc5",
-  "projectname": "list",
+  "projectname": "%E8%8A%B1%E6%A0%B7%E7%99%BE%E5%A7%93%2B",
   "debugOptions": {
     "hidedInDevtools": []
   },
@@ -253,8 +254,22 @@
           "scene": null
         },
         {
-          "name": "subMall/temporary/temporary",
-          "pathName": "subMall/temporary/temporary",
+          "id": -1,
+          "name": "入学申请",
+          "pathName": "subCourse/applyJoinSchool/applyJoinSchool",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "报道页",
+          "pathName": "subCourse/schoolReport/schoolReport",
+          "query": "stage_id=1&class_num=1",
+          "scene": null
+        },
+        {
+          "name": "报道结果页",
+          "pathName": "subCourse/schoolReportResult/schoolReportResult",
+          "query": "data= {\"name\":\"学员信息录入测试\",\"date\":\"2020-11-12\",\"class_num\":\"1\",\"stageId\":\"1\",\"campId\":40,\"userId\":228}",
           "scene": null
         }
       ]

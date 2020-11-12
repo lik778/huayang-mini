@@ -33,7 +33,8 @@
   "requiredBackgroundModes": [
     "audio"
   ],
-  "subpackages": [{
+  "subpackages": [
+    {
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -83,7 +84,10 @@
         "lotteryWebview/lotteryWebview",
         "campDetail/campDetail",
         "campPeriodList/campPeriodList",
-        "noAuthWebview/noAuthWebview"
+        "noAuthWebview/noAuthWebview",
+        "applyJoinSchool/applyJoinSchool",
+        "schoolReport/schoolReport",
+        "schoolReportResult/schoolReportResult"
       ]
     },
     {
@@ -104,7 +108,8 @@
   },
   "tabBar": {
     "custom": true,
-    "list": [{
+    "list": [
+      {
         "pagePath": "pages/discovery/discovery"
       },
       {
