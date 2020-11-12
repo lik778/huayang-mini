@@ -410,6 +410,16 @@ export function getVideoCourseList(params) {
 		})
 	})
 }
+
+// 获取视频系列课程列表(带已购标签)
+export function queryVideoCourseListByBuyTag(params) {
+	return new Promise(resolve => {
+		request._get(URL.getVideoCourseListByBuyTag, params).then(({data}) => {
+			resolve(data)
+		})
+	})
+}
+
 // 获取视频课程详情
 export function getVideoCourseDetail(params) {
 	return new Promise(resolve => {
@@ -605,4 +615,12 @@ export function getUserPracticeRecentRecord(params) {
  */
 export function updateBootcampStudyTime(params) {
 	return request._post(URL.setBootcampStudyTime, params)
+}
+
+/**
+ * 获取训练营特色标签列表
+ * @returns {Promise<unknown>}
+ */
+export function queryBootcampFeatureList() {
+	return request._get(URL.getBootcampFeatureList)
 }

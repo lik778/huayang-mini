@@ -76,7 +76,7 @@ Page({
 
   // 返回
   back() {
-    wx.switchTab({
+    wx.reLaunch({
       url: '/pages/practice/practice',
     })
   },
