@@ -652,3 +652,8 @@ export const classCheckin = params => {
 export const studyLogCreate = params => {
 	return request._get(URL.studyLogCreate, params)
 }
+
+// 获取学员信息
+export const checkNeedToFillInfo = params => {
+	return request._get(URL.checkNeedToFillInfo, params)
+}

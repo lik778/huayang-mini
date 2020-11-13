@@ -7,6 +7,7 @@ import {
   getFindBanner,
   getHasJoinCamp,
   getWxRoomData,
+  checkNeedToFillInfo,
   studyLogCreate
 } from "../../api/course/index"
 import {
@@ -406,6 +407,23 @@ Page({
     })
   },
 
+  checkNeedFillInfo() {
+    let userId = getLocalStorage(GLOBAL_KEY.userId)
+    return new Promise(resolve => {
+      checkNeedToFillInfo({
+        user_id: userId
+      }).then(res => {
+        if (res.data) {
+          wx.navigateTo({
+            url: '/subCourse/applyJoinSchool/applyJoinSchool',
+          })
+        } else {
+          resolve()
+        }
+      })
+    })
+
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -431,36 +449,40 @@ Page({
       choosedDay,
       fromPage
     })
-    this.getAppId()
-    this.getArticileLinkData()
-    this.getBanner()
-    this.initCoverShow(campId)
-    this.isJoinCamp().then(() => {
-      let whatDay = computeDate(new Date().getTime(), new Date(this.data.joinDate).getTime())
-      if (choosedDay !== undefined && choosedDay !== 0) {
-        let endDate = dateAddDays(this.data.joinDate, (choosedDay - 1) * oneDaySecond, formatType).replace(/-/g, '/')
-        let endDateNum = new Date(endDate).getTime()
-        if (new Date().getTime() < endDateNum) {
-          // 当前查看的日期大于当天日期,锁住
+    // 检查是否需要填写学员信息
+    this.checkNeedFillInfo().then(() => {
+
+      this.getAppId()
+      this.getArticileLinkData()
+      this.getBanner()
+      this.initCoverShow(campId)
+      this.isJoinCamp().then(() => {
+        let whatDay = computeDate(new Date().getTime(), new Date(this.data.joinDate).getTime())
+        if (choosedDay !== undefined && choosedDay !== 0) {
+          let endDate = dateAddDays(this.data.joinDate, (choosedDay - 1) * oneDaySecond, formatType).replace(/-/g, '/')
+          let endDateNum = new Date(endDate).getTime()
+          if (new Date().getTime() < endDateNum) {
+            // 当前查看的日期大于当天日期,锁住
+            this.setData({
+              showLock: true
+            })
+          }
+          this.getNowCourse(choosedDay)
+        } else if (choosedDay !== undefined && choosedDay === 0) {
+          this.getNowCourse(0)
+        } else {
+          this.getNowCourse(whatDay)
+        }
+        let nowDate = new Date().getTime()
+        let startDate = new Date(this.data.joinDate).getTime()
+        if (nowDate < startDate) {
           this.setData({
-            showLock: true
+            choosedDay: choosedDay === undefined ? 0 : choosedDay
           })
         }
-        this.getNowCourse(choosedDay)
-      } else if (choosedDay !== undefined && choosedDay === 0) {
-        this.getNowCourse(0)
-      } else {
-        this.getNowCourse(whatDay)
-      }
-      let nowDate = new Date().getTime()
-      let startDate = new Date(this.data.joinDate).getTime()
-      if (nowDate < startDate) {
         this.setData({
-          choosedDay: choosedDay === undefined ? 0 : choosedDay
+          whatDay
         })
-      }
-      this.setData({
-        whatDay
       })
     })
     // 通过小程序码进入 scene=${source}
