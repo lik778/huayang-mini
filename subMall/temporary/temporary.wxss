@@ -1,7 +1,6 @@
 .temporary {
     box-sizing: border-box;
     padding: 30rpx;
-    height: 100vh;
 }
 .card {
     position: relative;

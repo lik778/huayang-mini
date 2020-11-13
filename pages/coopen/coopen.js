@@ -20,18 +20,29 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		this.setData({
-			statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
-		})
+		this.setData({statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight})
 
 		getFindBanner({scene: 16}).then((bannerList) => {
 			if (bannerList.length > 0) {
 				let {pic_url, link} = bannerList[0]
-				this.setData({cover: pic_url, link})
+				// 适配设备屏幕尺寸
+				let { screenWidth, screenHeight } = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
+				let ratio = (screenWidth / screenHeight).toFixed(2)
+				let size = ((9/16 + 375/812) / 2).toFixed(2)
+				let pics = pic_url.split(",")
+				let cover = ""
+				if (ratio <= size) {
+					// 加载常规图
+					cover = pics[0] || ""
+				} else {
+					// 加载长图
+					cover = pics[1] || pics[0] || ""
+				}
 
+				this.setData({cover, link})
 				this.data.timer = setInterval(() => {
 					if (this.data.countdownNo <= 0) {
-						wx.reLaunch({url: '/pages/discovery/discovery'})
+						wx.navigateBack()
 						clearTimeout(this.data.timer)
 					} else {
 						let no = this.data.countdownNo
@@ -52,7 +63,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		bxPoint("applets_guide", {
+		bxPoint("applets_coopen_guide", {
 			from_uid: getApp().globalData.super_user_id,
 			source: getApp().globalData.source
 		})
@@ -65,7 +76,7 @@ Page({
 
 	},
 
-	/**
+	/**echa
 	 * 生命周期函数--监听页面卸载
 	 */
 	onUnload: function () {
@@ -85,14 +96,22 @@ Page({
 	onReachBottom: function () {
 
 	},
+	handleAd() {
+		bxPoint("applets_coopen_tap_link", {link: this.data.link}, false)
+		clearTimeout(this.data.timer)
+		wx.redirectTo({
+			url: this.data.link,
+			fail() {
+				wx.reLaunch({url: "/pages/discovery/discovery"})
+			}
+		})
+	},
 	/**
 	 * 跳过动画
 	 */
 	skip() {
-		bxPoint("applets_skip", {}, false)
+		bxPoint("applets_coopen_skip", {}, false)
 		clearTimeout(this.data.timer)
-		wx.reLaunch({
-			url: "/pages/discovery/discovery"
-		})
+		wx.navigateBack()
 	}
 })

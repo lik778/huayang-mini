@@ -40,7 +40,7 @@
 /* 视频课程列表 */
 .list-main {
   margin: 0 auto;
-  padding-top: 130rpx;
+  padding: 130rpx 0 50rpx;
   width: calc(100% - 60rpx);
 }
 
@@ -103,7 +103,7 @@
 }
 .price-one {
   margin-right: 20rpx;
-  font: 500 32rpx/44rpx PingFangSC;
+  font: 32rpx/44rpx PingFangSC;
   color: #CC0000;
 }
 
@@ -114,7 +114,7 @@
 }
 
 .price-three {
-  margin-left: 20rpx;
-  font: 500 32rpx/32rpx PingFangSC;
+  margin-right: 20rpx;
+  font: 32rpx/32rpx PingFangSC;
   color: #CC0000;
 }

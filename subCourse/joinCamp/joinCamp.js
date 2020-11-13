@@ -1,10 +1,25 @@
 // 加入训练营
-import { GLOBAL_KEY, Version } from "../../lib/config"
+import {
+  GLOBAL_KEY,
+  Version
+} from "../../lib/config"
 
-import { checkFocusLogin } from "../../api/auth/index"
+import {
+  checkFocusLogin
+} from "../../api/auth/index"
 
-import { getCampDetail, getHasJoinCamp, joinCamp } from "../../api/course/index"
-import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, payCourse } from "../../utils/util"
+import {
+  getCampDetail,
+  getHasJoinCamp,
+  joinCamp
+} from "../../api/course/index"
+import {
+  $notNull,
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  payCourse
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -30,10 +45,22 @@ Page({
     timeJoin: '',
     promoteUid: "", //分销邀请人id
     backIndex: false,
-    isPromoter: false //是否是分销人
+    isPromoter: false, //是否是分销人
+    adapter: false
   },
   toBootcampDetailPage() {
-    wx.navigateTo({url: `/subCourse/campDetail/campDetail?id=${this.data.campId}&share=true`})
+    bxPoint("camp_join", {}, false)
+    wx.navigateTo({
+      url: `/subCourse/campDetail/campDetail?id=${this.data.campId}&share=true`
+    })
+  },
+  // 打点
+  shareNow() {
+    bxPoint("promotion_camp_joinpage", {
+      open_id: getLocalStorage(GLOBAL_KEY.openId),
+      user_id: getLocalStorage(GLOBAL_KEY.userId),
+      isPromoter: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).kecheng_user.is_promoter === 1 ? true : false
+    })
   },
   // 生成当前天的日期
   getCurrentDate(currentDate) {
@@ -48,7 +75,9 @@ Page({
   },
   // 获取训练营详情
   getCampDetail(id) {
-    getCampDetail({traincamp_id: id}).then(res => {
+    getCampDetail({
+      traincamp_id: id
+    }).then(res => {
       let dateList = res.start_date.split(',')
       let startDate = ''
       let pushTime = ''
@@ -83,8 +112,7 @@ Page({
         if (!hasUserInfo() || !hasAccountInfo()) {
           // 没有授权
           buttonType = 7
-        }
-        else {
+        } else {
           // 受过权了
           if (res.price > 0) {
             // 收费
@@ -124,7 +152,9 @@ Page({
             })
           }
         }
-        checkFocusLogin({app_version: Version}).then(async res1 => {
+        checkFocusLogin({
+          app_version: Version
+        }).then(async res1 => {
           let _this = this
           if (res.discount_price > 0 && res.distribution_ratio > 0) {
             res.sharePrice = ((res.discount_price * (res.distribution_ratio / 100)) / 100).toFixed(2)
@@ -133,7 +163,9 @@ Page({
           }
           // 用户已登录，检查用户是否加入过当前训练营
           if (hasUserInfo() && hasAccountInfo()) {
-            let campInfo = await getHasJoinCamp({traincamp_id: id})
+            let campInfo = await getHasJoinCamp({
+              traincamp_id: id
+            })
             if ($notNull(campInfo)) {
               buttonType = 10
             }
@@ -243,7 +275,9 @@ Page({
 
   },
   // 集中处理支付回调
-  backFun({type}) {
+  backFun({
+    type
+  }) {
     if (type === 'fail') {
       this.setData({
         lock: true
@@ -318,7 +352,6 @@ Page({
 
     if (hasUserInfo() && hasAccountInfo()) {
       let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
-      // let isPromoter = userInfo.kecheng_user.is_promoter === 1 ? true : false
       this.setData({
         campId,
         userInfo: userInfo
@@ -336,6 +369,11 @@ Page({
     if (!getApp().globalData.firstViewPage && getCurrentPages().length > 0) {
       getApp().globalData.firstViewPage = getCurrentPages()[0].route
     }
+
+    let systemInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
+    this.setData({
+      adapter: /iphone x/i.test(systemInfo.model) || /iPhone11/i.test(systemInfo.model)
+    })
   },
 
   /**

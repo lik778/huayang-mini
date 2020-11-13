@@ -37,7 +37,8 @@ Page({
 		didShowTipsLay: false, // 显示提示收藏蒙层
 		didNeedScrollTop: false, // 是否需要将页面滑动到顶部
 		didShowAuth: false,
-		didShowNoDataLayout: false
+		didShowNoDataLayout: false,
+		didSignIn: false
 	},
 
 	/**
@@ -63,7 +64,7 @@ Page({
 		}
 
 		// 检查是否需要展示提示层
-		this.checkTipsLay()
+		// this.checkTipsLay()
 
 		// 记录起始页面地址
 		if (!getApp().globalData.firstViewPage && getCurrentPages().length > 0) {
@@ -268,7 +269,6 @@ Page({
 	goToDiscovery() {
 		bxPoint("parctice_choose", {}, false)
 		if (hasUserInfo() && hasAccountInfo()) {
-			setLocalStorage("needToScrollTop", "1")
 			wx.switchTab({url: '/pages/discovery/discovery'})
 		} else {
 			this.setData({didShowAuth: true})
@@ -286,8 +286,8 @@ Page({
 		})
 	},
 	async initial() {
-		if (hasAccountInfo()) {
-			this.setData({didShowNoDataLayout: false})
+		if (hasUserInfo() && hasAccountInfo()) {
+			this.setData({didShowNoDataLayout: false, didSignIn: true})
 			getUserPracticeRecentRecord({user_id: getLocalStorage(GLOBAL_KEY.userId)}).then(async (originData) => {
 				let handledData = []
 				for (let item of originData) {
@@ -412,12 +412,11 @@ Page({
 				// 用户首次授权成功，如果该用户没有任何课程则自动跳转至发现页
 				if (getLocalStorage("hy_dd_auth_done_in_practice") === "yes" && resultData.length === 0) {
 					removeLocalStorage("hy_dd_auth_done_in_practice")
-					setLocalStorage("needToScrollTop", "1")
 					wx.reLaunch({url: '/pages/discovery/discovery'})
 				}
 			})
 		} else {
-			this.setData({didShowNoDataLayout: true})
+			this.setData({didShowNoDataLayout: true, didSignIn: false})
 		}
 	}
 })

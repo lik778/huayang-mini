@@ -499,12 +499,9 @@ Page({
   onShow: function () {
     bxPoint('camp_calendar', {
       from_uid: getApp().globalData.super_user_id,
+      bootcampId: this.data.campId
     })
-    let height = parseInt(
-      ((JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth - 114) /
-        16) *
-      9
-    )
+    let height = parseInt(((JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth - 114) / 16) * 9)
     this.setData({
       statusBarHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
       videoHeight: height,

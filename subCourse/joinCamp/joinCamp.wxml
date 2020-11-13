@@ -8,7 +8,7 @@
 		<image src="{{item}}" wx:for="{{campDetailData.desc}}" mode="widthFix" wx:key="index"></image>
 	</view>
 	<!-- 按钮区域6种状态 -->
-	<view class="button">
+	<view class="button {{adapter ? 'adapter' : ''}}">
 		<view class="button-one button-style-one" wx:if="{{buttonType===1}}">
 			<!-- 没有开营日期 -->
 			即将开营

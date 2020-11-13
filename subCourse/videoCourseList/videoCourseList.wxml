@@ -13,11 +13,11 @@
             <view class="course-info">
                 <text class="course-title limit-two-line">{{item.name}}</text>
                 <view class="course-visit-count">共{{item.visit_count}}人学习</view>
-                <view class="course-operate">
-                    <view class="price limit-one-line" wx:if="{{showMoney}}">
+                <view class="course-operate" wx:if="{{showMoney}}">
+                    <view class="price limit-one-line">
                         <block wx:if="{{item.tipsText}}">
-                            <text class="price-two">¥{{item.price}}</text>
                             <text class="price-three">{{item.tipsText}}</text>
+                            <text class="price-two">¥{{item.price}}</text>
                         </block>
                         <block wx:else>
                             <text class="price-one">
@@ -26,7 +26,7 @@
                             </text>
                             <text class="price-two" style="text-decoration: {{item.didBought?'none':'line-through'}};">
                                 <text wx:if="{{item.didBought}}">去学习</text>
-                                <text wx:else>¥{{item.price}}</text>
+                                <text wx:else>{{item.price>0?"¥"+item.price:""}}</text>
                             </text>
                         </block>
                     </view>

@@ -31,7 +31,6 @@ Page({
 		isModelLink: true,
 		bannerList: null,
 		canShow: false,
-		courseList: [],
 		recommendCourseList: [],
 		modelBannerLink: "",
 		activityList: null,
@@ -48,23 +47,28 @@ Page({
 		tabsOffsetLeftAry: [],
 		featureList: [],
 		didFixedTab: false,
-		tabsDomOffsetTopNo: 0
+		tabsDomOffsetTopNo: 0,
+		obs: [], // 被监听的video标签队列
 	},
 	calcTabsOffset() {
 		let self = this
 		let tabQuery = wx.createSelectorQuery()
 		tabQuery.select("#tabs").boundingClientRect()
 		tabQuery.exec(function (res) {
-			self.setData({didFixedTab: res[0].top <= 0})
+			let bool = res[0].top <= 0
+			if (bool !== self.data.didFixedTab) {
+				self.setData({didFixedTab: bool})
+			}
 		})
 	},
 	touchMove(e) {
 		this.calcTabsOffset()
 	},
 	initBootcampListener() {
+		let obs = []
 		for (let index = 0; index < this.data.campList.length; index++) {
-			wx.createIntersectionObserver()
-				.relativeToViewport({top: -50, bottom: -50})
+			let ob = wx.createIntersectionObserver()
+			ob.relativeToViewport({top: -50, bottom: -50})
 				.observe('.card-' + index, res => {
 					let campList = this.data.cacheCampList.length > 0 ? this.data.cacheCampList.slice() : this.data.campList.slice()
 					if (res && res.intersectionRatio > 0) {
@@ -75,7 +79,7 @@ Page({
 							}
 							return item
 						})
-						// 滚动结束，跟新可视区域位置
+						// 滚动结束，更新可视区域位置
 						if (!this.data.scrollIng) {
 							this.setData({cacheCampList: campList.slice()})
 							let target = this.data.campList.find(n => n.id === index)
@@ -85,7 +89,7 @@ Page({
 							}
 						}
 					} else {
-						// 移除可视区域
+						// 离开可视区域
 						campList = campList.map((item, itemIndex) => {
 							if (itemIndex === index) {
 								item.show = false
@@ -102,6 +106,7 @@ Page({
 							}
 						}
 					}
+					// 可视区域首次渲染
 					if (this.data.didFirstLoad) {
 						let t = setTimeout(() => {
 							this.setData({campList: campList.slice(), didFirstLoad: false})
@@ -109,11 +114,21 @@ Page({
 						}, 50)
 					}
 				})
+			obs.push(ob)
 		}
+		this.setData({obs})
 	},
 	handleTab(e) {
-		let { id, name } = e.currentTarget.dataset.item
+		let {id, name} = e.currentTarget.dataset.item
 		this.setData({tabIndex: id})
+
+		// 检查是否存在obs，存在的话清除队列
+		if (this.data.obs.length > 0) {
+			this.data.obs.forEach(o => {
+				o.disconnect()
+			})
+		}
+
 		switch (id) {
 			case 2: {
 				this.getVideoCourse()
@@ -128,7 +143,7 @@ Page({
 
 		bxPoint("discovery_tab", {tabName: name}, false)
 
-		if (this.data.scrollTop >= 190) {
+		if (this.data.scrollTop >= this.data.tabsDomOffsetTopNo) {
 			let scrollTop = this.data.tabsDomOffsetTopNo
 			wx.pageScrollTo({
 				duration: 0,
@@ -240,18 +255,16 @@ Page({
 
 	// 处理是否显示模特大赛banner
 	initModelBanner() {
-		getFindBanner({
-			scene: 11
-		}).then(res => {
+		getFindBanner({scene: 11}).then(res => {
 			this.setData({
 				competitionBannerList: res,
-				showModelBanner: res.length === 0 ? false : true
+				showModelBanner: res.length !== 0
 			})
 		})
 	},
 	// 跳往视频课程全部列表
 	toVideoList(e) {
-		let { key } = e.currentTarget.dataset.item
+		let {key} = e.currentTarget.dataset.item
 		let activeIndex = 0
 		switch (key) {
 			case "形体学院": {
@@ -276,102 +289,56 @@ Page({
 	},
 	// 加载"全部"或"推荐"的视频系列课
 	getVideoCourse() {
-		if (this.data.tabIndex === 0) {
-			getVideoTypeList().then((list) => {
-				let resultList = []
-				list.forEach(({key, value}) => {
-					let params = {limit: 2, category: key}
-					if (getLocalStorage(GLOBAL_KEY.userId)) {
-						params.user_id = getLocalStorage(GLOBAL_KEY.userId)
-					}
-					queryVideoCourseListByBuyTag(params).then(data => {
-						if (getLocalStorage(GLOBAL_KEY.userId)) {
-							data = data.map(_ => {
-								return {
-									..._.kecheng_series,
-									didBought: _.buy_tag === "已购",
-									buy_tag: _.buy_tag
-								}
-							})
-						}
-						let handledList = data.map((res) => {
-							res.price = (res.price / 100).toFixed(2)
-							if (res.discount_price === -1 && res.price > 0) {
-								// 原价出售
-								// 是否有营销活动
-								if (+res.invite_open === 1) {
-									res.fission_price = (+res.price * res.invite_discount / 10000).toFixed(2)
-								}
-							} else if (res.discount_price >= 0 && res.price > 0) {
-								// 收费但有折扣
-								res.discount_price = (res.discount_price / 100).toFixed(2)
-								// 是否有营销活动
-								if (+res.invite_open === 1) {
-									res.fission_price = (+res.discount_price * res.invite_discount / 10000).toFixed(2)
-								}
-							} else if (+res.discount_price === -1 && +res.price === 0) {
-								res.discount_price = 0
-							}
-
-							// 只显示开启营销活动的数据
-							if (+res.invite_open === 1) {
-								res.tipsText = res.fission_price == 0 ? "邀请好友助力免费学" : `邀请好友助力${(res.invite_discount / 10)}折购`
-							}
-
-							return res
-						})
-						resultList.push({key: value, content: handledList.slice()})
-						if (resultList.length === list.length) {
-							this.setData({recommendCourseList: resultList})
-						}
-					})
-				})
-			})
-		} else if (this.data.tabIndex === 2) {
-			let params = {limit: 999}
-			if (getLocalStorage(GLOBAL_KEY.userId)) {
-				params.user_id = getLocalStorage(GLOBAL_KEY.userId)
-			}
-			queryVideoCourseListByBuyTag(params).then(list => {
+		getVideoTypeList().then((list) => {
+			let resultList = []
+			list.forEach(({key, value}) => {
+				let params = {limit: 5, category: key}
 				if (getLocalStorage(GLOBAL_KEY.userId)) {
-					list = list.map(_ => {
-						return {
-							..._.kecheng_series,
-							didBought: _.buy_tag === "已购",
-							buy_tag: _.buy_tag
-						}
-					})
+					params.user_id = getLocalStorage(GLOBAL_KEY.userId)
 				}
-
-				let handledList = list.map((res) => {
-					res.price = (res.price / 100).toFixed(2)
-					if (res.discount_price === -1 && res.price > 0) {
-						// 原价出售
-						// 是否有营销活动
-						if (+res.invite_open === 1) {
-							res.fission_price = (+res.price * res.invite_discount / 10000).toFixed(2)
-						}
-					} else if (res.discount_price >= 0 && res.price > 0) {
-						// 收费但有折扣
-						res.discount_price = (res.discount_price / 100).toFixed(2)
-						// 是否有营销活动
-						if (+res.invite_open === 1) {
-							res.fission_price = (+res.discount_price * res.invite_discount / 10000).toFixed(2)
-						}
-					} else if (+res.discount_price === -1 && +res.price === 0) {
-						res.discount_price = 0
+				queryVideoCourseListByBuyTag(params).then(data => {
+					if (getLocalStorage(GLOBAL_KEY.userId)) {
+						data = data.map(_ => {
+							return {
+								..._.kecheng_series,
+								didBought: _.buy_tag === "已购",
+								buy_tag: _.buy_tag
+							}
+						})
 					}
+					let handledList = data.map((res) => {
+						res.price = (res.price / 100) // .toFixed(2)
+						if (res.discount_price === -1 && res.price > 0) {
+							// 原价出售
+							// 是否有营销活动
+							if (+res.invite_open === 1) {
+								res.fission_price = (+res.price * res.invite_discount / 10000) // .toFixed(2)
+							}
+						} else if (res.discount_price >= 0 && res.price > 0) {
+							// 收费但有折扣
+							res.discount_price = (res.discount_price / 100) // .toFixed(2)
+							// 是否有营销活动
+							if (+res.invite_open === 1) {
+								res.fission_price = (+res.discount_price * res.invite_discount / 10000) // .toFixed(2)
+							}
+						} else if (+res.discount_price === -1 && +res.price === 0) {
+							res.discount_price = 0
+						}
 
-					// 只显示开启营销活动的数据
-					if (+res.invite_open === 1) {
-						res.tipsText = res.fission_price == 0 ? "邀请好友助力免费学" : `邀请好友助力${(res.invite_discount / 10)}折购`
+						// 只显示开启营销活动的数据
+						if (+res.invite_open === 1) {
+							res.tipsText = res.fission_price == 0 ? "邀请好友助力免费学" : `邀请好友助力${(res.invite_discount / 10)}折购`
+						}
+
+						return res
+					})
+					resultList.push({key: value, content: handledList.slice()})
+					if (resultList.length === list.length) {
+						this.setData({recommendCourseList: resultList})
 					}
-
-					return res
 				})
-				this.setData({courseList: handledList})
 			})
-		}
+		})
 	},
 	// 跳往视频详情页
 	toVideoDetail(e) {
@@ -429,11 +396,14 @@ Page({
 	// 获取banner列表
 	getBanner() {
 		getFindBanner({scene: 8}).then(bannerList => {
-			this.setData({bannerList, canShow: true})
+			this.setData({bannerList})
 		})
 	},
 	// 加载"推荐"或"全部"的训练营列表
 	getRecommendList() {
+		// 获取banner数据
+		this.getBanner()
+
 		let params = {
 			offset: 0,
 			limit: 999,
@@ -453,8 +423,8 @@ Page({
 				})
 
 				// 处理训练营价格单位
-				item.price = (item.price / 100).toFixed(2)
-				item.discount_price = (item.discount_price / 100).toFixed(2)
+				item.price = (item.price / 100) // .toFixed(2)
+				item.discount_price = (item.discount_price / 100) // .toFixed(2)
 
 				// 计算下次开营时间
 				item.next_bootcamp_start_date = "即将开营"
@@ -474,8 +444,8 @@ Page({
 			})
 
 			this.setData({campList: list})
+			// 获取视频系列课
 			this.getVideoCourse()
-			this.getBanner()
 			// 获取直播列表个数
 			this.getLiveTotalNum()
 
@@ -505,19 +475,38 @@ Page({
 	},
 	// 检查用户是否引导
 	checkUserGuide() {
-		if (getApp().globalData.firstViewPage) return
-		if (getApp().globalData.didVisibleCooPenPage) return
+		if (getApp().globalData.firstViewPage) {
+			this._toggleView(100)
+			return
+		}
+		if (getApp().globalData.didVisibleCooPenPage) {
+			this._toggleView(100)
+			return
+		}
 
-		getFindBanner({scene: 16}).then((data) => {
-			if (data.length > 0) {
-				wx.navigateTo({
-					url: "/pages/coopen/coopen",
-					success(res) {
-						getApp().globalData.didVisibleCooPenPage = true
-					}
-				})
-			}
-		})
+		try {
+			getFindBanner({scene: 16}).then((data) => {
+				if (data.length > 0) {
+					wx.navigateTo({
+						url: "/pages/coopen/coopen",
+						success(res) {
+							getApp().globalData.didVisibleCooPenPage = true
+						}
+					})
+				}
+				this._toggleView()
+			}).catch(() => {
+				this._toggleView()
+			})
+		} catch (e) {
+			this._toggleView()
+		}
+	},
+	_toggleView(timeNo = 300) {
+		let t = setTimeout(() => {
+			this.setData({canShow: true})
+			clearTimeout(t)
+		}, timeNo)
 	},
 	// 检查ios环境
 	checkIos() {
@@ -580,8 +569,6 @@ Page({
 	onReady: function () {
 		// 计算tab偏移位置
 		this.initTabOffset()
-		// 获取推荐数据
-		this.getRecommendList()
 	},
 
 	/**
@@ -595,6 +582,10 @@ Page({
 			})
 		}
 		this.initModelBanner()
+
+		// 获取推荐数据
+		this.getRecommendList()
+
 		bxPoint("applets_find", {
 			from_uid: getApp().globalData.super_user_id,
 			source: getApp().globalData.source,
