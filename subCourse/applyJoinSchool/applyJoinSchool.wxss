@@ -1,0 +1,313 @@
+/* subCourse/applyJoinSchool/applyJoinSchool.wxss */
+@import "../../assets/css/common.wxss";
+
+.main {}
+
+.main input {
+  -webkit-appearance: none;
+}
+
+.logo {
+  text-align: center;
+  padding-top: 70rpx;
+}
+
+.logo image {
+  width: 300rpx;
+  height: 224rpx;
+}
+
+.title {
+  padding-top: 50rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title-line {
+  width: 116rpx;
+  height: 2rpx;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.title-text {
+  padding: 0 20rpx;
+  font-size: 36rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 52rpx;
+}
+
+.warning {
+  padding: 0 60rpx;
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 30px;
+  margin-top: 50rpx;
+}
+
+.input-module {
+  padding: 0 60rpx;
+  padding-top: 60rpx;
+}
+
+.name-item,
+.age-item,
+.status-item {
+  display: flex;
+  align-items: center;
+  padding-bottom: 60rpx;
+}
+
+.name-label,
+.age-label,
+.job-label,
+.status-label,
+.hobby-label {
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 50rpx;
+}
+
+.name-input,
+.age-select {
+  padding-left: 48rpx;
+}
+
+.name-input input {
+  width: 510rpx;
+  height: 88rpx;
+  border: 0.5px solid #979797;
+  border-radius: 8rpx;
+  padding-left: 24rpx;
+  box-sizing: border-box;
+}
+
+.age-select {
+  position: relative;
+}
+
+.arrow-box {
+  position: absolute;
+  width: 86rpx;
+  height: 100%;
+  border: 0.5px solid #979797;
+  border-right: none;
+  right: 0;
+  top: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: 8rpx;
+}
+
+.arrow-box image {
+  width: 22rpx;
+  height: 12rpx;
+}
+
+.age-select input {
+  width: 510rpx;
+  height: 88rpx;
+  border: 0.5px solid #979797;
+  border-radius: 8rpx;
+  padding-left: 24rpx;
+  box-sizing: border-box;
+
+}
+
+.age-cover {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  background: transparent;
+  left: 0;
+  top: 0;
+
+}
+
+.job-list {
+  padding-top: 50rpx;
+}
+
+.job-item {
+  padding-bottom: 48rpx;
+}
+
+.job-line {
+  display: flex;
+  align-items: center;
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 36rpx;
+  padding-bottom: 44rpx;
+}
+
+.job-line image {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 20rpx;
+}
+
+.job-other {
+  display: flex;
+  align-items: center;
+
+}
+
+.job-other image {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 20rpx;
+}
+
+.job-other text {
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 36rpx;
+
+}
+
+.job-other input {
+  width: 478rpx;
+  height: 88rpx;
+  box-sizing: border-box;
+  border: 0.5px solid #979797;
+  padding-left: 24rpx;
+  border-radius: 8rpx;
+  margin-left: 20rpx;
+}
+
+.status-select {
+  position: relative;
+}
+
+.status-select input {
+  width: 510rpx;
+  height: 88rpx;
+  border: 0.5px solid #979797;
+  border-radius: 8rpx;
+  padding-left: 24rpx;
+  box-sizing: border-box;
+  margin-left: 48rpx;
+}
+
+.status-box {
+  position: absolute;
+  width: 86rpx;
+  height: 100%;
+  border: 0.5px solid #979797;
+  border-right: none;
+  right: 0;
+  top: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: 8rpx;
+}
+
+.status-select image {
+  width: 22rpx;
+  height: 12rpx;
+}
+
+.status-cover {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  background: transparent;
+  left: 0;
+  top: 0;
+}
+
+.hobby-list {
+  padding-top: 50rpx;
+}
+
+.hobby-line {
+  display: flex;
+  align-items: center;
+  margin-bottom: 44rpx;
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 36rpx;
+}
+
+.hobby-line image {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 20rpx;
+}
+
+.hobby-other {
+  display: flex;
+  align-items: center;
+}
+
+.hobby-other image {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 20rpx;
+}
+
+.hobby-other text {
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 36rpx;
+  margin-right: 20rpx;
+}
+
+.hobby-other input {
+  width: 478rpx;
+  height: 88rpx;
+  border: 0.5px solid #979797;
+  border-radius: 8rpx;
+  padding-left: 24rpx;
+  box-sizing: border-box;
+}
+
+.button {
+  width: calc(100% - 120rpx);
+  margin: 0 auto;
+  margin-top: 80rpx;
+  margin-bottom: 80rpx;
+  height: 96rpx;
+  border-radius: 999rpx;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  text-align: center;
+  line-height: 96rpx;
+}
+
+/* .picker {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+} */
+.container .van-toast {
+  width: 98px;
+  text-align: center;
+}

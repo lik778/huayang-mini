@@ -1,0 +1,16 @@
+<!--subCourse/schoolReport/schoolReport.wxml-->
+<view class="container" wx:if="{{info!==''}}">
+  <!-- tabbar -->
+  <view class="back" style="padding-top:{{statusBarHeight}}px">
+    <view class="back-module">
+      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604458365vukBeP.jpg" bindtap="back"></image>
+      <text>班级报道</text>
+    </view>
+  </view>
+  <view class="main" style="padding-top:{{statusBarHeight+40}}px">
+    <view class="desc">欢迎加入花样训练营，开启课程学习之旅。请您确认所在的班级，然后点击下方按钮完成新生报到。</view>
+    <view class="title">{{info.name}}</view>
+    <view class="date">{{info.date}}期 {{info.class_num}}班</view>
+    <view class="button subject-bg-color" bindtap="toResult">立即报到</view>
+  </view>
+</view>

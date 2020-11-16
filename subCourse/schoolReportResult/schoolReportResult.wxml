@@ -1,0 +1,19 @@
+<!--subCourse/schoolReportResult/schoolReportResult.wxml-->
+<view class="container" wx:if="{{info!==''}}">
+  <!-- tabbar -->
+  <view class="back" style="padding-top:{{statusBarHeight}}px">
+    <view class="back-module">
+      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604458365vukBeP.jpg" bindtap="back"></image>
+      <text>班级报道</text>
+    </view>
+  </view>
+  <view class="main" style="padding-top:{{statusBarHeight+40}}px">
+    <view class="img">
+      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1605177816lcEhjs.jpg"></image>
+    </view>
+    <view class="title">恭喜您已经报到成功啦！</view>
+    <view class="desc camp-name">{{info.name}}</view>
+    <view class="desc">{{info.date}}期</view>
+  </view>
+  <view class="button subject-bg-color" bindtap="back">开始学习</view>
+</view>

@@ -1,24 +1,31 @@
 // subCourse/trainingCampDetail/trainingCampDetail.js
 import {
-	getArticileLink,
-	getCampDetail,
-	getCourseData,
-	getCurentDayData,
-	getFindBanner,
-	getHasJoinCamp,
-	getWxRoomData
+  getArticileLink,
+  getCampDetail,
+  getCourseData,
+  getCurentDayData,
+  getFindBanner,
+  getHasJoinCamp,
+  getWxRoomData,
+  checkNeedToFillInfo,
+  studyLogCreate
 } from "../../api/course/index"
-import { getProductInfo, getYouZanAppId } from "../../api/mall/index"
 import {
-	computeDate,
-	dateAddDays,
-	getLocalStorage,
-	getNowDate,
-	setLocalStorage,
-	simpleDurationSimple
+  getProductInfo,
+  getYouZanAppId
+} from "../../api/mall/index"
+import {
+  computeDate,
+  dateAddDays,
+  getLocalStorage,
+  getNowDate,
+  setLocalStorage,
+  simpleDurationSimple
 } from "../../utils/util"
 import bxPoint from '../../utils/bxPoint'
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 
 Page({
 
@@ -108,6 +115,16 @@ Page({
   // 跳往课程详情
   toCoursedetail(e) {
     let item = e.currentTarget.dataset.item
+    let params = {
+      user_id: this.data.userInfo.id,
+      traincamp_id: this.data.campId,
+      start_date: this.data.joinDate,
+      date: this.data.showDate,
+    }
+    // 学历数据记录
+    // studyLogCreate(params).then(res => {
+    //   console.log(res)
+    // })
     if (item.type === 'video') {
       // 视频课程
       this.playVideo()
@@ -117,6 +134,9 @@ Page({
           pic: item.cover
         }
       })
+      bxPoint('traincamp_every_day', {
+        is_course: true
+      }, false)
     } else if (item.type === 'kecheng') {
       // 课程
       getCourseData({
@@ -124,7 +144,11 @@ Page({
       }).then((res) => {
         if (res.id) {
           if (res.kecheng_type === 0) {
+
             // 直播
+            bxPoint('traincamp_every_day', {
+              is_course: true
+            }, false)
             getWxRoomData({
               zhibo_room_id: res.room_id
             }).then(res => {
@@ -134,6 +158,9 @@ Page({
             })
           } else if (res.kecheng_type === 1) {
             // 回看
+            bxPoint('traincamp_every_day', {
+              is_course: true
+            }, false)
             getWxRoomData({
               zhibo_room_id: res.room_id
             }).then(res => {
@@ -143,11 +170,17 @@ Page({
             })
           } else if (res.kecheng_type === 2) {
             // 小额通
+            bxPoint('traincamp_every_day', {
+              is_course: false
+            }, false)
             wx.navigateTo({
               url: `/pages/webViewCommon/webViewCommon?link=${res.xiaoetong_url}`,
             })
           } else {
             // 结构化
+            bxPoint('traincamp_every_day', {
+              is_course: true
+            }, false)
             wx.navigateTo({
               url: `/subCourse/practiceDetail/practiceDetail?courseId=${res.id}&parentBootCampId=${this.data.campId}&formCampDetail=payUser`,
             })
@@ -162,6 +195,9 @@ Page({
       })
     } else if (item.type === 'product') {
       // 商品
+      bxPoint('traincamp_every_day', {
+        is_course: false
+      }, false)
       getProductInfo({
         product_id: item.product_id,
       }).then((res) => {
@@ -172,6 +208,9 @@ Page({
       })
     } else if (item.type === 'url') {
       // url
+      bxPoint('traincamp_every_day', {
+        is_course: false
+      }, false)
       let link = encodeURIComponent(item.url)
       wx.navigateTo({
         url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
@@ -391,6 +430,24 @@ Page({
     })
   },
 
+  // 检查是否需要填写信息
+  checkNeedFillInfo() {
+    let userId = getLocalStorage(GLOBAL_KEY.userId)
+    return new Promise(resolve => {
+      checkNeedToFillInfo({
+        user_id: userId
+      }).then(res => {
+        if (res.data) {
+          wx.navigateTo({
+            url: `/subCourse/applyJoinSchool/applyJoinSchool?campId=${this.data.campId}`,
+          })
+        } else {
+          resolve()
+        }
+      })
+    })
+
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -416,59 +473,67 @@ Page({
       choosedDay,
       fromPage
     })
-    this.getAppId()
-    this.getArticileLinkData()
-    this.getBanner()
-    this.initCoverShow(campId)
-    this.isJoinCamp().then(() => {
-      let whatDay = computeDate(new Date().getTime(), new Date(this.data.joinDate).getTime())
-      if (choosedDay !== undefined && choosedDay !== 0) {
-        let endDate = dateAddDays(this.data.joinDate, (choosedDay - 1) * oneDaySecond, formatType).replace(/-/g, '/')
-        let endDateNum = new Date(endDate).getTime()
-        if (new Date().getTime() < endDateNum) {
-          // 当前查看的日期大于当天日期,锁住
+    // 初始化数据
+    let run = () => {
+      this.getAppId()
+      this.getArticileLinkData()
+      this.getBanner()
+      this.initCoverShow(campId)
+      this.isJoinCamp().then(() => {
+        let whatDay = computeDate(new Date().getTime(), new Date(this.data.joinDate).getTime())
+        if (choosedDay !== undefined && choosedDay !== 0) {
+          let endDate = dateAddDays(this.data.joinDate, (choosedDay - 1) * oneDaySecond, formatType).replace(/-/g, '/')
+          let endDateNum = new Date(endDate).getTime()
+          if (new Date().getTime() < endDateNum) {
+            // 当前查看的日期大于当天日期,锁住
+            this.setData({
+              showLock: true
+            })
+          }
+          this.getNowCourse(choosedDay)
+        } else if (choosedDay !== undefined && choosedDay === 0) {
+          this.getNowCourse(0)
+        } else {
+          this.getNowCourse(whatDay)
+        }
+        let nowDate = new Date().getTime()
+        let startDate = new Date(this.data.joinDate).getTime()
+        if (nowDate < startDate) {
           this.setData({
-            showLock: true
+            choosedDay: choosedDay === undefined ? 0 : choosedDay
           })
         }
-        this.getNowCourse(choosedDay)
-      } else if (choosedDay !== undefined && choosedDay === 0) {
-        this.getNowCourse(0)
-      } else {
-        this.getNowCourse(whatDay)
-      }
-      let nowDate = new Date().getTime()
-      let startDate = new Date(this.data.joinDate).getTime()
-      if (nowDate < startDate) {
         this.setData({
-          choosedDay: choosedDay === undefined ? 0 : choosedDay
+          whatDay
+        })
+      })
+      // 通过小程序码进入 scene=${source}
+      if (scene) {
+        let sceneAry = decodeURIComponent(scene).split('/')
+        let [sceneSource = ''] = sceneAry
+        if (sceneSource) {
+          getApp().globalData.source = sceneSource
+        }
+        this.setData({
+          backIndex: true,
         })
       }
-      this.setData({
-        whatDay
-      })
-    })
-    // 通过小程序码进入 scene=${source}
-    if (scene) {
-      let sceneAry = decodeURIComponent(scene).split('/')
-      let [sceneSource = ''] = sceneAry
-      if (sceneSource) {
-        getApp().globalData.source = sceneSource
+      // 分享直接进入的
+      if (share) {
+        this.setData({
+          backIndex: true,
+        })
       }
+      // 存储用户信息
       this.setData({
-        backIndex: true,
+        userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
       })
     }
-    // 分享直接进入的
-    if (share) {
-      this.setData({
-        backIndex: true,
-      })
-    }
-    // 存储用户信息
-    this.setData({
-      userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-    })
+    run()
+    // 检查是否需要填写学员信息
+    // this.checkNeedFillInfo().then(() => {
+    //   run()
+    // })
   },
 
   /**

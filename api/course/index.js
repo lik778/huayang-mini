@@ -1,5 +1,7 @@
 import request from "../../lib/request"
-import { URL } from "../../lib/config"
+import {
+	URL
+} from "../../lib/config"
 
 
 // 获取结构化练习海报背景图
@@ -414,7 +416,9 @@ export function getVideoCourseList(params) {
 // 获取视频系列课程列表(带已购标签)
 export function queryVideoCourseListByBuyTag(params) {
 	return new Promise(resolve => {
-		request._get(URL.getVideoCourseListByBuyTag, params).then(({data}) => {
+		request._get(URL.getVideoCourseListByBuyTag, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -601,7 +605,9 @@ export function queryOrderDetail(params) {
  */
 export function getUserPracticeRecentRecord(params) {
 	return new Promise((resolve) => {
-		request._get(URL.queryUserPracticeRecentRecord, params).then(({data}) => {
+		request._get(URL.queryUserPracticeRecentRecord, params).then(({
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})
@@ -623,4 +629,31 @@ export function updateBootcampStudyTime(params) {
  */
 export function queryBootcampFeatureList() {
 	return request._get(URL.getBootcampFeatureList)
+}
+// 学员信息录入
+
+export const daxueEnter = params => {
+	return request._post(URL.daxueEnter, params)
+}
+
+// 获取训练营分期信息
+
+export const getCampStageMessgae = params => {
+	return request._get(URL.getCampStageMessgae, params)
+}
+
+// 班级报道
+
+export const classCheckin = params => {
+	return request._post(URL.classCheckin, params)
+}
+
+// 创建学习日志
+export const studyLogCreate = params => {
+	return request._get(URL.studyLogCreate, params)
+}
+
+// 获取学员信息
+export const checkNeedToFillInfo = params => {
+	return request._get(URL.checkNeedToFillInfo, params)
 }

@@ -1,0 +1,94 @@
+<view class="container">
+  <!--  自定义头部  -->
+  <view class="navigation" style="padding-top:{{statusHeight+43}}px;background:#5F5F5F;">
+    <naviBar title="入学申请" backPath='{{backPath}}' backPathBelongTab="{{true}}"></naviBar>
+  </view>
+  <!-- 主体区域 -->
+  <view class="main">
+    <view class="logo">
+      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1605151342LrKwov.jpg"></image>
+    </view>
+    <view class="title">
+      <view class="title-line"></view>
+      <view class="title-text">恭喜您成为花样大学生</view>
+      <view class="title-line"></view>
+    </view>
+    <view class="warning">请完善您的学员信息，花样会根据您的兴趣推荐合适的课程哦！</view>
+    <view class="input-module">
+      <view class="name-item">
+        <view class="name-label">姓名</view>
+        <view class="name-input">
+          <input type="text" placeholder="请输入您的姓名" maxlength="30" bindblur="changeName" />
+        </view>
+      </view>
+      <picker bindchange="changeAge" value="{{index}}" range="{{ageList}}" mode="selector">
+        <view class="age-item">
+          <view class="age-label">年龄</view>
+          <view class="age-select" bindtap="showPicker" data-index="1">
+            <input type="text" placeholder="请选择您的年龄" value="{{formData.age_range}}" />
+            <view class="arrow-box">
+              <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1605151549rzWKeI.jpg"></image>
+            </view>
+            <view class="age-cover"></view>
+          </view>
+        </view>
+      </picker>
+      <view class="job-item">
+        <view class="job-label">职业</view>
+        <view class="job-list">
+          <view class="job-line" wx:for="{{jobList}}" wx:key="{{index}}" bindtap="changeJob" data-index="{{index}}">
+            <image wx:if="{{jobIndex!==index}}"
+              src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1605160323yPrNTX.jpg"></image>
+            <image wx:else src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1605160336VOONYw.jpg"></image>
+            <text>{{item}}</text>
+          </view>
+          <view class="job-other" bindtap="changeJob" data-index="4">
+            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1605160336VOONYw.jpg" wx:if="{{jobIndex===4}}">
+            </image>
+            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1605160323yPrNTX.jpg" wx:else></image>
+            <text>其他</text>
+            <input type="text" placeholder="请输入您的职业" bindblur="changeJobInput" value="{{jobInputValue}}"
+              maxlength="30" />
+          </view>
+        </view>
+      </view>
+      <picker bindchange="changeStatus" value="{{index}}" range="{{statusList}}" mode="selector">
+        <view class="status-item">
+          <view class="status-label">状态</view>
+          <view class="status-select">
+            <input type="text" placeholder="请选择您的状态"
+              value="{{formData.status===1?'原职业在职':formData.status===2?'返聘':formData.status===3?'退休':''}}" />
+            <view class="status-box">
+              <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1605151549rzWKeI.jpg"></image>
+            </view>
+            <view class="status-cover"></view>
+          </view>
+        </view>
+      </picker>
+      <view class="hobby-item">
+        <view class="hobby-label">兴趣</view>
+        <view class="hobby-list">
+          <view class="hobby-line" wx:for="{{hobbyList}}" bindtap="changeHobby" data-index="{{index}}"
+            wx:key="{{index}}">
+            <image wx:if="{{!item.checked}}"
+              src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1605162618LPrjMe.jpg"></image>
+            <image wx:else src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1605162629hyyarw.jpg"></image>
+            <text>{{item.name}}</text>
+          </view>
+          <view class="hobby-other" bindtap="changeHobbyIndex" data-index="5">
+            <image wx:if="{{hobbyIndex===5}}"
+              src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1605162629hyyarw.jpg"></image>
+            <image wx:else src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1605162618LPrjMe.jpg"></image>
+            <text>其他</text>
+            <input type="text" bindblur='changeHobbyInput' placeholder="请输入您的兴趣" maxlength="100" />
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 按钮 -->
+  <view class="button subject-bg-color" bindtap="save">
+    保存
+  </view>
+  <van-toast id="van-toast" />
+</view>

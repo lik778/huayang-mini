@@ -1,0 +1,89 @@
+@import "../../assets/css/common.wxss";
+
+/* 返回 */
+.back {
+  position: fixed;
+  left: 14rpx;
+  top: 10rpx;
+  width: calc(100% - 14rpx);
+  z-index: 50;
+}
+
+.back-module {
+  position: relative;
+  width: 100vw;
+  left: -14rpx;
+}
+
+.back image {
+  width: 64rpx;
+  height: 64rpx;
+  margin-left: 14rpx;
+}
+
+.back-module text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 34rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000;
+  line-height: 38rpx;
+}
+
+.main {}
+
+.title {
+  padding: 0 64rpx;
+  font-size: 42rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  text-align: center;
+  line-height: 36rpx;
+}
+
+.date {
+  font-size: 42rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 42rpx;
+  text-align: center;
+  padding-top: 28rpx;
+  padding-bottom: 100rpx;
+}
+
+.class-title {
+  font-size: 42rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 42rpx;
+  text-align: center;
+}
+
+.desc {
+  padding: 100rpx 60rpx 100rpx 60rpx;
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #717171;
+  line-height: 50rpx;
+  /* text-justify: auto; */
+}
+
+.button {
+  width: calc(100% - 120rpx);
+  margin: 0 auto;
+  height: 96rpx;
+  line-height: 96rpx;
+  text-align: center;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  border-radius: 999rpx;
+}
