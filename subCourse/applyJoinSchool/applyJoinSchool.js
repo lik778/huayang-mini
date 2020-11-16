@@ -148,7 +148,9 @@ Page({
     for (let i in this.data.hobbyArr) {
       arr.push(this.data.hobbyArr[i].name)
     }
-    arr.push(this.data.hobbyOther)
+    if (this.data.hobbyOther !== '') {
+      arr.push(this.data.hobbyOther)
+    }
     params.interest = arr.join(',')
     params.user_id = JSON.parse(getLocalStorage(GLOBAL_KEY.userId))
     let isRight = this.checkParams(params)
@@ -164,7 +166,7 @@ Page({
             duration: 3000,
             onClose: () => {
               wx.navigateTo({
-                url: '/subCourse/videoCourseList/videoCourseList',
+                url: `/subCourse/campDetail/campDetail?id=${this.data.campId}&share=true`,
               })
             }
           });
@@ -229,6 +231,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      campId: options.campId
+    })
     bxPoint("traincamp_class_checkin")
   },
 

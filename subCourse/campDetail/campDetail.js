@@ -437,7 +437,7 @@ Page({
       }).then(res => {
         if (res.data) {
           wx.navigateTo({
-            url: '/subCourse/applyJoinSchool/applyJoinSchool',
+            url: `/subCourse/applyJoinSchool/applyJoinSchool?campId=${this.data.campId}`,
           })
         } else {
           resolve()
