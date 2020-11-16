@@ -45,7 +45,7 @@
     <view class="course-detail-box" wx:if="{{tabIndex===0}}">
       <view class="course-list">
         <view wx:for="{{courseData.video_detail}}" wx:key="index">
-          <view class="{{playIndex===index?'course-item course-item-active subject-bg-color':'course-item'}}"
+          <view class="{{playIndex===index?'course-item course-item-active subject-font-color':'course-item'}}"
             bindtap="{{hasLogin?buttonType===6?'play':item.canReplay?'play':'':'join'}}" data-item="{{item}}"
             data-index="{{index}}">
             <view class="course-item-left">
