@@ -121,9 +121,10 @@ Page({
       start_date: this.data.joinDate,
       date: this.data.showDate,
     }
-    studyLogCreate(params).then(res => {
-      console.log(res)
-    })
+    // 学历数据记录
+    // studyLogCreate(params).then(res => {
+    //   console.log(res)
+    // })
     if (item.type === 'video') {
       // 视频课程
       this.playVideo()
@@ -429,6 +430,7 @@ Page({
     })
   },
 
+  // 检查是否需要填写信息
   checkNeedFillInfo() {
     let userId = getLocalStorage(GLOBAL_KEY.userId)
     return new Promise(resolve => {
@@ -471,9 +473,8 @@ Page({
       choosedDay,
       fromPage
     })
-    // 检查是否需要填写学员信息
-    this.checkNeedFillInfo().then(() => {
-
+    // 初始化数据
+    let run = () => {
       this.getAppId()
       this.getArticileLinkData()
       this.getBanner()
@@ -506,28 +507,33 @@ Page({
           whatDay
         })
       })
-    })
-    // 通过小程序码进入 scene=${source}
-    if (scene) {
-      let sceneAry = decodeURIComponent(scene).split('/')
-      let [sceneSource = ''] = sceneAry
-      if (sceneSource) {
-        getApp().globalData.source = sceneSource
+      // 通过小程序码进入 scene=${source}
+      if (scene) {
+        let sceneAry = decodeURIComponent(scene).split('/')
+        let [sceneSource = ''] = sceneAry
+        if (sceneSource) {
+          getApp().globalData.source = sceneSource
+        }
+        this.setData({
+          backIndex: true,
+        })
       }
+      // 分享直接进入的
+      if (share) {
+        this.setData({
+          backIndex: true,
+        })
+      }
+      // 存储用户信息
       this.setData({
-        backIndex: true,
+        userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
       })
     }
-    // 分享直接进入的
-    if (share) {
-      this.setData({
-        backIndex: true,
-      })
-    }
-    // 存储用户信息
-    this.setData({
-      userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-    })
+    run()
+    // 检查是否需要填写学员信息
+    // this.checkNeedFillInfo().then(() => {
+    //   run()
+    // })
   },
 
   /**
