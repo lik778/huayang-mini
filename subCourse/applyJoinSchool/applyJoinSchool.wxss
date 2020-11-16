@@ -51,7 +51,7 @@
 
 .input-module {
   padding: 0 60rpx;
-  padding-top: 50rpx;
+  padding-top: 60rpx;
 }
 
 .name-item,
@@ -59,7 +59,7 @@
 .status-item {
   display: flex;
   align-items: center;
-  padding-bottom: 48rpx;
+  padding-bottom: 60rpx;
 }
 
 .name-label,
@@ -182,7 +182,7 @@
 
 .job-other input {
   width: 478rpx;
-  height: 80rpx;
+  height: 88rpx;
   box-sizing: border-box;
   border: 0.5px solid #979797;
   padding-left: 24rpx;
@@ -278,7 +278,7 @@
 
 .hobby-other input {
   width: 478rpx;
-  height: 80rpx;
+  height: 88rpx;
   border: 0.5px solid #979797;
   border-radius: 8rpx;
   padding-left: 24rpx;
@@ -299,6 +299,7 @@
   text-align: center;
   line-height: 96rpx;
 }
+
 /* .picker {
   position: fixed;
   bottom: 0;

@@ -133,6 +133,9 @@ Page({
           pic: item.cover
         }
       })
+      bxPoint('traincamp_every_day', {
+        is_course: true
+      }, false)
     } else if (item.type === 'kecheng') {
       // 课程
       getCourseData({
@@ -140,7 +143,11 @@ Page({
       }).then((res) => {
         if (res.id) {
           if (res.kecheng_type === 0) {
+
             // 直播
+            bxPoint('traincamp_every_day', {
+              is_course: true
+            }, false)
             getWxRoomData({
               zhibo_room_id: res.room_id
             }).then(res => {
@@ -150,6 +157,9 @@ Page({
             })
           } else if (res.kecheng_type === 1) {
             // 回看
+            bxPoint('traincamp_every_day', {
+              is_course: true
+            }, false)
             getWxRoomData({
               zhibo_room_id: res.room_id
             }).then(res => {
@@ -159,11 +169,17 @@ Page({
             })
           } else if (res.kecheng_type === 2) {
             // 小额通
+            bxPoint('traincamp_every_day', {
+              is_course: false
+            }, false)
             wx.navigateTo({
               url: `/pages/webViewCommon/webViewCommon?link=${res.xiaoetong_url}`,
             })
           } else {
             // 结构化
+            bxPoint('traincamp_every_day', {
+              is_course: true
+            }, false)
             wx.navigateTo({
               url: `/subCourse/practiceDetail/practiceDetail?courseId=${res.id}&parentBootCampId=${this.data.campId}&formCampDetail=payUser`,
             })
@@ -178,6 +194,9 @@ Page({
       })
     } else if (item.type === 'product') {
       // 商品
+      bxPoint('traincamp_every_day', {
+        is_course: false
+      }, false)
       getProductInfo({
         product_id: item.product_id,
       }).then((res) => {
@@ -188,6 +207,9 @@ Page({
       })
     } else if (item.type === 'url') {
       // url
+      bxPoint('traincamp_every_day', {
+        is_course: false
+      }, false)
       let link = encodeURIComponent(item.url)
       wx.navigateTo({
         url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,

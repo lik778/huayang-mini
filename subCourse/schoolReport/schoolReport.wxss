@@ -40,7 +40,6 @@
   font-size: 42rpx;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
-  padding-top: 104rpx;
   color: #000000;
   text-align: center;
   line-height: 36rpx;
@@ -53,8 +52,8 @@
   color: #000000;
   line-height: 42rpx;
   text-align: center;
-  padding-top: 40rpx;
-  padding-bottom: 40rpx;
+  padding-top: 28rpx;
+  padding-bottom: 100rpx;
 }
 
 .class-title {
@@ -67,12 +66,13 @@
 }
 
 .desc {
-  padding: 80rpx 20rpx 60rpx 40rpx;
+  padding: 100rpx 60rpx 100rpx 60rpx;
   font-size: 36rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #717171;
   line-height: 50rpx;
+  /* text-justify: auto; */
 }
 
 .button {
