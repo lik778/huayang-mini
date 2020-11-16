@@ -253,10 +253,9 @@
           "scene": null
         },
         {
-          "id": -1,
           "name": "入学申请",
           "pathName": "subCourse/applyJoinSchool/applyJoinSchool",
-          "query": "",
+          "query": "campId=40",
           "scene": null
         },
         {

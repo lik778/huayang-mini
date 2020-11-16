@@ -160,7 +160,7 @@ Page({
       })
       daxueEnter(params).then(res => {
         if (res.code === 0) {
-          Toast({
+          Toast.success({
             message: "您已保存成功，开始学习吧",
             forbidClick: true,
             duration: 3000,

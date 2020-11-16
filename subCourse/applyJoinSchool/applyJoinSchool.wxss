@@ -307,3 +307,7 @@
   width: 100%;
   background: #fff;
 } */
+.container .van-toast {
+  width: 98px;
+  text-align: center;
+}
