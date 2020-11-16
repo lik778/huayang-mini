@@ -21,6 +21,8 @@
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
+    "useMultiFrameRuntime": false,
+    "useApiHook": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -31,8 +33,7 @@
     "userConfirmedUseCompilerModuleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
-    "useMultiFrameRuntime": false,
-    "useApiHook": true
+    "minifyWXSS": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.12.0",
@@ -134,10 +135,9 @@
           "scene": null
         },
         {
-          "id": 11,
           "name": "subCourse/joinCamp/joinCamp",
           "pathName": "subCourse/joinCamp/joinCamp",
-          "query": "id=1&share=true&scene=joinCamp%2F1%2Fshare",
+          "query": "id=8&share=true",
           "scene": null
         },
         {
@@ -261,7 +261,7 @@
         {
           "name": "报道页",
           "pathName": "subCourse/schoolReport/schoolReport",
-          "query": "stage_id=1&class_num=1",
+          "query": "scene=1%7C1",
           "scene": null
         },
         {

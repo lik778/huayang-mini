@@ -77,6 +77,7 @@ Page({
     let sceneAry = ''
     let stage_id = ''
     let class_num = ''
+    console.log(decodeURIComponent(scene))
     if (scene) {
       sceneAry = decodeURIComponent(scene).split('/');
       [stage_id = '', class_num = ''] = sceneAry
