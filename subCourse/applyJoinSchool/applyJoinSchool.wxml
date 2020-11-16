@@ -18,7 +18,7 @@
       <view class="name-item">
         <view class="name-label">姓名</view>
         <view class="name-input">
-          <input type="text" placeholder="请输入您的姓名" bindblur="changeName" />
+          <input type="text" placeholder="请输入您的姓名" maxlength="30" bindblur="changeName" />
         </view>
       </view>
       <picker bindchange="changeAge" value="{{index}}" range="{{ageList}}" mode="selector">
@@ -47,7 +47,8 @@
             </image>
             <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1605160323yPrNTX.jpg" wx:else></image>
             <text>其他</text>
-            <input type="text" placeholder="请输入您的职业" bindblur="changeJobInput" value="{{jobInputValue}}" />
+            <input type="text" placeholder="请输入您的职业" bindblur="changeJobInput" value="{{jobInputValue}}"
+              maxlength="30" />
           </view>
         </view>
       </view>
@@ -79,7 +80,7 @@
               src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1605162629hyyarw.jpg"></image>
             <image wx:else src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1605162618LPrjMe.jpg"></image>
             <text>其他</text>
-            <input type="text" bindblur='changeHobbyInput' placeholder="请输入您的兴趣" />
+            <input type="text" bindblur='changeHobbyInput' placeholder="请输入您的兴趣" maxlength="100" />
           </view>
         </view>
       </view>

@@ -183,6 +183,9 @@ Page({
   },
   // 检查参数
   checkParams(e) {
+    e.real_name = e.real_name.trim()
+    e.job = e.job.trim()
+    e.interest = e.interest.trim()
     if (e.real_name === '') {
       wx.showToast({
         title: '请正确填写您的姓名',
