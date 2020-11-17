@@ -256,6 +256,15 @@ Page({
       showCover: false,
       showPlayIcon: false
     })
+    let params = {
+      user_id: this.data.userInfo.id,
+      traincamp_id: this.data.campId,
+      start_date: this.data.joinDate,
+      date: this.data.showDate
+    }
+    studyLogCreate(params).then(res => {
+      console.log(res)
+    })
     this.videoContext.play()
     this.videoContext.requestFullScreen()
   },
