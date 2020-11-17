@@ -17,24 +17,24 @@ Page({
    */
   data: {
     backPath: "/pages/practice/practice",
-    ageList: ['40～50岁', '51～60岁', '61～70岁'],
+    ageList: ['40～50岁', '51～60岁', '61～70岁', '其他'],
     statusList: ['原职业在职', '返聘', '退休'],
     jobList: ['国家机关/党群组织/企业', "事业单位负责人", '专业技术人员', '商业/服务人员'],
     jobIndex: '',
     hobbyList: [{
-      name: '健身、形体',
+      name: '穿搭、美妆、发型',
       checked: false
     }, {
-      name: '红酒、茶艺、茶道',
+      name: '走秀、瑜伽、舞蹈',
       checked: false
     }, {
-      name: '朗诵、书法',
+      name: '朗诵、唱歌、摄影',
       checked: false
     }, {
-      name: '穿搭、发型、化妆',
+      name: '红酒鉴赏、茶道、花艺',
       checked: false
     }, {
-      name: '芭蕾、瑜伽、舞蹈、走秀',
+      name: '书法、绘画、手工艺品',
       checked: false
     }],
     hobbyIndex: '',
@@ -281,10 +281,4 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

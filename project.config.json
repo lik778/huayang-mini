@@ -261,7 +261,7 @@
         {
           "name": "报道页",
           "pathName": "subCourse/schoolReport/schoolReport",
-          "query": "scene=1%7C1",
+          "query": "scene=1%2F1",
           "scene": null
         },
         {

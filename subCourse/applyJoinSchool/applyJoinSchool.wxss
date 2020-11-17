@@ -69,7 +69,7 @@
 .hobby-label {
   font-size: 36rpx;
   font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
+  font-weight: 600;
   color: #000000;
   line-height: 50rpx;
 }

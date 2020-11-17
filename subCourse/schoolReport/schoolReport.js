@@ -40,6 +40,7 @@ Page({
         traincamp_stage_id: this.data.info.stageId,
         class_num: this.data.info.class_num
       }).then(res => {
+        console.log(res)
         if (res.code === 0) {
           bxPoint("daxue_enter")
           wx.showToast({
@@ -55,11 +56,22 @@ Page({
             }
           })
         } else {
+          wx.showToast({
+            title: res.message,
+            duration: 2000,
+            icon: "none"
+          })
           this.setData({
             lock: true
           })
         }
-      }).catch(() => {
+      }).catch((err) => {
+        console.log(err)
+        wx.showToast({
+          title: '加入失败',
+          duration: 2000,
+          icon: "none"
+        })
         this.setData({
           lock: true
         })
@@ -77,7 +89,7 @@ Page({
     let sceneAry = ''
     let stage_id = ''
     let class_num = ''
-    console.log(decodeURIComponent(scene))
+    console.log(options)
     if (scene) {
       sceneAry = decodeURIComponent(scene).split('/');
       [stage_id = '', class_num = ''] = sceneAry
@@ -99,6 +111,7 @@ Page({
       getCampStageMessgae({
         traincamp_stage_id: stage_id
       }).then(res1 => {
+        console.log(res1)
         getCampDetail({
           traincamp_id: res1.data.stage.kecheng_traincamp_id
         }).then(res => {
@@ -167,10 +180,4 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

@@ -115,16 +115,20 @@ Page({
   // 跳往课程详情
   toCoursedetail(e) {
     let item = e.currentTarget.dataset.item
-    let params = {
-      user_id: this.data.userInfo.id,
-      traincamp_id: this.data.campId,
-      start_date: this.data.joinDate,
-      date: this.data.showDate,
-    }
+
     // 学历数据记录
-    // studyLogCreate(params).then(res => {
-    //   console.log(res)
-    // })
+    if (this.data.hasStartCampType !== 1) {
+      let params = {
+        user_id: this.data.userInfo.id,
+        traincamp_id: this.data.campId,
+        start_date: this.data.joinDate,
+        date: this.data.showDate
+      }
+      studyLogCreate(params).then(res => {
+        console.log(res)
+      })
+    }
+
     if (item.type === 'video') {
       // 视频课程
       this.playVideo()
@@ -529,11 +533,11 @@ Page({
         userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
       })
     }
-    run()
+    // run()
     // 检查是否需要填写学员信息
-    // this.checkNeedFillInfo().then(() => {
-    //   run()
-    // })
+    this.checkNeedFillInfo().then(() => {
+      run()
+    })
   },
 
   /**
