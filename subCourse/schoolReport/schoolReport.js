@@ -46,17 +46,8 @@ Page({
         console.log(res)
         if (res.code === 0) {
           bxPoint("daxue_enter")
-          wx.showToast({
-            title: '报到成功',
-            icon: "success",
-            duration: 3000,
-            success: () => {
-              setTimeout(() => {
-                wx.navigateTo({
-                  url: `/subCourse/schoolReportResult/schoolReportResult?data=${JSON.stringify(this.data.info)}`,
-                })
-              }, 3000)
-            }
+          wx.navigateTo({
+            url: `/subCourse/schoolReportResult/schoolReportResult?data=${JSON.stringify(this.data.info)}`,
           })
         } else {
           wx.showToast({

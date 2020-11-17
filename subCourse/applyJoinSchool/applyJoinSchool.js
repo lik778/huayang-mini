@@ -161,7 +161,7 @@ Page({
       daxueEnter(params).then(res => {
         if (res.code === 0) {
           Toast.success({
-            message: "您已保存成功，开始学习吧",
+            message: "您已保存成功\n开始学习吧",
             forbidClick: true,
             duration: 3000,
             onClose: () => {
@@ -189,33 +189,38 @@ Page({
     e.job = e.job.trim()
     e.interest = e.interest.trim()
     if (e.real_name === '') {
-      wx.showToast({
-        title: '请正确填写您的姓名',
-        icon: "none"
+      Toast({
+        message: '请正确填写您的姓名',
+        duration: 2500,
+        forbidClick: true
       })
       return false
     } else if (e.age_range === '') {
-      wx.showToast({
-        title: '请选择您的年龄段',
-        icon: "none"
-      })
-      return false
-    } else if (e.job === '') {
-      wx.showToast({
-        title: '请正确填写您的职业',
-        icon: "none"
+      Toast({
+        message: '请选择您的年龄段',
+        duration: 2500,
+        forbidClick: true
       })
       return false
     } else if (e.status === '') {
-      wx.showToast({
-        title: '请选择您的状态',
-        icon: "none"
+      Toast({
+        message: '请选择您的状态',
+        duration: 2500,
+        forbidClick: true
+      })
+      return false
+    } else if (e.job === '') {
+      Toast({
+        message: '请正确填写您的职业',
+        duration: 2500,
+        forbidClick: true
       })
       return false
     } else if (e.interest === '') {
-      wx.showToast({
-        title: '请正确填写您的兴趣',
-        icon: "none"
+      Toast({
+        message: '请正确填写您的兴趣',
+        duration: 2500,
+        forbidClick: true
       })
       return false
     } else {

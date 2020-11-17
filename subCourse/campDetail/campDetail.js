@@ -66,7 +66,8 @@ Page({
     showAddTeacherCover: false, //显示指引弹窗
     fromPage: '', //页面来源
     userInfo: "", //用户信息
-    promoteUid: "" //分销人id
+    promoteUid: "", //分销人id
+    period: "" //训练营周期
   },
 
   // 关闭引导私域蒙板
@@ -286,7 +287,8 @@ Page({
         traincamp_id: this.data.campId
       }).then(res => {
         this.setData({
-          joinDate: res.date
+          joinDate: res.date,
+          period: res.period
         })
         this.getCampDetailData()
         resolve()
@@ -485,6 +487,8 @@ Page({
       this.initCoverShow(campId)
       this.isJoinCamp().then(() => {
         let whatDay = computeDate(new Date().getTime(), new Date(this.data.joinDate).getTime())
+        let nowDate = new Date().getTime()
+        let startDate = new Date(this.data.joinDate).getTime()
         if (choosedDay !== undefined && choosedDay !== 0) {
           let endDate = dateAddDays(this.data.joinDate, (choosedDay - 1) * oneDaySecond, formatType).replace(/-/g, '/')
           let endDateNum = new Date(endDate).getTime()
@@ -498,10 +502,17 @@ Page({
         } else if (choosedDay !== undefined && choosedDay === 0) {
           this.getNowCourse(0)
         } else {
-          this.getNowCourse(whatDay)
+          let oneDaySecond = 86400
+          let formatType = 'yyyy-MM-dd'
+          let endDateStr = dateAddDays(this.data.joinDate, (this.data.period - 1) * oneDaySecond, formatType)
+          let endDate = new Date(endDateStr).getTime()
+          if (nowDate > endDate) {
+            this.getNowCourse(this.data.period)
+          } else {
+            this.getNowCourse(whatDay)
+          }
         }
-        let nowDate = new Date().getTime()
-        let startDate = new Date(this.data.joinDate).getTime()
+
         if (nowDate < startDate) {
           this.setData({
             choosedDay: choosedDay === undefined ? 0 : choosedDay

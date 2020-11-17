@@ -1,6 +1,10 @@
 /* subCourse/applyJoinSchool/applyJoinSchool.wxss */
 @import "../../assets/css/common.wxss";
 
+.container {
+  padding-bottom: 80rpx;
+}
+
 .main {}
 
 .main input {
@@ -289,7 +293,6 @@
   width: calc(100% - 120rpx);
   margin: 0 auto;
   margin-top: 80rpx;
-  margin-bottom: 80rpx;
   height: 96rpx;
   border-radius: 999rpx;
   font-size: 40rpx;
@@ -308,6 +311,8 @@
   background: #fff;
 } */
 .container .van-toast {
-  width: 98px;
+  font-size: 20px;
   text-align: center;
+  white-space: nowrap;
+  padding: 10px 20px;
 }
