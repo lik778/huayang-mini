@@ -5,9 +5,9 @@
         <cover-view class="tab-underline" style="left: {{tabsOffsetLeftAry[tabIndex]}}px;"></cover-view>
     </cover-view>
     <!--  推广位 -->
-    <view class="promotion">
+    <view class="promotion" wx:if="{{bannerList.length!==0}}">
         <!-- banner 滚动区域 -->
-        <view class="swiper-box" id="swiper-box" wx:if="{{bannerList.length!==0}}">
+        <view class="swiper-box" id="swiper-box">
             <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}"
                     duration="{{500}}">
                 <swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="joinCampFromBanner" data-item="{{item}}">
