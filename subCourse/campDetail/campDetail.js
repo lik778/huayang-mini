@@ -447,8 +447,6 @@ Page({
           wx.navigateTo({
             url: `/subCourse/applyJoinSchool/applyJoinSchool?campId=${this.data.campId}`,
           })
-        } else {
-          resolve()
         }
       })
     })
@@ -543,12 +541,11 @@ Page({
       this.setData({
         userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
       })
+      // 检查是否需要填写学员信息
+      this.checkNeedFillInfo()
     }
-    // run()
-    // 检查是否需要填写学员信息
-    this.checkNeedFillInfo().then(() => {
-      run()
-    })
+    run()
+
   },
 
   /**
