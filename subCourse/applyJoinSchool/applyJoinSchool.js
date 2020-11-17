@@ -17,24 +17,24 @@ Page({
    */
   data: {
     backPath: "/pages/practice/practice",
-    ageList: ['40～50岁', '51～60岁', '61～70岁'],
+    ageList: ['40～50岁', '51～60岁', '61～70岁', '其他'],
     statusList: ['原职业在职', '返聘', '退休'],
     jobList: ['国家机关/党群组织/企业', "事业单位负责人", '专业技术人员', '商业/服务人员'],
     jobIndex: '',
     hobbyList: [{
-      name: '健身、形体',
+      name: '穿搭、美妆、发型',
       checked: false
     }, {
-      name: '红酒、茶艺、茶道',
+      name: '走秀、瑜伽、舞蹈',
       checked: false
     }, {
-      name: '朗诵、书法',
+      name: '朗诵、唱歌、摄影',
       checked: false
     }, {
-      name: '穿搭、发型、化妆',
+      name: '红酒鉴赏、茶道、花艺',
       checked: false
     }, {
-      name: '芭蕾、瑜伽、舞蹈、走秀',
+      name: '书法、绘画、手工艺品',
       checked: false
     }],
     hobbyIndex: '',
@@ -161,7 +161,7 @@ Page({
       daxueEnter(params).then(res => {
         if (res.code === 0) {
           Toast.success({
-            message: "您已保存成功，开始学习吧",
+            message: "您已保存成功\n开始学习吧",
             forbidClick: true,
             duration: 3000,
             onClose: () => {
@@ -189,33 +189,38 @@ Page({
     e.job = e.job.trim()
     e.interest = e.interest.trim()
     if (e.real_name === '') {
-      wx.showToast({
-        title: '请正确填写您的姓名',
-        icon: "none"
+      Toast({
+        message: '请正确填写您的姓名',
+        duration: 2500,
+        forbidClick: true
       })
       return false
     } else if (e.age_range === '') {
-      wx.showToast({
-        title: '请选择您的年龄段',
-        icon: "none"
-      })
-      return false
-    } else if (e.job === '') {
-      wx.showToast({
-        title: '请正确填写您的职业',
-        icon: "none"
+      Toast({
+        message: '请选择您的年龄段',
+        duration: 2500,
+        forbidClick: true
       })
       return false
     } else if (e.status === '') {
-      wx.showToast({
-        title: '请选择您的状态',
-        icon: "none"
+      Toast({
+        message: '请选择您的状态',
+        duration: 2500,
+        forbidClick: true
+      })
+      return false
+    } else if (e.job === '') {
+      Toast({
+        message: '请正确填写您的职业',
+        duration: 2500,
+        forbidClick: true
       })
       return false
     } else if (e.interest === '') {
-      wx.showToast({
-        title: '请正确填写您的兴趣',
-        icon: "none"
+      Toast({
+        message: '请正确填写您的兴趣',
+        duration: 2500,
+        forbidClick: true
       })
       return false
     } else {
@@ -281,10 +286,4 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

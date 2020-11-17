@@ -10,7 +10,7 @@
     </view>
     <view class="title">
       <view class="title-line"></view>
-      <view class="title-text">恭喜您成为花样大学生</view>
+      <view class="title-text">恭喜您成为花样大学学生</view>
       <view class="title-line"></view>
     </view>
     <view class="warning">请完善您的学员信息，花样会根据您的兴趣推荐合适的课程哦！</view>
@@ -33,8 +33,23 @@
           </view>
         </view>
       </picker>
+
+      <picker bindchange="changeStatus" value="{{index}}" range="{{statusList}}" mode="selector">
+        <view class="status-item">
+          <view class="status-label">状态</view>
+          <view class="status-select">
+            <input type="text" placeholder="请选择您的状态"
+              value="{{formData.status===1?'原职业在职':formData.status===2?'返聘':formData.status===3?'退休':''}}" />
+            <view class="status-box">
+              <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1605151549rzWKeI.jpg"></image>
+            </view>
+            <view class="status-cover"></view>
+          </view>
+        </view>
+      </picker>
+
       <view class="job-item">
-        <view class="job-label">职业</view>
+        <view class="job-label">职业（单选）</view>
         <view class="job-list">
           <view class="job-line" wx:for="{{jobList}}" wx:key="{{index}}" bindtap="changeJob" data-index="{{index}}">
             <image wx:if="{{jobIndex!==index}}"
@@ -52,21 +67,9 @@
           </view>
         </view>
       </view>
-      <picker bindchange="changeStatus" value="{{index}}" range="{{statusList}}" mode="selector">
-        <view class="status-item">
-          <view class="status-label">状态</view>
-          <view class="status-select">
-            <input type="text" placeholder="请选择您的状态"
-              value="{{formData.status===1?'原职业在职':formData.status===2?'返聘':formData.status===3?'退休':''}}" />
-            <view class="status-box">
-              <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1605151549rzWKeI.jpg"></image>
-            </view>
-            <view class="status-cover"></view>
-          </view>
-        </view>
-      </picker>
+
       <view class="hobby-item">
-        <view class="hobby-label">兴趣</view>
+        <view class="hobby-label">兴趣（多选）</view>
         <view class="hobby-list">
           <view class="hobby-line" wx:for="{{hobbyList}}" bindtap="changeHobby" data-index="{{index}}"
             wx:key="{{index}}">

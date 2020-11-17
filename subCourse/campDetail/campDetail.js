@@ -66,7 +66,8 @@ Page({
     showAddTeacherCover: false, //显示指引弹窗
     fromPage: '', //页面来源
     userInfo: "", //用户信息
-    promoteUid: "" //分销人id
+    promoteUid: "", //分销人id
+    period: "" //训练营周期
   },
 
   // 关闭引导私域蒙板
@@ -115,16 +116,20 @@ Page({
   // 跳往课程详情
   toCoursedetail(e) {
     let item = e.currentTarget.dataset.item
-    let params = {
-      user_id: this.data.userInfo.id,
-      traincamp_id: this.data.campId,
-      start_date: this.data.joinDate,
-      date: this.data.showDate,
-    }
+
     // 学历数据记录
-    // studyLogCreate(params).then(res => {
-    //   console.log(res)
-    // })
+    if (this.data.hasStartCampType !== 1) {
+      let params = {
+        user_id: this.data.userInfo.id,
+        traincamp_id: this.data.campId,
+        start_date: this.data.joinDate,
+        date: this.data.showDate
+      }
+      studyLogCreate(params).then(res => {
+        console.log(res)
+      })
+    }
+
     if (item.type === 'video') {
       // 视频课程
       this.playVideo()
@@ -251,6 +256,15 @@ Page({
       showCover: false,
       showPlayIcon: false
     })
+    let params = {
+      user_id: this.data.userInfo.id,
+      traincamp_id: this.data.campId,
+      start_date: this.data.joinDate,
+      date: this.data.showDate
+    }
+    studyLogCreate(params).then(res => {
+      console.log(res)
+    })
     this.videoContext.play()
     this.videoContext.requestFullScreen()
   },
@@ -282,7 +296,8 @@ Page({
         traincamp_id: this.data.campId
       }).then(res => {
         this.setData({
-          joinDate: res.date
+          joinDate: res.date,
+          period: res.period
         })
         this.getCampDetailData()
         resolve()
@@ -441,8 +456,6 @@ Page({
           wx.navigateTo({
             url: `/subCourse/applyJoinSchool/applyJoinSchool?campId=${this.data.campId}`,
           })
-        } else {
-          resolve()
         }
       })
     })
@@ -481,6 +494,8 @@ Page({
       this.initCoverShow(campId)
       this.isJoinCamp().then(() => {
         let whatDay = computeDate(new Date().getTime(), new Date(this.data.joinDate).getTime())
+        let nowDate = new Date().getTime()
+        let startDate = new Date(this.data.joinDate).getTime()
         if (choosedDay !== undefined && choosedDay !== 0) {
           let endDate = dateAddDays(this.data.joinDate, (choosedDay - 1) * oneDaySecond, formatType).replace(/-/g, '/')
           let endDateNum = new Date(endDate).getTime()
@@ -494,10 +509,17 @@ Page({
         } else if (choosedDay !== undefined && choosedDay === 0) {
           this.getNowCourse(0)
         } else {
-          this.getNowCourse(whatDay)
+          let oneDaySecond = 86400
+          let formatType = 'yyyy-MM-dd'
+          let endDateStr = dateAddDays(this.data.joinDate, (this.data.period - 1) * oneDaySecond, formatType)
+          let endDate = new Date(endDateStr).getTime()
+          if (nowDate > endDate) {
+            this.getNowCourse(this.data.period)
+          } else {
+            this.getNowCourse(whatDay)
+          }
         }
-        let nowDate = new Date().getTime()
-        let startDate = new Date(this.data.joinDate).getTime()
+
         if (nowDate < startDate) {
           this.setData({
             choosedDay: choosedDay === undefined ? 0 : choosedDay
@@ -528,12 +550,11 @@ Page({
       this.setData({
         userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
       })
+      // 检查是否需要填写学员信息
+      this.checkNeedFillInfo()
     }
     run()
-    // 检查是否需要填写学员信息
-    // this.checkNeedFillInfo().then(() => {
-    //   run()
-    // })
+
   },
 
   /**
