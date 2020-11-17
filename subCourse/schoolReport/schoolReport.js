@@ -3,6 +3,9 @@ import {
   getLocalStorage
 } from "../../utils/util"
 import {
+  getUserInfo
+} from "../../api/mine/index"
+import {
   getCampStageMessgae,
   classCheckin,
   getCampDetail
@@ -44,7 +47,7 @@ Page({
         if (res.code === 0) {
           bxPoint("daxue_enter")
           wx.showToast({
-            title: '报道成功',
+            title: '报到成功',
             icon: "success",
             duration: 3000,
             success: () => {
@@ -89,7 +92,6 @@ Page({
     let sceneAry = ''
     let stage_id = ''
     let class_num = ''
-    console.log(options)
     if (scene) {
       sceneAry = decodeURIComponent(scene).split('/');
       [stage_id = '', class_num = ''] = sceneAry
@@ -106,34 +108,42 @@ Page({
         return
       }
     }
-    let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo)
-    if (userInfo) {
-      getCampStageMessgae({
-        traincamp_stage_id: stage_id
-      }).then(res1 => {
-        console.log(res1)
-        getCampDetail({
-          traincamp_id: res1.data.stage.kecheng_traincamp_id
-        }).then(res => {
-          this.setData({
-            info: {
-              name: res.name,
-              date: res1.data.stage.date,
-              class_num: class_num,
-              stageId: stage_id,
-              campId: res1.data.stage.kecheng_traincamp_id,
-              userId: getLocalStorage(GLOBAL_KEY.userId)
-            }
+    getUserInfo("scene=zhide").then(res => {
+      let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo)
+      if (userInfo) {
+        getCampStageMessgae({
+          traincamp_stage_id: stage_id
+        }).then(res1 => {
+          console.log(res1)
+          getCampDetail({
+            traincamp_id: res1.data.stage.kecheng_traincamp_id
+          }).then(res => {
+            this.setData({
+              info: {
+                name: res.name,
+                date: res1.data.stage.date,
+                class_num: class_num,
+                stageId: stage_id,
+                campId: res1.data.stage.kecheng_traincamp_id,
+                userId: getLocalStorage(GLOBAL_KEY.userId)
+              }
+            })
           })
         })
-      })
-    } else {
+      } else {
+        let redirectPath = `/subCourse/schoolReport/schoolReport?stage_id=${stage_id}&class_num=${class_num}`
+        redirectPath = encodeURIComponent(redirectPath)
+        wx.navigateTo({
+          url: `/pages/auth/auth?redirectPath=${redirectPath}&needDecode=true`,
+        })
+      }
+    }).catch((err) => {
       let redirectPath = `/subCourse/schoolReport/schoolReport?stage_id=${stage_id}&class_num=${class_num}`
       redirectPath = encodeURIComponent(redirectPath)
       wx.navigateTo({
         url: `/pages/auth/auth?redirectPath=${redirectPath}&needDecode=true`,
       })
-    }
+    })
   },
 
   /**
@@ -147,6 +157,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+
     this.setData({
       statusBarHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     })
