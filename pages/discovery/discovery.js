@@ -265,17 +265,7 @@ Page({
 	// 跳往视频课程全部列表
 	toVideoList(e) {
 		let {key} = e.currentTarget.dataset.item
-		let activeIndex = 0
-		switch (key) {
-			case "形体学院": {
-				activeIndex = 1
-				break
-			}
-			case "时尚学院": {
-				activeIndex = 2
-				break
-			}
-		}
+		let activeIndex = this.data.recommendCourseList.findIndex(n => n.key === key) + 1
 		bxPoint("discovery_more_college_info", {collegeName: key}, false)
 		wx.navigateTo({
 			url: `/subCourse/videoCourseList/videoCourseList?index=${activeIndex}`
@@ -339,6 +329,7 @@ Page({
 						target.content = handledList.slice()
 					}
 					if (processIndex === list.length) {
+						resultList = resultList.filter(n => n.content.length > 0)
 						this.setData({recommendCourseList: resultList})
 					}
 					processIndex += 1
