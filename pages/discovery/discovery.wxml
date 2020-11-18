@@ -78,7 +78,7 @@
 
         <!-- 视频课 -->
         <block wx:for="{{recommendCourseList}}" wx:key="index" wx:for-item="recommendCourseItem">
-            <view class="course-layout">{{recommendCourseItem.key}}</view>
+            <view class="course-layout">{{recommendCourseItem.key}}学院</view>
             <view class="course-item" wx:for="{{recommendCourseItem.content}}" wx:key="index" bindtap="toVideoDetail" data-item="{{item}}">
                 <image class="course-image" src="{{item.cover_pic}}"></image>
                 <view class="course-info">
@@ -201,7 +201,7 @@
 
     <view class="tab-pane" wx:if="{{tabIndex === 2}}">
         <block wx:for="{{recommendCourseList}}" wx:key="index" wx:for-item="recommendCourseItem">
-            <view class="course-layout course-tab">{{recommendCourseItem.key}}</view>
+            <view class="course-layout course-tab">{{recommendCourseItem.key}}学院</view>
             <view class="course-item" wx:for="{{recommendCourseItem.content}}" wx:key="index" bindtap="toVideoDetail" data-item="{{item}}">
                 <image class="course-image" src="{{item.cover_pic}}"></image>
                 <view class="course-info">
