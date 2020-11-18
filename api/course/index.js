@@ -1,7 +1,5 @@
 import request from "../../lib/request"
-import {
-	URL
-} from "../../lib/config"
+import { URL } from "../../lib/config"
 
 
 // 获取结构化练习海报背景图
@@ -419,6 +417,7 @@ export function queryVideoCourseListByBuyTag(params) {
 		request._get(URL.getVideoCourseListByBuyTag, params).then(({
 			data
 		}) => {
+			data = data || []
 			resolve(data)
 		})
 	})
@@ -460,6 +459,7 @@ export function getVideoTypeList(params) {
 		request._get(URL.getVideoTypeList, params).then(({
 			data
 		}) => {
+			data = data || []
 			resolve(data)
 		})
 	})
