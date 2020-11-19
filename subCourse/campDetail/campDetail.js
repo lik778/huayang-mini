@@ -278,6 +278,11 @@ Page({
     studyLogCreate(params).then(res => {
       console.log(res)
     })
+    let VideoSrcHost = 'https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com' //视频地址前缀
+    bxPoint('traincamp_video_play', {
+      videoSrc: this.data.campData.src.split(VideoSrcHost)[1],
+      traincamp_id: this.data.campId
+    })
     this.videoContext.play()
     this.videoContext.requestFullScreen()
   },
