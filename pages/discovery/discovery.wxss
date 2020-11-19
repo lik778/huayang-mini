@@ -27,6 +27,14 @@
   z-index: 10;
 }
 
+.tabs-fixed-line {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 1px;
+  background: white;
+}
+
 .tab {
   height: 100rpx;
   margin-right: 60rpx;

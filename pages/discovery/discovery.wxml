@@ -1,9 +1,10 @@
 <!--发现主页-->
 <view class="discovery" bindtouchmove="touchMove" style="visibility: {{canShow?'visible':'hidden'}};">
-    <cover-view class="tabs tabs-fixed" wx:if="{{didFixedTab}}">
-        <cover-view class="tab {{tabIndex===item.id ? 'tab-active' : ''}} tab-ep" wx:for="{{tabs}}" wx:key="{{item.id}}" data-item="{{item}}" bindtap="handleTab">{{item.name}}</cover-view>
-        <cover-view class="tab-underline" style="left: {{tabsOffsetLeftAry[tabIndex]}}px;"></cover-view>
-    </cover-view>
+    <cover-view class="tabs-fixed-line" wx:if="{{didFixedTab}}"></cover-view>
+    <view class="tabs tabs-fixed" wx:if="{{didFixedTab}}">
+        <view class="tab {{tabIndex===item.id ? 'tab-active' : ''}} tab-ep" wx:for="{{tabs}}" wx:key="{{item.id}}" data-item="{{item}}" bindtap="handleTab">{{item.name}}</view>
+        <view class="tab-underline" style="left: {{tabsOffsetLeftAry[tabIndex]}}px;"></view>
+    </view>
     <!--  推广位 -->
     <view class="promotion" wx:if="{{bannerList.length!==0}}">
         <!-- banner 滚动区域 -->
