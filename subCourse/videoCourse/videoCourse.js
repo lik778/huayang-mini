@@ -63,6 +63,8 @@ Page({
     promoteUid: "", //分销分享人ID
     userInfo: "", //用户信息
     showPromotion: true, //分销分享按钮
+    playDurationsList: [], //播放记录秒数打点
+    playDurationsListAll: [], //播放记录所有打点
   },
   initFissionTask() {
     createFissionTask({
@@ -126,6 +128,19 @@ Page({
       playIndex: -1
     })
   },
+
+  // 播放进度变化
+  processChange(e) {
+    let arr = this.data.playDurationsList
+    let time = Math.floor(e.detail.currentTime)
+    if (this.data.playDurationsList.indexOf(time) === -1) {
+      arr.push(time)
+    }
+    this.setData({
+      playDurationsList: arr,
+    })
+  },
+
   // 暂停播放
   pause() {
     if (!this.data.closeCover) {
@@ -134,6 +149,45 @@ Page({
       })
     }
   },
+
+
+  // 记录播放时长打点
+  recordPlayDuration() {
+    let VideoSrcHost = 'https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com' //视频地址前缀
+    let arr = this.data.playDurationsList.sort((a, b) => {
+      return a - b
+    })
+    let time = this.data.courseData.video_detail[this.data.playIndex].duration //视频总时长
+    let splitIndexArr = []
+    let index = 0
+    let timeSnippetArr = []
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i + 1] - arr[i] > 1) {
+        splitIndexArr.push(i + 1)
+      }
+    }
+    while (splitIndexArr.length > 0) {
+      let data = arr.slice(index, splitIndexArr[0])
+      timeSnippetArr.push(data)
+      index = splitIndexArr[0]
+      splitIndexArr.splice(0, 1)
+      if (splitIndexArr.length === 0) {
+        timeSnippetArr.push(arr.slice(index, arr.length))
+      }
+    }
+    bxPoint("page_series", {
+      scene:'page_series',
+      kecheng_series_id: this.data.videoId,
+      video_src: this.data.videoSrc.split(VideoSrcHost)[1],
+      lesson_num: `第${this.data.playIndex + 1}节课`,
+      play_duration: {
+        time_snippet: timeSnippetArr.length === 0 ? arr : timeSnippetArr, //事件片段
+        total_duration: time, //视频总时间
+        total_visit_duration: arr.length, // 总观看时间
+      },
+    })
+  },
+
   // 加入课程
   join() {
     let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo) === undefined ? '' : JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
@@ -288,8 +342,9 @@ Page({
       videoListAll = JSON.parse(res.video_detail)
       for (let i in videoListAll) {
         // 处理课程视频长度以及第xx节课
+        videoListAll[i].duration = videoListAll[i].time
         videoListAll[i].time = secondToMinute(videoListAll[i].time)
-        // videoListAll[i].time = simpleDurationDate(videoListAll[i].time, 's')
+        console.log(videoListAll[i])
         videoListAll[i].Index = convertToChinaNum(parseInt(i) + 1)
       }
       res.video_detail = videoListAll.slice(0, 3)
@@ -602,14 +657,16 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    // 记录播放时长打点
+    this.recordPlayDuration()
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    // 记录播放时长打点
+    this.recordPlayDuration()
   },
 
   /**

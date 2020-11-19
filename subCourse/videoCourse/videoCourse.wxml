@@ -2,7 +2,7 @@
 <view class="video-course" wx:if="courseData!==''">
   <!-- 视频区域 -->
   <view class="video" style="{{videoStyle}}">
-    <video id="myVideo" bindplay="playVideo" src="{{videoSrc}}" style="{{videoHeight}}" bindpause="pause"
+    <video id="myVideo" bindplay="playVideo" src="{{videoSrc}}" style="{{videoHeight}}" bindpause="pause" bindtimeupdate="processChange"
       controls="{{showLock?false:true}}" show-center-play-btn="{{false}}" bindended="endVideo">
     </video>
     <view class="video-cover-one" wx:if="{{showVideoCover}}">

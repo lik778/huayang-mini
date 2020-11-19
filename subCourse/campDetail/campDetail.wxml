@@ -55,7 +55,7 @@
       <view class="video-player" wx:if="{{videoData.src!==''}}">
         <view class="video-box">
           <video id="video" show-center-play-btn="{{false}}" bindfullscreenchange="enterFull" src="{{videoData.src}}"
-            style="height:{{videoHeight}}px"></video>
+            style="height:{{videoHeight}}px" bindtimeupdate="processChange"></video>
           <image src="{{videoData.pic}}" wx:if="{{showCover}}" class="video-cover"></image>
           <image src="/assets/images/common/play.png" wx:if="{{showPlayIcon}}" class="video-play" bindtap="playVideo"
             wx:if="{{!showLock}}"></image>
@@ -66,7 +66,7 @@
       <!-- 课程列表 -->
       <view class="course-list">
         <view class="course-item" wx:for="{{courseList}}" wx:key="*this" bindtap="{{showLock?'':'toCoursedetail'}}"
-          data-item="{{item}}">
+          data-item="{{item}}" data-index='{{index}}'>
           <view class="course-item-left">
             <block wx:if="{{!showLock}}">
               <image src="{{iconSrcList.course}}" wx:if="{{item.type==='kecheng'}}"></image>

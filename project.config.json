@@ -269,6 +269,12 @@
           "pathName": "subCourse/schoolReportResult/schoolReportResult",
           "query": "data= {\"name\":\"学员信息录入测试\",\"date\":\"2020-11-12\",\"class_num\":\"1\",\"stageId\":\"1\",\"campId\":40,\"userId\":228}",
           "scene": null
+        },
+        {
+          "name": "视频详情",
+          "pathName": "subCourse/videoCourse/videoCourse",
+          "query": "videoId=42",
+          "scene": null
         }
       ]
     }

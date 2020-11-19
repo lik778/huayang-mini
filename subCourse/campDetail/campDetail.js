@@ -67,7 +67,10 @@ Page({
     fromPage: '', //页面来源
     userInfo: "", //用户信息
     promoteUid: "", //分销人id
-    period: "" //训练营周期
+    period: "", //训练营周期
+    playDurationsList: [],
+    totalDurantion: 0, //视频总时长
+    playIndex: 0 //课程下标
   },
 
   // 关闭引导私域蒙板
@@ -116,7 +119,10 @@ Page({
   // 跳往课程详情
   toCoursedetail(e) {
     let item = e.currentTarget.dataset.item
-
+    let index = e.currentTarget.dataset.index
+    this.setData({
+      playIndex: index
+    })
     // 学历数据记录
     if (this.data.hasStartCampType !== 1) {
       let params = {
@@ -140,7 +146,8 @@ Page({
         }
       })
       bxPoint('traincamp_every_day', {
-        is_course: true
+        is_course: true,
+        traincamp_id: this.data.campId
       }, false)
     } else if (item.type === 'kecheng') {
       // 课程
@@ -152,7 +159,8 @@ Page({
 
             // 直播
             bxPoint('traincamp_every_day', {
-              is_course: true
+              is_course: true,
+              traincamp_id: this.data.campId
             }, false)
             getWxRoomData({
               zhibo_room_id: res.room_id
@@ -164,7 +172,8 @@ Page({
           } else if (res.kecheng_type === 1) {
             // 回看
             bxPoint('traincamp_every_day', {
-              is_course: true
+              is_course: true,
+              traincamp_id: this.data.campId
             }, false)
             getWxRoomData({
               zhibo_room_id: res.room_id
@@ -176,7 +185,8 @@ Page({
           } else if (res.kecheng_type === 2) {
             // 小额通
             bxPoint('traincamp_every_day', {
-              is_course: false
+              is_course: false,
+              traincamp_id: this.data.campId
             }, false)
             wx.navigateTo({
               url: `/pages/webViewCommon/webViewCommon?link=${res.xiaoetong_url}`,
@@ -184,7 +194,8 @@ Page({
           } else {
             // 结构化
             bxPoint('traincamp_every_day', {
-              is_course: true
+              is_course: true,
+              traincamp_id: this.data.campId
             }, false)
             wx.navigateTo({
               url: `/subCourse/practiceDetail/practiceDetail?courseId=${res.id}&parentBootCampId=${this.data.campId}&formCampDetail=payUser`,
@@ -201,7 +212,8 @@ Page({
     } else if (item.type === 'product') {
       // 商品
       bxPoint('traincamp_every_day', {
-        is_course: false
+        is_course: false,
+        traincamp_id: this.data.campId
       }, false)
       getProductInfo({
         product_id: item.product_id,
@@ -214,7 +226,8 @@ Page({
     } else if (item.type === 'url') {
       // url
       bxPoint('traincamp_every_day', {
-        is_course: false
+        is_course: false,
+        traincamp_id: this.data.campId
       }, false)
       let link = encodeURIComponent(item.url)
       wx.navigateTo({
@@ -461,6 +474,58 @@ Page({
     })
 
   },
+
+  // 播放进度变化
+  processChange(e) {
+    let arr = this.data.playDurationsList
+    let time = Math.floor(e.detail.currentTime)
+    if (this.data.playDurationsList.indexOf(time) === -1) {
+      arr.push(time)
+    }
+    this.setData({
+      playDurationsList: arr,
+      totalDurantion: Math.floor(e.detail.duration)
+    })
+  },
+
+  // 记录播放时长打点
+  recordPlayDuration() {
+    let VideoSrcHost = 'https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com' //视频地址前缀
+    let arr = this.data.playDurationsList.sort((a, b) => {
+      return a - b
+    })
+    let time = this.data.totalDurantion //视频总时长
+    let splitIndexArr = []
+    let index = 0
+    let timeSnippetArr = []
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i + 1] - arr[i] > 1) {
+        splitIndexArr.push(i + 1)
+      }
+    }
+    while (splitIndexArr.length > 0) {
+      let data = arr.slice(index, splitIndexArr[0])
+      timeSnippetArr.push(data)
+      index = splitIndexArr[0]
+      splitIndexArr.splice(0, 1)
+      if (splitIndexArr.length === 0) {
+        timeSnippetArr.push(arr.slice(index, arr.length))
+      }
+    }
+    bxPoint("page_traincamp", {
+      scene: 'page_traincamp',
+      traincamp_id: this.data.campId,
+      video_src: this.data.videoData.src.split(VideoSrcHost)[1],
+      lesson_num: `第${this.data.playIndex + 1}节课`,
+      play_duration: {
+        time_snippet: timeSnippetArr.length === 0 ? arr : timeSnippetArr, //事件片段
+        total_duration: time, //视频总时间
+        total_visit_duration: arr.length, // 总观看时间
+      },
+    })
+  },
+
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -528,6 +593,7 @@ Page({
         this.setData({
           whatDay
         })
+
       })
       // 通过小程序码进入 scene=${source}
       if (scene) {
@@ -572,6 +638,7 @@ Page({
       from_uid: getApp().globalData.super_user_id,
       bootcampId: this.data.campId
     })
+
     let height = parseInt(((JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth - 114) / 16) * 9)
     this.setData({
       statusBarHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
@@ -583,14 +650,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    this.recordPlayDuration()
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    this.recordPlayDuration()
   },
 
   /**
