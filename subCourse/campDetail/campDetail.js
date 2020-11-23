@@ -70,7 +70,8 @@ Page({
     period: "", //训练营周期
     playDurationsList: [],
     totalDurantion: 0, //视频总时长
-    playIndex: 0 //课程下标
+    playIndex: 0, //课程下标
+    hasPlayVideo: false
   },
 
   // 关闭引导私域蒙板
@@ -265,9 +266,11 @@ Page({
 
   // 视频播放
   playVideo() {
+
     this.setData({
       showCover: false,
-      showPlayIcon: false
+      showPlayIcon: false,
+      hasPlayVideo: true
     })
     let params = {
       user_id: this.data.userInfo.id,
@@ -280,9 +283,9 @@ Page({
     })
     let VideoSrcHost = 'https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com' //视频地址前缀
     bxPoint('traincamp_video_play', {
-      videoSrc: this.data.campData.src.split(VideoSrcHost)[1],
+      videoSrc: this.data.campData.intro_video_link.split(VideoSrcHost)[1],
       traincamp_id: this.data.campId
-    })
+    }, false)
     this.videoContext.play()
     this.videoContext.requestFullScreen()
   },
@@ -293,7 +296,7 @@ Page({
       open_id: getLocalStorage(GLOBAL_KEY.openId),
       user_id: getLocalStorage(GLOBAL_KEY.userId),
       isPromoter: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).kecheng_user.is_promoter === 1 ? true : false
-    })
+    }, false)
   },
 
   // 进/退全屏
@@ -495,6 +498,7 @@ Page({
 
   // 记录播放时长打点
   recordPlayDuration() {
+    if (!this.data.hasPlayVideo) return
     let VideoSrcHost = 'https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com' //视频地址前缀
     let arr = this.data.playDurationsList.sort((a, b) => {
       return a - b
@@ -517,7 +521,7 @@ Page({
         timeSnippetArr.push(arr.slice(index, arr.length))
       }
     }
-    bxPoint("page_traincamp", {
+    console.log({
       scene: 'page_traincamp',
       traincamp_id: this.data.campId,
       video_src: this.data.videoData.src.split(VideoSrcHost)[1],
@@ -528,6 +532,17 @@ Page({
         total_visit_duration: arr.length, // 总观看时间
       },
     })
+    bxPoint("page_traincamp", {
+      scene: 'page_traincamp',
+      traincamp_id: this.data.campId,
+      video_src: this.data.videoData.src.split(VideoSrcHost)[1],
+      lesson_num: `第${this.data.playIndex + 1}节课`,
+      play_duration: {
+        time_snippet: timeSnippetArr.length === 0 ? arr : timeSnippetArr, //事件片段
+        total_duration: time, //视频总时间
+        total_visit_duration: arr.length, // 总观看时间
+      },
+    }, false)
   },
 
 

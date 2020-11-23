@@ -185,7 +185,7 @@ Page({
         total_duration: time, //视频总时间
         total_visit_duration: arr.length, // 总观看时间
       },
-    })
+    },false)
   },
 
   // 加入课程
@@ -589,7 +589,7 @@ Page({
       open_id: getLocalStorage(GLOBAL_KEY.openId),
       user_id: getLocalStorage(GLOBAL_KEY.userId),
       isPromoter: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).kecheng_user.is_promoter === 1 ? true : false
-    })
+    },false)
   },
 
   /**
