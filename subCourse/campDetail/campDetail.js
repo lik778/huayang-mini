@@ -122,11 +122,12 @@ Page({
   toCoursedetail(e) {
     let item = e.currentTarget.dataset.item
     let index = e.currentTarget.dataset.index
+    let VideoSrcHost = 'https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com' //视频地址前缀
     this.setData({
       playIndex: index
     })
     // 学历数据记录
-    if (this.data.hasStartCampType !== 1) {
+    if (this.data.hasStartCampType !== 1 && item.type !== 'video') {
       let params = {
         user_id: this.data.userInfo.id,
         traincamp_id: this.data.campId,
@@ -150,12 +151,12 @@ Page({
       })
 
 
-      bxPoint('traincamp_every_day', {
-        videoSrc: this.data.campData.intro_video_link.split(VideoSrcHost)[1],
-        is_course: true,
-        traincamp_id: this.data.campId,
-        lesson_num: `第${this.data.videoData.index+1}节课`,
-      }, false)
+      // bxPoint('traincamp_every_day', {
+      //   videoSrc: this.data.videoData.src.split(VideoSrcHost)[1],
+      //   is_course: true,
+      //   traincamp_id: this.data.campId,
+      //   lesson_num: `第${this.data.videoData.index+1}节课`,
+      // }, false)
 
     } else if (item.type === 'kecheng') {
       // 课程
@@ -167,7 +168,7 @@ Page({
 
             // 直播
             bxPoint('traincamp_every_day', {
-              videoSrc: this.data.campData.intro_video_link.split(VideoSrcHost)[1],
+              videoSrc: this.data.videoData.src.split(VideoSrcHost)[1],
               is_course: true,
               lesson_num: `第${this.data.videoData.index+1}节课`,
               traincamp_id: this.data.campId
@@ -185,7 +186,7 @@ Page({
 
 
             bxPoint('traincamp_every_day', {
-              videoSrc: this.data.campData.intro_video_link.split(VideoSrcHost)[1],
+              videoSrc: this.data.videoData.src.split(VideoSrcHost)[1],
               lesson_num: `第${this.data.videoData.index+1}节课`,
               is_course: true,
               traincamp_id: this.data.campId
@@ -213,7 +214,7 @@ Page({
 
 
             bxPoint('traincamp_every_day', {
-              videoSrc: this.data.campData.intro_video_link.split(VideoSrcHost)[1],
+              videoSrc: this.data.videoData.src.split(VideoSrcHost)[1],
               lesson_num: `第${this.data.videoData.index+1}节课`,
               is_course: true,
               traincamp_id: this.data.campId
@@ -308,7 +309,7 @@ Page({
     let VideoSrcHost = 'https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com' //视频地址前缀
     console.log(this.data.videoData)
     bxPoint('traincamp_every_day', {
-      videoSrc: this.data.campData.intro_video_link.split(VideoSrcHost)[1],
+      videoSrc: this.data.videoData.src.split(VideoSrcHost)[1],
       traincamp_id: this.data.campId,
       is_course: true,
       lesson_num: `第${this.data.videoData.index+1}节课`,
