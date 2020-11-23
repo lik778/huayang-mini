@@ -72,7 +72,8 @@ Page({
     playDurationsList: [],
     totalDurantion: 0, //视频总时长
     playIndex: 0, //课程下标
-    hasPlayVideo: false
+    hasPlayVideo: false,
+    createPoint: true, //打点lock
   },
 
   // 关闭引导私域蒙板
@@ -134,9 +135,25 @@ Page({
         start_date: this.data.joinDate,
         date: this.data.showDate
       }
-      studyLogCreate(params).then(res => {
-        console.log(res)
-      })
+      if (this.data.createPoint) {
+        this.setData({
+          createPoint: false
+        })
+        studyLogCreate(params).then(res => {
+          setTimeout(() => {
+            this.setData({
+              createPoint: true
+            })
+          }, 1000)
+        }).catch(() => {
+          setTimeout(() => {
+            this.setData({
+              createPoint: true
+            })
+          }, 1000)
+        })
+      }
+
     }
 
     if (item.type === 'video') {
@@ -303,9 +320,24 @@ Page({
       start_date: this.data.joinDate,
       date: this.data.showDate
     }
-    studyLogCreate(params).then(res => {
-      console.log(res)
-    })
+    if (this.data.createPoint) {
+      this.setData({
+        createPoint: false
+      })
+      studyLogCreate(params).then(res => {
+        setTimeout(() => {
+          this.setData({
+            createPoint: true
+          })
+        }, 1000)
+      }).catch(() => {
+        setTimeout(() => {
+          this.setData({
+            createPoint: true
+          })
+        }, 1000)
+      })
+    }
     let VideoSrcHost = 'https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com' //视频地址前缀
     console.log(this.data.videoData)
     bxPoint('traincamp_every_day', {
