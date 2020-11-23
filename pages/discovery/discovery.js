@@ -265,17 +265,7 @@ Page({
 	// 跳往视频课程全部列表
 	toVideoList(e) {
 		let {key} = e.currentTarget.dataset.item
-		let activeIndex = 0
-		switch (key) {
-			case "形体学院": {
-				activeIndex = 1
-				break
-			}
-			case "时尚学院": {
-				activeIndex = 2
-				break
-			}
-		}
+		let activeIndex = this.data.recommendCourseList.findIndex(n => n.key === key) + 1
 		bxPoint("discovery_more_college_info", {collegeName: key}, false)
 		wx.navigateTo({
 			url: `/subCourse/videoCourseList/videoCourseList?index=${activeIndex}`
@@ -290,8 +280,10 @@ Page({
 	// 加载"全部"或"推荐"的视频系列课
 	getVideoCourse() {
 		getVideoTypeList().then((list) => {
+			let processIndex = 1
 			let resultList = []
 			list.forEach(({key, value}) => {
+				resultList.push({key: value, content: []})
 				let params = {limit: 5, category: key}
 				if (getLocalStorage(GLOBAL_KEY.userId)) {
 					params.user_id = getLocalStorage(GLOBAL_KEY.userId)
@@ -332,10 +324,15 @@ Page({
 
 						return res
 					})
-					resultList.push({key: value, content: handledList.slice()})
-					if (resultList.length === list.length) {
+					if (handledList.length > 0) {
+						let target = resultList.find(n => n.key === value)
+						target.content = handledList.slice()
+					}
+					if (processIndex === list.length) {
+						resultList = resultList.filter(n => n.content.length > 0)
 						this.setData({recommendCourseList: resultList})
 					}
+					processIndex += 1
 				})
 			})
 		})

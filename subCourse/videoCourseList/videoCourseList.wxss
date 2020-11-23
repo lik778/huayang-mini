@@ -1,9 +1,21 @@
 @import "../../assets/css/common.wxss";
 
+.tabs-fixed-line {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 1px;
+  background: white;
+}
+
 .type-list {
   display: flex;
   align-items: center;
   position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
   width: calc(100% - 80rpx);
   padding: 32rpx 50rpx 10rpx 30rpx;
   background: #fff;

@@ -1,9 +1,10 @@
 <!--发现主页-->
 <view class="discovery" bindtouchmove="touchMove" style="visibility: {{canShow?'visible':'hidden'}};">
-    <cover-view class="tabs tabs-fixed" wx:if="{{didFixedTab}}">
-        <cover-view class="tab {{tabIndex===item.id ? 'tab-active' : ''}} tab-ep" wx:for="{{tabs}}" wx:key="{{item.id}}" data-item="{{item}}" bindtap="handleTab">{{item.name}}</cover-view>
-        <cover-view class="tab-underline" style="left: {{tabsOffsetLeftAry[tabIndex]}}px;"></cover-view>
-    </cover-view>
+    <cover-view class="tabs-fixed-line" wx:if="{{didFixedTab}}"></cover-view>
+    <view class="tabs tabs-fixed" wx:if="{{didFixedTab}}">
+        <view class="tab {{tabIndex===item.id ? 'tab-active' : ''}} tab-ep" wx:for="{{tabs}}" wx:key="{{item.id}}" data-item="{{item}}" bindtap="handleTab">{{item.name}}</view>
+        <view class="tab-underline" style="left: {{tabsOffsetLeftAry[tabIndex]}}px;"></view>
+    </view>
     <!--  推广位 -->
     <view class="promotion" wx:if="{{bannerList.length!==0}}">
         <!-- banner 滚动区域 -->
@@ -78,7 +79,7 @@
 
         <!-- 视频课 -->
         <block wx:for="{{recommendCourseList}}" wx:key="index" wx:for-item="recommendCourseItem">
-            <view class="course-layout">{{recommendCourseItem.key}}</view>
+            <view class="course-layout">{{recommendCourseItem.key}}学院</view>
             <view class="course-item" wx:for="{{recommendCourseItem.content}}" wx:key="index" bindtap="toVideoDetail" data-item="{{item}}">
                 <image class="course-image" src="{{item.cover_pic}}"></image>
                 <view class="course-info">
@@ -201,7 +202,7 @@
 
     <view class="tab-pane" wx:if="{{tabIndex === 2}}">
         <block wx:for="{{recommendCourseList}}" wx:key="index" wx:for-item="recommendCourseItem">
-            <view class="course-layout course-tab">{{recommendCourseItem.key}}</view>
+            <view class="course-layout course-tab">{{recommendCourseItem.key}}学院</view>
             <view class="course-item" wx:for="{{recommendCourseItem.content}}" wx:key="index" bindtap="toVideoDetail" data-item="{{item}}">
                 <image class="course-image" src="{{item.cover_pic}}"></image>
                 <view class="course-info">
