@@ -393,6 +393,7 @@ Page({
 
     bxPoint("camp_introduce", {
       from_uid: getApp().globalData.super_user_id,
+      bootcampId: this.data.campId,
       source: getApp().globalData.source,
     })
   },

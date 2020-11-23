@@ -943,3 +943,12 @@ export const checkIsPrice = e => {
 		return false;
 	}
 };
+
+// 获取两个自然数之前的所有正整数
+export function getAllNumber(a, b) {
+	let arr = []
+	for (var i = a; i <= b; i++) {
+		arr.push(i)
+	}
+	return arr
+}
