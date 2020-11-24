@@ -1,5 +1,7 @@
 import request from "../../lib/request"
-import { URL } from "../../lib/config"
+import {
+	URL
+} from "../../lib/config"
 
 
 // 获取结构化练习海报背景图
@@ -656,4 +658,10 @@ export const studyLogCreate = params => {
 // 获取学员信息
 export const checkNeedToFillInfo = params => {
 	return request._get(URL.checkNeedToFillInfo, params)
+}
+
+
+// 判断用户当日是否学习
+export const dailyStudyCheck = params => {
+	return request._get(URL.dailyStudyCheck, params)
 }

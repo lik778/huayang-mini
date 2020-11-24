@@ -1,0 +1,21 @@
+<!--subCourse/campSharePoster/campSharePoster.wxml-->
+<view class="container">
+  <!--  navibar -->
+  <view class="navigation" style="padding-top:{{statusHeight+43}}px;background:#37383B;">
+    <naviBar title="入学申请" color='#37383B' titleColor='#fff'></naviBar>
+  </view>
+  <!-- 主体 -->
+  <view class="main">
+    <view class="poster">
+      <canvas canvas-id='canvas' style="width:900px;height:1440px;"></canvas>
+      <image src="{{backSrc}}" style="width:{{canvasWidth}}px;height:{{canvasHeight}}px;"></image>
+    </view>
+    <view class="button">
+      <view class="button-left subject-font-color" bindtap="shareTofriend">
+        <button open-type="share">分享到群内打卡</button>
+        <view class="button-left-share" >分享到群内打卡</view>
+      </view>
+      <view class="button-right subject-bg-color" bindtap="downloadPoster">保存海报到相册</view>
+    </view>
+  </view>
+</view>

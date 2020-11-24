@@ -1,14 +1,21 @@
 //app.js
-import { getLocalStorage, setLocalStorage } from './utils/util'
-import { GLOBAL_KEY } from './lib/config'
-import { collectError } from "./api/auth/index"
+import {
+	getLocalStorage,
+	setLocalStorage
+} from './utils/util'
+import {
+	GLOBAL_KEY
+} from './lib/config'
+import {
+	collectError
+} from "./api/auth/index"
 
 App({
 	onLaunch: function () {
 		wx.loadFontFace({
 			global: true,
 			family: 'Condensed',
-			source: 'url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/font/DIN%20Condensed%20Bold.ttf")',
+			source: 'url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/font/DIN%20Condensed%20Bold.ttf")'
 		})
 	},
 	onShow(options) {

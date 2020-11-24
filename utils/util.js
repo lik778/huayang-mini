@@ -917,7 +917,7 @@ export const getNowDate = (linkIcon) => {
 
 // 获取当天日期
 //显示日期在页面上  yyy-MM-dd
-export const getNowDateAll = (linkIcon) => {
+export const getNowDateAll = (linkIcon = '-') => {
 	let date = new Date();
 	//年
 	let year = date.getFullYear();

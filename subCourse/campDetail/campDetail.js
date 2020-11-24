@@ -8,7 +8,9 @@ import {
   getHasJoinCamp,
   getWxRoomData,
   checkNeedToFillInfo,
-  studyLogCreate
+  studyLogCreate,
+  dailyStudyCheck,
+
 } from "../../api/course/index"
 import {
   getProductInfo,
@@ -20,7 +22,8 @@ import {
   getLocalStorage,
   getNowDate,
   setLocalStorage,
-  simpleDurationSimple
+  simpleDurationSimple,
+  getNowDateAll
 } from "../../utils/util"
 import bxPoint from '../../utils/bxPoint'
 import {
@@ -74,6 +77,24 @@ Page({
     playIndex: 0, //课程下标
     hasPlayVideo: false,
     createPoint: true, //打点lock
+    showShareButton: false, //是否显示分享海报跳转按钮
+    dayNum: 0
+  },
+
+  // 跳转至训练营海报页
+  toCampPoster() {
+    let obj = Object.assign(this.data.campData, {
+      day_num: this.data.dayNum
+    })
+    let data = JSON.stringify(obj)
+    bxPoint("page_traincamp_share_button", {
+      traincamp_id: this.data.campData.id,
+      date: getNowDateAll('-'),
+      day_num: this.data.dayNum
+    }, false)
+    wx.navigateTo({
+      url: `/subCourse/campSharePoster/campSharePoster?data=${data}`,
+    })
   },
 
   // 关闭引导私域蒙板
@@ -447,6 +468,28 @@ Page({
       traincamp_id: this.data.campId
     }).then(res => {
       let list = res.content ? JSON.parse(res.content) : []
+      if (dayNum !== 0) {
+        dailyStudyCheck({
+          user_id: this.data.userInfo.id,
+          traincamp_id: this.data.campId,
+          start_date: this.data.joinDate,
+          date: this.data.showDate
+        }).then(res => {
+          if (res.data) {
+            this.setData({
+              showShareButton: true
+            })
+          } else {
+            this.setData({
+              showShareButton: false
+            })
+          }
+        })
+      } else {
+        this.setData({
+          showShareButton: false
+        })
+      }
       if (list.length > 0) {
         for (let i = 0; i < list.length; i++) {
           if (list[i].type === "kecheng") {
@@ -470,7 +513,8 @@ Page({
         }
       }
       this.setData({
-        courseList: list
+        courseList: list,
+        dayNum: dayNum
       })
     })
   },

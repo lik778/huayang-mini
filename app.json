@@ -87,7 +87,8 @@
         "noAuthWebview/noAuthWebview",
         "applyJoinSchool/applyJoinSchool",
         "schoolReport/schoolReport",
-        "schoolReportResult/schoolReportResult"
+        "schoolReportResult/schoolReportResult",
+        "campSharePoster/campSharePoster"
       ]
     },
     {

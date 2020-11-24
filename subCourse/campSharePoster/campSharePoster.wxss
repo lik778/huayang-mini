@@ -1,0 +1,76 @@
+/* subCourse/campSharePoster/campSharePoster.wxss */
+@import "../../assets/css/common.wxss";
+
+.container {
+  background: #37383B;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.main {
+  margin-top: 60rpx;
+}
+
+.main canvas {
+  margin: 0 auto;
+  left: -900px;
+  top: 0;
+}
+
+.poster {
+  position: relative;
+}
+
+.poster image {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: calc(100% - 60rpx);
+  position: absolute;
+  bottom: 12rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.button-left {
+  width: 330rpx;
+  height: 96rpx;
+  border-radius: 999rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  line-height: 44rpx;
+  background: #fff;
+  text-align: center;
+  line-height: 96rpx;
+  position: relative;
+}
+
+.button-left button {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  width: 330rpx;
+  height: 96rpx;
+}
+
+.button-right {
+  width: 330rpx;
+  height: 96rpx;
+  border-radius: 999rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  line-height: 96rpx;
+  /* font-family: Condensed; */
+}
