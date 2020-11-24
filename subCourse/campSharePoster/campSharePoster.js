@@ -325,6 +325,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: `我正在参加${this.data.campAllData.name}，每天都有看的见的变化，快来试试`,
+      path: `/subCourse/campDetail/campDetail?id=${this.data.campAllData.id}&share=true`
+    }
   }
 })
