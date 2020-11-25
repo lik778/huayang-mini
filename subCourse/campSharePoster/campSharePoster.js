@@ -106,7 +106,7 @@ Page({
     let fontNomal = 'PingFangSC-Semibold, PingFang SC'
     let headIcon = this.data.userInfo.avatar_url
     ctx.scale(3, 3)
-    this.drawRact(ctx, 0, 0,300,480, '#fff').then(() => {
+    this.drawRact(ctx, 0, 0, 300, 480, '#fff').then(() => {
       // 绘制主视觉
       this.drawImage(ctx, this.data.bgSrc, 0, 0, 300, 347).then(() => {
         // 绘制日期
@@ -122,23 +122,22 @@ Page({
             this.drawFont(ctx, String(this.data.campAllData.day_num), "#000", 'bold', fontNomal, 30, 34, 425)
             this.drawFont(ctx, '天课程', "#000", 'normal', fontNomal, 14, elem + 39, 438)
             this.drawFont(ctx, '长按识别二维码', "#000", 'normal', fontNomal, 10, 220, 442)
-            this.drawFont(ctx, '一起练习', "#000", 'normal', fontNomal, 10, 235, 456).then(() => {
-              this.drawImage(ctx, this.data.campAllData.qrcode, 221, 374, 68, 68).then(() => {
-                ctx.draw(false, () => {
-                  wx.canvasToTempFilePath({
-                    canvasId: 'canvas',
-                    success: (res) => {
-                      let tempFilePath = res.tempFilePath;
-                      wx.hideLoading()
-                      this.setData({
-                        backSrc: tempFilePath
-                      })
-                    },
-                    fail: function (res) {
-                      console.log(res);
-                    }
-                  }, this);
-                })
+            this.drawFont(ctx, '一起练习', "#000", 'normal', fontNomal, 10, 235, 456)
+            this.drawImage(ctx, this.data.campAllData.qrcode, 221, 374, 68, 68).then(() => {
+              ctx.draw(false, () => {
+                wx.canvasToTempFilePath({
+                  canvasId: 'canvas',
+                  success: (res) => {
+                    let tempFilePath = res.tempFilePath;
+                    wx.hideLoading()
+                    this.setData({
+                      backSrc: tempFilePath
+                    })
+                  },
+                  fail: function (res) {
+                    console.log(res);
+                  }
+                }, this);
               })
             })
           })

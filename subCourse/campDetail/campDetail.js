@@ -351,7 +351,6 @@ Page({
       })
     }
     let VideoSrcHost = 'https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com' //视频地址前缀
-    console.log(this.data.videoData)
     bxPoint('traincamp_every_day', {
       videoSrc: this.data.videoData.src.split(VideoSrcHost)[1],
       traincamp_id: this.data.campId,
@@ -459,7 +458,6 @@ Page({
 
   // 获取当天课程
   getNowCourse(dayNum) {
-    console.log(this.data.showDate)
     getCurentDayData({
       day_num: dayNum,
       traincamp_id: this.data.campId
