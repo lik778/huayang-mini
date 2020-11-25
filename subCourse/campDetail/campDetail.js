@@ -78,7 +78,8 @@ Page({
     hasPlayVideo: false,
     createPoint: true, //打点lock
     showShareButton: false, //是否显示分享海报跳转按钮
-    dayNum: 0
+    dayNum: 0,
+    canShowPage: false
   },
 
   // 跳转至训练营海报页
@@ -148,35 +149,6 @@ Page({
     this.setData({
       playIndex: index
     })
-    // 学历数据记录
-    if (this.data.hasStartCampType !== 1 && item.type !== 'video') {
-      let params = {
-        user_id: this.data.userInfo.id,
-        traincamp_id: this.data.campId,
-        start_date: this.data.joinDate,
-        date: this.data.showDate
-      }
-      if (this.data.createPoint) {
-        this.setData({
-          createPoint: false
-        })
-        studyLogCreate(params).then(res => {
-          setTimeout(() => {
-            this.setData({
-              createPoint: true
-            })
-          }, 1000)
-        }).catch(() => {
-          setTimeout(() => {
-            this.setData({
-              createPoint: true
-            })
-          }, 1000)
-        })
-      }
-
-    }
-
     if (item.type === 'video') {
       // 视频课程
       this.playVideo()
@@ -187,17 +159,36 @@ Page({
           index: index
         }
       })
-
-
-      // bxPoint('traincamp_every_day', {
-      //   videoSrc: this.data.videoData.src.split(VideoSrcHost)[1],
-      //   is_course: true,
-      //   traincamp_id: this.data.campId,
-      //   lesson_num: `第${this.data.videoData.index+1}节课`,
-      // }, false)
-
     } else if (item.type === 'kecheng') {
       // 课程
+      if (this.data.hasStartCampType !== 1) {
+        // 学历数据记录
+        let params = {
+          user_id: this.data.userInfo.id,
+          traincamp_id: this.data.campId,
+          start_date: this.data.joinDate,
+          date: this.data.showDate
+        }
+        if (this.data.createPoint) {
+          this.setData({
+            createPoint: false
+          })
+          studyLogCreate(params).then(res => {
+            setTimeout(() => {
+              this.setData({
+                createPoint: true
+              })
+            }, 1000)
+          }).catch(() => {
+            setTimeout(() => {
+              this.setData({
+                createPoint: true
+              })
+            }, 1000)
+          })
+        }
+      }
+
       getCourseData({
         kecheng_id: item.kecheng_id,
       }).then((res) => {
@@ -504,7 +495,8 @@ Page({
             }).then(res => {
               list[i].duration = simpleDurationSimple(res.duration)
               this.setData({
-                courseList: list
+                courseList: list,
+                canShowPage: true
               })
             })
           } else if (list[i].type === "video" && this.data.videoData.src === '') {
@@ -513,14 +505,19 @@ Page({
                 src: list[i].video,
                 pic: list[i].cover,
                 index: i
-              }
+              },
+              courseList: list,
+              canShowPage: true
             })
           }
         }
+      } else {
+        this.setData({
+          canShowPage: true
+        })
       }
       this.setData({
-        courseList: list,
-        dayNum: dayNum
+        dayNum: dayNum,
       })
     })
   },

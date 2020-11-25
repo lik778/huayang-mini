@@ -922,7 +922,7 @@ export const getNowDateAll = (linkIcon = '-') => {
 	//年
 	let year = date.getFullYear();
 	//月
-	let month = date.getMonth() + 1 < 10 ? "0" + date.getMonth() : date.getMonth();
+	let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
 	//日
 	let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
 	//时

@@ -2,7 +2,7 @@
 <view class="container">
   <!--  navibar -->
   <view class="navigation" style="padding-top:{{statusHeight+43}}px;background:#37383B;">
-    <naviBar title="训练结束" color='#37383B' titleColor='#fff'></naviBar>
+    <naviBar title="学习打卡" color='#37383B' titleColor='#fff'></naviBar>
   </view>
   <!-- 主体 -->
   <view class="main">

@@ -1,5 +1,5 @@
 <!--subCourse/trainingCampDetail/trainingCampDetail.wxml-->
-<view class="container" wx:if="{{campData!==''}}">
+<view class="container" wx:if="{{campData!==''&&canShowPage}}">
   <!-- 返回按钮 -->
   <view class="back-icon" bindtap="back" style="padding-top:{{statusBarHeight}}px">
     <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597131543zKwtZa.jpg"></image>
@@ -98,8 +98,9 @@
     </view>
   </view>
   <!-- 分享跳转海报按钮 -->
-  <view class="share-poster-box subject-bg-color " wx:if='{{showShareButton}}' bindtap="toCampPoster">
-    分享好友，一起学习 ›
+  <view class="share-poster-box subject-bg-color " wx:if='{{showShareButton&&courseList.length>0}}'
+    bindtap="toCampPoster">
+    学习打卡
     <!-- share-poster-box -->
   </view>
   <!-- 添加班主任 -->

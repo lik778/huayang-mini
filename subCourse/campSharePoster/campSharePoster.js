@@ -106,7 +106,7 @@ Page({
     let fontNomal = 'PingFangSC-Semibold, PingFang SC'
     let headIcon = this.data.userInfo.avatar_url
     ctx.scale(3, 3)
-    this.drawRact(ctx, 0, 0, this.data.canvasWidth, this.data.canvasHeight, '#fff').then(() => {
+    this.drawRact(ctx, 0, 0,300,480, '#fff').then(() => {
       // 绘制主视觉
       this.drawImage(ctx, this.data.bgSrc, 0, 0, 300, 347).then(() => {
         // 绘制日期
