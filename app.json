@@ -6,7 +6,7 @@
     }
   },
   "usingComponents": {
-    "van-dialog": "../miniprogram_npm/@vant/weapp/dialog/index"
+    "van-dialog": "./miniprogram_npm/@vant/weapp/dialog/index"
   },
   "navigateToMiniProgramAppIdList": [
     "wx95fb6b5dbe8739b7",
