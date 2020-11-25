@@ -952,3 +952,29 @@ export function getAllNumber(a, b) {
 	}
 	return arr
 }
+
+export const isIphoneXRSMax = function () {
+	// iPhone X、iPhone XS
+	let params = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
+	let isIPhoneX =
+		/iPhone/gi.test(params.brand) &&
+		params.pixelRatio &&
+		params.pixelRatio === 3 &&
+		params.screenWidth === 375 &&
+		params.screenHeight === 812;
+	// iPhone XS Max
+	let isIPhoneXSMax =
+		/iPhone/gi.test(params.brand) &&
+		params.pixelRatio &&
+		params.pixelRatio === 3 &&
+		params.screenWidth === 414 &&
+		params.screenHeight === 896;
+	// iPhone XR
+	let isIPhoneXR =
+		/iPhone/gi.test(params.brand) &&
+		params.pixelRatio &&
+		params.pixelRatio === 2 &&
+		params.screenWidth === 414 &&
+		params.screenHeight === 896;
+	return isIPhoneX || isIPhoneXR || isIPhoneXSMax;
+};

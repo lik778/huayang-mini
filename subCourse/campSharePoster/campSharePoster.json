@@ -2,5 +2,6 @@
   "navigationStyle": "custom",
   "usingComponents": {
     "naviBar": "../../components/navibar/navibar"
-  }
+  },
+  "backgroundColor": "#37383B"
 }

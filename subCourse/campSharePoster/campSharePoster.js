@@ -1,7 +1,8 @@
 // subCourse/campSharePoster/campSharePoster.js
 import {
   getLocalStorage,
-  getNowDateAll
+  getNowDateAll,
+  isIphoneXRSMax
 } from "../../utils/util"
 import {
   GLOBAL_KEY
@@ -16,8 +17,14 @@ Page({
     statusHeight: '',
     canvasWidth: '',
     canvasHeight: '',
+    height: '',
     canvasRadio: "",
     backSrc: "",
+    bgSrc: "",
+    showDate: "",
+    userInfo: '',
+    isIphoneXRSMax: false,
+
     mainBgImage: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606198043MyxTaM.jpg",
     campAllData: '',
     campData: {
@@ -50,7 +57,6 @@ Page({
                   if (res.errMsg === "saveImageToPhotosAlbum:ok") {
                     wx.showToast({
                       title: '保存成功',
-                      icon: "none",
                       duration: 2000
                     })
                     bxPoint("page_traincamp_poster_share_button", {
@@ -73,7 +79,6 @@ Page({
                   if (res.errMsg === "saveImageToPhotosAlbum:ok") {
                     wx.showToast({
                       title: '保存成功',
-                      icon: "none",
                       duration: 2000
                     })
                     bxPoint("page_traincamp_poster_share_button", {
@@ -98,36 +103,23 @@ Page({
       mask: true,
     })
     let ctx = wx.createCanvasContext('canvas')
-    let todayDate = getNowDateAll('-').split(" ")[0]
-    let year = todayDate.split('-')[0]
-    let month = todayDate.split("-")[1] + "/" + todayDate.split("-")[2]
-    let date = year + " " + month
     let fontNomal = 'PingFangSC-Semibold, PingFang SC'
-    let campAllDAta = this.data.campAllData
-    let bgSrc = ''
-    let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-    let headIcon = userInfo.avatar_url
-    if (campAllDAta.poster_pics === '') {
-      bgSrc = this.data.mainBgImage
-    } else {
-      let arr = campAllDAta.poster_pics.split(',')
-      bgSrc = arr[Math.floor(Math.random() * arr.length)];
-    }
+    let headIcon = this.data.userInfo.avatar_url
     ctx.scale(3, 3)
     this.drawRact(ctx, 0, 0, this.data.canvasWidth, this.data.canvasHeight, '#fff').then(() => {
       // 绘制主视觉
-      this.drawImage(ctx, bgSrc, 0, 0, 300, 347).then(() => {
+      this.drawImage(ctx, this.data.bgSrc, 0, 0, 300, 347).then(() => {
         // 绘制日期
-        this.drawFont(ctx, String(date), "#fff", 'bold', 'Condensed', 32, 15, 20).then(() => {
+        this.drawFont(ctx, String(this.data.showDate), "#fff", 'bold', fontNomal, 32, 15, 20).then(() => {
           // 绘制头像
           this.drawBorderCircle(ctx, headIcon, 51, 347, 34).then(() => {
             let elem = Math.ceil(ctx.measureText(String(this.data.campAllData.day_num)).width)
             // 绘制昵称
-            this.drawFont(ctx, userInfo.nick_name, "#fff", 'bold', fontNomal, 18, 92, 320)
+            this.drawFont(ctx, this.data.userInfo.nick_name, "#fff", 'bold', fontNomal, 18, 92, 320)
             this.drawFont(ctx, '正在花样百姓学习', "#000", 400, fontNomal, 14, 92, 357)
             this.drawFont(ctx, this.data.campAllData.name, "#000", 'normal', fontNomal, 14, 15, 402)
             this.drawFont(ctx, '第', "#000", 'normal', fontNomal, 14, 15, 438)
-            this.drawFont(ctx, String(this.data.campAllData.day_num), "#000", 'bold', 'Condensed', 30, 34, 425)
+            this.drawFont(ctx, String(this.data.campAllData.day_num), "#000", 'bold', fontNomal, 30, 34, 425)
             this.drawFont(ctx, '天课程', "#000", 'normal', fontNomal, 14, elem + 39, 438)
             this.drawFont(ctx, '长按识别二维码', "#000", 'normal', fontNomal, 10, 220, 442)
             this.drawFont(ctx, '一起练习', "#000", 'normal', fontNomal, 10, 235, 456).then(() => {
@@ -265,14 +257,28 @@ Page({
    */
   onLoad: function (options) {
     let campAllData = options.data ? JSON.parse(options.data) : ''
-    console.log(campAllData)
     let systemParams = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
     let width = systemParams.screenWidth - 76
     let height = Math.round((systemParams.screenWidth - 76) / 5 * 8)
+    let todayDate = getNowDateAll('-').split(" ")[0]
+    let year = todayDate.split('-')[0]
+    let month = todayDate.split("-")[1] + "/" + todayDate.split("-")[2]
+    let date = year + " " + month
+    let bgSrc = ''
+    let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+    if (campAllData.poster_pics === '') {
+      bgSrc = this.data.mainBgImage
+    } else {
+      let arr = campAllData.poster_pics.split(',')
+      bgSrc = arr[Math.floor(Math.random() * arr.length)];
+    }
     this.setData({
       canvasWidth: width,
       canvasHeight: height,
-      campAllData: campAllData
+      showDate: date,
+      campAllData: campAllData,
+      bgSrc,
+      userInfo
     })
     this.createPoster()
   },
@@ -288,8 +294,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let params = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
+    let data = isIphoneXRSMax()
     this.setData({
-      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
+      statusHeight: params.statusBarHeight,
+      height: ((params.screenWidth - 76) * 1.6).toFixed(2),
+      isIphoneXRSMax: data,
+      boxHeight: data ? params.screenHeight - params.statusBarHeight - 111 : params.screenHeight - params.statusBarHeight - 91
     })
   },
 
