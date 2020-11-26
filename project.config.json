@@ -14,7 +14,7 @@
     "coverView": true,
     "nodeModules": true,
     "autoAudits": false,
-    "showShadowRootInWxmlPanel": true,
+    "showShadowRootInWxmlPanel": false,
     "scopeDataCheck": false,
     "uglifyFileName": false,
     "checkInvalidKey": true,
@@ -275,6 +275,24 @@
           "name": "视频详情",
           "pathName": "subCourse/videoCourse/videoCourse",
           "query": "videoId=42",
+          "scene": null
+        },
+        {
+          "name": "训练营详情",
+          "pathName": "subCourse/campDetail/campDetail",
+          "query": "id=40",
+          "scene": null
+        },
+        {
+          "name": "训练营海报",
+          "pathName": "subCourse/campSharePoster/campSharePoster",
+          "query": "id=40",
+          "scene": null
+        },
+        {
+          "name": "mine/invite/invite",
+          "pathName": "mine/invite/invite",
+          "query": "id=40",
           "scene": null
         }
       ]

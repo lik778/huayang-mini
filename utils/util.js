@@ -917,12 +917,12 @@ export const getNowDate = (linkIcon) => {
 
 // 获取当天日期
 //显示日期在页面上  yyy-MM-dd
-export const getNowDateAll = (linkIcon) => {
+export const getNowDateAll = (linkIcon = '-') => {
 	let date = new Date();
 	//年
 	let year = date.getFullYear();
 	//月
-	let month = date.getMonth() + 1 < 10 ? "0" + date.getMonth() : date.getMonth();
+	let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
 	//日
 	let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
 	//时
@@ -952,3 +952,42 @@ export function getAllNumber(a, b) {
 	}
 	return arr
 }
+
+export const isIphoneXRSMax = function () {
+	// iPhone X、iPhone XS
+	let params = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
+	console.log(params)
+	let isIPhoneX =
+		/iPhone/gi.test(params.brand) &&
+		params.pixelRatio &&
+		params.pixelRatio === 3 &&
+		params.screenWidth === 375 &&
+		params.screenHeight === 812;
+	// iPhone XS Max
+	let isIPhoneXSMax =
+		/iPhone/gi.test(params.brand) &&
+		params.pixelRatio &&
+		params.pixelRatio === 3 &&
+		params.screenWidth === 414 &&
+		params.screenHeight === 896;
+	// iPhone XR
+	let isIPhoneXR =
+		/iPhone/gi.test(params.brand) &&
+		params.pixelRatio &&
+		params.pixelRatio === 2 &&
+		params.screenWidth === 414 &&
+		params.screenHeight === 896;
+	// iphone 12
+	let isIPhone12 =
+		/iPhone/gi.test(params.brand) &&
+		params.pixelRatio &&
+		params.pixelRatio === 3 &&
+		params.screenWidth === 390 &&
+		params.screenHeight === 844;
+	let isIphone12Max = /iPhone/gi.test(params.brand) &&
+		params.pixelRatio &&
+		params.pixelRatio === 3 &&
+		params.screenWidth === 428 &&
+		params.screenHeight === 926;
+	return isIPhoneX || isIPhoneXR || isIPhoneXSMax || isIPhone12 || isIphone12Max;
+};

@@ -228,7 +228,7 @@ Page({
   },
   // 加入训练营
   joinCamp() {
-    if (hasUserInfo() && hasAccountInfo()) {
+    if (hasUserInfo() && hasAccountInfo() && this.data.endTime !== '') {
       if (this.data.lock) {
         this.setData({
           lock: false

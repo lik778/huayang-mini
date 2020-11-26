@@ -8,7 +8,9 @@ import {
   getHasJoinCamp,
   getWxRoomData,
   checkNeedToFillInfo,
-  studyLogCreate
+  studyLogCreate,
+  dailyStudyCheck,
+  queryPunchCardQrCode
 } from "../../api/course/index"
 import {
   getProductInfo,
@@ -20,7 +22,8 @@ import {
   getLocalStorage,
   getNowDate,
   setLocalStorage,
-  simpleDurationSimple
+  simpleDurationSimple,
+  getNowDateAll
 } from "../../utils/util"
 import bxPoint from '../../utils/bxPoint'
 import {
@@ -74,6 +77,31 @@ Page({
     playIndex: 0, //课程下标
     hasPlayVideo: false,
     createPoint: true, //打点lock
+    showShareButton: false, //是否显示分享海报跳转按钮
+    dayNum: 0,
+    canShowPage: false
+  },
+
+  // 跳转至训练营海报页
+  toCampPoster() {
+    bxPoint("page_traincamp_share_button", {
+      traincamp_id: this.data.campData.id,
+      date: getNowDateAll('-'),
+      day_num: this.data.dayNum
+    }, false)
+    queryPunchCardQrCode({
+      traincamp_id: this.data.campId
+    }).then(res => {
+      let obj = Object.assign(this.data.campData, {
+        day_num: this.data.dayNum
+      })
+      obj.qrcode = res
+      let data = JSON.stringify(obj)
+      wx.navigateTo({
+        url: `/subCourse/campSharePoster/campSharePoster?data=${data}`,
+      })
+    })
+
   },
 
   // 关闭引导私域蒙板
@@ -127,35 +155,6 @@ Page({
     this.setData({
       playIndex: index
     })
-    // 学历数据记录
-    if (this.data.hasStartCampType !== 1 && item.type !== 'video') {
-      let params = {
-        user_id: this.data.userInfo.id,
-        traincamp_id: this.data.campId,
-        start_date: this.data.joinDate,
-        date: this.data.showDate
-      }
-      if (this.data.createPoint) {
-        this.setData({
-          createPoint: false
-        })
-        studyLogCreate(params).then(res => {
-          setTimeout(() => {
-            this.setData({
-              createPoint: true
-            })
-          }, 1000)
-        }).catch(() => {
-          setTimeout(() => {
-            this.setData({
-              createPoint: true
-            })
-          }, 1000)
-        })
-      }
-
-    }
-
     if (item.type === 'video') {
       // 视频课程
       this.playVideo()
@@ -166,17 +165,36 @@ Page({
           index: index
         }
       })
-
-
-      // bxPoint('traincamp_every_day', {
-      //   videoSrc: this.data.videoData.src.split(VideoSrcHost)[1],
-      //   is_course: true,
-      //   traincamp_id: this.data.campId,
-      //   lesson_num: `第${this.data.videoData.index+1}节课`,
-      // }, false)
-
     } else if (item.type === 'kecheng') {
       // 课程
+      if (this.data.hasStartCampType !== 1) {
+        // 学历数据记录
+        let params = {
+          user_id: this.data.userInfo.id,
+          traincamp_id: this.data.campId,
+          start_date: this.data.joinDate,
+          date: this.data.showDate
+        }
+        if (this.data.createPoint) {
+          this.setData({
+            createPoint: false
+          })
+          studyLogCreate(params).then(res => {
+            setTimeout(() => {
+              this.setData({
+                createPoint: true
+              })
+            }, 1000)
+          }).catch(() => {
+            setTimeout(() => {
+              this.setData({
+                createPoint: true
+              })
+            }, 1000)
+          })
+        }
+      }
+
       getCourseData({
         kecheng_id: item.kecheng_id,
       }).then((res) => {
@@ -339,7 +357,6 @@ Page({
       })
     }
     let VideoSrcHost = 'https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com' //视频地址前缀
-    console.log(this.data.videoData)
     bxPoint('traincamp_every_day', {
       videoSrc: this.data.videoData.src.split(VideoSrcHost)[1],
       traincamp_id: this.data.campId,
@@ -363,6 +380,28 @@ Page({
   enterFull(e) {
     if (e.detail.fullscreen === false) {
       this.videoContext.pause()
+      if (this.data.dayNum !== 0) {
+        dailyStudyCheck({
+          user_id: this.data.userInfo.id,
+          traincamp_id: this.data.campId,
+          start_date: this.data.joinDate,
+          date: this.data.showDate
+        }).then(res => {
+          if (res.data) {
+            this.setData({
+              showShareButton: true
+            })
+          } else {
+            this.setData({
+              showShareButton: false
+            })
+          }
+        })
+      } else {
+        this.setData({
+          showShareButton: false
+        })
+      }
       this.setData({
         showPlayIcon: true,
         showCover: true
@@ -380,64 +419,69 @@ Page({
           joinDate: res.date,
           period: res.period
         })
-        this.getCampDetailData()
-        resolve()
+        this.getCampDetailData().then(() => {
+          resolve()
+        })
       })
     })
   },
 
   // 获取训练营详情
   getCampDetailData() {
-    getCampDetail({
-      traincamp_id: this.data.campId,
-      user_id: getLocalStorage(GLOBAL_KEY.userId)
-    }).then(res => {
-      if (res.discount_price > 0 && res.distribution_ratio > 0) {
-        res.sharePrice = ((res.discount_price * (res.distribution_ratio / 100)) / 100).toFixed(2)
-      } else {
-        res.sharePrice = ''
-      }
-      let oneDaySecond = 86400
-      let formatType = 'yyyy-MM-dd'
-      let startDate = new Date(this.data.joinDate).getTime()
-      let nowDate = new Date().getTime()
-      let endDateStr = dateAddDays(this.data.joinDate, (res.period - 1) * oneDaySecond, formatType)
-      let endDate = new Date(endDateStr).getTime()
-      let hasStartCampType = ''
-      let todayDate = ''
-      let showDate = ''
-      if (nowDate < startDate) {
-        // 未开营
-        hasStartCampType = 1
-      } else if (nowDate > endDate) {
-        // 已结束
-        hasStartCampType = 3
-      } else {
-        // 开营中
-        hasStartCampType = 2
-        todayDate = getNowDate('-')
-      }
-      if (this.data.choosedDay) {
-        showDate = dateAddDays(this.data.joinDate, (this.data.choosedDay - 1) * oneDaySecond, formatType)
-      } else {
-        showDate = hasStartCampType === 1 ? this.data.joinDate : hasStartCampType === 2 ? todayDate : endDateStr
-      }
-      // 处理日期补0
-      let dateStr = showDate.split("-")
-      for (let i in dateStr) {
-        if (Number(dateStr[i]) < 10 && dateStr[i].indexOf("0") !== 0) {
-          dateStr[i] = "0" + dateStr[i]
+    return new Promise(resolve => {
+      getCampDetail({
+        traincamp_id: this.data.campId,
+        user_id: getLocalStorage(GLOBAL_KEY.userId)
+      }).then(res => {
+        if (res.discount_price > 0 && res.distribution_ratio > 0) {
+          res.sharePrice = ((res.discount_price * (res.distribution_ratio / 100)) / 100).toFixed(2)
+        } else {
+          res.sharePrice = ''
         }
-      }
-      showDate = dateStr.join("-")
-      this.setData({
-        campData: res,
-        endDateStr,
-        showDate,
-        todayDate,
-        hasStartCampType
+        let oneDaySecond = 86400
+        let formatType = 'yyyy-MM-dd'
+        let startDate = new Date(this.data.joinDate).getTime()
+        let nowDate = new Date().getTime()
+        let endDateStr = dateAddDays(this.data.joinDate, (res.period - 1) * oneDaySecond, formatType)
+        let endDate = new Date(endDateStr).getTime()
+        let hasStartCampType = ''
+        let todayDate = ''
+        let showDate = ''
+        if (nowDate < startDate) {
+          // 未开营
+          hasStartCampType = 1
+        } else if (nowDate > endDate) {
+          // 已结束
+          hasStartCampType = 3
+        } else {
+          // 开营中
+          hasStartCampType = 2
+          todayDate = getNowDate('-')
+        }
+        if (this.data.choosedDay) {
+          showDate = dateAddDays(this.data.joinDate, (this.data.choosedDay - 1) * oneDaySecond, formatType)
+        } else {
+          showDate = hasStartCampType === 1 ? this.data.joinDate : hasStartCampType === 2 ? todayDate : endDateStr
+        }
+        // 处理日期补0
+        let dateStr = showDate.split("-")
+        for (let i in dateStr) {
+          if (Number(dateStr[i]) < 10 && dateStr[i].indexOf("0") !== 0) {
+            dateStr[i] = "0" + dateStr[i]
+          }
+        }
+        showDate = dateStr.join("-")
+        this.setData({
+          campData: res,
+          endDateStr,
+          showDate,
+          todayDate,
+          hasStartCampType
+        })
+        resolve()
       })
     })
+
   },
 
   // 获取当天课程
@@ -447,6 +491,28 @@ Page({
       traincamp_id: this.data.campId
     }).then(res => {
       let list = res.content ? JSON.parse(res.content) : []
+      if (dayNum !== 0) {
+        dailyStudyCheck({
+          user_id: this.data.userInfo.id,
+          traincamp_id: this.data.campId,
+          start_date: this.data.joinDate,
+          date: this.data.showDate
+        }).then(res => {
+          if (res.data) {
+            this.setData({
+              showShareButton: true
+            })
+          } else {
+            this.setData({
+              showShareButton: false
+            })
+          }
+        })
+      } else {
+        this.setData({
+          showShareButton: false
+        })
+      }
       if (list.length > 0) {
         for (let i = 0; i < list.length; i++) {
           if (list[i].type === "kecheng") {
@@ -455,7 +521,8 @@ Page({
             }).then(res => {
               list[i].duration = simpleDurationSimple(res.duration)
               this.setData({
-                courseList: list
+                courseList: list,
+                canShowPage: true
               })
             })
           } else if (list[i].type === "video" && this.data.videoData.src === '') {
@@ -464,13 +531,23 @@ Page({
                 src: list[i].video,
                 pic: list[i].cover,
                 index: i
-              }
+              },
+              courseList: list,
+              canShowPage: true
+            })
+          } else {
+            this.setData({
+              canShowPage: true
             })
           }
         }
+      } else {
+        this.setData({
+          canShowPage: true
+        })
       }
       this.setData({
-        courseList: list
+        dayNum: dayNum,
       })
     })
   },
@@ -603,8 +680,7 @@ Page({
     let choosedDay = options.dayNum === undefined ? options.dayNum : Number(options.dayNum)
     let fromPage = options.from === undefined ? '' : options.from
     let campId = options.id
-    let oneDaySecond = 86400
-    let formatType = 'yyyy-MM-dd'
+
     let {
       scene,
       share,
@@ -616,80 +692,29 @@ Page({
         promoteUid: promote_uid
       })
     }
+    // 通过小程序码进入 scene=${source}
+    if (scene) {
+      let sceneAry = decodeURIComponent(scene).split('/')
+      let [sceneSource = ''] = sceneAry
+      if (sceneSource) {
+        getApp().globalData.source = sceneSource
+      }
+      this.setData({
+        backIndex: true,
+      })
+    }
+    // 分享直接进入的
+    if (share) {
+      this.setData({
+        backIndex: true,
+      })
+    }
     this.setData({
       campId,
       choosedDay,
       fromPage
     })
-    // 初始化数据
-    let run = () => {
-      this.getAppId()
-      this.getArticileLinkData()
-      this.getBanner()
-      this.initCoverShow(campId)
-      this.isJoinCamp().then(() => {
-        let whatDay = computeDate(new Date().getTime(), new Date(this.data.joinDate).getTime())
-        let nowDate = new Date().getTime()
-        let startDate = new Date(this.data.joinDate).getTime()
-        if (choosedDay !== undefined && choosedDay !== 0) {
-          let endDate = dateAddDays(this.data.joinDate, (choosedDay - 1) * oneDaySecond, formatType).replace(/-/g, '/')
-          let endDateNum = new Date(endDate).getTime()
-          if (new Date().getTime() < endDateNum) {
-            // 当前查看的日期大于当天日期,锁住
-            this.setData({
-              showLock: true
-            })
-          }
-          this.getNowCourse(choosedDay)
-        } else if (choosedDay !== undefined && choosedDay === 0) {
-          this.getNowCourse(0)
-        } else {
-          let oneDaySecond = 86400
-          let formatType = 'yyyy-MM-dd'
-          let endDateStr = dateAddDays(this.data.joinDate, (this.data.period - 1) * oneDaySecond, formatType)
-          let endDate = new Date(endDateStr).getTime()
-          if (nowDate > endDate) {
-            this.getNowCourse(this.data.period)
-          } else {
-            this.getNowCourse(whatDay)
-          }
-        }
 
-        if (nowDate < startDate) {
-          this.setData({
-            choosedDay: choosedDay === undefined ? 0 : choosedDay
-          })
-        }
-        this.setData({
-          whatDay
-        })
-
-      })
-      // 通过小程序码进入 scene=${source}
-      if (scene) {
-        let sceneAry = decodeURIComponent(scene).split('/')
-        let [sceneSource = ''] = sceneAry
-        if (sceneSource) {
-          getApp().globalData.source = sceneSource
-        }
-        this.setData({
-          backIndex: true,
-        })
-      }
-      // 分享直接进入的
-      if (share) {
-        this.setData({
-          backIndex: true,
-        })
-      }
-      // 存储用户信息
-      this.setData({
-        userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-      })
-      // 检查是否需要填写学员信息
-      this.checkNeedFillInfo()
-    }
-    run()
 
   },
 
@@ -708,6 +733,60 @@ Page({
       from_uid: getApp().globalData.super_user_id,
       bootcampId: this.data.campId
     })
+    // 初始化数据
+    let run = () => {
+      let oneDaySecond = 86400
+      let formatType = 'yyyy-MM-dd'
+      this.getAppId()
+      this.getArticileLinkData()
+      this.getBanner()
+      this.initCoverShow(this.data.campId)
+      this.isJoinCamp().then(() => {
+        let whatDay = computeDate(new Date().getTime(), new Date(this.data.joinDate).getTime())
+        let nowDate = new Date().getTime()
+        let startDate = new Date(this.data.joinDate).getTime()
+        if (this.data.choosedDay !== undefined && this.data.choosedDay !== 0) {
+          let endDate = dateAddDays(this.data.joinDate, (this.data.choosedDay - 1) * oneDaySecond, formatType).replace(/-/g, '/')
+          let endDateNum = new Date(endDate).getTime()
+          if (new Date().getTime() < endDateNum) {
+            // 当前查看的日期大于当天日期,锁住
+            this.setData({
+              showLock: true
+            })
+          }
+          this.getNowCourse(this.data.choosedDay)
+        } else if (this.data.choosedDay !== undefined && this.data.choosedDay === 0) {
+          this.getNowCourse(0)
+        } else {
+          let oneDaySecond = 86400
+          let formatType = 'yyyy-MM-dd'
+          let endDateStr = dateAddDays(this.data.joinDate, (this.data.period - 1) * oneDaySecond, formatType)
+          let endDate = new Date(endDateStr).getTime()
+          if (nowDate > endDate) {
+            this.getNowCourse(this.data.period)
+          } else {
+            this.getNowCourse(whatDay)
+          }
+        }
+
+        if (nowDate < startDate) {
+          this.setData({
+            choosedDay: this.data.choosedDay === undefined ? 0 : this.data.choosedDay
+          })
+        }
+        this.setData({
+          whatDay
+        })
+      })
+
+      // 存储用户信息
+      this.setData({
+        userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+      })
+      // 检查是否需要填写学员信息
+      this.checkNeedFillInfo()
+    }
+    run()
 
     let height = parseInt(((JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth - 114) / 16) * 9)
     this.setData({
