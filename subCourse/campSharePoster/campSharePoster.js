@@ -25,12 +25,7 @@ Page({
     userInfo: '',
     isIphoneXRSMax: false,
     mainBgImage: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606371212ZLgxIW.jpg",
-    campAllData: '',
-    campData: {
-      name: "14天超模走秀训练营",
-      dayNum: 20,
-      qrcode: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606198043MyxTaM.jpg"
-    }
+    campAllData: ''
   },
 
   // 分享给好友
