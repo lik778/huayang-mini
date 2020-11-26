@@ -295,6 +295,7 @@ Page({
   onShow: function () {
     let params = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
     let data = isIphoneXRSMax()
+    console.log(this.data.campAllData)
     this.setData({
       statusHeight: params.statusBarHeight,
       height: ((params.screenWidth - 76) * 1.6).toFixed(2),

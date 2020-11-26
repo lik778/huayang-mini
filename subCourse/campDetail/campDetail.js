@@ -10,7 +10,7 @@ import {
   checkNeedToFillInfo,
   studyLogCreate,
   dailyStudyCheck,
-
+  queryPunchCardQrCode
 } from "../../api/course/index"
 import {
   getProductInfo,
@@ -84,18 +84,24 @@ Page({
 
   // 跳转至训练营海报页
   toCampPoster() {
-    let obj = Object.assign(this.data.campData, {
-      day_num: this.data.dayNum
-    })
-    let data = JSON.stringify(obj)
     bxPoint("page_traincamp_share_button", {
       traincamp_id: this.data.campData.id,
       date: getNowDateAll('-'),
       day_num: this.data.dayNum
     }, false)
-    wx.navigateTo({
-      url: `/subCourse/campSharePoster/campSharePoster?data=${data}`,
+    queryPunchCardQrCode({
+      traincamp_id: this.data.campId
+    }).then(res => {
+      let obj = Object.assign(this.data.campData, {
+        day_num: this.data.dayNum
+      })
+      obj.qrcode = res
+      let data = JSON.stringify(obj)
+      wx.navigateTo({
+        url: `/subCourse/campSharePoster/campSharePoster?data=${data}`,
+      })
     })
+
   },
 
   // 关闭引导私域蒙板
@@ -374,6 +380,28 @@ Page({
   enterFull(e) {
     if (e.detail.fullscreen === false) {
       this.videoContext.pause()
+      if (this.data.dayNum !== 0) {
+        dailyStudyCheck({
+          user_id: this.data.userInfo.id,
+          traincamp_id: this.data.campId,
+          start_date: this.data.joinDate,
+          date: this.data.showDate
+        }).then(res => {
+          if (res.data) {
+            this.setData({
+              showShareButton: true
+            })
+          } else {
+            this.setData({
+              showShareButton: false
+            })
+          }
+        })
+      } else {
+        this.setData({
+          showShareButton: false
+        })
+      }
       this.setData({
         showPlayIcon: true,
         showCover: true
@@ -505,6 +533,10 @@ Page({
                 index: i
               },
               courseList: list,
+              canShowPage: true
+            })
+          } else {
+            this.setData({
               canShowPage: true
             })
           }
