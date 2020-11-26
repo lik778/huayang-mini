@@ -158,7 +158,7 @@
   position: absolute;
   left: 30rpx;
   top: 804rpx;
-  font-size: 28rpx;
+  font-size: 30rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #000000;

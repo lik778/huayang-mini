@@ -956,6 +956,7 @@ export function getAllNumber(a, b) {
 export const isIphoneXRSMax = function () {
 	// iPhone X、iPhone XS
 	let params = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
+	console.log(params)
 	let isIPhoneX =
 		/iPhone/gi.test(params.brand) &&
 		params.pixelRatio &&
@@ -976,5 +977,17 @@ export const isIphoneXRSMax = function () {
 		params.pixelRatio === 2 &&
 		params.screenWidth === 414 &&
 		params.screenHeight === 896;
-	return isIPhoneX || isIPhoneXR || isIPhoneXSMax;
+	// iphone 12
+	let isIPhone12 =
+		/iPhone/gi.test(params.brand) &&
+		params.pixelRatio &&
+		params.pixelRatio === 3 &&
+		params.screenWidth === 390 &&
+		params.screenHeight === 844;
+	let isIphone12Max = /iPhone/gi.test(params.brand) &&
+		params.pixelRatio &&
+		params.pixelRatio === 3 &&
+		params.screenWidth === 428 &&
+		params.screenHeight === 926;
+	return isIPhoneX || isIPhoneXR || isIPhoneXSMax || isIPhone12 || isIphone12Max;
 };

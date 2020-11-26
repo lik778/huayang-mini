@@ -24,8 +24,7 @@ Page({
     showDate: "",
     userInfo: '',
     isIphoneXRSMax: false,
-
-    mainBgImage: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606198043MyxTaM.jpg",
+    mainBgImage: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606371212ZLgxIW.jpg",
     campAllData: '',
     campData: {
       name: "14天超模走秀训练营",
@@ -117,7 +116,7 @@ Page({
             // 绘制昵称
             this.drawFont(ctx, this.data.userInfo.nick_name, "#fff", 'bold', fontNomal, 18, 92, 320)
             this.drawFont(ctx, '正在花样百姓学习', "#000", 400, fontNomal, 14, 92, 357)
-            this.drawFont(ctx, this.data.campAllData.name, "#000", 'normal', fontNomal, 14, 15, 402)
+            this.drawFont(ctx, this.data.campAllData.name, "#000", 'normal', fontNomal, 15, 15, 402)
             this.drawFont(ctx, '第', "#000", 'normal', fontNomal, 14, 15, 438)
             this.drawFont(ctx, String(this.data.campAllData.day_num), "#000", 'bold', fontNomal, 30, 34, 425)
             this.drawFont(ctx, '天课程', "#000", 'normal', fontNomal, 14, elem + 39, 438)
