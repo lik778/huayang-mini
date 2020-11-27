@@ -665,3 +665,8 @@ export const checkNeedToFillInfo = params => {
 export const dailyStudyCheck = params => {
 	return request._get(URL.dailyStudyCheck, params)
 }
+
+// 获取班级logo
+export const getClassLogo = params => {
+	return request._get(URL.getClassLogo, params)
+}

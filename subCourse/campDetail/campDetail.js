@@ -10,7 +10,8 @@ import {
   checkNeedToFillInfo,
   studyLogCreate,
   dailyStudyCheck,
-  queryPunchCardQrCode
+  queryPunchCardQrCode,
+  getClassLogo
 } from "../../api/course/index"
 import {
   getProductInfo,
@@ -79,7 +80,25 @@ Page({
     createPoint: true, //打点lock
     showShareButton: false, //是否显示分享海报跳转按钮
     dayNum: 0,
-    canShowPage: false
+    canShowPage: false,
+    showMyCredential: false, //是否显示我的结营证书
+  },
+
+  // 跳往训练营结营证书页
+  toMyCredential() {
+    getClassLogo({
+      user_id: this.data.userInfo.id,
+      traincamp_id: this.data.campId,
+      start_date: this.data.joinDate
+    }).then(res => {
+      let logo = ''
+      if (res.data.class_num !== 0) {
+        logo = JSON.parse(res.data.logos)[res.data.class_num]
+      }
+      wx.navigateTo({
+        url: `/subCourse/campCredential/campCredential?campData=${JSON.stringify(this.data.campData)}&userData=${JSON.stringify(this.data.userInfo)}&logo=${logo}`,
+      })
+    })
   },
 
   // 跳转至训练营海报页
@@ -672,6 +691,19 @@ Page({
     }, false)
   },
 
+  // 检查是否需要替换按钮为我的结营证书
+  checkNeedShowMyCredential() {
+    let period = (this.data.campData.period - 1) * 24 * 60 * 60
+    let joinDate = this.data.joinDate
+    let endDate = dateAddDays(joinDate, period, 'yyyy-MM-dd')
+    // if (new Date().getTime() >= new Date(endDate).getTime()) {
+    if (new Date('2020-12-03').getTime() >= new Date(endDate).getTime()) {
+      this.setData({
+        showMyCredential: true
+      })
+    }
+  },
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -774,6 +806,9 @@ Page({
             choosedDay: this.data.choosedDay === undefined ? 0 : this.data.choosedDay
           })
         }
+        // 判断是否显示“我的结营证书”
+        this.checkNeedShowMyCredential()
+
         this.setData({
           whatDay
         })

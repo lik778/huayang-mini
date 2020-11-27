@@ -2,7 +2,8 @@
 @import "../../assets/css/common.wxss";
 
 .container {
-  background: #F9F9F9;
+  /* background: #F9F9F9; */
+  background: #FFF;
   padding-bottom: 320rpx;
   min-height: 100vh;
   box-sizing: border-box;
@@ -241,11 +242,7 @@
 }
 
 .publicity {
-  position: fixed;
-  left: 30rpx;
-  bottom: 20rpx;
   display: flex;
-  z-index: 60;
   align-items: center;
   justify-content: center;
   font-size: 40rpx;
@@ -446,4 +443,29 @@
   color: #FFFFFF;
   border-radius: 999rpx;
   margin-top: 10rpx;
+}
+
+
+/* 我的结营证书 */
+.my-credential {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 136rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.my-credential-text {
+  width: calc(100% - 60rpx);
+  height: 96rpx;
+  text-align: center;
+  line-height: 96rpx;
+  border-radius: 999rpx;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
 }

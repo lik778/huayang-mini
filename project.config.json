@@ -294,6 +294,12 @@
           "pathName": "mine/invite/invite",
           "query": "id=40",
           "scene": null
+        },
+        {
+          "name": "训练营结营证书",
+          "pathName": "subCourse/campCredential/campCredential",
+          "query": "id=40",
+          "scene": null
         }
       ]
     }
