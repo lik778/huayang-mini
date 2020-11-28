@@ -298,7 +298,7 @@ Page({
 						let dayDiff = dayjs().diff(dayjs(date), 'day', true)
 						let dayNum = dayDiff | 0
 						if (dayDiff >= 0) {
-							// dayNum += 1
+							dayNum += 1
 						} else {
 							dayNum = 0
 						}
