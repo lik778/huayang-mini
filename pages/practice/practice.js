@@ -295,10 +295,10 @@ Page({
 						// 训练营
 						let {kecheng_traincamp_id, date, status, kecheng_traincamp: {name, period}} = item
 						// 根据训练营查找对应的课程
+						let dayDiff = dayjs().diff(dayjs(date), 'day', true)
 						let dayNum = dayDiff
 						if (dayDiff >= 0) {
-							dayNum += 1
-							dayNum = dayNum | 0
+							dayNum = ++dayNum | 0
 						} else {
 						 	dayNum = 0
 						}
