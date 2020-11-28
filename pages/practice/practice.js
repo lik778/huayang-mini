@@ -296,13 +296,12 @@ Page({
 						let {kecheng_traincamp_id, date, status, kecheng_traincamp: {name, period}} = item
 						// 根据训练营查找对应的课程
 						let dayDiff = dayjs().diff(dayjs(date), 'day', true)
-						let dayNum = dayDiff | 0
+						let dayNum = dayDiff
 						if (dayDiff >= 0) {
-							// dayNum += 1
+							dayNum = ++dayNum | 0
 						} else {
-							dayNum = 0
+						 	dayNum = 0
 						}
-
 						// 如果训练营已经过期，则显示该训练营最后一天的课程内容
 						let endDate = dayjs(date).add(period, "day")
 						let nowDate = dayjs().format("YYYY-MM-DD")
