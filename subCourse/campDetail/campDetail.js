@@ -537,7 +537,8 @@ Page({
             })
           } else {
             this.setData({
-              canShowPage: true
+              canShowPage: true,
+              courseList: list,
             })
           }
         }
