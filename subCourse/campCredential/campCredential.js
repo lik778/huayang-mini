@@ -7,14 +7,12 @@ import {
   drawFont,
   drawImage,
   drawImageAuto,
-  drawRact,
-  drawLine,
   measureTextWidth,
-  drawBorderCircle
 } from "../../utils/canvas"
 import {
   GLOBAL_KEY
 } from "../../lib/config"
+import bxPoint from "../../utils/bxPoint"
 Page({
 
   /**
@@ -94,7 +92,6 @@ Page({
         }
       }
     })
-
   },
 
   // 绘制canvas
@@ -110,6 +107,7 @@ Page({
     ctx.font = 'normal 12px PingFangSC-Regular, PingFang SC'
     let campNameX = (this.data.canvasWidth - measureTextWidth(ctx, `《${campName}》`)) / 2
     ctx.scale(3, 3)
+    console.log(this.data.canvasWidth, this.data.canvasHeight)
     drawImage(ctx, this.data.hostBg, 0, 0, this.data.canvasWidth, this.data.canvasHeight).then(() => {
       drawImageAuto(ctx, this.data.LogoList[0], this.data.LogoList[1], this.data.canvasWidth).then(() => {
         drawFont(ctx, String(userName), '#0B0B0B', 'bold', 'SourceHanSerifCN-Bold, SourceHanSerifCN', 22, userNameX, 177)
@@ -146,12 +144,23 @@ Page({
     let year = date.getFullYear();
     let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
     let Nowdate = year + "年" + month + "月"
+    let systemParams = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
     this.setData({
+      statusBarHeight: systemParams.statusBarHeight,
+      systemParams: systemParams,
+      htmlBgHeight: ((systemParams.screenWidth - 90) * 1.78).toFixed(2),
+      isIphoneXRSMax: isIphoneXRSMax(),
+      canvasWidth: systemParams.screenWidth - 90,
+      canvasHeight: Number(((systemParams.screenWidth - 90) * 1.78).toFixed(2)),
+      mainHeight: isIphoneXRSMax() ? systemParams.screenHeight - systemParams.statusBarHeight - 117 : systemParams.screenHeight - systemParams.statusBarHeight - 97,
+      radio: ((systemParams.screenWidth - 90) / 286).toFixed(2),
       campData,
       userName,
       Nowdate,
       LogoList: logoData
     })
+
+    this.drawCredential()
   },
 
   /**
@@ -165,18 +174,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let systemParams = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
-    this.setData({
-      statusBarHeight: systemParams.statusBarHeight,
-      systemParams: systemParams,
-      htmlBgHeight: ((systemParams.screenWidth - 90) * 1.78).toFixed(2),
-      isIphoneXRSMax: isIphoneXRSMax(),
-      canvasWidth: systemParams.screenWidth - 90,
-      canvasHeight: Number(((systemParams.screenWidth - 90) * 1.78).toFixed(2)),
-      mainHeight: isIphoneXRSMax() ? systemParams.screenHeight - systemParams.statusBarHeight - 117 : systemParams.screenHeight - systemParams.statusBarHeight - 97,
-      radio: ((systemParams.screenWidth - 90) / 286).toFixed(2)
-    })
-    this.drawCredential()
+
   },
 
   /**

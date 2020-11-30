@@ -102,6 +102,7 @@ Page({
         let logo = ''
         if (res.data && res.data.class_num !== 0) {
           logo = JSON.parse(res.data.logos)[res.data.class_num]
+          logo = logo || ''
         }
         wx.navigateTo({
           url: `/subCourse/campCredential/campCredential?campData=${JSON.stringify(this.data.campData)}&userName=${name}&logo=${logo}`,
@@ -706,8 +707,7 @@ Page({
     let period = (this.data.campData.period - 1) * 24 * 60 * 60
     let joinDate = this.data.joinDate
     let endDate = dateAddDays(joinDate, period, 'yyyy-MM-dd')
-    // if (new Date().getTime() >= new Date(endDate).getTime()) {
-    if (new Date('2020-12-03').getTime() >= new Date(endDate).getTime()) {
+    if (new Date().getTime() >= new Date(endDate).getTime()) {
       this.setData({
         showMyCredential: true
       })
