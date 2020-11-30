@@ -11,7 +11,8 @@ import {
   studyLogCreate,
   dailyStudyCheck,
   queryPunchCardQrCode,
-  getClassLogo
+  getClassLogo,
+  getClassStudentData
 } from "../../api/course/index"
 import {
   getProductInfo,
@@ -86,17 +87,22 @@ Page({
 
   // 跳往训练营结营证书页
   toMyCredential() {
-    getClassLogo({
-      user_id: this.data.userInfo.id,
-      traincamp_id: this.data.campId,
-      start_date: this.data.joinDate
-    }).then(res => {
-      let logo = ''
-      if (res.data.class_num !== 0) {
-        logo = JSON.parse(res.data.logos)[res.data.class_num]
-      }
-      wx.navigateTo({
-        url: `/subCourse/campCredential/campCredential?campData=${JSON.stringify(this.data.campData)}&userData=${JSON.stringify(this.data.userInfo)}&logo=${logo}`,
+    getClassStudentData({
+      user_id: this.data.userInfo.id
+    }).then(res1 => {
+      let name = res1.data.real_name === '' ? this.data.userInfo.nick_name : res1.data.real_name
+      getClassLogo({
+        user_id: this.data.userInfo.id,
+        traincamp_id: this.data.campId,
+        start_date: this.data.joinDate
+      }).then(res => {
+        let logo = ''
+        if (res.data && res.data.class_num !== 0) {
+          logo = JSON.parse(res.data.logos)[res.data.class_num]
+        }
+        wx.navigateTo({
+          url: `/subCourse/campCredential/campCredential?campData=${JSON.stringify(this.data.campData)}&userName=${name}&logo=${logo}`,
+        })
       })
     })
   },

@@ -670,3 +670,8 @@ export const dailyStudyCheck = params => {
 export const getClassLogo = params => {
 	return request._get(URL.getClassLogo, params)
 }
+
+// 学员信息获取
+export const getClassStudentData = params => {
+	return request._get(URL.getClassStudentData, params)
+}

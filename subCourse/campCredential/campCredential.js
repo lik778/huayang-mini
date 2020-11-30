@@ -29,7 +29,7 @@ Page({
     canvasWidth: "", //canvas宽度
     canvasSrc: '', //生成的canvas地址
     campData: "",
-    userData: '',
+    userName: '',
     Nowdate: '',
     // LogoList: ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606447725FvEaJd.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606447725FvEaJd.jpg'],
     hostBg: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606447725FvEaJd.jpg",
@@ -89,17 +89,20 @@ Page({
 
   // 绘制canvas
   drawCredential() {
+    wx.showLoading({
+      title: '绘制中...',
+    })
     let ctx = wx.createCanvasContext('canvas')
-    let userName = this.data.userData.real_name || this.data.userData.nick_name
+    let userName = this.data.userName
     let campName = this.data.campData.name
     ctx.font = 'bold 22px SourceHanSerifCN-Bold, SourceHanSerifCN'
-    let userNameX = (this.data.canvasWidth - measureTextWidth(ctx, userName)) / 2
+    let userNameX = (this.data.canvasWidth - measureTextWidth(ctx, String(userName))) / 2
     ctx.font = 'normal 12px PingFangSC-Regular, PingFang SC'
     let campNameX = (this.data.canvasWidth - measureTextWidth(ctx, `《${campName}》`)) / 2
     ctx.scale(3, 3)
     drawImage(ctx, this.data.hostBg, 0, 0, this.data.canvasWidth, this.data.canvasHeight).then(() => {
       drawImageAuto(ctx, this.data.LogoList[0], this.data.LogoList[1], this.data.canvasWidth).then(() => {
-        drawFont(ctx, userName, '#0B0B0B', 'bold', 'SourceHanSerifCN-Bold, SourceHanSerifCN', 22, userNameX, 177)
+        drawFont(ctx, String(userName), '#0B0B0B', 'bold', 'SourceHanSerifCN-Bold, SourceHanSerifCN', 22, userNameX, 177)
         drawFont(ctx, `《${campName}》`, '#730807', 'normal', 'PingFangSC-Regular, PingFang SC', 12, campNameX, 237)
         drawFont(ctx, this.data.Nowdate, '#000000', 'normal', 'PingFangSC-Light, PingFang SC', 10, 117, 342)
         ctx.draw(false, () => {
@@ -127,7 +130,7 @@ Page({
   onLoad: function (options) {
     let logoList = ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606479354jNvJpJ.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606479354jNvJpJ.jpg']
     let campData = JSON.parse(options.campData)
-    let userData = JSON.parse(options.userData)
+    let userName = options.userName
     let logoData = options.logo === '' ? logoList : options.logo.split(",")
     let date = new Date();
     let year = date.getFullYear();
@@ -135,7 +138,7 @@ Page({
     let Nowdate = year + "年" + month + "月"
     this.setData({
       campData,
-      userData,
+      userName,
       Nowdate,
       LogoList: logoData
     })
@@ -198,6 +201,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: `我正在参加${this.data.campData.name}，每天都有看的见的变化，快来试试`,
+      path: `/subCourse/joinCamp/joinCamp?id=${this.data.campData.id}&share=true`
+    }
   }
 })
