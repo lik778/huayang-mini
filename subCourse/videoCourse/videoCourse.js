@@ -175,17 +175,24 @@ Page({
         timeSnippetArr.push(arr.slice(index, arr.length))
       }
     }
+    let timeList = []
+    for (let i in timeSnippetArr) {
+      let str1 = timeSnippetArr[i][0]
+      let str2 = timeSnippetArr[i][timeSnippetArr[i].length - 1]
+      timeList.push(`${str1}-${str2}`)
+    }
+
     bxPoint("page_series", {
-      scene:'page_series',
+      scene: 'page_series',
       kecheng_series_id: this.data.videoId,
       video_src: this.data.videoSrc.split(VideoSrcHost)[1],
       lesson_num: `第${this.data.playIndex + 1}节课`,
       play_duration: {
-        time_snippet: timeSnippetArr.length === 0 ? arr : timeSnippetArr, //事件片段
+        time_snippet: timeList.length === 0 ? arr : timeList, //事件片段
         total_duration: time, //视频总时间
         total_visit_duration: arr.length, // 总观看时间
       },
-    },false)
+    }, false)
   },
 
   // 加入课程
@@ -589,7 +596,7 @@ Page({
       open_id: getLocalStorage(GLOBAL_KEY.openId),
       user_id: getLocalStorage(GLOBAL_KEY.userId),
       isPromoter: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).kecheng_user.is_promoter === 1 ? true : false
-    },false)
+    }, false)
   },
 
   /**
