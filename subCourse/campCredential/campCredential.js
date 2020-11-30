@@ -30,7 +30,8 @@ Page({
     userName: '',
     Nowdate: '',
     hostBg: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606447725FvEaJd.jpg",
-    LogoList: []
+    LogoList: [],
+    isRowStyle: false
   },
 
   // 返回
@@ -107,7 +108,10 @@ Page({
     let campNameX = (286 - measureTextWidth(ctx, `《${campName}》`)) / 2
     ctx.scale(3, 3)
     drawImage(ctx, this.data.hostBg, 0, 0, 286, 510).then(() => {
-      drawImageAuto(ctx, this.data.LogoList[0], this.data.LogoList[1]).then(() => {
+      drawImageAuto(ctx, this.data.LogoList[0], this.data.LogoList[1]).then((res1) => {
+        this.setData({
+          isRowStyle: res1
+        })
         drawFont(ctx, String(userName), '#0B0B0B', 'bold', 'SourceHanSerifCN-Bold, SourceHanSerifCN', 22, userNameX, 177)
         drawFont(ctx, `《${campName}》`, '#730807', 'normal', 'PingFangSC-Regular, PingFang SC', 12, campNameX, 237)
         drawFont(ctx, this.data.Nowdate, '#000000', 'normal', 'PingFangSC-Light, PingFang SC', 10, 117, 342)
@@ -134,7 +138,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let logoList = ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606479354jNvJpJ.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606479354jNvJpJ.jpg']
+    let logoList = ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606721434GSUkFm.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606721430eIijle.jpg']
     let campData = JSON.parse(options.campData)
     let userName = options.userName
     let logoData = options.logo === '' ? logoList : options.logo.split(",")

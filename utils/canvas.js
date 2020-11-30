@@ -30,51 +30,107 @@ export const drawImage = (ctx, imageSrc, x, y, width, height) => {
 }
 
 // 专门适配两张图片居中绘制并且识别横竖图,其他情况勿用
-export const drawImageAuto = async (ctx, imageSrc1, imageSrc2) => {
-  let rowWidth = 62 //宽图宽
-  let rowHeight = 20 //宽图高
-  let colWidth = 26 //长图宽
-  let colHeight = 26 //长图高
-  let rowX = 72 //宽图第一张图x
-  let rowX2 = 150 //宽图第二张图x
-  let rowY = 70 //宽图统一y
-  let colX = 112 //长图第一张图x
-  let colX2 = 148 //长图第二张图x
-  let colY = 68 //长图统一y
-  // 第一张图
-  await drawImageFun(ctx, imageSrc1, rowWidth, rowHeight, colWidth, colHeight, rowX, colX, rowY, colY)
-  // 第二张图
-  await drawImageFun(ctx, imageSrc2, rowWidth, rowHeight, colWidth, colHeight, rowX2, colX2, rowY, colY)
-  return new Promise(resolve => {
-    resolve()
+export const drawImageAuto =  (ctx, imageSrc1, imageSrc2) => {
+  return new Promise(async resolve1 => {
+    // 第一张图
+    let imgInfo1 = await new Promise(resolve => {
+      wx.downloadFile({
+        url: imageSrc1,
+        success: (res1) => {
+          if (res1.statusCode === 200) {
+            wx.getImageInfo({
+              src: res1.tempFilePath,
+              success: (res2) => {
+                let obj = {
+                  src: res1.tempFilePath,
+                  width: res2.width,
+                  height: res2.height,
+                }
+                resolve(obj)
+              }
+            })
+          }
+        }
+      })
+    })
+    let imgInfo2 = await new Promise(resolve => {
+      wx.downloadFile({
+        url: imageSrc2,
+        success: (res1) => {
+          if (res1.statusCode === 200) {
+            wx.getImageInfo({
+              src: res1.tempFilePath,
+              success: (res2) => {
+                let obj = {
+                  src: res1.tempFilePath,
+                  width: res2.width,
+                  height: res2.height,
+                }
+                resolve(obj)
+              }
+            })
+          }
+        }
+      })
+    })
+    let drawData = await drawImageFun(ctx, imgInfo1, imgInfo2)
+    resolve1(drawData)
   })
 }
 
 // 绘制图片公用方法
-export const drawImageFun = (ctx, src, rowWidth, rowHeight, colWidth, colHeight, rowX, colX, rowY, colY) => {
+export const drawImageFun = (ctx, imgInfo1, imgInfo2) => {
   return new Promise(resolve => {
-    wx.downloadFile({
-      url: src,
-      success: (res) => {
-        if (res.statusCode === 200) {
-          wx.getImageInfo({
-            src: res.tempFilePath,
-            success: (res1) => {
-              ctx.save()
-              if (res1.width > res1.height) {
-                // 横图
-                ctx.drawImage(res.tempFilePath, rowX, rowY, rowWidth, rowHeight)
-              } else {
-                // 竖图
-                ctx.drawImage(res.tempFilePath, colX, colY, colWidth, colHeight)
-              }
-              ctx.restore()
-              resolve()
-            }
-          })
-        }
-      }
-    })
+    let imgWidth1 = ''
+    let imgHeight1 = ''
+    let imgY1 = ''
+    let imgY2 = ''
+    let imgWidth2 = ''
+    let imgHeight2 = ''
+    let imgIsRow1 = true
+    if (imgInfo1.width > imgInfo1.height) {
+      // 横图
+      imgWidth1 = 62
+      imgHeight1 = 20
+      imgY1 = 70
+      imgIsRow1 = true
+    } else {
+      // 竖图
+      imgWidth1 = 26
+      imgHeight1 = 26
+      imgY1 = 68
+      imgIsRow1 = false
+    }
+
+    if (imgInfo2.width > imgInfo2.height) {
+      // 横图
+      imgWidth2 = 62
+      imgHeight2 = 20
+      imgY2 = 70
+    } else {
+      // 竖图
+      imgWidth2 = 26
+      imgHeight2 = 26
+      imgY2 = 68
+    }
+    if (imgIsRow1) {
+      imgWidth1 = imgWidth2 = 62
+      imgHeight1 = imgHeight2 = 20
+      imgY1 = imgY2 = 70
+      let imgTotalWidth = imgWidth1 + imgWidth2
+      let a = (270 - imgTotalWidth) / 2
+      ctx.drawImage(imgInfo1.src, a, imgY1, imgWidth1, imgHeight1)
+      ctx.drawImage(imgInfo2.src, a + imgWidth1 + 16, imgY2, imgWidth2, imgHeight2)
+    } else {
+      imgWidth1 = imgWidth2 = 26
+      imgHeight1 = imgHeight2 = 26
+      imgY1 = imgY2 = 68
+      let imgTotalWidth = imgWidth1 + imgWidth2
+      let a = (276 - imgTotalWidth) / 2
+      ctx.drawImage(imgInfo1.src, a, imgY1, imgWidth1, imgHeight1)
+      ctx.drawImage(imgInfo2.src, a + imgWidth1 + 10, imgY2, imgWidth2, imgHeight2)
+    }
+    resolve(imgIsRow1)
   })
 }
 
