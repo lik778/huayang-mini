@@ -87,6 +87,9 @@ Page({
 
   // 跳往训练营结营证书页
   toMyCredential() {
+    bxPoint("page_camp_detail_credential", {
+      traincamp_id: this.data.campData.id
+    }, false)
     getClassStudentData({
       user_id: this.data.userInfo.id
     }).then(res1 => {

@@ -43,8 +43,18 @@ Page({
     })
   },
 
+  // 分享朋友
+  savePoint() {
+    bxPoint("page_camp_credential_share", {
+      traincamp_id: this.data.campData.id
+    }, false)
+  },
+
   // 保存到相册
   saveToAlbum() {
+    bxPoint("page_camp_credential_save", {
+      traincamp_id: this.data.campData.id
+    }, false)
     wx.getSetting({
       success: (res) => {
         if (res.authSetting['scope.writePhotosAlbum']) {
