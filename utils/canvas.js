@@ -30,7 +30,7 @@ export const drawImage = (ctx, imageSrc, x, y, width, height) => {
 }
 
 // 专门适配两张图片居中绘制并且识别横竖图,其他情况勿用
-export const drawImageAuto = async (ctx, imageSrc1, imageSrc2, canvasWidth) => {
+export const drawImageAuto = async (ctx, imageSrc1, imageSrc2) => {
   let rowWidth = 62 //宽图宽
   let rowHeight = 20 //宽图高
   let colWidth = 26 //长图宽
@@ -44,7 +44,7 @@ export const drawImageAuto = async (ctx, imageSrc1, imageSrc2, canvasWidth) => {
   // 第一张图
   await drawImageFun(ctx, imageSrc1, rowWidth, rowHeight, colWidth, colHeight, rowX, colX, rowY, colY)
   // 第二张图
-  await drawImageFun(ctx, imageSrc1, rowWidth, rowHeight, colWidth, colHeight, rowX2, colX2, rowY, colY)
+  await drawImageFun(ctx, imageSrc2, rowWidth, rowHeight, colWidth, colHeight, rowX2, colX2, rowY, colY)
   return new Promise(resolve => {
     resolve()
   })
