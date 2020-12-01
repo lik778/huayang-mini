@@ -14,6 +14,7 @@ Page({
 		screenHeight: 0, // 设备高度
 		screenWidth: 0, // 设备宽度
 		parentBootCampId: 0, // 训练营id，有就传无则不传
+		lessonDate: "", // 训练营的第N天，有就传无则不传
 		courseInfo: null, // 课程信息
 		currentActionIndex: 0, // 当前动作索引
 		originData: null,
@@ -63,7 +64,15 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: async function (options) {
-		this.setData({parentBootCampId: options.parentBootCampId || 0})
+		let { lessonDate = "" } = options
+		try {
+			if (lessonDate) {
+				lessonDate = new Date(+lessonDate).toLocaleDateString().split("/").join("-")
+			}
+		} catch (e) {
+			lessonDate = ""
+		}
+		this.setData({parentBootCampId: options.parentBootCampId || 0, lessonDate})
 
 		const self = this
 		const eventChannel = this.getOpenerEventChannel()
@@ -259,7 +268,7 @@ Page({
 	 * 秀一下
 	 */
 	async show() {
-		bxPoint("course_show", {practice_time: this.data.globalRecordTiming}, false)
+		bxPoint("course_show", {practice_time: this.data.globalRecordTiming, traincamp_id: this.data.parentBootCampId, lesson_date: this.data.lessonDate}, false)
 
 		let url = `/subCourse/actionPost/actionPost?actionName=${this.data.courseInfo.name}&duration=${this.data.globalRecordTimeText}&actionNo=${this.data.originData.length}&keChengId=${this.data.courseInfo.id}&bootCampId=${this.data.parentBootCampId}`
 		wx.redirectTo({url})
@@ -609,6 +618,7 @@ Page({
 				})
 			})
 		} else {
+			bxPoint("course_play_complete", {practice_time: this.data.globalRecordTiming, traincamp_id: this.data.parentBootCampId, lesson_date: this.data.lessonDate}, false)
 			// 训练结束
 			this.setData({
 				didShowResultLayer: true,
