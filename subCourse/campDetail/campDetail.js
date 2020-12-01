@@ -1,5 +1,7 @@
 // subCourse/trainingCampDetail/trainingCampDetail.js
 import {
+  checkNeedToFillInfo,
+  dailyStudyCheck,
   getArticileLink,
   getCampDetail,
   getCourseData,
@@ -7,28 +9,21 @@ import {
   getFindBanner,
   getHasJoinCamp,
   getWxRoomData,
-  checkNeedToFillInfo,
-  studyLogCreate,
-  dailyStudyCheck,
-  queryPunchCardQrCode
+  queryPunchCardQrCode,
+  studyLogCreate
 } from "../../api/course/index"
-import {
-  getProductInfo,
-  getYouZanAppId
-} from "../../api/mall/index"
+import { getProductInfo, getYouZanAppId } from "../../api/mall/index"
 import {
   computeDate,
   dateAddDays,
   getLocalStorage,
   getNowDate,
+  getNowDateAll,
   setLocalStorage,
-  simpleDurationSimple,
-  getNowDateAll
+  simpleDurationSimple
 } from "../../utils/util"
 import bxPoint from '../../utils/bxPoint'
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { GLOBAL_KEY } from "../../lib/config"
 
 Page({
 
@@ -246,8 +241,6 @@ Page({
             })
           } else {
             // 结构化
-
-
             bxPoint('traincamp_every_day', {
               videoSrc: this.data.videoData.src.split(VideoSrcHost)[1],
               lesson_num: `第${this.data.videoData.index+1}节课`,
@@ -255,7 +248,7 @@ Page({
               traincamp_id: this.data.campId
             }, false)
             wx.navigateTo({
-              url: `/subCourse/practiceDetail/practiceDetail?courseId=${res.id}&parentBootCampId=${this.data.campId}&formCampDetail=payUser`,
+              url: `/subCourse/practiceDetail/practiceDetail?courseId=${res.id}&parentBootCampId=${this.data.campId}&lessonDate=${+new Date(this.data.showDate)}&formCampDetail=payUser`,
             })
           }
         } else {
