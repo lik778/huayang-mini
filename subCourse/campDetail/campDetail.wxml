@@ -104,14 +104,18 @@
     <!-- share-poster-box -->
   </view>
   <!-- 添加班主任 -->
-  <view class="add-teacher">
+  <view class="add-teacher" wx:if='{{!showMyCredential}}'>
+    <view class="publicity" bindtap="toArticleLink">
+      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606186989eIWyRL.jpg"></image>
+      <text>点击添加班主任微信</text>
+    </view>
   </view>
-  <view class="publicity" bindtap="toArticleLink">
-    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606186989eIWyRL.jpg"></image>
-    <text>点击添加班主任微信</text>
+  <!-- 我的结营证书 -->
+  <view class="my-credential" wx:else bindtap="toMyCredential">
+    <view class="my-credential-text subject-font-color">我的结营证书</view>
   </view>
   <!-- 遮罩层 -->
-  <view class="cover-bg" wx:if="{{showAddTeacherCover}}" bindtap="closeCover">
+  <view class="cover-bg" wx:if="{{showAddTeacherCover&&!showMyCredential}}" bindtap="closeCover">
     <view class="cover-bg-box">
       <view class="cover-text">
         <view>请务必添加班主任</view>

@@ -28,7 +28,7 @@
                                     </view>
                                     <view class="boot-camp-content-name limit-one-line">{{contentItem.name || contentItem.title}}</view>
                                 </view>
-                                <view class="boot-camp-start" bind:tap="handleExerciseBtnTap" data-item="{{contentItem}}"
+                                <view class="boot-camp-start" bind:tap="handleExerciseBtnTap" data-item="{{contentItem}}" data-index="{{contentIndex}}"
                                       data-parent="{{item}}">{{contentItem.type==='kecheng'?'练习':'前往'}}</view>
                             </view>
                         </view>
