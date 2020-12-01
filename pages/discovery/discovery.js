@@ -405,9 +405,21 @@ Page({
 			offset: 0,
 			limit: 999,
 		}
-		if (this.data.tabIndex === 0) {
-			params.user_id = getLocalStorage(GLOBAL_KEY.userId) || ""
+
+		// 监听tab变化，传递额外参数
+		switch (this.data.tabIndex) {
+			case 0: {
+				// 推荐，传递用户ID，获取推荐训练营
+				params.user_id = getLocalStorage(GLOBAL_KEY.userId) || ""
+				break
+			}
+			case 1: {
+				// 主题营，传递scene，获取除读书营之外所有训练营
+				params.scene = "traincamp"
+				break
+			}
 		}
+
 		// 获取训练营列表
 		getCampList(params).then(({list}) => {
 			list = list.map(item => {
