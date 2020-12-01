@@ -10,7 +10,9 @@ import {
   checkNeedToFillInfo,
   studyLogCreate,
   dailyStudyCheck,
-  queryPunchCardQrCode
+  queryPunchCardQrCode,
+  getClassLogo,
+  getClassStudentData
 } from "../../api/course/index"
 import {
   getProductInfo,
@@ -79,7 +81,34 @@ Page({
     createPoint: true, //打点lock
     showShareButton: false, //是否显示分享海报跳转按钮
     dayNum: 0,
-    canShowPage: false
+    canShowPage: false,
+    showMyCredential: false, //是否显示我的结营证书
+  },
+
+  // 跳往训练营结营证书页
+  toMyCredential() {
+    bxPoint("page_camp_detail_credential", {
+      traincamp_id: this.data.campData.id
+    }, false)
+    getClassStudentData({
+      user_id: this.data.userInfo.id
+    }).then(res1 => {
+      let name = res1.data.real_name === '' ? this.data.userInfo.nick_name : res1.data.real_name
+      getClassLogo({
+        user_id: this.data.userInfo.id,
+        traincamp_id: this.data.campId,
+        start_date: this.data.joinDate
+      }).then(res => {
+        let logo = ''
+        if (res.data && res.data.class_num !== 0) {
+          logo = JSON.parse(res.data.logos)[res.data.class_num]
+          logo = logo || ''
+        }
+        wx.navigateTo({
+          url: `/subCourse/campCredential/campCredential?campData=${JSON.stringify(this.data.campData)}&userName=${name}&logo=${logo}`,
+        })
+      })
+    })
   },
 
   // 跳转至训练营海报页
@@ -660,17 +689,41 @@ Page({
         timeSnippetArr.push(arr.slice(index, arr.length))
       }
     }
+    let timeList = []
+    for (let i in timeSnippetArr) {
+      let str1 = timeSnippetArr[i][0]
+      let str2 = timeSnippetArr[i][timeSnippetArr[i].length - 1]
+      timeList.push(`${str1}-${str2}`)
+    }
+    let listData = []
+    if (arr.length <= 1) {
+      listData = arr[0]
+    } else {
+      listData = [`${arr[0]}-${arr[arr.length-1]}`]
+    }
     bxPoint("page_traincamp", {
       scene: 'page_traincamp',
       traincamp_id: this.data.campId,
       video_src: this.data.videoData.src.split(VideoSrcHost)[1],
       lesson_num: `第${this.data.playIndex + 1}节课`,
       play_duration: {
-        time_snippet: timeSnippetArr.length === 0 ? arr : timeSnippetArr, //事件片段
+        time_snippet: timeList.length === 0 ? listData : timeList, //事件片段
         total_duration: time, //视频总时间
         total_visit_duration: arr.length, // 总观看时间
       },
     }, false)
+  },
+
+  // 检查是否需要替换按钮为我的结营证书
+  checkNeedShowMyCredential() {
+    let period = (this.data.campData.period - 1) * 24 * 60 * 60
+    let joinDate = this.data.joinDate
+    let endDate = dateAddDays(joinDate, period, 'yyyy-MM-dd')
+    if (new Date().getTime() >= new Date(endDate).getTime()) {
+      this.setData({
+        showMyCredential: true
+      })
+    }
   },
 
 
@@ -775,6 +828,9 @@ Page({
             choosedDay: this.data.choosedDay === undefined ? 0 : this.data.choosedDay
           })
         }
+        // 判断是否显示“我的结营证书”
+        this.checkNeedShowMyCredential()
+
         this.setData({
           whatDay
         })

@@ -956,7 +956,6 @@ export function getAllNumber(a, b) {
 export const isIphoneXRSMax = function () {
 	// iPhone X、iPhone XS
 	let params = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
-	console.log(params)
 	let isIPhoneX =
 		/iPhone/gi.test(params.brand) &&
 		params.pixelRatio &&
