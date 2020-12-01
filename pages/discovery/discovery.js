@@ -135,7 +135,7 @@ Page({
 				break
 			}
 			default: {
-				this.setData({didFirstLoad: true})
+				this.setData({didFirstLoad: true, cacheCampList: []})
 				this.getRecommendList()
 				break
 			}
@@ -632,7 +632,9 @@ Page({
 		let timer = setTimeout(() => {
 			if (this.data.scrollTop === e.scrollTop) {
 				this.setData({scrollTop: e.scrollTop, scrollIng: false})
-				this.setData({campList: this.data.cacheCampList.slice()})
+				if (this.data.cacheCampList.length > 0) {
+					this.setData({campList: this.data.cacheCampList.slice()})
+				}
 				clearTimeout(timer)
 			}
 		}, 300)
