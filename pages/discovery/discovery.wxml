@@ -69,7 +69,7 @@
                     <view class="bootcamp-operate-price">
                         <block wx:if="{{showMoney}}">
                             <text class="bootcamp-operate-discount-price">¥{{item.discount_price}}</text><text
-                                class="bootcamp-operate-sub-price">¥{{item.price}}</text>
+                                class="bootcamp-operate-sub-price" wx:if="{{item.price}}">¥{{item.price}}</text>
                         </block>
                     </view>
                     <view class="bootcamp-operate-btn">立即参加</view>
@@ -191,7 +191,7 @@
                     <view class="bootcamp-operate-price">
                         <block wx:if="{{showMoney}}">
                             <text class="bootcamp-operate-discount-price">¥{{item.discount_price}}</text><text
-                                class="bootcamp-operate-sub-price">¥{{item.price}}</text>
+                                class="bootcamp-operate-sub-price" wx:if="{{item.price}}">¥{{item.price}}</text>
                         </block>
                     </view>
                     <view class="bootcamp-operate-btn">立即参加</view>
