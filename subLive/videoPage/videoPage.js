@@ -106,8 +106,8 @@ Page({
     } else {
       listData = [`${arr[0]}-${arr[arr.length-1]}`]
     }
-		bxPoint("page_traincamp", {
-			scene: 'page_traincamp',
+		bxPoint("page_practice_camp", {
+			scene: 'page_practice_camp',
 			traincamp_id: this.data.campId,
 			video_src: this.data.videoSrc,
 			lesson_num: `第${this.data.playIndex + 1}节课`,
