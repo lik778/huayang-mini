@@ -434,8 +434,14 @@ Page({
 				})
 
 				// 处理训练营价格单位
-				item.price = (item.price / 100) // .toFixed(2)
-				item.discount_price = (item.discount_price / 100) // .toFixed(2)
+				if (item.discount_price > 0) {
+					item.price = (item.price / 100) // .toFixed(2)
+					item.discount_price = (item.discount_price / 100) // .toFixed(2)
+				} else {
+					// 折扣价小于等于零时，不显示折扣价，仅显示原价
+					item.discount_price = (item.price / 100) // .toFixed(2)
+					item.price = 0
+				}
 
 				// 计算下次开营时间
 				item.next_bootcamp_start_date = "即将开营"
