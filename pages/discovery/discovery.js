@@ -16,6 +16,8 @@ import bxPoint from "../../utils/bxPoint"
 import { getYouZanAppId } from "../../api/mall/index"
 import dayjs from "dayjs"
 
+const TRAINCAMP_SCENE = "traincamp"
+
 Page({
 
 	/**
@@ -135,6 +137,7 @@ Page({
 				break
 			}
 			default: {
+				// 推荐、主题营TAB切换时，清除视频位置数据缓存
 				this.setData({didFirstLoad: true, cacheCampList: []})
 				this.getRecommendList()
 				break
@@ -415,11 +418,10 @@ Page({
 			}
 			case 1: {
 				// 主题营，传递scene，获取除读书营之外所有训练营
-				params.scene = "traincamp"
+				params.scene = TRAINCAMP_SCENE
 				break
 			}
 		}
-
 		// 获取训练营列表
 		getCampList(params).then(({list}) => {
 			list = list.map(item => {
@@ -632,6 +634,7 @@ Page({
 		let timer = setTimeout(() => {
 			if (this.data.scrollTop === e.scrollTop) {
 				this.setData({scrollTop: e.scrollTop, scrollIng: false})
+				// 视频位置数据为空时，不更新视图
 				if (this.data.cacheCampList.length > 0) {
 					this.setData({campList: this.data.cacheCampList.slice()})
 				}
