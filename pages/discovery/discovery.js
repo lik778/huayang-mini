@@ -16,6 +16,8 @@ import bxPoint from "../../utils/bxPoint"
 import { getYouZanAppId } from "../../api/mall/index"
 import dayjs from "dayjs"
 
+const TRAINCAMP_SCENE = "traincamp"
+
 Page({
 
 	/**
@@ -135,7 +137,8 @@ Page({
 				break
 			}
 			default: {
-				this.setData({didFirstLoad: true})
+				// 推荐、主题营TAB切换时，清除视频位置数据缓存
+				this.setData({didFirstLoad: true, cacheCampList: []})
 				this.getRecommendList()
 				break
 			}
@@ -405,8 +408,19 @@ Page({
 			offset: 0,
 			limit: 999,
 		}
-		if (this.data.tabIndex === 0) {
-			params.user_id = getLocalStorage(GLOBAL_KEY.userId) || ""
+
+		// 监听tab变化，传递额外参数
+		switch (this.data.tabIndex) {
+			case 0: {
+				// 推荐，传递用户ID，获取推荐训练营
+				params.user_id = getLocalStorage(GLOBAL_KEY.userId) || ""
+				break
+			}
+			case 1: {
+				// 主题营，传递scene，获取除读书营之外所有训练营
+				params.scene = TRAINCAMP_SCENE
+				break
+			}
 		}
 		// 获取训练营列表
 		getCampList(params).then(({list}) => {
@@ -420,8 +434,14 @@ Page({
 				})
 
 				// 处理训练营价格单位
-				item.price = (item.price / 100) // .toFixed(2)
-				item.discount_price = (item.discount_price / 100) // .toFixed(2)
+				if (item.discount_price > 0) {
+					item.price = (item.price / 100) // .toFixed(2)
+					item.discount_price = (item.discount_price / 100) // .toFixed(2)
+				} else {
+					// 折扣价小于等于零时，不显示折扣价，仅显示原价
+					item.discount_price = (item.price / 100) // .toFixed(2)
+					item.price = 0
+				}
 
 				// 计算下次开营时间
 				item.next_bootcamp_start_date = "即将开营"
@@ -620,7 +640,10 @@ Page({
 		let timer = setTimeout(() => {
 			if (this.data.scrollTop === e.scrollTop) {
 				this.setData({scrollTop: e.scrollTop, scrollIng: false})
-				this.setData({campList: this.data.cacheCampList.slice()})
+				// 视频位置数据为空时，不更新视图
+				if (this.data.cacheCampList.length > 0) {
+					this.setData({campList: this.data.cacheCampList.slice()})
+				}
 				clearTimeout(timer)
 			}
 		}, 300)
