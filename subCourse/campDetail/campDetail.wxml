@@ -112,7 +112,7 @@
   </view>
   <!-- 我的结营证书 -->
   <view class="my-credential" wx:else bindtap="toMyCredential">
-    <view class="my-credential-text subject-bg-color">我的结营证书</view>
+    <view class="my-credential-text subject-font-color">我的结营证书</view>
   </view>
   <!-- 遮罩层 -->
   <view class="cover-bg" wx:if="{{showAddTeacherCover&&!showMyCredential}}" bindtap="closeCover">

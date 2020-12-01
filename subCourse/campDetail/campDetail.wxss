@@ -467,5 +467,6 @@
   font-size: 40rpx;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
-  color: #FFFFFF;
+  /* color: #FFFFFF; */
+  border: 1px solid #CC0000;
 }

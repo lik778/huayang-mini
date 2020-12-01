@@ -140,7 +140,8 @@ Page({
   onLoad: function (options) {
     let logoList = ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606721434GSUkFm.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606721430eIijle.jpg']
     let campData = JSON.parse(options.campData)
-    let userName = options.userName
+    campData.name=campData.name.length > 12 ? campData.name.slice(0, 12) : campData.name
+    let userName = options.userName.length > 6 ? options.userName.slice(0, 6) : options.userName
     let logoData = options.logo === '' ? logoList : options.logo.split(",")
     let date = new Date();
     let year = date.getFullYear();
