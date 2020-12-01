@@ -1,18 +1,18 @@
 // subCourse/trainingCampDetail/trainingCampDetail.js
 import {
+  checkNeedToFillInfo,
+  dailyStudyCheck,
   getArticileLink,
   getCampDetail,
+  getClassLogo,
+  getClassStudentData,
   getCourseData,
   getCurentDayData,
   getFindBanner,
   getHasJoinCamp,
   getWxRoomData,
-  checkNeedToFillInfo,
-  studyLogCreate,
-  dailyStudyCheck,
   queryPunchCardQrCode,
-  getClassLogo,
-  getClassStudentData
+  studyLogCreate
 } from "../../api/course/index"
 import { getProductInfo, getYouZanAppId } from "../../api/mall/index"
 import {
@@ -699,6 +699,7 @@ Page({
       traincamp_id: this.data.campId,
       video_src: this.data.videoData.src.split(VideoSrcHost)[1],
       lesson_num: `第${this.data.playIndex + 1}节课`,
+      date: this.data.showDate,
       play_duration: {
         time_snippet: timeList.length === 0 ? listData : timeList, //事件片段
         total_duration: time, //视频总时间

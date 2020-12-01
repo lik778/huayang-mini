@@ -1,10 +1,7 @@
-import {
-	getLocalStorage
-} from "../../utils/util"
-import {
-	GLOBAL_KEY
-} from "../../lib/config"
+import { getLocalStorage } from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
+import dayjs from "dayjs"
 
 Page({
 
@@ -111,6 +108,7 @@ Page({
 			traincamp_id: this.data.campId,
 			video_src: this.data.videoSrc,
 			lesson_num: `第${this.data.playIndex + 1}节课`,
+			date: dayjs().format('YYYY-MM-DD'),
 			play_duration: {
 				time_snippet: timeList.length === 0 ? listData : timeList, //事件片段
 				total_duration: this.data.totalDuration, //视频总时间
