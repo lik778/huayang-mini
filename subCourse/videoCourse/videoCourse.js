@@ -181,14 +181,19 @@ Page({
       let str2 = timeSnippetArr[i][timeSnippetArr[i].length - 1]
       timeList.push(`${str1}-${str2}`)
     }
-
+    let listData = []
+    if (arr.length <= 1) {
+      listData = arr[0]
+    } else {
+      listData = [`${arr[0]}-${arr[arr.length-1]}`]
+    }
     bxPoint("page_series", {
       scene: 'page_series',
       kecheng_series_id: this.data.videoId,
       video_src: this.data.videoSrc.split(VideoSrcHost)[1],
       lesson_num: `第${this.data.playIndex + 1}节课`,
       play_duration: {
-        time_snippet: timeList.length === 0 ? arr : timeList, //事件片段
+        time_snippet: timeList.length === 0 ?listData : timeList, //事件片段
         total_duration: time, //视频总时间
         total_visit_duration: arr.length, // 总观看时间
       },
