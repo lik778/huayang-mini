@@ -119,7 +119,7 @@ Page({
     // 学习课程打点
     bxPoint("series_content_click", {
       series_id: this.data.courseData.id,
-      kecheng_title: this.data.videoListAll[playIndex].title
+      kecheng_title: this.data.videoListAll[playIndex + 1].title
     }, false)
     setTimeout(() => {
       this.videoContext.play()
@@ -195,7 +195,8 @@ Page({
       scene: 'page_series',
       kecheng_series_id: this.data.videoId,
       video_src: this.data.videoSrc.split(VideoSrcHost)[1],
-      lesson_num: `第${this.data.playIndex + 1}节课`,
+      lesson_num: `第${this.data.videoIndex + 1}节课`,
+      kecheng_title: this.data.videoListAll[this.data.videoIndex].title,
       play_duration: {
         time_snippet: timeList.length === 0 ? listData : timeList, //事件片段
         total_duration: time, //视频总时间
