@@ -17,6 +17,7 @@ import {
   getVideoArticleLink,
   getVideoCourseDetail,
   joinVideoCourse,
+  getIosCustomerLink,
   recordStudy
 } from "../../api/course/index"
 import {
@@ -65,7 +66,8 @@ Page({
     showPromotion: true, //分销分享按钮
     playDurationsList: [], //播放记录秒数打点
     playDurationsListAll: [], //播放记录所有打点
-    videoIndex: 0
+    videoIndex: 0,
+    isIosPlatform: false
   },
   initFissionTask() {
     createFissionTask({
@@ -216,6 +218,10 @@ Page({
     } else {
       if (this.data.lock) {
         // 加入课程
+        bxPoint("series_join", {
+          series_id: this.data.courseData.id
+        }, false)
+
         joinVideoCourse({
           open_id: openid,
           series_id: this.data.courseData.id,
@@ -224,35 +230,51 @@ Page({
           this.setData({
             lock: false
           })
-          bxPoint("series_join", {
-            series_id: this.data.courseData.id
-          }, false)
+
           if (res === 'success') {
             this.backFun({
               type: "success"
             })
           } else if (res.num) {
-            payCourse({
-              id: res.id,
-              name: '加入视频课程'
-            }).then(res => {
-              // 设置顶部标题
-              if (res.errMsg === "requestPayment:ok") {
-                this.backFun({
-                  type: "success"
+            if (this.data.isIosPlatform) {
+              // IOS平台
+              getIosCustomerLink().then(res => {
+                this.setData({
+                  lock: true
                 })
-              } else {
+                let link = encodeURIComponent(res.data)
+                wx.navigateTo({
+                  url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
+                })
+              })
+            } else {
+              payCourse({
+                id: res.id,
+                name: '加入视频课程'
+              }).then(res => {
+                // 设置顶部标题
+                if (res.errMsg === "requestPayment:ok") {
+                  this.backFun({
+                    type: "success"
+                  })
+                } else {
+                  this.backFun({
+                    type: "fail"
+                  })
+                }
+              }).catch(err => {
                 this.backFun({
                   type: "fail"
                 })
-              }
-            }).catch(err => {
-              this.backFun({
-                type: "fail"
               })
-            })
+            }
           }
         })
+
+
+
+
+
       }
     }
   },
@@ -426,36 +448,21 @@ Page({
         res.sharePrice = ''
       }
       this.getArticleLink(res.id)
-      checkFocusLogin({
-        app_version: Version
-      }).then(res1 => {
-        let _this = this
-        if (!res1) {
-          // ios规则弹窗
-          wx.getSystemInfo({
-            success: function (res2) {
-              if (res2.platform == 'ios') {
-                buttonStyle = ButtonType.thoughIOSVirtualPay
-              }
-              _this.setData({
-                courseData: res,
-                showMoreAll: showMoreAll,
-                videoListAll: videoListAll,
-                showMore: showMore,
-                videoLock: lock,
-                showVideoLock: showVideoLock,
-                buttonType: buttonStyle,
-                videoSrc: videoListAll[0].canReplay ? videoListAll[0].url : ''
-              })
-            }
-          })
-        } else {
-          _this.setData({
+
+      wx.getSystemInfo({
+        success: (res2) => {
+          let isIosPlatform = false
+          if (res2.platform == 'ios' && buttonStyle !== 6) {
+            buttonStyle = 1
+            isIosPlatform = true
+          }
+          this.setData({
             courseData: res,
             showMoreAll: showMoreAll,
             videoListAll: videoListAll,
             showMore: showMore,
             videoLock: lock,
+            isIosPlatform,
             showVideoLock: showVideoLock,
             buttonType: buttonStyle,
             videoSrc: videoListAll[0].canReplay ? videoListAll[0].url : ''

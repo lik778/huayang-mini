@@ -11,7 +11,8 @@ import {
 import {
   getCampDetail,
   getHasJoinCamp,
-  joinCamp
+  joinCamp,
+  getIosCustomerLink
 } from "../../api/course/index"
 import {
   $notNull,
@@ -34,6 +35,7 @@ Page({
     overdue: false,
     titleName: "",
     joinTime: "",
+    isIosPlatform: false, //是否是Ios平台
     hasJoinAll: false, //代表加入过
     endTime: "",
     showPromotion: true, //分销分享按钮
@@ -83,7 +85,7 @@ Page({
       let pushTime = ''
       let buttonType = 7
       res.desc = res.desc.split(",")
-      this.getCurrentDate().then(nowDate => {
+      this.getCurrentDate().then(async nowDate => {
         let date2 = new Date(nowDate).getTime() //当前日期
         if (dateList.length > 1) {
           // 多个开营日期
@@ -152,47 +154,37 @@ Page({
             })
           }
         }
-        checkFocusLogin({
-          app_version: Version
-        }).then(async res1 => {
-          let _this = this
-          if (res.discount_price > 0 && res.distribution_ratio > 0) {
-            res.sharePrice = ((res.discount_price * (res.distribution_ratio / 100)) / 100).toFixed(2)
-          } else {
-            res.sharePrice = ''
+        let _this = this
+        if (res.discount_price > 0 && res.distribution_ratio > 0) {
+          res.sharePrice = ((res.discount_price * (res.distribution_ratio / 100)) / 100).toFixed(2)
+        } else {
+          res.sharePrice = ''
+        }
+        // 用户已登录，检查用户是否加入过当前训练营
+        if (hasUserInfo() && hasAccountInfo()) {
+          let campInfo = await getHasJoinCamp({
+            traincamp_id: id
+          })
+          if ($notNull(campInfo)) {
+            buttonType = 10
           }
-          // 用户已登录，检查用户是否加入过当前训练营
-          if (hasUserInfo() && hasAccountInfo()) {
-            let campInfo = await getHasJoinCamp({
-              traincamp_id: id
-            })
-            if ($notNull(campInfo)) {
-              buttonType = 10
-            }
-          }
-          if (!res1) {
-            wx.getSystemInfo({
-              success: function (res2) {
-                if (res2.platform == 'ios') {
-                  buttonType = 8
-                }
-                _this.setData({
-                  campDetailData: res,
-                  joinTime: pushTime,
-                  buttonType: buttonType,
-                  endTime: startDate,
-                  campId: id,
-                  titleName: res.name.length > 8 ? res.name.slice(0, 8) + ".." : res.name
-                })
+        }
+        wx.getSystemInfo({
+          success: (res2) => {
+            let isIosPlatform = false
+            if (res2.platform == 'ios') {
+              isIosPlatform = true
+              if (hasUserInfo() && hasAccountInfo()) {
+                buttonType = buttonType === 10 ? 10 : 9
               }
-            })
-          } else {
-            _this.setData({
+            }
+            this.setData({
               campDetailData: res,
               joinTime: pushTime,
-              buttonType: buttonType,
+              buttonType: startDate === '' ? 1 : buttonType,
               endTime: startDate,
               campId: id,
+              isIosPlatform,
               titleName: res.name.length > 8 ? res.name.slice(0, 8) + ".." : res.name
             })
           }
@@ -234,38 +226,51 @@ Page({
           lock: false
         })
         bxPoint("camp_join", {}, false)
-        joinCamp({
-          open_id: getLocalStorage(GLOBAL_KEY.openId),
-          date: this.data.hasJoinAll ? this.data.hasAllTime : this.data.endTime,
-          traincamp_id: this.data.campId,
-          promote_uid: this.data.promoteUid
-        }).then((res) => {
-          if (res.id) {
-            payCourse({
-              id: res.id,
-              name: '加入训练营'
-            }).then(res => {
-              // 设置顶部标题
-              if (res.errMsg === "requestPayment:ok") {
-                this.backFun({
-                  type: "success"
-                })
-              } else {
+        if (this.data.isIosPlatform) {
+          // ios平台
+          getIosCustomerLink().then(res => {
+            this.setData({
+              lock: true
+            })
+            let link = encodeURIComponent(res.data)
+            wx.navigateTo({
+              url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
+            })
+          })
+        } else {
+          joinCamp({
+            open_id: getLocalStorage(GLOBAL_KEY.openId),
+            date: this.data.hasJoinAll ? this.data.hasAllTime : this.data.endTime,
+            traincamp_id: this.data.campId,
+            promote_uid: this.data.promoteUid
+          }).then((res) => {
+            if (res.id) {
+              payCourse({
+                id: res.id,
+                name: '加入训练营'
+              }).then(res => {
+                // 设置顶部标题
+                if (res.errMsg === "requestPayment:ok") {
+                  this.backFun({
+                    type: "success"
+                  })
+                } else {
+                  this.backFun({
+                    type: "fail"
+                  })
+                }
+              }).catch(err => {
                 this.backFun({
                   type: "fail"
                 })
-              }
-            }).catch(err => {
-              this.backFun({
-                type: "fail"
               })
-            })
-          } else {
-            this.backFun({
-              type: "success"
-            })
-          }
-        })
+            } else {
+              this.backFun({
+                type: "success"
+              })
+            }
+          })
+        }
       }
     } else {
       this.setData({
