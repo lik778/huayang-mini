@@ -675,3 +675,9 @@ export const getClassLogo = params => {
 export const getClassStudentData = params => {
 	return request._get(URL.getClassStudentData, params)
 }
+
+// 获取IOS虚拟支付下引导私域的链接
+export const getIosCustomerLink = params => {
+	return request._get(URL.getIosCustomerLink, params)
+}
+

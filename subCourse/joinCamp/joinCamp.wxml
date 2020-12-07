@@ -41,9 +41,19 @@
 			立即加入
 		</view>
 		<!-- 已购买，继续学习 -->
-		<view class="button-four button-style-two subject-bg-color" wx:if="{{buttonType===10}}" bindtap="toBootcampDetailPage">
+		<view class="button-four button-style-two subject-bg-color" wx:if="{{buttonType===10}}"
+			bindtap="toBootcampDetailPage">
 			继续学习
 		</view>
+
+		<!-- ios引导私域购买 -->
+		<view class="button-five button-style-three subject-bg-color" wx:if="{{buttonType===9}}" bindtap="joinCamp">
+			<!-- 免费的 -->
+			<view>({{hasJoinAll?timeJoin : joinTime}}开营)</view>
+			<view>立即加入</view>
+		</view>
+
+
 	</view>
 	<!-- 授权弹窗 -->
 	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
