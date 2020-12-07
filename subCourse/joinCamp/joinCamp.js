@@ -229,6 +229,9 @@ Page({
         if (this.data.isIosPlatform) {
           // ios平台
           getIosCustomerLink().then(res => {
+            this.setData({
+              lock: true
+            })
             let link = encodeURIComponent(res.data)
             wx.navigateTo({
               url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
