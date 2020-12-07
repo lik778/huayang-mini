@@ -34,7 +34,7 @@
     <view class="tab-pane" wx:if="{{tabIndex === 0}}">
         <!-- 训练营 -->
         <view class="card {{'card-' + index}}" wx:for="{{campList}}" wx:key="index" data-index="{{item}}"
-            bindtap="joinCamp">
+            bindtap="joinCamp" style="height:{{isIosPlatform?'506rpx':'560rpx'}}">
             <image class="bootcampCardItem" wx:if="{{!item.show}}" mode="aspectFill"
                 src="{{item.intro_video_cover_pic || item.cover_pic}}"></image>
             <video wx:else id="{{'video-' + index}}" class="bootcampCardItem" controls="{{false}}"
@@ -54,11 +54,12 @@
                         <text>{{featureItem.value}}</text>
                     </view>
                 </view>
-                <view class="bootcamp-next-date">
-                    {{item.next_bootcamp_start_date === "即将开营" ? "即将开营" : "下一期开营时间：" + item.next_bootcamp_start_date}}
+                <view class="bootcamp-next-date" style="display:{{isIosPlatform?'flex':''}};align-items:{{isIosPlatform?'center':''}};justify-content:{{isIosPlatform?'space-between':''}};">
+                    <view>{{item.next_bootcamp_start_date === "即将开营" ? "即将开营" : "下一期开营时间：" + item.next_bootcamp_start_date}}</view>
+                    <view class="bootcamp-operate-btn" wx:if='{{isIosPlatform}}'>立即参加</view>
                 </view>
-                <view class="bootcamp-operate">
-                    <view class="bootcamp-operate-price" wx:if='{{!isIosPlatform}}'>
+                <view class="bootcamp-operate" wx:if='{{!isIosPlatform}}'>
+                    <view class="bootcamp-operate-price">
                         <block wx:if="{{!isIosPlatform}}">
                             <text class="bootcamp-operate-discount-price">¥{{item.discount_price}}</text><text
                                 class="bootcamp-operate-sub-price" wx:if="{{item.price}}">¥{{item.price}}</text>
@@ -149,7 +150,7 @@
     <view class="tab-pane" wx:if="{{tabIndex === 1}}">
         <!-- 训练营 -->
         <view class="card {{'card-' + index}}" wx:for="{{campList}}" wx:key="index" data-index="{{item}}"
-            bindtap="joinCamp">
+            bindtap="joinCamp" style="height:{{isIosPlatform?'506rpx':'560rpx'}}">
             <image class="bootcampCardItem" wx:if="{{!item.show}}" mode="aspectFill"
                 src="{{item.intro_video_cover_pic || item.cover_pic}}"></image>
             <video wx:else id="{{'video-' + index}}" class="bootcampCardItem" controls="{{false}}"
@@ -169,11 +170,12 @@
                         <text>{{featureItem.value}}</text>
                     </view>
                 </view>
-                <view class="bootcamp-next-date">
-                    {{item.next_bootcamp_start_date === "即将开营" ? "即将开营" : "下一期开营时间：" + item.next_bootcamp_start_date}}
+                <view class="bootcamp-next-date" style="display:{{isIosPlatform?'flex':''}};align-items:{{isIosPlatform?'center':''}};justify-content:{{isIosPlatform?'space-between':''}};">
+                    <view>{{item.next_bootcamp_start_date === "即将开营" ? "即将开营" : "下一期开营时间：" + item.next_bootcamp_start_date}}</view>
+                    <view class="bootcamp-operate-btn" wx:if='{{isIosPlatform}}'>立即参加</view>
                 </view>
-                <view class="bootcamp-operate">
-                    <view class="bootcamp-operate-price" wx:if='{{!isIosPlatform}}'>
+                <view class="bootcamp-operate" wx:if='{{!isIosPlatform}}'>
+                    <view class="bootcamp-operate-price">
                         <block wx:if="{{!isIosPlatform}}">
                             <text class="bootcamp-operate-discount-price">¥{{item.discount_price}}</text><text
                                 class="bootcamp-operate-sub-price" wx:if="{{item.price}}">¥{{item.price}}</text>

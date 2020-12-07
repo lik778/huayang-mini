@@ -221,29 +221,30 @@ Page({
         bxPoint("series_join", {
           series_id: this.data.courseData.id
         }, false)
-        if (this.data.isIosPlatform) {
-          // IOS平台
-          getIosCustomerLink().then(res => {
-            let link = encodeURIComponent(res.data)
-            wx.navigateTo({
-              url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
-            })
-          })
-        } else {
-          joinVideoCourse({
-            open_id: openid,
-            series_id: this.data.courseData.id,
-            promote_uid: this.data.promoteUid
-          }).then(res => {
-            this.setData({
-              lock: false
-            })
 
-            if (res === 'success') {
-              this.backFun({
-                type: "success"
+        joinVideoCourse({
+          open_id: openid,
+          series_id: this.data.courseData.id,
+          promote_uid: this.data.promoteUid
+        }).then(res => {
+          this.setData({
+            lock: false
+          })
+
+          if (res === 'success') {
+            this.backFun({
+              type: "success"
+            })
+          } else if (res.num) {
+            if (this.data.isIosPlatform) {
+              // IOS平台
+              getIosCustomerLink().then(res => {
+                let link = encodeURIComponent(res.data)
+                wx.navigateTo({
+                  url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
+                })
               })
-            } else if (res.num) {
+            } else {
               payCourse({
                 id: res.id,
                 name: '加入视频课程'
@@ -264,8 +265,12 @@ Page({
                 })
               })
             }
-          })
-        }
+          }
+        })
+
+
+
+
 
       }
     }
@@ -444,7 +449,7 @@ Page({
       wx.getSystemInfo({
         success: (res2) => {
           let isIosPlatform = false
-          if (res2.platform == 'ios') {
+          if (res2.platform == 'ios' && buttonStyle !== 6) {
             buttonStyle = 1
             isIosPlatform = true
           }
