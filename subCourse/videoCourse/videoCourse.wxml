@@ -39,7 +39,7 @@
         bindtap="changeTabIndex" data-index='1'>详情</view>
     </view>
     <view class="course-title" wx:else>
-      <view class="course-title-left">课程内容{{buttonType}}</view>
+      <view class="course-title-left">课程内容</view>
       <view class="course-title-right">{{videoListAll.length}}个课时</view>
     </view>
     <view class="course-detail-box" wx:if="{{tabIndex===0}}">
