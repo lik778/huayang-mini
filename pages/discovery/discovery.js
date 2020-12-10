@@ -1,10 +1,5 @@
 // pages/ discovery/discovery.js
-import {
-	$notNull,
-	getLocalStorage,
-	hasAccountInfo,
-	hasUserInfo,
-} from "../../utils/util"
+import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, } from "../../utils/util"
 import request from "../../lib/request"
 import {
 	getActivityList,
@@ -15,17 +10,9 @@ import {
 	queryBootcampFeatureList,
 	queryVideoCourseListByBuyTag
 } from "../../api/course/index"
-import {
-	GLOBAL_KEY,
-	Version
-} from "../../lib/config"
-import {
-	checkFocusLogin
-} from "../../api/auth/index"
+import { GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
-import {
-	getYouZanAppId
-} from "../../api/mall/index"
+import { getYouZanAppId } from "../../api/mall/index"
 import dayjs from "dayjs"
 
 const TRAINCAMP_SCENE = "traincamp"

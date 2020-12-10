@@ -89,7 +89,12 @@
         "schoolReport/schoolReport",
         "schoolReportResult/schoolReportResult",
         "campSharePoster/campSharePoster",
-        "campCredential/campCredential"
+        "campCredential/campCredential",
+        "launchTask/launchTask",
+        "personTask/personTask",
+        "themeTask/themeTask",
+        "compositeTask/compositeTask",
+        "indexTask/indexTask"
       ]
     },
     {

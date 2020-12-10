@@ -300,6 +300,18 @@
           "pathName": "subCourse/campCredential/campCredential",
           "query": "id=40",
           "scene": null
+        },
+        {
+          "name": "发布页",
+          "pathName": "subCourse/launchTask/launchTask",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "综合作业秀",
+          "pathName": "subCourse/compositeTask/compositeTask",
+          "query": "",
+          "scene": null
         }
       ]
     }

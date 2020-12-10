@@ -1,0 +1,174 @@
+.task-layout {
+    display: flex;
+    justify-content: space-between;
+    padding: 60rpx 40rpx;
+    margin-bottom: 12rpx;
+    box-sizing: border-box;
+    background: white;
+    font-size: 0;
+}
+
+.user-avatar {
+    width: 88rpx;
+    height: 88rpx;
+    border-radius: 999rpx;
+}
+
+.task-content {
+    overflow: hidden;
+    width: 562rpx;
+}
+
+.username {
+    font: 500 36rpx/36rpx PingFangSC;
+}
+
+.launch-date {
+    margin: 28rpx 0;
+    color: #9F9F9F;
+    font: 24rpx/24rpx PingFangSC;
+}
+
+.desc {
+    margin-bottom: 30rpx;
+    font: 32rpx/44rpx PingFangSC;
+}
+
+.media-content {
+
+}
+
+.media-content-images {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.review-image {
+    width: 240rpx;
+    height: 240rpx;
+    margin: 0 10rpx 10rpx 0
+}
+
+.review-image.simple-image {
+    width: 400rpx;
+    height: 300rpx;
+}
+
+.media-content-video {
+    position: relative;
+}
+
+.media-content-video:active {
+    opacity: 0.9;
+}
+
+.review-video {
+    width: 100%;
+    height: 100%;
+}
+
+.play-icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 88rpx;
+    height: 88rpx;
+    transform: translate(-50%, -50%);
+}
+
+.audio-callback-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    width: 466rpx;
+    height: 100rpx;
+    box-sizing: border-box;
+    padding: 0 36rpx 0 10rpx;
+    border-radius: 999rpx;
+    background: #F5F3F3;
+}
+
+.audio-callback-icon {
+    width: 80rpx;
+    height: 80rpx;
+}
+
+.audio-callback-icon:active {
+    opacity: 0.9;
+}
+
+.audio-callback-sound-wave {
+    width: 190rpx;
+    height: 32rpx;
+}
+
+.audio-callback-times {
+    font: 40rpx/40rpx PingFangSC;
+}
+
+.tag {
+    display: inline-block;
+    margin: 20rpx 0 40rpx;
+    font: 32rpx/32rpx PingFangSC;
+    color: #BE6F36;
+    padding: 14rpx 20rpx;
+    border-radius: 24rpx 2rpx;
+    background: #F8E2D3;
+}
+
+.operate-layout {
+    display: flex;
+    align-items: center;
+}
+
+.thumb-layout, .share-layout {
+    display: flex;
+    align-items: center;
+    margin-right: 60rpx;
+    font: 28rpx/28rpx PingFangSC;
+    color: #666;
+}
+
+.thumb-layout:active, .share-layout:active {
+    opacity: 0.9;
+}
+
+.thumb, .share {
+    width: 48rpx;
+    height: 48rpx;
+    margin-right: 8rpx;
+}
+
+.teacher-comment {
+
+}
+
+.teacher-title {
+    margin: 60rpx 0 0;
+    font: 500 28rpx/28rpx PingFangSC;
+}
+
+.teacher-info {
+    display: flex;
+    align-items: center;
+    margin: 30rpx 0 20rpx;
+    font: 500 28rpx/28rpx PingFangSC;
+}
+
+.teacher-headimage {
+    height: 48rpx;
+    width: 48rpx;
+    margin-right: 22rpx;
+    border-radius: 999rpx;
+}
+
+.teacher-desc {
+    margin-bottom: 20rpx;
+    font: 28rpx/40rpx PingFangSC;
+}
+
+.teacher-launch-date {
+    font: 24rpx/34rpx PingFangSC;
+    color: #9F9F9F;
+}
