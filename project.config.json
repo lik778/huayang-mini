@@ -300,6 +300,12 @@
           "pathName": "subCourse/campCredential/campCredential",
           "query": "id=40",
           "scene": null
+        },
+        {
+          "name": "/subCourse/joinCamp/joinCamp",
+          "pathName": "subCourse/joinCamp/joinCamp",
+          "query": "id=29&invite_user_id=228&promote_uid=228",
+          "scene": null
         }
       ]
     }
