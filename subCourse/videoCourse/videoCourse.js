@@ -65,7 +65,8 @@ Page({
     showPromotion: true, //分销分享按钮
     playDurationsList: [], //播放记录秒数打点
     playDurationsListAll: [], //播放记录所有打点
-    videoIndex: 0
+    videoIndex: 0,
+    inPlay: false, //是否播放中
   },
   initFissionTask() {
     createFissionTask({
@@ -96,7 +97,8 @@ Page({
         playIndex: playIndex,
         videoIndex: playIndex,
         closeCover: true,
-        showVideoCover: false
+        showVideoCover: false,
+        inPlay:true
       })
     } else {
       this.setData({
@@ -104,7 +106,8 @@ Page({
         closeCover: true,
         showVideoCover: false,
         videoSrc: this.data.videoListAll[playIndex].url,
-        videoIndex: playIndex
+        videoIndex: playIndex,
+        inPlay:true
       })
     }
     wx.pageScrollTo({
@@ -119,7 +122,7 @@ Page({
     // 学习课程打点
     bxPoint("series_content_click", {
       series_id: this.data.courseData.id,
-      kecheng_title: this.data.videoListAll[playIndex + 1].title
+      kecheng_title: this.data.videoListAll[playIndex].title
     }, false)
     setTimeout(() => {
       this.videoContext.play()
@@ -128,7 +131,8 @@ Page({
   // 播放结束
   endVideo() {
     this.setData({
-      playIndex: -1
+      playIndex: -1,
+      inPlay:false
     })
   },
 
@@ -619,6 +623,12 @@ Page({
       promote_uid = '',
       series_invite_id = ''
     } = options
+    if (options.playIndex) {
+      let index = Number(options.playIndex)
+      this.setData({
+        playIndex: index
+      })
+    }
     if (promote_uid !== '') {
       this.setData({
         promoteUid: promote_uid
@@ -705,7 +715,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    let shareLink = `/subCourse/videoCourse/videoCourse?videoId=${this.data.courseData.id}`
+    let shareLink = `/subCourse/videoCourse/videoCourse?videoId=${this.data.courseData.id}&playIndex=${this.data.playIndex}`
     if (this.data.promoteUid !== '') {
       shareLink += `&promote_uid=${this.data.promoteUid}`
     } else {
@@ -713,9 +723,10 @@ Page({
         shareLink += `&promote_uid=${this.data.userInfo.id}`
       }
     }
-
+    let title = this.data.courseData.video_detail[this.data.playIndex].title
+    // let title=this.data.courseData.share_desc
     return {
-      title: this.data.courseData.share_desc,
+      title: title,
       path: shareLink
     }
   }

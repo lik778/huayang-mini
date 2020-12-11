@@ -247,10 +247,9 @@
           "scene": null
         },
         {
-          "id": -1,
-          "name": "mine/personActivity/personActivity",
-          "pathName": "mine/personActivity/personActivity",
-          "query": "",
+          "name": "视频详情页",
+          "pathName": "subCourse/videoCourse/videoCourse",
+          "query": "videoId=25&playIndex=1",
           "scene": null
         },
         {

@@ -17,6 +17,22 @@ App({
 			family: 'Condensed',
 			source: 'url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/font/DIN%20Condensed%20Bold.ttf")'
 		})
+		// wx.getLocation({
+		// 	type: 'wgs84',
+		// 	isHighAccuracy:true,
+		// 	success (res) {
+		// 		const latitude = res.latitude
+		// 		const longitude = res.longitude
+		// 		const speed = res.speed
+		// 		const accuracy = res.accuracy
+		// 		console.log(res)
+		// 	}
+		//  })
+		//  "permission": {
+		// 	"scope.userLocation": {
+		// 		"desc": "你的位置信息将用于小程序为您提供更好的服务"
+		// 	}
+		// },
 	},
 	onShow(options) {
 		// 记录设备信息，保证进入详情页时可以获取到statusHeight自定义navibar
