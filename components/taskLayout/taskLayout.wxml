@@ -1,48 +1,43 @@
-<view class="task-layout">
-    <image mode="aspectFit" class="user-avatar" src="{{info.avatar_url}}"></image>
+<view class="task-layout" wx:if="{{taskInfo != null}}">
+    <image mode="aspectFit" bindtap="goToPersonTaskPage" class="user-avatar" src="{{info.avatar_url}}"></image>
     <view class="task-content">
         <view class="username">{{info.nick_name}}</view>
         <view class="launch-date">{{info.created_at}}</view>
         <view class="desc">{{info.desc}}</view>
         <view class="media-content">
             <view class="media-content-images" wx:if="{{info.media_type === MEDIA_TYPE.image}}">
-                <image class="review-image {{info.media_detail.length === 1 ? 'simple-image' : ''}}" wx:for="{{info.media_detail}}" mode="aspectFill" src="{{item}}" bindtap="reviewImages" data-index="{{index}}"></image>
+                <image class="{{info.media_detail.length === 1 ? 'simple-image' : 'review-image'}}" wx:for="{{info.media_detail}}" mode="aspectFill" src="{{item}}" bindtap="reviewImages" data-index="{{index}}"></image>
             </view>
-            <view class="media-content-video" bindtap="reviewVideo" wx:if="{{info.media_type === MEDIA_TYPE.video}}" style="height: {{info.video_height + 'rpx'}}; width: {{info.video_width + 'rpx'}}">
-                <block wx:if="{{visibleReviewVideo}}">
-                    <video class="review-video" poster="{{info.video_cover}}" controls autoplay enable-play-gesture="{{false}}" src="{{info.media_detail}}"></video>
-                </block>
-                <block wx:else>
-                    <image class="review-video" mode="aspectFill" src="{{info.video_cover}}"></image>
-                    <image class="play-icon" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607584319mpwKOc.jpg"></image>
-                </block>
+            <view class="media-content-video" wx:if="{{info.media_type === MEDIA_TYPE.video}}" style="height: {{info.video_height + 'rpx'}}; width: {{info.video_width + 'rpx'}}">
+                <video class="review-video" id="task-video-{{info.taskId}}" poster="{{info.video_cover}}" controls play-btn-position="center" enable-play-gesture="{{false}}" vslide-gesture-in-fullscreen="{{false}}" src="{{info.media_detail}}" bindplay="reviewVideo"></video>
             </view>
             <view class="media-content-audio" wx:if="{{info.media_type === MEDIA_TYPE.audio}}">
-                <view class="audio-callback-box">
+                <view class="audio-callback-box" bindtap="reviewAudio">
                     <image mode="aspectFit" class="audio-callback-icon" src="{{AUDIO_CALLBACK_IMAGE[audioCallbackStatus]}}"></image>
                     <image mode="aspectFit" class="audio-callback-sound-wave" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607503793dMmlHv.jpg"></image>
                     <text class="audio-callback-times">{{info.audio_length}}</text>
                 </view>
             </view>
         </view>
-        <text class="tag">{{info.kecheng_name}}</text>
+        <text class="tag" bindtap="goToThemeTaskPage">{{info.kecheng_name}}</text>
         <view class="operate-layout">
-            <view class="thumb-layout">
-                <image class="thumb" mode="aspectFit"
-                       src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607585036RaAvFq.jpg"></image>
+            <view class="thumb-layout" bindtap="toggleThumbStatus">
+                <image class="thumb" mode="aspectFit" src="{{info.has_like ? 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607585036RaAvFq.jpg':'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607660879nJFCWj.jpg'}}"></image>
                 <text>{{info.like_count}}</text>
             </view>
             <view class="share-layout">
                 <image class="share" mode="aspectFit"
                        src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607585399UkrxwH.jpg"></image>
                 <text>分享</text>
+                <button open-type="share" data-taskId="{{info.taskId}}" class="share-btn"></button>
             </view>
+            <view wx:if="{{isOwnner}}" class="delete-layout" bindtap="deleteSelfTask">删除</view>
         </view>
-        <view class="teacher-comment">
+        <view class="teacher-comment" wx:if="{{info.work_comment_list.length > 0}}">
             <view class="teacher-title">老师点评</view>
             <view wx:for="{{info.work_comment_list}}" wx:key="index">
                 <view class="teacher-info">
-                    <image class="teacher-headimage" mode="aspectFit" src="{{item.teacherAvatar}}"></image>
+                    <image class="teacher-headimage" mode="aspectFill" src="{{item.teacherAvatar}}"></image>
                     <text>{{item.teacherName}}</text>
                 </view>
                 <view class="teacher-desc">{{item.comment}}</view>

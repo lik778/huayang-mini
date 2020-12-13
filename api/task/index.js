@@ -35,3 +35,48 @@ export function publishTask(params) {
 export function getTaskStream(params) {
 	return request._get(URL.taskStream, params)
 }
+
+/**
+ * 作业点赞
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export function thumbTask(params) {
+	return request._post(URL.thumb, params)
+}
+
+/**
+ * 取消作业点赞
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export function unThumbTask(params) {
+	return request._post(URL.unThumb, params)
+}
+
+/**
+ * 删除自己的作业记录
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export function deleteTaskRecord(params) {
+	return request._post(URL.removeSelfTask, params)
+}
+
+/**
+ * 获取某个用户的作业信息
+ * @param params
+ * @returns {Promise | Promise<unknown>}
+ */
+export function getTaskUserInfo(params) {
+	return request._get(URL.queryTaskUserInfo, params)
+}
+
+/**
+ * 获取作业详情
+ * @param params
+ * @returns {Promise | Promise<unknown>}
+ */
+export function getTaskDetail(params) {
+	return request._get(URL.queryTaskDetail, params)
+}

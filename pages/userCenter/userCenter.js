@@ -1,21 +1,8 @@
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
-import {
-  getPhoneNumber
-} from "../../api/course/index"
-import {
-  getUserGuideLink,
-  getUserInfo,
-  getUserOwnerClasses
-} from "../../api/mine/index"
-import {
-  getLocalStorage,
-  hasAccountInfo,
-  hasUserInfo,
-  setLocalStorage
-} from "../../utils/util"
+import { getPhoneNumber } from "../../api/course/index"
+import { getUserGuideLink, getUserInfo, getUserOwnerClasses } from "../../api/mine/index"
+import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -163,6 +150,19 @@ Page({
     this.setData({
       userInfo: getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
     })
+  },
+  // 我的作业
+  goToTaskLaunchPage() {
+    if (hasUserInfo() && hasAccountInfo()) {
+      let userId = getLocalStorage(GLOBAL_KEY.userId)
+      wx.navigateTo({
+        url: `/subCourse/personTask/personTask?visit_user_id=${userId}`,
+      })
+    } else {
+      this.setData({
+        didShowAuth: true
+      })
+    }
   },
   // 我的订单
   toOrder() {

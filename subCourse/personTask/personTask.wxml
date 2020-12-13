@@ -1,2 +1,21 @@
-<!--subCourse/personTask/personTask.wxml-->
-<text>subCourse/personTask/personTask.wxml</text>
+<view class="person-task">
+    <block wx:if="{{visit_user_info}}">
+        <view class="user-layout">
+            <image mode="aspectFill" class="user-avatar" src="{{visit_user_info.avatar_url}}"></image>
+            <text class="user-name">{{visit_user_info.nick_name}}</text>
+        </view>
+
+        <view class="numbers">
+            <view class="number-item" style="margin-right: 60rpx;"><text class="no">{{visit_user_info.work_count}}</text>作业数</view>
+            <view class="number-item"><text class="no">{{visit_user_info.like_count}}</text>获赞数</view>
+        </view>
+
+        <view class="space-layout"></view>
+    </block>
+
+    <view class="task-layout">作业动态</view>
+
+    <taskLayout isOwnner="{{isOwnner}}" bind:umthumbed="onUmthumbed" bind:thumbed="onThumbed" bind:postTaskId="receiveTaskId" bind:deleteTask="removeTask" wx:for="{{personTaskList}}" wx:key="index" isPerson="{{true}}" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
+
+    <view class="launch-btn" bindtap="goToLaunchTaskPage"></view>
+</view>

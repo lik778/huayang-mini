@@ -1,0 +1,15 @@
+.index-task {
+    padding-bottom: 136rpx;
+}
+.btn {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 136rpx;
+    font-size: 0;
+}
+.btn:active {
+    opacity: 0.9;
+}

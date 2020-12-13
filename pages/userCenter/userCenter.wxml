@@ -53,6 +53,16 @@
 				</view>
 				<image src="/assets/images/common/arrow.png"></image>
 			</view>
+			<view class="function-item" bindtap="goToTaskLaunchPage">
+				<view class="function-item-left">
+					<image src="/assets/images/common/task.png" class="task-image"></image>
+					<view class="function-item-box">
+						<view class="function-item-top">我的作业</view>
+						<view class="function-item-bottom">查看作业记录</view>
+					</view>
+				</view>
+				<image src="/assets/images/common/arrow.png"></image>
+			</view>
 			<view class="function-item" bindtap="toOrder">
 				<view class="function-item-left">
 					<image src="/assets/images/common/order.png"></image>

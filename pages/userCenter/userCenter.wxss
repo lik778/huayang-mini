@@ -187,6 +187,13 @@
   margin-left: -4rpx;
 }
 
+.function-item-left .task-image {
+  width: 52rpx;
+  height: 52rpx;
+  vertical-align: bottom;
+  margin-left: -4rpx;
+}
+
 @keyframes flashing {
   0% {
     transform: scale(1);

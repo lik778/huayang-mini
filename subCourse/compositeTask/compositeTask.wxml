@@ -1,0 +1,4 @@
+<view class="composite-task">
+    <taskLayout bind:postTaskId="receiveTaskId" wx:for="{{compositeTaskList}}" wx:key="index" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
+    <view class="launch-btn" bindtap="goToLaunchTask" />
+</view>

@@ -1,51 +1,53 @@
-import { $notNull, getLocalStorage } from "../../utils/util"
+import { getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
-import { getTaskStream, getTaskUserInfo } from "../../api/task/index"
+import { getTaskStream } from "../../api/task/index"
+import { getCampDetail } from "../../api/course/index"
 
-const NAME = "personTaskPage"
+const NAME = "themeTaskPage"
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    visit_user_id: undefined,
-    visit_user_info: null,
-    personTaskList: [],
+    kecheng_type: undefined,
+    kecheng_id: undefined,
+    themeTaskList: [],
     mediaQueue: [],
     offset: 0,
     limit: 3,
     hasMore: true,
-    isOwnner: false
+    themeBannerImage: "",
+    themeTitle: "",
+    didSignIn: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let {visit_user_id} = options
-    this.setData({visit_user_id})
-    this.getUserInfo()
+    let {kecheng_type, kecheng_id} = options
+    this.setData({kecheng_type, kecheng_id})
+    this.getDetail()
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    this.getPersonTask(true)
+    this.getThemeTask(true)
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let current_user_id = getLocalStorage(GLOBAL_KEY.userId)
-    this.setData({isOwnner: current_user_id == this.data.visit_user_id})
+    this.setData({didSignIn: hasAccountInfo() && hasUserInfo()})
 
     let needInitialPageName = getApp().globalData.needInitialPageName
     if (needInitialPageName === NAME) {
       wx.pageScrollTo({scrollTop: 0, duration: 0})
-      this.getPersonTask(true)
+      this.getThemeTask(true)
       getApp().globalData.needInitialPageName = ""
     }
   },
@@ -68,7 +70,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    this.getPersonTask(true)
+    this.getThemeTask(true)
   },
 
   /**
@@ -76,7 +78,7 @@ Page({
    */
   onReachBottom: function () {
     if (this.data.hasMore) {
-      this.getPersonTask()
+      this.getThemeTask()
     }
   },
 
@@ -90,43 +92,46 @@ Page({
       path: `/subCourse/indexTask/indexTask?taskId=${taskId}`
     }
   },
-  /**
-   * 取消点赞回调
-   */
-  onUmthumbed() {
-    let oldData = {...this.data.visit_user_info}
-    this.setData({visit_user_info: { ...oldData, like_count: oldData.like_count - 1 }})
+  goToJoinBootcamp() {
+    wx.navigateTo({url: `/subCourse/joinCamp/joinCamp?id=${this.data.kecheng_id}`})
   },
-  /**
-   * 点赞回调
-   */
-  onThumbed() {
-    let oldData = {...this.data.visit_user_info}
-    this.setData({visit_user_info: { ...oldData, like_count: oldData.like_count + 1 }})
+  gotoBootcampDetail() {
+    wx.navigateTo({url: `/subCourse/campDetail/campDetail?id=${this.data.kecheng_id}`})
   },
-  /**
-   * 跳转发布页
-   */
   goToLaunchTaskPage() {
-    wx.navigateTo({url: "/subCourse/launchTask/launchTask?fromPageName=" + NAME})
+    wx.navigateTo({url: `/subCourse/launchTask/launchTask?fromPageName=${NAME}themeType=${this.data.kecheng_type}&themeId=${this.data.kecheng_id}&themeTitle=${this.data.themeTitle}`})
+  },
+  back() {
+    wx.navigateBack()
+  },
+  getDetail() {
+    switch (+this.data.kecheng_type) {
+      case 0: {
+        // 训练营
+        getCampDetail({
+          traincamp_id: this.data.kecheng_id,
+          user_id: getLocalStorage(GLOBAL_KEY.userId)
+        }).then((data) => {
+          data = data || []
+          let { cover_pic, name } = data
+          this.setData({themeBannerImage: cover_pic, themeTitle: name})
+        })
+      }
+      case 1: {
+        // 学院 TODO 学院banner找叶子设计
+      }
+    }
   },
   /**
-   * 获取用户作业相关信息
+   * 获取主题作业流
    */
-  getUserInfo() {
-    getTaskUserInfo({user_id: this.data. visit_user_id}).then(({data}) => {
-      this.setData({visit_user_info: data})
-    })
-  },
-  /**
-   * 获取个人作业流
-   */
-  getPersonTask(refresh = false) {
+  getThemeTask(refresh = false) {
     if (refresh) {
-      this.setData({personTaskList: []})
+      this.setData({themeTaskList: []})
     }
     let params = {
-      visit_user_id: this.data.visit_user_id,
+      kecheng_type: this.data.kecheng_type,
+      kecheng_id: this.data.kecheng_id,
       limit: this.data.limit,
       offset: refresh ? 0 : this.data.offset
     }
@@ -136,25 +141,10 @@ Page({
     }
     getTaskStream(params).then(({data}) => {
       data = data || []
-      let oldData = this.data.personTaskList.slice()
-      let personTaskList = refresh ? [...data] : [...oldData, ...data]
-      this.setData({personTaskList, hasMore: data.length === this.data.limit, offset: personTaskList.length})
+      let oldData = this.data.themeTaskList.slice()
+      let themeTaskList = refresh ? [...data] : [...oldData, ...data]
+      this.setData({themeTaskList, hasMore: data.length === this.data.limit, offset: themeTaskList.length})
     })
-  },
-  /**
-   * 删除自己的作业
-   * @param e
-   */
-  removeTask(e) {
-    let oldData = this.data.personTaskList.slice()
-    let newData = oldData.map((item) => {
-      if ($notNull(item) && (item.kecheng_work.id != e.detail.taskId)) {
-        return item
-      }
-      return null
-    })
-
-    this.setData({personTaskList: [...newData]})
   },
   /**
    * 接受正在播放媒体的作业ID号

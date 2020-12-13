@@ -27,19 +27,16 @@
     <!-- 图片回显 -->
     <view class="images-review-box" wx:if="{{images.length > 0}}">
         <view class="image-review" wx:for="{{images}}" wx:key="index">
-            <image mode="aspectFill" class="simple-image" bindtap="reviewImage" data-index="{{index}}" src="{{item}}"/>
-            <image mode="aspectFit" bindtap="removeImage" data-item="{{item}}" class="remove-icon"
-                   src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607421256DZlfPK.jpg"></image>
+            <image mode="aspectFit" class="simple-image" bindtap="reviewImage" data-index="{{index}}" src="{{item}}"/>
+            <image mode="aspectFit" bindtap="removeImage" data-item="{{item}}" class="remove-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607421256DZlfPK.jpg"></image>
         </view>
-        <image class="add-image" bindtap="chooseDeviceImage" wx:if="{{images.length < 4}}" mode="aspectFill"
-               src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607439250lRghyE.jpg"></image>
+        <image class="add-image" bindtap="chooseDeviceImage" wx:if="{{images.length < 4}}" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607439250lRghyE.jpg"></image>
     </view>
 
     <!-- 视频回显 -->
     <view class="video-review-box" wx:if="{{videoReviewVisible}}">
         <video class="preview-video" src="{{videoUrl}}" controls enable-play-gesture="{{false}}"></video>
-        <image mode="aspectFit" bindtap="removeVideo" class="remove-icon"
-               src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607421256DZlfPK.jpg"></image>
+        <image mode="aspectFit" bindtap="removeVideo" class="remove-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607421256DZlfPK.jpg"></image>
     </view>
 
     <!-- 录音弹窗 -->
@@ -55,10 +52,8 @@
                     /////////
                 </view>
                 <view class="audio-review-operate">
-                    <view class="audio-operate-box"
-                          wx:if="{{recordAudioStatus === AUDIO_STATUS.done || recordAudioStatus === AUDIO_STATUS.play}}">
-                        <image mode="aspectFit" bindtap="reloadAudioRecord" class="audio-operate-small-image"
-                               src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607496010ehmzIm.jpg"></image>
+                    <view class="audio-operate-box" wx:if="{{recordAudioStatus === AUDIO_STATUS.done || recordAudioStatus === AUDIO_STATUS.play}}">
+                        <image mode="aspectFit" bindtap="reloadAudioRecord" class="audio-operate-small-image" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607496010ehmzIm.jpg"></image>
                         <text class="audio-operate-text">重录</text>
                     </view>
                     <view class="audio-operate-box middle-icon">

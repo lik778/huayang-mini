@@ -102,23 +102,42 @@ Page({
 		recordAudioTimes: "00:00",
 		recentCourseList: [],
 		selectedCourseItem: null,
-		mediaType: undefined
+		mediaType: undefined,
+		fromPageName: undefined
 	},
 
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
+		let {themeType, themeId, themeTitle, fromPageName} = options;
+		if (themeType && themeId && themeTitle) {
+			let recentCourseList = [{
+				name: themeTitle,
+				kecheng_type: themeType,
+				kecheng_id: themeId,
+				isSelected: true
+			}]
+			this.setData({recentCourseList})
+		}
 
+		if (fromPageName) {
+			this.setData({fromPageName})
+		}
+
+		this.initAliyunUploader()
+		this.initialRecorderManager()
+
+		if (!$notNull(this.data.recentCourseList)) {
+			this.getRecentCourseList()
+		}
 	},
 
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
-		this.getRecentCourseList()
-		this.initAliyunUploader()
-		this.initialRecorderManager()
+
 	},
 
 	/**
@@ -192,17 +211,30 @@ Page({
 			},
 			// 文件上传成功
 			onUploadSucceed: function (uploadInfo) {
-				let callbackUrl = `http://video.huayangbaixing.com/${uploadInfo.object}`
-				self.setData({
-					videoId: uploadInfo.videoId,
-					videoUrl: callbackUrl,
-					videoReviewVisible: true,
-					materialVisible: false
-				})
+				let callbackUrl = `https://video.huayangbaixing.com/${uploadInfo.object}`
+				console.error(callbackUrl)
+				switch (self.data.mediaType) {
+					case MEDIA_TYPE.audio: {
+						self.setData({localAudioUrl: callbackUrl})
+						break
+					}
+					case MEDIA_TYPE.video: {
+						self.setData({
+							videoId: uploadInfo.videoId,
+							videoUrl: callbackUrl,
+							videoReviewVisible: true,
+							materialVisible: false
+						})
+						break
+					}
+				}
+
+				wx.hideLoading()
 			},
 			// 文件上传失败
 			onUploadFailed: function (uploadInfo, code, message) {
 				console.error("文件上传失败", message)
+				wx.hideLoading()
 			},
 			// 上传凭证超时
 			onUploadTokenExpired: function (uploadInfo) {
@@ -248,8 +280,13 @@ Page({
 			console.log(tempFilePath, duration, fileSize)
 
 			// 上传本地录音
-			this.uploadFileToWxService(tempFilePath, "audio").then((url) => {
-				this.setData({localAudioUrl: url})
+			getOssCertificate({
+				title: "aduio_task",
+				filename: tempFilePath.split("://")[1]
+			}).then(({data}) => {
+				self.data.aliyunUploader.params = data
+				self.data.aliyunUploader.addFile({url: tempFilePath}, null, null, null, '{"Vod":{}}')
+				self.data.aliyunUploader.startUpload()
 			})
 		})
 
@@ -409,6 +446,9 @@ Page({
 					self.data.aliyunUploader.params = data
 					self.data.aliyunUploader.addFile({url: tempFilePath}, null, null, null, '{"Vod":{}}')
 					self.data.aliyunUploader.startUpload()
+					wx.showLoading({title: "上传中...", mask: true})
+
+					console.error(self.data.aliyunUploader)
 				})
 			},
 			fail(err) {
@@ -423,6 +463,7 @@ Page({
 	 * @param extraHeaders
 	 */
 	uploadFileToWxService(filePath, type, extraHeaders = {}) {
+		wx.showLoading({title: "上传中...", mask: true})
 		return new Promise((resolve, reject) => {
 			wx.uploadFile({
 				url: DEVELOPMENT_SERVICE_URL[type],
@@ -440,6 +481,9 @@ Page({
 					console.error(err)
 					let {message} = JSON.parse(err)
 					reject(message)
+				},
+				complete() {
+					wx.hideLoading()
 				}
 			})
 		})
@@ -680,9 +724,14 @@ Page({
 			return toast(errorMessage)
 		}
 
+		wx.showLoading({title: "发布中...", mask: true})
 		publishTask(params).then(({data}) => {
 			toast("发布作业成功")
 			console.log(data)
+			getApp().globalData.needInitialPageName = this.data.fromPageName
+			wx.navigateBack()
+		}).finally(() => {
+			wx.hideLoading()
 		})
 	}
 })

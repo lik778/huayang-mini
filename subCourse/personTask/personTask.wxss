@@ -1,1 +1,64 @@
-/* subCourse/personTask/personTask.wxss */
+.person-task {
+    padding-bottom: 136rpx;
+}
+
+.user-layout {
+    display: flex;
+    align-items: center;
+    margin: 60rpx;
+    font-size: 0;
+}
+
+.user-avatar {
+    width: 128rpx;
+    height: 128rpx;
+    border-radius: 999rpx;
+    margin-right: 30rpx;
+}
+
+.user-name {
+    font: 500 52rpx/52rpx PingFangSC;
+}
+
+.numbers {
+    margin: 0 60rpx 40rpx;
+    display: flex;
+}
+
+.number-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font: 32rpx/36rpx PingFangSC;
+    color: rgba(0,0,0, 0.6)
+}
+
+.no {
+    margin-right: 12rpx;
+    font: 500 44rpx/36rpx PingFangSC;
+    color: black;
+}
+
+.space-layout {
+    height: 12rpx;
+    background: #F9F9F9;
+}
+
+.task-layout {
+    margin: 68rpx 40rpx 0;
+    font: 500 40rpx/40rpx PingFangSC;
+}
+
+.launch-btn {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 136rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607663397fpoTbz.jpg") no-repeat center;
+    background-size: cover;
+}
+
+.launch-btn:active {
+    opacity: 0.9;
+}

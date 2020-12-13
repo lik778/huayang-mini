@@ -1,0 +1,18 @@
+.composite-task {
+    padding-bottom: 136rpx;
+    background: #F9F9F9;
+}
+
+.launch-btn {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 136rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607663397fpoTbz.jpg") no-repeat center;
+    background-size: cover;
+}
+
+.launch-btn:active {
+    opacity: 0.9;
+}

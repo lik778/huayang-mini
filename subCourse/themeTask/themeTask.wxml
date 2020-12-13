@@ -1,0 +1,24 @@
+<view class="theme-task">
+    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607759556NHlnQg.jpg" mode="aspectFill" class="close-icon" bindtap="back"></image>
+    <view class="header-content">
+        <image class="theme-banner" mode="aspectFill" src="{{themeBannerImage}}" />
+        <view class="theme-title">{{themeTitle}}</view>
+    </view>
+
+    <view class="task-layout">作业动态</view>
+
+    <taskLayout bind:postTaskId="receiveTaskId" wx:for="{{themeTaskList}}" wx:key="index" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
+
+    <block wx:if="{{kecheng_type}}">
+        <view class="bootcamp-footer" wx:if="{{kecheng_type === '0'}}">
+            <view class="joined-footer" wx:if="{{didSignIn}}">
+                <image bindtap="gotoBootcampDetail" class="joined-btn" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607760368jrMrIZ.jpg"></image>
+                <image bindtap="goToLaunchTaskPage" class="joined-btn" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607760362ibQQru.jpg"></image>
+            </view>
+            <image bindtap="goToJoinBootcamp" wx:else class="not-join-btn" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607760202LgfwLA.jpg"></image>
+        </view>
+        <view class="course-footer" wx:else>
+            问叶子要"加入学习"的图片
+        </view>
+    </block>
+</view>
