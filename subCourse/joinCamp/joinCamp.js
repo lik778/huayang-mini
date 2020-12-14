@@ -181,7 +181,7 @@ Page({
             this.setData({
               campDetailData: res,
               joinTime: pushTime,
-              buttonType: startDate === '' ? 1 : buttonType,
+              buttonType: buttonType === 10 ? 10 : startDate === '' ? 1 : buttonType,
               endTime: startDate,
               campId: id,
               isIosPlatform,
