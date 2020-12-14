@@ -2,8 +2,9 @@
 <view class="video-course" wx:if="courseData!==''">
   <!-- 视频区域 -->
   <view class="video" style="{{videoStyle}}">
-    <video id="myVideo" bindplay="playVideo" src="{{videoSrc}}" style="{{videoHeight}}" bindpause="pause" bindtimeupdate="processChange"
-      controls="{{showLock?false:true}}" show-center-play-btn="{{false}}" bindended="endVideo">
+    <video id="myVideo" bindplay="playVideo" src="{{videoSrc}}" style="{{videoHeight}}" bindpause="pause"
+      bindtimeupdate="processChange" controls="{{showLock?false:true}}" show-center-play-btn="{{false}}"
+      bindended="endVideo">
     </video>
     <view class="video-cover-one" wx:if="{{showVideoCover}}">
       <image src="{{courseData.video_pic}}"></image>
@@ -61,7 +62,7 @@
                 <view class="item-left-bottom">{{item.title}}</view>
               </view>
             </view>
-            <view class="course-item-right subject-font-color" wx:if="{{playIndex===index}}">
+            <view class="course-item-right subject-font-color" wx:if="{{playIndex===index&&inPlay}}">
               正在播放
             </view>
             <view class="course-item-right subject-font-color" wx:else>
@@ -121,7 +122,7 @@
     </view>
   </view>
   <!-- 分销按钮 -->
-  <view class="share-friend" bindtap="shareCourse"
+  <view class="share-friend" bindtap="shareCourse" style="bottom:{{buttonType===6?'80rpx':'188rpx'}}"
     wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&showPromotion&&courseData.sharePrice!==''}}">
     <view class="share-friend-box">
       <button open-type="share">推广成功赚{{courseData.sharePrice}}元</button>
@@ -129,12 +130,13 @@
     </view>
   </view>
   <!-- 分享微信好友 -->
-  <view class="share" bindtap="share" wx:else>
+  <view class="share" bindtap="share" wx:else style="bottom:{{buttonType===6?'80rpx':'188rpx'}}">
     <view class="share-box">
       <button open-type="share"></button>
       <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599118170RBWnFr.jpg"></image>
     </view>
   </view>
+
   <!-- 授权弹窗 -->
   <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
   </authModule>

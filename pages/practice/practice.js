@@ -192,6 +192,7 @@ Page({
 		} = e.currentTarget.dataset
 		let courseIndex = e.currentTarget.dataset.index
 		let campId = e.currentTarget.dataset.parent.bootCampId
+
 		bxPoint("practice_start", {}, false)
 		this.setData({
 			didNeedScrollTop: true
@@ -257,7 +258,7 @@ Page({
 			}
 			case 'video': {
 				wx.navigateTo({
-					url: '/subLive/videoPage/videoPage?link=' + item.video + `&is_camp_video=true&courseIndex=${courseIndex}&campId=${campId}`
+					url: '/subLive/videoPage/videoPage?link=' + item.video + `&is_camp_video=true&courseIndex=${courseIndex}&campId=${campId}&name=${item.name}`
 				})
 				return
 			}

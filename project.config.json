@@ -32,9 +32,11 @@
     "useIsolateContext": true,
     "useCompilerModule": true,
     "userConfirmedUseCompilerModuleSwitch": false,
+    "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
-    "minifyWXSS": true
+    "minifyWXSS": true,
+    "bundle": false
   },
   "compileType": "miniprogram",
   "libVersion": "2.12.0",
@@ -247,10 +249,9 @@
           "scene": null
         },
         {
-          "id": -1,
-          "name": "mine/personActivity/personActivity",
-          "pathName": "mine/personActivity/personActivity",
-          "query": "",
+          "name": "视频详情页",
+          "pathName": "subCourse/videoCourse/videoCourse",
+          "query": "videoId=25&playIndex=2",
           "scene": null
         },
         {
@@ -299,6 +300,12 @@
           "name": "训练营结营证书",
           "pathName": "subCourse/campCredential/campCredential",
           "query": "id=40",
+          "scene": null
+        },
+        {
+          "name": "/subCourse/joinCamp/joinCamp",
+          "pathName": "subCourse/joinCamp/joinCamp",
+          "query": "id=29&invite_user_id=228&promote_uid=228",
           "scene": null
         }
       ]

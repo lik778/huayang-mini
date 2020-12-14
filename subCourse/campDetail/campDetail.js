@@ -698,7 +698,7 @@ Page({
       traincamp_id: this.data.campId,
       video_src: this.data.videoData.src.split(VideoSrcHost)[1],
       lesson_num: `第${this.data.playIndex + 1}节课`,
-      date: this.data.showDate,
+      kecheng_title: `${this.data.courseList[this.data.playIndex].name}`,
       play_duration: {
         time_snippet: timeList.length === 0 ? listData : timeList, //事件片段
         total_duration: time, //视频总时间
