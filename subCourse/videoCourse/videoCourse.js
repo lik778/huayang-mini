@@ -221,7 +221,6 @@ Page({
       })
       return
     } else {
-    
       if (this.data.isIosPlatform) {
         // IOS平台
         getIosCustomerLink().then(res => {
