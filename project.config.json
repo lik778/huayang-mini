@@ -251,7 +251,7 @@
         {
           "name": "视频详情页",
           "pathName": "subCourse/videoCourse/videoCourse",
-          "query": "videoId=25&playIndex=1",
+          "query": "videoId=25&playIndex=2",
           "scene": null
         },
         {

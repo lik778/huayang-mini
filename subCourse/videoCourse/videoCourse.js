@@ -391,6 +391,7 @@ Page({
         // 控制视频是否可以播放
         lock = false
       }
+      // let canPlay = this.data.playIndex === -1 ? res.video_detail[0].canReplay : res.video_detail[this.data.playIndex].canReplay
       let canPlay = res.video_detail[0].canReplay
       let showVideoCoverLock = this.data.showVideoCover
       let hasLogin = this.data.hasLogin
@@ -486,6 +487,9 @@ Page({
         }
         if (res.data === null) {
           // 未加入过
+          this.setData({
+            playIndex: -1
+          })
           this.getVideoDetail()
         } else {
           // 加入过
