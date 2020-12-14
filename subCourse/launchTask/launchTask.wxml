@@ -6,8 +6,7 @@
 
     <!--  输入框  -->
     <view class="text">
-        <textarea class="textarea" bindinput="onTextareaInput" placeholder="请输入您的作业内容或心情"
-                  placeholder-class="textarea-placeholder" maxlength="{{200}}"/>
+        <textarea class="textarea" bindinput="onTextareaInput" placeholder="请输入您的作业内容或心情" placeholder-class="textarea-placeholder" maxlength="{{200}}"/>
         <view class="text-count">{{textCount}}/200</view>
     </view>
 

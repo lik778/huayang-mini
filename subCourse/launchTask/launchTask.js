@@ -579,7 +579,7 @@ Page({
 	 */
 	onTextareaInput(e) {
 		let text = e.detail.value
-		this.setData({textCount: text.length, desc: text})
+		this.setData({textCount: text.length, desc: text.replace(/\s+/g, "")})
 	},
 	/**
 	 * 切换录音弹窗
