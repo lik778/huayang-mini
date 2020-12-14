@@ -1,10 +1,5 @@
 // pages/ discovery/discovery.js
-import {
-	$notNull,
-	getLocalStorage,
-	hasAccountInfo,
-	hasUserInfo,
-} from "../../utils/util"
+import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, } from "../../utils/util"
 import request from "../../lib/request"
 import {
 	getActivityList,
@@ -15,17 +10,9 @@ import {
 	queryBootcampFeatureList,
 	queryVideoCourseListByBuyTag
 } from "../../api/course/index"
-import {
-	GLOBAL_KEY,
-	Version
-} from "../../lib/config"
-import {
-	checkFocusLogin
-} from "../../api/auth/index"
+import { GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
-import {
-	getYouZanAppId
-} from "../../api/mall/index"
+import { getYouZanAppId } from "../../api/mall/index"
 import dayjs from "dayjs"
 
 const TRAINCAMP_SCENE = "traincamp"
@@ -97,7 +84,7 @@ Page({
 					bottom: -50
 				})
 				.observe('.card-' + index, res => {
-					let campList = this.data.cacheCampList.length > 0 ? this.data.cacheCampList.slice() : this.data.campList.slice()
+					let campList = this.data.campList.slice()
 					if (res && res.intersectionRatio > 0) {
 						// 进入可视区域
 						campList = campList.map((item, itemIndex) => {
@@ -159,6 +146,9 @@ Page({
 			id,
 			name
 		} = e.currentTarget.dataset.item
+
+		if (this.data.tabIndex === +id) return
+
 		this.setData({
 			tabIndex: id
 		})
@@ -541,11 +531,9 @@ Page({
 			// 获取直播列表个数
 			this.getLiveTotalNum()
 
-			let temp = setTimeout(() => {
-				// 监听每个video标签在视口的位置
-				this.initBootcampListener()
-				clearTimeout(temp)
-			}, 500)
+
+			// 监听每个video标签在视口的位置
+			this.initBootcampListener()
 		})
 	},
 	// 获取直播列表个数
