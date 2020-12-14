@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "taskLayout": "../../components/taskLayout/taskLayout"
+    "taskLayout": "../../components/taskLayout/taskLayout",
+    "authModule": "../../components/auth/auth"
   }
 }

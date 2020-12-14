@@ -7,12 +7,12 @@
 
     <view class="task-layout">作业动态</view>
 
-    <taskLayout bind:postTaskId="receiveTaskId" wx:for="{{themeTaskList}}" wx:key="index" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
+    <taskLayout isTheme="{{true}}" bind:noAuth="onNoAuth" bind:postTaskId="receiveTaskId" wx:for="{{themeTaskList}}" wx:key="index" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
 
     <block wx:if="{{kecheng_type}}">
         <view class="bootcamp-footer" wx:if="{{kecheng_type === '0'}}">
             <view class="joined-footer" wx:if="{{didSignIn}}">
-                <image bindtap="gotoBootcampDetail" class="joined-btn" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607760368jrMrIZ.jpg"></image>
+                <image bindtap="goToBootcampDetail" class="joined-btn" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607760368jrMrIZ.jpg"></image>
                 <image bindtap="goToLaunchTaskPage" class="joined-btn" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607760362ibQQru.jpg"></image>
             </view>
             <image bindtap="goToJoinBootcamp" wx:else class="not-join-btn" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607760202LgfwLA.jpg"></image>
@@ -21,4 +21,6 @@
             问叶子要"加入学习"的图片
         </view>
     </block>
+
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
 </view>

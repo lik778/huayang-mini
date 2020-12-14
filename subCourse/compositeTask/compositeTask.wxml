@@ -1,4 +1,5 @@
 <view class="composite-task">
-    <taskLayout bind:postTaskId="receiveTaskId" wx:for="{{compositeTaskList}}" wx:key="index" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
+    <taskLayout bind:noAuth="onNoAuth" bind:postTaskId="receiveTaskId" wx:for="{{compositeTaskList}}" wx:key="index" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
     <view class="launch-btn" bindtap="goToLaunchTask" />
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
 </view>

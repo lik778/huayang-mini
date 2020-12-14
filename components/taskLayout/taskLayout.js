@@ -1,6 +1,6 @@
 import dayjs from "dayjs"
 import { deleteTaskRecord, thumbTask, unThumbTask } from "../../api/task/index"
-import { getLocalStorage, toast } from "../../utils/util"
+import { getLocalStorage, hasAccountInfo, hasUserInfo, toast } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
 // 媒体资源类型
 const MEDIA_TYPE = {
@@ -37,6 +37,10 @@ Component({
 		isPerson: {
 			type: Boolean,
 			value: false
+		},
+		isTheme: {
+			type: Boolean,
+			value: false
 		}
 	},
 
@@ -61,9 +65,7 @@ Component({
 		 * 跳转到个人作业秀页面
 		 */
 		goToPersonTaskPage() {
-			if (this.data.isPerson) {
-				return
-			}
+			if (this.data.isPerson) return
 			let {userId} = this.data.info
 			wx.navigateTo({url: `/subCourse/personTask/personTask?visit_user_id=${userId}`})
 
@@ -72,6 +74,7 @@ Component({
 		 * 跳转到主题作业秀页面
 		 */
 		goToThemeTaskPage() {
+			if (this.data.isTheme) return
 			let {kecheng_type, kecheng_id} = this.data.info
 			wx.navigateTo({url: `/subCourse/themeTask/themeTask?kecheng_type=${kecheng_type}&kecheng_id=${kecheng_id}`})
 		},
@@ -104,6 +107,10 @@ Component({
 		 * @param e
 		 */
 		toggleThumbStatus(e) {
+			if (!hasUserInfo() || !hasAccountInfo()) {
+				return this.triggerEvent("noAuth")
+			}
+
 			let oldInfoData = {...this.data.info}
 			let {taskId, has_like} = oldInfoData
 			let params = {work_id: taskId, user_id: getLocalStorage(GLOBAL_KEY.userId)}
@@ -215,7 +222,7 @@ Component({
 			if (this.data.bgAudioInstance) {
 				// 已初始化
 				if (this.data.didBgAudioRunning) {
-					this.data.bgAudioInstance.stop()
+					this.data.bgAudioInstance.pause()
 				} else {
 					this.data.bgAudioInstance.src = this.data.info.media_detail
 					this.data.bgAudioInstance.play()
@@ -250,6 +257,7 @@ Component({
 			bgAudioInstance.src = this.data.info.media_detail
 
 			bgAudioInstance.onCanplay(() => {
+				this.setData({audioCallbackStatus: AUDIO_CALLBACK_STATUS.start})
 				this.setData({didBgAudioRunning: true})
 				console.log("bga can play")
 			})
@@ -260,11 +268,13 @@ Component({
 			})
 
 			bgAudioInstance.onPause(() => {
+				this.setData({audioCallbackStatus: AUDIO_CALLBACK_STATUS.pause})
 				bgAudioInstance.stop()
 				console.log("bga pause")
 			})
 
 			bgAudioInstance.onStop(() => {
+				this.setData({audioCallbackStatus: AUDIO_CALLBACK_STATUS.pause})
 				this.setData({didBgAudioRunning: false})
 				console.log("bga stop")
 			})
@@ -334,7 +344,7 @@ Component({
 				desc,
 				video_height: video_height >= video_width ? 400 : 300,
 				video_width: video_width >= video_height ? 400 : 300,
-				video_cover: video_cover || "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607583151WdjlCc.jpg",
+				video_cover: video_cover || (video_width >= video_height ? "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607912712ZAvxKf.jpg" : "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607912672WKXVrT.jpg"),
 				created_at: this.calcDate(created_at),
 				audio_length,
 				avatar_url,

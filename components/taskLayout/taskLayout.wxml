@@ -14,7 +14,7 @@
             <view class="media-content-audio" wx:if="{{info.media_type === MEDIA_TYPE.audio}}">
                 <view class="audio-callback-box" bindtap="reviewAudio">
                     <image mode="aspectFit" class="audio-callback-icon" src="{{AUDIO_CALLBACK_IMAGE[audioCallbackStatus]}}"></image>
-                    <image mode="aspectFit" class="audio-callback-sound-wave" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607503793dMmlHv.jpg"></image>
+                    <image mode="aspectFit" class="audio-callback-sound-wave" src="{{ audioCallbackStatus === AUDIO_CALLBACK_STATUS.start ? 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607911730epuYmI.jpg' : 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607911592MKMVWV.jpg'  }}"></image>
                     <text class="audio-callback-times">{{info.audio_length}}</text>
                 </view>
             </view>

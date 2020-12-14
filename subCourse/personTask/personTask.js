@@ -1,4 +1,4 @@
-import { $notNull, getLocalStorage } from "../../utils/util"
+import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
 import { getTaskStream, getTaskUserInfo } from "../../api/task/index"
 
@@ -16,7 +16,8 @@ Page({
     offset: 0,
     limit: 3,
     hasMore: true,
-    isOwnner: false
+    isOwnner: false,
+    didShowAuth: false
   },
 
   /**
@@ -91,6 +92,20 @@ Page({
     }
   },
   /**
+   * 处理未登录状态
+   */
+  onNoAuth() {
+    this.setData({didShowAuth: true})
+  },
+  // 用户授权取消
+  authCancelEvent() {
+    this.setData({didShowAuth: false})
+  },
+  // 用户确认授权
+  authCompleteEvent() {
+    this.setData({didShowAuth: false})
+  },
+  /**
    * 取消点赞回调
    */
   onUmthumbed() {
@@ -108,7 +123,11 @@ Page({
    * 跳转发布页
    */
   goToLaunchTaskPage() {
-    wx.navigateTo({url: "/subCourse/launchTask/launchTask?fromPageName=" + NAME})
+    if (hasUserInfo() && hasAccountInfo()) {
+      wx.navigateTo({url: "/subCourse/launchTask/launchTask?fromPageName=" + NAME})
+    } else {
+      this.onNoAuth()
+    }
   },
   /**
    * 获取用户作业相关信息

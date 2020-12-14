@@ -1,5 +1,5 @@
 import { getTaskStream } from "../../api/task/index"
-import { getLocalStorage } from "../../utils/util"
+import { getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
 
 const NAME = "compositeTaskPage"
@@ -13,7 +13,8 @@ Page({
 		mediaQueue: [],
 		offset: 0,
 		limit: 3,
-		hasMore: true
+		hasMore: true,
+		didShowAuth: false
 	},
 
 	/**
@@ -83,6 +84,20 @@ Page({
 		}
 	},
 	/**
+	 * 处理未登录状态
+	 */
+	onNoAuth() {
+		this.setData({didShowAuth: true})
+	},
+	// 用户授权取消
+	authCancelEvent() {
+		this.setData({didShowAuth: false})
+	},
+	// 用户确认授权
+	authCompleteEvent() {
+		this.setData({didShowAuth: false})
+	},
+	/**
 	 * 获取综合作业流
 	 */
 	getCompositeTask(refresh = false) {
@@ -126,6 +141,10 @@ Page({
 	 * 跳转去发布页
 	 */
 	goToLaunchTask() {
-		wx.navigateTo({url: "/subCourse/launchTask/launchTask?fromPageName=" + NAME})
+		if (hasUserInfo() && hasAccountInfo()) {
+			wx.navigateTo({url: "/subCourse/launchTask/launchTask?fromPageName=" + NAME})
+		} else {
+			this.onNoAuth()
+		}
 	}
 })

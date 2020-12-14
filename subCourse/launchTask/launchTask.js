@@ -103,7 +103,9 @@ Page({
 		recentCourseList: [],
 		selectedCourseItem: null,
 		mediaType: undefined,
-		fromPageName: undefined
+		fromPageName: undefined,
+		launchLock: false, // 发布锁
+		didRecordFileUploading: false, // 录音文件是否上传中
 	},
 
 	/**
@@ -205,14 +207,14 @@ Page({
 		let aliyunUploader = new VODUpload({
 			userId: "1416960148576552",
 			onUploadstarted: function (uploadInfo) {
-				let {RequestId, VideoId, UploadAddress, UploadAuth} = self.data.aliyunUploader.params
+				let {RequestId, VideoId, UploadAddress, UploadAuth} = self.data.aliyunUploader.dd_custom_params
 				// 设置上传参数
 				aliyunUploader.setUploadAuthAndAddress(uploadInfo, UploadAuth, UploadAddress, VideoId)
 			},
 			// 文件上传成功
 			onUploadSucceed: function (uploadInfo) {
 				let callbackUrl = `https://video.huayangbaixing.com/${uploadInfo.object}`
-				console.error(callbackUrl)
+				console.log("上传文件的地址 = ", callbackUrl)
 				switch (self.data.mediaType) {
 					case MEDIA_TYPE.audio: {
 						self.setData({localAudioUrl: callbackUrl})
@@ -228,12 +230,13 @@ Page({
 						break
 					}
 				}
-
+				self.setData({didRecordFileUploading: false})
 				wx.hideLoading()
 			},
 			// 文件上传失败
 			onUploadFailed: function (uploadInfo, code, message) {
 				console.error("文件上传失败", message)
+				self.setData({didRecordFileUploading: false})
 				wx.hideLoading()
 			},
 			// 上传凭证超时
@@ -279,12 +282,15 @@ Page({
 
 			console.log(tempFilePath, duration, fileSize)
 
+			self.setData({didRecordFileUploading: true})
+			wx.showLoading({title: "上传中...", mask: true})
+
 			// 上传本地录音
 			getOssCertificate({
 				title: "aduio_task",
 				filename: tempFilePath.split("://")[1]
 			}).then(({data}) => {
-				self.data.aliyunUploader.params = data
+				self.data.aliyunUploader.dd_custom_params = data
 				self.data.aliyunUploader.addFile({url: tempFilePath}, null, null, null, '{"Vod":{}}')
 				self.data.aliyunUploader.startUpload()
 			})
@@ -367,6 +373,9 @@ Page({
 	 * 播放录音
 	 */
 	playRecord() {
+		// 如果录音文件正在上传中，不播放录音
+		if (this.data.didRecordFileUploading) return
+		console.log("开始试听");
 		this.data.innerAudioContext.src = this.data.localAudioUrl
 		this.data.innerAudioContext.play()
 	},
@@ -380,6 +389,7 @@ Page({
 	 * 结束播放音频
 	 */
 	stopRecord() {
+		console.log("结束试听");
 		this.data.innerAudioContext.stop()
 	},
 	/**
@@ -443,7 +453,7 @@ Page({
 					title: "video_task",
 					filename: tempFilePath.split("://")[1]
 				}).then(({data}) => {
-					self.data.aliyunUploader.params = data
+					self.data.aliyunUploader.dd_custom_params = data
 					self.data.aliyunUploader.addFile({url: tempFilePath}, null, null, null, '{"Vod":{}}')
 					self.data.aliyunUploader.startUpload()
 					wx.showLoading({title: "上传中...", mask: true})
@@ -591,9 +601,14 @@ Page({
 	 * 关闭录音弹窗
 	 */
 	closeAudioModal() {
-		this.toggleAudioModal(false)
+		// 停止录音播放，清除本地录音地址
+		this.stopRecord()
+
 		// 结束录音 结束倒计时 录音状态为初始状态
-		this.stopRecording()
+		if (this.data.recordAudioStatus === AUDIO_STATUS.run) {
+			this.stopRecording()
+		}
+		this.toggleAudioModal(false)
 	},
 	/**
 	 * 处理音频按钮点击事件
@@ -636,7 +651,12 @@ Page({
 	 * 重录录音
 	 */
 	reloadAudioRecord() {
-		this.stopRecording()
+		// 停止录音播放，清除本地录音地址
+		this.stopRecord()
+
+		if (this.data.recordAudioStatus === AUDIO_STATUS.run) {
+			this.stopRecording()
+		}
 		this.setData({recordAudioStatus: AUDIO_STATUS.ready})
 	},
 	/**
@@ -673,6 +693,9 @@ Page({
 	 * 发布
 	 */
 	launch() {
+		if (this.data.launchLock) return
+		this.setData({launchLock: true})
+
 		let errorMessage = ""
 		let userId = getLocalStorage(GLOBAL_KEY.userId)
 
@@ -729,8 +752,11 @@ Page({
 			toast("发布作业成功")
 			console.log(data)
 			getApp().globalData.needInitialPageName = this.data.fromPageName
+			this.setData({launchLock: false})
+			wx.hideLoading()
 			wx.navigateBack()
-		}).finally(() => {
+		}).catch(() => {
+			this.setData({launchLock: false})
 			wx.hideLoading()
 		})
 	}

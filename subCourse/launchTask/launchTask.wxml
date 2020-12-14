@@ -47,9 +47,8 @@
             </view>
             <view class="audio-review-space"></view>
             <view class="audio-review-content">
-                <view class="audio-review-sound-wave"
-                      wx:if="{{recordAudioStatus === AUDIO_STATUS.run || recordAudioStatus === AUDIO_STATUS.play}}">
-                    /////////
+                <view class="audio-review-sound-wave" wx:if="{{recordAudioStatus === AUDIO_STATUS.run || recordAudioStatus === AUDIO_STATUS.play}}">
+                    <image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607911730epuYmI.jpg"></image>
                 </view>
                 <view class="audio-review-operate">
                     <view class="audio-operate-box" wx:if="{{recordAudioStatus === AUDIO_STATUS.done || recordAudioStatus === AUDIO_STATUS.play}}">
@@ -76,7 +75,7 @@
     <!-- 录音回显 -->
     <view class="audio-callback-box" wx:if="{{audioReviewVisible}}">
         <image mode="aspectFit" bindtap="toggleAudioPlayer" class="audio-callback-icon" src="{{AUDIO_CALLBACK_IMAGE[audioCallbackStatus]}}"></image>
-        <image mode="aspectFit" class="audio-callback-sound-wave" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607503793dMmlHv.jpg"></image>
+        <image mode="aspectFit" class="audio-callback-sound-wave" src="{{ audioCallbackStatus === AUDIO_CALLBACK_STATUS.start ? 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607911730epuYmI.jpg' : 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607911592MKMVWV.jpg' }}"></image>
         <text class="audio-callback-times">{{localAudioTimes}}</text>
         <image mode="aspectFit" bindtap="removeAudio" class="remove-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607421256DZlfPK.jpg"></image>
     </view>

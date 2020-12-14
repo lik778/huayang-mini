@@ -185,6 +185,11 @@
     text-align: center;
 }
 
+.audio-review-sound-wave > image {
+    width: 190rpx;
+    height: 32rpx;
+}
+
 .audio-review-operate {
     position: absolute;
     top: 138rpx;

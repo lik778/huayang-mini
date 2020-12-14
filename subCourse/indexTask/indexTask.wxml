@@ -1,5 +1,6 @@
 <view class="index-task">
-    <taskLayout wx:for="{{indexTaskList}}" wx:key="index" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
+    <taskLayout bind:noAuth="onNoAuth" wx:for="{{indexTaskList}}" wx:key="index" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
 
     <image class="btn" bindtap="goToDiscoveryPage" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607840675iqSAwk.jpg"></image>
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
 </view>

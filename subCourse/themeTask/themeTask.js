@@ -19,7 +19,8 @@ Page({
     hasMore: true,
     themeBannerImage: "",
     themeTitle: "",
-    didSignIn: false
+    didSignIn: false,
+    didShowAuth: false
   },
 
   /**
@@ -92,15 +93,37 @@ Page({
       path: `/subCourse/indexTask/indexTask?taskId=${taskId}`
     }
   },
-  goToJoinBootcamp() {
-    wx.navigateTo({url: `/subCourse/joinCamp/joinCamp?id=${this.data.kecheng_id}`})
+  /**
+   * 处理未登录状态
+   */
+  onNoAuth() {
+    this.setData({didShowAuth: true})
   },
-  gotoBootcampDetail() {
+  // 用户授权取消
+  authCancelEvent() {
+    this.setData({didShowAuth: false})
+  },
+  // 用户确认授权
+  authCompleteEvent() {
+    this.setData({didSignIn: hasAccountInfo() && hasUserInfo()})
+    this.setData({didShowAuth: false})
+  },
+  goToJoinBootcamp() {
+    if (this.data.didSignIn) {
+      wx.navigateTo({url: `/subCourse/joinCamp/joinCamp?id=${this.data.kecheng_id}`})
+    } else {
+      this.onNoAuth()
+    }
+  },
+  goToBootcampDetail() {
     wx.navigateTo({url: `/subCourse/campDetail/campDetail?id=${this.data.kecheng_id}`})
   },
   goToLaunchTaskPage() {
     wx.navigateTo({url: `/subCourse/launchTask/launchTask?fromPageName=${NAME}themeType=${this.data.kecheng_type}&themeId=${this.data.kecheng_id}&themeTitle=${this.data.themeTitle}`})
   },
+  /**
+   * 返回上一页
+   */
   back() {
     wx.navigateBack()
   },

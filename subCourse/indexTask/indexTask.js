@@ -12,6 +12,7 @@ Page({
     indexTaskList: [],
     offset: 0,
     limit: 1,
+    didShowAuth: false
   },
 
   /**
@@ -69,6 +70,20 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  /**
+   * 处理未登录状态
+   */
+  onNoAuth() {
+    this.setData({didShowAuth: true})
+  },
+  // 用户授权取消
+  authCancelEvent() {
+    this.setData({didShowAuth: false})
+  },
+  // 用户确认授权
+  authCompleteEvent() {
+    this.setData({didShowAuth: false})
   },
   /**
    * 调整到首页查看更多内容
