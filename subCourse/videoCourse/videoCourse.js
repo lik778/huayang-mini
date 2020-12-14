@@ -720,7 +720,7 @@ Page({
         shareLink += `&promote_uid=${this.data.userInfo.id}`
       }
     }
-    let title = this.data.courseData.video_detail[this.data.playIndex].title
+    let title = this.data.playIndex === -1 ? this.data.courseData.video_detail[0].title : this.data.courseData.video_detail[this.data.playIndex].title
     // let title=this.data.courseData.share_desc
     return {
       title: title,
