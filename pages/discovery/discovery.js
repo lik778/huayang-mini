@@ -1,5 +1,10 @@
 // pages/ discovery/discovery.js
-import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, } from "../../utils/util"
+import {
+	$notNull,
+	getLocalStorage,
+	hasAccountInfo,
+	hasUserInfo,
+} from "../../utils/util"
 import request from "../../lib/request"
 import {
 	getActivityList,
@@ -10,10 +15,17 @@ import {
 	queryBootcampFeatureList,
 	queryVideoCourseListByBuyTag
 } from "../../api/course/index"
-import { GLOBAL_KEY, Version } from "../../lib/config"
-import { checkFocusLogin } from "../../api/auth/index"
+import {
+	GLOBAL_KEY,
+	Version
+} from "../../lib/config"
+import {
+	checkFocusLogin
+} from "../../api/auth/index"
 import bxPoint from "../../utils/bxPoint"
-import { getYouZanAppId } from "../../api/mall/index"
+import {
+	getYouZanAppId
+} from "../../api/mall/index"
 import dayjs from "dayjs"
 
 const TRAINCAMP_SCENE = "traincamp"
@@ -26,7 +38,7 @@ Page({
 	data: {
 		current: 0,
 		liveNum: 0,
-		showMoney: true,
+		isIosPlatform: false,
 		campList: null,
 		showModelBanner: false,
 		didShowAuth: false,
@@ -36,10 +48,18 @@ Page({
 		recommendCourseList: [],
 		modelBannerLink: "",
 		activityList: null,
-		tabs: [
-			{id: 0, name: "推荐"},
-			{id: 1, name: "主题营"},
-			{id: 2, name: "课程"},
+		tabs: [{
+				id: 0,
+				name: "推荐"
+			},
+			{
+				id: 1,
+				name: "主题营"
+			},
+			{
+				id: 2,
+				name: "课程"
+			},
 		],
 		tabIndex: 0,
 		cacheCampList: [],
@@ -59,7 +79,9 @@ Page({
 		tabQuery.exec(function (res) {
 			let bool = res[0].top <= 0
 			if (bool !== self.data.didFixedTab) {
-				self.setData({didFixedTab: bool})
+				self.setData({
+					didFixedTab: bool
+				})
 			}
 		})
 	},
@@ -70,7 +92,10 @@ Page({
 		let obs = []
 		for (let index = 0; index < this.data.campList.length; index++) {
 			let ob = wx.createIntersectionObserver()
-			ob.relativeToViewport({top: -50, bottom: -50})
+			ob.relativeToViewport({
+					top: -50,
+					bottom: -50
+				})
 				.observe('.card-' + index, res => {
 					let campList = this.data.cacheCampList.length > 0 ? this.data.cacheCampList.slice() : this.data.campList.slice()
 					if (res && res.intersectionRatio > 0) {
@@ -83,7 +108,9 @@ Page({
 						})
 						// 滚动结束，更新可视区域位置
 						if (!this.data.scrollIng) {
-							this.setData({cacheCampList: campList.slice()})
+							this.setData({
+								cacheCampList: campList.slice()
+							})
 							let target = this.data.campList.find(n => n.id === index)
 							if ($notNull(target) && target.show) {
 								let videoInstance = wx.createVideoContext("video-" + index)
@@ -100,7 +127,9 @@ Page({
 						})
 						// 滚动结束，跟新可视区域位置
 						if (!this.data.scrollIng) {
-							this.setData({cacheCampList: campList.slice()})
+							this.setData({
+								cacheCampList: campList.slice()
+							})
 							let target = this.data.campList.find(n => n.id === index)
 							if ($notNull(target) && target.show) {
 								let videoInstance = wx.createVideoContext("video-" + index)
@@ -111,18 +140,28 @@ Page({
 					// 可视区域首次渲染
 					if (this.data.didFirstLoad) {
 						let t = setTimeout(() => {
-							this.setData({campList: campList.slice(), didFirstLoad: false})
+							this.setData({
+								campList: campList.slice(),
+								didFirstLoad: false
+							})
 							clearTimeout(t)
 						}, 50)
 					}
 				})
 			obs.push(ob)
 		}
-		this.setData({obs})
+		this.setData({
+			obs
+		})
 	},
 	handleTab(e) {
-		let {id, name} = e.currentTarget.dataset.item
-		this.setData({tabIndex: id})
+		let {
+			id,
+			name
+		} = e.currentTarget.dataset.item
+		this.setData({
+			tabIndex: id
+		})
 
 		// 检查是否存在obs，存在的话清除队列
 		if (this.data.obs.length > 0) {
@@ -138,13 +177,18 @@ Page({
 			}
 			default: {
 				// 推荐、主题营TAB切换时，清除视频位置数据缓存
-				this.setData({didFirstLoad: true, cacheCampList: []})
+				this.setData({
+					didFirstLoad: true,
+					cacheCampList: []
+				})
 				this.getRecommendList()
 				break
 			}
 		}
 
-		bxPoint("discovery_tab", {tabName: name}, false)
+		bxPoint("discovery_tab", {
+			tabName: name
+		}, false)
 
 		if (this.data.scrollTop >= this.data.tabsDomOffsetTopNo) {
 			let scrollTop = this.data.tabsDomOffsetTopNo
@@ -165,14 +209,18 @@ Page({
 				let diff = (item.width - 44) / 2
 				tabsOffsetLeftAry.push(item.left + diff)
 			})
-			self.setData({tabsOffsetLeftAry})
+			self.setData({
+				tabsOffsetLeftAry
+			})
 		})
 
 		// 计算tabs的scrollTop位置
 		let tabQuery = wx.createSelectorQuery()
 		tabQuery.select("#tabs").boundingClientRect()
 		tabQuery.exec(function (res) {
-			self.setData({tabsDomOffsetTopNo: res[0].top})
+			self.setData({
+				tabsDomOffsetTopNo: res[0].top
+			})
 		})
 	},
 	// 获取授权
@@ -258,7 +306,9 @@ Page({
 
 	// 处理是否显示模特大赛banner
 	initModelBanner() {
-		getFindBanner({scene: 11}).then(res => {
+		getFindBanner({
+			scene: 11
+		}).then(res => {
 			this.setData({
 				competitionBannerList: res,
 				showModelBanner: res.length !== 0
@@ -267,9 +317,13 @@ Page({
 	},
 	// 跳往视频课程全部列表
 	toVideoList(e) {
-		let {key} = e.currentTarget.dataset.item
+		let {
+			key
+		} = e.currentTarget.dataset.item
 		let activeIndex = this.data.recommendCourseList.findIndex(n => n.key === key) + 1
-		bxPoint("discovery_more_college_info", {collegeName: key}, false)
+		bxPoint("discovery_more_college_info", {
+			collegeName: key
+		}, false)
 		wx.navigateTo({
 			url: `/subCourse/videoCourseList/videoCourseList?index=${activeIndex}`
 		})
@@ -285,9 +339,18 @@ Page({
 		getVideoTypeList().then((list) => {
 			let processIndex = 1
 			let resultList = []
-			list.forEach(({key, value}) => {
-				resultList.push({key: value, content: []})
-				let params = {limit: 5, category: key}
+			list.forEach(({
+				key,
+				value
+			}) => {
+				resultList.push({
+					key: value,
+					content: []
+				})
+				let params = {
+					limit: 5,
+					category: key
+				}
 				if (getLocalStorage(GLOBAL_KEY.userId)) {
 					params.user_id = getLocalStorage(GLOBAL_KEY.userId)
 				}
@@ -333,7 +396,9 @@ Page({
 					}
 					if (processIndex === list.length) {
 						resultList = resultList.filter(n => n.content.length > 0)
-						this.setData({recommendCourseList: resultList})
+						this.setData({
+							recommendCourseList: resultList
+						})
 					}
 					processIndex += 1
 				})
@@ -395,8 +460,12 @@ Page({
 	},
 	// 获取banner列表
 	getBanner() {
-		getFindBanner({scene: 8}).then(bannerList => {
-			this.setData({bannerList})
+		getFindBanner({
+			scene: 8
+		}).then(bannerList => {
+			this.setData({
+				bannerList
+			})
 		})
 	},
 	// 加载"推荐"或"全部"的训练营列表
@@ -423,11 +492,15 @@ Page({
 			}
 		}
 		// 获取训练营列表
-		getCampList(params).then(({list}) => {
+		getCampList(params).then(({
+			list
+		}) => {
 			list = list.map(item => {
 				// 处理训练营特色标签
 				item.feature = item.feature.split(",").map(k => {
-					let target = this.data.featureList.find(({key}) => key === k)
+					let target = this.data.featureList.find(({
+						key
+					}) => key === k)
 					if ($notNull(target)) {
 						return target
 					}
@@ -460,7 +533,9 @@ Page({
 				return item
 			})
 
-			this.setData({campList: list})
+			this.setData({
+				campList: list
+			})
 			// 获取视频系列课
 			this.getVideoCourse()
 			// 获取直播列表个数
@@ -502,7 +577,9 @@ Page({
 		}
 
 		try {
-			getFindBanner({scene: 16}).then((data) => {
+			getFindBanner({
+				scene: 16
+			}).then((data) => {
 				if (data.length > 0) {
 					wx.navigateTo({
 						url: "/pages/coopen/coopen",
@@ -521,26 +598,21 @@ Page({
 	},
 	_toggleView(timeNo = 300) {
 		let t = setTimeout(() => {
-			this.setData({canShow: true})
+			this.setData({
+				canShow: true
+			})
 			clearTimeout(t)
 		}, timeNo)
 	},
 	// 检查ios环境
 	checkIos() {
-		checkFocusLogin({
-			app_version: Version
-		}).then(res1 => {
-			let _this = this
-			if (!res1) {
-				wx.getSystemInfo({
-					success: function (res2) {
-						if (res2.platform == 'ios') {
-							_this.setData({
-								showMoney: false
-							})
-						}
-					}
-				})
+		wx.getSystemInfo({
+			success:  (res2)=> {
+				if (res2.platform == 'ios') {
+					this.setData({
+						isIosPlatform: true
+					})
+				}
 			}
 		})
 	},
@@ -572,8 +644,12 @@ Page({
 		}
 
 		// 获取训练营特色标签列表
-		queryBootcampFeatureList().then(({data}) => {
-			this.setData({featureList: data})
+		queryBootcampFeatureList().then(({
+			data
+		}) => {
+			this.setData({
+				featureList: data
+			})
 		})
 		// 检查用户是否需要引导
 		this.checkUserGuide()
@@ -612,8 +688,7 @@ Page({
 	/**
 	 * 生命周期函数--监听页面隐藏
 	 */
-	onHide: function () {
-	},
+	onHide: function () {},
 
 	/**
 	 * 生命周期函数--监听页面卸载
@@ -632,17 +707,24 @@ Page({
 	/**
 	 * 页面上拉触底事件的处理函数
 	 */
-	onReachBottom: function () {
-	},
+	onReachBottom: function () {},
 	onPageScroll(e) {
-		this.setData({scrollTop: e.scrollTop, scrollIng: true})
+		this.setData({
+			scrollTop: e.scrollTop,
+			scrollIng: true
+		})
 		this.calcTabsOffset()
 		let timer = setTimeout(() => {
 			if (this.data.scrollTop === e.scrollTop) {
-				this.setData({scrollTop: e.scrollTop, scrollIng: false})
+				this.setData({
+					scrollTop: e.scrollTop,
+					scrollIng: false
+				})
 				// 视频位置数据为空时，不更新视图
 				if (this.data.cacheCampList.length > 0) {
-					this.setData({campList: this.data.cacheCampList.slice()})
+					this.setData({
+						campList: this.data.cacheCampList.slice()
+					})
 				}
 				clearTimeout(timer)
 			}
