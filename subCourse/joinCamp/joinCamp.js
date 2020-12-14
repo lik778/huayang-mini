@@ -166,6 +166,7 @@ Page({
             traincamp_id: id
           })
           if ($notNull(campInfo)) {
+            // 已经加入过，显示继续学习
             buttonType = 10
           }
         }
