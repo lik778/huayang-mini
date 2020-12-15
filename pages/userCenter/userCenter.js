@@ -154,6 +154,7 @@ Page({
   // 我的作业
   goToTaskLaunchPage() {
     if (hasUserInfo() && hasAccountInfo()) {
+      bxPoint("mine_task_layout", {}, false)
       let userId = getLocalStorage(GLOBAL_KEY.userId)
       wx.navigateTo({
         url: `/subCourse/personTask/personTask?visit_user_id=${userId}`,

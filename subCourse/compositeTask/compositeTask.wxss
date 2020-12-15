@@ -3,14 +3,20 @@
     background: #F9F9F9;
 }
 
-.launch-btn {
+.launch-layout {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
+    width: 100vw;
     height: 136rpx;
-    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607663397fpoTbz.jpg") no-repeat center;
-    background-size: cover;
+    font-size: 0;
+    background: white;
+}
+
+.launch-btn {
+    height: inherit;
+    width: inherit;
 }
 
 .launch-btn:active {

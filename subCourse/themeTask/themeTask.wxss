@@ -3,8 +3,8 @@
 }
 
 .close-icon {
-    position: absolute;
-    top: 48rpx;
+    position: fixed;
+    top: 0;
     left: 14rpx;
     width: 62rpx;
     height: 62rpx;
@@ -71,5 +71,24 @@
 }
 
 .joined-btn:active {
+    opacity: 0.9;
+}
+
+.course-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 136rpx;
+    font-size: 0;
+    background: white;
+}
+
+.continue-btn {
+    height: inherit;
+    width: inherit;
+}
+.continue-btn:active {
     opacity: 0.9;
 }

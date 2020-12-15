@@ -1,0 +1,3 @@
+<view class="ff-animate" wx:if="{{didVisble}}">
+    <image class="ff-pic {{item.hid ? 'hidden' : ''}}" mode="widthFix" wx:for="{{flowerList}}" wx:key="index" src="{{item.url}}"></image>
+</view>

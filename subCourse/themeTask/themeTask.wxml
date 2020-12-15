@@ -1,26 +1,28 @@
 <view class="theme-task">
-    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607759556NHlnQg.jpg" mode="aspectFill" class="close-icon" bindtap="back"></image>
+    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607759556NHlnQg.jpg" mode="aspectFill" class="close-icon" style="padding-top:{{statusBarHeight}}px;" bindtap="back"></image>
     <view class="header-content">
         <image class="theme-banner" mode="aspectFill" src="{{themeBannerImage}}" />
-        <view class="theme-title">{{themeTitle}}</view>
+        <view class="theme-title">{{themeTitle}}学院的作业秀</view>
     </view>
 
     <view class="task-layout">作业动态</view>
 
-    <taskLayout isTheme="{{true}}" bind:noAuth="onNoAuth" bind:postTaskId="receiveTaskId" wx:for="{{themeTaskList}}" wx:key="index" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
+    <taskLayout didShowTip="{{index === 1 && didShowTip}}" isTheme="{{true}}" bind:noAuth="onNoAuth" bind:postTaskId="receiveTaskId" wx:for="{{themeTaskList}}" wx:key="index" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
 
     <block wx:if="{{kecheng_type}}">
         <view class="bootcamp-footer" wx:if="{{kecheng_type === '0'}}">
-            <view class="joined-footer" wx:if="{{didSignIn}}">
+            <view class="joined-footer" wx:if="{{isOwnBootcamp && didSignIn}}">
                 <image bindtap="goToBootcampDetail" class="joined-btn" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607760368jrMrIZ.jpg"></image>
                 <image bindtap="goToLaunchTaskPage" class="joined-btn" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607760362ibQQru.jpg"></image>
             </view>
             <image bindtap="goToJoinBootcamp" wx:else class="not-join-btn" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607760202LgfwLA.jpg"></image>
         </view>
         <view class="course-footer" wx:else>
-            问叶子要"加入学习"的图片
+            <image bindtap="goToCoursePage" class="continue-btn" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608019654hdgrfl.jpg"></image>
         </view>
     </block>
 
-    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
+    <authModule show="{{didShowAuth}}" bind:thumbChange="onThumbChange" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
+
+    <flower id="flower" />
 </view>

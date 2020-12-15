@@ -1,6 +1,7 @@
 import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
 import { getTaskStream, getTaskUserInfo } from "../../api/task/index"
+import bxPoint from "../../utils/bxPoint"
 
 const NAME = "personTaskPage"
 Page({
@@ -26,7 +27,8 @@ Page({
   onLoad: function (options) {
     let {visit_user_id} = options
     this.setData({visit_user_id})
-    this.getUserInfo()
+
+    bxPoint("pv_person_task_page", {})
   },
 
   /**
@@ -34,6 +36,7 @@ Page({
    */
   onReady: function () {
     this.getPersonTask(true)
+    this.getUserInfo()
   },
 
   /**
@@ -47,6 +50,7 @@ Page({
     if (needInitialPageName === NAME) {
       wx.pageScrollTo({scrollTop: 0, duration: 0})
       this.getPersonTask(true)
+      this.getUserInfo()
       getApp().globalData.needInitialPageName = ""
     }
   },
@@ -85,10 +89,17 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (e) {
-    let taskId = e.target.dataset.taskid
-    return {
-      title: '作业秀分享文案',
-      path: `/subCourse/indexTask/indexTask?taskId=${taskId}`
+    if (e.target) {
+      let {taskid, nickname} = e.target.dataset
+      return {
+        title: `${nickname}的作业很棒哦，快来看看吧！`,
+        path: `/subCourse/indexTask/indexTask?taskId=${taskid}`
+      }
+    } else {
+      return {
+        title: `${this.data.visit_user_info.nick_name}的精彩作业秀`,
+        path: `/subCourse/personTask/personTask?visit_user_id=${this.data.visit_user_id}`
+      }
     }
   },
   /**
@@ -106,18 +117,15 @@ Page({
     this.setData({didShowAuth: false})
   },
   /**
-   * 取消点赞回调
+   * [取消]点赞事件触发
    */
-  onUmthumbed() {
-    let oldData = {...this.data.visit_user_info}
-    this.setData({visit_user_info: { ...oldData, like_count: oldData.like_count - 1 }})
-  },
-  /**
-   * 点赞回调
-   */
-  onThumbed() {
-    let oldData = {...this.data.visit_user_info}
-    this.setData({visit_user_info: { ...oldData, like_count: oldData.like_count + 1 }})
+  onThumbChange(e) {
+    this.getUserInfo()
+    if (e.detail.thumbType === "like") {
+      // 送花
+      let comp = this.selectComponent("#flower")
+      comp.star()
+    }
   },
   /**
    * 跳转发布页
@@ -174,6 +182,7 @@ Page({
     })
 
     this.setData({personTaskList: [...newData]})
+    this.getUserInfo()
   },
   /**
    * 接受正在播放媒体的作业ID号

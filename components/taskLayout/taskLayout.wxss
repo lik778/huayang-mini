@@ -1,4 +1,5 @@
 .task-layout {
+    position: relative;
     display: flex;
     justify-content: space-between;
     padding: 60rpx 40rpx;
@@ -148,7 +149,13 @@
     background: transparent;
 }
 
-.thumb, .share {
+.thumb {
+    width: 52rpx;
+    height: 54rpx;
+    margin-right: 8rpx;
+}
+
+.share {
     width: 48rpx;
     height: 48rpx;
     margin-right: 8rpx;
@@ -202,4 +209,27 @@
 .teacher-launch-date {
     font: 24rpx/34rpx PingFangSC;
     color: #9F9F9F;
+}
+
+.tip-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 184rpx;
+    left: 84rpx;
+    width: 438rpx;
+    height: 188rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608001134XJoNTg.jpg") no-repeat 100% 100%;
+    background-size: contain;
+    color: white;
+    font: 32rpx/48rpx PingFangSC;
+}
+
+.tip-label > text {
+    padding-top: 28rpx;
+}
+
+.tip-label > text:active {
+    opacity: 0.9;
 }

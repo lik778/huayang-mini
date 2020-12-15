@@ -1,8 +1,9 @@
-import { $notNull, getLocalStorage, queryWxAuth, toast } from "../../utils/util"
+import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, queryWxAuth, toast } from "../../utils/util"
 import { GLOBAL_KEY, WX_AUTH_TYPE } from "../../lib/config"
 import request from "../../lib/request"
 import { getOssCertificate, getTaskBelongList, publishTask } from "../../api/task/index"
 import VODUpload from "../../utils/aliyun-upload-sdk-1.0.1.min"
+import bxPoint from "../../utils/bxPoint"
 
 const MAX_AUDIO_DURATION = 10 * 60 * 1000
 
@@ -106,6 +107,7 @@ Page({
 		fromPageName: undefined,
 		launchLock: false, // 发布锁
 		didRecordFileUploading: false, // 录音文件是否上传中
+		didShowAuth: false,
 	},
 
 	/**
@@ -113,7 +115,7 @@ Page({
 	 */
 	onLoad: function (options) {
 		let {themeType, themeId, themeTitle, fromPageName} = options;
-		if (themeType && themeId && themeTitle) {
+		if (themeId && themeTitle) {
 			let recentCourseList = [{
 				name: themeTitle,
 				kecheng_type: themeType,
@@ -133,6 +135,10 @@ Page({
 		if (!$notNull(this.data.recentCourseList)) {
 			this.getRecentCourseList()
 		}
+
+		this.disableMuteSwitch()
+
+		bxPoint("pv_launch_task_page", {})
 	},
 
 	/**
@@ -182,6 +188,13 @@ Page({
 	 */
 	onShareAppMessage: function () {
 
+	},
+
+	/**
+	 * 即使是在静音模式下，也能播放声音
+	 */
+	disableMuteSwitch() {
+		wx.setInnerAudioOption({obeyMuteSwitch: false})
 	},
 
 	/**
@@ -376,7 +389,7 @@ Page({
 		// 如果录音文件正在上传中，不播放录音
 		if (this.data.didRecordFileUploading) return
 		console.log("开始试听");
-		this.data.innerAudioContext.src = this.data.localAudioUrl
+		this.data.innerAudioContext.src = this.data.localAudioUrl  + '?' + +new Date()
 		this.data.innerAudioContext.play()
 	},
 	/**
@@ -578,7 +591,7 @@ Page({
 	 * @param e
 	 */
 	onTextareaInput(e) {
-		let text = e.detail.value
+		let text = String(e.detail.value).slice(0, 200)
 		this.setData({textCount: text.length, desc: text.replace(/\s+/g, "")})
 	},
 	/**
@@ -695,6 +708,10 @@ Page({
 	launch() {
 		if (this.data.launchLock) return
 		this.setData({launchLock: true})
+
+		if(!hasUserInfo() || !hasAccountInfo()) {
+			return this.setData({didShowAuth: true})
+		}
 
 		let errorMessage = ""
 		let userId = getLocalStorage(GLOBAL_KEY.userId)

@@ -1,25 +1,5 @@
 .launch-task {
-}
-
-/*发布按钮*/
-.header {
-    display: flex;
-    justify-content: flex-end;
-    margin: 20rpx 50rpx;
-}
-
-.launch-btn {
-    height: 64rpx;
-    width: 130rpx;
-    font: 500 32rpx/64rpx PingFangSC;
-    border-radius: 999rpx;
-    text-align: center;
-    color: #fff;
-    background: #C00;
-}
-
-.launch-btn:active {
-    opacity: 0.9;
+    padding-bottom: 136rpx;
 }
 
 /*输入框*/
@@ -136,7 +116,8 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.5)
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10;
 }
 
 .audio-review-box {
@@ -280,10 +261,12 @@
 .course-container {
 
 }
+
 .course-layout {
     padding: 0 58rpx;
     font: 500 40rpx/56rpx PingFangSC;
 }
+
 .course-item {
     display: flex;
     justify-content: space-between;
@@ -292,20 +275,45 @@
     margin-bottom: 2rpx;
     font: 500 36rpx/116rpx PingFangSC;
 }
+
 .course-item:active {
     opacity: 0.9;
 }
+
 .course-item-option {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .select-text {
     margin-right: 14rpx;
     font: 32rpx/44rpx PingFangSC;
-    color: rgba(0,0,0,0.6)
+    color: rgba(0, 0, 0, 0.6)
 }
+
 .select-icon {
     width: 44rpx;
     height: 44rpx;
+}
+
+/*发布按钮*/
+.footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100vw;
+    height: 136rpx;
+    font-size: 0;
+    background: white;
+}
+
+.launch-btn {
+    height: inherit;
+    width: inherit;
+}
+
+.launch-btn:active {
+    opacity: 0.9;
 }

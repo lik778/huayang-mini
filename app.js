@@ -60,5 +60,6 @@ App({
 		super_user_id: 0, // 上级邀请人id
 		source: "", // 用户场景来源
 		needInitialPageName: "", // 需要重新加载的页面  [ 综合作业广场｜主题作业广场 ]
+		didShowedTaskTip: false, // 是否已经展示过作业提示
 	}
 })

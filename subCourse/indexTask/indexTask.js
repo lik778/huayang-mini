@@ -1,6 +1,7 @@
 import { getLocalStorage } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
 import { getTaskDetail } from "../../api/task/index"
+import bxPoint from "../../utils/bxPoint"
 
 Page({
 
@@ -21,6 +22,8 @@ Page({
   onLoad: function (options) {
     let { taskId } = options
     this.setData({taskId})
+
+    bxPoint("pv_share_task_page", {})
   },
 
   /**
@@ -70,6 +73,16 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  /**
+   * [取消]点赞事件触发
+   */
+  onThumbChange(e) {
+    if (e.detail.thumbType === "like") {
+      // 送花
+      let comp = this.selectComponent("#flower")
+      comp.star()
+    }
   },
   /**
    * 处理未登录状态

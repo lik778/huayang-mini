@@ -15,9 +15,12 @@
 
     <view class="task-layout">作业动态</view>
 
-    <taskLayout bind:noAuth="onNoAuth" isOwnner="{{isOwnner}}" bind:umthumbed="onUmthumbed" bind:thumbed="onThumbed" bind:postTaskId="receiveTaskId" bind:deleteTask="removeTask" wx:for="{{personTaskList}}" wx:key="index" isPerson="{{true}}" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
+    <taskLayout bind:noAuth="onNoAuth" isOwnner="{{isOwnner}}" bind:thumbChange="onThumbChange" bind:postTaskId="receiveTaskId" bind:deleteTask="removeTask" wx:for="{{personTaskList}}" wx:key="index" isPerson="{{true}}" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
 
-    <view class="launch-btn" bindtap="goToLaunchTaskPage"></view>
+    <view class="launch-layout" wx:if="{{isOwnner}}">
+        <image mode="aspectFill" bindtap="goToLaunchTaskPage" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607663397fpoTbz.jpg" class="launch-btn"></image>
+    </view>
 
     <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
+    <flower id="flower" />
 </view>

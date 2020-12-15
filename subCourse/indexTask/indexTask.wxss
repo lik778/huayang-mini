@@ -1,7 +1,7 @@
 .index-task {
     padding-bottom: 136rpx;
 }
-.btn {
+.launch-layout {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -9,7 +9,14 @@
     width: 100vw;
     height: 136rpx;
     font-size: 0;
+    background: white;
 }
-.btn:active {
+
+.launch-btn {
+    height: inherit;
+    width: inherit;
+}
+
+.launch-btn:active {
     opacity: 0.9;
 }

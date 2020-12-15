@@ -1,6 +1,7 @@
 import { getTaskStream } from "../../api/task/index"
 import { getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
+import bxPoint from "../../utils/bxPoint"
 
 const NAME = "compositeTaskPage"
 Page({
@@ -14,14 +15,16 @@ Page({
 		offset: 0,
 		limit: 3,
 		hasMore: true,
-		didShowAuth: false
+		didShowAuth: false,
+		didShowTip: false,
+		firstTaskCardHeight: 0,
 	},
 
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-
+		bxPoint("pv_composite_task_page", {})
 	},
 
 	/**
@@ -73,14 +76,52 @@ Page({
 		}
 	},
 
+	onPageScroll(e) {
+		if (this.data.compositeTaskList.length === 0 && this.data.firstTaskCardHeight === 0) return
+		if (getApp().globalData.didShowedTaskTip) return
+		if (e.scrollTop >= this.data.firstTaskCardHeight) {
+			this.setData({didShowTip: true})
+			getApp().globalData.didShowedTaskTip = true
+		}
+	},
+
 	/**
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function (e) {
-		let taskId = e.target.dataset.taskid
-		return {
-			title: '作业秀分享文案',
-			path: `/subCourse/indexTask/indexTask?taskId=${taskId}`
+		console.log(e);
+		if (e.target) {
+			let {taskid, nickname} = e.target.dataset
+			return {
+				title: `${nickname}的作业很棒哦，快来看看吧！`,
+				path: `/subCourse/indexTask/indexTask?taskId=${taskid}`
+			}
+		} else {
+			return {
+				title: '花样作业秀，精彩纷呈！',
+				path: `/subCourse/compositeTask/compositeTask`
+			}
+		}
+
+	},
+	initPageScroll() {
+		if (this.data.compositeTaskList.length > 1) {
+			let self = this
+			const query = wx.createSelectorQuery()
+			query.select(`#task-layout-${this.data.compositeTaskList[1].kecheng_work.id}`).boundingClientRect()
+			query.exec(function (res) {
+				self.setData({firstTaskCardHeight: res[0].top})
+			})
+		}
+	},
+	/**
+	 * [取消]点赞事件触发
+	 */
+	onThumbChange(e) {
+		if (e.detail.thumbType === "like") {
+			// 送花
+			let comp = this.selectComponent("#flower")
+			comp.star()
 		}
 	},
 	/**
@@ -117,6 +158,11 @@ Page({
 			let oldData = this.data.compositeTaskList.slice()
 			let compositeTaskList = refresh ? [...data] : [...oldData, ...data]
 			this.setData({compositeTaskList, hasMore: data.length === this.data.limit, offset: compositeTaskList.length})
+
+			let t = setTimeout(() => {
+				this.initPageScroll()
+				clearTimeout(t)
+			}, 200)
 		})
 	},
 	/**

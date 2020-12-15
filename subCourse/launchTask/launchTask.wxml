@@ -1,9 +1,4 @@
 <view class="launch-task">
-    <!--  发布按钮  -->
-    <view class="header">
-        <view class="launch-btn" bindtap="launch">发布</view>
-    </view>
-
     <!--  输入框  -->
     <view class="text">
         <textarea class="textarea" bindinput="onTextareaInput" placeholder="请输入您的作业内容或心情" placeholder-class="textarea-placeholder" maxlength="{{200}}"/>
@@ -92,5 +87,10 @@
                 <image mode="aspectFit" class="select-icon" src="{{item.isSelected ? 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607507791oUjFCQ.jpg' : 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607513345qkQmaQ.jpg'}}"></image>
             </view>
         </view>
+    </view>
+
+    <!--  发布按钮  -->
+    <view class="footer">
+        <image mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607997581SoBfDB.jpg" class="launch-btn" bindtap="launch"></image>
     </view>
 </view>
