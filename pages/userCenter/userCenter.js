@@ -22,7 +22,7 @@ Page({
     kecheng_count: 0,
     traincamp_count: 0,
     showPromotion: true,
-    visibleTaskEntrance: true
+    visibleTaskEntrance: false
   },
   // 跳往我的推广
   toPromotion() {
