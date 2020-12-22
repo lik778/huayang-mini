@@ -12,6 +12,7 @@ Page({
     taskId: undefined,
     nickname: undefined,
     userId: undefined,
+    didShowIndexPage: false,
     indexTaskList: [],
     offset: 0,
     limit: 1,
@@ -144,7 +145,9 @@ Page({
         this.startTimer()
       }
 
-      this.setData({indexTaskList: $notNull(data) ? [data] : []})
+      this.setData({indexTaskList: $notNull(data) ? [data] : [], didShowIndexPage: true})
+    }).catch(() => {
+      this.setData({didShowIndexPage: true})
     })
   },
   startTimer() {
@@ -159,6 +162,6 @@ Page({
     }, 1000)
   },
   goToPersonTaskPage() {
-    wx.navigateTo({url: `/subCourse/personTask/personTask?visit_user_id=${this.data.userId}`})
+    wx.redirectTo({url: `/subCourse/personTask/personTask?visit_user_id=${this.data.userId}`})
   }
 })

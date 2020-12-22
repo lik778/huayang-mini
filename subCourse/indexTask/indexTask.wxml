@@ -1,6 +1,12 @@
-<view class="index-task">
+<view class="index-task" wx:if="{{didShowIndexPage}}">
     <block wx:if="{{indexTaskList.length > 0}}">
         <taskLayout bind:noAuth="onNoAuth" bind:thumbChange="onThumbChange" wx:for="{{indexTaskList}}" wx:key="index" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
+
+        <view class="launch-layout">
+            <image class="launch-btn" bindtap="goToDiscoveryPage" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608631699BZBnHP.jpg"></image>
+        </view>
+        <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
+        <flower id="flower" />
     </block>
     <view class="empty-content" wx:else>
         <image class="empty-picture" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608608600Thinyi.jpg"></image>
@@ -10,12 +16,4 @@
         </view>
         <view class="empty-btn" bindtap="goToPersonTaskPage">去查看({{timerNo}})</view>
     </view>
-
-    <block wx:if="{{indexTaskList.length > 0}}">
-        <view class="launch-layout">
-            <image class="launch-btn" bindtap="goToDiscoveryPage" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607840675iqSAwk.jpg"></image>
-        </view>
-        <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
-        <flower id="flower" />
-    </block>
 </view>
