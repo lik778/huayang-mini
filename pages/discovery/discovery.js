@@ -84,7 +84,7 @@ Page({
 					bottom: -50
 				})
 				.observe('.card-' + index, res => {
-					let campList = this.data.cacheCampList.length > 0 ? this.data.cacheCampList.slice() : this.data.campList.slice()
+					let campList = this.data.campList.slice()
 					if (res && res.intersectionRatio > 0) {
 						// 进入可视区域
 						campList = campList.map((item, itemIndex) => {
@@ -146,6 +146,9 @@ Page({
 			id,
 			name
 		} = e.currentTarget.dataset.item
+
+		if (this.data.tabIndex === +id) return
+
 		this.setData({
 			tabIndex: id
 		})
@@ -528,11 +531,9 @@ Page({
 			// 获取直播列表个数
 			this.getLiveTotalNum()
 
-			let temp = setTimeout(() => {
-				// 监听每个video标签在视口的位置
-				this.initBootcampListener()
-				clearTimeout(temp)
-			}, 500)
+
+			// 监听每个video标签在视口的位置
+			this.initBootcampListener()
 		})
 	},
 	// 获取直播列表个数

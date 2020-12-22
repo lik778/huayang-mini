@@ -14,7 +14,12 @@ Page({
 		totalDuration: 0,
 		playDurationList: [],
 		hasPlayVideo: '',
-		hasPoint: true
+		hasPoint: true,
+
+		videoSrc: '',
+		playIndex: 0,
+		campId: '',
+		name: ''
 	},
 
 
@@ -50,14 +55,13 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		console.log(options)
 		if (options.is_camp_video && options.is_camp_video === 'true') {
-			console.log("1wsqwq")
 			let host = 'https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com'
 			this.setData({
 				videoSrc: options.link.split(host)[1],
 				playIndex: Number(options.courseIndex),
-				campId: Number(options.campId)
+				campId: Number(options.campId),
+				name: options.name
 			})
 		}
 		// is_camp_video
@@ -98,17 +102,17 @@ Page({
 			timeList.push(`${str1}-${str2}`)
 		}
 		let listData = []
-    if (arr.length <= 1) {
-      listData = arr[0]
-    } else {
-      listData = [`${arr[0]}-${arr[arr.length-1]}`]
-    }
+		if (arr.length <= 1) {
+			listData = arr[0]
+		} else {
+			listData = [`${arr[0]}-${arr[arr.length-1]}`]
+		}
 		bxPoint("page_practice_camp", {
 			scene: 'page_practice_camp',
 			traincamp_id: this.data.campId,
 			video_src: this.data.videoSrc,
 			lesson_num: `第${this.data.playIndex + 1}节课`,
-			date: dayjs().format('YYYY-MM-DD'),
+			kecheng_title: this.data.name,
 			play_duration: {
 				time_snippet: timeList.length === 0 ? listData : timeList, //事件片段
 				total_duration: this.data.totalDuration, //视频总时间

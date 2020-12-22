@@ -43,9 +43,8 @@
 			</view>
 			<view class="list-module">
 				<view class="camp-module">
-					<view class="camp-item" bindtap="toDetail" data-item="{{item}}" data-type="camp"
-						wx:for="{{listData.traincamp_list}}" wx:key="{{index}}">
-						<view class="camp-item-box">
+					<view class="camp-item" wx:for="{{listData.traincamp_list}}" wx:key="{{index}}">
+						<view class="camp-item-box" bindtap="toDetail" data-item="{{item}}" data-type="camp">
 							<view class="camp-item-bg">
 								<image src="{{item.cover_pic}}"></image>
 							</view>
@@ -59,17 +58,17 @@
 									<text wx:if="{{item.sharePrice!==''}}">推广成功</text>
 									<text class="subject-font-color" wx:if="{{item.sharePrice!==''}}">赚{{item.sharePrice}}元</text>
 								</view>
-								<button class="camp-item-bottom-text-right subject-bg-color">
-									立即推广
-								</button>
 							</view>
 						</view>
+						<button data-item='{{item}}' data-type='camp' class="camp-item-bottom-text-right subject-bg-color"
+							open-type="share">
+							立即推广
+						</button>
 					</view>
 				</view>
 				<view class="course-module">
-					<view bindtap="toDetail" data-item="{{item}}" data-type="course" class="course-item"
-						wx:for="{{listData.series_list}}" wx:key="{{index}}">
-						<view class="course-item-box">
+					<view class="course-item" wx:for="{{listData.series_list}}" wx:key="{{index}}">
+						<view class="course-item-box" bindtap="toDetail" data-item="{{item}}" data-type="course">
 							<view class="course-item-left">
 								<image src="{{item.cover_pic}}"></image>
 							</view>
@@ -84,9 +83,8 @@
 									</view>
 								</view>
 							</view>
-
 						</view>
-						<button class="course-item-bottom-right subject-bg-color">立即推广</button>
+						<button data-item="{{item}}" data-type="course" class="course-item-bottom-right subject-bg-color" open-type="share">立即推广</button>
 					</view>
 				</view>
 			</view>

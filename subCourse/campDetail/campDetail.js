@@ -96,8 +96,7 @@ Page({
       }).then(res => {
         let logo = ''
         if (res.data && res.data.class_num !== 0) {
-          logo = JSON.parse(res.data.logos)[res.data.class_num]
-          logo = logo || ''
+          logo = res.data.logos ? JSON.parse(res.data.logos)[res.data.class_num] : ''
         }
         wx.navigateTo({
           url: `/subCourse/campCredential/campCredential?campData=${JSON.stringify(this.data.campData)}&userName=${name}&logo=${logo}`,
@@ -700,6 +699,7 @@ Page({
       video_src: this.data.videoData.src.split(VideoSrcHost)[1],
       lesson_num: `第${this.data.playIndex + 1}节课`,
       date: this.data.showDate,
+      kecheng_title: `${this.data.courseList[this.data.playIndex].name}`,
       play_duration: {
         time_snippet: timeList.length === 0 ? listData : timeList, //事件片段
         total_duration: time, //视频总时间

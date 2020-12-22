@@ -5,6 +5,7 @@
       "provider": "wx2b03c6e691cd7370"
     }
   },
+
   "usingComponents": {
     "van-dialog": "./miniprogram_npm/@vant/weapp/dialog/index"
   },
@@ -31,10 +32,10 @@
     "pages/activePayCancel/activePayCancel"
   ],
   "requiredBackgroundModes": [
-    "audio"
+    "audio",
+    "location"
   ],
-  "subpackages": [
-    {
+  "subpackages": [{
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -115,8 +116,7 @@
   },
   "tabBar": {
     "custom": true,
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/discovery/discovery"
       },
       {

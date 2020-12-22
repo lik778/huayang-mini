@@ -166,6 +166,7 @@ Page({
             traincamp_id: id
           })
           if ($notNull(campInfo)) {
+            // 已经加入过，显示继续学习
             buttonType = 10
           }
         }
@@ -181,7 +182,7 @@ Page({
             this.setData({
               campDetailData: res,
               joinTime: pushTime,
-              buttonType: startDate === '' ? 1 : buttonType,
+              buttonType: buttonType === 10 ? 10 : startDate === '' ? 1 : buttonType,
               endTime: startDate,
               campId: id,
               isIosPlatform,

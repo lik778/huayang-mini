@@ -233,7 +233,6 @@ Page({
         if (Number(getLocalStorage(GLOBAL_KEY.userId)) === Number(promote_uid)) {
           this.setData({
             isShare: true,
-
           })
         }
       }
@@ -278,7 +277,6 @@ Page({
       getUserInfo('scene=zhide').then(res => {
         setLocalStorage(GLOBAL_KEY.accountInfo, res)
         res.kecheng_user.deposit = (res.kecheng_user.deposit / 100).toFixed(2) === '0.00' ? 0 : (res.kecheng_user.deposit / 100).toFixed(2)
-        console.log(res.kecheng_user.deposit)
         this.setData({
           accountInfo: res
         })
@@ -330,10 +328,22 @@ Page({
     }
   },
   onShareAppMessage: function (res) {
+    // 默认
+    let path = `/mine/promotion/promotion?promote_uid=${this.data.promoteUid}`
+    if (res.target.dataset.item) {
+      let item = res.target.dataset.item
+      if (res.target.dataset.type === 'camp') {
+        // 训练营推广
+        path = "/subCourse/joinCamp/joinCamp?id=" + item.id + `&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}&promote_uid=${this.data.promoteUid}`
+      } else if (res.target.dataset.type === 'course') {
+        // 课程推广
+        path = `/subCourse/videoCourse/videoCourse?videoId=${item.id}&promote_uid=${this.data.promoteUid}`
+      }
+    }
     return {
       title: `${this.data.shareUserInfo.nick_name}为您推荐了花样精选课程`,
       imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604635714bjNCqs.jpg",
-      path: `/mine/promotion/promotion?promote_uid=${this.data.promoteUid}`
+      path: path
     }
   }
 })
