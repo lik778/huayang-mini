@@ -103,10 +103,11 @@
 
 .tag {
     display: inline-block;
-    margin: 20rpx 0 40rpx;
-    font: 32rpx/32rpx PingFangSC;
+    margin: 30rpx 0;
+    height: 56rpx;
+    font: 32rpx/56rpx PingFangSC;
     color: #BE6F36;
-    padding: 14rpx 20rpx;
+    padding: 0 20rpx;
     border-radius: 24rpx 2rpx;
     background: #F8E2D3;
 }
@@ -117,15 +118,19 @@
 
 .operate-layout {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
 }
 
 .thumb-layout, .share-layout {
     display: flex;
-    align-items: center;
-    min-width: 120rpx;
-    font: 28rpx/28rpx PingFangSC;
+    align-items: flex-end;
+    min-width: 128rpx;
+    font: 28rpx/36rpx PingFangSC;
     color: #666;
+}
+
+.thumb-layout > text {
+    margin-right: 20rpx;
 }
 
 .share-layout {
@@ -152,26 +157,22 @@
 
 .thumb {
     width: 52rpx;
-    height: 54rpx;
+    height: 52rpx;
     margin-right: 8rpx;
 }
 
 .share {
-    width: 48rpx;
-    height: 48rpx;
-    margin-right: 8rpx;
-}
-
-.thumb-layout > text {
-    display: inline-block;
-    margin-right: 20rpx;
+    width: 52rpx;
+    height: 52rpx;
+    margin-right: 12rpx;
 }
 
 .delete-layout {
-    width: 120rpx;
     height: 48rpx;
-    font: 28rpx/48rpx PingFangSC;
-    text-align: center;
+    display: flex;
+    align-items: flex-end;
+    margin: 0 40rpx 4rpx;
+    font: 28rpx/28rpx PingFangSC;
     color: #729CBD;
 }
 

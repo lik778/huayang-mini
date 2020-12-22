@@ -87,9 +87,9 @@ Page({
 		audioReviewVisible: false,
 		textCount: 0,
 		desc: "",
-		previewLocalAudioUrl: undefined,
+		previewLocalAudioUrl: "",
 		localAudioTimes: "00:00",
-		audioUrl: undefined,
+		audioUrl: "",
 		audioDuration: 0,
 		audioCallbackStatus: AUDIO_CALLBACK_STATUS.pause,
 		previewLocalVideoUrl: undefined,
@@ -104,7 +104,7 @@ Page({
 		recordAudioTimes: "00:00",
 		recentCourseList: [],
 		selectedCourseItem: null,
-		mediaType: undefined,
+		mediaType: "",
 		fromPageName: undefined,
 		launchLock: false, // 发布锁
 		didRecordFileUploading: false, // 录音文件是否上传中
@@ -268,6 +268,11 @@ Page({
 	initialRecorderManager() {
 		const recorderManager = wx.getRecorderManager()
 		let self = this
+		recorderManager.onStart(() => {
+			// 开始倒计时 录音状态为运行中
+			self.setData({recordAudioStatus: AUDIO_STATUS.run, recordAudioTimer: self.createTheTimer()})
+		})
+
 		// 监听录音错误
 		recorderManager.onError((e) => {
 			console.error("recorder error", e)
@@ -340,8 +345,6 @@ Page({
 	startRecording() {
 		// 获取录音权限
 		queryWxAuth(WX_AUTH_TYPE.record).then(() => {
-			// 开始倒计时 录音状态为运行中
-			this.setData({recordAudioStatus: AUDIO_STATUS.run, recordAudioTimer: this.createTheTimer()})
 			// 开启录音
 			this.data.recorderManager.start({
 				duration: MAX_AUDIO_DURATION,
@@ -407,6 +410,7 @@ Page({
 			this.data.innerAudioContext.stop()
 		}
 
+		// 移除预览录音地址
 		if (didRemovePreviewAudioUrl) {
 			let t = setTimeout(() => {
 				this.removeAudio()
@@ -580,9 +584,9 @@ Page({
 	removeAudio() {
 		this.resetMediaType()
 		this.setData({
-			previewLocalAudioUrl: undefined,
+			previewLocalAudioUrl: "",
 			localAudioTimes: "00:00",
-			audioUrl: undefined,
+			audioUrl: "",
 			audioDuration: 0,
 			audioReviewVisible: false,
 			materialVisible: true
@@ -623,6 +627,7 @@ Page({
 		if (this.data.recordAudioStatus === AUDIO_STATUS.run) {
 			this.stopRecording()
 		}
+
 		this.toggleAudioModal(false)
 	},
 	/**
@@ -702,7 +707,7 @@ Page({
 	 * 还原媒体类型
 	 */
 	resetMediaType() {
-		this.setData({mediaType: undefined})
+		this.setData({mediaType: ""})
 	},
 	/**
 	 * 准备发布
@@ -818,9 +823,9 @@ Page({
 			getApp().globalData.needInitialPageName = this.data.fromPageName
 			this.setData({launchLock: false})
 			wx.navigateBack()
+			wx.hideLoading()
 		}).catch(() => {
 			this.setData({launchLock: false})
-		}).finally(() => {
 			wx.hideLoading()
 		})
 	}

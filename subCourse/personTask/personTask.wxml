@@ -6,8 +6,8 @@
         </view>
 
         <view class="numbers">
-            <view class="number-item" style="margin-right: 60rpx;"><text class="no">{{visit_user_info.work_count}}</text>作业数</view>
-            <view class="number-item"><text class="no">{{visit_user_info.like_count}}</text>获赞数</view>
+            <view class="number-item" style="margin-right: 60rpx;"><text class="no">{{visit_user_info.work_count}}</text><text>作业数</text></view>
+            <view class="number-item"><text class="no">{{visit_user_info.like_count}}</text><text>获赞数</text></view>
         </view>
 
         <view class="space-layout"></view>

@@ -22,12 +22,11 @@
         <text class="tag" bindtap="goToThemeTaskPage">{{info.kecheng_name}}</text>
         <view class="operate-layout">
             <view class="thumb-layout" bindtap="toggleThumbStatus">
-                <image class="thumb" mode="aspectFit" src="{{info.has_like ? 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608000999DusIdh.jpg':'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608000952jWlALY.jpg'}}"></image>
+                <image class="thumb" mode="aspectFit" src="{{info.has_like ? 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608636481pXgWtl.jpg':'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608636453zQuVAy.jpg'}}"></image>
                 <text>{{info.like_count}}</text>
             </view>
             <view class="share-layout">
-                <image class="share" mode="aspectFit"
-                       src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607585399UkrxwH.jpg"></image>
+                <image class="share" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608636580xrVqdh.jpg"></image>
                 <text>分享</text>
                 <button open-type="share" data-taskId="{{info.taskId}}" bindtap="onShareBtnTap" data-nickname="{{info.nick_name}}" data-userId="{{info.userId}}" class="share-btn"></button>
             </view>

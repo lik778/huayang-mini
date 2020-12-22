@@ -118,6 +118,7 @@ Page({
    * 调整到首页查看更多内容
    */
   goToDiscoveryPage() {
+    bxPoint("task_simple_join_btn", {}, false)
     wx.switchTab({url: "/pages/discovery/discovery"})
   },
   /**

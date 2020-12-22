@@ -328,7 +328,7 @@
           "scene": null
         },
         {
-          "name": "subCourse/indexTask/indexTask",
+          "name": "作业落地页",
           "pathName": "subCourse/indexTask/indexTask",
           "query": "taskId=211&nickname=Derisfe&userId=207",
           "scene": null

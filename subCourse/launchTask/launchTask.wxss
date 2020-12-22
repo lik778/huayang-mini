@@ -5,6 +5,7 @@
 
 /*输入框*/
 .text {
+    margin-top: 60rpx;
     margin-bottom: 50rpx;
 }
 

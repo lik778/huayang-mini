@@ -1,6 +1,7 @@
 @import "../../assets/css/common.wxss";
 .theme-task {
     padding-bottom: 136rpx;
+    background: #F9F9F9;
 }
 
 .close-icon {
@@ -37,8 +38,9 @@
 }
 
 .task-layout {
-    margin: 68rpx 40rpx 0;
+    padding: 68rpx 40rpx 0;
     font: 500 40rpx/40rpx PingFangSC;
+    background: white;
 }
 
 .bootcamp-footer {

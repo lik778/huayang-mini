@@ -2,13 +2,15 @@
 
 .person-task {
     padding-bottom: 136rpx;
+    background: #F9F9F9;
 }
 
 .user-layout {
     display: flex;
     align-items: center;
-    margin: 60rpx;
+    padding: 60rpx;
     font-size: 0;
+    background: white;
 }
 
 .user-avatar {
@@ -24,15 +26,15 @@
 }
 
 .numbers {
-    margin: 0 60rpx 40rpx;
+    padding: 0 60rpx 40rpx;
     display: flex;
+    background: white;
 }
 
 .number-item {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    font: 32rpx/36rpx PingFangSC;
+    align-items: flex-end;
+    font: 32rpx/32rpx PingFangSC;
     color: rgba(0,0,0, 0.6)
 }
 
@@ -48,8 +50,9 @@
 }
 
 .task-layout {
-    margin: 68rpx 40rpx 0;
+    padding: 68rpx 40rpx 0;
     font: 500 40rpx/40rpx PingFangSC;
+    background: white;
 }
 
 .launch-layout {
