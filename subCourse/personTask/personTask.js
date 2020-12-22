@@ -60,7 +60,17 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
+    // 在页面隐藏前，移除媒体队列
+    if (this.data.mediaQueue.length > 0) {
+      let queue = this.data.mediaQueue.slice()
+      // 重置之前播放的所有媒体
+      let comp = this.selectComponent(`#task-layout-${queue[0]}`)
+      comp.resetMediaStatus()
+      queue.shift()
 
+      // 缓存正要播放的媒体ID
+      this.setData({mediaQueue: queue})
+    }
   },
 
   /**
@@ -190,6 +200,13 @@ Page({
       }
       return null
     })
+
+    let len = newData.filter(n => $notNull(n)).length
+
+    // 删除自己作业后，剩余作业小于2继续往后加载数据
+    if (len < 2) {
+      this.getPersonTask()
+    }
 
     this.setData({personTaskList: [...newData]})
     this.getUserInfo()

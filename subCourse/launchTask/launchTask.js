@@ -714,6 +714,14 @@ Page({
 			return this.setData({didShowAuth: true})
 		}
 
+		if (!this.data.desc) {
+			return toast("请填写作业内容或心情")
+		} else if (!$notNull(this.data.selectedCourseItem)) {
+			return toast("请选择作业所在课程")
+		} else if (!this.data.mediaType) {
+			return toast("请选择作业素材")
+		}
+
 		switch (this.data.mediaType) {
 			case MEDIA_TYPE.video: {
 				if (!this.data.previewLocalVideoUrl) return toast("请选择作业素材")
@@ -760,14 +768,6 @@ Page({
 	launch() {
 		let errorMessage = ""
 		let userId = getLocalStorage(GLOBAL_KEY.userId)
-
-		if (!this.data.desc) {
-			return toast("请填写作业内容或心情")
-		} else if (!$notNull(this.data.selectedCourseItem)) {
-			return toast("请选择作业所在课程")
-		} else if (!this.data.mediaType) {
-			return toast("请选择作业素材")
-		}
 
 		let params = {
 			user_id: userId,

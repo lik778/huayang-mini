@@ -324,7 +324,7 @@
         {
           "name": "主题作业秀",
           "pathName": "subCourse/themeTask/themeTask",
-          "query": "kecheng_type=1&kecheng_id=2",
+          "query": "kecheng_type=0&kecheng_id=38",
           "scene": null
         },
         {

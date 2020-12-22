@@ -66,7 +66,17 @@ Page({
 	 * 生命周期函数--监听页面隐藏
 	 */
 	onHide: function () {
+		// 在页面隐藏前，移除媒体队列
+		if (this.data.mediaQueue.length > 0) {
+			let queue = this.data.mediaQueue.slice()
+			// 重置之前播放的所有媒体
+			let comp = this.selectComponent(`#task-layout-${queue[0]}`)
+			comp.resetMediaStatus()
+			queue.shift()
 
+			// 缓存正要播放的媒体ID
+			this.setData({mediaQueue: queue})
+		}
 	},
 
 	/**
@@ -115,7 +125,7 @@ Page({
 		} else {
 			return {
 				imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608515904gwuBds.jpg",
-				title: `花样“${this.data.themeTitle}”的精彩作业秀`,
+				title: `花样“${this.data.themeTitle}”${this.data.kecheng_type === '1' ? '学院' : ''}的精彩作业秀`,
 				path: `/subCourse/themeTask/themeTask?kecheng_type=${this.data.kecheng_type}&kecheng_id=${this.data.kecheng_id}`
 			}
 		}
@@ -183,7 +193,7 @@ Page({
 		wx.navigateTo({url: `/subCourse/campDetail/campDetail?id=${this.data.kecheng_id}`})
 	},
 	goToLaunchTaskPage() {
-		wx.navigateTo({url: `/subCourse/launchTask/launchTask?fromPageName=${NAME}themeType=${this.data.kecheng_type}&themeId=${this.data.kecheng_id}&themeTitle=${this.data.themeTitle}`})
+		wx.navigateTo({url: `/subCourse/launchTask/launchTask?fromPageName=${NAME}&themeType=${this.data.kecheng_type}&themeId=${this.data.kecheng_id}&themeTitle=${this.data.themeTitle}`})
 	},
 	/**
 	 * 返回上一页

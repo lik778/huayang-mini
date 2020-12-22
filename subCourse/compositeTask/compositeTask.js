@@ -51,7 +51,17 @@ Page({
 	 * 生命周期函数--监听页面隐藏
 	 */
 	onHide: function () {
+		// 在页面隐藏前，移除媒体队列
+		if (this.data.mediaQueue.length > 0) {
+			let queue = this.data.mediaQueue.slice()
+			// 重置之前播放的所有媒体
+			let comp = this.selectComponent(`#task-layout-${queue[0]}`)
+			comp.resetMediaStatus()
+			queue.shift()
 
+			// 缓存正要播放的媒体ID
+			this.setData({mediaQueue: queue})
+		}
 	},
 
 	/**
