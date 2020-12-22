@@ -251,7 +251,7 @@
         {
           "name": "视频详情页",
           "pathName": "subCourse/videoCourse/videoCourse",
-          "query": "videoId=25&playIndex=2",
+          "query": "videoId=26&playIndex=2",
           "scene": null
         },
         {
@@ -306,6 +306,12 @@
           "name": "/subCourse/joinCamp/joinCamp",
           "pathName": "subCourse/joinCamp/joinCamp",
           "query": "id=29&invite_user_id=228&promote_uid=228",
+          "scene": null
+        },
+        {
+          "name": "邀请好友看课",
+          "pathName": "subCourse/inviteFriendStudy/inviteFriendStudy",
+          "query": "inviteId=3&isInviter=false",
           "scene": null
         }
       ]

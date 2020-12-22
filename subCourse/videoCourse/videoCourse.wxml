@@ -59,6 +59,8 @@
               </view>
               <view class="course-item-left-right">
                 <view class="item-left-top">第{{item.Index}}课</view>
+                <!-- 请好友看课 -->
+                <view catchtap="inviteFriend" wx:if='{{buttonType===6}}' data-index="{{index}}">请好友看课</view>
                 <view class="item-left-bottom">{{item.title}}</view>
               </view>
             </view>

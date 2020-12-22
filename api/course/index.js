@@ -681,3 +681,23 @@ export const getIosCustomerLink = params => {
 	return request._get(URL.getIosCustomerLink, params)
 }
 
+
+// 请好友看课
+export const inviteFriend = params => {
+	return request._post(URL.inviteFriend, params)
+}
+
+// 获取请好友看课信息
+export const getInviteFriendInfo = params => {
+	return request._get(URL.getInviteFriendInfo, params)
+}
+
+// 创建用户领取记录
+export const receiveCreate = params => {
+	return request._post(URL.receiveCreate, params)
+}
+
+// 用户是否已领取校验
+export const checkReceiveCreate = params => {
+	return request._get(URL.checkReceiveCreate, params)
+}

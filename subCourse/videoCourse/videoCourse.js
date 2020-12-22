@@ -18,7 +18,8 @@ import {
   getVideoCourseDetail,
   joinVideoCourse,
   getIosCustomerLink,
-  recordStudy
+  recordStudy,
+  inviteFriend
 } from "../../api/course/index"
 import {
   GLOBAL_KEY,
@@ -69,6 +70,24 @@ Page({
     videoIndex: 0,
     inPlay: false, //是否播放中
     isIosPlatform: false
+  },
+  // 邀请好友看课
+  inviteFriend(e) {
+    let index = e.currentTarget.dataset.index + 1
+    let videoId = Number(this.data.videoId)
+    let userId = this.data.userInfo.id
+    let params = {
+      user_id: userId,
+      kecheng_series_id: videoId,
+      kecheng_series_num: index
+    }
+    inviteFriend(params).then(res => {
+      if (res.code === 0) {
+        wx.navigateTo({
+          url: `/subCourse/inviteFriendStudy/inviteFriendStudy?inviteId=${res.data.gift.id}`,
+        })
+      }
+    })
   },
   initFissionTask() {
     createFissionTask({

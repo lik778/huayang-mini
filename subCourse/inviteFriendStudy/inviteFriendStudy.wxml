@@ -1,0 +1,25 @@
+<!--subCourse/inviteFriendStudy/inviteFriendStudy.wxml-->
+<view class="invite" wx:if='{{canShow}}'>
+  <!-- 邀请者 -->
+  <view class="inviter" wx:if='{{isInviter}}'>邀请者</view>
+  <!-- 被邀请者 -->
+  <view class="invitee" wx:else>被邀请者</view>
+  <!-- 邀请领取记录 -->
+  <view class="invite-info">
+    {{inviteInfo.user_list.length}}/{{inviteInfo.gift.limit_count}}
+  </view>
+  <view class="get-list">
+    <view class="get-lits-item" wx:for="{{inviteInfo.user_list}}" wx:key="{{index}}"
+      style="display:flex;align-items:center;justify-content: space-between;">
+      <image src="{{item.avatar}}" style="width:50px;height:50px;border-radius:50%"></image>
+      <text>{{item.user_name}}</text>
+      <text>{{item.created_at}}</text>
+    </view>
+    <!-- 领取按钮 -->
+    <button wx:if='{{inviteInfo.user_list.length===inviteInfo.gift.limit_count}}'>已领完</button>
+    <button bindtap="get" wx:else>立即领取</button>
+  </view>
+  <!-- 授权弹窗 -->
+  <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
+  </authModule>
+</view>
