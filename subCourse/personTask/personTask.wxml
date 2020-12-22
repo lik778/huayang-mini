@@ -1,4 +1,4 @@
-<view class="person-task">
+<view class="person-task" style="background: {{personTaskList.length > 0 ? '#F9F9F9' : 'white'}}">
     <block wx:if="{{visit_user_info}}">
         <view class="user-layout">
             <image mode="aspectFill" class="user-avatar" src="{{visit_user_info.avatar_url}}"></image>

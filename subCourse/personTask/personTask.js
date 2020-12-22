@@ -19,7 +19,7 @@ Page({
     hasMore: true,
     isOwnner: false,
     didShowAuth: false,
-    cachedAction: null
+    cachedAction: null,
   },
 
   /**

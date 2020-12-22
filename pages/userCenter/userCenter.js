@@ -4,6 +4,7 @@ import { getPhoneNumber } from "../../api/course/index"
 import { getUserGuideLink, getUserInfo, getUserOwnerClasses } from "../../api/mine/index"
 import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
+import { getTaskEntranceStatus } from "../../api/task/index"
 
 Page({
 
@@ -20,7 +21,8 @@ Page({
     activity_count: 0,
     kecheng_count: 0,
     traincamp_count: 0,
-    showPromotion: true
+    showPromotion: true,
+    visibleTaskEntrance: true
   },
   // 跳往我的推广
   toPromotion() {
@@ -198,6 +200,11 @@ Page({
     })
   },
   run() {
+    // 检查是否展示作业秀入口
+    getTaskEntranceStatus().then(({data}) => {
+      this.setData({visibleTaskEntrance: data == 1})
+    })
+
     if (hasUserInfo() && !hasAccountInfo()) {
       // 有微信信息没有手机号信息
       this.setData({
