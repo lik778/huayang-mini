@@ -1,3 +1,4 @@
+@import "../../assets/css/common.wxss";
 .launch-task {
     padding-bottom: 136rpx;
 }
@@ -278,6 +279,10 @@
 
 .course-item:active {
     opacity: 0.9;
+}
+
+.course-item > text {
+    width: 468rpx;
 }
 
 .course-item-option {

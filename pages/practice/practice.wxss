@@ -2,10 +2,26 @@
 
 .practice {
     position: relative;
-    padding: 30rpx 30rpx 180rpx;
+    padding: 0 30rpx 180rpx;
     min-height: calc(100vh - 120rpx);
     box-sizing: border-box;
     background: #F9F9F9;
+}
+
+.banner {
+    width: 630rpx;
+    height: 132rpx;
+    margin: 50rpx auto;
+    font-size: 0;
+}
+
+.banner-picture {
+    width: inherit;
+    height: inherit;
+}
+
+.banner-picture:active {
+    opacity: 0.9;
 }
 
 /*support-layer*/

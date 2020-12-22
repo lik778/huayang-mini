@@ -2,7 +2,7 @@
     <block wx:if="{{visit_user_info}}">
         <view class="user-layout">
             <image mode="aspectFill" class="user-avatar" src="{{visit_user_info.avatar_url}}"></image>
-            <text class="user-name">{{visit_user_info.nick_name}}</text>
+            <text class="user-name limit-one-line">{{visit_user_info.nick_name}}</text>
         </view>
 
         <view class="numbers">

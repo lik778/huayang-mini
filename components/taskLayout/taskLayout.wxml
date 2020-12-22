@@ -1,7 +1,7 @@
 <view class="task-layout" wx:if="{{taskInfo != null}}">
     <image mode="aspectFit" bindtap="goToPersonTaskPage" class="user-avatar" src="{{info.avatar_url}}"></image>
     <view class="task-content">
-        <view class="username">{{info.nick_name}}</view>
+        <view class="username limit-one-line">{{info.nick_name}}</view>
         <view class="launch-date">{{info.created_at}}</view>
         <view class="desc">{{info.desc}}</view>
         <view class="media-content">
@@ -38,7 +38,7 @@
             <view wx:for="{{info.work_comment_list}}" wx:key="index">
                 <view class="teacher-info">
                     <image class="teacher-headimage" mode="aspectFill" src="{{item.teacherAvatar}}"></image>
-                    <text>{{item.teacherName}}</text>
+                    <text class="limit-one-line">{{item.teacherName}}</text>
                 </view>
                 <view class="teacher-desc">{{item.comment}}</view>
                 <view class="teacher-launch-date">{{item.updated_at}}</view>

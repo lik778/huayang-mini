@@ -10,18 +10,20 @@ Page({
    */
   data: {
     taskId: undefined,
+    nickname: undefined,
     indexTaskList: [],
     offset: 0,
     limit: 1,
-    didShowAuth: false
+    didShowAuth: false,
+    cachedAction: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let { taskId } = options
-    this.setData({taskId})
+    let { taskId, nickname } = options
+    this.setData({taskId, nickname})
 
     bxPoint("pv_share_task_page", {})
   },
@@ -72,7 +74,11 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608515904gwuBds.jpg",
+      title: `${this.data.nickname}的作业很棒哦，快来看看吧！`,
+      path: `/subCourse/indexTask/indexTask?taskId=${this.data.taskId}&nickname=${this.data.nickname}`
+    }
   },
   /**
    * [取消]点赞事件触发
@@ -87,15 +93,22 @@ Page({
   /**
    * 处理未登录状态
    */
-  onNoAuth() {
+  onNoAuth(e) {
+    if (e) {
+      this.setData({cachedAction: e.detail.cb})
+    }
     this.setData({didShowAuth: true})
   },
   // 用户授权取消
   authCancelEvent() {
-    this.setData({didShowAuth: false})
+    this.setData({didShowAuth: false, cachedAction: null})
   },
   // 用户确认授权
   authCompleteEvent() {
+    if (this.data.cachedAction) {
+      this.data.cachedAction()
+      this.setData({cachedAction: null})
+    }
     this.setData({didShowAuth: false})
   },
   /**

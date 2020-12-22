@@ -2,12 +2,12 @@
     <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607759556NHlnQg.jpg" mode="aspectFill" class="close-icon" style="padding-top:{{statusBarHeight}}px;" bindtap="back"></image>
     <view class="header-content">
         <image class="theme-banner" mode="aspectFill" src="{{themeBannerImage}}" />
-        <view class="theme-title">{{themeTitle}}学院的作业秀</view>
+        <view class="theme-title limit-one-line">{{themeTitle}}学院的作业秀</view>
     </view>
 
     <view class="task-layout">作业动态</view>
 
-    <taskLayout didShowTip="{{index === 1 && didShowTip}}" isTheme="{{true}}" bind:noAuth="onNoAuth" bind:postTaskId="receiveTaskId" wx:for="{{themeTaskList}}" wx:key="index" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
+    <taskLayout didShowTip="{{index === 1 && didShowTip}}" bind:thumbChange="onThumbChange" isTheme="{{true}}" bind:noAuth="onNoAuth" bind:postTaskId="receiveTaskId" wx:for="{{themeTaskList}}" wx:key="index" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
 
     <block wx:if="{{kecheng_type}}">
         <view class="bootcamp-footer" wx:if="{{kecheng_type === '0'}}">
@@ -22,7 +22,7 @@
         </view>
     </block>
 
-    <authModule show="{{didShowAuth}}" bind:thumbChange="onThumbChange" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
 
     <flower id="flower" />
 </view>

@@ -1,4 +1,7 @@
 <view class="practice">
+    <view class="banner">
+        <image class="banner-picture" bindtap="goToCompositeTaskPage" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608445441zNroBC.jpg"></image>
+    </view>
     <!--  今日练习计划  -->
     <view class="support-layer">
         <view class="title">

@@ -87,11 +87,12 @@ Page({
 		audioReviewVisible: false,
 		textCount: 0,
 		desc: "",
-		localAudioUrl: undefined,
+		previewLocalAudioUrl: undefined,
 		localAudioTimes: "00:00",
 		audioUrl: undefined,
 		audioDuration: 0,
 		audioCallbackStatus: AUDIO_CALLBACK_STATUS.pause,
+		previewLocalVideoUrl: undefined,
 		videoUrl: undefined,
 		videoId: undefined,
 		videoHeight: undefined,
@@ -107,6 +108,7 @@ Page({
 		fromPageName: undefined,
 		launchLock: false, // 发布锁
 		didRecordFileUploading: false, // 录音文件是否上传中
+		didVideoFileUploading: false, // 视频文件是否上传中
 		didShowAuth: false,
 	},
 
@@ -122,7 +124,7 @@ Page({
 				kecheng_id: themeId,
 				isSelected: true
 			}]
-			this.setData({recentCourseList})
+			this.setData({recentCourseList, selectedCourseItem: recentCourseList[0]})
 		}
 
 		if (fromPageName) {
@@ -230,26 +232,25 @@ Page({
 				console.log("上传文件的地址 = ", callbackUrl)
 				switch (self.data.mediaType) {
 					case MEDIA_TYPE.audio: {
-						self.setData({localAudioUrl: callbackUrl})
+						self.setData({audioUrl: callbackUrl})
 						break
 					}
 					case MEDIA_TYPE.video: {
 						self.setData({
 							videoId: uploadInfo.videoId,
 							videoUrl: callbackUrl,
-							videoReviewVisible: true,
-							materialVisible: false
 						})
 						break
 					}
 				}
-				self.setData({didRecordFileUploading: false})
-				wx.hideLoading()
+				self.setData({didRecordFileUploading: false, didVideoFileUploading: false})
+				// 发布
+				self.launch()
 			},
 			// 文件上传失败
 			onUploadFailed: function (uploadInfo, code, message) {
 				console.error("文件上传失败", message)
-				self.setData({didRecordFileUploading: false})
+				self.setData({didRecordFileUploading: false, didVideoFileUploading: false})
 				wx.hideLoading()
 			},
 			// 上传凭证超时
@@ -295,18 +296,18 @@ Page({
 
 			console.log(tempFilePath, duration, fileSize)
 
-			self.setData({didRecordFileUploading: true})
-			wx.showLoading({title: "上传中...", mask: true})
+			// 录音时长不能小于5秒
+			if (duration < 5) {
+				self.setData({
+					recordAudioStatus: AUDIO_STATUS.ready,
+					recordAudioTimes: "00:00",
+					audioDuration: 0,
+					localAudioTimes: "00:00"
+				})
+				return toast("录音时长不能小于5秒")
+			}
 
-			// 上传本地录音
-			getOssCertificate({
-				title: "aduio_task",
-				filename: tempFilePath.split("://")[1]
-			}).then(({data}) => {
-				self.data.aliyunUploader.dd_custom_params = data
-				self.data.aliyunUploader.addFile({url: tempFilePath}, null, null, null, '{"Vod":{}}')
-				self.data.aliyunUploader.startUpload()
-			})
+			self.setData({previewLocalAudioUrl: tempFilePath})
 		})
 
 		// 监听录音暂停事件
@@ -386,10 +387,8 @@ Page({
 	 * 播放录音
 	 */
 	playRecord() {
-		// 如果录音文件正在上传中，不播放录音
-		if (this.data.didRecordFileUploading) return
 		console.log("开始试听");
-		this.data.innerAudioContext.src = this.data.localAudioUrl  + '?' + +new Date()
+		this.data.innerAudioContext.src = this.data.previewLocalAudioUrl
 		this.data.innerAudioContext.play()
 	},
 	/**
@@ -456,22 +455,16 @@ Page({
 				let videoSize = size / 1024 / 1024 | 0
 				// 视频不能超过200MB
 				if (videoSize > 200) {
-					return toast("视频不能超过200MB")
+					return toast("视频大小不能超过200MB")
 				}
 
-				// 记录视频的宽高
-				self.setData({videoHeight: height, videoWidth: width})
-
-				getOssCertificate({
-					title: "video_task",
-					filename: tempFilePath.split("://")[1]
-				}).then(({data}) => {
-					self.data.aliyunUploader.dd_custom_params = data
-					self.data.aliyunUploader.addFile({url: tempFilePath}, null, null, null, '{"Vod":{}}')
-					self.data.aliyunUploader.startUpload()
-					wx.showLoading({title: "上传中...", mask: true})
-
-					console.error(self.data.aliyunUploader)
+				// 记录视频的宽高、设备本地视频地址、显示本地视频
+				self.setData({
+					videoHeight: height,
+					videoWidth: width,
+					previewLocalVideoUrl: tempFilePath,
+					videoReviewVisible: true,
+					materialVisible: false
 				})
 			},
 			fail(err) {
@@ -559,9 +552,8 @@ Page({
 	},
 	/**
 	 * 删除预览视频
-	 * @param videoUrl
 	 */
-	removeVideo(videoUrl) {
+	removeVideo() {
 		this.resetMediaType()
 		this.setData({
 			videoId: undefined,
@@ -578,7 +570,7 @@ Page({
 	removeAudio() {
 		this.resetMediaType()
 		this.setData({
-			localAudioUrl: undefined,
+			previewLocalAudioUrl: undefined,
 			localAudioTimes: "00:00",
 			audioUrl: undefined,
 			audioDuration: 0,
@@ -645,7 +637,7 @@ Page({
 				break
 			}
 			case AUDIO_STATUS.play: {
-				// 暂停已录制的音频 录音状态为暂停
+				// 结束播放已录制的音频 录音状态为暂停
 				this.stopRecord()
 				this.setData({recordAudioStatus: AUDIO_STATUS.done})
 				break
@@ -656,8 +648,8 @@ Page({
 	 * 保存录音
 	 */
 	saveAudioRecord() {
-		let localAudioUrl = this.data.localAudioUrl
-		this.setData({audioUrl: localAudioUrl, audioReviewVisible: true, materialVisible: false})
+		this.stopRecord()
+		this.setData({audioReviewVisible: true, materialVisible: false})
 		this.toggleAudioModal(false)
 	},
 	/**
@@ -703,16 +695,54 @@ Page({
 		this.setData({mediaType: undefined})
 	},
 	/**
-	 * 发布
+	 * 准备发布
 	 */
-	launch() {
+	async prepareLaunch() {
 		if (this.data.launchLock) return
-		this.setData({launchLock: true})
 
 		if(!hasUserInfo() || !hasAccountInfo()) {
 			return this.setData({didShowAuth: true})
 		}
 
+		switch (this.data.mediaType) {
+			case MEDIA_TYPE.video: {
+				wx.showLoading({title: "上传中...", mask: true})
+				// 上传视频
+				let { data } = await getOssCertificate({
+					title: "video_task",
+					filename: this.data.previewLocalVideoUrl.split("://")[1]
+				})
+				this.data.aliyunUploader.dd_custom_params = data
+				this.data.aliyunUploader.addFile({url: this.data.previewLocalVideoUrl}, null, null, null, '{"Vod":{}}')
+				this.data.aliyunUploader.startUpload()
+				// 开始上传视频文件
+				this.setData({didVideoFileUploading: true})
+				break
+			}
+			case MEDIA_TYPE.audio: {
+				// 上传录音
+				let { data } = await getOssCertificate({
+					title: "aduio_task",
+					filename: this.data.previewLocalAudioUrl.split("://")[1]
+				})
+				this.data.aliyunUploader.dd_custom_params = data
+				this.data.aliyunUploader.addFile({url: this.data.previewLocalAudioUrl}, null, null, null, '{"Vod":{}}')
+				this.data.aliyunUploader.startUpload()
+				// 开始上传录音文件
+				this.setData({didRecordFileUploading: true})
+				break
+			}
+			case MEDIA_TYPE.image: {
+				this.launch()
+				break
+			}
+		}
+	},
+
+	/**
+	 * 正式发布
+	 */
+	launch() {
 		let errorMessage = ""
 		let userId = getLocalStorage(GLOBAL_KEY.userId)
 
@@ -764,16 +794,18 @@ Page({
 			return toast(errorMessage)
 		}
 
+		this.setData({launchLock: true})
+
 		wx.showLoading({title: "发布中...", mask: true})
 		publishTask(params).then(({data}) => {
-			toast("发布作业成功")
+			toast("发布作业成功", 1000)
 			console.log(data)
 			getApp().globalData.needInitialPageName = this.data.fromPageName
 			this.setData({launchLock: false})
-			wx.hideLoading()
 			wx.navigateBack()
 		}).catch(() => {
 			this.setData({launchLock: false})
+		}).finally(() => {
 			wx.hideLoading()
 		})
 	}

@@ -5,10 +5,7 @@ import {
 	queryBootCampContentInToday,
 	updateBootcampStudyTime
 } from "../../api/course/index"
-import {
-	CourseLevels,
-	GLOBAL_KEY
-} from "../../lib/config"
+import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
 import {
 	$notNull,
@@ -147,11 +144,13 @@ Page({
 			path: `/pages/discovery/discovery?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
 		}
 	},
+	goToCompositeTaskPage() {
+		bxPoint("task_practice_tab_entrance", {}, false)
+		wx.navigateTo({url: "/subCourse/compositeTask/compositeTask"})
+	},
 	// 用户确认授权
 	authCompleteEvent() {
-		this.setData({
-			didShowAuth: false
-		})
+		this.setData({didShowAuth: false})
 		setLocalStorage("hy_dd_auth_done_in_practice", "yes")
 		this.initial()
 	},

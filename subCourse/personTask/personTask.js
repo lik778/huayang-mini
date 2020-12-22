@@ -18,7 +18,8 @@ Page({
     limit: 3,
     hasMore: true,
     isOwnner: false,
-    didShowAuth: false
+    didShowAuth: false,
+    cachedAction: null
   },
 
   /**
@@ -92,11 +93,13 @@ Page({
     if (e.target) {
       let {taskid, nickname} = e.target.dataset
       return {
+        imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608515904gwuBds.jpg",
         title: `${nickname}的作业很棒哦，快来看看吧！`,
-        path: `/subCourse/indexTask/indexTask?taskId=${taskid}`
+        path: `/subCourse/indexTask/indexTask?taskId=${taskid}&nickname=${nickname}`
       }
     } else {
       return {
+        imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608515904gwuBds.jpg",
         title: `${this.data.visit_user_info.nick_name}的精彩作业秀`,
         path: `/subCourse/personTask/personTask?visit_user_id=${this.data.visit_user_id}`
       }
@@ -105,15 +108,22 @@ Page({
   /**
    * 处理未登录状态
    */
-  onNoAuth() {
+  onNoAuth(e) {
+    if (e) {
+      this.setData({cachedAction: e.detail.cb})
+    }
     this.setData({didShowAuth: true})
   },
   // 用户授权取消
   authCancelEvent() {
-    this.setData({didShowAuth: false})
+    this.setData({didShowAuth: false, cachedAction: null})
   },
   // 用户确认授权
   authCompleteEvent() {
+    if (this.data.cachedAction) {
+      this.data.cachedAction()
+      this.setData({cachedAction: null})
+    }
     this.setData({didShowAuth: false})
   },
   /**
@@ -134,7 +144,7 @@ Page({
     if (hasUserInfo() && hasAccountInfo()) {
       wx.navigateTo({url: "/subCourse/launchTask/launchTask?fromPageName=" + NAME})
     } else {
-      this.onNoAuth()
+      this.onNoAuth({detail: { cb: () => {wx.navigateTo({url: "/subCourse/launchTask/launchTask?fromPageName=" + NAME})} }})
     }
   },
   /**

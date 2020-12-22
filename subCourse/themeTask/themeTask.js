@@ -25,7 +25,8 @@ Page({
 		didSignIn: false, // 登录状态
 		didShowAuth: false,
 		didShowTip: false,
-		firstTaskCardHeight: 0
+		firstTaskCardHeight: 0,
+		cachedAction: null
 	},
 
 	/**
@@ -107,11 +108,13 @@ Page({
 		if (e.target) {
 			let {taskid, nickname} = e.target.dataset
 			return {
+				imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608515904gwuBds.jpg",
 				title: `${nickname}的作业很棒哦，快来看看吧！`,
-				path: `/subCourse/indexTask/indexTask?taskId=${taskid}`
+				path: `/subCourse/indexTask/indexTask?taskId=${taskid}&nickname=${nickname}`
 			}
 		} else {
 			return {
+				imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608515904gwuBds.jpg",
 				title: `花样“${this.data.themeTitle}”的精彩作业秀`,
 				path: `/subCourse/themeTask/themeTask?kecheng_type=${this.data.kecheng_type}&kecheng_id=${this.data.kecheng_id}`
 			}
@@ -148,23 +151,32 @@ Page({
 	/**
 	 * 处理未登录状态
 	 */
-	onNoAuth() {
+	onNoAuth(e) {
+		if (e) {
+			this.setData({cachedAction: e.detail.cb})
+		}
 		this.setData({didShowAuth: true})
 	},
 	// 用户授权取消
 	authCancelEvent() {
-		this.setData({didShowAuth: false})
+		this.setData({didShowAuth: false, cachedAction: null})
 	},
 	// 用户确认授权
 	authCompleteEvent() {
 		this.setData({didSignIn: hasAccountInfo() && hasUserInfo()})
+
+		if (this.data.cachedAction) {
+			this.data.cachedAction()
+			this.setData({cachedAction: null})
+		}
+
 		this.setData({didShowAuth: false})
 	},
 	goToJoinBootcamp() {
 		if (this.data.didSignIn) {
 			wx.navigateTo({url: `/subCourse/joinCamp/joinCamp?id=${this.data.kecheng_id}`})
 		} else {
-			this.onNoAuth()
+			this.onNoAuth({detail: { cb: () => {wx.navigateTo({url: `/subCourse/joinCamp/joinCamp?id=${this.data.kecheng_id}`})} }})
 		}
 	},
 	goToBootcampDetail() {

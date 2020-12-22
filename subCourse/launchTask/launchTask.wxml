@@ -29,7 +29,7 @@
 
     <!-- 视频回显 -->
     <view class="video-review-box" wx:if="{{videoReviewVisible}}">
-        <video class="preview-video" src="{{videoUrl}}" controls enable-play-gesture="{{false}}"></video>
+        <video class="preview-video" src="{{previewLocalVideoUrl}}" controls enable-play-gesture="{{false}}"></video>
         <image mode="aspectFit" bindtap="removeVideo" class="remove-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607421256DZlfPK.jpg"></image>
     </view>
 
@@ -79,9 +79,9 @@
 
     <!-- 课程选择 -->
     <view class="course-container">
-        <view class="course-layout">选在所在课程</view>
+        <view class="course-layout">选择所在课程</view>
         <view class="course-item" wx:for="{{recentCourseList}}" wx:key="index" bindtap="onCourseListChange" data-item="{{item}}">
-            <text>{{item.name}}</text>
+            <text class="limit-one-line">{{item.name}}</text>
             <view class="course-item-option">
                 <text class="select-text">{{item.isSelected ? "已选择" : "选择"}}</text>
                 <image mode="aspectFit" class="select-icon" src="{{item.isSelected ? 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607507791oUjFCQ.jpg' : 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607513345qkQmaQ.jpg'}}"></image>
@@ -91,6 +91,6 @@
 
     <!--  发布按钮  -->
     <view class="footer">
-        <image mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607997581SoBfDB.jpg" class="launch-btn" bindtap="launch"></image>
+        <image mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607997581SoBfDB.jpg" class="launch-btn" bindtap="prepareLaunch"></image>
     </view>
 </view>

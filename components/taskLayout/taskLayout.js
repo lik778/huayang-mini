@@ -105,6 +105,10 @@ Component({
 			if (this.data.isTheme) return
 			let {kecheng_type, kecheng_id} = this.data.info
 			bxPoint("task_tag_click", {type: kecheng_type, contentId: kecheng_id}, false)
+
+			if (!hasUserInfo() || !hasAccountInfo()) {
+				return this.triggerEvent("noAuth", {cb: () => {wx.navigateTo({url: `/subCourse/themeTask/themeTask?kecheng_type=${kecheng_type}&kecheng_id=${kecheng_id}`})}})
+			}
 			wx.navigateTo({url: `/subCourse/themeTask/themeTask?kecheng_type=${kecheng_type}&kecheng_id=${kecheng_id}`})
 		},
 		/**
@@ -133,12 +137,11 @@ Component({
 		},
 		/**
 		 * [取消]点赞
-		 * @param e
 		 */
-		toggleThumbStatus(e) {
+		toggleThumbStatus() {
 			this.resetTips()
 			if (!hasUserInfo() || !hasAccountInfo()) {
-				return this.triggerEvent("noAuth")
+				return this.triggerEvent("noAuth", {cb: () => {this.toggleThumbStatus()}})
 			}
 
 			let oldInfoData = {...this.data.info}
