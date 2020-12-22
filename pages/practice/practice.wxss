@@ -1,6 +1,7 @@
 @import "../../assets/css/common.wxss";
 
 .practice {
+    overflow: hidden;
     position: relative;
     padding: 0 30rpx 180rpx;
     min-height: calc(100vh - 120rpx);

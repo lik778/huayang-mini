@@ -91,11 +91,11 @@ Page({
 	 */
 	onShareAppMessage: function (e) {
 		if (e.target) {
-			let {taskid, nickname} = e.target.dataset
+			let {taskid, nickname, userid} = e.target.dataset
 			return {
 				imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608515904gwuBds.jpg",
 				title: `${nickname}的作业很棒哦，快来看看吧！`,
-				path: `/subCourse/indexTask/indexTask?taskId=${taskid}&nickname=${nickname}`
+				path: `/subCourse/indexTask/indexTask?taskId=${taskid}&nickname=${nickname}&userId=${userid}`
 			}
 		} else {
 			return {

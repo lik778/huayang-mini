@@ -1,4 +1,4 @@
-import { getLocalStorage } from "../../utils/util"
+import { $notNull, getLocalStorage } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
 import { getTaskDetail } from "../../api/task/index"
 import bxPoint from "../../utils/bxPoint"
@@ -11,19 +11,21 @@ Page({
   data: {
     taskId: undefined,
     nickname: undefined,
+    userId: undefined,
     indexTaskList: [],
     offset: 0,
     limit: 1,
     didShowAuth: false,
-    cachedAction: null
+    cachedAction: null,
+    timerNo: 3
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let { taskId, nickname } = options
-    this.setData({taskId, nickname})
+    let { taskId, nickname, userId } = options
+    this.setData({taskId, nickname, userId})
 
     bxPoint("pv_share_task_page", {})
   },
@@ -77,7 +79,7 @@ Page({
     return {
       imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608515904gwuBds.jpg",
       title: `${this.data.nickname}的作业很棒哦，快来看看吧！`,
-      path: `/subCourse/indexTask/indexTask?taskId=${this.data.taskId}&nickname=${this.data.nickname}`
+      path: `/subCourse/indexTask/indexTask?taskId=${this.data.taskId}&nickname=${this.data.nickname}&userId=${this.data.userId}`
     }
   },
   /**
@@ -132,13 +134,31 @@ Page({
     }
     getTaskDetail(params).then(({data}) => {
       data = data || {}
-      data = {
-        ...data,
-        kecheng_work: {...data.work},
-        work_comment_list: data.comment_list,
+      if ($notNull(data)) {
+        data = {
+          ...data,
+          kecheng_work: {...data.work},
+          work_comment_list: data.comment_list,
+        }
+      } else {
+        this.startTimer()
       }
 
-      this.setData({indexTaskList: [data]})
+      this.setData({indexTaskList: $notNull(data) ? [data] : []})
     })
+  },
+  startTimer() {
+    let timer = setInterval(() => {
+      let no = this.data.timerNo
+      if (no <= 0) {
+        this.goToPersonTaskPage()
+        clearInterval(timer)
+      } else {
+        this.setData({timerNo: no - 1})
+      }
+    }, 1000)
+  },
+  goToPersonTaskPage() {
+    wx.navigateTo({url: `/subCourse/personTask/personTask?visit_user_id=${this.data.userId}`})
   }
 })

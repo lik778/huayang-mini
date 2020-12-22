@@ -278,6 +278,7 @@ Component({
 					break
 				}
 				case MEDIA_TYPE.audio: {
+					this.setData({audioCallbackStatus: AUDIO_CALLBACK_STATUS.pause})
 					this.setData({bgAudioInstance: null})
 					break
 				}
@@ -299,6 +300,7 @@ Component({
 			})
 
 			bgAudioInstance.onEnded(() => {
+				this.setData({audioCallbackStatus: AUDIO_CALLBACK_STATUS.pause})
 				this.setData({didBgAudioRunning: false})
 				console.log("bga ended")
 			})

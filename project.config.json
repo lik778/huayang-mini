@@ -330,7 +330,7 @@
         {
           "name": "作业落地页",
           "pathName": "subCourse/indexTask/indexTask",
-          "query": "taskId=211",
+          "query": "taskId=1211&nickname=Derisfe&userId=207",
           "scene": null
         }
       ]

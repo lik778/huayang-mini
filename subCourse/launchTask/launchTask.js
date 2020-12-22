@@ -399,10 +399,20 @@ Page({
 	},
 	/**
 	 * 结束播放音频
+	 * @param didRemovePreviewAudioUrl
 	 */
-	stopRecord() {
+	stopRecord(didRemovePreviewAudioUrl = false) {
 		console.log("结束试听");
-		this.data.innerAudioContext.stop()
+		if (!this.data.innerAudioContext.paused) {
+			this.data.innerAudioContext.stop()
+		}
+
+		if (didRemovePreviewAudioUrl) {
+			let t = setTimeout(() => {
+				this.removeAudio()
+				clearTimeout(t)
+			}, 1000)
+		}
 	},
 	/**
 	 * 选择设备中的图片
@@ -607,7 +617,7 @@ Page({
 	 */
 	closeAudioModal() {
 		// 停止录音播放，清除本地录音地址
-		this.stopRecord()
+		this.stopRecord(true)
 
 		// 结束录音 结束倒计时 录音状态为初始状态
 		if (this.data.recordAudioStatus === AUDIO_STATUS.run) {
@@ -657,7 +667,7 @@ Page({
 	 */
 	reloadAudioRecord() {
 		// 停止录音播放，清除本地录音地址
-		this.stopRecord()
+		this.stopRecord(true)
 
 		if (this.data.recordAudioStatus === AUDIO_STATUS.run) {
 			this.stopRecording()
@@ -706,6 +716,7 @@ Page({
 
 		switch (this.data.mediaType) {
 			case MEDIA_TYPE.video: {
+				if (!this.data.previewLocalVideoUrl) return toast("请选择作业素材")
 				wx.showLoading({title: "上传中...", mask: true})
 				// 上传视频
 				let { data } = await getOssCertificate({
@@ -720,6 +731,7 @@ Page({
 				break
 			}
 			case MEDIA_TYPE.audio: {
+				if (!this.data.previewLocalAudioUrl) return toast("请选择作业素材")
 				// 上传录音
 				let { data } = await getOssCertificate({
 					title: "aduio_task",
@@ -735,6 +747,9 @@ Page({
 			case MEDIA_TYPE.image: {
 				this.launch()
 				break
+			}
+			default: {
+				this.launch()
 			}
 		}
 	},

@@ -80,3 +80,11 @@ export function getTaskUserInfo(params) {
 export function getTaskDetail(params) {
 	return request._get(URL.queryTaskDetail, params)
 }
+
+/**
+ * 获取作业秀入口状态
+ * @returns {Promise<unknown>}
+ */
+export function getTaskEntranceStatus() {
+	return request._get(URL.queryTaskEntranceStatus)
+}

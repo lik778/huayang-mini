@@ -1,6 +1,6 @@
 .user-center {
   background: #F9F9F9;
-  padding-bottom: 100rpx;
+  padding-bottom: 125rpx;
   min-height: 100vh;
   box-sizing: border-box;
 }

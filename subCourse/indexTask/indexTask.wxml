@@ -1,9 +1,21 @@
 <view class="index-task">
-    <taskLayout bind:noAuth="onNoAuth" bind:thumbChange="onThumbChange" wx:for="{{indexTaskList}}" wx:key="index" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
-
-    <view class="launch-layout">
-        <image class="launch-btn" bindtap="goToDiscoveryPage" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607840675iqSAwk.jpg"></image>
+    <block wx:if="{{indexTaskList.length > 0}}">
+        <taskLayout bind:noAuth="onNoAuth" bind:thumbChange="onThumbChange" wx:for="{{indexTaskList}}" wx:key="index" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
+    </block>
+    <view class="empty-content" wx:else>
+        <image class="empty-picture" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608608600Thinyi.jpg"></image>
+        <view class="empty-text">
+            <view>该作业已被删除</view>
+            <view>您可以查看更多她/他的作业秀</view>
+        </view>
+        <view class="empty-btn" bindtap="goToPersonTaskPage">去查看({{timerNo}})</view>
     </view>
-    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
-    <flower id="flower" />
+
+    <block wx:if="{{indexTaskList.length > 0}}">
+        <view class="launch-layout">
+            <image class="launch-btn" bindtap="goToDiscoveryPage" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607840675iqSAwk.jpg"></image>
+        </view>
+        <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
+        <flower id="flower" />
+    </block>
 </view>
