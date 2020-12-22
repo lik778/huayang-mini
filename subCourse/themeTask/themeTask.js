@@ -199,7 +199,11 @@ Page({
 	 * 返回上一页
 	 */
 	back() {
-		wx.navigateBack()
+		wx.navigateBack({
+			fail() {
+				wx.reLaunch({url: "/pages/discovery/discovery"})
+			}
+		})
 	},
 	/**
 	 * 获取主题页详情

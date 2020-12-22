@@ -95,7 +95,11 @@ Component({
 			this.resetTips()
 			if (this.data.isPerson) return
 			let {userId} = this.data.info
-			wx.navigateTo({url: `/subCourse/personTask/personTask?visit_user_id=${userId}`})
+			if (this.data.isTheme) {
+				wx.redirectTo({url: `/subCourse/personTask/personTask?visit_user_id=${userId}`})
+			} else {
+				wx.navigateTo({url: `/subCourse/personTask/personTask?visit_user_id=${userId}`})
+			}
 		},
 		/**
 		 * 跳转到主题作业秀页面
@@ -109,7 +113,12 @@ Component({
 			if (!hasUserInfo() || !hasAccountInfo()) {
 				return this.triggerEvent("noAuth", {cb: () => {wx.navigateTo({url: `/subCourse/themeTask/themeTask?kecheng_type=${kecheng_type}&kecheng_id=${kecheng_id}`})}})
 			}
-			wx.navigateTo({url: `/subCourse/themeTask/themeTask?kecheng_type=${kecheng_type}&kecheng_id=${kecheng_id}`})
+
+			if (this.data.isPerson) {
+				wx.redirectTo({url: `/subCourse/themeTask/themeTask?kecheng_type=${kecheng_type}&kecheng_id=${kecheng_id}`})
+			} else {
+				wx.navigateTo({url: `/subCourse/themeTask/themeTask?kecheng_type=${kecheng_type}&kecheng_id=${kecheng_id}`})
+			}
 		},
 		/**
 		 * 删除自己的作业
@@ -148,23 +157,27 @@ Component({
 			let {taskId, has_like} = oldInfoData
 			let params = {work_id: taskId, user_id: getLocalStorage(GLOBAL_KEY.userId)}
 			if (!!has_like) {
-				unThumbTask(params).then(({data}) => {
+				unThumbTask(params).then(({data, message}) => {
 					if (data === "success") {
 						let new_like_count = oldInfoData.like_count - 1
 						oldInfoData.has_like = 0
 						oldInfoData.like_count = new_like_count < 0 ? 0 : new_like_count
 						this.setData({info: oldInfoData})
 						this.triggerEvent("thumbChange", {thumbType: "unlike"})
+					} else {
+						toast(message)
 					}
 				})
 			} else {
-				thumbTask(params).then(({data}) => {
+				thumbTask(params).then(({data, message}) => {
 					if (data === "success") {
 						let new_like_count = oldInfoData.like_count + 1
 						oldInfoData.has_like = 1
 						oldInfoData.like_count = new_like_count
 						this.setData({info: oldInfoData})
 						this.triggerEvent("thumbChange", {thumbType: "like"})
+					} else {
+						toast(message)
 					}
 				})
 			}
