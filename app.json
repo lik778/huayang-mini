@@ -1,7 +1,7 @@
 {
   "plugins": {
     "live-player-plugin": {
-      "version": "1.2.2",
+      "version": "1.2.5",
       "provider": "wx2b03c6e691cd7370"
     }
   },
@@ -90,7 +90,12 @@
         "schoolReport/schoolReport",
         "schoolReportResult/schoolReportResult",
         "campSharePoster/campSharePoster",
-        "campCredential/campCredential"
+        "campCredential/campCredential",
+        "launchTask/launchTask",
+        "personTask/personTask",
+        "themeTask/themeTask",
+        "compositeTask/compositeTask",
+        "indexTask/indexTask"
       ]
     },
     {

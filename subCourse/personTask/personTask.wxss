@@ -1,0 +1,77 @@
+@import "../../assets/css/common.wxss";
+
+.person-task {
+    min-height: 100vh;
+    padding-bottom: 136rpx;
+    background: #F9F9F9;
+}
+
+.user-layout {
+    display: flex;
+    align-items: center;
+    padding: 60rpx;
+    font-size: 0;
+    background: white;
+}
+
+.user-avatar {
+    width: 128rpx;
+    height: 128rpx;
+    border-radius: 999rpx;
+    margin-right: 30rpx;
+}
+
+.user-name {
+    width: 460rpx;
+    font: 500 52rpx/52rpx PingFangSC;
+}
+
+.numbers {
+    padding: 0 60rpx 40rpx;
+    display: flex;
+    background: white;
+}
+
+.number-item {
+    display: flex;
+    align-items: flex-end;
+    font: 32rpx/32rpx PingFangSC;
+    color: rgba(0,0,0, 0.6)
+}
+
+.no {
+    margin-right: 12rpx;
+    font: 500 44rpx/36rpx PingFangSC;
+    color: black;
+}
+
+.space-layout {
+    height: 12rpx;
+    background: #F9F9F9;
+}
+
+.task-layout {
+    padding: 68rpx 40rpx 0;
+    font: 500 40rpx/40rpx PingFangSC;
+    background: white;
+}
+
+.launch-layout {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 136rpx;
+    font-size: 0;
+    background: white;
+}
+
+.launch-btn {
+    height: inherit;
+    width: inherit;
+}
+
+.launch-btn:active {
+    opacity: 0.9;
+}

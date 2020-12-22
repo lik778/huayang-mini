@@ -1,21 +1,9 @@
 import md5 from 'md5'
-import {
-	GLOBAL_KEY,
-	ROOT_URL,
-	URL,
-	WeChatLiveStatus
-} from '../lib/config'
-import {
-	createOrder
-} from "../api/mine/payVip"
-import {
-	getWatchLiveAuth,
-	statisticsWatchNo
-} from "../api/live/course"
+import { GLOBAL_KEY, ROOT_URL, URL, WeChatLiveStatus } from '../lib/config'
+import { createOrder } from "../api/mine/payVip"
+import { getWatchLiveAuth, statisticsWatchNo } from "../api/live/course"
 import request from "../lib/request"
-import {
-	getUserInfo
-} from "../api/mine/index"
+import { getUserInfo } from "../api/mine/index"
 
 const livePlayer = requirePlugin('live-player-plugin')
 
@@ -742,7 +730,7 @@ export const queryWxAuth = function (authKey = WX_AUTH_TYPE.userInfo) {
 						reject()
 					},
 					complete(res) {
-						console.error('wxGetSetting', res)
+						console.log('wxGetSetting', res)
 					}
 				})
 			}
