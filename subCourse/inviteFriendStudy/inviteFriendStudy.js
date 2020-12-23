@@ -22,7 +22,14 @@ Page({
     userId: '',
     didShowAuth: false,
     hasRecieve: false,
-    canShow: false
+    canShow: false,
+    width: "",
+    height: ""
+  },
+
+  // 保存到相册
+  saveToAblum() {
+    console.log("保存到相册")
   },
 
   // 立即领取
@@ -97,8 +104,12 @@ Page({
         isInviter: false
       })
     }
+    let width = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth
+    let height = ((width - 60) / 7 * 11).toFixed(2)
     this.setData({
       inviteId,
+      width: width,
+      height: height,
       userId: getLocalStorage(GLOBAL_KEY.userId) || ''
     })
     this.getInviteData(inviteId)
