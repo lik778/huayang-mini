@@ -1,0 +1,22 @@
+/* 送花动画 */
+.ff-animate {
+    z-index: 300;
+    position: fixed;
+    top: 25%;
+    right: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+}
+.ff-animate .ff-pic {
+    position: absolute;
+    width: 300rpx;
+}
+
+.ff-animate .hidden {
+    opacity: 0;
+}
+
+.ff-animate .show {
+    opacity: 1;
+}

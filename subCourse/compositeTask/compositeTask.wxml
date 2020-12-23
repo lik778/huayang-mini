@@ -1,0 +1,8 @@
+<view class="composite-task">
+    <taskLayout didShowTip="{{index === 1 && didShowTip}}" bind:noAuth="onNoAuth" bind:thumbChange="onThumbChange" bind:postTaskId="receiveTaskId" wx:for="{{compositeTaskList}}" wx:key="index" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
+    <view class="launch-layout">
+        <image mode="aspectFill" bindtap="goToLaunchTask" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607663397fpoTbz.jpg" class="launch-btn"></image>
+    </view>
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
+    <flower id="flower" />
+</view>

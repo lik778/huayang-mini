@@ -4,7 +4,7 @@
     "ignore": []
   },
   "setting": {
-    "urlCheck": false,
+    "urlCheck": true,
     "es6": true,
     "enhance": true,
     "postcss": true,
@@ -29,14 +29,14 @@
       "outputPath": ""
     },
     "enableEngineNative": false,
+    "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": true,
     "userConfirmedUseCompilerModuleSwitch": false,
     "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
-    "minifyWXSS": true,
-    "bundle": false
+    "minifyWXSS": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.12.0",
@@ -303,9 +303,33 @@
           "scene": null
         },
         {
-          "name": "/subCourse/joinCamp/joinCamp",
-          "pathName": "subCourse/joinCamp/joinCamp",
-          "query": "id=29&invite_user_id=228&promote_uid=228",
+          "name": "发布页",
+          "pathName": "subCourse/launchTask/launchTask",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "综合作业秀",
+          "pathName": "subCourse/compositeTask/compositeTask",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "个人作业秀",
+          "pathName": "subCourse/personTask/personTask",
+          "query": "visit_user_id=207",
+          "scene": null
+        },
+        {
+          "name": "主题作业秀",
+          "pathName": "subCourse/themeTask/themeTask",
+          "query": "kecheng_type=0&kecheng_id=38",
+          "scene": null
+        },
+        {
+          "name": "作业落地页",
+          "pathName": "subCourse/indexTask/indexTask",
+          "query": "taskId=211&nickname=Derisfe&userId=207",
           "scene": null
         },
         {

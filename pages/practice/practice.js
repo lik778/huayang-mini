@@ -5,10 +5,7 @@ import {
 	queryBootCampContentInToday,
 	updateBootcampStudyTime
 } from "../../api/course/index"
-import {
-	CourseLevels,
-	GLOBAL_KEY
-} from "../../lib/config"
+import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
 import {
 	$notNull,
@@ -19,6 +16,7 @@ import {
 	setLocalStorage
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
+import { getTaskEntranceStatus } from "../../api/task/index"
 
 const CourseTypeImage = {
 	kecheng: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604371266ssIXdS.jpg",
@@ -41,7 +39,8 @@ Page({
 		didNeedScrollTop: false, // 是否需要将页面滑动到顶部
 		didShowAuth: false,
 		didShowNoDataLayout: false,
-		didSignIn: false
+		didSignIn: false,
+		visibleTaskEntrance: true
 	},
 
 	/**
@@ -147,11 +146,16 @@ Page({
 			path: `/pages/discovery/discovery?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
 		}
 	},
+	/**
+	 * 前往综合作业秀页面
+	 */
+	goToCompositeTaskPage() {
+		bxPoint("task_practice_tab_entrance", {}, false)
+		wx.navigateTo({url: "/subCourse/compositeTask/compositeTask"})
+	},
 	// 用户确认授权
 	authCompleteEvent() {
-		this.setData({
-			didShowAuth: false
-		})
+		this.setData({didShowAuth: false})
 		setLocalStorage("hy_dd_auth_done_in_practice", "yes")
 		this.initial()
 	},
@@ -317,6 +321,11 @@ Page({
 		})
 	},
 	async initial() {
+		// 检查是否展示作业秀入口
+		getTaskEntranceStatus().then(({data}) => {
+			this.setData({visibleTaskEntrance: data == 1})
+		})
+
 		if (hasUserInfo() && hasAccountInfo()) {
 			this.setData({
 				didShowNoDataLayout: false,

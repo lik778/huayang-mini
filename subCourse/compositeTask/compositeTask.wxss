@@ -1,0 +1,24 @@
+.composite-task {
+    padding-bottom: 136rpx;
+    background: #F9F9F9;
+}
+
+.launch-layout {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 136rpx;
+    font-size: 0;
+    background: white;
+}
+
+.launch-btn {
+    height: inherit;
+    width: inherit;
+}
+
+.launch-btn:active {
+    opacity: 0.9;
+}

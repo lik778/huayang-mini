@@ -1,0 +1,325 @@
+@import "../../assets/css/common.wxss";
+.launch-task {
+    padding-bottom: 136rpx;
+}
+
+/*输入框*/
+.text {
+    margin-top: 60rpx;
+    margin-bottom: 50rpx;
+}
+
+.textarea {
+    margin: 0 auto;
+    width: 630rpx;
+    height: 192rpx;
+    border-radius: 12rpx;
+    font: 32rpx/32rpx PingFangSC;
+}
+
+.textarea-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.text-count {
+    width: 630rpx;
+    margin: 20rpx auto 0;
+    text-align: right;
+    font: 32rpx/32rpx PingFangSC;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+/*上传素材*/
+.upload-material {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 60rpx;
+}
+
+.material-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 0;
+}
+
+.material-box:active {
+    opacity: 0.9;
+}
+
+.material-box > image {
+    width: 184rpx;
+    height: 184rpx;
+}
+
+/*图片回显*/
+.images-review-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 96rpx;
+}
+
+.image-review {
+    position: relative;
+    margin-bottom: 40rpx;
+    font-size: 0;
+}
+
+.simple-image {
+    width: 260rpx;
+    height: 260rpx;
+}
+
+.remove-icon {
+    position: absolute;
+    top: -20rpx;
+    right: -20rpx;
+    width: 48rpx;
+    height: 48rpx;
+}
+
+.remove-icon:active {
+    opacity: 0.9;
+}
+
+.add-image {
+    width: 260rpx;
+    height: 260rpx;
+    margin-bottom: 40rpx;
+    font-size: 0;
+}
+
+.add-image:active {
+    opacity: 0.9;
+}
+
+/*视频回显*/
+.video-review-box {
+    position: relative;
+    font-size: 0;
+    width: 360rpx;
+    height: 480rpx;
+    margin: 0 auto;
+}
+
+.preview-video {
+    width: 100%;
+    height: 100%;
+}
+
+/*录音弹窗*/
+.audio-review-modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+.audio-review-box {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 600rpx;
+    border-radius: 20rpx 20rpx 0 0;
+    background: white;
+}
+
+.audio-review-modal-close-icon {
+    position: absolute;
+    top: 8rpx;
+    right: 4rpx;
+    width: 40rpx;
+    height: 40rpx;
+    margin: 40rpx;
+}
+
+.audio-review-modal-close-icon:active {
+    opacity: 0.9;
+}
+
+.audio-review-title {
+    height: 136rpx;
+    text-align: center;
+    font: 500 40rpx/146rpx PingFangSC;
+}
+
+.audio-review-space {
+    height: 12rpx;
+    background: #F9F9F9;
+}
+
+.audio-review-content {
+    position: relative;
+}
+
+.audio-review-sound-wave {
+    position: absolute;
+    top: 48rpx;
+    right: 0;
+    left: 0;
+    text-align: center;
+}
+
+.audio-review-sound-wave > image {
+    width: 190rpx;
+    height: 32rpx;
+}
+
+.audio-review-operate {
+    position: absolute;
+    top: 138rpx;
+    right: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.audio-operate-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 0;
+}
+
+.audio-operate-box.middle-icon {
+    margin: 0 110rpx;
+}
+
+.audio-operate-small-image {
+    width: 96rpx;
+    height: 96rpx;
+}
+
+.audio-operate-small-image:active {
+    opacity: 0.9;
+}
+
+.audio-operate-image {
+    width: 176rpx;
+    height: 176rpx;
+}
+
+.audio-operate-image:active {
+    opacity: 0.9;
+}
+
+.audio-operate-text {
+    margin-top: 16rpx;
+    font: 32rpx/44rpx PingFangSC;
+    color: #333;
+}
+
+/*录音回显*/
+.audio-callback-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    width: 466rpx;
+    height: 100rpx;
+    box-sizing: border-box;
+    padding: 0 36rpx 0 10rpx;
+    margin: 0 auto;
+    border-radius: 999rpx;
+    background: #F5F3F3;
+}
+
+.audio-callback-icon {
+    width: 80rpx;
+    height: 80rpx;
+}
+
+.audio-callback-icon:active {
+    opacity: 0.9;
+}
+
+.audio-callback-sound-wave {
+    width: 190rpx;
+    height: 32rpx;
+}
+
+.audio-callback-times {
+    font: 40rpx/40rpx PingFangSC;
+}
+
+/*分隔栏*/
+.separate {
+    height: 12rpx;
+    margin: 50rpx 0;
+    background: #F9F9F9;
+}
+
+/*课程选择*/
+.course-container {
+
+}
+
+.course-layout {
+    padding: 0 58rpx;
+    font: 500 40rpx/56rpx PingFangSC;
+}
+
+.course-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 58rpx;
+    margin-bottom: 2rpx;
+    font: 500 36rpx/116rpx PingFangSC;
+}
+
+.course-item:active {
+    opacity: 0.9;
+}
+
+.course-item > text {
+    width: 468rpx;
+}
+
+.course-item-option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.select-text {
+    margin-right: 14rpx;
+    font: 32rpx/44rpx PingFangSC;
+    color: rgba(0, 0, 0, 0.6)
+}
+
+.select-icon {
+    width: 44rpx;
+    height: 44rpx;
+}
+
+/*发布按钮*/
+.footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100vw;
+    height: 136rpx;
+    font-size: 0;
+    background: white;
+}
+
+.launch-btn {
+    height: inherit;
+    width: inherit;
+}
+
+.launch-btn:active {
+    opacity: 0.9;
+}
