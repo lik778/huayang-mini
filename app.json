@@ -5,7 +5,6 @@
       "provider": "wx2b03c6e691cd7370"
     }
   },
-
   "usingComponents": {
     "van-dialog": "./miniprogram_npm/@vant/weapp/dialog/index"
   },
@@ -35,7 +34,8 @@
     "audio",
     "location"
   ],
-  "subpackages": [{
+  "subpackages": [
+    {
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -95,7 +95,8 @@
         "personTask/personTask",
         "themeTask/themeTask",
         "compositeTask/compositeTask",
-        "indexTask/indexTask"
+        "indexTask/indexTask",
+        "inviteFriendStudy/inviteFriendStudy"
       ]
     },
     {
@@ -116,7 +117,8 @@
   },
   "tabBar": {
     "custom": true,
-    "list": [{
+    "list": [
+      {
         "pagePath": "pages/discovery/discovery"
       },
       {
