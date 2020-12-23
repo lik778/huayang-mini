@@ -219,6 +219,7 @@ Page({
    */
   onLoad: function (options) {
     let inviteId = Number(options.inviteId)
+    console.log(options)
     if (options.isInviter) {
       this.setData({
         isInviter: false
