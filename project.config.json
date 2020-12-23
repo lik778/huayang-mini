@@ -318,7 +318,7 @@
         {
           "name": "个人作业秀",
           "pathName": "subCourse/personTask/personTask",
-          "query": "visit_user_id=207",
+          "query": "visit_user_id=251",
           "scene": null
         },
         {
@@ -330,7 +330,7 @@
         {
           "name": "作业落地页",
           "pathName": "subCourse/indexTask/indexTask",
-          "query": "taskId=211&nickname=Derisfe&userId=207",
+          "query": "taskId=211&nickname=Derisfe&userId=251",
           "scene": null
         }
       ]

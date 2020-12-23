@@ -467,6 +467,8 @@ Page({
 				let {tempFilePath, duration, size, height, width} = res
 
 				let videoSize = size / 1024 / 1024 | 0
+
+				console.log("压缩后的视频大小(MB) = ", videoSize);
 				// 视频不能超过200MB
 				if (videoSize > 200) {
 					return toast("视频大小不能超过200MB")

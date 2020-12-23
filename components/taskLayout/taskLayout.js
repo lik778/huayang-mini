@@ -395,7 +395,7 @@ Component({
 				desc,
 				video_height: video_height >= video_width ? 400 : 300,
 				video_width: video_width >= video_height ? 400 : 300,
-				video_cover: video_cover || (video_width >= video_height ? "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608000399bcXYDv.jpg" : "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608000356lGHZEl.jpg"),
+				// video_cover: video_cover || (video_width >= video_height ? "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608000399bcXYDv.jpg" : "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608000356lGHZEl.jpg"),
 				created_at: this.calcDate(created_at),
 				audio_length,
 				avatar_url,

@@ -1,4 +1,5 @@
 .composite-task {
+    height: 100vh;
     padding-bottom: 136rpx;
     background: #F9F9F9;
 }

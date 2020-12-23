@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "作业秀",
   "usingComponents": {
     "taskLayout": "../../components/taskLayout/taskLayout",
     "authModule": "../../components/auth/auth",
