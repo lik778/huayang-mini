@@ -7,7 +7,7 @@
 
     <view class="task-layout">作业动态</view>
 
-    <taskLayout didShowTip="{{index === 1 && didShowTip}}" bind:thumbChange="onThumbChange" isTheme="{{true}}" bind:noAuth="onNoAuth" bind:postTaskId="receiveTaskId" wx:for="{{themeTaskList}}" wx:key="index" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
+    <taskLayout didShowTip="{{index === 1 && didShowTip}}" bind:thumbChange="onThumbChange" isTheme="{{true}}" bind:noAuth="onNoAuth" bind:postTaskId="receiveTaskId" wx:for="{{themeTaskList}}" wx:key="index" scrollTopNumber="{{scrollTopNumber}}" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
 
     <block wx:if="{{kecheng_type}}">
         <view class="bootcamp-footer" wx:if="{{kecheng_type === '0'}}">
