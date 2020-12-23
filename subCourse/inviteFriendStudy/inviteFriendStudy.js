@@ -65,8 +65,11 @@ Page({
         }).then(res1 => {
           if (res1.code === 0) {
             if (res1.data) {
-              wx.navigateTo({
-                url: `/subCourse/videoCourse/videoCourse?videoId=${res.data.gift.kecheng_series_id}`,
+              // wx.navigateTo({
+              //   url: `/subCourse/videoCourse/videoCourse?videoId=${res.data.gift.kecheng_series_id}`,
+              // })
+              this.setData({
+                canShow: true
               })
             } else {
               this.setData({

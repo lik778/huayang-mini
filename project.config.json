@@ -337,6 +337,12 @@
           "pathName": "subCourse/inviteFriendStudy/inviteFriendStudy",
           "query": "inviteId=3&isInviter=false",
           "scene": null
+        },
+        {
+          "name": "请好友看课",
+          "pathName": "subCourse/inviteFriendStudy/inviteFriendStudy",
+          "query": "inviteId=3",
+          "scene": null
         }
       ]
     }
