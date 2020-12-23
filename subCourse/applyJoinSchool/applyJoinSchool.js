@@ -97,8 +97,10 @@ Page({
 
   // 状态选择框实时更改
   changeStatus(e) {
+    console.log(e)
+    let index = Number(e.detail.value) + 1
     this.setData({
-      ['formData.status']: Number(e.detail.value) + 1
+      ['formData.status']: index === 1 ? 1 : index === 2 ? 3 : 2
     })
   },
   // 兴趣选择框实时更改

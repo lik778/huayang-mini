@@ -1,105 +1,115 @@
 <!--subCourse/inviteFriendStudy/inviteFriendStudy.wxml-->
 <view class="container" wx:if='{{canShow}}'>
-  <!-- 邀请者 -->
-  <view class="invite" wx:if="{{false}}">
-    <view class="bg-image">
-      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608629140Qrjdly.jpg"></image>
+  <!-- canvas -->
+  <view class="canvas" style="height:0;overflow: hidden;">
+    <canvas canvas-id="canvas" style="width: 945px; height: 1494px;"></canvas>
+  </view>
+  <view>
+    <!-- 邀请者 -->
+    <view class="invite" wx:if="{{isInviter}}">
+      <view class="bg-image">
+        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608629140Qrjdly.jpg"></image>
+      </view>
+      <view class="poster" style="width:{{width-60}}px;height:{{height}}px">
+        <view class="poster-box">
+          <view class="poster-bg">
+            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608715550jaBfZC.jpg">
+            </image>
+          </view>
+          <view class="text-one">{{nickName}}</view>
+          <view class="title">{{kechengShareTitle}}</view>
+          <view class="teacher-info">
+            <view class="teacher-left">
+              <image
+                src="{{inviteInfo.teacher.avatar || 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608716478HmwDBq.jpg'}}">
+              </image>
+            </view>
+            <view class="teacher-right">
+              <view class="teacher-right-top">
+                {{inviteInfo.teacher.name||"花样老师"}}·{{inviteInfo.kecheng_series.name}}
+              </view>
+              <view class="teacher-right-bottom">
+                {{inviteInfo.kecheng_series.visit_count}}人学过
+              </view>
+            </view>
+          </view>
+          <view class="qrcode">
+            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608631173hwfdmM.jpg"></image>
+          </view>
+          <view class="limit">
+            限量<text>{{inviteInfo.gift.limit_count}}</text>个名额，速速领取
+          </view>
+        </view>
+      </view>
+      <view class="button-module">
+        <view class="button-left">
+          <button open-type="share"></button>
+          <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608632303PfpBaD.jpg"></image>
+        </view>
+        <view class="button-right" bindtap="saveToAblum">
+          <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608632282OvzjDB.jpg"></image>
+        </view>
+      </view>
     </view>
-    <view class="poster" style="width:{{width-60}}px;height:{{height}}px">
-      <view class="poster-box">
-        <view class="poster-bg">
-          <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608629011oaZlvI.jpg">
+    <!-- 被邀请者 -->
+    <view class="invitee" wx:else>
+      <view class="invitee-bg">
+        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608687603zacWBm.jpg"></image>
+      </view>
+      <view class="invitee-main">
+        <view class="invitee-poster-bg">
+          <image style="height:{{height1}}px"
+            src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608689991bgmPFY.jpg">
           </image>
         </view>
-        <view class="text-one">无敌小草</view>
-        <view class="title">动作分解教学</view>
-        <view class="teacher-info">
-          <view class="teacher-left">
+        <view class="invitee-name">
+          无敌小草
+        </view>
+        <view class="invitee-title">动作分解教学</view>
+        <view class="invitee-info">
+          <view class="invitee-info-left">
             <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608631191XszqAK.jpg"></image>
           </view>
-          <view class="teacher-right">
-            <view class="teacher-right-top">
+          <view class="invitee-info-right">
+            <view class="invitee-info-right-top">
               李老师·欢乐健身舞
             </view>
-            <view class="teacher-right-bottom">
+            <view class="invitee-info-right-bottom">
               {{inviteInfo.kecheng_series.visit_count}}人学过
             </view>
           </view>
         </view>
-        <view class="qrcode">
-          <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608631173hwfdmM.jpg"></image>
+        <view class="invitee-limit">
+          限量<text>20</text>个名额，速速领取
         </view>
-        <view class="limit">
-          限量<text>{{inviteInfo.gift.limit_count}}</text>个名额，速速领取
-        </view>
+        <image bindtap="get" wx:if='{{inviteInfo.user_list.length < inviteInfo.gift.limit_count}}' class="invitee-get"
+          src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608688837yLGdym.jpg"></image>
+        <image wx:else class="invitee-get-all"
+          src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608689511OudFVu.jpg">
+        </image>
       </view>
-    </view>
-    <view class="button-module">
-      <view class="button-left">
-        <button open-type="share"></button>
-        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608632303PfpBaD.jpg"></image>
-      </view>
-      <view class="button-right" bindtap="saveToAblum">
-        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608632282OvzjDB.jpg"></image>
-      </view>
-    </view>
-  </view>
-  <!-- 被邀请者 -->
-  <view class="invitee" wx:else>
-    <view class="invitee-bg">
-      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608687603zacWBm.jpg"></image>
-    </view>
-    <view class="invitee-main">
-      <view class="invitee-poster-bg">
-        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608687438MkLYuZ.jpg"></image>
-      </view>
-      <view class="invitee-name">
-        无敌小草
-      </view>
-      <view class="invitee-title">动作分解教学</view>
-      <view class="invitee-info">
-        <view class="invitee-info-left">
-          <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608631191XszqAK.jpg"></image>
-        </view>
-        <view class="invitee-info-right">
-          <view class="invitee-info-right-top">
-            李老师·欢乐健身舞
+      <view class="invitee-get-list-module">
+        <view class="invitee-get-list-title">
+          <view class="invitee-get-list-title-line"></view>
+          <view class="invitee-get-list-title-num">看谁领取了{{inviteInfo.user_list.length}}/{{inviteInfo.gift.limit_count}}
           </view>
-          <view class="invitee-info-right-bottom">
-            {{inviteInfo.kecheng_series.visit_count}}人学过
+          <view class="invitee-get-list-title-line"></view>
+        </view>
+        <view class="invitee-get-list">
+          <view class="invitee-get-item" wx:for="{{inviteInfo.user_list}}" wx:key="{{index}}">
+            <view class="invitee-get-item-left">
+              <image src="{{item.avatar}}"></image>
+              <text>{{item.user_name}}</text>
+            </view>
+            <view class="invitee-get-item-right">
+              {{item.created_at}}
+            </view>
           </view>
         </view>
       </view>
-      <view class="invitee-limit"></view>
     </view>
-    <!-- https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608687437DSamqj.jpg -->
-    <!-- https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608687438MkLYuZ.jpg -->
-  </view>
-  <view wx:if='{{false}}'>
-    <!-- 邀请者 -->
-    <view class="inviter" wx:if='{{isInviter}}'>邀请者</view>
-    <!-- 被邀请者 -->
-    <view class="invitee" wx:else>被邀请者</view>
-    <!-- 邀请领取记录 -->
-    <view class="invite-info">
-      {{inviteInfo.user_list.length}}/{{inviteInfo.gift.limit_count}}
-    </view>
-    <view class="get-list">
-      <view class="get-lits-item" wx:for="{{inviteInfo.user_list}}" wx:key="{{index}}"
-        style="display:flex;align-items:center;justify-content: space-between;">
-        <image src="{{item.avatar}}" style="width:50px;height:50px;border-radius:50%"></image>
-        <text>{{item.user_name}}</text>
-        <text>{{item.created_at}}</text>
-      </view>
-      <!-- 领取按钮 -->
-      <button wx:if='{{inviteInfo.user_list.length===inviteInfo.gift.limit_count}}'>已领完</button>
-      <button bindtap="get" wx:else>立即领取</button>
-    </view>
-
   </view>
   <!-- 授权弹窗 -->
   <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
   </authModule>
-  <!-- https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608631173hwfdmM.jpg -->
-  <!-- https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608631191XszqAK.jpg -->
 </view>

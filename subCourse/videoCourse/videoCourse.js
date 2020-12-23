@@ -69,7 +69,8 @@ Page({
     playDurationsListAll: [], //播放记录所有打点
     videoIndex: 0,
     inPlay: false, //是否播放中
-    isIosPlatform: false
+    isIosPlatform: false,
+    showSuccess: false
   },
   // 邀请好友看课
   inviteFriend(e) {
@@ -145,9 +146,11 @@ Page({
       series_id: this.data.courseData.id,
       kecheng_title: this.data.videoListAll[playIndex].title
     }, false)
+
     setTimeout(() => {
+      console.log(this.data.videoSrc)
       this.videoContext.play()
-    }, 200)
+    }, 1000)
   },
   // 播放结束
   endVideo() {
@@ -641,6 +644,7 @@ Page({
       source,
       videoId,
       promote_uid = '',
+      showSuccess = false,
       series_invite_id = ''
     } = options
     if (options.playIndex) {
@@ -649,6 +653,9 @@ Page({
         playIndex: index
       })
     }
+    this.setData({
+      showSuccess
+    })
     if (promote_uid !== '') {
       this.setData({
         promoteUid: promote_uid
