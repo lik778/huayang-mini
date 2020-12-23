@@ -20,6 +20,7 @@ Page({
     isOwnner: false,
     didShowAuth: false,
     cachedAction: null,
+    scrollTopNumber: 0 // 页面滑动位置
   },
 
   /**
@@ -95,8 +96,10 @@ Page({
       this.getPersonTask()
     }
   },
-
-  /**
+  onPageScroll(e) {
+    this.setData({scrollTopNumber: e.scrollTop})
+  },
+    /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function (e) {
@@ -186,6 +189,8 @@ Page({
       let oldData = this.data.personTaskList.slice()
       let personTaskList = refresh ? [...data] : [...oldData, ...data]
       this.setData({personTaskList, hasMore: data.length === this.data.limit, offset: personTaskList.length})
+
+      if (refresh) wx.stopPullDownRefresh()
     })
   },
   /**

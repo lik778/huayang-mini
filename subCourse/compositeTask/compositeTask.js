@@ -18,7 +18,8 @@ Page({
 		didShowAuth: false,
 		didShowTip: false,
 		firstTaskCardHeight: 0,
-		cachedAction: null
+		cachedAction: null,
+		scrollTopNumber: 0 // 页面滑动位置
 	},
 
 	/**
@@ -88,6 +89,7 @@ Page({
 	},
 
 	onPageScroll(e) {
+		this.setData({scrollTopNumber: e.scrollTop})
 		if (this.data.compositeTaskList.length === 0 && this.data.firstTaskCardHeight === 0) return
 		if (getApp().globalData.didShowedTaskTip) return
 		if (e.scrollTop >= this.data.firstTaskCardHeight) {
@@ -177,6 +179,8 @@ Page({
 			let oldData = this.data.compositeTaskList.slice()
 			let compositeTaskList = refresh ? [...data] : [...oldData, ...data]
 			this.setData({compositeTaskList, hasMore: data.length === this.data.limit, offset: compositeTaskList.length})
+
+			if (refresh) wx.stopPullDownRefresh()
 
 			let t = setTimeout(() => {
 				this.initPageScroll()
