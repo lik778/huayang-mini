@@ -1,4 +1,6 @@
 /* subCourse/inviteFriendStudy/inviteFriendStudy.wxss */
+@import "../../assets/css/common.wxss";
+
 .container {
   width: 100vw;
   min-height: 100vh;
@@ -67,6 +69,9 @@
   font-weight: 600;
   color: #000000;
   line-height: 36rpx;
+  white-space: nowrap;
+  width: 500rpx;
+  text-align: center;
 }
 
 .teacher-info {
@@ -114,6 +119,7 @@
   left: 50%;
   transform: translateX(-50%);
   top: 570rpx;
+
 }
 
 .qrcode image {
@@ -121,6 +127,7 @@
   height: 256rpx;
   border-radius: 50%;
   vertical-align: bottom;
+  background: #fff;
 }
 
 .limit {

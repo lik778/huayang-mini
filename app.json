@@ -96,8 +96,7 @@
         "personTask/personTask",
         "themeTask/themeTask",
         "compositeTask/compositeTask",
-        "indexTask/indexTask",
-        "inviteFriendStudy/inviteFriendStudy"
+        "indexTask/indexTask"
       ]
     },
     {

@@ -56,12 +56,12 @@ Page({
     let fontFamily = 'PingFangSC-Regular, PingFang SC;'
     let title = this.data.kechengShareTitle
     let nickName = this.data.nickName
-    let teacherInfo = `${this.data.inviteInfo.teacher.name||'花样老师'}·${this.data.inviteInfo.kecheng_series.name}`
+    let teacherInfo = `${this.data.inviteInfo.teacher.name||'花样老师'}·${this.data.inviteInfo.kecheng_series.teacher_desc}`
     let studyNum = `${this.data.inviteInfo.kecheng_series.visit_count}人学过`
     ctx.font = 'bold 18px PingFangSC-Medium, PingFang SC'
     let kechengtitleX = parseInt((315 - measureTextWidth(ctx, title)) / 2)
     let limitNum = `${this.data.inviteInfo.gift.limit_count}`
-    let qrcode = 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608631173hwfdmM.jpg'
+    let qrcode = this.data.inviteInfo.gift.qrcode
     ctx.scale(3, 3)
     drawImage(ctx, posterBg, 0, 0, 315, 498).then(() => {
       ctx.font = 'bold 18px PingFangSC-Medium, PingFang SC'

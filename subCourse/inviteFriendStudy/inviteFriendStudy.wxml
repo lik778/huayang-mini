@@ -17,7 +17,7 @@
             </image>
           </view>
           <view class="text-one">{{nickName}}</view>
-          <view class="title">{{kechengShareTitle}}</view>
+          <view class="title limit-one-line">{{kechengShareTitle}}</view>
           <view class="teacher-info">
             <view class="teacher-left">
               <image
@@ -26,7 +26,7 @@
             </view>
             <view class="teacher-right">
               <view class="teacher-right-top">
-                {{inviteInfo.teacher.name||"花样老师"}}·{{inviteInfo.kecheng_series.name}}
+                {{inviteInfo.teacher.name||"花样老师"}}·{{inviteInfo.kecheng_series.teacher_desc}}
               </view>
               <view class="teacher-right-bottom">
                 {{inviteInfo.kecheng_series.visit_count}}人学过
@@ -34,7 +34,7 @@
             </view>
           </view>
           <view class="qrcode">
-            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608631173hwfdmM.jpg"></image>
+            <image src="{{inviteInfo.gift.qrcode}}"></image>
           </view>
           <view class="limit">
             限量<text>{{inviteInfo.gift.limit_count}}</text>个名额，速速领取
