@@ -1,6 +1,6 @@
 import dayjs from "dayjs"
 import { deleteTaskRecord, thumbTask, unThumbTask } from "../../api/task/index"
-import { getLocalStorage, hasAccountInfo, hasUserInfo, toast } from "../../utils/util"
+import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, toast } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 // 媒体资源类型
@@ -29,7 +29,10 @@ Component({
 	properties: {
 		taskInfo: {
 			type: Object,
-			value: null
+			value: null,
+			observer(newVal) {
+				this.setData({didReadyShowTask: $notNull(newVal)})
+			}
 		},
 		isOwnner: {
 			type: Boolean,
@@ -54,6 +57,10 @@ Component({
 					}, 3000)
 				}
 			}
+		},
+		scrollTopNumber: {
+			type: Number,
+			value: 0
 		}
 	},
 
@@ -64,17 +71,37 @@ Component({
 		MEDIA_TYPE,
 		AUDIO_CALLBACK_STATUS,
 		AUDIO_CALLBACK_IMAGE,
+		didReadyShowTask: false,
 		audioCallbackStatus: AUDIO_CALLBACK_STATUS.pause,
 		info: {},
 		bgAudioInstance: null,
 		videoInstance: null,
 		didBgAudioRunning: false,
-		innerTip: true
+		innerTip: true,
+		cachedScrollTopNumber: 0
 	},
 	/**
 	 * 组件的方法列表
 	 */
 	methods: {
+		/**
+		 * 监听video标签进入或退出全屏
+		 * @param e
+		 */
+		onFullScreenChange(e) {
+			let {system} = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
+			if (system.includes("Android")) {
+				if (e.detail.fullScreen) {
+					// 进入全屏
+					this.setData({cachedScrollTopNumber: this.data.scrollTopNumber})
+				} else {
+					// 退出全屏
+					wx.nextTick(() => {
+						wx.pageScrollTo({scrollTop: this.data.cachedScrollTopNumber, duration: 0})
+					})
+				}
+			}
+		},
 		/**
 		 * 记录作业卡片内部分享按钮点击事件
 		 */
@@ -242,6 +269,7 @@ Component({
 			let sources = this.data.info.media_detail.map(img => {
 				return {url: img}
 			})
+			this.postTaskId()
 			wx.previewMedia({
 				sources,
 				current: e.currentTarget.dataset.index
@@ -395,7 +423,7 @@ Component({
 				desc,
 				video_height: video_height >= video_width ? 400 : 300,
 				video_width: video_width >= video_height ? 400 : 300,
-				video_cover: video_cover || (video_width >= video_height ? "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608000399bcXYDv.jpg" : "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608000356lGHZEl.jpg"),
+				// video_cover: video_cover || (video_width >= video_height ? "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608000399bcXYDv.jpg" : "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608000356lGHZEl.jpg"),
 				created_at: this.calcDate(created_at),
 				audio_length,
 				avatar_url,
@@ -404,7 +432,7 @@ Component({
 				work_comment_list
 			}
 
-			this.setData({info})
+			this.setData({info, didReadyShowTask: $notNull(info)})
 		}
 	},
 })

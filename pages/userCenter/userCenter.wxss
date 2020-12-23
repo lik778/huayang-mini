@@ -192,6 +192,7 @@
   height: 52rpx;
   vertical-align: bottom;
   margin-left: -4rpx;
+  margin-right: 20rpx;
 }
 
 @keyframes flashing {

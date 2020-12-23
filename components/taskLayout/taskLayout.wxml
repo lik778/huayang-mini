@@ -1,4 +1,4 @@
-<view class="task-layout" wx:if="{{taskInfo != null}}">
+<view class="task-layout" wx:if="{{didReadyShowTask}}">
     <image mode="aspectFit" bindtap="goToPersonTaskPage" class="user-avatar" src="{{info.avatar_url}}"></image>
     <view class="task-content">
         <view class="username limit-one-line">{{info.nick_name}}</view>
@@ -9,7 +9,7 @@
                 <image class="{{info.media_detail.length === 1 ? 'simple-image' : 'review-image'}}" wx:for="{{info.media_detail}}" mode="aspectFill" src="{{item}}" bindtap="reviewImages" data-index="{{index}}"></image>
             </view>
             <view class="media-content-video" wx:if="{{info.media_type === MEDIA_TYPE.video}}" style="height: {{info.video_height + 'rpx'}}; width: {{info.video_width + 'rpx'}}">
-                <video class="review-video" id="task-video-{{info.taskId}}" poster="{{info.video_cover}}" controls play-btn-position="center" enable-play-gesture="{{false}}" vslide-gesture-in-fullscreen="{{false}}" src="{{info.media_detail}}" bindplay="reviewVideo"></video>
+                <video class="review-video" bindfullscreenchange="onFullScreenChange" id="task-video-{{info.taskId}}" controls play-btn-position="center" enable-play-gesture="{{false}}" vslide-gesture-in-fullscreen="{{false}}" src="{{info.media_detail}}" bindplay="reviewVideo"></video>
             </view>
             <view class="media-content-audio" wx:if="{{info.media_type === MEDIA_TYPE.audio}}">
                 <view class="audio-callback-box" bindtap="reviewAudio">
