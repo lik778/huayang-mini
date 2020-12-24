@@ -224,3 +224,17 @@ export const drawCircleHeadIcon = (ctx, url, x, y, r) => {
     })
   })
 }
+
+// 绘制圆形纯色
+export const drawCircleFill = (ctx, color, x, y, r) => {
+  return new Promise(resolve => {
+    ctx.save()
+    ctx.beginPath(); // 开始绘制
+    ctx.arc(x, y, r, 0, Math.PI * 2, false);
+    ctx.clip();
+    ctx.setFillStyle(color)
+    ctx.fill()
+    ctx.restore()
+    resolve()
+  })
+}

@@ -2,7 +2,6 @@
 import {
   getInviteFriendInfo,
   receiveCreate,
-
   checkReceiveCreate
 } from "../../api/course/index"
 // canvas
@@ -12,7 +11,8 @@ import {
   drawRact,
   drawCircleHeadIcon,
   drawLine,
-  measureTextWidth
+  measureTextWidth,
+  drawCircleFill
 } from "../../utils/canvas"
 import {
   GLOBAL_KEY
@@ -71,69 +71,71 @@ Page({
         drawCircleHeadIcon(ctx, teacherIcon, 68, 241, 20).then(() => {
           drawFont(ctx, teacherInfo, '#000000', '400', fontFamily, 14, 98, 222)
           drawFont(ctx, studyNum, 'rgba(0,0,0,0.4)', '400', fontFamily, 14, 98, 246)
-          drawCircleHeadIcon(ctx, qrcode, 158, 350, 64).then(() => {
-            ctx.font = 'normal 14px PingFangSC-Regular, PingFang SC'
-            let limitText1 = measureTextWidth(ctx, "限量")
-            ctx.font = 'normal 30px PingFangSC-Regular, PingFang SC'
-            let limitText2 = measureTextWidth(ctx, limitNum)
-            ctx.font = 'normal 14px PingFangSC-Regular, PingFang SC'
-            let limitText3 = measureTextWidth(ctx, '个名额，速速领取')
-            let limitX = (315 - limitText1 - limitText2 - limitText3) / 2
-            drawFont(ctx, '限量', '#fff', '400', fontFamily, 14, limitX, 450).then(() => {
-              drawFont(ctx, limitNum, '#fff', '400', fontFamily, 30, limitX + limitText1, 438).then(() => {
-                drawFont(ctx, '个名额，速速领取', '#fff', '400', fontFamily, 14, limitX + limitText1 + limitText2, 450)
-                ctx.draw(false, () => {
-                  wx.canvasToTempFilePath({
-                    canvasId: 'canvas',
-                    success: (res) => {
-                      let tempFilePath = res.tempFilePath;
-                      wx.hideLoading()
-                      wx.getSetting({
-                        success: (res) => {
-                          if (res.authSetting['scope.writePhotosAlbum']) {
-                            wx.authorize({
-                              scope: 'scope.writePhotosAlbum',
-                              success: () => {
-                                wx.saveImageToPhotosAlbum({
-                                  filePath: tempFilePath,
-                                  success: (res) => {
-                                    if (res.errMsg === "saveImageToPhotosAlbum:ok") {
-                                      wx.showToast({
-                                        title: '保存成功',
-                                        duration: 2000,
-                                        mask: true
-                                      })
+          drawCircleFill(ctx, "#fff", 158, 350, 64).then(() => {
+            drawCircleHeadIcon(ctx, qrcode, 158, 350, 64).then(() => {
+              ctx.font = 'normal 14px PingFangSC-Regular, PingFang SC'
+              let limitText1 = measureTextWidth(ctx, "限量")
+              ctx.font = 'normal 30px PingFangSC-Regular, PingFang SC'
+              let limitText2 = measureTextWidth(ctx, limitNum)
+              ctx.font = 'normal 14px PingFangSC-Regular, PingFang SC'
+              let limitText3 = measureTextWidth(ctx, '个名额，速速领取')
+              let limitX = (315 - limitText1 - limitText2 - limitText3) / 2
+              drawFont(ctx, '限量', '#fff', '400', fontFamily, 14, limitX, 450).then(() => {
+                drawFont(ctx, limitNum, '#fff', '400', fontFamily, 30, limitX + limitText1, 438).then(() => {
+                  drawFont(ctx, '个名额，速速领取', '#fff', '400', fontFamily, 14, limitX + limitText1 + limitText2, 450)
+                  ctx.draw(false, () => {
+                    wx.canvasToTempFilePath({
+                      canvasId: 'canvas',
+                      success: (res) => {
+                        let tempFilePath = res.tempFilePath;
+                        wx.hideLoading()
+                        wx.getSetting({
+                          success: (res) => {
+                            if (res.authSetting['scope.writePhotosAlbum']) {
+                              wx.authorize({
+                                scope: 'scope.writePhotosAlbum',
+                                success: () => {
+                                  wx.saveImageToPhotosAlbum({
+                                    filePath: tempFilePath,
+                                    success: (res) => {
+                                      if (res.errMsg === "saveImageToPhotosAlbum:ok") {
+                                        wx.showToast({
+                                          title: '保存成功',
+                                          duration: 2000,
+                                          mask: true
+                                        })
+                                      }
                                     }
-                                  }
-                                })
-                              }
-                            })
-                          } else {
-                            wx.authorize({
-                              scope: 'scope.writePhotosAlbum',
-                              success: () => {
-                                wx.saveImageToPhotosAlbum({
-                                  filePath: tempFilePath,
-                                  success: (res) => {
-                                    if (res.errMsg === "saveImageToPhotosAlbum:ok") {
-                                      wx.showToast({
-                                        title: '保存成功',
-                                        duration: 2000,
-                                        mask: true
-                                      })
+                                  })
+                                }
+                              })
+                            } else {
+                              wx.authorize({
+                                scope: 'scope.writePhotosAlbum',
+                                success: () => {
+                                  wx.saveImageToPhotosAlbum({
+                                    filePath: tempFilePath,
+                                    success: (res) => {
+                                      if (res.errMsg === "saveImageToPhotosAlbum:ok") {
+                                        wx.showToast({
+                                          title: '保存成功',
+                                          duration: 2000,
+                                          mask: true
+                                        })
+                                      }
                                     }
-                                  }
-                                })
-                              }
-                            })
+                                  })
+                                }
+                              })
+                            }
                           }
-                        }
-                      })
-                    },
-                    fail: function (res) {
-                      console.log(res);
-                    }
-                  }, this);
+                        })
+                      },
+                      fail: function (res) {
+                        console.log(res);
+                      }
+                    }, this);
+                  })
                 })
               })
             })
@@ -220,15 +222,14 @@ Page({
   onLoad: function (options) {
     let inviteId = ''
     if (options.scene) {
-      inviteId = Number(options.scene)
+      let sceneAry = decodeURIComponent(options.scene).split('/');
+      let [id = '', isInviter = true] = sceneAry;
+      inviteId = Number(id)
+      this.setData({
+        isInviter: isInviter === 'false' ? false : true
+      })
     } else {
       inviteId = Number(options.inviteId)
-    }
-    console.log(options)
-    if (options.isInviter) {
-      this.setData({
-        isInviter: false
-      })
     }
     let width = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth
     let height = ((width - 60) / 7 * 11).toFixed(2)
@@ -238,7 +239,6 @@ Page({
       width,
       height,
       height1,
-
       nickName: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).nick_name,
       userId: getLocalStorage(GLOBAL_KEY.userId) || ''
     })
