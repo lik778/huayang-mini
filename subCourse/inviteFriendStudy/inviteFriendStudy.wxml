@@ -6,7 +6,7 @@
   </view>
   <view>
     <!-- 邀请者 -->
-    <view class="invite" wx:if="{{!isInviter}}">
+    <view class="invite" wx:if="{{isInviter}}">
       <view class="bg-image">
         <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608629140Qrjdly.jpg"></image>
       </view>

@@ -166,6 +166,17 @@ Page({
 
   // 返回首页
   toIndex() {
+
+    // 领取课程详情页-查看更多课程按钮（2020-12-28上线）
+    bxPoint("receive_discovery_more", {
+      series_id: this.data.inviteInfo.kecheng_series.id,
+      kecheng_title: title,
+      qr_code: this.data.inviteInfo.gift.qrcode,
+      limit_num: this.data.inviteInfo.gift.limit_count,
+      share_uid: this.data.inviteInfo.gift.user_id,
+      remain_num: this.data.inviteInfo.gift.limit_count - this.data.inviteInfo.user_list.length,
+    })
+
     wx.switchTab({
       url: '/pages/discovery/discovery',
     })
@@ -179,6 +190,17 @@ Page({
       })
       return
     }
+
+    // 点击领取课程（2020-12-28上线）
+    bxPoint("receive_click", {
+      series_id: this.data.inviteInfo.kecheng_series.id,
+      kecheng_title: title,
+      qr_code: this.data.inviteInfo.gift.qrcode,
+      limit_num: this.data.inviteInfo.gift.limit_count,
+      share_uid: this.data.inviteInfo.gift.user_id,
+      receive_num: this.data.inviteInfo.user_list.length + 1,
+    })
+
     receiveCreate({
       gift_id: this.data.inviteId,
       user_id: this.data.userId
@@ -205,15 +227,15 @@ Page({
           kechengShareTitle: title
         })
         // 学课分享海报（2020-12-28上线）
-        bxPoint("receive_introduce", {
+        bxPoint("share_detail", {
           series_id: this.data.inviteInfo.kecheng_series.id,
           kecheng_title: title,
           qr_code: this.data.inviteInfo.gift.qrcode,
           limit_num: this.data.inviteInfo.gift.limit_count,
-          // share_uid:,
-          // receive_num:,
+          share_uid: this.data.inviteInfo.gift.user_id,
+          remain_num: this.data.inviteInfo.gift.limit_count - this.data.inviteInfo.user_list.length,
         })
-        // console.log(this.data.userId)
+
         if (this.data.userId === '' || this.data.isInviter) {
           this.setData({
             canShow: true
@@ -291,7 +313,9 @@ Page({
       height1,
       userId: getLocalStorage(GLOBAL_KEY.userId) || ''
     })
-    console.log(options.isInviter, inviteId)
+
+    console.log(options, options.isInviter, inviteId)
+
     this.getInviteData(inviteId)
   },
 
