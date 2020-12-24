@@ -218,7 +218,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let inviteId = Number(options.inviteId)
+    let inviteId = ''
+    if (options.scene) {
+      inviteId = Number(options.scene)
+    } else {
+      inviteId = Number(options.inviteId)
+    }
     console.log(options)
     if (options.isInviter) {
       this.setData({

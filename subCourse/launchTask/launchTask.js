@@ -700,7 +700,7 @@ Page({
 		let selectedCourseItem = e.currentTarget.dataset.item
 		let recentCourseList = this.data.recentCourseList.slice()
 		recentCourseList = recentCourseList.map(n => {
-			n.isSelected = selectedCourseItem.kecheng_id === n.kecheng_id
+			n.isSelected = selectedCourseItem.kecheng_id === n.kecheng_id && selectedCourseItem.kecheng_type === n.kecheng_type
 			return n
 		})
 		this.setData({recentCourseList, selectedCourseItem})
