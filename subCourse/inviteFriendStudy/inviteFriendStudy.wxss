@@ -1,6 +1,11 @@
 /* subCourse/inviteFriendStudy/inviteFriendStudy.wxss */
 @import "../../assets/css/common.wxss";
 
+.canvas {
+  position: absolute;
+  left: -2000px;
+}
+
 .container {
   width: 100vw;
   min-height: 100vh;
@@ -217,7 +222,7 @@
   width: calc(100vw - 120rpx);
   position: relative;
   margin: 0 auto;
-  margin-top: 80rpx;
+  padding-top: 80rpx;
 }
 
 .invitee-poster-bg image {
@@ -263,6 +268,7 @@
   width: 80rpx;
   height: 80rpx;
   vertical-align: bottom;
+  border-radius: 50%;
 }
 
 .invitee-info-right-top {

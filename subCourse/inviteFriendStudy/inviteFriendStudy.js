@@ -20,6 +20,7 @@ import {
 import {
   getLocalStorage
 } from "../../utils/util"
+import bxPoint from "../../utils/bxPoint"
 Page({
 
   /**
@@ -45,7 +46,25 @@ Page({
       title: '绘制中...',
       mask: true
     })
+    // 学课分享海报-保存相册按钮（2020-12-28上线）
+    bxPoint("share_save_click", {
+      series_id: this.data.inviteInfo.kecheng_series.id,
+      kecheng_title: this.data.kechengShareTitle,
+      qr_code: this.data.inviteInfo.gift.qrcode,
+      limit_num: this.data.inviteInfo.gift.limit_count,
+    }, false)
     this.drawPoster()
+  },
+
+  // 海报分享打点
+  sharePoster() {
+    // 请学课分享海报-分享给好友按钮（2020-12-28上线）
+    bxPoint("share_click", {
+      series_id: this.data.inviteInfo.kecheng_series.id,
+      kecheng_title: this.data.kechengShareTitle,
+      qr_code: this.data.inviteInfo.gift.qrcode,
+      limit_num: this.data.inviteInfo.gift.limit_count,
+    }, false)
   },
 
   // 绘制canvas
@@ -55,7 +74,7 @@ Page({
     let teacherIcon = this.data.inviteInfo.teacher.avatar || 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608716478HmwDBq.jpg'
     let fontFamily = 'PingFangSC-Regular, PingFang SC;'
     let title = this.data.kechengShareTitle
-    let nickName = this.data.nickName
+    let nickName = this.data.inviteInfo.nick_name
     let teacherInfo = `${this.data.inviteInfo.teacher.name||'花样老师'}·${this.data.inviteInfo.kecheng_series.teacher_desc}`
     let studyNum = `${this.data.inviteInfo.kecheng_series.visit_count}人学过`
     ctx.font = 'bold 18px PingFangSC-Medium, PingFang SC'
@@ -145,6 +164,13 @@ Page({
     })
   },
 
+  // 返回首页
+  toIndex() {
+    wx.switchTab({
+      url: '/pages/discovery/discovery',
+    })
+  },
+
   // 立即领取
   get() {
     if (this.data.userId === '') {
@@ -178,25 +204,42 @@ Page({
           inviteInfo: res.data,
           kechengShareTitle: title
         })
-        checkReceiveCreate({
-          gift_id: this.data.inviteId,
-          user_id: this.data.userId
-        }).then(res1 => {
-          if (res1.code === 0) {
-            if (res1.data) {
-              wx.navigateTo({
-                url: `/subCourse/videoCourse/videoCourse?videoId=${res.data.gift.kecheng_series_id}`,
-              })
-              // this.setData({
-              //   canShow: true
-              // })
-            } else {
-              this.setData({
-                canShow: true
-              })
-            }
-          }
+        // 学课分享海报（2020-12-28上线）
+        bxPoint("receive_introduce", {
+          series_id: this.data.inviteInfo.kecheng_series.id,
+          kecheng_title: title,
+          qr_code: this.data.inviteInfo.gift.qrcode,
+          limit_num: this.data.inviteInfo.gift.limit_count,
+          // share_uid:,
+          // receive_num:,
         })
+        // console.log(this.data.userId)
+        if (this.data.userId === '' || this.data.isInviter) {
+          this.setData({
+            canShow: true
+          })
+        } else {
+          checkReceiveCreate({
+            gift_id: this.data.inviteId,
+            user_id: this.data.userId
+          }).then(res1 => {
+            if (res1.code === 0) {
+              if (res1.data) {
+                wx.navigateTo({
+                  url: `/subCourse/videoCourse/videoCourse?videoId=${res.data.gift.kecheng_series_id}`,
+                })
+                // this.setData({
+                //   canShow: true
+                // })
+              } else {
+                this.setData({
+                  canShow: true
+                })
+              }
+            }
+          })
+        }
+
       }
     })
   },
@@ -211,7 +254,8 @@ Page({
   // 同意授权
   authCompleteEvent() {
     this.setData({
-      userId: getLocalStorage(GLOBAL_KEY.userId)
+      userId: getLocalStorage(GLOBAL_KEY.userId),
+      didShowAuth: false
     })
     this.getInviteData()
   },
@@ -231,6 +275,12 @@ Page({
     } else {
       inviteId = Number(options.inviteId)
     }
+
+    if (options.isInviter) {
+      this.setData({
+        isInviter: false
+      })
+    }
     let width = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth
     let height = ((width - 60) / 7 * 11).toFixed(2)
     let height1 = ((width - 60) / 2 * 3).toFixed(2)
@@ -239,9 +289,9 @@ Page({
       width,
       height,
       height1,
-      nickName: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).nick_name,
       userId: getLocalStorage(GLOBAL_KEY.userId) || ''
     })
+    console.log(options.isInviter, inviteId)
     this.getInviteData(inviteId)
   },
 
@@ -291,6 +341,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: `我在花样百姓学习了一门好课，邀请你一起来学习，快来吧！`,
+      path: `/subCourse/inviteFriendStudy/inviteFriendStudy?inviteId=${this.data.inviteInfo.gift.id}&isInviter=false`
+    }
   }
 })

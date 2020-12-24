@@ -82,6 +82,12 @@ Page({
       kecheng_series_id: videoId,
       kecheng_series_num: index
     }
+    // 请好友看-按钮打点（2020-12-28上线）
+    bxPoint("share_friend_learn", {
+      series_id: this.data.courseData.id,
+      kecheng_title: this.data.courseData.video_detail[index - 1].title
+    }, false)
+
     inviteFriend(params).then(res => {
       if (res.code === 0) {
         wx.navigateTo({
