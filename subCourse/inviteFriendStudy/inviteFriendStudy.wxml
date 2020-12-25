@@ -56,39 +56,41 @@
       <view class="invitee-bg">
         <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608687603zacWBm.jpg"></image>
       </view>
-      <view class="invitee-main">
-        <view class="invitee-poster-bg">
-          <image style="height:{{height1}}px"
-            src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608689991bgmPFY.jpg">
-          </image>
-        </view>
-        <view class="invitee-name">
-          {{inviteInfo.nick_name}}
-        </view>
-        <view class="invitee-title">{{kechengShareTitle}}</view>
-        <view class="invitee-info">
-          <view class="invitee-info-left">
-            <image
-              src="{{inviteInfo.teacher.avatar || 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608716478HmwDBq.jpg'}}">
+      <view class="invitee-module">
+        <view class="invitee-main">
+          <view class="invitee-poster-bg">
+            <image style="height:{{height1}}px"
+              src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608689991bgmPFY.jpg">
             </image>
           </view>
-          <view class="invitee-info-right">
-            <view class="invitee-info-right-top">
-              {{inviteInfo.teacher.name||"花样老师"}}·{{inviteInfo.kecheng_series.teacher_desc}}
+          <view class="invitee-name">
+            {{inviteInfo.nick_name}}
+          </view>
+          <view class="invitee-title">{{kechengShareTitle}}</view>
+          <view class="invitee-info">
+            <view class="invitee-info-left">
+              <image
+                src="{{inviteInfo.teacher.avatar || 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608716478HmwDBq.jpg'}}">
+              </image>
             </view>
-            <view class="invitee-info-right-bottom">
-              {{inviteInfo.kecheng_series.visit_count}}人学过
+            <view class="invitee-info-right">
+              <view class="invitee-info-right-top">
+                {{inviteInfo.teacher.name||"花样老师"}}·{{inviteInfo.kecheng_series.teacher_desc}}
+              </view>
+              <view class="invitee-info-right-bottom">
+                {{inviteInfo.kecheng_series.visit_count}}人学过
+              </view>
             </view>
           </view>
+          <view class="invitee-limit">
+            限量<text>{{inviteInfo.gift.limit_count}}</text>个名额，速速领取
+          </view>
+          <image bindtap="get" wx:if='{{inviteInfo.user_list.length < inviteInfo.gift.limit_count}}' class="invitee-get"
+            src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608688837yLGdym.jpg"></image>
+          <image wx:else class="invitee-get-all" bindtap="toIndex"
+            src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608689511OudFVu.jpg">
+          </image>
         </view>
-        <view class="invitee-limit">
-          限量<text>{{inviteInfo.gift.limit_count}}</text>个名额，速速领取
-        </view>
-        <image bindtap="get" wx:if='{{inviteInfo.user_list.length < inviteInfo.gift.limit_count}}' class="invitee-get"
-          src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608688837yLGdym.jpg"></image>
-        <image wx:else class="invitee-get-all" bindtap="toIndex"
-          src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608689511OudFVu.jpg">
-        </image>
       </view>
       <view class="invitee-get-list-module">
         <view class="invitee-get-list-title">

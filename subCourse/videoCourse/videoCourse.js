@@ -70,7 +70,8 @@ Page({
     videoIndex: 0,
     inPlay: false, //是否播放中
     isIosPlatform: false,
-    showSuccess: false
+    showSuccess: false,
+    shareIndex: ''
   },
   // 邀请好友看课
   inviteFriend(e) {
@@ -116,6 +117,9 @@ Page({
       })
       return
     }
+
+
+
     let playIndex = this.data.playIndex === -1 ? 0 : this.data.playIndex
     let index = e.currentTarget.dataset.index
     if (index !== undefined && index !== playIndex) {
@@ -153,8 +157,8 @@ Page({
       kecheng_title: this.data.videoListAll[playIndex].title
     }, false)
 
+
     setTimeout(() => {
-      console.log(this.data.videoSrc)
       this.videoContext.play()
     }, 1000)
   },
@@ -487,9 +491,10 @@ Page({
             showMore: showMore,
             videoLock: lock,
             isIosPlatform,
-            showVideoLock: showVideoLock,
+            showVideoLock: this.data.shareIndex === '' ? showVideoLock : false,
             buttonType: buttonStyle,
-            videoSrc: videoListAll[0].canReplay ? videoListAll[0].url : ''
+            playIndex: this.data.shareIndex === '' ? this.data.playIndex : this.data.shareIndex,
+            videoSrc: videoListAll[0].canReplay ? videoListAll[0].url : this.data.shareIndex === '' ? '' : videoListAll[this.data.shareIndex].url
           })
         }
       })
@@ -653,12 +658,15 @@ Page({
       showSuccess = false,
       series_invite_id = ''
     } = options
+
     if (options.playIndex) {
       let index = Number(options.playIndex)
       this.setData({
-        playIndex: index
+        shareIndex: index
       })
     }
+
+
     this.setData({
       showSuccess
     })
@@ -699,6 +707,9 @@ Page({
     this.setData({
       videoStyle: `height:${height}px`,
     })
+    setTimeout(() => {
+      console.log(this.data.videoSrc)
+    }, 3000)
   },
 
   /**

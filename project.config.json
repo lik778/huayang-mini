@@ -335,13 +335,13 @@
         {
           "name": "邀请好友看课",
           "pathName": "subCourse/inviteFriendStudy/inviteFriendStudy",
-          "query": "inviteId=7",
+          "query": "inviteId=8",
           "scene": null
         },
         {
           "name": "请好友看课",
           "pathName": "subCourse/inviteFriendStudy/inviteFriendStudy",
-          "query": "inviteId=8",
+          "query": "scene=68/false",
           "scene": null
         }
       ]

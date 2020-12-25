@@ -37,7 +37,8 @@ Page({
     nickName: "",
     width: "", //海报宽度
     height: "", //海报高度-邀请人
-    height1: "" //海报高度-被邀请人
+    height1: "", //海报高度-被邀请人
+    getLock: true
   },
 
   // 保存到相册
@@ -170,7 +171,7 @@ Page({
     // 领取课程详情页-查看更多课程按钮（2020-12-28上线）
     bxPoint("receive_discovery_more", {
       series_id: this.data.inviteInfo.kecheng_series.id,
-      kecheng_title: title,
+      kecheng_title: this.data.kechengShareTitle,
       qr_code: this.data.inviteInfo.gift.qrcode,
       limit_num: this.data.inviteInfo.gift.limit_count,
       share_uid: this.data.inviteInfo.gift.user_id,
@@ -191,26 +192,57 @@ Page({
       return
     }
 
-    // 点击领取课程（2020-12-28上线）
-    bxPoint("receive_click", {
-      series_id: this.data.inviteInfo.kecheng_series.id,
-      kecheng_title: title,
-      qr_code: this.data.inviteInfo.gift.qrcode,
-      limit_num: this.data.inviteInfo.gift.limit_count,
-      share_uid: this.data.inviteInfo.gift.user_id,
-      receive_num: this.data.inviteInfo.user_list.length + 1,
+    if (!this.data.getLock) return
+    this.setData({
+      getLock: false
     })
-
     receiveCreate({
       gift_id: this.data.inviteId,
       user_id: this.data.userId
     }).then(res => {
       if (res.code === 0) {
-        wx.navigateTo({
-          url: `/subCourse/videoCourse/videoCourse?videoId=${this.data.inviteInfo.gift.kecheng_series_id}&showSuccess=true`,
+        // 点击领取课程（2020-12-28上线）
+        bxPoint("receive_click", {
+          series_id: this.data.inviteInfo.kecheng_series.id,
+          kecheng_title: this.data.kechengShareTitle,
+          qr_code: this.data.inviteInfo.gift.qrcode,
+          limit_num: this.data.inviteInfo.gift.limit_count,
+          share_uid: this.data.inviteInfo.gift.user_id,
+          receive_num: res.data,
+        })
+
+
+
+        wx.redirectTo({
+          url: `/subCourse/videoCourse/videoCourse?videoId=${this.data.inviteInfo.gift.kecheng_series_id}&showSuccess=true&playIndex=${this.data.inviteInfo.gift.kecheng_series_num-1}`,
+        })
+        
+        this.setData({
+          getLock: true
         })
         // this.getInviteData()
+      } else {
+        wx.showToast({
+          title: res.message,
+          icon: "none",
+          duration: 2000,
+          mask: true
+        })
+        this.setData({
+          getLock: true
+        })
+        this.getInviteData()
       }
+    }).catch(err => {
+      this.setData({
+        getLock: true
+      })
+      wx.showToast({
+        title: err.message,
+        icon: "none",
+        duration: 2000,
+        mask: true
+      })
     })
   },
 
@@ -229,7 +261,7 @@ Page({
         // 学课分享海报（2020-12-28上线）
         bxPoint("share_detail", {
           series_id: this.data.inviteInfo.kecheng_series.id,
-          kecheng_title: title,
+          kecheng_title: this.data.kechengShareTitle,
           qr_code: this.data.inviteInfo.gift.qrcode,
           limit_num: this.data.inviteInfo.gift.limit_count,
           share_uid: this.data.inviteInfo.gift.user_id,
@@ -247,8 +279,8 @@ Page({
           }).then(res1 => {
             if (res1.code === 0) {
               if (res1.data) {
-                wx.navigateTo({
-                  url: `/subCourse/videoCourse/videoCourse?videoId=${res.data.gift.kecheng_series_id}`,
+                wx.redirectTo({
+                  url: `/subCourse/videoCourse/videoCourse?videoId=${res.data.gift.kecheng_series_id}&playIndex=${this.data.inviteInfo.gift.kecheng_series_num-1}`,
                 })
                 // this.setData({
                 //   canShow: true

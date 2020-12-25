@@ -218,11 +218,14 @@
   vertical-align: bottom;
 }
 
+.invitee-module {
+  padding-top: 80rpx;
+}
+
 .invitee-main {
   width: calc(100vw - 120rpx);
   position: relative;
   margin: 0 auto;
-  padding-top: 80rpx;
 }
 
 .invitee-poster-bg image {
@@ -251,6 +254,7 @@
   font-weight: 600;
   color: #000000;
   line-height: 36rpx;
+  white-space: nowrap;
 }
 
 .invitee-info {

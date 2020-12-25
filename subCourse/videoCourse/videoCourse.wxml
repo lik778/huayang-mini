@@ -9,6 +9,7 @@
     <view class="video-cover-one" wx:if="{{showVideoCover}}">
       <image src="{{courseData.video_pic}}"></image>
     </view>
+
     <view class="video-cover" wx:if="{{!showVideoLock&&showVideoCover}}" bindtap="play">
       <image src="/assets/images/common/play.png"></image>
     </view>
@@ -51,8 +52,8 @@
       <view class="course-list">
         <view wx:for="{{courseData.video_detail}}" wx:key="index">
           <view class="{{playIndex===index?'course-item course-item-active subject-font-color':'course-item'}}"
-            bindtap="{{hasLogin?buttonType===6?'play':item.canReplay?'play':'':'join'}}" data-item="{{item}}"
-            data-index="{{index}}">
+            bindtap="{{hasLogin?buttonType===6||item.status==='unlock'?'play':item.canReplay?'play':'':'join'}}"
+            data-item="{{item}}" data-index="{{index}}">
             <view class="course-item-left">
               <view class="course-item-left-left" wx:if="{{item.canReplay}}">试看</view>
               <view class="course-item-left-left" wx:if="{{buttonType!==6&&item.status==='unlock'&&!item.canReplay}}">
