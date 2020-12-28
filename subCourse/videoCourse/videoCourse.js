@@ -71,31 +71,38 @@ Page({
     inPlay: false, //是否播放中
     isIosPlatform: false,
     showSuccess: false,
-    shareIndex: ''
+    shareIndex: '',
+    inviteFriendLock: true
   },
   // 邀请好友看课
   inviteFriend(e) {
-    let index = e.currentTarget.dataset.index + 1
-    let videoId = Number(this.data.videoId)
-    let userId = this.data.userInfo.id
-    let params = {
-      user_id: userId,
-      kecheng_series_id: videoId,
-      kecheng_series_num: index
-    }
-    // 请好友看-按钮打点（2020-12-28上线）
-    bxPoint("share_friend_learn", {
-      series_id: this.data.courseData.id,
-      kecheng_title: this.data.courseData.video_detail[index - 1].title
-    }, false)
-
-    inviteFriend(params).then(res => {
-      if (res.code === 0) {
-        wx.navigateTo({
-          url: `/subCourse/inviteFriendStudy/inviteFriendStudy?inviteId=${res.data.gift.id}`,
-        })
+    if (this.data.inviteFriendLock) {
+      this.setData({
+        inviteFriendLock: false
+      })
+      let index = e.currentTarget.dataset.index + 1
+      let videoId = Number(this.data.videoId)
+      let userId = this.data.userInfo.id
+      let params = {
+        user_id: userId,
+        kecheng_series_id: videoId,
+        kecheng_series_num: index
       }
-    })
+      // 请好友看-按钮打点（2020-12-28上线）
+      bxPoint("share_friend_learn", {
+        series_id: this.data.courseData.id,
+        kecheng_title: this.data.courseData.video_detail[index - 1].title
+      }, false)
+
+      inviteFriend(params).then(res => {
+        if (res.code === 0) {
+          wx.navigateTo({
+            url: `/subCourse/inviteFriendStudy/inviteFriendStudy?inviteId=${res.data.gift.id}`,
+          })
+        }
+      })
+    }
+
   },
   initFissionTask() {
     createFissionTask({
@@ -122,7 +129,7 @@ Page({
 
     let playIndex = this.data.playIndex === -1 ? 0 : this.data.playIndex
     let index = e.currentTarget.dataset.index
-    console.log(playIndex,'playIndex')
+    console.log(playIndex, 'playIndex')
     if (index !== undefined && index !== playIndex) {
       playIndex = index
       this.setData({
@@ -659,7 +666,6 @@ Page({
       showSuccess = false,
       series_invite_id = ''
     } = options
-    console.log(options,'options')
     if (options.playIndex) {
       let index = Number(options.playIndex)
       this.setData({
@@ -706,11 +712,17 @@ Page({
     let width = wx.getSystemInfoSync().windowWidth
     let height = parseInt(((width - 30) / 16) * 9)
     this.setData({
-      videoStyle: `height:${height}px`,
+      videoStyle: this.data.showSuccess ? `height:${height}px;margin-top:46px` : `height:${height}px;`,
     })
-    setTimeout(() => {
-      console.log(this.data.videoSrc)
-    }, 3000)
+    // 5s后定时关闭领取成功弹窗
+    if (this.data.showSuccess) {
+      setTimeout(() => {
+        this.setData({
+          showSuccess: false,
+          videoStyle: `height:${height}px;`,
+        })
+      }, 5000)
+    }
   },
 
   /**
@@ -730,6 +742,9 @@ Page({
   onHide: function () {
     // 记录播放时长打点
     this.recordPlayDuration()
+    this.setData({
+      inviteFriendLock: true
+    })
   },
 
   /**

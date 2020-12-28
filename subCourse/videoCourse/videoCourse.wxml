@@ -19,7 +19,7 @@
   </view>
   <!-- 领取课程成功顶部弹窗 -->
   <view class="get-success" wx:if='{{showSuccess}}' bindtap="play">
-    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608708202glGimF.jpg"></image>
+    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1609144762ecfTzA.jpg"></image>
   </view>
   <!-- 内容简介区域 -->
   <view class="info">
@@ -59,7 +59,7 @@
               <view class="course-item-left-left" wx:if="{{buttonType!==6&&item.status==='unlock'&&!item.canReplay}}">
                 好友相送</view>
               <view class="course-item-left-left" wx:if="{{!item.canReplay&&hasLogin&&buttonType===6}}">
-                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599188783dnVheO.jpg"></image>
+                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1609143666MCoTzZ.jpg"></image>
               </view>
               <view class="course-item-left-left video-lock"
                 wx:if="{{!item.canReplay&&item.status!=='unlock'&&(!hasLogin||buttonType!==6)}}">

@@ -41,7 +41,7 @@
           </view>
         </view>
       </view>
-      <view class="button-module">
+      <view class="button-module" style="padding-bottom:{{isIphoneXRSMax?20:0}}px">
         <view class="button-left" bindtap="sharePoster">
           <button open-type="share"></button>
           <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608632303PfpBaD.jpg"></image>

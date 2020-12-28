@@ -18,7 +18,8 @@ import {
   GLOBAL_KEY
 } from "../../lib/config"
 import {
-  getLocalStorage
+  getLocalStorage,
+  isIphoneXRSMax
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 Page({
@@ -38,7 +39,8 @@ Page({
     width: "", //海报宽度
     height: "", //海报高度-邀请人
     height1: "", //海报高度-被邀请人
-    getLock: true
+    getLock: true,
+    isIphoneXRSMax: false
   },
 
   // 保存到相册
@@ -336,6 +338,7 @@ Page({
         isInviter: false
       })
     }
+
     let width = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth
     let height = ((width - 60) / 7 * 11).toFixed(2)
     let height1 = ((width - 60) / 2 * 3).toFixed(2)
@@ -346,9 +349,12 @@ Page({
       height1,
       userId: getLocalStorage(GLOBAL_KEY.userId) || ''
     })
-
-    console.log(options, options.isInviter, inviteId)
-
+    // 兼容x以上机型底部按钮触碰区
+    if (isIphoneXRSMax()) {
+      this.setData({
+        isIphoneXRSMax: true
+      })
+    }
     this.getInviteData(inviteId)
   },
 

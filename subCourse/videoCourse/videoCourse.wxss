@@ -370,7 +370,7 @@
 
 .course-item-left-left image {
   width: 48rpx;
-  height: 48rpx;
+  height: 54rpx;
   vertical-align: bottom;
 }
 
