@@ -58,6 +58,7 @@ Page({
 		didFixedTab: false,
 		tabsDomOffsetTopNo: 0,
 		obs: [], // 被监听的video标签队列
+		themeTabMinHeight: 0,
 	},
 	calcTabsOffset() {
 		let self = this
@@ -212,6 +213,8 @@ Page({
 				tabsDomOffsetTopNo: res[0].top
 			})
 		})
+		// 计算主题营TAB最小高度
+		this.setData({themeTabMinHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenHeight - 264})
 	},
 	// 获取授权
 	getAuth() {
@@ -460,9 +463,6 @@ Page({
 	},
 	// 加载"推荐"或"全部"的训练营列表
 	getRecommendList() {
-		// 获取banner数据
-		this.getBanner()
-
 		let params = {
 			offset: 0,
 			limit: 999,
@@ -482,9 +482,7 @@ Page({
 			}
 		}
 		// 获取训练营列表
-		getCampList(params).then(({
-			list
-		}) => {
+		getCampList(params).then(({list}) => {
 			list = list.map(item => {
 				// 处理训练营特色标签
 				item.feature = item.feature.split(",").map(k => {
@@ -526,11 +524,13 @@ Page({
 			this.setData({
 				campList: list
 			})
-			// 获取视频系列课
-			this.getVideoCourse()
-			// 获取直播列表个数
-			this.getLiveTotalNum()
 
+			if (this.data.tabIndex === 0) {
+				// 获取视频系列课
+				this.getVideoCourse()
+				// 获取直播列表个数
+				this.getLiveTotalNum()
+			}
 
 			// 监听每个video标签在视口的位置
 			this.initBootcampListener()
@@ -663,6 +663,9 @@ Page({
 			})
 		}
 		this.initModelBanner()
+
+		// 获取banner数据
+		this.getBanner()
 
 		// 获取推荐数据
 		this.getRecommendList()

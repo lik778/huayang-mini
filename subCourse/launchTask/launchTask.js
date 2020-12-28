@@ -188,8 +188,16 @@ Page({
 	/**
 	 * 用户点击右上角分享
 	 */
-	onShareAppMessage: function () {
+	onShareAppMessage: function () {},
 
+	// 用户授权取消
+	authCancelEvent() {
+		this.setData({didShowAuth: false})
+	},
+
+	// 用户确认授权
+	authCompleteEvent() {
+		this.setData({didShowAuth: false})
 	},
 
 	/**
@@ -600,7 +608,7 @@ Page({
 	 */
 	onTextareaInput(e) {
 		let text = String(e.detail.value).slice(0, 200)
-		this.setData({textCount: text.length, desc: text.replace(/\s+/g, "")})
+		this.setData({textCount: text.length, desc: text.trim()})
 	},
 	/**
 	 * 切换录音弹窗
