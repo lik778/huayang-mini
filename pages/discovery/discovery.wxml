@@ -2,7 +2,7 @@
 <view class="discovery" bindtouchmove="touchMove" style="visibility: {{canShow?'visible':'hidden'}};">
     <cover-view class="tabs-fixed-line" wx:if="{{didFixedTab}}"></cover-view>
     <view class="tabs tabs-fixed" wx:if="{{didFixedTab}}">
-        <view class="tab {{tabIndex===item.id ? 'tab-active' : ''}} tab-ep" wx:for="{{tabs}}" wx:key="{{item.id}}"
+        <view class="tab {{tabIndex===item.id ? 'tab-active' : ''}} tab-ep" wx:for="{{tabs}}" wx:key="index"
             data-item="{{item}}" bindtap="handleTab">{{item.name}}</view>
         <view class="tab-underline" style="left: {{tabsOffsetLeftAry[tabIndex]}}px;"></view>
     </view>
@@ -25,7 +25,7 @@
     </view>
 
     <view class="tabs" id="tabs">
-        <view class="tab {{tabIndex===item.id ? 'tab-active' : ''}} tab-ep" wx:for="{{tabs}}" wx:key="{{item.id}}"
+        <view class="tab {{tabIndex===item.id ? 'tab-active' : ''}} tab-ep" wx:for="{{tabs}}" wx:key="index"
             data-item="{{item}}" bindtap="handleTab">{{item.name}}
         </view>
         <view class="tab-underline" style="left: {{tabsOffsetLeftAry[tabIndex]}}px;"></view>
@@ -147,7 +147,7 @@
         </view>
     </view>
 
-    <view class="tab-pane" wx:if="{{tabIndex === 1}}">
+    <view class="tab-pane" style="min-height: {{themeTabMinHeight}}px;" wx:if="{{tabIndex === 1}}">
         <!-- 训练营 -->
         <view class="card {{'card-' + index}}" wx:for="{{campList}}" wx:key="index" data-index="{{item}}"
             bindtap="joinCamp" style="height:{{isIosPlatform?'506rpx':'560rpx'}}">
