@@ -129,7 +129,7 @@ Page({
 
     let playIndex = this.data.playIndex === -1 ? 0 : this.data.playIndex
     let index = e.currentTarget.dataset.index
-    console.log(playIndex, 'playIndex')
+
     if (index !== undefined && index !== playIndex) {
       playIndex = index
       this.setData({
