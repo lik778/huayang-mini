@@ -18,7 +18,8 @@ import {
   getVideoCourseDetail,
   joinVideoCourse,
   getIosCustomerLink,
-  recordStudy
+  recordStudy,
+  inviteFriend
 } from "../../api/course/index"
 import {
   GLOBAL_KEY,
@@ -68,7 +69,40 @@ Page({
     playDurationsListAll: [], //播放记录所有打点
     videoIndex: 0,
     inPlay: false, //是否播放中
-    isIosPlatform: false
+    isIosPlatform: false,
+    showSuccess: false,
+    shareIndex: '',
+    inviteFriendLock: true
+  },
+  // 邀请好友看课
+  inviteFriend(e) {
+    if (this.data.inviteFriendLock) {
+      this.setData({
+        inviteFriendLock: false
+      })
+      let index = e.currentTarget.dataset.index + 1
+      let videoId = Number(this.data.videoId)
+      let userId = this.data.userInfo.id
+      let params = {
+        user_id: userId,
+        kecheng_series_id: videoId,
+        kecheng_series_num: index
+      }
+      // 请好友看-按钮打点（2020-12-28上线）
+      bxPoint("share_friend_learn", {
+        series_id: this.data.courseData.id,
+        kecheng_title: this.data.courseData.video_detail[index - 1].title
+      }, false)
+
+      inviteFriend(params).then(res => {
+        if (res.code === 0) {
+          wx.navigateTo({
+            url: `/subCourse/inviteFriendStudy/inviteFriendStudy?inviteId=${res.data.gift.id}`,
+          })
+        }
+      })
+    }
+
   },
   initFissionTask() {
     createFissionTask({
@@ -90,8 +124,12 @@ Page({
       })
       return
     }
+
+
+
     let playIndex = this.data.playIndex === -1 ? 0 : this.data.playIndex
     let index = e.currentTarget.dataset.index
+
     if (index !== undefined && index !== playIndex) {
       playIndex = index
       this.setData({
@@ -126,14 +164,16 @@ Page({
       series_id: this.data.courseData.id,
       kecheng_title: this.data.videoListAll[playIndex].title
     }, false)
+
+
     setTimeout(() => {
       this.videoContext.play()
-    }, 200)
+    }, 1000)
   },
   // 播放结束
   endVideo() {
     this.setData({
-      playIndex: -1,
+      // playIndex: -1,
       inPlay: false
     })
   },
@@ -459,9 +499,10 @@ Page({
             showMore: showMore,
             videoLock: lock,
             isIosPlatform,
-            showVideoLock: showVideoLock,
+            showVideoLock: this.data.shareIndex === '' ? showVideoLock : false,
             buttonType: buttonStyle,
-            videoSrc: videoListAll[0].canReplay ? videoListAll[0].url : ''
+            playIndex: this.data.shareIndex === '' ? this.data.playIndex : this.data.shareIndex,
+            videoSrc: videoListAll[0].canReplay ? videoListAll[0].url : this.data.shareIndex === '' ? '' : videoListAll[this.data.shareIndex].url
           })
         }
       })
@@ -622,14 +663,20 @@ Page({
       source,
       videoId,
       promote_uid = '',
+      showSuccess = false,
       series_invite_id = ''
     } = options
     if (options.playIndex) {
       let index = Number(options.playIndex)
       this.setData({
-        playIndex: index
+        shareIndex: index
       })
     }
+
+
+    this.setData({
+      showSuccess
+    })
     if (promote_uid !== '') {
       this.setData({
         promoteUid: promote_uid
@@ -665,8 +712,17 @@ Page({
     let width = wx.getSystemInfoSync().windowWidth
     let height = parseInt(((width - 30) / 16) * 9)
     this.setData({
-      videoStyle: `height:${height}px`,
+      videoStyle: this.data.showSuccess ? `height:${height}px;margin-top:46px` : `height:${height}px;`,
     })
+    // 5s后定时关闭领取成功弹窗
+    if (this.data.showSuccess) {
+      setTimeout(() => {
+        this.setData({
+          showSuccess: false,
+          videoStyle: `height:${height}px;`,
+        })
+      }, 5000)
+    }
   },
 
   /**
@@ -686,6 +742,9 @@ Page({
   onHide: function () {
     // 记录播放时长打点
     this.recordPlayDuration()
+    this.setData({
+      inviteFriendLock: true
+    })
   },
 
   /**

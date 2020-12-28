@@ -4,6 +4,7 @@ export const drawFont = (ctx, text, fontColor, fontWeight = 'normal', fontFamily
     ctx.save()
     ctx.setTextBaseline('top')
     ctx.setTextAlign('left')
+    ctx.setFontSize(fontSize)
     ctx.font = `normal ${fontWeight} ${fontSize}px ${fontFamily}`
     ctx.setFillStyle(fontColor)
     ctx.fillText(text, x, y)
@@ -30,7 +31,7 @@ export const drawImage = (ctx, imageSrc, x, y, width, height) => {
 }
 
 // 专门适配两张图片居中绘制并且识别横竖图,其他情况勿用
-export const drawImageAuto =  (ctx, imageSrc1, imageSrc2) => {
+export const drawImageAuto = (ctx, imageSrc1, imageSrc2) => {
   return new Promise(async resolve1 => {
     // 第一张图
     let imgInfo1 = await new Promise(resolve => {
@@ -196,5 +197,44 @@ export const drawBorderCircle = (ctx, url, x, y, r) => {
         }
       }
     })
+  })
+}
+
+
+// 绘制不带边框圆形头像
+export const drawCircleHeadIcon = (ctx, url, x, y, r) => {
+  return new Promise(resolve => {
+    // ctx: 上下文;url: 图片地址;x: 圆中心x位置;y: 圆中心y位置;r: 圆半径
+    // 保存上下文
+    ctx.save()
+    //画圆   前两个参数确定了圆心 （x,y） 坐标  第三个参数是圆的半径  四参数是绘图方向  默认是false，即顺时针
+    ctx.beginPath(); //开始绘制
+    ctx.arc(x, y, r, 0, Math.PI * 2, false);
+    ctx.clip();
+    wx.downloadFile({
+      url: url,
+      success: (res) => {
+        if (res.statusCode === 200) {
+          ctx.drawImage(res.tempFilePath, x - r, y - r, r * 2, r * 2)
+          // 恢复画布
+          ctx.restore()
+          resolve()
+        }
+      }
+    })
+  })
+}
+
+// 绘制圆形纯色
+export const drawCircleFill = (ctx, color, x, y, r) => {
+  return new Promise(resolve => {
+    ctx.save()
+    ctx.beginPath(); // 开始绘制
+    ctx.arc(x, y, r, 0, Math.PI * 2, false);
+    ctx.clip();
+    ctx.setFillStyle(color)
+    ctx.fill()
+    ctx.restore()
+    resolve()
   })
 }

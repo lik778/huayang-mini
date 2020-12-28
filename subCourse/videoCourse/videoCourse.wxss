@@ -342,18 +342,20 @@
 .course-item-left {
   display: flex;
   align-items: center;
-  width: calc(100% - 148rpx);
+  width: calc(100% - 196rpx);
 }
 
 .course-item-right {
-  width: 150rpx;
-  padding-right: 20rpx;
-  text-align: right;
+  width: 196rpx;
+  height: 64rpx;
   font-size: 32rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: rgba(0, 0, 0, 0.6);
-  line-height: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 64rpx;
+  text-align: center;
+  border-radius: 999rpx;
+  margin-right: 20rpx;
 }
 
 .course-item-left-left {
@@ -368,12 +370,17 @@
 
 .course-item-left-left image {
   width: 48rpx;
-  height: 48rpx;
+  height: 54rpx;
   vertical-align: bottom;
 }
 
 .course-item-left-right {
-  width: 450rpx;
+  width: 374rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  line-height: 44rpx;
+  color: #000000;
 }
 
 .item-left-bottom {
@@ -381,16 +388,14 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
   -webkit-box-orient: vertical;
 }
 
-.item-left-top {
-  font-size: 32rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  line-height: 44rpx;
+.course-item-left-right-top {
+  display: flex;
+
 }
 
 .show-more {
@@ -505,4 +510,31 @@
   font-weight: 600;
   border-radius: 999rpx;
   color: #FFFFFF;
+}
+
+/* 领取课程成功 */
+.get-success {
+  position: relative;
+  z-index: 20;
+  width: 100vw;
+  height: 92rpx;
+}
+
+.get-success image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 92rpx;
+  vertical-align: bottom;
+}
+
+@keyframes showGetSucess {
+  from {
+    background: red;
+  }
+  
+  to {
+    background: yellow;
+  }
 }

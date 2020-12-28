@@ -249,10 +249,9 @@
           "scene": null
         },
         {
-          "id": -1,
-          "name": "mine/personActivity/personActivity",
-          "pathName": "mine/personActivity/personActivity",
-          "query": "",
+          "name": "视频详情页",
+          "pathName": "subCourse/videoCourse/videoCourse",
+          "query": "videoId=46",
           "scene": null
         },
         {
@@ -331,6 +330,18 @@
           "name": "作业落地页",
           "pathName": "subCourse/indexTask/indexTask",
           "query": "taskId=211&nickname=Derisfe&userId=251",
+          "scene": null
+        },
+        {
+          "name": "邀请好友看课",
+          "pathName": "subCourse/inviteFriendStudy/inviteFriendStudy",
+          "query": "inviteId=74",
+          "scene": null
+        },
+        {
+          "name": "subCourse/inviteFriendStudy/inviteFriendStudy",
+          "pathName": "subCourse/inviteFriendStudy/inviteFriendStudy",
+          "query": "scene= 75/false",
           "scene": null
         }
       ]

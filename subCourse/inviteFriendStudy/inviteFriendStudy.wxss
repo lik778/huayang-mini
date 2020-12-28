@@ -1,4 +1,11 @@
 /* subCourse/inviteFriendStudy/inviteFriendStudy.wxss */
+@import "../../assets/css/common.wxss";
+
+.canvas {
+  position: absolute;
+  left: -2000px;
+}
+
 .container {
   width: 100vw;
   min-height: 100vh;
@@ -67,6 +74,9 @@
   font-weight: 600;
   color: #000000;
   line-height: 36rpx;
+  white-space: nowrap;
+  width: 500rpx;
+  text-align: center;
 }
 
 .teacher-info {
@@ -98,7 +108,7 @@
   font-weight: 400;
   color: #000000;
   line-height: 28rpx;
-  padding-bottom: 20rpx;
+  padding-bottom: 24rpx;
 }
 
 .teacher-right-bottom {
@@ -114,6 +124,7 @@
   left: 50%;
   transform: translateX(-50%);
   top: 570rpx;
+
 }
 
 .qrcode image {
@@ -121,6 +132,7 @@
   height: 256rpx;
   border-radius: 50%;
   vertical-align: bottom;
+  background: #fff;
 }
 
 .limit {
@@ -206,11 +218,14 @@
   vertical-align: bottom;
 }
 
+.invitee-module {
+  padding-top: 80rpx;
+}
+
 .invitee-main {
   width: calc(100vw - 120rpx);
   position: relative;
   margin: 0 auto;
-  margin-top: 80rpx;
 }
 
 .invitee-poster-bg image {
@@ -239,6 +254,7 @@
   font-weight: 600;
   color: #000000;
   line-height: 36rpx;
+  white-space: nowrap;
 }
 
 .invitee-info {
@@ -256,6 +272,7 @@
   width: 80rpx;
   height: 80rpx;
   vertical-align: bottom;
+  border-radius: 50%;
 }
 
 .invitee-info-right-top {
@@ -337,12 +354,13 @@
   font-weight: 400;
   color: #555555;
   line-height: 36rpx;
+  white-space: nowrap;
 }
 
 .invitee-get-list-title-line {
   width: 160rpx;
   height: 2rpx;
-  background: #555555;
+  background: rgba(85, 85, 85, 0.4);
 }
 
 .invitee-get-item {
