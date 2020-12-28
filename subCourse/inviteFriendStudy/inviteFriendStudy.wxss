@@ -108,7 +108,7 @@
   font-weight: 400;
   color: #000000;
   line-height: 28rpx;
-  padding-bottom: 20rpx;
+  padding-bottom: 24rpx;
 }
 
 .teacher-right-bottom {
@@ -354,12 +354,13 @@
   font-weight: 400;
   color: #555555;
   line-height: 36rpx;
+  white-space: nowrap;
 }
 
 .invitee-get-list-title-line {
   width: 160rpx;
   height: 2rpx;
-  background: #555555;
+  background: rgba(85, 85, 85, 0.4);
 }
 
 .invitee-get-item {

@@ -2,7 +2,7 @@
 <view class="container" wx:if='{{canShow}}'>
   <!-- canvas -->
   <view class="canvas" style="height:0;overflow: hidden;">
-    <canvas canvas-id="canvas" style="width: 945px; height: 1494px;"></canvas>
+    <canvas canvas-id="canvas" style="width: 1125px; height: 1728px;"></canvas>
   </view>
   <view>
     <!-- 邀请者 -->
@@ -94,10 +94,10 @@
       </view>
       <view class="invitee-get-list-module">
         <view class="invitee-get-list-title">
-          <view class="invitee-get-list-title-line"></view>
+          <view class="invitee-get-list-title-line" style="width:{{lineWithdh}}px"></view>
           <view class="invitee-get-list-title-num">看谁领取了{{inviteInfo.user_list.length}}/{{inviteInfo.gift.limit_count}}
           </view>
-          <view class="invitee-get-list-title-line"></view>
+          <view class="invitee-get-list-title-line" style="width:{{lineWithdh}}px"></view>
         </view>
         <view class="invitee-get-list">
           <view class="invitee-get-item" wx:for="{{inviteInfo.user_list}}" wx:key="{{index}}">
