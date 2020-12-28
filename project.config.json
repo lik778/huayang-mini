@@ -339,9 +339,9 @@
           "scene": null
         },
         {
-          "name": "请好友看课",
+          "name": "subCourse/inviteFriendStudy/inviteFriendStudy",
           "pathName": "subCourse/inviteFriendStudy/inviteFriendStudy",
-          "query": "scene=68/false",
+          "query": "scene= 81/false",
           "scene": null
         }
       ]

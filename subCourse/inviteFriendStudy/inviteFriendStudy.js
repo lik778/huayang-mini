@@ -89,72 +89,73 @@ Page({
       drawFont(ctx, nickName, '#8C5419', '400', fontFamily, 14, nickNameX, 133)
       drawFont(ctx, title, '#000000', 'bold', 'PingFangSC-Medium, PingFang SC', 18, kechengtitleX, 188).then(() => {
         drawCircleHeadIcon(ctx, teacherIcon, 68, 241, 20).then(() => {
-          drawFont(ctx, teacherInfo, '#000000', '400', fontFamily, 14, 98, 222)
-          drawFont(ctx, studyNum, 'rgba(0,0,0,0.4)', '400', fontFamily, 14, 98, 246)
-          drawCircleFill(ctx, "#fff", 158, 350, 64).then(() => {
-            drawCircleHeadIcon(ctx, qrcode, 158, 350, 64).then(() => {
-              ctx.font = 'normal 14px PingFangSC-Regular, PingFang SC'
-              let limitText1 = measureTextWidth(ctx, "限量")
-              ctx.font = 'normal 30px PingFangSC-Regular, PingFang SC'
-              let limitText2 = measureTextWidth(ctx, limitNum)
-              ctx.font = 'normal 14px PingFangSC-Regular, PingFang SC'
-              let limitText3 = measureTextWidth(ctx, '个名额，速速领取')
-              let limitX = (315 - limitText1 - limitText2 - limitText3) / 2
-              drawFont(ctx, '限量', '#fff', '400', fontFamily, 14, limitX, 450).then(() => {
-                drawFont(ctx, limitNum, '#fff', '400', fontFamily, 30, limitX + limitText1, 438).then(() => {
-                  drawFont(ctx, '个名额，速速领取', '#fff', '400', fontFamily, 14, limitX + limitText1 + limitText2, 450)
-                  ctx.draw(false, () => {
-                    wx.canvasToTempFilePath({
-                      canvasId: 'canvas',
-                      success: (res) => {
-                        let tempFilePath = res.tempFilePath;
-                        wx.hideLoading()
-                        wx.getSetting({
-                          success: (res) => {
-                            if (res.authSetting['scope.writePhotosAlbum']) {
-                              wx.authorize({
-                                scope: 'scope.writePhotosAlbum',
-                                success: () => {
-                                  wx.saveImageToPhotosAlbum({
-                                    filePath: tempFilePath,
-                                    success: (res) => {
-                                      if (res.errMsg === "saveImageToPhotosAlbum:ok") {
-                                        wx.showToast({
-                                          title: '保存成功',
-                                          duration: 2000,
-                                          mask: true
-                                        })
+          drawFont(ctx, teacherInfo, '#000000', '400', fontFamily, 14, 98, 222).then(() => {
+            drawFont(ctx, studyNum, 'rgba(0,0,0,0.4)', '400', fontFamily, 14, 98, 246)
+            drawCircleFill(ctx, "#fff", 158, 350, 64).then(() => {
+              drawCircleHeadIcon(ctx, qrcode, 158, 350, 64).then(() => {
+                ctx.font = 'normal 14px PingFangSC-Regular, PingFang SC'
+                let limitText1 = measureTextWidth(ctx, "限量")
+                ctx.font = 'normal 30px PingFangSC-Regular, PingFang SC'
+                let limitText2 = measureTextWidth(ctx, limitNum)
+                ctx.font = 'normal 14px PingFangSC-Regular, PingFang SC'
+                let limitText3 = measureTextWidth(ctx, '个名额，速速领取')
+                let limitX = (315 - limitText1 - limitText2 - limitText3) / 2
+                drawFont(ctx, '限量', '#fff', '400', fontFamily, 14, limitX, 450).then(() => {
+                  drawFont(ctx, limitNum, '#fff', '400', fontFamily, 30, limitX + limitText1, 438).then(() => {
+                    drawFont(ctx, '个名额，速速领取', '#fff', '400', fontFamily, 14, limitX + limitText1 + limitText2, 450)
+                    ctx.draw(false, () => {
+                      wx.canvasToTempFilePath({
+                        canvasId: 'canvas',
+                        success: (res) => {
+                          let tempFilePath = res.tempFilePath;
+                          wx.hideLoading()
+                          wx.getSetting({
+                            success: (res) => {
+                              if (res.authSetting['scope.writePhotosAlbum']) {
+                                wx.authorize({
+                                  scope: 'scope.writePhotosAlbum',
+                                  success: () => {
+                                    wx.saveImageToPhotosAlbum({
+                                      filePath: tempFilePath,
+                                      success: (res) => {
+                                        if (res.errMsg === "saveImageToPhotosAlbum:ok") {
+                                          wx.showToast({
+                                            title: '保存成功',
+                                            duration: 2000,
+                                            mask: true
+                                          })
+                                        }
                                       }
-                                    }
-                                  })
-                                }
-                              })
-                            } else {
-                              wx.authorize({
-                                scope: 'scope.writePhotosAlbum',
-                                success: () => {
-                                  wx.saveImageToPhotosAlbum({
-                                    filePath: tempFilePath,
-                                    success: (res) => {
-                                      if (res.errMsg === "saveImageToPhotosAlbum:ok") {
-                                        wx.showToast({
-                                          title: '保存成功',
-                                          duration: 2000,
-                                          mask: true
-                                        })
+                                    })
+                                  }
+                                })
+                              } else {
+                                wx.authorize({
+                                  scope: 'scope.writePhotosAlbum',
+                                  success: () => {
+                                    wx.saveImageToPhotosAlbum({
+                                      filePath: tempFilePath,
+                                      success: (res) => {
+                                        if (res.errMsg === "saveImageToPhotosAlbum:ok") {
+                                          wx.showToast({
+                                            title: '保存成功',
+                                            duration: 2000,
+                                            mask: true
+                                          })
+                                        }
                                       }
-                                    }
-                                  })
-                                }
-                              })
+                                    })
+                                  }
+                                })
+                              }
                             }
-                          }
-                        })
-                      },
-                      fail: function (res) {
-                        console.log(res);
-                      }
-                    }, this);
+                          })
+                        },
+                        fail: function (res) {
+                          console.log(res);
+                        }
+                      }, this);
+                    })
                   })
                 })
               })
@@ -216,7 +217,7 @@ Page({
         wx.redirectTo({
           url: `/subCourse/videoCourse/videoCourse?videoId=${this.data.inviteInfo.gift.kecheng_series_id}&showSuccess=true&playIndex=${this.data.inviteInfo.gift.kecheng_series_num-1}`,
         })
-        
+
         this.setData({
           getLock: true
         })

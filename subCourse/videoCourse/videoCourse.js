@@ -122,6 +122,7 @@ Page({
 
     let playIndex = this.data.playIndex === -1 ? 0 : this.data.playIndex
     let index = e.currentTarget.dataset.index
+    console.log(playIndex,'playIndex')
     if (index !== undefined && index !== playIndex) {
       playIndex = index
       this.setData({
@@ -165,7 +166,7 @@ Page({
   // 播放结束
   endVideo() {
     this.setData({
-      playIndex: -1,
+      // playIndex: -1,
       inPlay: false
     })
   },
@@ -658,7 +659,7 @@ Page({
       showSuccess = false,
       series_invite_id = ''
     } = options
-
+    console.log(options,'options')
     if (options.playIndex) {
       let index = Number(options.playIndex)
       this.setData({
