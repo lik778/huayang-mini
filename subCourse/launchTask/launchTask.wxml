@@ -93,4 +93,6 @@
     <view class="footer">
         <image mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607997581SoBfDB.jpg" class="launch-btn" bindtap="prepareLaunch"></image>
     </view>
+
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
 </view>
