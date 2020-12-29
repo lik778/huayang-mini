@@ -55,11 +55,12 @@
             bindtap="{{hasLogin?buttonType===6||item.status==='unlock'?'play':item.canReplay?'play':'':'join'}}"
             data-item="{{item}}" data-index="{{index}}">
             <view class="course-item-left">
-              <view class="course-item-left-left" wx:if="{{item.canReplay}}">试看</view>
-              <view class="course-item-left-left" wx:if="{{buttonType!==6&&item.status==='unlock'&&!item.canReplay}}">
+              <view class="course-item-left-left" wx:if="{{playIndex===index&&inPlay}}">正在播放</view>
+              <view class="course-item-left-left" wx:elif="{{item.canReplay}}">试看</view>
+              <view class="course-item-left-left" wx:elif="{{buttonType!==6&&item.status==='unlock'&&!item.canReplay}}">
                 好友相送</view>
-              <view class="course-item-left-left" wx:if="{{!item.canReplay&&hasLogin&&buttonType===6}}">
-                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1609143666MCoTzZ.jpg"></image>
+              <view class="course-item-left-left" wx:elif="{{!item.canReplay&&hasLogin&&buttonType===6}}">
+                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1609214465NZZWiu.jpg"></image>
               </view>
               <view class="course-item-left-left video-lock"
                 wx:if="{{!item.canReplay&&item.status!=='unlock'&&(!hasLogin||buttonType!==6)}}">
@@ -68,21 +69,16 @@
               <view
                 class="{{playIndex===index&&inPlay?'course-item-left-right subject-font-color':'course-item-left-right'}}">
                 <view class="course-item-left-right-top">
-                  <text class="item-left-top" decode='true'>{{index+1}}.&nbsp;</text>
-                  <text class="item-left-bottom">{{item.title}}</text>
+                  <text class="item-left-top" decode='true'>第{{item.Index}}课&nbsp;</text>
+                  <text class="item-left-bottom">{{item.time}}</text>
                 </view>
-                <view class="course-item-left-right-bottom subject-font-color" wx:if="{{playIndex===index&&inPlay}}">
-                  正在播放
-                </view>
-                <view class="course-item-left-right-bottom" wx:else>{{item.time}}</view>
+                <view class="course-item-left-right-bottom">{{item.title}}</view>
               </view>
             </view>
-            <view class="course-item-right subject-bg-color" catchtap="inviteFriend"
+            <view class="course-item-right" catchtap="inviteFriend"
               wx:if='{{buttonType===6&&courseData.gift_limit_count>0}}' data-index="{{index}}">
-              请好友看课</view>
-            <!-- <view class="course-item-right subject-font-color" wx:if="{{playIndex===index&&inPlay}}">
-              正在播放
-            </view> -->
+              <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1609220383OfGaWa.jpg"></image>
+            </view>
           </view>
         </view>
       </view>

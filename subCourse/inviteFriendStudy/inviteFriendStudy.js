@@ -90,7 +90,7 @@ Page({
     let qrcode = this.data.inviteInfo.gift.qrcode
     ctx.scale(3, 3)
     drawImage(ctx, bg, 0, 0, 375, 576).then(() => {
-      drawImage(ctx, posterBg, 39, 30, 315, 498).then(() => {
+      drawImage(ctx, posterBg, 30, 39, 315, 498).then(() => {
         ctx.font = 'bold 18px PingFangSC-Medium, PingFang SC'
         let nickNameX = 302 - measureTextWidth(ctx, nickName)
         drawFont(ctx, nickName, '#8C5419', '400', fontFamily, 14, nickNameX, 168)
