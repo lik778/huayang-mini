@@ -251,7 +251,7 @@
         {
           "name": "视频详情页",
           "pathName": "subCourse/videoCourse/videoCourse",
-          "query": "videoId=46",
+          "query": "videoId=55",
           "scene": null
         },
         {
@@ -341,7 +341,7 @@
         {
           "name": "subCourse/inviteFriendStudy/inviteFriendStudy",
           "pathName": "subCourse/inviteFriendStudy/inviteFriendStudy",
-          "query": "scene= 75/false",
+          "query": "scene= 129/false",
           "scene": null
         }
       ]
