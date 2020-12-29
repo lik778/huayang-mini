@@ -54,7 +54,8 @@
           <view class="{{playIndex===index?'course-item course-item-active subject-font-color':'course-item'}}"
             bindtap="{{hasLogin?buttonType===6||item.status==='unlock'?'play':item.canReplay?'play':'':'join'}}"
             data-item="{{item}}" data-index="{{index}}">
-            <view class="course-item-left">
+            <view class="course-item-left"
+              style="width:{{buttonType===6&&courseData.gift_limit_count>0?'calc(100% - 216rpx)':'calc(100% - 30rpx)'}}">
               <view class="course-item-left-left" wx:if="{{playIndex===index&&inPlay}}">正在播放</view>
               <view class="course-item-left-left" wx:elif="{{item.canReplay}}">试看</view>
               <view class="course-item-left-left" wx:elif="{{buttonType!==6&&item.status==='unlock'&&!item.canReplay}}">

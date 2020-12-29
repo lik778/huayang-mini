@@ -388,7 +388,7 @@
 }
 
 .course-item-left-right {
-  width: 320rpx;
+  width: calc(100% - 124rpx);
   font-size: 32rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
