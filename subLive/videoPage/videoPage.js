@@ -1,5 +1,9 @@
-import { getLocalStorage } from "../../utils/util"
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+	getLocalStorage
+} from "../../utils/util"
+import {
+	GLOBAL_KEY
+} from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import dayjs from "dayjs"
 
@@ -19,7 +23,8 @@ Page({
 		videoSrc: '',
 		playIndex: 0,
 		campId: '',
-		name: ''
+		name: '',
+		date:""
 	},
 
 
@@ -56,12 +61,13 @@ Page({
 	 */
 	onLoad: function (options) {
 		if (options.is_camp_video && options.is_camp_video === 'true') {
-			let host = 'https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com'
+			let host = 'http://video.huayangbaixing.com/sv'
 			this.setData({
 				videoSrc: options.link.split(host)[1],
 				playIndex: Number(options.courseIndex),
 				campId: Number(options.campId),
-				name: options.name
+				name: options.name,
+				date: options.date
 			})
 		}
 		// is_camp_video
@@ -113,11 +119,10 @@ Page({
 			video_src: this.data.videoSrc,
 			lesson_num: `第${this.data.playIndex + 1}节课`,
 			kecheng_title: this.data.name,
-			play_duration: {
-				time_snippet: timeList.length === 0 ? listData : timeList, //事件片段
-				total_duration: this.data.totalDuration, //视频总时间
-				total_visit_duration: arr.length, // 总观看时间
-			},
+			lesson_date: this.data.date,
+			time_snippet: timeList.length === 0 ? listData : timeList, //事件片段
+			total_duration: this.data.totalDuration, //视频总时间
+			total_visit_duration: arr.length, // 总观看时间
 		}, false)
 	},
 	/**

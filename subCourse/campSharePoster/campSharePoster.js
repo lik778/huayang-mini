@@ -32,7 +32,7 @@ Page({
   shareTofriend() {
     bxPoint("page_traincamp_poster_save_button", {
       traincamp_id: this.data.campAllData.id,
-      date: getNowDateAll('-'),
+      clock_time: getNowDateAll('-'),
       day_num: this.data.campAllData.day_num
     }, false)
   },
@@ -55,7 +55,7 @@ Page({
                     })
                     bxPoint("page_traincamp_poster_share_button", {
                       traincamp_id: this.data.campAllData.id,
-                      date: getNowDateAll('-'),
+                      clock_time: getNowDateAll('-'),
                       day_num: this.data.campAllData.day_num
                     }, false)
                   }
@@ -77,7 +77,7 @@ Page({
                     })
                     bxPoint("page_traincamp_poster_share_button", {
                       traincamp_id: this.data.campAllData.id,
-                      date: getNowDateAll('-'),
+                      clock_time: getNowDateAll('-'),
                       day_num: this.data.campAllData.day_num
                     }, false)
                   }

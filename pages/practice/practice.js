@@ -5,7 +5,10 @@ import {
 	queryBootCampContentInToday,
 	updateBootcampStudyTime
 } from "../../api/course/index"
-import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
+import {
+	CourseLevels,
+	GLOBAL_KEY
+} from "../../lib/config"
 import dayjs from "dayjs"
 import {
 	$notNull,
@@ -13,10 +16,13 @@ import {
 	hasAccountInfo,
 	hasUserInfo,
 	removeLocalStorage,
+	formatDate,
 	setLocalStorage
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
-import { getTaskEntranceStatus } from "../../api/task/index"
+import {
+	getTaskEntranceStatus
+} from "../../api/task/index"
 
 const CourseTypeImage = {
 	kecheng: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604371266ssIXdS.jpg",
@@ -151,11 +157,15 @@ Page({
 	 */
 	goToCompositeTaskPage() {
 		bxPoint("task_practice_tab_entrance", {}, false)
-		wx.navigateTo({url: "/subCourse/compositeTask/compositeTask"})
+		wx.navigateTo({
+			url: "/subCourse/compositeTask/compositeTask"
+		})
 	},
 	// 用户确认授权
 	authCompleteEvent() {
-		this.setData({didShowAuth: false})
+		this.setData({
+			didShowAuth: false
+		})
 		setLocalStorage("hy_dd_auth_done_in_practice", "yes")
 		this.initial()
 	},
@@ -190,6 +200,7 @@ Page({
 	},
 	// 处理练习按钮事件
 	handleExerciseBtnTap(e) {
+
 		let {
 			item,
 			parent,
@@ -261,8 +272,11 @@ Page({
 				return
 			}
 			case 'video': {
+				let parent = e.currentTarget.dataset.parent
+				let parentTime = dayjs(parent.date).add(parent.day_num - 1, 'day').valueOf()
+				let endDate = formatDate('Y-m-d', parentTime / 1000)
 				wx.navigateTo({
-					url: '/subLive/videoPage/videoPage?link=' + item.video + `&is_camp_video=true&courseIndex=${courseIndex}&campId=${campId}&name=${item.name}`
+					url: '/subLive/videoPage/videoPage?link=' + item.video + `&is_camp_video=true&courseIndex=${courseIndex}&campId=${campId}&name=${item.name}&date=${endDate}`
 				})
 				return
 			}
@@ -322,8 +336,12 @@ Page({
 	},
 	async initial() {
 		// 检查是否展示作业秀入口
-		getTaskEntranceStatus().then(({data}) => {
-			this.setData({visibleTaskEntrance: data == 1})
+		getTaskEntranceStatus().then(({
+			data
+		}) => {
+			this.setData({
+				visibleTaskEntrance: data == 1
+			})
 		})
 
 		if (hasUserInfo() && hasAccountInfo()) {
@@ -386,6 +404,8 @@ Page({
 							name: name,
 							content,
 							status: +status,
+							date: date,
+							day_num: dayNum,
 							visitAt: +dayjs(item.visit_at),
 							_mark: "bootcamp"
 						})
