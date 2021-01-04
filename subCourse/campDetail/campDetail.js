@@ -26,6 +26,7 @@ import {
 } from "../../utils/util"
 import bxPoint from '../../utils/bxPoint'
 import { GLOBAL_KEY } from "../../lib/config"
+import dayjs from "dayjs"
 
 Page({
 
@@ -276,7 +277,7 @@ Page({
               traincamp_id: this.data.campId
             }, false)
             wx.navigateTo({
-              url: `/subCourse/practiceDetail/practiceDetail?courseId=${res.id}&parentBootCampId=${this.data.campId}&lessonDate=${+new Date(this.data.showDate)}&formCampDetail=payUser`,
+              url: `/subCourse/practiceDetail/practiceDetail?courseId=${res.id}&parentBootCampId=${this.data.campId}&lessonDate=${dayjs(this.data.showDate).valueOf()}&formCampDetail=payUser`,
             })
           }
         } else {

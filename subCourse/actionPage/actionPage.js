@@ -4,6 +4,7 @@ import { LocaleVoice, voices_ary, voices_key, voices_number } from "../../lib/vo
 import { completePractice, recordPracticeBehavior } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
 import { collectError } from "../../api/auth/index"
+import dayjs from "dayjs"
 
 Page({
 	/**
@@ -268,7 +269,7 @@ Page({
 	 * 秀一下
 	 */
 	async show() {
-		bxPoint("course_show", {practice_time: this.data.globalRecordTiming, traincamp_id: this.data.parentBootCampId, lesson_date: this.data.lessonDate}, false)
+		bxPoint("course_show", {practice_time: this.data.globalRecordTiming, traincamp_id: this.data.parentBootCampId, lesson_date: dayjs(this.data.lessonDate).format("YYYY-MM-DD")}, false)
 
 		let url = `/subCourse/actionPost/actionPost?actionName=${this.data.courseInfo.name}&duration=${this.data.globalRecordTimeText}&actionNo=${this.data.originData.length}&keChengId=${this.data.courseInfo.id}&bootCampId=${this.data.parentBootCampId}`
 		wx.redirectTo({url})
@@ -618,7 +619,7 @@ Page({
 				})
 			})
 		} else {
-			bxPoint("course_play_complete", {practice_time: this.data.globalRecordTiming, traincamp_id: this.data.parentBootCampId, lesson_date: this.data.lessonDate}, false)
+			bxPoint("course_play_complete", {practice_time: this.data.globalRecordTiming, traincamp_id: this.data.parentBootCampId, lesson_date: dayjs(this.data.lessonDate).format("YYYY-MM-DD")}, false)
 			// 训练结束
 			this.setData({
 				didShowResultLayer: true,
