@@ -1,16 +1,8 @@
 // mine/mineOrder/mineOrder.js
-import {
-  getLocalStorage
-} from "../../utils/util"
-import {
-  getMineOrder
-} from "../../api/mine/index"
-import {
-  GLOBAL_KEY
-} from "../../lib/config.js"
-import {
-  getYouZanAppId
-} from "../../api/mall/index"
+import { getLocalStorage } from "../../utils/util"
+import { getMineOrder } from "../../api/mine/index"
+import { GLOBAL_KEY } from "../../lib/config.js"
+import { getYouZanAppId } from "../../api/mall/index"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -33,8 +25,9 @@ Page({
   },
   // 切换tab
   changeTab(e) {
+    let index =  e.currentTarget.dataset.index
     bxPoint("order_tab", {
-      tab: e.currentTarget.dataset.index == 1 ? "goods" : "camp"
+      tab: index == 1 ? "camp" : index === 2 ? "goods" : "kecheng"
     }, false)
     this.setData({
       curentIndex: e.currentTarget.dataset.index
