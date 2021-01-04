@@ -218,7 +218,7 @@ Page({
           limit_num: this.data.inviteInfo.gift.limit_count,
           share_uid: this.data.inviteInfo.gift.user_id,
           receive_num: res.data,
-        })
+        },false)
 
 
 

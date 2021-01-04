@@ -8,9 +8,7 @@ import {
   secondToMinute,
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
-import {
-  checkFocusLogin
-} from "../../api/auth/index"
+import { checkFocusLogin } from "../../api/auth/index"
 import {
   checkJoinVideoCourse,
   createFissionTask,
@@ -21,10 +19,7 @@ import {
   recordStudy,
   inviteFriend
 } from "../../api/course/index"
-import {
-  GLOBAL_KEY,
-  Version
-} from "../../lib/config"
+import { GLOBAL_KEY, Version } from "../../lib/config"
 
 const ButtonType = {
   freeAndNoLevelLimit: 1, // 免费且没有等级限制
@@ -159,6 +154,8 @@ Page({
       kecheng_series_id: this.data.courseData.id,
       kecheng_num: playIndex + 1
     })
+    
+    // 2021-1-5
     // 学习课程打点
     bxPoint("series_content_click", {
       series_id: this.data.courseData.id,
@@ -202,7 +199,7 @@ Page({
 
   // 记录播放时长打点
   recordPlayDuration() {
-    let VideoSrcHost = 'https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com' //视频地址前缀
+    let VideoSrcHost = 'http://video.huayangbaixing.com/sv' //视频地址前缀
     let arr = this.data.playDurationsList.sort((a, b) => {
       return a - b
     })
@@ -236,18 +233,16 @@ Page({
     } else {
       listData = [`${arr[0]}-${arr[arr.length-1]}`]
     }
-
+    console.log(this.data.videoSrc)
     bxPoint("page_series", {
       scene: 'page_series',
-      kecheng_series_id: this.data.videoId,
+      series_id: this.data.videoId,
       video_src: this.data.videoSrc.split(VideoSrcHost)[1],
       lesson_num: `第${this.data.videoIndex + 1}节课`,
       kecheng_title: this.data.videoListAll[this.data.videoIndex].title,
-      play_duration: {
-        time_snippet: timeList.length === 0 ? listData : timeList, //事件片段
-        total_duration: time, //视频总时间
-        total_visit_duration: arr.length, // 总观看时间
-      },
+      time_snippet: timeList.length === 0 ? listData : timeList, //事件片段
+      total_duration: time, //视频总时间
+      total_visit_duration: arr.length, // 总观看时间
     }, false)
   },
 

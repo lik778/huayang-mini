@@ -178,7 +178,7 @@ Page({
 		}
 
 		bxPoint("discovery_tab", {
-			tabName: name
+			tab: name
 		}, false)
 
 		if (this.data.scrollTop >= this.data.tabsDomOffsetTopNo) {

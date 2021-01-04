@@ -26,6 +26,7 @@ import {
 } from "../../utils/util"
 import bxPoint from '../../utils/bxPoint'
 import { GLOBAL_KEY } from "../../lib/config"
+import dayjs from "dayjs"
 
 Page({
 
@@ -109,7 +110,7 @@ Page({
   toCampPoster() {
     bxPoint("page_traincamp_share_button", {
       traincamp_id: this.data.campData.id,
-      date: getNowDateAll('-'),
+      clock_time: getNowDateAll('-'),
       day_num: this.data.dayNum
     }, false)
     queryPunchCardQrCode({
@@ -174,7 +175,7 @@ Page({
   toCoursedetail(e) {
     let item = e.currentTarget.dataset.item
     let index = e.currentTarget.dataset.index
-    let VideoSrcHost = 'https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com' //视频地址前缀
+    let VideoSrcHost = 'http://video.huayangbaixing.com/sv' //视频地址前缀
     this.setData({
       playIndex: index
     })
@@ -276,7 +277,7 @@ Page({
               traincamp_id: this.data.campId
             }, false)
             wx.navigateTo({
-              url: `/subCourse/practiceDetail/practiceDetail?courseId=${res.id}&parentBootCampId=${this.data.campId}&lessonDate=${+new Date(this.data.showDate)}&formCampDetail=payUser`,
+              url: `/subCourse/practiceDetail/practiceDetail?courseId=${res.id}&parentBootCampId=${this.data.campId}&lessonDate=${dayjs(this.data.showDate).valueOf()}&formCampDetail=payUser`,
             })
           }
         } else {
@@ -377,7 +378,7 @@ Page({
         }, 1000)
       })
     }
-    let VideoSrcHost = 'https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com' //视频地址前缀
+    let VideoSrcHost = 'http://video.huayangbaixing.com/sv' //视频地址前缀
     bxPoint('traincamp_every_day', {
       videoSrc: this.data.videoData.src.split(VideoSrcHost)[1],
       traincamp_id: this.data.campId,
@@ -659,7 +660,7 @@ Page({
   // 记录播放时长打点
   recordPlayDuration() {
     if (!this.data.hasPlayVideo) return
-    let VideoSrcHost = 'https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com' //视频地址前缀
+    let VideoSrcHost = 'http://video.huayangbaixing.com/sv' //视频地址前缀
     let arr = this.data.playDurationsList.sort((a, b) => {
       return a - b
     })
@@ -698,13 +699,11 @@ Page({
       traincamp_id: this.data.campId,
       video_src: this.data.videoData.src.split(VideoSrcHost)[1],
       lesson_num: `第${this.data.playIndex + 1}节课`,
-      date: this.data.showDate,
+      lesson_date: this.data.showDate,
       kecheng_title: `${this.data.courseList[this.data.playIndex].name}`,
-      play_duration: {
-        time_snippet: timeList.length === 0 ? listData : timeList, //事件片段
-        total_duration: time, //视频总时间
-        total_visit_duration: arr.length, // 总观看时间
-      },
+      time_snippet: timeList.length === 0 ? listData : timeList, //事件片段
+      total_duration: time, //视频总时间
+      total_visit_duration: arr.length, // 总观看时间
     }, false)
   },
 
