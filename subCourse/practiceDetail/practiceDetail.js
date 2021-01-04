@@ -16,6 +16,7 @@ Page({
 		statusHeight: 0,
 		screenWidth: 0,
 		parentBootCampId: 0, // 训练营id，有就传无则不传
+		lessonDate: 0, // 训练营中的第N天
 		options: {},
 		accountInfo: {},
 		CourseLevels,
@@ -134,11 +135,12 @@ Page({
 
 	// 启动函数
 	start() {
-		let {parentBootCampId = 0, courseId, formCampDetail} = this.data.options
+		let {parentBootCampId = 0, lessonDate = 0, courseId, formCampDetail} = this.data.options
 
 		let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
 		this.setData({
 			parentBootCampId,
+			lessonDate,
 			courseId,
 			screenWidth: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth,
 			statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
@@ -295,7 +297,7 @@ Page({
 			joinCourseInGuide({kecheng_id_str: this.data.courseId})
 
 			wx.navigateTo({
-				url: `/subCourse/actionPage/actionPage?parentBootCampId=${this.data.parentBootCampId}`,
+				url: `/subCourse/actionPage/actionPage?parentBootCampId=${this.data.parentBootCampId}&lessonDate=${this.data.lessonDate}`,
 				success(res) {
 					res.eventChannel.emit('transmitCourseMeta', JSON.stringify(cookedCourseMetaData))
 					res.eventChannel.emit('transmitCourseInfo', JSON.stringify(self.data.courseInfoObj))

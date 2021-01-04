@@ -15,7 +15,9 @@ import {
   getVideoArticleLink,
   getVideoCourseDetail,
   joinVideoCourse,
-  recordStudy
+  getIosCustomerLink,
+  recordStudy,
+  inviteFriend
 } from "../../api/course/index"
 import { GLOBAL_KEY, Version } from "../../lib/config"
 
@@ -58,6 +60,44 @@ Page({
     promoteUid: "", //分销分享人ID
     userInfo: "", //用户信息
     showPromotion: true, //分销分享按钮
+    playDurationsList: [], //播放记录秒数打点
+    playDurationsListAll: [], //播放记录所有打点
+    videoIndex: 0,
+    inPlay: false, //是否播放中
+    isIosPlatform: false,
+    showSuccess: false,
+    shareIndex: '',
+    inviteFriendLock: true
+  },
+  // 邀请好友看课
+  inviteFriend(e) {
+    if (this.data.inviteFriendLock) {
+      this.setData({
+        inviteFriendLock: false
+      })
+      let index = e.currentTarget.dataset.index + 1
+      let videoId = Number(this.data.videoId)
+      let userId = this.data.userInfo.id
+      let params = {
+        user_id: userId,
+        kecheng_series_id: videoId,
+        kecheng_series_num: index
+      }
+      // 请好友看-按钮打点（2020-12-28上线）
+      bxPoint("share_friend_learn", {
+        series_id: this.data.courseData.id,
+        kecheng_title: this.data.courseData.video_detail[index - 1].title
+      }, false)
+
+      inviteFriend(params).then(res => {
+        if (res.code === 0) {
+          wx.navigateTo({
+            url: `/subCourse/inviteFriendStudy/inviteFriendStudy?inviteId=${res.data.gift.id}`,
+          })
+        }
+      })
+    }
+
   },
   initFissionTask() {
     createFissionTask({
@@ -79,22 +119,30 @@ Page({
       })
       return
     }
+
+
+
     let playIndex = this.data.playIndex === -1 ? 0 : this.data.playIndex
     let index = e.currentTarget.dataset.index
+
     if (index !== undefined && index !== playIndex) {
       playIndex = index
       this.setData({
         videoSrc: e.currentTarget.dataset.item.url,
         playIndex: playIndex,
+        videoIndex: playIndex,
         closeCover: true,
-        showVideoCover: false
+        showVideoCover: false,
+        inPlay: true
       })
     } else {
       this.setData({
         playIndex: playIndex,
         closeCover: true,
         showVideoCover: false,
-        videoSrc: this.data.videoListAll[playIndex].url
+        videoSrc: this.data.videoListAll[playIndex].url,
+        videoIndex: playIndex,
+        inPlay: true
       })
     }
     wx.pageScrollTo({
@@ -106,21 +154,39 @@ Page({
       kecheng_series_id: this.data.courseData.id,
       kecheng_num: playIndex + 1
     })
+    
+    // 2021-1-5
     // 学习课程打点
     bxPoint("series_content_click", {
       series_id: this.data.courseData.id,
       kecheng_title: this.data.videoListAll[playIndex].title
     }, false)
+
+
     setTimeout(() => {
       this.videoContext.play()
-    }, 200)
+    }, 1000)
   },
   // 播放结束
   endVideo() {
     this.setData({
-      playIndex: -1
+      // playIndex: -1,
+      inPlay: false
     })
   },
+
+  // 播放进度变化
+  processChange(e) {
+    let arr = this.data.playDurationsList
+    let time = Math.floor(e.detail.currentTime)
+    if (this.data.playDurationsList.indexOf(time) === -1) {
+      arr.push(time)
+    }
+    this.setData({
+      playDurationsList: arr,
+    })
+  },
+
   // 暂停播放
   pause() {
     if (!this.data.closeCover) {
@@ -129,6 +195,57 @@ Page({
       })
     }
   },
+
+
+  // 记录播放时长打点
+  recordPlayDuration() {
+    let VideoSrcHost = 'http://video.huayangbaixing.com/sv' //视频地址前缀
+    let arr = this.data.playDurationsList.sort((a, b) => {
+      return a - b
+    })
+    let time = this.data.courseData.video_detail[this.data.videoIndex].duration //视频总时长
+    let splitIndexArr = []
+    let index = 0
+    let timeSnippetArr = []
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i + 1] - arr[i] > 1) {
+        splitIndexArr.push(i + 1)
+      }
+    }
+    while (splitIndexArr.length > 0) {
+      let data = arr.slice(index, splitIndexArr[0])
+      timeSnippetArr.push(data)
+      index = splitIndexArr[0]
+      splitIndexArr.splice(0, 1)
+      if (splitIndexArr.length === 0) {
+        timeSnippetArr.push(arr.slice(index, arr.length))
+      }
+    }
+    let timeList = []
+    for (let i in timeSnippetArr) {
+      let str1 = timeSnippetArr[i][0]
+      let str2 = timeSnippetArr[i][timeSnippetArr[i].length - 1]
+      timeList.push(`${str1}-${str2}`)
+    }
+    let listData = []
+    if (arr.length <= 1) {
+      listData = arr[0]
+    } else {
+      listData = [`${arr[0]}-${arr[arr.length-1]}`]
+    }
+    console.log(this.data.videoSrc)
+    bxPoint("page_series", {
+      scene: 'page_series',
+      series_id: this.data.videoId,
+      video_src: this.data.videoSrc.split(VideoSrcHost)[1],
+      lesson_num: `第${this.data.videoIndex + 1}节课`,
+      kecheng_title: this.data.videoListAll[this.data.videoIndex].title,
+      time_snippet: timeList.length === 0 ? listData : timeList, //事件片段
+      total_duration: time, //视频总时间
+      total_visit_duration: arr.length, // 总观看时间
+    }, false)
+  },
+
   // 加入课程
   join() {
     let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo) === undefined ? '' : JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
@@ -139,45 +256,55 @@ Page({
       })
       return
     } else {
-      if (this.data.lock) {
-        // 加入课程
-        joinVideoCourse({
-          open_id: openid,
-          series_id: this.data.courseData.id,
-          promote_uid: this.data.promoteUid
-        }).then(res => {
-          this.setData({
-            lock: false
+      if (this.data.isIosPlatform) {
+        // IOS平台
+        getIosCustomerLink().then(res => {
+          let link = encodeURIComponent(res.data)
+          wx.navigateTo({
+            url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
           })
+        })
+      } else {
+        if (this.data.lock) {
+          // 加入课程
           bxPoint("series_join", {
             series_id: this.data.courseData.id
           }, false)
-          if (res === 'success') {
-            this.backFun({
-              type: "success"
+          joinVideoCourse({
+            open_id: openid,
+            series_id: this.data.courseData.id,
+            promote_uid: this.data.promoteUid
+          }).then(res => {
+            this.setData({
+              lock: false
             })
-          } else if (res.num) {
-            payCourse({
-              id: res.id,
-              name: '加入视频课程'
-            }).then(res => {
-              // 设置顶部标题
-              if (res.errMsg === "requestPayment:ok") {
-                this.backFun({
-                  type: "success"
-                })
-              } else {
+            if (res === 'success') {
+              this.backFun({
+                type: "success"
+              })
+            } else if (res.num) {
+              payCourse({
+                id: res.id,
+                name: '加入视频课程'
+              }).then(res => {
+                // 设置顶部标题
+                if (res.errMsg === "requestPayment:ok") {
+                  this.backFun({
+                    type: "success"
+                  })
+                } else {
+                  this.backFun({
+                    type: "fail"
+                  })
+                }
+              }).catch(err => {
                 this.backFun({
                   type: "fail"
                 })
-              }
-            }).catch(err => {
-              this.backFun({
-                type: "fail"
               })
-            })
-          }
-        })
+            }
+          })
+        }
       }
     }
   },
@@ -283,8 +410,8 @@ Page({
       videoListAll = JSON.parse(res.video_detail)
       for (let i in videoListAll) {
         // 处理课程视频长度以及第xx节课
+        videoListAll[i].duration = videoListAll[i].time
         videoListAll[i].time = secondToMinute(videoListAll[i].time)
-        // videoListAll[i].time = simpleDurationDate(videoListAll[i].time, 's')
         videoListAll[i].Index = convertToChinaNum(parseInt(i) + 1)
       }
       res.video_detail = videoListAll.slice(0, 3)
@@ -299,6 +426,7 @@ Page({
         // 控制视频是否可以播放
         lock = false
       }
+      // let canPlay = this.data.playIndex === -1 ? res.video_detail[0].canReplay : res.video_detail[this.data.playIndex].canReplay
       let canPlay = res.video_detail[0].canReplay
       let showVideoCoverLock = this.data.showVideoCover
       let hasLogin = this.data.hasLogin
@@ -351,39 +479,25 @@ Page({
         res.sharePrice = ''
       }
       this.getArticleLink(res.id)
-      checkFocusLogin({
-        app_version: Version
-      }).then(res1 => {
-        let _this = this
-        if (!res1) {
-          // ios规则弹窗
-          wx.getSystemInfo({
-            success: function (res2) {
-              if (res2.platform == 'ios') {
-                buttonStyle = ButtonType.thoughIOSVirtualPay
-              }
-              _this.setData({
-                courseData: res,
-                showMoreAll: showMoreAll,
-                videoListAll: videoListAll,
-                showMore: showMore,
-                videoLock: lock,
-                showVideoLock: showVideoLock,
-                buttonType: buttonStyle,
-                videoSrc: videoListAll[0].canReplay ? videoListAll[0].url : ''
-              })
-            }
-          })
-        } else {
-          _this.setData({
+
+      wx.getSystemInfo({
+        success: (res2) => {
+          let isIosPlatform = false
+          if (res2.platform == 'ios' && buttonStyle !== 6) {
+            buttonStyle = 1
+            isIosPlatform = true
+          }
+          this.setData({
             courseData: res,
             showMoreAll: showMoreAll,
             videoListAll: videoListAll,
             showMore: showMore,
             videoLock: lock,
-            showVideoLock: showVideoLock,
+            isIosPlatform,
+            showVideoLock: this.data.shareIndex === '' ? showVideoLock : false,
             buttonType: buttonStyle,
-            videoSrc: videoListAll[0].canReplay ? videoListAll[0].url : ''
+            playIndex: this.data.shareIndex === '' ? this.data.playIndex : this.data.shareIndex,
+            videoSrc: videoListAll[0].canReplay ? videoListAll[0].url : this.data.shareIndex === '' ? '' : videoListAll[this.data.shareIndex].url
           })
         }
       })
@@ -409,6 +523,9 @@ Page({
         }
         if (res.data === null) {
           // 未加入过
+          this.setData({
+            playIndex: -1
+          })
           this.getVideoDetail()
         } else {
           // 加入过
@@ -529,7 +646,7 @@ Page({
       open_id: getLocalStorage(GLOBAL_KEY.openId),
       user_id: getLocalStorage(GLOBAL_KEY.userId),
       isPromoter: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).kecheng_user.is_promoter === 1 ? true : false
-    })
+    }, false)
   },
 
   /**
@@ -541,8 +658,20 @@ Page({
       source,
       videoId,
       promote_uid = '',
+      showSuccess = false,
       series_invite_id = ''
     } = options
+    if (options.playIndex) {
+      let index = Number(options.playIndex)
+      this.setData({
+        shareIndex: index
+      })
+    }
+
+
+    this.setData({
+      showSuccess
+    })
     if (promote_uid !== '') {
       this.setData({
         promoteUid: promote_uid
@@ -578,8 +707,19 @@ Page({
     let width = wx.getSystemInfoSync().windowWidth
     let height = parseInt(((width - 30) / 16) * 9)
     this.setData({
-      videoStyle: `height:${height}px`,
+      videoStyle: this.data.showSuccess ? `height:${height}px;margin-top:46px` : `height:${height}px;`,
     })
+    // 5s后定时关闭领取成功弹窗
+    if (this.data.showSuccess) {
+      setTimeout(() => {
+        this.setData({
+          showSuccess: false,
+          videoStyle: `height:${height}px;`,
+        })
+
+      }, 5000)
+    }
+    
   },
 
   /**
@@ -597,14 +737,19 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    // 记录播放时长打点
+    this.recordPlayDuration()
+    this.setData({
+      inviteFriendLock: true
+    })
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    // 记录播放时长打点
+    this.recordPlayDuration()
   },
 
   /**
@@ -627,7 +772,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    let shareLink = `/subCourse/videoCourse/videoCourse?videoId=${this.data.courseData.id}`
+    let shareLink = `/subCourse/videoCourse/videoCourse?videoId=${this.data.courseData.id}&playIndex=${this.data.playIndex}`
     if (this.data.promoteUid !== '') {
       shareLink += `&promote_uid=${this.data.promoteUid}`
     } else {
@@ -635,9 +780,10 @@ Page({
         shareLink += `&promote_uid=${this.data.userInfo.id}`
       }
     }
-
+    let title = this.data.playIndex === -1 ? this.data.courseData.video_detail[0].title : this.data.courseData.video_detail[this.data.playIndex].title
+    // let title=this.data.courseData.share_desc
     return {
-      title: this.data.courseData.share_desc,
+      title: title,
       path: shareLink
     }
   }

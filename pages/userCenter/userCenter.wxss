@@ -1,6 +1,6 @@
 .user-center {
   background: #F9F9F9;
-  padding-bottom: 100rpx;
+  padding-bottom: 125rpx;
   min-height: 100vh;
   box-sizing: border-box;
 }
@@ -185,6 +185,14 @@
   height: 40rpx;
   vertical-align: bottom;
   margin-left: -4rpx;
+}
+
+.function-item-left .task-image {
+  width: 52rpx;
+  height: 52rpx;
+  vertical-align: bottom;
+  margin-left: -4rpx;
+  margin-right: 20rpx;
 }
 
 @keyframes flashing {

@@ -1,0 +1,43 @@
+<!--subCourse/campSharePoster/campSharePoster.wxml-->
+<view class="container">
+  <!--  navibar -->
+  <view class="navigation" style="padding-top:{{statusHeight+43}}px;background:#37383B;">
+    <naviBar title="学习打卡" color='#37383B' titleColor='#fff'></naviBar>
+  </view>
+  <!-- 主体 -->
+  <view class="main">
+    <view class="poster">
+      <canvas canvas-id='canvas' style="width:900px;height:1440px;"></canvas>
+      <image src="{{backSrc}}" style="width:{{canvasWidth}}px;height:{{canvasHeight}}px;"></image>
+    </view>
+
+  </view>
+  <!-- 显示的html -->
+  <view class="html-module" style="height:{{boxHeight}}px" wx:if="{{backSrc!==''}}">
+    <view class="html-box" style="height:{{height}}px">
+      <view class="html-box-bg">
+        <image src="{{bgSrc}}"></image>
+      </view>
+      <view class="html-date">{{showDate}}</view>
+      <view class="html-headicon">
+        <image src="{{userInfo.avatar_url}}"></image>
+      </view>
+      <view class="html-nickname">{{userInfo.nick_name}}</view>
+      <view class="html-text">正在花样百姓学习</view>
+      <view class="htmk-camp-name">{{campAllData.name}}</view>
+      <view class="html-camp-study-num">第<text>{{campAllData.day_num}}</text>天课程</view>
+      <view class="html-camp-qrcode">
+        <image src="{{campAllData.qrcode}}"></image>
+      </view>
+      <view class="html-camp-qrcode-text-one">长按识别二维码</view>
+      <view class="html-camp-qrcode-text-two">一起练习</view>
+    </view>
+  </view>
+  <view class="button" style="bottom:{{isIphoneXRSMax?'52rpx':'12rpx'}}" wx:if="{{backSrc!==''}}">
+    <view class="button-left subject-font-color" bindtap="shareTofriend">
+      <button open-type="share">分享到群内打卡</button>
+      <view class="button-left-share">分享到群内打卡</view>
+    </view>
+    <view class="button-right subject-bg-color" bindtap="downloadPoster">保存海报到相册</view>
+  </view>
+</view>

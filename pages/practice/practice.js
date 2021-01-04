@@ -5,7 +5,10 @@ import {
 	queryBootCampContentInToday,
 	updateBootcampStudyTime
 } from "../../api/course/index"
-import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
+import {
+	CourseLevels,
+	GLOBAL_KEY
+} from "../../lib/config"
 import dayjs from "dayjs"
 import {
 	$notNull,
@@ -13,9 +16,13 @@ import {
 	hasAccountInfo,
 	hasUserInfo,
 	removeLocalStorage,
+	formatDate,
 	setLocalStorage
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
+import {
+	getTaskEntranceStatus
+} from "../../api/task/index"
 
 const CourseTypeImage = {
 	kecheng: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604371266ssIXdS.jpg",
@@ -37,7 +44,9 @@ Page({
 		didShowTipsLay: false, // 显示提示收藏蒙层
 		didNeedScrollTop: false, // 是否需要将页面滑动到顶部
 		didShowAuth: false,
-		didShowNoDataLayout: false
+		didShowNoDataLayout: false,
+		didSignIn: false,
+		visibleTaskEntrance: true
 	},
 
 	/**
@@ -63,7 +72,7 @@ Page({
 		}
 
 		// 检查是否需要展示提示层
-		this.checkTipsLay()
+		// this.checkTipsLay()
 
 		// 记录起始页面地址
 		if (!getApp().globalData.firstViewPage && getCurrentPages().length > 0) {
@@ -74,8 +83,7 @@ Page({
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
-	onReady: function () {
-	},
+	onReady: function () {},
 
 	/**
 	 * 生命周期函数--监听页面显示
@@ -104,8 +112,13 @@ Page({
 		// 是否需要将页面滑动到顶部
 		if (this.data.didNeedScrollTop) {
 			// 将页面滑动到顶部
-			wx.pageScrollTo({scrollTop: 0, duration: 0})
-			this.setData({didNeedScrollTop: false})
+			wx.pageScrollTo({
+				scrollTop: 0,
+				duration: 0
+			})
+			this.setData({
+				didNeedScrollTop: false
+			})
 		}
 	},
 
@@ -139,15 +152,28 @@ Page({
 			path: `/pages/discovery/discovery?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
 		}
 	},
+	/**
+	 * 前往综合作业秀页面
+	 */
+	goToCompositeTaskPage() {
+		bxPoint("task_practice_tab_entrance", {}, false)
+		wx.navigateTo({
+			url: "/subCourse/compositeTask/compositeTask"
+		})
+	},
 	// 用户确认授权
 	authCompleteEvent() {
-		this.setData({didShowAuth: false})
+		this.setData({
+			didShowAuth: false
+		})
 		setLocalStorage("hy_dd_auth_done_in_practice", "yes")
 		this.initial()
 	},
 	// 用户授权取消
 	authCancelEvent() {
-		this.setData({didShowAuth: false})
+		this.setData({
+			didShowAuth: false
+		})
 	},
 	hiddenTipMask() {
 		this.setData({
@@ -174,14 +200,23 @@ Page({
 	},
 	// 处理练习按钮事件
 	handleExerciseBtnTap(e) {
+
 		let {
 			item,
-			parent
+			parent,
 		} = e.currentTarget.dataset
+		let courseIndex = e.currentTarget.dataset.index
+		let campId = e.currentTarget.dataset.parent.bootCampId
+
 		bxPoint("practice_start", {}, false)
-		this.setData({didNeedScrollTop: true})
+		this.setData({
+			didNeedScrollTop: true
+		})
 		// 训练营学习时间更新
-		updateBootcampStudyTime({traincamp_id: parent.bootCampId, user_id: getLocalStorage(GLOBAL_KEY.userId)})
+		updateBootcampStudyTime({
+			traincamp_id: parent.bootCampId,
+			user_id: getLocalStorage(GLOBAL_KEY.userId)
+		})
 		switch (item.type) {
 			case 'kecheng': {
 				switch (item.kecheng_type) {
@@ -237,8 +272,11 @@ Page({
 				return
 			}
 			case 'video': {
+				let parent = e.currentTarget.dataset.parent
+				let parentTime = dayjs(parent.date).add(parent.day_num - 1, 'day').valueOf()
+				let endDate = formatDate('Y-m-d', parentTime / 1000)
 				wx.navigateTo({
-					url: '/subLive/videoPage/videoPage?link=' + item.video
+					url: '/subLive/videoPage/videoPage?link=' + item.video + `&is_camp_video=true&courseIndex=${courseIndex}&campId=${campId}&name=${item.name}&date=${endDate}`
 				})
 				return
 			}
@@ -246,13 +284,19 @@ Page({
 	},
 	// 查看训练营详情
 	goToBootCamp(e) {
-		let {bootCampId} = e.currentTarget.dataset.item
-		this.setData({didNeedScrollTop: true})
+		let {
+			bootCampId
+		} = e.currentTarget.dataset.item
+		this.setData({
+			didNeedScrollTop: true
+		})
 		let self = this
 		wx.navigateTo({
 			url: "/subCourse/campDetail/campDetail?id=" + bootCampId + "&from=practice",
 			success() {
-				self.setData({didNeedScrollTop: true})
+				self.setData({
+					didNeedScrollTop: true
+				})
 			}
 		})
 	},
@@ -268,10 +312,13 @@ Page({
 	goToDiscovery() {
 		bxPoint("parctice_choose", {}, false)
 		if (hasUserInfo() && hasAccountInfo()) {
-			setLocalStorage("needToScrollTop", "1")
-			wx.switchTab({url: '/pages/discovery/discovery'})
+			wx.switchTab({
+				url: '/pages/discovery/discovery'
+			})
 		} else {
-			this.setData({didShowAuth: true})
+			this.setData({
+				didShowAuth: true
+			})
 		}
 	},
 	// 跳往视频课程详情
@@ -281,28 +328,51 @@ Page({
 		wx.navigateTo({
 			url: `/subCourse/videoCourse/videoCourse?videoId=${id}`,
 			success() {
-				self.setData({didNeedScrollTop: true})
+				self.setData({
+					didNeedScrollTop: true
+				})
 			}
 		})
 	},
 	async initial() {
-		if (hasAccountInfo()) {
-			this.setData({didShowNoDataLayout: false})
-			getUserPracticeRecentRecord({user_id: getLocalStorage(GLOBAL_KEY.userId)}).then(async (originData) => {
+		// 检查是否展示作业秀入口
+		getTaskEntranceStatus().then(({
+			data
+		}) => {
+			this.setData({
+				visibleTaskEntrance: data == 1
+			})
+		})
+
+		if (hasUserInfo() && hasAccountInfo()) {
+			this.setData({
+				didShowNoDataLayout: false,
+				didSignIn: true
+			})
+			getUserPracticeRecentRecord({
+				user_id: getLocalStorage(GLOBAL_KEY.userId)
+			}).then(async (originData) => {
 				let handledData = []
 				for (let item of originData) {
 					if (item.hasOwnProperty("kecheng_traincamp")) {
 						// 训练营
-						let {kecheng_traincamp_id, date, status, kecheng_traincamp: {name, period}} = item
+						let {
+							kecheng_traincamp_id,
+							date,
+							status,
+							kecheng_traincamp: {
+								name,
+								period
+							}
+						} = item
 						// 根据训练营查找对应的课程
 						let dayDiff = dayjs().diff(dayjs(date), 'day', true)
-						let dayNum = dayDiff | 0
+						let dayNum = dayDiff
 						if (dayDiff >= 0) {
-							// dayNum += 1
+							dayNum = ++dayNum | 0
 						} else {
 							dayNum = 0
 						}
-
 						// 如果训练营已经过期，则显示该训练营最后一天的课程内容
 						let endDate = dayjs(date).add(period, "day")
 						let nowDate = dayjs().format("YYYY-MM-DD")
@@ -334,6 +404,8 @@ Page({
 							name: name,
 							content,
 							status: +status,
+							date: date,
+							day_num: dayNum,
 							visitAt: +dayjs(item.visit_at),
 							_mark: "bootcamp"
 						})
@@ -391,7 +463,10 @@ Page({
 						}
 						let target = resultData.find(n => n.key === key)
 						if (!$notNull(target)) {
-							resultData.push({key, content: []})
+							resultData.push({
+								key,
+								content: []
+							})
 						}
 						target = resultData.find(n => n.key === key)
 						target.content.push(item)
@@ -400,24 +475,34 @@ Page({
 						let key = dayjs(item.visitAt).format("YYYY-MM-DD")
 						let target = resultData.find(n => n.key === key)
 						if (!$notNull(target)) {
-							resultData.push({key, content: []})
+							resultData.push({
+								key,
+								content: []
+							})
 						}
 						target = resultData.find(n => n.key === key)
 						target.content.push(item)
 					}
 				})
 
-				this.setData({resultData, didShowNoDataLayout: true})
+				this.setData({
+					resultData,
+					didShowNoDataLayout: true
+				})
 
 				// 用户首次授权成功，如果该用户没有任何课程则自动跳转至发现页
 				if (getLocalStorage("hy_dd_auth_done_in_practice") === "yes" && resultData.length === 0) {
 					removeLocalStorage("hy_dd_auth_done_in_practice")
-					setLocalStorage("needToScrollTop", "1")
-					wx.reLaunch({url: '/pages/discovery/discovery'})
+					wx.reLaunch({
+						url: '/pages/discovery/discovery'
+					})
 				}
 			})
 		} else {
-			this.setData({didShowNoDataLayout: true})
+			this.setData({
+				didShowNoDataLayout: true,
+				didSignIn: false
+			})
 		}
 	}
 })

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "authModule": "../../components/auth/auth"
+  },
+  "navigationBarTitleText":"发布作业"
+}

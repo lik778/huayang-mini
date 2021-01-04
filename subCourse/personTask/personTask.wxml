@@ -1,0 +1,26 @@
+<view class="person-task" style="background: {{personTaskList.length > 0 ? '#F9F9F9' : 'white'}}; padding-bottom: {{ isOwnner ? '136rpx' : '0' }}">
+    <block wx:if="{{visit_user_info}}">
+        <view class="user-layout">
+            <image mode="aspectFill" class="user-avatar" src="{{visit_user_info.avatar_url}}"></image>
+            <text class="user-name limit-one-line">{{visit_user_info.nick_name}}</text>
+        </view>
+
+        <view class="numbers">
+            <view class="number-item" style="margin-right: 60rpx;"><text class="no">{{visit_user_info.work_count}}</text><text>作业数</text></view>
+            <view class="number-item"><text class="no">{{visit_user_info.like_count}}</text><text>获赞数</text></view>
+        </view>
+
+        <view class="space-layout"></view>
+    </block>
+
+    <view class="task-layout">作业动态</view>
+
+    <taskLayout bind:noAuth="onNoAuth" isOwnner="{{isOwnner}}" bind:thumbChange="onThumbChange" bind:postTaskId="receiveTaskId" bind:deleteTask="removeTask" wx:for="{{personTaskList}}" wx:key="index" isPerson="{{true}}" scrollTopNumber="{{scrollTopNumber}}" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
+
+    <view class="launch-layout" wx:if="{{isOwnner}}">
+        <image mode="aspectFill" bindtap="goToLaunchTaskPage" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607663397fpoTbz.jpg" class="launch-btn"></image>
+    </view>
+
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
+    <flower id="flower" />
+</view>

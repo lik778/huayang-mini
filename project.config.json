@@ -4,7 +4,7 @@
     "ignore": []
   },
   "setting": {
-    "urlCheck": false,
+    "urlCheck": true,
     "es6": true,
     "enhance": true,
     "postcss": true,
@@ -14,7 +14,7 @@
     "coverView": true,
     "nodeModules": true,
     "autoAudits": false,
-    "showShadowRootInWxmlPanel": true,
+    "showShadowRootInWxmlPanel": false,
     "scopeDataCheck": false,
     "uglifyFileName": false,
     "checkInvalidKey": true,
@@ -28,16 +28,20 @@
       "disablePlugins": [],
       "outputPath": ""
     },
+    "enableEngineNative": false,
+    "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": true,
     "userConfirmedUseCompilerModuleSwitch": false,
+    "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
-    "packNpmRelationList": []
+    "packNpmRelationList": [],
+    "minifyWXSS": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.12.0",
   "appid": "wx85d130227f745fc5",
-  "projectname": "list",
+  "projectname": "%E8%8A%B1%E6%A0%B7%E7%99%BE%E5%A7%93%2B",
   "debugOptions": {
     "hidedInDevtools": []
   },
@@ -134,10 +138,9 @@
           "scene": null
         },
         {
-          "id": 11,
           "name": "subCourse/joinCamp/joinCamp",
           "pathName": "subCourse/joinCamp/joinCamp",
-          "query": "id=1&share=true&scene=joinCamp%2F1%2Fshare",
+          "query": "id=8&share=true",
           "scene": null
         },
         {
@@ -246,15 +249,99 @@
           "scene": null
         },
         {
-          "id": -1,
-          "name": "mine/personActivity/personActivity",
-          "pathName": "mine/personActivity/personActivity",
+          "name": "视频详情页",
+          "pathName": "subCourse/videoCourse/videoCourse",
+          "query": "videoId=55",
+          "scene": null
+        },
+        {
+          "name": "入学申请",
+          "pathName": "subCourse/applyJoinSchool/applyJoinSchool",
+          "query": "campId=40",
+          "scene": null
+        },
+        {
+          "name": "报道页",
+          "pathName": "subCourse/schoolReport/schoolReport",
+          "query": "scene=1%2F1",
+          "scene": null
+        },
+        {
+          "name": "报道结果页",
+          "pathName": "subCourse/schoolReportResult/schoolReportResult",
+          "query": "data= {\"name\":\"学员信息录入测试\",\"date\":\"2020-11-12\",\"class_num\":\"1\",\"stageId\":\"1\",\"campId\":40,\"userId\":228}",
+          "scene": null
+        },
+        {
+          "name": "视频详情",
+          "pathName": "subCourse/videoCourse/videoCourse",
+          "query": "videoId=42",
+          "scene": null
+        },
+        {
+          "name": "训练营详情",
+          "pathName": "subCourse/campDetail/campDetail",
+          "query": "id=40",
+          "scene": null
+        },
+        {
+          "name": "训练营海报",
+          "pathName": "subCourse/campSharePoster/campSharePoster",
+          "query": "id=40",
+          "scene": null
+        },
+        {
+          "name": "mine/invite/invite",
+          "pathName": "mine/invite/invite",
+          "query": "id=40",
+          "scene": null
+        },
+        {
+          "name": "训练营结营证书",
+          "pathName": "subCourse/campCredential/campCredential",
+          "query": "id=40",
+          "scene": null
+        },
+        {
+          "name": "发布页",
+          "pathName": "subCourse/launchTask/launchTask",
           "query": "",
           "scene": null
         },
         {
-          "name": "subMall/temporary/temporary",
-          "pathName": "subMall/temporary/temporary",
+          "name": "综合作业秀",
+          "pathName": "subCourse/compositeTask/compositeTask",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "个人作业秀",
+          "pathName": "subCourse/personTask/personTask",
+          "query": "visit_user_id=251",
+          "scene": null
+        },
+        {
+          "name": "主题作业秀",
+          "pathName": "subCourse/themeTask/themeTask",
+          "query": "kecheng_type=0&kecheng_id=38",
+          "scene": null
+        },
+        {
+          "name": "作业落地页",
+          "pathName": "subCourse/indexTask/indexTask",
+          "query": "taskId=211&nickname=Derisfe&userId=251",
+          "scene": null
+        },
+        {
+          "name": "邀请好友看课",
+          "pathName": "subCourse/inviteFriendStudy/inviteFriendStudy",
+          "query": "inviteId=74",
+          "scene": null
+        },
+        {
+          "name": "subCourse/inviteFriendStudy/inviteFriendStudy",
+          "pathName": "subCourse/inviteFriendStudy/inviteFriendStudy",
+          "query": "scene= 129/false",
           "scene": null
         }
       ]

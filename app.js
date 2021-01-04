@@ -8,8 +8,24 @@ App({
 		wx.loadFontFace({
 			global: true,
 			family: 'Condensed',
-			source: 'url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/font/DIN%20Condensed%20Bold.ttf")',
+			source: 'url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/font/DIN%20Condensed%20Bold.ttf")'
 		})
+		// wx.getLocation({
+		// 	type: 'wgs84',
+		// 	isHighAccuracy:true,
+		// 	success (res) {
+		// 		const latitude = res.latitude
+		// 		const longitude = res.longitude
+		// 		const speed = res.speed
+		// 		const accuracy = res.accuracy
+		// 		console.log(res)
+		// 	}
+		//  })
+		//  "permission": {
+		// 	"scope.userLocation": {
+		// 		"desc": "你的位置信息将用于小程序为您提供更好的服务"
+		// 	}
+		// },
 	},
 	onShow(options) {
 		// 记录设备信息，保证进入详情页时可以获取到statusHeight自定义navibar
@@ -58,6 +74,8 @@ App({
 		firstViewPage: "", // 用户打开的第一个页面地址
 		didVisibleCooPenPage: false, // 是否已经展示过开屏页
 		super_user_id: 0, // 上级邀请人id
-		source: "" // 用户场景来源
+		source: "", // 用户场景来源
+		needInitialPageName: "", // 需要重新加载的页面  [ 综合作业广场｜主题作业广场 ]
+		didShowedTaskTip: false, // 是否已经展示过作业提示
 	}
 })

@@ -1,0 +1,9 @@
+{
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "taskLayout": "../../components/taskLayout/taskLayout",
+    "authModule": "../../components/auth/auth",
+    "flower": "../../components/flower/flower"
+  }
+}

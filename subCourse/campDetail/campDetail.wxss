@@ -2,8 +2,11 @@
 @import "../../assets/css/common.wxss";
 
 .container {
-  background: #FFFFFF;
-  padding-bottom: 140rpx;
+  /* background: #F9F9F9; */
+  background: #FFF;
+  padding-bottom: 320rpx;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 .back-icon {
@@ -60,7 +63,7 @@
 }
 
 .main {
-  padding-top: 20rpx;
+  /* padding-top: 20rpx; */
 }
 
 
@@ -70,6 +73,8 @@
   align-items: center;
   height: 120rpx;
   padding: 0 30rpx;
+  background: #fff;
+  margin: 10rpx 0;
 }
 
 .calendar-left {
@@ -149,6 +154,11 @@
   align-items: center;
   padding-left: 50rpx;
   height: 144rpx;
+  border-bottom: 1px solid #F2F2F2;
+}
+
+.course-item:last-child {
+  border-bottom: none;
 }
 
 .course-item-left {
@@ -172,10 +182,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #F2F2F2;
+
 }
 
-.course-item-msg {}
+.course-item-msg {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
 .course-item-right-top {
   font-size: 36rpx;
@@ -227,23 +242,20 @@
 }
 
 .publicity {
-  position: fixed;
-  left: 30rpx;
-  bottom: 20rpx;
   display: flex;
-  z-index: 60;
   align-items: center;
   justify-content: center;
   font-size: 40rpx;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
-  color: #FFFFFF;
+  color: #00BB66;
   line-height: 56rpx;
-  background: #00BB66;
+  background: #FFFFFF;
   width: calc(100% - 60rpx);
   border-radius: 48rpx;
   height: 96rpx;
   animation: share 0.6s linear alternate infinite;
+  border: 1px solid #00BB66;
 }
 
 .publicity image {
@@ -342,6 +354,11 @@
   height: 126rpx;
 }
 
+.course-module {
+  background: #fff;
+
+}
+
 .no-course-module {
   text-align: center;
   padding-top: 100rpx;
@@ -356,32 +373,100 @@
 /* 分销按钮 */
 .share-friend {
   position: fixed;
-  right: 26rpx;
-  bottom: 188rpx;
+  right: 0;
+  bottom: 196rpx;
+  width: 324rpx;
+  height: 124rpx;
 }
 
 .share-friend-box {
   position: relative;
+  width: 100%;
+  height: 124rpx;
 }
 
-.share-friend-box button {
-  padding: 18rpx 56rpx;
-  font-size: 32rpx;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 600;
-  border-radius: 999rpx;
-  color: #FFFFFF;
-  opacity: 0;
+.share-friend-bg {
   position: absolute;
   left: 0;
   top: 0;
+  width: 100%;
+  height: 124rpx;
 }
 
-.share-text {
-  padding: 18rpx 56rpx;
-  font-size: 32rpx;
+.share-friend-bg image {
+  width: 100%;
+  height: 100%;
+}
+
+.share-friend-box button {
+  width: 100%;
+  height: 124rpx;
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  top: 0;
+}
+
+.share-friend-text-top {
+  position: absolute;
+  left: 164rpx;
+  top: 38rpx;
+  font-size: 28rpx;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
-  border-radius: 999rpx;
   color: #FFFFFF;
+  line-height: 40rpx;
+}
+
+.share-friend-text-bottom {
+  position: absolute;
+  left: 164rpx;
+  bottom: 6rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 40rpx;
+}
+
+
+/* 分享海报跳转按钮 */
+.share-poster-box {
+  width: calc(100% - 60rpx);
+  margin: 0 auto;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  border-radius: 999rpx;
+  margin-top: 10rpx;
+}
+
+
+/* 我的结营证书 */
+.my-credential {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 136rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.my-credential-text {
+  width: calc(100% - 60rpx);
+  height: 96rpx;
+  text-align: center;
+  line-height: 96rpx;
+  border-radius: 999rpx;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  /* color: #FFFFFF; */
+  border: 1px solid #CC0000;
 }

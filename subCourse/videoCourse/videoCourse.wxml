@@ -3,17 +3,23 @@
   <!-- 视频区域 -->
   <view class="video" style="{{videoStyle}}">
     <video id="myVideo" bindplay="playVideo" src="{{videoSrc}}" style="{{videoHeight}}" bindpause="pause"
-      controls="{{showLock?false:true}}" show-center-play-btn="{{false}}" bindended="endVideo">
+      bindtimeupdate="processChange" controls="{{showLock?false:true}}" show-center-play-btn="{{false}}"
+      bindended="endVideo">
     </video>
     <view class="video-cover-one" wx:if="{{showVideoCover}}">
       <image src="{{courseData.video_pic}}"></image>
     </view>
+
     <view class="video-cover" wx:if="{{!showVideoLock&&showVideoCover}}" bindtap="play">
       <image src="/assets/images/common/play.png"></image>
     </view>
     <view class="video-cover" wx:if="{{showVideoLock&&showVideoCover}}">
       <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597224125GjluUS.jpg"></image>
     </view>
+  </view>
+  <!-- 领取课程成功顶部弹窗 -->
+  <view class="get-success" wx:if='{{showSuccess}}' bindtap="play">
+    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1609144762ecfTzA.jpg"></image>
   </view>
   <!-- 内容简介区域 -->
   <view class="info">
@@ -45,31 +51,37 @@
     <view class="course-detail-box" wx:if="{{tabIndex===0}}">
       <view class="course-list">
         <view wx:for="{{courseData.video_detail}}" wx:key="index">
-          <view class="{{playIndex===index?'course-item course-item-active subject-bg-color':'course-item'}}"
-            bindtap="{{hasLogin?buttonType===6?'play':item.canReplay?'play':'':'join'}}" data-item="{{item}}"
-            data-index="{{index}}">
-            <view class="course-item-left">
-              <view class="course-item-left-left" wx:if="{{item.canReplay}}">试看</view>
-              <view class="course-item-left-left" wx:if="{{!item.canReplay&&hasLogin&&buttonType===6}}">
-                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599188783dnVheO.jpg"></image>
+          <view class="{{playIndex===index?'course-item course-item-active subject-font-color':'course-item'}}"
+            bindtap="{{hasLogin?buttonType===6||item.status==='unlock'?'play':item.canReplay?'play':'':'join'}}"
+            data-item="{{item}}" data-index="{{index}}">
+            <view class="course-item-left"
+              style="width:{{buttonType===6&&courseData.gift_limit_count>0?'calc(100% - 216rpx)':'calc(100% - 30rpx)'}}">
+              <view class="course-item-left-left" wx:if="{{playIndex===index&&inPlay}}">正在播放</view>
+              <view class="course-item-left-left" wx:elif="{{item.canReplay}}">试看</view>
+              <view class="course-item-left-left" wx:elif="{{buttonType!==6&&item.status==='unlock'&&!item.canReplay}}">
+                好友相送</view>
+              <view class="course-item-left-left" wx:elif="{{!item.canReplay&&hasLogin&&buttonType===6}}">
+                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1609214465NZZWiu.jpg"></image>
               </view>
-              <view class="course-item-left-left video-lock" wx:if="{{!item.canReplay&&(!hasLogin||buttonType!==6)}}">
+              <view class="course-item-left-left video-lock"
+                wx:if="{{!item.canReplay&&item.status!=='unlock'&&(!hasLogin||buttonType!==6)}}">
                 <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599188738gbIlPx.jpg"></image>
               </view>
-              <view class="course-item-left-right">
-                <view class="item-left-top">第{{item.Index}}课</view>
-                <view class="item-left-bottom">{{item.title}}</view>
+              <view
+                class="{{playIndex===index&&inPlay?'course-item-left-right subject-font-color':'course-item-left-right'}}">
+                <view class="course-item-left-right-top">
+                  <text class="item-left-top" decode='true'>第{{item.Index}}课&nbsp;</text>
+                  <text class="item-left-bottom">{{item.time}}</text>
+                </view>
+                <view class="course-item-left-right-bottom">{{item.title}}</view>
               </view>
             </view>
-            <view class="course-item-right subject-font-color" wx:if="{{playIndex===index}}">
-              正在播放
-            </view>
-            <view class="course-item-right subject-font-color" wx:else>
-              {{item.time}}
+            <view class="course-item-right" catchtap="inviteFriend"
+              wx:if='{{buttonType===6&&courseData.gift_limit_count>0}}' data-index="{{index}}">
+              <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1609220383OfGaWa.jpg"></image>
             </view>
           </view>
         </view>
-
       </view>
       <view class="show-more" wx:if="{{showMore&&showMoreAll}}" bindtap="showMore">
         <text>展开</text>
@@ -121,7 +133,7 @@
     </view>
   </view>
   <!-- 分销按钮 -->
-  <view class="share-friend" bindtap="shareCourse"
+  <view class="share-friend" bindtap="shareCourse" style="bottom:{{buttonType===6?'80rpx':'188rpx'}}"
     wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&showPromotion&&courseData.sharePrice!==''}}">
     <view class="share-friend-box">
       <button open-type="share">推广成功赚{{courseData.sharePrice}}元</button>
@@ -129,12 +141,13 @@
     </view>
   </view>
   <!-- 分享微信好友 -->
-  <view class="share" bindtap="share" wx:else>
+  <view class="share" bindtap="share" wx:else style="bottom:{{buttonType===6?'80rpx':'188rpx'}}">
     <view class="share-box">
       <button open-type="share"></button>
       <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599118170RBWnFr.jpg"></image>
     </view>
   </view>
+
   <!-- 授权弹窗 -->
   <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
   </authModule>

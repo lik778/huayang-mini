@@ -1,4 +1,4 @@
 <view class="coopen">
-    <image class="full-screen-image" mode="aspectFill" src="{{cover}}"></image>
+    <image class="full-screen-image" mode="aspectFill" src="{{cover}}" bindtap="handleAd"></image>
     <view class="skip" bindtap="skip">跳过 {{countdownNo}}</view>
 </view>

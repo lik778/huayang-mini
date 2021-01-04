@@ -1,12 +1,12 @@
 {
   "plugins": {
     "live-player-plugin": {
-      "version": "1.2.2",
+      "version": "1.2.5",
       "provider": "wx2b03c6e691cd7370"
     }
   },
   "usingComponents": {
-    "van-dialog": "../miniprogram_npm/@vant/weapp/dialog/index"
+    "van-dialog": "./miniprogram_npm/@vant/weapp/dialog/index"
   },
   "navigateToMiniProgramAppIdList": [
     "wx95fb6b5dbe8739b7",
@@ -31,9 +31,11 @@
     "pages/activePayCancel/activePayCancel"
   ],
   "requiredBackgroundModes": [
-    "audio"
+    "audio",
+    "location"
   ],
-  "subpackages": [{
+  "subpackages": [
+    {
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -83,7 +85,18 @@
         "lotteryWebview/lotteryWebview",
         "campDetail/campDetail",
         "campPeriodList/campPeriodList",
-        "noAuthWebview/noAuthWebview"
+        "noAuthWebview/noAuthWebview",
+        "applyJoinSchool/applyJoinSchool",
+        "schoolReport/schoolReport",
+        "schoolReportResult/schoolReportResult",
+        "campSharePoster/campSharePoster",
+        "campCredential/campCredential",
+        "inviteFriendStudy/inviteFriendStudy",
+        "launchTask/launchTask",
+        "personTask/personTask",
+        "themeTask/themeTask",
+        "compositeTask/compositeTask",
+        "indexTask/indexTask"
       ]
     },
     {
@@ -104,7 +117,8 @@
   },
   "tabBar": {
     "custom": true,
-    "list": [{
+    "list": [
+      {
         "pagePath": "pages/discovery/discovery"
       },
       {

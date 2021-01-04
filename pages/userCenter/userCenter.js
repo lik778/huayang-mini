@@ -1,22 +1,10 @@
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
-import {
-  getPhoneNumber
-} from "../../api/course/index"
-import {
-  getUserGuideLink,
-  getUserInfo,
-  getUserOwnerClasses
-} from "../../api/mine/index"
-import {
-  getLocalStorage,
-  hasAccountInfo,
-  hasUserInfo,
-  setLocalStorage
-} from "../../utils/util"
+import { getPhoneNumber } from "../../api/course/index"
+import { getUserGuideLink, getUserInfo, getUserOwnerClasses } from "../../api/mine/index"
+import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
+import { getTaskEntranceStatus } from "../../api/task/index"
 
 Page({
 
@@ -33,7 +21,8 @@ Page({
     activity_count: 0,
     kecheng_count: 0,
     traincamp_count: 0,
-    showPromotion: true
+    showPromotion: true,
+    visibleTaskEntrance: false
   },
   // 跳往我的推广
   toPromotion() {
@@ -164,6 +153,20 @@ Page({
       userInfo: getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
     })
   },
+  // 我的作业
+  goToTaskLaunchPage() {
+    if (hasUserInfo() && hasAccountInfo()) {
+      bxPoint("mine_task_layout", {}, false)
+      let userId = getLocalStorage(GLOBAL_KEY.userId)
+      wx.navigateTo({
+        url: `/subCourse/personTask/personTask?visit_user_id=${userId}`,
+      })
+    } else {
+      this.setData({
+        didShowAuth: true
+      })
+    }
+  },
   // 我的订单
   toOrder() {
     if (hasUserInfo() && hasAccountInfo()) {
@@ -197,6 +200,11 @@ Page({
     })
   },
   run() {
+    // 检查是否展示作业秀入口
+    getTaskEntranceStatus().then(({data}) => {
+      this.setData({visibleTaskEntrance: data == 1})
+    })
+
     if (hasUserInfo() && !hasAccountInfo()) {
       // 有微信信息没有手机号信息
       this.setData({

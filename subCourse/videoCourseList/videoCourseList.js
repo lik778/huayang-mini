@@ -59,20 +59,20 @@ Page({
         bottomLock = false
       }
       let handledList = list.map((res) => {
-        res.price = (res.price / 100).toFixed(2)
+        res.price = (res.price / 100) // .toFixed(2)
         if (res.discount_price === -1 && res.price > 0) {
           // 原价出售
           // 是否有营销活动
           if (+res.invite_open === 1) {
-            res.fission_price = (+res.price * res.invite_discount / 10000).toFixed(2)
+            res.fission_price = (+res.price * res.invite_discount / 10000) // .toFixed(2)
           }
         }
         else if (res.discount_price >= 0 && res.price > 0) {
           // 收费但有折扣
-          res.discount_price = (res.discount_price / 100).toFixed(2)
+          res.discount_price = (res.discount_price / 100) // .toFixed(2)
           // 是否有营销活动
           if (+res.invite_open === 1) {
-            res.fission_price = (+res.discount_price * res.invite_discount / 10000).toFixed(2)
+            res.fission_price = (+res.discount_price * res.invite_discount / 10000) // .toFixed(2)
           }
         } else if (+res.discount_price === -1 && +res.price === 0) {
           res.discount_price = 0
@@ -81,8 +81,6 @@ Page({
         // 只显示开启营销活动的数据
         if (+res.invite_open === 1) {
           res.tipsText = res.fission_price == 0 ? "邀请好友助力免费学" : `邀请好友助力${(res.invite_discount / 10)}折购`
-        } else {
-          res.tipsText = `${res.discount_price == 0 ? "免费" : "¥" + Number(res.discount_price).toFixed(2)}`
         }
 
         return res
@@ -175,6 +173,11 @@ Page({
         currentIndex: index
       })
     }
+
+    if (options.invite_user_id) {
+      getApp().globalData.super_user_id = options.invite_user_id
+    }
+
     this.getTabList(index)
     // ios规则适配
     this.checkIos()
@@ -234,6 +237,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "这里有好多好课，快来一起变美，变自信",
+      path: `/subCourse/videoCourseList/videoCourseList?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
+    }
   }
 })

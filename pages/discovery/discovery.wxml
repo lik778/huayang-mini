@@ -1,17 +1,17 @@
 <!--发现主页-->
-<view class="discovery" bindtouchmove="touchMove">
+<view class="discovery" bindtouchmove="touchMove" style="visibility: {{canShow?'visible':'hidden'}};">
+    <cover-view class="tabs-fixed-line" wx:if="{{didFixedTab}}"></cover-view>
     <view class="tabs tabs-fixed" wx:if="{{didFixedTab}}">
-        <view class="tab {{tabIndex===item.id ? 'tab-active' : ''}} tab-ep" wx:for="{{tabs}}" wx:key="{{item.id}}"
-              data-item="{{item}}" bindtap="handleTab">{{item.name}}
-        </view>
+        <view class="tab {{tabIndex===item.id ? 'tab-active' : ''}} tab-ep" wx:for="{{tabs}}" wx:key="index"
+            data-item="{{item}}" bindtap="handleTab">{{item.name}}</view>
         <view class="tab-underline" style="left: {{tabsOffsetLeftAry[tabIndex]}}px;"></view>
     </view>
     <!--  推广位 -->
-    <view class="promotion">
+    <view class="promotion" wx:if="{{bannerList.length!==0}}">
         <!-- banner 滚动区域 -->
-        <view class="swiper-box" id="swiper-box" wx:if="{{bannerList.length!==0}}">
+        <view class="swiper-box" id="swiper-box">
             <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}"
-                    duration="{{500}}">
+                duration="{{500}}">
                 <swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="joinCampFromBanner" data-item="{{item}}">
                     <view class="swiper-cover"></view>
                     <image mode="cover" src="{{item.pic_url}}"></image>
@@ -19,40 +19,29 @@
             </swiper>
             <view class="swiper-dot">
                 <view wx:for="{{bannerList}}" wx:key="index" wx:if="{{bannerList.length>1}}"
-                      class="{{current===index?'active swiper-dot-item':'swiper-dot-item'}}"></view>
+                    class="{{current===index?'active swiper-dot-item':'swiper-dot-item'}}"></view>
             </view>
         </view>
     </view>
 
     <view class="tabs" id="tabs">
-        <view class="tab {{tabIndex===item.id ? 'tab-active' : ''}} tab-ep" wx:for="{{tabs}}" wx:key="{{item.id}}"
-              data-item="{{item}}" bindtap="handleTab">{{item.name}}
+        <view class="tab {{tabIndex===item.id ? 'tab-active' : ''}} tab-ep" wx:for="{{tabs}}" wx:key="index"
+            data-item="{{item}}" bindtap="handleTab">{{item.name}}
         </view>
         <view class="tab-underline" style="left: {{tabsOffsetLeftAry[tabIndex]}}px;"></view>
     </view>
 
     <view class="tab-pane" wx:if="{{tabIndex === 0}}">
         <!-- 训练营 -->
-        <view class="card {{'card-' + index}}" wx:for="{{campList}}" wx:key="index" data-index="{{item}}" bindtap="joinCamp">
+        <view class="card {{'card-' + index}}" wx:for="{{campList}}" wx:key="index" data-index="{{item}}"
+            bindtap="joinCamp" style="height:{{isIosPlatform?'506rpx':'560rpx'}}">
             <image class="bootcampCardItem" wx:if="{{!item.show}}" mode="aspectFill"
-                   src="{{item.intro_video_cover_pic || item.cover_pic}}"></image>
-            <video
-                    wx:else
-                    id="{{'video-' + index}}"
-                    class="bootcampCardItem"
-                    controls="{{false}}"
-                    poster="{{item.intro_video_cover_pic}}"
-                    object-fit="cover"
-                    enable-play-gesture="{{false}}"
-                    play-btn-position="top"
-                    show-center-play-btn="{{false}}"
-                    show-play-btn="{{false}}"
-                    autoplay="{{true}}"
-                    muted="{{true}}"
-                    loop="{{true}}"
-                    enable-progress-gesture="{{false}}"
-                    binderror="onError"
-                    src="{{item.intro_video_link}}">
+                src="{{item.intro_video_cover_pic || item.cover_pic}}"></image>
+            <video wx:else id="{{'video-' + index}}" class="bootcampCardItem" controls="{{false}}"
+                poster="{{item.intro_video_cover_pic}}" object-fit="cover" enable-play-gesture="{{false}}"
+                play-btn-position="top" show-center-play-btn="{{false}}" show-play-btn="{{false}}" autoplay="{{true}}"
+                muted="{{true}}" loop="{{true}}" enable-progress-gesture="{{false}}" binderror="onError"
+                src="{{item.intro_video_link}}">
             </video>
             <view class="fixText">
                 <view class="bootcamp-title limit-one-line">{{item.name}}</view>
@@ -65,11 +54,16 @@
                         <text>{{featureItem.value}}</text>
                     </view>
                 </view>
-                <view class="bootcamp-next-date">{{item.next_bootcamp_start_date === "即将开营" ? "即将开营" : "下一期开营时间：" + item.next_bootcamp_start_date}}</view>
-                <view class="bootcamp-operate">
+                <view class="bootcamp-next-date" style="display:{{isIosPlatform?'flex':''}};align-items:{{isIosPlatform?'center':''}};justify-content:{{isIosPlatform?'space-between':''}};">
+                    <view>{{item.next_bootcamp_start_date === "即将开营" ? "即将开营" : "下一期开营时间：" + item.next_bootcamp_start_date}}</view>
+                    <view class="bootcamp-operate-btn" wx:if='{{isIosPlatform}}'>立即参加</view>
+                </view>
+                <view class="bootcamp-operate" wx:if='{{!isIosPlatform}}'>
                     <view class="bootcamp-operate-price">
-                        <text class="bootcamp-operate-discount-price">¥{{item.discount_price}}</text><text
-                            class="bootcamp-operate-sub-price">¥{{item.price}}</text>
+                        <block wx:if="{{!isIosPlatform}}">
+                            <text class="bootcamp-operate-discount-price">¥{{item.discount_price}}</text><text
+                                class="bootcamp-operate-sub-price" wx:if="{{item.price}}">¥{{item.price}}</text>
+                        </block>
                     </view>
                     <view class="bootcamp-operate-btn">立即参加</view>
                 </view>
@@ -78,33 +72,36 @@
 
         <!-- 视频课 -->
         <block wx:for="{{recommendCourseList}}" wx:key="index" wx:for-item="recommendCourseItem">
-            <view class="course-layout">{{recommendCourseItem.key}}</view>
-            <view class="course-item" wx:for="{{recommendCourseItem.content}}" wx:key="index" bindtap="toVideoDetail" data-item="{{item}}">
+            <view class="course-layout">{{recommendCourseItem.key}}学院</view>
+            <view class="course-item" wx:for="{{recommendCourseItem.content}}" wx:key="index" bindtap="toVideoDetail"
+                data-item="{{item}}">
                 <image class="course-image" src="{{item.cover_pic}}"></image>
                 <view class="course-info">
                     <text class="course-title limit-two-line">{{item.name}}</text>
                     <view class="course-visit-count">共{{item.visit_count}}人学习</view>
-                    <view class="course-operate">
-                        <view class="price limit-one-line" wx:if="{{showMoney}}">
+                    <view class="course-operate" wx:if="{{!isIosPlatform}}">
+                        <view class="price limit-one-line">
                             <block wx:if="{{item.tipsText}}">
-                                <text class="price-two">¥{{item.price}}</text>
                                 <text class="price-three">{{item.tipsText}}</text>
+                                <text class="price-two">¥{{item.price}}</text>
                             </block>
                             <block wx:else>
                                 <text class="price-one">
                                     <text wx:if="{{item.didBought}}">已购</text>
                                     <text wx:else>{{item.discount_price ? '¥'+item.discount_price : '免费'}}</text>
                                 </text>
-                                <text class="price-two" style="text-decoration: {{item.didBought?'none':'line-through'}};">
+                                <text class="price-two"
+                                    style="text-decoration: {{item.didBought?'none':'line-through'}};">
                                     <text wx:if="{{item.didBought}}">去学习</text>
-                                    <text wx:else>¥{{item.price}}</text>
+                                    <text wx:else>{{item.price>0?"¥"+item.price:""}}</text>
                                 </text>
                             </block>
                         </view>
                     </view>
                 </view>
             </view>
-            <view class="course-item-more-btn" bindtap="toVideoList" data-item="{{recommendCourseItem}}">查看更多学院课程</view>
+            <view class="course-item-more-btn" bindtap="toVideoList" data-item="{{recommendCourseItem}}">查看更多学院课程 ›
+            </view>
         </block>
 
         <!-- 往期直播 -->
@@ -113,6 +110,9 @@
             <view class="live-title-right">{{liveNum}}+直播课程 ›</view>
         </view>
 
+        <!-- 分隔 -->
+        <view class="separate-line"></view>
+
         <!-- 大赛&活动 -->
         <view class="other-activity" wx:if="{{showModelBanner}}">
             <!-- 大赛 -->
@@ -120,7 +120,7 @@
                 <view class="competition-title">大赛</view>
                 <view class="competition-list">
                     <view class="competition-item" bindtap="toModelCompetition" data-item='{{item}}'
-                          wx:for="{{competitionBannerList}}" wx:key="index">
+                        wx:for="{{competitionBannerList}}" wx:key="index">
                         <image mode="aspectFill" src="{{item.pic_url}}"></image>
                         <view class="competition-item-title">{{item.title}}</view>
                     </view>
@@ -147,29 +147,17 @@
         </view>
     </view>
 
-    <view class="tab-pane" wx:if="{{tabIndex === 1}}">
+    <view class="tab-pane" style="min-height: {{themeTabMinHeight}}px;" wx:if="{{tabIndex === 1}}">
         <!-- 训练营 -->
         <view class="card {{'card-' + index}}" wx:for="{{campList}}" wx:key="index" data-index="{{item}}"
-              bindtap="joinCamp">
+            bindtap="joinCamp" style="height:{{isIosPlatform?'506rpx':'560rpx'}}">
             <image class="bootcampCardItem" wx:if="{{!item.show}}" mode="aspectFill"
-                   src="{{item.intro_video_cover_pic || item.cover_pic}}"></image>
-            <video
-                    wx:else
-                    id="{{'video-' + index}}"
-                    class="bootcampCardItem"
-                    controls="{{false}}"
-                    poster="{{item.intro_video_cover_pic}}"
-                    object-fit="cover"
-                    enable-play-gesture="{{false}}"
-                    play-btn-position="top"
-                    show-center-play-btn="{{false}}"
-                    show-play-btn="{{false}}"
-                    autoplay="{{true}}"
-                    muted="{{true}}"
-                    loop="{{true}}"
-                    enable-progress-gesture="{{false}}"
-                    binderror="onError"
-                    src="{{item.intro_video_link}}">
+                src="{{item.intro_video_cover_pic || item.cover_pic}}"></image>
+            <video wx:else id="{{'video-' + index}}" class="bootcampCardItem" controls="{{false}}"
+                poster="{{item.intro_video_cover_pic}}" object-fit="cover" enable-play-gesture="{{false}}"
+                play-btn-position="top" show-center-play-btn="{{false}}" show-play-btn="{{false}}" autoplay="{{true}}"
+                muted="{{true}}" loop="{{true}}" enable-progress-gesture="{{false}}" binderror="onError"
+                src="{{item.intro_video_link}}">
             </video>
             <view class="fixText">
                 <view class="bootcamp-title limit-one-line">{{item.name}}</view>
@@ -182,11 +170,16 @@
                         <text>{{featureItem.value}}</text>
                     </view>
                 </view>
-                <view class="bootcamp-next-date">{{item.next_bootcamp_start_date === "即将开营" ? "即将开营" : "下一期开营时间：" + item.next_bootcamp_start_date}}</view>
-                <view class="bootcamp-operate">
+                <view class="bootcamp-next-date" style="display:{{isIosPlatform?'flex':''}};align-items:{{isIosPlatform?'center':''}};justify-content:{{isIosPlatform?'space-between':''}};">
+                    <view>{{item.next_bootcamp_start_date === "即将开营" ? "即将开营" : "下一期开营时间：" + item.next_bootcamp_start_date}}</view>
+                    <view class="bootcamp-operate-btn" wx:if='{{isIosPlatform}}'>立即参加</view>
+                </view>
+                <view class="bootcamp-operate" wx:if='{{!isIosPlatform}}'>
                     <view class="bootcamp-operate-price">
-                        <text class="bootcamp-operate-discount-price">¥{{item.discount_price}}</text><text
-                            class="bootcamp-operate-sub-price">¥{{item.price}}</text>
+                        <block wx:if="{{!isIosPlatform}}">
+                            <text class="bootcamp-operate-discount-price">¥{{item.discount_price}}</text><text
+                                class="bootcamp-operate-sub-price" wx:if="{{item.price}}">¥{{item.price}}</text>
+                        </block>
                     </view>
                     <view class="bootcamp-operate-btn">立即参加</view>
                 </view>
@@ -195,35 +188,42 @@
     </view>
 
     <view class="tab-pane" wx:if="{{tabIndex === 2}}">
-        <view class="course-item" wx:for="{{courseList}}" wx:key="index" bindtap="toVideoDetail" data-item="{{item}}">
-            <image class="course-image" src="{{item.cover_pic}}"></image>
-            <view class="course-info">
-                <text class="course-title limit-two-line">{{item.name}}</text>
-                <view class="course-visit-count">共{{item.visit_count}}人学习</view>
-                <view class="course-operate">
-                    <view class="price limit-one-line" wx:if="{{showMoney}}">
-                        <block wx:if="{{item.tipsText}}">
-                            <text class="price-two">¥{{item.price}}</text>
-                            <text class="price-three">{{item.tipsText}}</text>
-                        </block>
-                        <block wx:else>
-                            <text class="price-one">
-                                <text wx:if="{{item.didBought}}">已购</text>
-                                <text wx:else>{{item.discount_price ? '¥'+item.discount_price : '免费'}}</text>
-                            </text>
-                            <text class="price-two" style="text-decoration: {{item.didBought?'none':'line-through'}};">
-                                <text wx:if="{{item.didBought}}">去学习</text>
-                                <text wx:else>¥{{item.price}}</text>
-                            </text>
-                        </block>
+        <block wx:for="{{recommendCourseList}}" wx:key="index" wx:for-item="recommendCourseItem">
+            <view class="course-layout course-tab">{{recommendCourseItem.key}}学院</view>
+            <view class="course-item" wx:for="{{recommendCourseItem.content}}" wx:key="index" bindtap="toVideoDetail"
+                data-item="{{item}}">
+                <image class="course-image" src="{{item.cover_pic}}"></image>
+                <view class="course-info">
+                    <text class="course-title limit-two-line">{{item.name}}</text>
+                    <view class="course-visit-count">共{{item.visit_count}}人学习</view>
+                    <view class="course-operate" wx:if="{{!isIosPlatform}}">
+                        <view class="price limit-one-line">
+                            <block wx:if="{{item.tipsText}}">
+                                <text class="price-three">{{item.tipsText}}</text>
+                                <text class="price-two">¥{{item.price}}</text>
+                            </block>
+                            <block wx:else>
+                                <text class="price-one">
+                                    <text wx:if="{{item.didBought}}">已购</text>
+                                    <text wx:else>{{item.discount_price ? '¥'+item.discount_price : '免费'}}</text>
+                                </text>
+                                <text class="price-two"
+                                    style="text-decoration: {{item.didBought?'none':'line-through'}};">
+                                    <text wx:if="{{item.didBought}}">去学习</text>
+                                    <text wx:else>{{item.price>0?"¥"+item.price:""}}</text>
+                                </text>
+                            </block>
+                        </view>
                     </view>
                 </view>
             </view>
-        </view>
+            <view class="course-item-more-btn course-tab" bindtap="toVideoList" data-item="{{recommendCourseItem}}">
+                查看更多学院课程 ›</view>
+        </block>
     </view>
 
     <!-- 授权弹窗 -->
     <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent"
-                bind:authCompleteEvent="authCompleteEvent">
+        bind:authCompleteEvent="authCompleteEvent">
     </authModule>
 </view>
