@@ -633,7 +633,7 @@ Page({
     let arr = this.data.playDurationsList.sort((a, b) => {
       return a - b
     })
-    let time = this.data.courseData.video_detail[this.data.videoIndex].duration //视频总时长
+    let time = this.data.videoCourseData.series_detail.video_detail[this.data.nowCoursePlayIndex].time //视频总时长
     let splitIndexArr = []
     let index = 0
     let timeSnippetArr = []
@@ -665,10 +665,10 @@ Page({
     }
     bxPoint("page_series", {
       scene: 'page_series',
-      series_id: this.data.videoId,
-      video_src: this.data.videoSrc.split(VideoSrcHost)[1],
-      lesson_num: `第${this.data.videoIndex + 1}节课`,
-      kecheng_title: this.data.videoListAll[this.data.videoIndex].title,
+      series_id: this.data.videoCourseId,
+      video_src: this.data.videoPlayerSrc.split(VideoSrcHost)[1],
+      lesson_num: `第${this.data.nowCoursePlayIndex + 1}节课`,
+      kecheng_title: this.data.videoCourseData.series_detail.video_detail[this.data.nowCoursePlayIndex].title,
       time_snippet: timeList.length === 0 ? listData : timeList, //事件片段
       total_duration: time, //视频总时间
       total_visit_duration: arr.length, // 总观看时间
@@ -759,7 +759,7 @@ Page({
    */
   onHide: function () {
     // 记录播放时长打点
-    // this.recordPlayDuration()
+    this.recordPlayDuration()
   },
 
   /**
@@ -767,7 +767,7 @@ Page({
    */
   onUnload: function () {
     // 记录播放时长打点
-    // this.recordPlayDuration()
+    this.recordPlayDuration()
   },
 
   /**
