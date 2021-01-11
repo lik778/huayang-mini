@@ -96,7 +96,8 @@
         "personTask/personTask",
         "themeTask/themeTask",
         "compositeTask/compositeTask",
-        "indexTask/indexTask"
+        "indexTask/indexTask",
+        "videoCourseDetail/videoCourseDetail"
       ]
     },
     {

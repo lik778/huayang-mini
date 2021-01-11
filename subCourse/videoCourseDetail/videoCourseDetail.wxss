@@ -1,0 +1,650 @@
+/* subCourse/videoCourseDetail/videoCourseDetail.wxss */
+@import "/assets/css/common.wxss";
+
+.video-detail {
+  padding-bottom: 250rpx;
+}
+
+/* 视频播放器 */
+.video-fixed-box {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  z-index: 40;
+}
+
+.notice {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 88rpx;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #FFFFFF;
+}
+
+.video-module {
+  position: relative;
+  margin: 0 auto;
+  margin-top: 88rpx;
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.video-cover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+}
+
+.video-cover image {
+  width: 100%;
+  height: 100%;
+  vertical-align: bottom;
+  border-radius: 16rpx;
+}
+
+.icon {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 30;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.icon image {
+  vertical-align: bottom;
+  width: 130rpx;
+  height: 130rpx;
+  border-radius: 16rpx;
+}
+
+.video-module video {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 16rpx;
+  vertical-align: bottom;
+}
+
+/* 课程介绍 */
+.video-desciption {
+  margin: 0 30rpx;
+}
+
+.video-description-title-line {
+  display: flex;
+  align-items: flex-start;
+}
+
+.video-description-title-line text {
+  font-size: 56rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 56rpx;
+  margin-right: 12rpx;
+}
+
+.video-description-title-icon-one {
+  width: 92rpx;
+  height: 30rpx;
+  vertical-align: bottom;
+}
+
+.video-description-title-icon-two {
+  width: 52rpx;
+  height: 30rpx;
+  vertical-align: bottom;
+}
+
+.video-description-sub-title {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #222222;
+  line-height: 32rpx;
+  margin: 40rpx 0;
+}
+
+.video-description-msg-line {
+  display: flex;
+  align-items: center;
+}
+
+.video-description-msg-line-text {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 32rpx;
+}
+
+.video-description-msg-wire {
+  width: 1px;
+  height: 28rpx;
+  background: rgba(0, 0, 0, 0.6);
+  margin: 0 30rpx;
+}
+
+/* tab */
+.tab-list {
+  margin: 0 30rpx;
+  display: flex;
+  margin-top: 80rpx;
+  align-items: center;
+  padding-bottom: 24rpx;
+  margin-bottom: 60rpx;
+}
+
+.tab-item {
+  font-size: 48rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 48rpx;
+  width: 50%;
+  text-align: center;
+  position: relative;
+}
+
+.tab-item-active {
+  font-weight: 600;
+}
+
+.tab-item-active::after {
+  position: absolute;
+  content: "";
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -24rpx;
+  background: #CC0000;
+  border-radius: 4rpx;
+  width: 84rpx;
+  height: 8rpx;
+}
+
+/* 课程详情 */
+
+.course-detail {
+  width: calc(100vw - 60rpx);
+  margin: 0 auto;
+  margin-bottom: 60rpx;
+}
+
+.course-detail image {
+  width: 100%;
+  vertical-align: bottom;
+}
+
+/* 课程列表 */
+.course-list {
+  width: calc(100vw - 60rpx);
+  margin: 0 auto;
+  margin-bottom: 60rpx;
+}
+
+.course-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 44rpx 28rpx;
+  background: #F9F9F9;
+  border-radius: 8rpx;
+  overflow: hidden;
+  align-items: center;
+  margin-bottom: 20rpx;
+  box-sizing: border-box;
+}
+
+.course-item-choosed{
+  border: 1px solid #CC0000;
+}
+.course-item-active {
+  color: #CC0000 !important;
+}
+
+.course-item-left {
+  display: flex;
+  align-items: center;
+  width: calc(100% - 216rpx);
+}
+
+.course-item-left-left {
+  padding-right: 30rpx;
+  width: 64rpx;
+  white-space: wrap;
+}
+
+.course-item-left-left text {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.7);
+  line-height: 44rpx;
+}
+
+.course-item-left-play {
+  width: 64rpx;
+  height: 64rpx;
+  vertical-align: bottom;
+}
+
+.course-item-left-lock {
+  width: 48rpx;
+  height: 48rpx;
+  vertical-align: bottom;
+}
+
+.course-item-left-right {
+  width: 320rpx;
+}
+
+.course-item-middle-top {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  line-height: 44rpx;
+}
+
+.course-item-right image {
+  width: 186rpx;
+  height: 64rpx;
+  vertical-align: bottom;
+}
+
+/* 添加私欲 */
+.add-teacher {
+  width: calc(100vw - 60rpx);
+  height: 126rpx;
+  margin: 0 auto;
+  margin-bottom: 60rpx;
+}
+
+.add-teacher image {
+  width: 100%;
+  height: 100%;
+  vertical-align: bottom;
+}
+
+/* 猜你喜欢 */
+.guess-like {
+  width: calc(100vw - 60rpx);
+  margin: 0 auto;
+}
+
+.guess-like-title {
+  margin-bottom: 40rpx;
+  font-size: 48rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 48rpx;
+}
+
+.guess-like-item {
+  display: flex;
+  margin-bottom: 40rpx;
+}
+
+
+.guess-like-item-left {
+  width: 166rpx;
+  height: 220rpx;
+  position: relative;
+}
+
+.guess-like-item-left-teach-img {
+  width: 100%;
+  height: 100%;
+  vertical-align: bottom;
+  border-radius: 8rpx;
+}
+
+.guess-like-item-left-icon-one {
+  width: 32rpx;
+  height: 30rpx;
+  vertical-align: bottom;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.guess-like-item-left-icon-two {
+  width: 52rpx;
+  height: 30rpx;
+  vertical-align: bottom;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.guess-like-item-right {
+  margin-left: 24rpx;
+  width: calc(100% - 190rpx);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.guess-like-item-right-top-text-one {
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 32rpx;
+  margin-bottom: 20rpx;
+}
+
+.guess-like-item-right-top-text-two {
+
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 28rpx;
+  margin-bottom: 20rpx;
+}
+
+.guess-like-item-right-top-text-three {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #666666;
+  line-height: 28rpx;
+}
+
+.guess-like-item-right-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.guess-like-item-right-bottom-left {
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  line-height: 32rpx;
+}
+
+.guess-like-item-right-bottom-right {
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 28rpx;
+}
+
+.guess-like-item-camp {
+  border-radius: 8rpx;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 40rpx;
+}
+
+.guess-like-item-camp-cover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.1)
+}
+
+.guess-like-item-camp-bg {
+  width: 100%;
+  height: 100%;
+}
+
+.guess-like-item-camp-bg image {
+  width: 100%;
+  height: 100%;
+  vertical-align: bottom;
+}
+
+.guess-like-item-camp-title {
+  position: absolute;
+  left: 30rpx;
+  top: 52rpx;
+  font-size: 44rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 44rpx;
+  z-index: 20;
+}
+
+.guess-like-item-camp-desc {
+  position: absolute;
+  left: 30rpx;
+  top: 126rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 32rpx;
+  z-index: 20;
+}
+
+.guess-like-item-camp-button {
+  position: absolute;
+  left: 30rpx;
+  bottom: 48rpx;
+  width: 200rpx;
+  height: 64rpx;
+  box-sizing: border-box;
+  border-radius: 999rpx;
+  border: 3rpx solid #fff;
+  text-align: center;
+  line-height: 58rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #FFFFFF;
+  z-index: 20;
+}
+
+.guess-like-more {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 32rpx;
+}
+
+/* 购买按钮 */
+.pay-button {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 126rpx;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 40;
+}
+
+.pay-button-common {
+  width: calc(100% - 60rpx);
+  height: 96rpx;
+  text-align: center;
+  line-height: 96rpx;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  border-radius: 999rpx;
+}
+
+.pay-button-charge-discount {
+  width: calc(100% - 60rpx);
+  height: 96rpx;
+  border-radius: 999rpx;
+  text-align: center;
+}
+
+.pay-button-charge-discount-top {
+  font-size: 28rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: rgba(250, 250, 250, 0.8);
+  line-height: 28rpx;
+  text-decoration: line-through;
+  padding-top: 12rpx;
+  padding-bottom: 8rpx;
+}
+
+.pay-button-charge-discount-bottom {
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 36rpx;
+}
+
+/* 等级限制弹窗 */
+.level-limit-alert {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.55);
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.level-limit-alert-icon {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -64rpx;
+}
+
+.level-limit-alert-icon image {
+  width: 110rpx;
+  height: 134rpx;
+}
+
+.level-limit-alert-box {
+  position: relative;
+  width: 500rpx;
+  height: 400rpx;
+  background: #fff;
+  border-radius: 16rpx;
+}
+
+.level-limit-alert-text {
+  padding: 0 74rpx;
+  padding-top: 106rpx;
+  font-size: 44rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 60rpx;
+}
+
+.level-limit-alert-button {
+  margin: 0 auto;
+  margin-top: 40rpx;
+  width: 360rpx;
+  height: 96rpx;
+  border-radius: 999rpx;
+  text-align: center;
+  line-height: 96rpx;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+/* 分销按钮 */
+.share-friend {
+  position: fixed;
+  right: 26rpx;
+  bottom: 188rpx;
+}
+
+.share-friend-box {
+  position: relative;
+}
+
+.share-friend-box button {
+  padding: 18rpx 56rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  border-radius: 999rpx;
+  color: #FFFFFF;
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.share-text {
+  padding: 18rpx 56rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  border-radius: 999rpx;
+  color: #FFFFFF;
+}
+
+/* 分享按钮 */
+.share {
+  position: fixed;
+  right: 26rpx;
+  bottom: 188rpx;
+  width: 180rpx;
+  height: 80rpx;
+}
+
+.share image {
+  width: 180rpx;
+  height: 80rpx;
+  vertical-align: bottom;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 5;
+}
+
+.share-box {
+  position: relative;
+  width: 180rpx;
+  height: 80rpx;
+}
+
+.share-box button {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  opacity: 0;
+  width: 180rpx;
+  height: 80rpx;
+}
