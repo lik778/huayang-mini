@@ -345,6 +345,7 @@
     color: #000000;
     line-height: 28rpx;
     margin: 20rpx 0;
+    height: 28rpx;
 }
 
 .video-practice-item-right-teacher {

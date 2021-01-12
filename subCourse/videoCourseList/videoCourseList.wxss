@@ -109,6 +109,7 @@
   color: #000000;
   line-height: 32rpx;
   padding-top: 6rpx;
+  height: 32rpx;
 }
 
 .course-info-sub-title {
@@ -118,6 +119,7 @@
   color: #000000;
   line-height: 28rpx;
   margin: 20rpx 0;
+  height: 28rpx;
 }
 
 .course-info-teacher {
@@ -126,6 +128,7 @@
   font-weight: 400;
   color: rgba(0, 0, 0, 0.6);
   line-height: 28rpx;
+  height: 28rpx;
 }
 
 .course-info-bottom-right-module-one {
@@ -167,6 +170,13 @@
   font-weight: 400;
   color: rgba(0, 0, 0, 0.6);
   line-height: 28rpx;
+}
+
+.course-info-bottom-left-module-one {
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  line-height: 32rpx;
 }
 
 /* 视频改版 */

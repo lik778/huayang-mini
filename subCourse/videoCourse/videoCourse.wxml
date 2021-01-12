@@ -1,9 +1,15 @@
 <!--subCourse/videoCourseDetail/videoCourseDetail.wxml-->
 <view class="video-detail" wx:if='{{videoCourseData!=""}}'>
   <!-- 横条区域 -->
-  <view class="notice subject-bg-color" wx:if='{{showStudyToast&&hasLogin}}' bindtap="playVideo">
+  <!-- 请好友看课 -->
+  <view class="notice subject-bg-color" wx:if='{{showSuccess}}' bindtap="playVideo">
+    <view class="notice-text">恭喜您成功领取，点击立即观看</view>
+  </view>
+  <!-- 上次学到第n节 -->
+  <view class="notice subject-bg-color" wx:elif='{{showStudyToast&&hasLogin}}' bindtap="playVideo">
     <view class="notice-text">您上次学到第{{studiedIndex}}节课，点击继续学习</view>
   </view>
+
   <!-- 视频播放器区域 -->
   <view class="video-fixed-box">
     <view class="video-module"
@@ -28,7 +34,7 @@
   </view>
 
   <!-- 视频介绍区域 -->
-  <view class="video-desciption" style="padding-top:{{showStudyToast&&hasLogin?'540rpx':'450rpx'}}">
+  <view class="video-desciption" style="padding-top:{{showStudyToast&&hasLogin?videoPlayStyle.height+74+'px':videoPlayStyle.height+30+'px'}}">
     <view class="video-description-title-line">
       <text>{{videoCourseData.series_detail.teacher_desc}}</text>
       <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610093007wRvmte.jpg"
@@ -51,7 +57,7 @@
   <!-- 课程列表 -->
   <view class="course-list" wx:if="{{tabIndex===0}}">
     <view
-      class="{{nowCoursePlayIndex===index&&inPlaying?'course-item course-item-active course-item-choosed':'course-item'}}"
+      class="{{(nowCoursePlayIndex===index&&inPlaying)||(nowCoursePlayIndex===index&&onlySelected)?'course-item course-item-active course-item-choosed':'course-item'}}"
       wx:for="{{videoCourseData.series_detail.video_detail}}" wx:key="{{index}}"
       bindtap="{{item.type==='lock'?'':item.type==='试看'?'playVideo':hasLogin?'playVideo':'login'}}"
       data-index='{{index}}'>
@@ -182,14 +188,14 @@
     </view>
   </view>
   <!-- 分享微信好友 -->
-  <view class="share" bindtap="share" wx:else style="bottom:{{noPayForCourse?'80rpx':'188rpx'}}">
+  <view class="share" bindtap="share" wx:else style="bottom:{{noPayForCourse?'80rpx':'140rpx'}}">
     <view class="share-box">
       <button open-type="share"></button>
       <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599118170RBWnFr.jpg"></image>
     </view>
   </view>
   <!-- 分销推广按钮 -->
-  <view class="share-friend" bindtap="shareCourse" style="bottom:{{noPayForCourse?'80rpx':'188rpx'}}"
+  <view class="share-friend" bindtap="shareCourse" style="bottom:{{noPayForCourse?'80rpx':'140rpx'}}"
     wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&videoCourseData.series_detail.sharePrice!==''}}">
     <view class="share-friend-box">
       <button open-type="share">推广成功赚{{videoCourseData.series_detail.sharePrice}}元</button>

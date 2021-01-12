@@ -346,9 +346,9 @@
           "scene": null
         },
         {
-          "name": "新版课程详情",
-          "pathName": "subCourse/videoCourseDetail/videoCourseDetail",
-          "query": "videoId=53",
+          "name": "subCourse/videoCourse/videoCourse",
+          "pathName": "subCourse/videoCourse/videoCourse",
+          "query": "videoId=67&playIndex=1",
           "scene": null
         },
         {

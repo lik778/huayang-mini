@@ -71,7 +71,8 @@ Page({
     noPayForCourse: false, //是否购买课程
     showLevelLimit: false, //显示等级限制弹窗
     inviteFriendLock: true, //请好友看按钮lock
-    onlySelected: false
+    onlySelected: false,
+    needRecordPlayTime: false, //是否需要记录播放打点时长
   },
 
 
@@ -93,7 +94,8 @@ Page({
     if (playIndex) {
       let index = Number(options.playIndex)
       this.setData({
-        nowCoursePlayIndex: index
+        nowCoursePlayIndex: index,
+        shareIndex: index
       })
     }
 
@@ -131,6 +133,15 @@ Page({
       systemParams
     })
 
+    // 5s后自动关闭好友分享顶部弹窗
+    if (this.data.showSuccess) {
+      setTimeout(() => {
+        this.setData({
+          showSuccess: false
+        })
+      }, 5000)
+    }
+
     // 检查是否加入过该课程
     this.checkHasJoined()
     // 页面pv打点
@@ -162,20 +173,23 @@ Page({
       }, 200)
     } else {
       this.setData({
-        nowCoursePlayIndex: this.data.nowCoursePlayIndex === '' ? 0 : this.data.nowCoursePlayIndex
+        nowCoursePlayIndex: this.data.nowCoursePlayIndex === '' ? '' : this.data.nowCoursePlayIndex
       })
       this.videoContext.play()
     }
 
     this.setData({
-      studiedIndex: ''
+      // studiedIndex: '',
+      needRecordPlayTime: true
     })
 
     // 记录学习到第几课
-    recordStudy({
-      kecheng_series_id: this.data.videoCourseId,
-      kecheng_num: this.data.nowCoursePlayIndex + 1
-    })
+    if (this.data.nowCoursePlayIndex !== '' & this.data.hasLogin) {
+      recordStudy({
+        kecheng_series_id: this.data.videoCourseId,
+        kecheng_num: this.data.nowCoursePlayIndex + 1
+      })
+    }
 
   },
 
@@ -220,8 +234,10 @@ Page({
           if (res.data === null) {
             // 未加入过
             this.setData({
-              nowCoursePlayIndex: '',
-              noPayForCourse: false
+              nowCoursePlayIndex: this.data.nowCoursePlayIndex ? this.data.nowCoursePlayIndex : '',
+              noPayForCourse: false,
+              showStudyToast: false,
+              studiedIndex: ''
             })
             // 获取训练营详情
             this.getVideoCourseData(-1)
@@ -229,16 +245,29 @@ Page({
             // 加入过
             buttonType = ButtonType.joined
             this.setData({
-              showStudyToast: this.data.nowCoursePlayIndex ? false : true,
-              nowCoursePlayIndex: this.data.nowCoursePlayIndex ? this.data.nowCoursePlayIndex : res.data.last_visit_num - 1 || '',
+              showStudyToast: this.data.nowCoursePlayIndex ? true : res.data.last_visit_num === 0 ? false : true,
+              nowCoursePlayIndex: this.data.nowCoursePlayIndex ? this.data.nowCoursePlayIndex : res.data.last_visit_num - 1 >= 0 ? res.data.last_visit_num - 1 : '',
               studiedIndex: res.data.last_visit_num === 0 ? '' : res.data.last_visit_num,
               noPayForCourse: true,
               videoPlayerLock: false
             })
+            if (this.data.showStudyToast) {
+              setTimeout(() => {
+                this.setData({
+                  showStudyToast: false
+                })
+              }, 5000)
+            }
             // 获取训练营详情
             this.getVideoCourseData(buttonType)
           }
         } else {
+          this.setData({
+            showStudyToast: false,
+            studiedIndex: '',
+            noPayForCourse: false,
+            nowCoursePlayIndex: this.data.nowCoursePlayIndex ? this.data.nowCoursePlayIndex : ''
+          })
           this.getVideoCourseData(ButtonType.noLogin)
         }
       })
@@ -264,12 +293,25 @@ Page({
       let isIos = false
       let nowCoursePlayIndex = this.data.nowCoursePlayIndex
       res.series_detail.detail_pics = res.series_detail.detail_pics.split(",")
+
+      // 价格处理
+      res.series_detail.price = (res.series_detail.price / 100).toFixed(2)
+
+      res.series_detail.discount_price = res.series_detail.discount_price === -1 ? '' : (res.series_detail.discount_price / 100).toFixed(2)
+
+      res.series_detail.sharePrice = res.series_detail.distribution_ratio > 0 ? res.series_detail.discount_price === '' ? res.series_detail.price * res.series_detail.distribution_ratio / 100 : res.series_detail.discount_price * res.series_detail.distribution_ratio / 100 : ''
+
       wx.getSystemInfo({
         success: (res1) => {
           if (buttonType !== ButtonType.noLogin || buttonType === -1) {
-            if (res1.platform == 'ios') {
+            if (res1.platform === 'ios') {
               // ios平台
-              buttonType = ButtonType.ios
+              if (res.series_detail.price === '0.00' || res.series_detail.discount_price === '') {
+                buttonType = ButtonType.free
+              } else {
+                buttonType = ButtonType.ios
+              }
+              // buttonType = ButtonType.ios
               isIos = true
             } else {
               // 安卓平台
@@ -342,25 +384,26 @@ Page({
               }
             }
           })
-          res.series_detail.video_detail = videoCourseList
-          res.series_detail.price = (res.series_detail.price / 100).toFixed(2)
-          res.series_detail.discount_price = res.series_detail.discount_price === -1 ? '' : (res.series_detail.discount_price / 100).toFixed(2)
-          res.series_detail.sharePrice = res.series_detail.distribution_ratio > 0 ? res.series_detail.discount_price === '' ? res.series_detail.price * res.series_detail.distribution_ratio / 100 : res.series_detail.discount_price * res.series_detail.distribution_ratio / 100 : ''
-
           if (this.data.noPayForCourse) {
-            if (nowCoursePlayIndex >= 0) {
-              videoPlayerSrc = res.series_detail.video_detail[nowCoursePlayIndex].url
+            if (nowCoursePlayIndex >= 0 && nowCoursePlayIndex !== '') {
+              videoPlayerSrc = videoCourseList[nowCoursePlayIndex].url
               this.setData({
                 onlySelected: true
               })
             } else {
-              videoPlayerSrc = res.series_detail.video_detail[0].url
+              videoPlayerSrc = videoCourseList[0].url
             }
-            this.setData({
-              inPlaying: true
+            videoCourseList.map(item => {
+              item.type = 'play'
             })
+          } else {
+            if (this.data.shareIndex) {
+              this.setData({
+                onlySelected: true
+              })
+            }
           }
-
+          res.series_detail.video_detail = videoCourseList
           this.setData({
             videoCourseData: res,
             videoPlayerSrc,
@@ -390,9 +433,15 @@ Page({
 
     let type = this.data.videoCourseData.series_detail.category
     let index = type === 'quality_life' ? 3 : type === 'fitness' ? 1 : type === 'fashion' ? 2 : 0
-    wx.navigateTo({
-      url: `/subCourse/videoCourseList/videoCourseList?index=${index}`,
-    })
+    if (getCurrentPages().length > 8) {
+      wx.redirectTo({
+        url: `/subCourse/videoCourseList/videoCourseList?index=${index}`,
+      })
+    } else {
+      wx.navigateTo({
+        url: `/subCourse/videoCourseList/videoCourseList?index=${index}`,
+      })
+    }
   },
 
   // 猜你喜欢=>训练营点击
@@ -403,10 +452,15 @@ Page({
       traincamp_is_recom_id: this.data.videoCourseData.recommend_traincamp.id,
       traincamp_is_recom_title: this.data.videoCourseData.recommend_traincamp.name
     }, false)
-
-    wx.navigateTo({
-      url: `/subCourse/joinCamp/joinCamp?id=${this.data.videoCourseData.recommend_traincamp.id}`,
-    })
+    if (getCurrentPages().length > 8) {
+      wx.redirectTo({
+        url: `/subCourse/joinCamp/joinCamp?id=${this.data.videoCourseData.recommend_traincamp.id}`,
+      })
+    } else {
+      wx.navigateTo({
+        url: `/subCourse/joinCamp/joinCamp?id=${this.data.videoCourseData.recommend_traincamp.id}`,
+      })
+    }
   },
 
   // 猜你喜欢=>视频课程点击
@@ -421,9 +475,15 @@ Page({
       kecheng_is_recom_label: item.kecheng_series.series_tag === 0 ? "无" : item.kecheng_series.series_tag === 1 ? "口碑课程" : '新课',
       kecheng_is_recom_teacher: item.kecheng_series.teacher_id
     }, false)
-    wx.navigateTo({
-      url: `/subCourse/videoCourse/videoCourse?videoId=${item.kecheng_series.id}`,
-    })
+    if (getCurrentPages().length > 8) {
+      wx.redirectTo({
+        url: `/subCourse/videoCourse/videoCourse?videoId=${item.kecheng_series.id}`,
+      })
+    } else {
+      wx.navigateTo({
+        url: `/subCourse/videoCourse/videoCourse?videoId=${item.kecheng_series.id}`,
+      })
+    }
   },
 
   // 请好友看课点击
@@ -739,9 +799,9 @@ Page({
   onShow: function () {
     this.setData({
       videoPlayStyle: {
-        width: parseInt(this.data.systemParams.screenWidth - 30),
-        height: parseInt((this.data.systemParams.screenWidth - 30) / 1.78),
-        campHeight: parseInt((this.data.systemParams.screenWidth - 30) / 2.15)
+        width: parseInt(this.data.systemParams.screenWidth),
+        height: parseInt((this.data.systemParams.screenWidth) / 1.78),
+        campHeight: parseInt((this.data.systemParams.screenWidth) / 2.15)
       }
     })
     // 注册视频播放器
@@ -755,7 +815,13 @@ Page({
    */
   onHide: function () {
     // 记录播放时长打点
-    this.recordPlayDuration()
+    if (this.data.needRecordPlayTime) {
+      this.recordPlayDuration()
+      this.setData({
+        needRecordPlayTime: false
+      })
+    }
+
   },
 
   /**
@@ -763,7 +829,9 @@ Page({
    */
   onUnload: function () {
     // 记录播放时长打点
-    this.recordPlayDuration()
+    if (this.data.needRecordPlayTime) {
+      this.recordPlayDuration()
+    }
   },
 
   /**
@@ -784,7 +852,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    let shareLink = `/subCourse/videoCourse/videoCourse?videoId=${this.data.videoCourseId.id}&playIndex=${this.data.nowCoursePlayIndex}`
+    let shareLink = `/subCourse/videoCourse/videoCourse?videoId=${this.data.videoCourseId}&playIndex=${this.data.nowCoursePlayIndex}`
     if (this.data.promoteUid !== '') {
       shareLink += `&promote_uid=${this.data.promoteUid}`
     } else {

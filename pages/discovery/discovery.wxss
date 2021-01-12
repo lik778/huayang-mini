@@ -308,6 +308,7 @@
   font-weight: 400;
   color: #000000;
   line-height: 28rpx;
+  height: 28rpx;
 }
 
 .course-teacher-desc {
