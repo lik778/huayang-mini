@@ -238,6 +238,8 @@ Page({
             // 获取训练营详情
             this.getVideoCourseData(buttonType)
           }
+        } else {
+          this.getVideoCourseData(ButtonType.noLogin)
         }
       })
     } else {
@@ -344,16 +346,10 @@ Page({
           res.series_detail.price = (res.series_detail.price / 100).toFixed(2)
           res.series_detail.discount_price = res.series_detail.discount_price === -1 ? '' : (res.series_detail.discount_price / 100).toFixed(2)
           res.series_detail.sharePrice = res.series_detail.distribution_ratio > 0 ? res.series_detail.discount_price === '' ? res.series_detail.price * res.series_detail.distribution_ratio / 100 : res.series_detail.discount_price * res.series_detail.distribution_ratio / 100 : ''
-          if (res.recommend_series) {
-            res.recommend_series.map(item => {
-              item.kecheng_series.price = (item.kecheng_series.price / 100).toFixed(2)
-              item.kecheng_series.discount_price = item.kecheng_series.discount_price === -1 ? '' : (item.kecheng_series.discount_price / 100).toFixed(2)
-            })
-          }
 
           if (this.data.noPayForCourse) {
             if (nowCoursePlayIndex >= 0) {
-              videoPlayerSrc = res.series_detail.video_detail[this.data.nowCoursePlayIndex].url
+              videoPlayerSrc = res.series_detail.video_detail[nowCoursePlayIndex].url
               this.setData({
                 onlySelected: true
               })

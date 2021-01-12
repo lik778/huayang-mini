@@ -1,27 +1,33 @@
 @import "../../assets/css/common.wxss";
+
 .person-course {
     padding-bottom: 210rpx;
 }
+
 .no-data-tips {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.no-data-tips > image {
+
+.no-data-tips>image {
     margin-top: 100rpx;
     width: 320rpx;
     height: 230rpx;
     font-size: 0;
 }
-.no-data-tips > text {
+
+.no-data-tips>text {
     font: 36rpx/44rpx Helvetica;
     color: #999;
 }
+
 .layout {
     margin: 80rpx 0 10rpx 30rpx;
-    font:  500 44rpx/60rpx PingFangSC;
+    font: 500 44rpx/60rpx PingFangSC;
 }
+
 .course-item {
     display: flex;
     align-items: center;
@@ -29,26 +35,59 @@
     padding: 20rpx 30rpx;
     border-bottom: 2rpx solid #F2F2F2;
 }
+
 .course-item:active {
     opacity: 0.9;
 }
+
 .course-image {
-    width: 220rpx;
+    width: 166rpx;
     height: 220rpx;
     font-size: 0;
     border-radius: 8rpx;
     margin-right: 24rpx;
 }
+
 .course-info {
-    width: 446rpx;
+    width: calc(100% - 190rpx);
     height: 220rpx;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
+
+/* 视频改版 */
+.course-info-main-title {
+    font-size: 32rpx;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 600;
+    color: #000000;
+    line-height: 32rpx;
+}
+
+.course-info-sub-title {
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #000000;
+    line-height: 28rpx;
+    margin: 20rpx 0;
+}
+
+.course-info-teacher {
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.6);
+    line-height: 28rpx;
+}
+
+/*视频改版  */
+
 .course-title {
     font: 32rpx/44rpx PingFangSC;
 }
+
 .continue-btn {
     width: 200rpx;
     height: 64rpx;
@@ -59,6 +98,7 @@
     font: 500 32rpx/60rpx PingFangSC;
     color: #CC0000;
 }
+
 .more-btn {
     position: fixed;
     bottom: 60rpx;
@@ -73,6 +113,7 @@
     font: 500 40rpx/96rpx PingFangSC;
     text-align: center;
 }
+
 .more-btn:active {
     opacity: 0.8;
 }

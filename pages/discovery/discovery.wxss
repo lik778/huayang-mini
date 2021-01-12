@@ -1,4 +1,5 @@
 @import "../../assets/css/common.wxss";
+
 .discovery {
   padding-top: 16rpx;
   background: #fff;
@@ -6,7 +7,7 @@
 
 /*推广位*/
 .promotion {
-    padding: 0 30rpx 30rpx;
+  padding: 0 30rpx 30rpx;
 }
 
 /*导航栏*/
@@ -118,7 +119,7 @@
 }
 
 .live.hidden {
-    padding-bottom: 200rpx;
+  padding-bottom: 200rpx;
 }
 
 .live-title-right {
@@ -130,6 +131,7 @@
 .activity {
   padding-top: 100rpx;
 }
+
 .other-activity {}
 
 .activity-title {
@@ -151,8 +153,7 @@
   background: #F9F9F9;
 }
 
-.competition {
-}
+.competition {}
 
 .competition-item {
   position: relative;
@@ -181,6 +182,7 @@
   align-items: center;
   justify-content: center;
 }
+
 /* 活动 */
 .activity-list {
   display: flex;
@@ -251,53 +253,146 @@
   color: rgba(204, 0, 0, 1);
   margin-left: 10rpx;
 }
+
 /*视频课*/
 .course-layout {
   font: 500 52rpx/52rpx PingFangSC;
   margin: 80rpx 0 40rpx;
 }
+
 .course-layout.course-tab {
   margin: 0 0 40rpx;
 }
+
 .course-item {
   display: flex;
   align-items: center;
   box-sizing: border-box;
   margin-bottom: 40rpx;
 }
+
 .course-item:active {
   opacity: 0.9;
 }
+
 .course-image {
-  width: 220rpx;
+  width: 166rpx;
   height: 220rpx;
   font-size: 0;
   border-radius: 8rpx;
   margin-right: 24rpx;
 }
+
 .course-info {
-  width: 446rpx;
+  width: calc(100% - 190rpx);
   height: 220rpx;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
+
+/* 视频课程改版 */
+.course-main-title {
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 32rpx;
+  padding-top: 6rpx;
+  padding-bottom: 20rpx;
+}
+
+.course-sub-title {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 28rpx;
+}
+
+.course-teacher-desc {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 28rpx;
+  padding-top: 20rpx;
+}
+
+.course-item-bottom-module {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.course-item-bottom-module-left-dis {}
+
+.course-item-bottom-module-right {
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 28rpx;
+}
+
+.course-item-bottom-module-left-price {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 28rpx;
+  text-decoration: line-through;
+  padding-left: 10rpx;
+}
+
+.course-item-bottom-module-left-dis {
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #CC0000;
+  line-height: 32rpx;
+}
+
+.course-item-bottom-module-left-one {
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #CC0000;
+  line-height: 32rpx;
+}
+
+.course-item-bottom-module-left-two {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  padding-left: 10rpx;
+  line-height: 28rpx;
+}
+
+/* 视频课程改版 */
+
+
 .course-title {
   font: 32rpx/44rpx PingFangSC;
   color: #000;
 }
+
 .course-operate {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .course-visit-count {
   font: 28rpx/40rpx PingFangSC;
   color: #666;
 }
+
 .price {
   font: 32rpx/44rpx PingFangSC;
 }
+
 .price-one {
   margin-right: 20rpx;
   font: 500 32rpx/44rpx PingFangSC;
@@ -329,9 +424,11 @@
   /*color: white;*/
   /*background: #CC0000;*/
 }
+
 .course-item-more-btn.course-tab {
   margin-bottom: 80rpx;
 }
+
 .course-item-more-btn:active {
   opacity: 0.8;
 }
@@ -341,6 +438,7 @@
   position: relative;
   height: 560rpx;
 }
+
 .bootcampCardItem {
   overflow: hidden;
   position: absolute;
@@ -351,6 +449,7 @@
   height: 320rpx;
   border-radius: 24rpx 24rpx 4rpx 4rpx;
 }
+
 .bootcampCardItem::after {
   content: "";
   position: absolute;
@@ -361,6 +460,7 @@
   opacity: 0.7;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
 }
+
 .fixText {
   position: absolute;
   top: 186rpx;
@@ -369,61 +469,73 @@
   color: white;
   font: 700 40rpx/40rpx PingFangSC;
 }
+
 .bootcamp-title {
   font: 600 44rpx/60rpx PingFangSC;
 }
+
 .bootcamp-summary {
   margin-top: 14rpx;
   font: 32rpx/32rpx PingFangSC;
 }
+
 .bootcamp-content {
   position: absolute;
   top: 340rpx;
   left: 0;
   right: 0;
 }
+
 .bootcamp-feature {
   display: flex;
   align-items: center;
 }
+
 .feature-tag {
   display: flex;
   align-items: center;
   margin-right: 30rpx;
   color: #666666;
 }
-.feature-tag > text {
+
+.feature-tag>text {
   height: 40rpx;
   font: 24rpx/44rpx PingFangSC;
 }
+
 .feature-icon {
   margin-right: 6rpx;
   width: 40rpx;
   height: 40rpx;
   font-size: 0;
 }
+
 .bootcamp-next-date {
   margin: 20rpx 0 10rpx;
   font: 32rpx/40rpx PingFangSC;
   color: #000;
 }
+
 .bootcamp-operate {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.bootcamp-operate-price {
-}
+
+.bootcamp-operate-price {}
+
 .bootcamp-operate-discount-price {
   margin-right: 20rpx;
   font: 500 44rpx/60rpx PingFangSC;
   color: #CC0000;
 }
+
 .bootcamp-operate-sub-price {
   text-decoration: line-through;
   font: 28rpx/40rpx PingFangSC;
   color: #666;
 }
+
 .bootcamp-operate-btn {
   width: 200rpx;
   height: 64rpx;
@@ -433,6 +545,7 @@
   text-align: center;
   font: 500 32rpx/64rpx PingFangSC;
 }
+
 .bootcamp-operate-btn:active {
   opacity: 0.8;
 }

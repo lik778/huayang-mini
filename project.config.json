@@ -350,6 +350,18 @@
           "pathName": "subCourse/videoCourseDetail/videoCourseDetail",
           "query": "videoId=53",
           "scene": null
+        },
+        {
+          "name": "subCourse/videoCourseList/videoCourseList",
+          "pathName": "subCourse/videoCourseList/videoCourseList",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "mine/personCourse/personCourse",
+          "pathName": "mine/personCourse/personCourse",
+          "query": "",
+          "scene": null
         }
       ]
     }

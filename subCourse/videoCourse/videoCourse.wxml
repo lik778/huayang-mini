@@ -1,13 +1,13 @@
 <!--subCourse/videoCourseDetail/videoCourseDetail.wxml-->
 <view class="video-detail" wx:if='{{videoCourseData!=""}}'>
   <!-- 横条区域 -->
-  <view class="notice subject-bg-color" wx:if='{{showStudyToast}}' bindtap="playVideo">
+  <view class="notice subject-bg-color" wx:if='{{showStudyToast&&hasLogin}}' bindtap="playVideo">
     <view class="notice-text">您上次学到第{{studiedIndex}}节课，点击继续学习</view>
   </view>
   <!-- 视频播放器区域 -->
   <view class="video-fixed-box">
     <view class="video-module"
-      style="width:{{videoPlayStyle.width}}px;height:{{videoPlayStyle.height}}px;margin-top:{{showStudyToast?'88rpx':0}}"
+      style="width:{{videoPlayStyle.width}}px;height:{{videoPlayStyle.height}}px;margin-top:{{showStudyToast&&hasLogin?'88rpx':0}}"
       bindpause="pauseVideo">
       <view class="video-cover" wx:if='{{!inPlaying||onlySelected}}'>
         <image src="{{videoCourseData.series_detail.cover_pic}}"></image>
@@ -28,7 +28,7 @@
   </view>
 
   <!-- 视频介绍区域 -->
-  <view class="video-desciption" style="padding-top:{{showStudyToast?'540rpx':'450rpx'}}">
+  <view class="video-desciption" style="padding-top:{{showStudyToast&&hasLogin?'540rpx':'450rpx'}}">
     <view class="video-description-title-line">
       <text>{{videoCourseData.series_detail.teacher_desc}}</text>
       <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610093007wRvmte.jpg"
@@ -113,16 +113,15 @@
             {{item.teacher.teacher_desc}}</view>
         </view>
         <view class="guess-like-item-right-bottom">
-          <view class="guess-like-item-right-bottom-left subject-font-color"
-            wx:if='{{item.kecheng_series.price===0||(item.kecheng_series.price===0&&item.kecheng_series.discount_price===0)||isIos}}'>
+          <view class="guess-like-item-right-bottom-left subject-font-color">
             去免费试看
           </view>
-          <view class="guess-like-item-right-bottom-left"
-            wx:if='{{(item.kecheng_series.discount_price>0||(item.kecheng_series.price!==0&&item.kecheng_series.discount_price!==0))&&!isIos}}'>
+          <!-- <view class="guess-like-item-right-bottom-left"
+            wx:if='{{(item.kecheng_series.discount_price>0||(item.kecheng_series.price!=="0.00"&&item.kecheng_series.discount_price!=="0.00"))&&!isIos}}'>
             <text class="subject-font-color" style="font-weight:600;">¥{{item.kecheng_series.discount_price}}</text>
             <text
               style="margin-left:10rpx;color:rgba(0,0,0,0.6);font-weight:400;    text-decoration:line-through;">¥{{item.kecheng_series.price}}</text>
-          </view>
+          </view> -->
           <view class="guess-like-item-right-bottom-right">
             共{{item.kecheng_series.visit_count}}人学习
           </view>

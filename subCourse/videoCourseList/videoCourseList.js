@@ -1,8 +1,18 @@
 // subCourse/videoCourseList/videoCourseList.js
-import { getVideoTypeList, queryVideoCourseListByBuyTag } from "../../api/course/index"
-import { checkFocusLogin } from "../../api/auth/index"
-import { GLOBAL_KEY, Version } from "../../lib/config"
-import { getLocalStorage } from "../../utils/util"
+import {
+  getVideoTypeList,
+  queryVideoCourseListByBuyTag
+} from "../../api/course/index"
+import {
+  checkFocusLogin
+} from "../../api/auth/index"
+import {
+  GLOBAL_KEY,
+  Version
+} from "../../lib/config"
+import {
+  getLocalStorage
+} from "../../utils/util"
 
 Page({
 
@@ -45,20 +55,25 @@ Page({
       params.user_id = getLocalStorage(GLOBAL_KEY.userId)
     }
     queryVideoCourseListByBuyTag(params).then(list => {
-      if (getLocalStorage(GLOBAL_KEY.userId)) {
-        list = list.map(_ => {
-          return {
-            ..._.kecheng_series,
-            didBought: _.buy_tag === "已购",
-            buy_tag: _.buy_tag
-          }
-        })
-      }
+      // if (getLocalStorage(GLOBAL_KEY.userId)) {
+      list = list.map(_ => {
+        return {
+          ..._.kecheng_series,
+          teacher: _.teacher,
+          didBought: _.buy_tag === "已购",
+          buy_tag: _.buy_tag
+        }
+      })
+      // }
       let bottomLock = true
       if (list.length < 10) {
         bottomLock = false
       }
       let handledList = list.map((res) => {
+        if (res.visit_count >= 10000) {
+          res.visit_count = (res.visit_count / 10000).toFixed(1) + "万"
+          res.visit_count = res.visit_count.split('.')[1] === '0万' ? res.visit_count[0] + "万" : res.visit_count
+        }
         res.price = (res.price / 100) // .toFixed(2)
         if (res.discount_price === -1 && res.price > 0) {
           // 原价出售
@@ -66,8 +81,7 @@ Page({
           if (+res.invite_open === 1) {
             res.fission_price = (+res.price * res.invite_discount / 10000) // .toFixed(2)
           }
-        }
-        else if (res.discount_price >= 0 && res.price > 0) {
+        } else if (res.discount_price >= 0 && res.price > 0) {
           // 收费但有折扣
           res.discount_price = (res.discount_price / 100) // .toFixed(2)
           // 是否有营销活动
@@ -80,7 +94,7 @@ Page({
 
         // 只显示开启营销活动的数据
         if (+res.invite_open === 1) {
-          res.tipsText = res.fission_price == 0 ? "邀请好友助力免费学" : `邀请好友助力${(res.invite_discount / 10)}折购`
+          res.tipsText = "邀好友"
         }
 
         return res

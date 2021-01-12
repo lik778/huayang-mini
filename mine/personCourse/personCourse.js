@@ -86,7 +86,7 @@ Page({
 
       let oldOffset = this.data.offset
       let oldList = this.data.courseList
-      list = list.map(t => t.kecheng_series)
+      // list = list.map(t => t.kecheng_series)
 
       this.setData({courseList: [...oldList, ...list], offset: oldOffset + list.length})
       // this.setData({courseList: [], offset: 0})
