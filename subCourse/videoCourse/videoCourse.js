@@ -393,7 +393,6 @@ Page({
               videoPlayerSrc = videoCourseList[this.data.shareIndex].url
             } else if (this.data.studiedIndex) {
               // 学习过
-              console.log(this.data.studiedIndex, videoCourseList)
               onlySelected = true
               nowCoursePlayIndex = this.data.studiedIndex - 1
               videoPlayerSrc = videoCourseList[this.data.studiedIndex - 1].url
@@ -480,7 +479,6 @@ Page({
             // 未登录
             buttonType = ButtonType.noLogin
           }
-          console.log(this.data.studiedIndex, nowCoursePlayIndex)
           res.series_detail.video_detail = videoCourseList
           this.setData({
             videoCourseData: res,
