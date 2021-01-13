@@ -13,7 +13,7 @@
   <!-- 视频播放器区域 -->
   <view class="video-fixed-box">
     <view class="video-module"
-      style="width:{{videoPlayStyle.width}}px;height:{{videoPlayStyle.height}}px;margin-top:{{showStudyToast&&hasLogin?'88rpx':0}}"
+      style="width:{{videoPlayStyle.width}}px;height:{{videoPlayStyle.height}}px;margin-top:{{(showStudyToast&&hasLogin)||showSuccess?'88rpx':0}}"
       bindpause="pauseVideo">
       <view class="video-cover" wx:if='{{!inPlaying||onlySelected}}'>
         <image src="{{videoCourseData.series_detail.cover_pic}}"></image>
@@ -35,7 +35,7 @@
 
   <!-- 视频介绍区域 -->
   <view class="video-desciption"
-    style="padding-top:{{showStudyToast&&hasLogin?videoPlayStyle.height+74+'px':videoPlayStyle.height+30+'px'}}">
+    style="padding-top:{{(showStudyToast&&hasLogin)||showSuccess?videoPlayStyle.height+74+'px':videoPlayStyle.height+30+'px'}}">
     <view class="video-description-title-line">
       <text>{{videoCourseData.series_detail.teacher_desc}}</text>
       <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610093007wRvmte.jpg"
@@ -78,7 +78,7 @@
           <view class="course-item-middle-top">
             第{{item.Index}}节 {{item.time}}
           </view>
-          <view class="course-item-middle-bottom">
+          <view class="{{noPayForCourse&&videoCourseData.series_detail.gift_limit_count>0?'course-item-middle-bottom':'course-item-middle-bottom course-item-middle-bottom-long'}}">
             {{item.title}}
           </view>
         </view>
@@ -212,7 +212,7 @@
   </view>
   <!-- 分销推广按钮 -->
   <view class="share-friend" bindtap="shareCourse" style="bottom:{{noPayForCourse?'80rpx':'140rpx'}}"
-    wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&videoCourseData.series_detail.sharePrice!==''}}">
+    wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&videoCourseData.series_detail.sharePrice!==''&&videoCourseData.series_detail.sharePrice>0}}">
     <view class="share-friend-box">
       <button open-type="share">推广成功赚{{videoCourseData.series_detail.sharePrice}}元</button>
       <view class="share-text subject-bg-color">推广成功赚{{videoCourseData.series_detail.sharePrice}}元</view>

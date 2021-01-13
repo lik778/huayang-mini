@@ -207,6 +207,7 @@
   align-items: center;
   margin-bottom: 20rpx;
   box-sizing: border-box;
+  border: 1px solid transparent;
 }
 
 .course-item-choosed {
@@ -264,6 +265,10 @@
   width: 186rpx;
   height: 64rpx;
   vertical-align: bottom;
+}
+
+.course-item-middle-bottom-long {
+  width: 536rpx;
 }
 
 /* 添加私欲 */

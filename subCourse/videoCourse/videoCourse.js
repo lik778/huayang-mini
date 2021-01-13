@@ -389,10 +389,13 @@ Page({
             if (this.data.shareIndex) {
               // 分享进来
               onlySelected = true
+              nowCoursePlayIndex = this.data.shareIndex
               videoPlayerSrc = videoCourseList[this.data.shareIndex].url
             } else if (this.data.studiedIndex) {
               // 学习过
+              console.log(this.data.studiedIndex, videoCourseList)
               onlySelected = true
+              nowCoursePlayIndex = this.data.studiedIndex - 1
               videoPlayerSrc = videoCourseList[this.data.studiedIndex - 1].url
             } else {
               videoPlayerSrc = videoCourseList[0].url
@@ -407,21 +410,50 @@ Page({
           } else {
             let has_free_visit = recordList.indexOf('试看')
             let has_friend_visit = recordList.indexOf('好友相送')
-            if (res.series_detail.promotion_video) {
-              // 存在宣传视频
-              videoPlayerSrc = res.series_detail.promotion_video
-              nowCoursePlayIndex = ''
-            } else if (has_free_visit !== -1) {
-              // 有试看课
-              videoPlayerSrc = videoCourseList[has_friend_visit + 1].url
-              nowCoursePlayIndex = has_free_visit
-            } else if (has_friend_visit !== -1) {
-              // 有好友相送课
-              videoPlayerSrc = videoCourseList[has_friend_visit + 1].url
-              nowCoursePlayIndex = has_friend_visit
-            } else {
-              videoPlayerSrc = ''
-              nowCoursePlayIndex = ''
+            if (this.data.showSuccess) {
+              // 请好友看课进入
+              videoPlayerSrc = videoCourseList[nowCoursePlayIndex].url
+              nowCoursePlayIndex = nowCoursePlayIndex
+            } else if (this.data.shareIndex) {
+              // 分享进入
+              if (recordList[this.data.shareIndex] !== 'lock') {
+                videoPlayerSrc = videoCourseList[this.data.shareIndex].url
+                nowCoursePlayIndex = this.data.shareIndex
+              } else {
+                if (res.series_detail.promotion_video) {
+                  // 存在宣传视频
+                  videoPlayerSrc = res.series_detail.promotion_video
+                  nowCoursePlayIndex = ''
+                } else if (has_free_visit !== -1) {
+                  // 有试看课
+                  videoPlayerSrc = videoCourseList[has_free_visit].url
+                  nowCoursePlayIndex = has_free_visit
+                } else if (has_friend_visit !== -1) {
+                  // 有好友相送课
+                  videoPlayerSrc = videoCourseList[has_friend_visit + 1].url
+                  nowCoursePlayIndex = has_friend_visit
+                } else {
+                  videoPlayerSrc = ''
+                  nowCoursePlayIndex = ''
+                }
+              }
+            } else if (!this.data.shareIndex) {
+              if (res.series_detail.promotion_video) {
+                // 存在宣传视频
+                videoPlayerSrc = res.series_detail.promotion_video
+                nowCoursePlayIndex = ''
+              } else if (has_free_visit !== -1) {
+                // 有试看课
+                videoPlayerSrc = videoCourseList[has_friend_visit + 1].url
+                nowCoursePlayIndex = has_free_visit
+              } else if (has_friend_visit !== -1) {
+                // 有好友相送课
+                videoPlayerSrc = videoCourseList[has_friend_visit + 1].url
+                nowCoursePlayIndex = has_friend_visit
+              } else {
+                videoPlayerSrc = ''
+                nowCoursePlayIndex = ''
+              }
             }
           }
           // 邀请助力
