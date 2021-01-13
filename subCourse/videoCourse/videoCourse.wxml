@@ -16,7 +16,7 @@
       style="width:{{videoPlayStyle.width}}px;height:{{videoPlayStyle.height}}px;margin-top:{{(showStudyToast&&hasLogin)||showSuccess?'88rpx':0}}"
       bindpause="pauseVideo">
       <view class="video-cover" wx:if='{{!inPlaying||onlySelected}}'>
-        <image src="{{videoCourseData.series_detail.cover_pic}}"></image>
+        <image src="{{videoCourseData.series_detail.video_pic}}"></image>
       </view>
       <view class="icon" wx:if="{{!inPlaying||onlySelected}}">
         <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610091513AyQCFg.jpg" class="video-player-lock"
@@ -78,7 +78,8 @@
           <view class="course-item-middle-top">
             第{{item.Index}}节 {{item.time}}
           </view>
-          <view class="{{noPayForCourse&&videoCourseData.series_detail.gift_limit_count>0?'course-item-middle-bottom':'course-item-middle-bottom course-item-middle-bottom-long'}}">
+          <view
+            class="{{noPayForCourse&&videoCourseData.series_detail.gift_limit_count>0?'course-item-middle-bottom':'course-item-middle-bottom course-item-middle-bottom-long'}}">
             {{item.title}}
           </view>
         </view>
@@ -91,7 +92,7 @@
   </view>
   <!-- 课程详情 -->
   <view class="course-detail" wx:else>
-    <image src="{{item}}" wx:for="{{videoCourseData.series_detail.detail_pics}}" wx:key="{{index}}" Mode="aspectFit">
+    <image src="{{item}}" wx:for="{{videoCourseData.series_detail.detail_pics}}" wx:key="{{index}}" mode="widthFix">
     </image>
   </view>
   <!-- 添加班主任 -->
