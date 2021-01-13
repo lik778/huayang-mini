@@ -93,7 +93,7 @@ Page({
       kecheng_subname: item.kecheng_series.name,
       kecheng_teacher: item.teacher.name,
     }, false)
-    
+
     wx.navigateTo({
       url: `/subCourse/videoCourse/videoCourse?videoId=${item.kecheng_series.id}`,
     })
@@ -103,7 +103,7 @@ Page({
       offset: this.data.offset,
       limit: this.data.limit
     }).then((list) => {
-
+      list = list || []
       if (list.length !== this.data.limit) {
         this.setData({
           noMore: true
@@ -135,7 +135,6 @@ Page({
 
           let oldRecommendOffset = this.data.recommendOffset
           let oldRecommendList = this.data.recommendList
-
           this.setData({
             recommendList: [...oldRecommendList, ...recommendList],
             recommendOffset: oldRecommendOffset + recommendList.length

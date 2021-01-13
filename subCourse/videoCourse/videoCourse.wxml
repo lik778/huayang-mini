@@ -178,7 +178,7 @@
     <view class="pay-button-no-login subject-bg-color pay-button-common" bindtap="login" wx:if="{{buttonType===1}}">立即加入
     </view>
     <!-- 邀请折扣 -->
-    <view class="pay-button-invite">
+    <view class="pay-button-invite" wx:if='{{buttonType===7||buttonType===8}}'>
       <view class="pay-button-invite-one" wx:if='{{buttonType===7}}'>
         <view class="pay-button-invite-one-left" bindtap="pay">
           <view>直接购买</view>

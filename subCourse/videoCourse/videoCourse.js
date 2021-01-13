@@ -285,7 +285,7 @@ Page({
       user_id: this.data.userInfo.id
     }).then(res => {
       buttonType = buttonType === '' ? ButtonType.noLogin : buttonType === -1 ? -1 : buttonType
-      let recordList = []
+
       let videoCourseList = []
       let userGrade = this.data.userInfo === '' ? this.data.userInfo.user_grade : 0
       let videoPlayerLock = true
@@ -294,138 +294,157 @@ Page({
       let nowCoursePlayIndex = this.data.nowCoursePlayIndex
       res.series_detail.detail_pics = res.series_detail.detail_pics.split(",")
 
-      // 价格处理
-      res.series_detail.price = (res.series_detail.price / 100).toFixed(2)
-
-      res.series_detail.discount_price = res.series_detail.discount_price === -1 ? '' : (res.series_detail.discount_price / 100).toFixed(2)
-
-      res.series_detail.sharePrice = res.series_detail.distribution_ratio > 0 ? res.series_detail.discount_price === '' ? res.series_detail.price * res.series_detail.distribution_ratio / 100 : res.series_detail.discount_price * res.series_detail.distribution_ratio / 100 : ''
-
       wx.getSystemInfo({
         success: (res1) => {
-          if (buttonType !== ButtonType.noLogin || buttonType === -1) {
+          // 设置加入按钮状态
+          if (buttonType === ButtonType.joined) {
+            // 已购买
+            buttonType = ButtonType.joined
+          } else {
+            // 未购买||未登录
             if (res1.platform === 'ios') {
               // ios平台
+              isIos = true
               if ((res.series_detail.price === '0.00' || res.series_detail.discount_price === '') && userGrade >= res.series_detail.user_grade) {
+                // 如果是免费课程则直接显示加入按钮
                 buttonType = ButtonType.free
               } else {
                 buttonType = ButtonType.ios
               }
-              // buttonType = ButtonType.ios
-              isIos = true
             } else {
               // 安卓平台
               isIos = false
-              if (buttonType !== ButtonType.joined) {
-                if (res.series_detail.price > 0) {
-                  // 不免费
-                  if (res.series_detail.discount_price > 0) {
-                    // 有折扣
-                    buttonType = ButtonType.chargeAndDiscount
-                  } else if (res.series_detail.discount_price < 0 || res.series_detail.discount_price === '') {
-                    // 原价
-                    buttonType = ButtonType.chargeAndNoDiscount
-                  }
-                } else {
-                  // 免费
-                  if (res.series_detail.user_grade > 0) {
-                    // 免费但有等级限制
-                    if (res.series_detail.user_grade > userGrade) {
-                      // 等级不够
-                      buttonType = ButtonType.freeAndLevelLimit
-                    } else {
-                      // 等级够了
-                      buttonType = ButtonType.free
-                    }
+              if (res.series_detail.discount_price === 0 || res.series_detail.price === 0) {
+                // 价格免费
+                if (res.series_detail.user_grade > 0) {
+                  // 有等级限制
+                  if (res.series_detail.user_grade > userGrade) {
+                    // 等级不够
+                    buttonType = ButtonType.freeAndLevelLimit
                   } else {
-                    // 完全免费
+                    // 等级够了
                     buttonType = ButtonType.free
                   }
+                } else {
+                  // 无等级限制，完全免费
+                  buttonType = ButtonType.free
+                }
+                if (res.series_detail.user_grade > 0) {
+                  // 免费但有等级限制
+                  if (res.series_detail.user_grade > userGrade) {
+                    // 等级不够
+                    buttonType = ButtonType.freeAndLevelLimit
+                  } else {
+                    // 等级够了
+                    buttonType = ButtonType.free
+                  }
+                } else {
+                  // 完全免费
+                  buttonType = ButtonType.free
+                }
+              } else {
+                // 收费
+                if (res.series_detail.discount_price > 0) {
+                  // 有折扣
+                  buttonType = ButtonType.chargeAndDiscount
+                } else {
+                  // 无折扣=>原价
+                  buttonType = ButtonType.chargeAndNoDiscount
                 }
               }
             }
           }
+          // 价格处理
+          res.series_detail.price = (res.series_detail.price / 100).toFixed(2)
+          res.series_detail.discount_price = res.series_detail.discount_price === -1 ? '' : (res.series_detail.discount_price / 100).toFixed(2)
+          res.series_detail.sharePrice = res.series_detail.distribution_ratio > 0 ? res.series_detail.discount_price === '' ? res.series_detail.price * res.series_detail.distribution_ratio / 100 : res.series_detail.discount_price * res.series_detail.distribution_ratio / 100 : ''
           // 处理视频课程列表
           videoCourseList = JSON.parse(res.series_detail.video_detail) || []
+          let recordList = new Array(videoCourseList.length).fill('lock')
+          // 处理课程列表不同状态
           videoCourseList.map((item, index) => {
             item.time = secondToMinute(item.time)
             item.type = 'lock'
             item.Index = convertToChinaNum(index + 1)
-            if (item.canReplay) {
-              item.type = '试看'
+            if (buttonType === ButtonType.joined) {
+              // 已购买
+              item.type = 'play'
+              recordList[index] = 'play'
             } else {
-              if (buttonType === ButtonType.joined) {
-                item.type = 'play'
-              } else {
-                if (item.status === 'unlock') {
-                  item.type = '好友相送'
-                }
-              }
-            }
-            // 判断规则(记录数组是0且是（好友相送或者分享进来的或者之前学习过）)
-            if (recordList.length === 0) {
-              if (res.series_detail.promotion_video !== '' && !this.data.noPayForCourse) {
-                recordList.push(true)
-                videoPlayerSrc = res.series_detail.promotion_video
-                return
-              }
-              if (!this.data.nowCoursePlayIndex) {
-                if (item.type === '试看') {
-                  recordList.push(true)
-                  videoPlayerSrc = item.url
-                  videoPlayerLock = false
-                  nowCoursePlayIndex = index
-                } else if (item.type === '好友相送') {
-                  recordList.push(true)
-                  videoPlayerSrc = item.url
-                  videoPlayerLock = false
-                  nowCoursePlayIndex = index
-                }
+              // 未购买||未授权
+              if (item.canReplay) {
+                // 试看课
+                item.type = '试看'
+                recordList[index] = '试看'
+              } else if (item.status === 'unlock') {
+                item.type = '好友相送'
+                recordList[index] = '好友相送'
               }
             }
           })
+          // 判断&设置播放器地址
           if (this.data.noPayForCourse) {
-            if (nowCoursePlayIndex >= 0 && nowCoursePlayIndex !== '') {
-              videoPlayerSrc = videoCourseList[nowCoursePlayIndex].url
-              this.setData({
-                onlySelected: true
-              })
+            // 已购买该课程
+            if (this.data.shareIndex) {
+              // 分享进来
+              videoPlayerSrc = videoCourseList[this.data.shareIndex].url
+            } else if (this.data.studiedIndex) {
+              // 学习过
+              videoPlayerSrc = videoCourseList[this.data.studiedIndex].url
             } else {
               videoPlayerSrc = videoCourseList[0].url
+              nowCoursePlayIndex = 0
             }
             videoCourseList.map(item => {
               item.type = 'play'
             })
+            this.setData({
+              onlySelected: true
+            })
           } else {
-            if (this.data.shareIndex) {
-              this.setData({
-                onlySelected: true
-              })
+            let has_free_visit = recordList.indexOf('试看')
+            let has_friend_visit = recordList.indexOf('好友相送')
+            if (res.series_detail.promotion_video) {
+              // 存在宣传视频
+              videoPlayerSrc = res.series_detail.promotion_video
+              nowCoursePlayIndex = ''
+            } else if (has_free_visit !== -1) {
+              // 有试看课
+              videoPlayerSrc = videoCourseList[has_friend_visit + 1].url
+              nowCoursePlayIndex = has_free_visit
+            } else if (has_friend_visit !== -1) {
+              // 有好友相送课
+              videoPlayerSrc = videoCourseList[has_friend_visit + 1].url
+              nowCoursePlayIndex = has_friend_visit
+            } else {
+              videoPlayerSrc = ''
+              nowCoursePlayIndex = ''
             }
           }
-
           // 邀请助力
-          if (res.series_detail.invite_open === 1) {
-            if (res.series_detail.invite_count > 0 && +res.series_detail.invite_discount === 0) {
-              // 邀请人数不为0 & 优惠价格为0
-              buttonType = ButtonType.fissionAndCountLimitAndFreeDiscount
-            } else if (+res.series_detail.invite_count === 0 && res.series_detail.invite_discount > 0) {
-              // 邀请人数为0 & 优惠价格不为0
-              res.series_detail.discount_price = (+res.series_detail.price * res.series_detail.invite_discount / 100).toFixed(2)
-              buttonType = ButtonType.chargeAndDiscounts
-              // this.setData({
-              //   didResetDiscountPrice: true
-              // })
-            } else if (res.series_detail.invite_count > 0 && res.series_detail.invite_discount > 0) {
-              // 邀请人数不为0 & 优惠折扣不为0
-              res.series_detail.fission_price = (+res.series_detail.price * res.series_detail.invite_discount / 100).toFixed(2)
-              buttonType = ButtonType.fissionAndCountLimitAndDiscountLimit
-            } else if (+res.series_detail.invite_count === 0 && +res.series_detail.invite_discount === 0) {
-              // 邀请人数为0 & 优惠折扣为0
-              buttonType = ButtonType.freeAndNoLevelLimit
+          if (this.data.hasLogin) {
+            // 已登录
+            if (res.series_detail.invite_open === 1 && (res.series_detail.price > 0 || res.series_detail.discount_price > 0)) {
+              if (res.series_detail.invite_count > 0 && +res.series_detail.invite_discount === 0) {
+                // 邀请人数不为0 & 优惠价格为0
+                buttonType = ButtonType.fissionAndCountLimitAndFreeDiscount
+              } else if (+res.series_detail.invite_count === 0 && res.series_detail.invite_discount > 0) {
+                // 邀请人数为0 & 优惠价格不为0
+                res.series_detail.discount_price = (+res.series_detail.price * res.series_detail.invite_discount / 100).toFixed(2)
+                buttonType = ButtonType.chargeAndDiscounts
+              } else if (res.series_detail.invite_count > 0 && res.series_detail.invite_discount > 0) {
+                // 邀请人数不为0 & 优惠折扣不为0
+                res.series_detail.fission_price = (+res.series_detail.price * res.series_detail.invite_discount / 100).toFixed(2)
+                buttonType = ButtonType.fissionAndCountLimitAndDiscountLimit
+              } else if (+res.series_detail.invite_count === 0 && +res.series_detail.invite_discount === 0) {
+                // 邀请人数为0 & 优惠折扣为0
+                buttonType = ButtonType.freeAndNoLevelLimit
+              }
             }
+          } else {
+            // 未登录
+            buttonType = ButtonType.noLogin
           }
-
           res.series_detail.video_detail = videoCourseList
           this.setData({
             videoCourseData: res,
