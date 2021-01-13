@@ -5,9 +5,9 @@
             <text>您还没有学习课程</text>
             <text>快去学习吧！</text>
         </view>
-        <view class="layout">课程推荐</view>
+        <view class="layout" wx:if='{{courseList.length > 0}}'>课程推荐</view>
     </block>
-    <view class="video-course-list">
+    <view class="video-course-list" wx:if='{{courseList.length>0}}'>
         <view class="course-item" wx:for="{{courseList.length > 0 ? courseList : recommendList}}" wx:key="index"
             bindtap="viewCourseDetail" data-item="{{item}}">
             <image class="course-image" src="{{item.kecheng_series.cover_pic}}"></image>
@@ -15,7 +15,8 @@
                 <view class="course-info-top">
                     <view class="course-info-main-title limit-one-line">{{item.kecheng_series.teacher_desc}}</view>
                     <view class="course-info-sub-title limit-one-line">{{item.kecheng_series.name}}</view>
-                    <view class="course-info-teacher limit-one-line">{{item.teacher.name}} {{item.teacher.teacher_desc}}</view>
+                    <view class="course-info-teacher limit-one-line">{{item.teacher.name}} {{item.teacher.teacher_desc}}
+                    </view>
                 </view>
                 <view class="continue-btn" wx:if="{{courseList.length > 0}}">继续学习</view>
             </view>

@@ -78,7 +78,17 @@
             <view class="course-layout">{{recommendCourseItem.key}}学院</view>
             <view class="course-item" wx:for="{{recommendCourseItem.content}}" wx:key="index" bindtap="toVideoDetail"
                 data-item="{{item}}">
-                <image class="course-image" src="{{item.cover_pic}}"></image>
+                <view class="course-logo">
+                    <image class="course-image" src="{{item.cover_pic}}"></image>
+                    <!-- 口碑 -->
+                    <image class="course-logo-icon"
+                        src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610509385fvXMxP.jpg"
+                        wx:if='{{item.series_tag===1}}'></image>
+                    <!-- 新课 -->
+                    <image class="course-logo-icon course-logo-icon-one"
+                        src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610509422TAlohv.jpg"
+                        wx:if='{{item.series_tag===2}}'></image>
+                </view>
                 <view class="course-info">
                     <view class="course-info-top">
                         <!-- 主标题 -->

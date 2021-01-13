@@ -105,7 +105,7 @@
     <view class="guess-like-item" wx:for="{{videoCourseData.recommend_series}}" wx:key="{{index}}"
       bindtap="toCoursePage" data-item='{{item}}' wx:if='{{videoCourseData.recommend_series}}'>
       <view class="guess-like-item-left">
-        <image class="guess-like-item-left-teach-img" src="{{item.teacher.avatar}}"></image>
+        <image class="guess-like-item-left-teach-img" src="{{item.kecheng_series.cover_pic}}"></image>
         <!-- 课程标签 -->
         <image wx:if='{{item.kecheng_series.series_tag===2}}' class="guess-like-item-left-icon-one"
           src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610346880xcxKuX.jpg"></image>

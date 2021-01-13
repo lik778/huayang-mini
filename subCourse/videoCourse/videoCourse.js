@@ -245,8 +245,8 @@ Page({
             // 加入过
             buttonType = ButtonType.joined
             this.setData({
-              showStudyToast: this.data.nowCoursePlayIndex ? true : res.data.last_visit_num === 0 ? false : true,
-              nowCoursePlayIndex: this.data.nowCoursePlayIndex ? this.data.nowCoursePlayIndex : res.data.last_visit_num - 1 >= 0 ? res.data.last_visit_num - 1 : '',
+              showStudyToast: this.data.shareIndex ? false : this.data.nowCoursePlayIndex ? true : res.data.last_visit_num === 0 ? false : true,
+              nowCoursePlayIndex: this.data.shareIndex ? this.data.shareIndex : this.data.nowCoursePlayIndex ? this.data.nowCoursePlayIndex : res.data.last_visit_num - 1 >= 0 ? res.data.last_visit_num - 1 : '',
               studiedIndex: res.data.last_visit_num === 0 ? '' : res.data.last_visit_num,
               noPayForCourse: true,
               videoPlayerLock: false
@@ -305,7 +305,7 @@ Page({
             if (res1.platform === 'ios') {
               // ios平台
               isIos = true
-              if ((res.series_detail.price === '0.00' || res.series_detail.discount_price === '') && userGrade >= res.series_detail.user_grade) {
+              if ((res.series_detail.price === 0 || res.series_detail.discount_price === '') && userGrade >= res.series_detail.user_grade) {
                 // 如果是免费课程则直接显示加入按钮
                 buttonType = ButtonType.free
               } else {
