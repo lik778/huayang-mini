@@ -23,7 +23,6 @@
                 </view>
                 <!-- 价钱+学习人数 -->
                 <view class="course-info-bottom">
-
                     <view class="course-info-bottom-left" wx:if="{{showMoney}}">
                         <view class="course-info-bottom-left-module" wx:if="{{item.tipsText}}">
                             <text class="course-info-bottom-right-module-one">{{item.tipsText}}</text>

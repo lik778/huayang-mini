@@ -90,12 +90,12 @@
                     </view>
                     <!-- 价格+学习人数 -->
                     <view class="course-item-bottom-module">
-                        <view class='course-item-bottom-module-left' wx:if="{{item.tipsText}}">
+                        <view class='course-item-bottom-module-left' wx:if="{{item.tipsText&&!isIosPlatform}}">
                             <text class="course-item-bottom-module-left-dis subject-font-color">{{item.tipsText}}</text>
                             <text class="course-item-bottom-module-left-price"
                                 wx:if='{{item.price>0}}'>¥{{item.price}}</text>
                         </view>
-                        <view class='course-item-bottom-module-left' wx:else>
+                        <view class='course-item-bottom-module-left' wx:if="{{!item.tipsText&&!isIosPlatform}}">
                             <text class="course-item-bottom-module-left-one">
                                 <text wx:if="{{item.didBought}}">已购</text>
                                 <text wx:else>{{item.discount_price ? '¥'+item.discount_price : '免费'}}</text>

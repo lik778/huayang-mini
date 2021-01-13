@@ -160,20 +160,14 @@ Page({
   },
   // 检查ios环境
   checkIos() {
-    checkFocusLogin({
-      app_version: Version
-    }).then(res1 => {
-      let _this = this
-      if (!res1) {
-        wx.getSystemInfo({
-          success: function (res2) {
-            if (res2.platform == 'ios') {
-              _this.setData({
-                showMoney: false
-              })
-            }
-          }
-        })
+    let _this = this
+    wx.getSystemInfo({
+      success: function (res2) {
+        if (res2.platform == 'ios') {
+          _this.setData({
+            showMoney: false
+          })
+        }
       }
     })
   },
