@@ -3,16 +3,87 @@
     <cover-view class="tabs-fixed-line"></cover-view>
     <view class="type-list">
         <view class="{{currentIndex===index?'main-title-item active':'main-title-item'}}" wx:for="{{titleList}}"
-              wx:key="index" bindtap="changeTab" data-index="{{index}}">
+            wx:key="index" bindtap="changeTab" data-index="{{index}}">
             {{item}}
         </view>
     </view>
     <view class="list-main" wx:if="{{videoList.length>0}}">
 
-        <view class="course-item" wx:for="{{videoList}}" wx:key="index" bindtap="toVideoCourseDetail" data-item="{{item}}">
-            <image class="course-image" src="{{item.cover_pic}}"></image>
+        <view class="course-item" wx:for="{{videoList}}" wx:key="index" bindtap="toVideoCourseDetail"
+            data-item="{{item}}">
+            <view class="course-logo">
+                <image class="course-image" src="{{item.cover_pic}}"></image>
+                <!-- 口碑 -->
+                <image class="course-logo-icon"
+                    src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610509385fvXMxP.jpg"
+                    wx:if='{{item.series_tag===1}}'></image>
+                <!-- 新课 -->
+                <image class="course-logo-icon course-logo-icon-one"
+                    src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610509422TAlohv.jpg"
+                    wx:if='{{item.series_tag===2}}'></image>
+            </view>
             <view class="course-info">
-                <text class="course-title limit-two-line">{{item.name}}</text>
+                <view class="course-info-top">
+                    <!-- 主标题 -->
+                    <view class="course-info-main-title limit-one-line">{{item.teacher_desc}}</view>
+                    <!-- 副标题 -->
+                    <view class="course-info-sub-title limit-one-line">{{item.name}}</view>
+                    <!-- 老师介绍 -->
+                    <view class="course-info-teacher limit-one-line">{{item.teacher.name}} {{item.teacher.teacher_desc}}
+                    </view>
+                </view>
+                <!-- 价钱+学习人数 -->
+                <view class="course-info-bottom">
+                    <view class="course-info-bottom-left" wx:if="{{showMoney}}">
+                        <view class="course-info-bottom-left-module" wx:if="{{item.tipsText}}">
+                            <text class="course-info-bottom-right-module-one">{{item.tipsText}}</text>
+                            <text class="course-info-bottom-right-module-one-two"
+                                wx:if='{{item.price>0}}'>¥{{item.price}}</text>
+                        </view>
+                        <view class="course-info-bottom-left-module" wx:else>
+                            <text class="course-info-bottom-left-module-one subject-font-color">
+                                <text wx:if="{{item.didBought}}">已购</text>
+                                <text wx:else>{{item.discount_price ? '¥'+item.discount_price : '免费'}}</text>
+                            </text>
+                            <text class="course-info-bottom-left-module-two"
+                                style="text-decoration: {{item.didBought?'none':'line-through'}};">
+                                <text wx:if="{{item.didBought}}">去学习</text>
+                                <text wx:else>{{item.price>0?"¥"+item.price:""}}</text>
+                            </text>
+                        </view>
+                    </view>
+                    <view class="course-info-bottom-right">
+                        共{{item.visit_count}}人学习
+                    </view>
+
+                </view>
+
+                <!-- <view class="course-info-sub-title">
+
+                    <view class="course-operate" wx:if="{{showMoney}}">
+                        <view class="price limit-one-line">
+                            <block wx:if="{{item.tipsText}}">
+                                <text class="price-three">{{item.tipsText}}</text>
+                                <text class="price-two">¥{{item.price}}</text>
+                            </block>
+                            <block wx:else>
+                                <text class="price-one">
+                                    <text wx:if="{{item.didBought}}">已购</text>
+                                    <text wx:else>{{item.discount_price ? '¥'+item.discount_price : '免费'}}</text>
+                                </text>
+                                <text class="price-two"
+                                    style="text-decoration: {{item.didBought?'none':'line-through'}};">
+                                    <text wx:if="{{item.didBought}}">去学习</text>
+                                    <text wx:else>{{item.price>0?"¥"+item.price:""}}</text>
+                                </text>
+                            </block>
+                        </view>
+                    </view>
+
+
+                </view> -->
+
+                <!-- <text class="course-title limit-two-line">{{item.name}}</text>
                 <view class="course-visit-count">共{{item.visit_count}}人学习</view>
                 <view class="course-operate" wx:if="{{showMoney}}">
                     <view class="price limit-one-line">
@@ -31,7 +102,7 @@
                             </text>
                         </block>
                     </view>
-                </view>
+                </view> -->
             </view>
         </view>
 

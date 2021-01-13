@@ -17,6 +17,7 @@ import {
 	hasUserInfo,
 	removeLocalStorage,
 	formatDate,
+	getNowDateAll,
 	setLocalStorage
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
@@ -78,6 +79,10 @@ Page({
 		if (!getApp().globalData.firstViewPage && getCurrentPages().length > 0) {
 			getApp().globalData.firstViewPage = getCurrentPages()[0].route
 		}
+		// 页面pv打点
+		bxPoint("applet_mine_click_course", {
+			from_uid: getApp().globalData.super_user_id || ''
+		})
 	},
 
 	/**
@@ -323,6 +328,7 @@ Page({
 	},
 	// 跳往视频课程详情
 	toVideoDetail(e) {
+		let item = e.currentTarget.dataset.item
 		let id = e.currentTarget.dataset.item.kecheng_series.id
 		let self = this
 		wx.navigateTo({
@@ -332,6 +338,15 @@ Page({
 					didNeedScrollTop: true
 				})
 			}
+		})
+		// 视频课点击打点
+		bxPoint("course_Learn", {
+			series_id: item.kecheng_series.id,
+			kecheng_learn_date: getNowDateAll(),
+			kecheng_name: item.kecheng_series.teacher_desc,
+			kecheng_subname: item.kecheng_series.name,
+			lesson_content_finished: item.last_visit_num,
+			lesson_content_total: item.kecheng_series.video_detail.length || 0,
 		})
 	},
 	async initial() {
