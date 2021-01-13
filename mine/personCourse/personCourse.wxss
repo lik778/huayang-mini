@@ -59,8 +59,8 @@
 /* 视频改版 */
 .course-info-main-title {
     font-size: 32rpx;
-    font-family: PingFangSC-Medium, PingFang SC;
-    font-weight: 600;
+    font-family: PingFangSC-Medium, PingFang SC, SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: bold;
     color: #000000;
     line-height: 32rpx;
     height: 32rpx;

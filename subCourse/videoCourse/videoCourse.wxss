@@ -172,7 +172,7 @@
   transform: translateX(-50%);
   bottom: -24rpx;
   background: #CC0000;
-  border-radius: 4rpx;
+  border-radius: 999rpx;
   width: 84rpx;
   height: 8rpx;
 }
@@ -335,6 +335,7 @@
   position: absolute;
   right: 0;
   top: 0;
+  border-top-right-radius: 8rpx;
 }
 
 .guess-like-item-right {
@@ -347,11 +348,12 @@
 
 .guess-like-item-right-top-text-one {
   font-size: 32rpx;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 600;
+  font-family: PingFangSC-Medium, PingFang SC, SourceHanSansCN-Medium, SourceHanSansCN;
+  font-weight: bold;
   color: #000000;
   line-height: 32rpx;
   margin-bottom: 20rpx;
+
 }
 
 .guess-like-item-right-top-text-two {
