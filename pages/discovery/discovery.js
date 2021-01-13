@@ -393,7 +393,7 @@ Page({
 						}
 
 						// 只显示开启营销活动的数据
-						if (+res.invite_open === 1) {
+						if (+res.invite_open === 1 && (res.price > 0 || res.discount_price > 0)) {
 							res.tipsText = res.fission_price == 0 ? "邀好友免费学" : `邀好友${(res.invite_discount / 10)}折购`
 						}
 
@@ -424,8 +424,8 @@ Page({
 			kecheng_subname: item.name,
 			kecheng_label: item.series_tag === 1 ? "口碑好课" : item.series_tag === 2 ? "新课" : "无",
 			kecheng_total_amount: item.visit_count,
-			kecheng_ori_price: item.price  > 0 ? item.price : 0,
-			kecheng_dis_price: item.discount_price < 0 ? '' : item.discount_price ,
+			kecheng_ori_price: item.price > 0 ? item.price : 0,
+			kecheng_dis_price: item.discount_price < 0 ? '' : item.discount_price,
 			kecheng_teacher: item.teacher.name,
 		}, false)
 		wx.navigateTo({

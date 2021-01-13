@@ -93,7 +93,7 @@ Page({
         }
 
         // 只显示开启营销活动的数据
-        if (+res.invite_open === 1) {
+        if (+res.invite_open === 1 && (res.price > 0 || res.discount_price > 0)) {
           res.tipsText = res.fission_price == 0 ? "邀好友免费学" : `邀好友${(res.invite_discount / 10)}折购`
         }
 

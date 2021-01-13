@@ -187,7 +187,7 @@ Page({
   handleShareTap() {},
   getCourseInfo() {
     getVideoCourseDetail({series_id: this.data.videoId})
-      .then((info) => {this.setData({ courseName: info.name })})
+      .then((info) => {this.setData({ courseName: info.series_detail.name })})
   },
   getFissionInfo() {
     getFissionDetail({series_invite_id: this.data.series_invite_id}).then((data) => {
