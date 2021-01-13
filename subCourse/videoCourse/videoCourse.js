@@ -306,7 +306,7 @@ Page({
           if (buttonType !== ButtonType.noLogin || buttonType === -1) {
             if (res1.platform === 'ios') {
               // ios平台
-              if (res.series_detail.price === '0.00' || res.series_detail.discount_price === '') {
+              if ((res.series_detail.price === '0.00' || res.series_detail.discount_price === '') && userGrade >= res.series_detail.user_grade) {
                 buttonType = ButtonType.free
               } else {
                 buttonType = ButtonType.ios
@@ -403,6 +403,29 @@ Page({
               })
             }
           }
+
+          // 邀请助力
+          if (res.series_detail.invite_open === 1) {
+            if (res.series_detail.invite_count > 0 && +res.series_detail.invite_discount === 0) {
+              // 邀请人数不为0 & 优惠价格为0
+              buttonType = ButtonType.fissionAndCountLimitAndFreeDiscount
+            } else if (+res.series_detail.invite_count === 0 && res.series_detail.invite_discount > 0) {
+              // 邀请人数为0 & 优惠价格不为0
+              res.series_detail.discount_price = (+res.series_detail.price * res.series_detail.invite_discount / 100).toFixed(2)
+              buttonType = ButtonType.chargeAndDiscounts
+              // this.setData({
+              //   didResetDiscountPrice: true
+              // })
+            } else if (res.series_detail.invite_count > 0 && res.series_detail.invite_discount > 0) {
+              // 邀请人数不为0 & 优惠折扣不为0
+              res.series_detail.fission_price = (+res.series_detail.price * res.series_detail.invite_discount / 100).toFixed(2)
+              buttonType = ButtonType.fissionAndCountLimitAndDiscountLimit
+            } else if (+res.series_detail.invite_count === 0 && +res.series_detail.invite_discount === 0) {
+              // 邀请人数为0 & 优惠折扣为0
+              buttonType = ButtonType.freeAndNoLevelLimit
+            }
+          }
+
           res.series_detail.video_detail = videoCourseList
           this.setData({
             videoCourseData: res,
@@ -412,7 +435,6 @@ Page({
             isIos,
             buttonType
           })
-
           // 未购买直接播放
           if (!this.data.noPayForCourse && videoPlayerSrc !== '') {
             setTimeout(() => {
@@ -433,8 +455,8 @@ Page({
 
     let type = this.data.videoCourseData.series_detail.category
     let index = type === 'quality_life' ? 3 : type === 'fitness' ? 1 : type === 'fashion' ? 2 : 0
-    if (getCurrentPages().length > 8) {
-      wx.redirectTo({
+    if (getCurrentPages().length > 6) {
+      wx.reLaunch({
         url: `/subCourse/videoCourseList/videoCourseList?index=${index}`,
       })
     } else {
@@ -453,7 +475,7 @@ Page({
       traincamp_is_recom_title: this.data.videoCourseData.recommend_traincamp.name
     }, false)
     if (getCurrentPages().length > 8) {
-      wx.redirectTo({
+      wx.reLaunch({
         url: `/subCourse/joinCamp/joinCamp?id=${this.data.videoCourseData.recommend_traincamp.id}`,
       })
     } else {
@@ -476,7 +498,7 @@ Page({
       kecheng_is_recom_teacher: item.kecheng_series.teacher_id
     }, false)
     if (getCurrentPages().length > 8) {
-      wx.redirectTo({
+      wx.reLaunch({
         url: `/subCourse/videoCourse/videoCourse?videoId=${item.kecheng_series.id}`,
       })
     } else {
@@ -544,10 +566,10 @@ Page({
     createFissionTask({
       user_id: getLocalStorage(GLOBAL_KEY.userId),
       open_id: getLocalStorage(GLOBAL_KEY.openId),
-      kecheng_series_id: this.data.courseData.id,
+      kecheng_series_id: this.data.videoCourseId,
     }).then((fissionData) => {
       wx.navigateTo({
-        url: `/subCourse/invitePage/invitePage?series_invite_id=${fissionData.id}&videoId=${this.data.courseData.id}&fissionPrice=${this.data.courseData.fission_price}`
+        url: `/subCourse/invitePage/invitePage?series_invite_id=${fissionData.id}&videoId=${this.data.videoCourseId}&fissionPrice=${this.data.videoCourseData.series_detail.fission_price}`
       })
     })
   },
@@ -789,7 +811,7 @@ Page({
       kecheng_total_amount: data.visit_count,
       kecheng_ori_price: data.price,
       kecheng_dis_price: data.discount_price,
-      kecheng_teacher: data.teacher_id
+      kecheng_teacher: data.teacher_id //待改善
     }, )
   },
 

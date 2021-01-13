@@ -371,6 +371,22 @@
   line-height: 28rpx;
 }
 
+.course-logo {
+  position: relative;
+}
+
+.course-logo-icon {
+  position: absolute;
+  right: 24rpx;
+  top: 0;
+  width: 52rpx;
+  height: 30rpx;
+}
+
+.course-logo-icon-one {
+  width: 32rpx;
+}
+
 /* 视频课程改版 */
 
 

@@ -394,7 +394,7 @@ Page({
 
 						// 只显示开启营销活动的数据
 						if (+res.invite_open === 1) {
-							res.tipsText =  res.fission_price == 0 ? "邀好友免费学" : `邀好友${(res.invite_discount / 10)}折购`
+							res.tipsText = res.fission_price == 0 ? "邀好友免费学" : `邀好友${(res.invite_discount / 10)}折购`
 						}
 
 						return res
@@ -416,9 +416,17 @@ Page({
 	},
 	// 跳往视频详情页
 	toVideoDetail(e) {
+		let item = e.currentTarget.dataset.item
 		let id = e.currentTarget.dataset.item.id
 		bxPoint("series_discovery_click", {
-			series_id: id
+			series_id: id,
+			kecheng_name: item.teacher_desc,
+			kecheng_subname: item.name,
+			kecheng_label: item.series_tag === 1 ? "口碑好课" : item.series_tag === 2 ? "新课" : "无",
+			kecheng_total_amount: item.visit_count,
+			kecheng_ori_price: item.price  > 0 ? item.price : 0,
+			kecheng_dis_price: item.discount_price < 0 ? '' : item.discount_price ,
+			kecheng_teacher: item.teacher.name,
 		}, false)
 		wx.navigateTo({
 			url: `/subCourse/videoCourse/videoCourse?videoId=${id}`,

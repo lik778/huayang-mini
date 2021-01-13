@@ -19,7 +19,7 @@
                     <!-- 副标题 -->
                     <view class="course-info-sub-title limit-one-line">{{item.name}}</view>
                     <!-- 老师介绍 -->
-                    <view class="course-info-teacher limit-one-line">{{item.teacher.name}} {{item.teacher_desc}}</view>
+                    <view class="course-info-teacher limit-one-line">{{item.teacher.name}} {{item.teacher.teacher_desc}}</view>
                 </view>
                 <!-- 价钱+学习人数 -->
                 <view class="course-info-bottom">

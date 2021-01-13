@@ -1,5 +1,11 @@
-import { getVideoCourseList, getVideoPracticeData } from "../../api/course/index"
-
+import {
+  getVideoCourseList,
+  getVideoPracticeData
+} from "../../api/course/index"
+import bxPoint from "../../utils/bxPoint"
+import {
+  getNowDateAll
+} from "../../utils/util"
 Page({
 
   /**
@@ -21,6 +27,10 @@ Page({
    */
   onLoad: function (options) {
     this.main()
+    // 页面pv打点
+    bxPoint("mine_ click_course", {
+      from_uid: getApp().globalData.super_user_id
+    })
   },
 
   /**
@@ -68,40 +78,68 @@ Page({
   },
 
   more() {
-    wx.reLaunch({url: "/pages/discovery/discovery"})
+    wx.reLaunch({
+      url: "/pages/discovery/discovery"
+    })
   },
-  // 跳转到训练营详情
+  // 跳转到课程详情
   viewCourseDetail(e) {
-    let { id } = e.currentTarget.dataset.item
+    let item = e.currentTarget.dataset.item
+    // 点击继续学习打点
+    bxPoint("mine_course_Learn", {
+      series_id: item.kecheng_series.id,
+      kecheng_learn_date: getNowDateAll(),
+      kecheng_name: item.kecheng_series.teacher_desc,
+      kecheng_subname: item.kecheng_series.name,
+      kecheng_teacher: item.teacher.name,
+    }, false)
+    
     wx.navigateTo({
-      url: `/subCourse/videoCourse/videoCourse?videoId=${id}`,
+      url: `/subCourse/videoCourse/videoCourse?videoId=${item.kecheng_series.id}`,
     })
   },
   main() {
-    getVideoPracticeData({offset: this.data.offset, limit: this.data.limit}).then((list) => {
+    getVideoPracticeData({
+      offset: this.data.offset,
+      limit: this.data.limit
+    }).then((list) => {
 
       if (list.length !== this.data.limit) {
-        this.setData({noMore: true})
+        this.setData({
+          noMore: true
+        })
       }
 
       let oldOffset = this.data.offset
       let oldList = this.data.courseList
       // list = list.map(t => t.kecheng_series)
 
-      this.setData({courseList: [...oldList, ...list], offset: oldOffset + list.length})
+      this.setData({
+        courseList: [...oldList, ...list],
+        offset: oldOffset + list.length
+      })
       // this.setData({courseList: [], offset: 0})
 
       if (this.data.courseList.length === 0) {
-        getVideoCourseList({offset: this.data.recommendOffset, limit: this.data.recommendLimit, status: 1}).then((recommendList) => {
+        getVideoCourseList({
+          offset: this.data.recommendOffset,
+          limit: this.data.recommendLimit,
+          status: 1
+        }).then((recommendList) => {
 
           if (recommendList.length !== this.data.recommendLimit) {
-            this.setData({noMoreRecommend: true})
+            this.setData({
+              noMoreRecommend: true
+            })
           }
 
           let oldRecommendOffset = this.data.recommendOffset
           let oldRecommendList = this.data.recommendList
 
-          this.setData({recommendList: [...oldRecommendList, ...recommendList], recommendOffset: oldRecommendOffset + recommendList.length})
+          this.setData({
+            recommendList: [...oldRecommendList, ...recommendList],
+            recommendOffset: oldRecommendOffset + recommendList.length
+          })
         })
       }
     })

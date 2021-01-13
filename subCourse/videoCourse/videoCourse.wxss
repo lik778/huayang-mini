@@ -209,9 +209,10 @@
   box-sizing: border-box;
 }
 
-.course-item-choosed{
+.course-item-choosed {
   border: 1px solid #CC0000;
 }
+
 .course-item-active {
   color: #CC0000 !important;
 }
@@ -643,4 +644,89 @@
   opacity: 0;
   width: 180rpx;
   height: 80rpx;
+}
+
+/* 邀请助力按钮 */
+.pay-button-invite {
+  width: calc(100% - 60rpx);
+}
+
+.pay-button-invite-two,
+.pay-button-invite-one {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.pay-button-invite-two-left,
+.pay-button-invite-one-left {
+  width: 236rpx;
+  height: 96rpx;
+  border: 1px solid rgba(0, 0, 0, 0.7);
+  border-radius: 999rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pay-button-invite-two-left,
+.pay-button-invite-one-left view:first-child {
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.7);
+  line-height: 40rpx;
+}
+
+.pay-button-invite-one-right {
+  width: 436rpx;
+  height: 96rpx;
+  border: 1px solid #CC0000;
+  border-radius: 999rpx;
+  display: flex;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  align-items: center;
+  justify-content: center;
+}
+
+.pay-button-invite-two-left,
+.pay-button-invite-one-left view:last-child {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 32rpx;
+  padding-top: 4rpx;
+}
+
+.pay-button-invite-two-right {
+  width: 436rpx;
+  height: 96rpx;
+  border: 1px solid #CC0000;
+  border-radius: 999rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.pay-button-invite-two-right view:first-child {
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 40rpx;
+}
+
+.pay-button-invite-two-right view:last-child {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 32rpx;
+  padding-top: 4rpx;
 }

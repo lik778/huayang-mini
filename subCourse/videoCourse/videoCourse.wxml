@@ -34,7 +34,8 @@
   </view>
 
   <!-- 视频介绍区域 -->
-  <view class="video-desciption" style="padding-top:{{showStudyToast&&hasLogin?videoPlayStyle.height+74+'px':videoPlayStyle.height+30+'px'}}">
+  <view class="video-desciption"
+    style="padding-top:{{showStudyToast&&hasLogin?videoPlayStyle.height+74+'px':videoPlayStyle.height+30+'px'}}">
     <view class="video-description-title-line">
       <text>{{videoCourseData.series_detail.teacher_desc}}</text>
       <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610093007wRvmte.jpg"
@@ -175,6 +176,28 @@
       立即加入</view>
     <!-- 未登录 -->
     <view class="pay-button-no-login subject-bg-color pay-button-common" bindtap="login" wx:if="{{buttonType===1}}">立即加入
+    </view>
+    <!-- 邀请折扣 -->
+    <view class="pay-button-invite">
+      <view class="pay-button-invite-one" wx:if='{{buttonType===7}}'>
+        <view class="pay-button-invite-one-left" bindtap="pay">
+          <view>直接购买</view>
+          <view>¥{{videoCourseData.series_detail.discount_price}}</view>
+        </view>
+        <view class="pay-button-invite-one-right subject-bg-color" bindtap="initFissionTask">
+          请好友助力解锁课程
+        </view>
+      </view>
+      <view class="pay-button-invite-two" wx:if='{{buttonType===8}}'>
+        <view class="pay-button-invite-two-left" bindtap="pay">
+          <view>直接购买</view>
+          <view>¥{{videoCourseData.series_detail.discount_price}}</view>
+        </view>
+        <view class="pay-button-invite-two-right subject-bg-color" bindtap="initFissionTask">
+          <view>请好友助力6折优惠购</view>
+          <view>¥{{videoCourseData.series_detail.fission_price}}</view>
+        </view>
+      </view>
     </view>
   </view>
   <!-- 等级限制弹窗 -->
