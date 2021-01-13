@@ -497,7 +497,7 @@ Page({
             showVideoLock: this.data.shareIndex === '' ? showVideoLock : false,
             buttonType: buttonStyle,
             playIndex: this.data.shareIndex === '' ? this.data.playIndex : this.data.shareIndex,
-            videoSrc: videoListAll[0].canReplay ? videoListAll[0].url : this.data.shareIndex === '' ? '' : videoListAll[this.data.shareIndex].url
+            videoSrc: videoListAll[0].canReplay ? videoListAll[0].url : this.data.shareIndex ===''||this.data.shareIndex < 0 ? '' : videoListAll[this.data.shareIndex].url
           })
         }
       })
