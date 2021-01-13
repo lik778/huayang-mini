@@ -390,7 +390,7 @@ Page({
               videoPlayerSrc = videoCourseList[this.data.shareIndex].url
             } else if (this.data.studiedIndex) {
               // 学习过
-              videoPlayerSrc = videoCourseList[this.data.studiedIndex].url
+              videoPlayerSrc = videoCourseList[this.data.studiedIndex - 1].url
             } else {
               videoPlayerSrc = videoCourseList[0].url
               nowCoursePlayIndex = 0
