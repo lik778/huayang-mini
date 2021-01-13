@@ -210,19 +210,19 @@
       <view class="level-limit-alert-button subject-bg-color" catchtap="toUserCenter">去完成</view>
     </view>
   </view>
-  <!-- 分享微信好友 -->
-  <view class="share" bindtap="share" wx:else style="bottom:{{noPayForCourse?'80rpx':'140rpx'}}">
-    <view class="share-box">
-      <button open-type="share"></button>
-      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599118170RBWnFr.jpg"></image>
-    </view>
-  </view>
   <!-- 分销推广按钮 -->
   <view class="share-friend" bindtap="shareCourse" style="bottom:{{noPayForCourse?'80rpx':'140rpx'}}"
     wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&videoCourseData.series_detail.sharePrice!==''}}">
     <view class="share-friend-box">
       <button open-type="share">推广成功赚{{videoCourseData.series_detail.sharePrice}}元</button>
       <view class="share-text subject-bg-color">推广成功赚{{videoCourseData.series_detail.sharePrice}}元</view>
+    </view>
+  </view>
+  <!-- 分享微信好友 -->
+  <view class="share" bindtap="share" wx:else style="bottom:{{noPayForCourse?'80rpx':'140rpx'}}">
+    <view class="share-box">
+      <button open-type="share"></button>
+      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599118170RBWnFr.jpg"></image>
     </view>
   </view>
   <!-- 授权弹窗 -->

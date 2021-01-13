@@ -76,7 +76,9 @@
                             <view class="video-practice-item-right-sub-title limit-one-line">
                                 {{item.kecheng_series.name}}</view>
                             <!-- 学习我 -->
-                            <view class="video-practice-item-right-teacher limit-one-line">{{item.kecheng_series.video_detail.length}}课时 已学习至第{{item.last_visit_num}}课</view>
+                            <view class="video-practice-item-right-teacher limit-one-line">
+                                {{item.kecheng_series.video_detail.length}}课时 <text
+                                    wx:if='{{item.last_visit_num>0}}'>已学习至第{{item.last_visit_num}}课</text></view>
                         </view>
                         <!-- 继续学习按钮 -->
                         <view class="video-practice-btn">继续学习</view>

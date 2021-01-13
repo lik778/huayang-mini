@@ -384,12 +384,15 @@ Page({
           })
           // 判断&设置播放器地址
           if (this.data.noPayForCourse) {
+            let onlySelected = false
             // 已购买该课程
             if (this.data.shareIndex) {
               // 分享进来
+              onlySelected = true
               videoPlayerSrc = videoCourseList[this.data.shareIndex].url
             } else if (this.data.studiedIndex) {
               // 学习过
+              onlySelected = true
               videoPlayerSrc = videoCourseList[this.data.studiedIndex - 1].url
             } else {
               videoPlayerSrc = videoCourseList[0].url
@@ -399,7 +402,7 @@ Page({
               item.type = 'play'
             })
             this.setData({
-              onlySelected: true
+              onlySelected
             })
           } else {
             let has_free_visit = recordList.indexOf('试看')
@@ -445,6 +448,7 @@ Page({
             // 未登录
             buttonType = ButtonType.noLogin
           }
+          console.log(this.data.studiedIndex, nowCoursePlayIndex)
           res.series_detail.video_detail = videoCourseList
           this.setData({
             videoCourseData: res,

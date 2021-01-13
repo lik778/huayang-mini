@@ -114,6 +114,7 @@
 
 .boot-camp-name-text {
     width: 410rpx;
+    height: 36rpx;
 }
 
 .segmentation {
