@@ -132,13 +132,14 @@ Page({
               noMoreRecommend: true
             })
           }
-
+         
           let oldRecommendOffset = this.data.recommendOffset
           let oldRecommendList = this.data.recommendList
           this.setData({
             recommendList: [...oldRecommendList, ...recommendList],
             recommendOffset: oldRecommendOffset + recommendList.length
           })
+          console.log(this.data.recommendList)
         })
       }
     })
