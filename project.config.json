@@ -252,7 +252,7 @@
         {
           "name": "视频详情页",
           "pathName": "subCourse/videoCourse/videoCourse",
-          "query": "videoId=55",
+          "query": "videoId=55&playIndex=3&showSuccess=true",
           "scene": null
         },
         {
@@ -343,6 +343,24 @@
           "name": "subCourse/inviteFriendStudy/inviteFriendStudy",
           "pathName": "subCourse/inviteFriendStudy/inviteFriendStudy",
           "query": "scene= 129/false",
+          "scene": null
+        },
+        {
+          "name": "subCourse/videoCourse/videoCourse",
+          "pathName": "subCourse/videoCourse/videoCourse",
+          "query": "videoId=67&playIndex=1",
+          "scene": null
+        },
+        {
+          "name": "subCourse/videoCourseList/videoCourseList",
+          "pathName": "subCourse/videoCourseList/videoCourseList",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "mine/personCourse/personCourse",
+          "pathName": "mine/personCourse/personCourse",
+          "query": "",
           "scene": null
         }
       ]

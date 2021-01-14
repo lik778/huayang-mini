@@ -39,8 +39,7 @@
 }
 
 /*recent-record*/
-.recent-record {
-}
+.recent-record {}
 
 .record-box {
     padding: 30rpx;
@@ -65,6 +64,7 @@
     overflow: hidden;
     border: 2rpx solid #F2F2F2;
 }
+
 /*空页面*/
 .no-camp {
     display: flex;
@@ -114,6 +114,7 @@
 
 .boot-camp-name-text {
     width: 410rpx;
+    height: 36rpx;
 }
 
 .segmentation {
@@ -243,7 +244,7 @@
     border-radius: 999rpx;
 }
 
-.icon-box > image {
+.icon-box>image {
     font-size: 0;
     width: 62rpx;
     height: 62rpx;
@@ -311,22 +312,51 @@
 }
 
 .video-practice-item-left {
-    width: 240rpx;
+    width: 190rpx;
 }
 
 .video-practice-item-left image {
-    width: 220rpx;
+    width: 166rpx;
     height: 220rpx;
     vertical-align: bottom;
     border-radius: 8rpx;
 }
 
 .video-practice-item-right {
-    width: calc(100% - 240rpx);
+    width: calc(100% - 180rpx);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
+
+/* 视频改版 */
+.video-practice-item-right-main-title {
+    font-size: 32rpx;
+    font-family: PingFangSC-Medium, PingFang SC, SourceHanSansCN-Regular, SourceHanSansCN;
+    font-weight: 500;
+    color: #000000;
+    line-height: 32rpx;
+}
+
+.video-practice-item-right-sub-title {
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #000000;
+    line-height: 28rpx;
+    margin: 20rpx 0;
+    height: 28rpx;
+}
+
+.video-practice-item-right-teacher {
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(0, 0, 0, .6);
+    line-height: 28rpx;
+}
+
+/* 视频改版 */
 
 .video-practice-item-right-top {
     font: 32rpx/44rpx PingFangSC;

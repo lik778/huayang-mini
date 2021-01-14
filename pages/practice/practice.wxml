@@ -1,6 +1,7 @@
 <view class="practice">
     <view class="banner" wx:if="{{visibleTaskEntrance}}">
-        <image class="banner-picture" bindtap="goToCompositeTaskPage" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608445441zNroBC.jpg"></image>
+        <image class="banner-picture" bindtap="goToCompositeTaskPage" mode="aspectFit"
+            src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608445441zNroBC.jpg"></image>
     </view>
     <!--  今日练习计划  -->
     <view class="support-layer">
@@ -10,7 +11,8 @@
     </view>
 
     <view class="recent-record">
-        <view class="record-box" wx:for="{{resultData}}" wx:key="resultIndex" wx:for-item="resultItem" wx:for-index="resultIndex">
+        <view class="record-box" wx:for="{{resultData}}" wx:key="resultIndex" wx:for-item="resultItem"
+            wx:for-index="resultIndex">
             <view class="record-layout">{{resultItem.key}}</view>
             <view class="record-in-box" wx:for="{{resultItem.content}}" wx:key="index">
                 <!-- 训练营 -->
@@ -23,16 +25,17 @@
                         <view class="segmentation"></view>
                         <view class="boot-camp-content">
                             <view class="boot-camp-course" wx:for="{{item.content}}" wx:for-item="contentItem"
-                                  wx:for-index="contentIndex" wx:key="contentIndex">
+                                wx:for-index="contentIndex" wx:key="contentIndex">
                                 <view class="boot-camp-info">
                                     <view class="icon-box">
-                                        <image mode="aspectFill"
-                                               src="{{CourseTypeImage[contentItem.type]}}"></image>
+                                        <image mode="aspectFill" src="{{CourseTypeImage[contentItem.type]}}"></image>
                                     </view>
-                                    <view class="boot-camp-content-name limit-one-line">{{contentItem.name || contentItem.title}}</view>
+                                    <view class="boot-camp-content-name limit-one-line">
+                                        {{contentItem.name || contentItem.title}}</view>
                                 </view>
-                                <view class="boot-camp-start" bind:tap="handleExerciseBtnTap" data-item="{{contentItem}}" data-index="{{contentIndex}}"
-                                      data-parent="{{item}}">{{contentItem.type==='kecheng'?'练习':'前往'}}</view>
+                                <view class="boot-camp-start" bind:tap="handleExerciseBtnTap"
+                                    data-item="{{contentItem}}" data-index="{{contentIndex}}" data-parent="{{item}}">
+                                    {{contentItem.type==='kecheng'?'练习':'前往'}}</view>
                             </view>
                         </view>
                     </block>
@@ -44,14 +47,16 @@
                         <view class="segmentation"></view>
                         <view class="no-exercise" wx:if="{{item.status !== 3}}">
                             <image mode="aspectFit" class="no-exercise-image"
-                                   src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596786073iGFqSK.jpg"></image>
+                                src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1596786073iGFqSK.jpg"></image>
                             <text>今天没课，好好放松一下吧! </text>
                         </view>
                         <view class="failure" wx:else>
                             <text>抱歉，您的训练营已到期，您可以：</text>
                             <view class="failure-btn">
-                                <view class="choose-other subject-font-color subject-bg-color" bind:tap="goToDiscovery">选择其他</view>
-                                <view class="choose-restart subject-bg-color" bind:tap="restartToBootCamp" data-item="{{item}}">重新开始</view>
+                                <view class="choose-other subject-font-color subject-bg-color" bind:tap="goToDiscovery">
+                                    选择其他</view>
+                                <view class="choose-restart subject-bg-color" bind:tap="restartToBootCamp"
+                                    data-item="{{item}}">重新开始</view>
                             </view>
                         </view>
                     </block>
@@ -62,12 +67,28 @@
                         <image src="{{item.kecheng_series.cover_pic}}"></image>
                     </view>
                     <view class="video-practice-item-right">
-                        <view class="video-practice-item-right-top limit-two-line">{{item.kecheng_series.name}}</view>
+                        <view class="video-practice-item-right-top-module">
+                            <!-- 主标题 -->
+                            <view class="video-practice-item-right-main-title limit-one-line">
+                                {{item.kecheng_series.teacher_desc}}
+                            </view>
+                            <!-- 副标题 -->
+                            <view class="video-practice-item-right-sub-title limit-one-line">
+                                {{item.kecheng_series.name}}</view>
+                            <!-- 学习我 -->
+                            <view class="video-practice-item-right-teacher limit-one-line">
+                                {{item.kecheng_series.video_detail.length}}课时 <text
+                                    wx:if='{{item.last_visit_num>0}}'>已学习至第{{item.last_visit_num}}课</text></view>
+                        </view>
+                        <!-- 继续学习按钮 -->
+                        <view class="video-practice-btn">继续学习</view>
+
+                        <!-- <view class="video-practice-item-right-top limit-two-line">{{item.kecheng_series.name}}</view>
                         <view class="video-practice-item-right-bottom">
                             <text>{{item.videoList}}课时 </text>
                             <text wx:if="{{item.last_visit_num!==0}}">已学习至第{{item.last_visit_num}}课</text>
                         </view>
-                        <view class="video-practice-btn">继续学习</view>
+                        <view class="video-practice-btn">继续学习</view> -->
                     </view>
                 </view>
             </view>
@@ -76,7 +97,9 @@
 
     <!--  兜底  -->
     <view class="no-camp" wx:if="{{didShowNoDataLayout && resultData.length === 0}}">
-        <image class="empty-image" src="{{didSignIn?'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604374394mmtUvd.jpg':'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1605161111pOWrOX.jpg'}}" mode="aspectFit"></image>
+        <image class="empty-image"
+            src="{{didSignIn?'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604374394mmtUvd.jpg':'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1605161111pOWrOX.jpg'}}"
+            mode="aspectFit"></image>
         <view class="empty-text">
             <text>{{didSignIn?"您还未学习":"您还未登录"}}</text>
             <text>{{didSignIn?"快去挑选课程吧!":"点击下方按钮登录吧！"}}</text>
@@ -98,6 +121,7 @@
     </view>
 
     <!-- 授权弹窗 -->
-    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent"
+        bind:authCompleteEvent="authCompleteEvent">
     </authModule>
 </view>

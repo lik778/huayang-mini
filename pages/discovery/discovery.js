@@ -1,5 +1,10 @@
 // pages/ discovery/discovery.js
-import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, } from "../../utils/util"
+import {
+	$notNull,
+	getLocalStorage,
+	hasAccountInfo,
+	hasUserInfo,
+} from "../../utils/util"
 import request from "../../lib/request"
 import {
 	getActivityList,
@@ -10,9 +15,13 @@ import {
 	queryBootcampFeatureList,
 	queryVideoCourseListByBuyTag
 } from "../../api/course/index"
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+	GLOBAL_KEY
+} from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
-import { getYouZanAppId } from "../../api/mall/index"
+import {
+	getYouZanAppId
+} from "../../api/mall/index"
 import dayjs from "dayjs"
 
 const TRAINCAMP_SCENE = "traincamp"
@@ -214,7 +223,9 @@ Page({
 			})
 		})
 		// 计算主题营TAB最小高度
-		this.setData({themeTabMinHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenHeight - 264})
+		this.setData({
+			themeTabMinHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenHeight - 264
+		})
 	},
 	// 获取授权
 	getAuth() {
@@ -348,16 +359,21 @@ Page({
 					params.user_id = getLocalStorage(GLOBAL_KEY.userId)
 				}
 				queryVideoCourseListByBuyTag(params).then(data => {
-					if (getLocalStorage(GLOBAL_KEY.userId)) {
-						data = data.map(_ => {
-							return {
-								..._.kecheng_series,
-								didBought: _.buy_tag === "已购",
-								buy_tag: _.buy_tag
-							}
-						})
-					}
+					// if (getLocalStorage(GLOBAL_KEY.userId)) {
+					data = data.map(_ => {
+						return {
+							..._.kecheng_series,
+							teacher: _.teacher,
+							didBought: _.buy_tag === "已购",
+							buy_tag: _.buy_tag
+						}
+					})
+					// }
 					let handledList = data.map((res) => {
+						if (res.visit_count >= 10000) {
+							res.visit_count = (res.visit_count / 10000).toFixed(1) + "万"
+							res.visit_count = res.visit_count.split('.')[1] === '0万' ? res.visit_count[0] + "万" : res.visit_count
+						}
 						res.price = (res.price / 100) // .toFixed(2)
 						if (res.discount_price === -1 && res.price > 0) {
 							// 原价出售
@@ -377,8 +393,8 @@ Page({
 						}
 
 						// 只显示开启营销活动的数据
-						if (+res.invite_open === 1) {
-							res.tipsText = res.fission_price == 0 ? "邀请好友助力免费学" : `邀请好友助力${(res.invite_discount / 10)}折购`
+						if (+res.invite_open === 1 && (res.price > 0 || res.discount_price > 0)) {
+							res.tipsText = res.fission_price == 0 ? "邀好友免费学" : `邀好友${(res.invite_discount / 10)}折购`
 						}
 
 						return res
@@ -403,9 +419,17 @@ Page({
 	},
 	// 跳往视频详情页
 	toVideoDetail(e) {
+		let item = e.currentTarget.dataset.item
 		let id = e.currentTarget.dataset.item.id
 		bxPoint("series_discovery_click", {
-			series_id: id
+			series_id: id,
+			kecheng_name: item.teacher_desc,
+			kecheng_subname: item.name,
+			kecheng_label: item.series_tag === 1 ? "口碑好课" : item.series_tag === 2 ? "新课" : "无",
+			kecheng_total_amount: item.visit_count,
+			kecheng_ori_price: item.price > 0 ? item.price : 0,
+			kecheng_dis_price: item.discount_price < 0 ? '' : item.discount_price,
+			kecheng_teacher: item.teacher.name,
 		}, false)
 		wx.navigateTo({
 			url: `/subCourse/videoCourse/videoCourse?videoId=${id}`,
@@ -488,7 +512,9 @@ Page({
 			}
 		}
 		// 获取训练营列表
-		getCampList(params).then(({list}) => {
+		getCampList(params).then(({
+			list
+		}) => {
 			list = list.map(item => {
 				// 处理训练营特色标签
 				item.feature = item.feature.split(",").map(k => {
@@ -603,7 +629,7 @@ Page({
 	// 检查ios环境
 	checkIos() {
 		wx.getSystemInfo({
-			success:  (res2)=> {
+			success: (res2) => {
 				if (res2.platform == 'ios') {
 					this.setData({
 						isIosPlatform: true

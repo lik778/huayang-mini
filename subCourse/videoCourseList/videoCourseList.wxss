@@ -80,39 +80,144 @@
   box-sizing: border-box;
   margin-bottom: 30rpx;
 }
+
 .course-item:active {
   opacity: 0.9;
 }
+
 .course-image {
-  width: 220rpx;
+  width: 166rpx;
   height: 220rpx;
   font-size: 0;
   border-radius: 8rpx;
   margin-right: 24rpx;
 }
+
 .course-info {
-  width: 446rpx;
+  width: calc(100% - 190rpx);
   height: 220rpx;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
+
+/* 视频改版 */
+.course-info-main-title {
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC, SourceHanSansCN-Regular, SourceHanSansCN;
+  font-weight: 500;
+  color: #000000;
+  line-height: 32rpx;
+  padding-top: 6rpx;
+  height: 32rpx;
+}
+
+.course-info-sub-title {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 28rpx;
+  margin: 20rpx 0;
+  height: 28rpx;
+}
+
+.course-info-teacher {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 28rpx;
+  height: 28rpx;
+}
+
+.course-info-bottom-right-module-one {
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #CC0000;
+  line-height: 32rpx;
+}
+
+.course-info-bottom-left-module-two {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 28rpx;
+  padding-left: 10rpx;
+}
+
+.course-info-bottom-right-module-one-two {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 28rpx;
+  text-decoration-line: line-through;
+  padding-left: 10rpx;
+}
+
+.course-info-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.course-info-bottom-right {
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 28rpx;
+}
+
+.course-info-bottom-left-module-one {
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  line-height: 32rpx;
+}
+
+.course-logo {
+  position: relative;
+}
+
+.course-logo-icon {
+  position: absolute;
+  right: 24rpx;
+  top: 0;
+  width: 52rpx;
+  height: 30rpx;
+  border-top-right-radius: 8rpx;
+}
+
+.course-logo-icon-one {
+  width: 32rpx;
+}
+
+/* 视频改版 */
+
 .course-title {
   font: 32rpx/44rpx PingFangSC;
   color: #000;
 }
+
 .course-operate {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .course-visit-count {
   font: 28rpx/40rpx PingFangSC;
   color: #666;
 }
+
 .price {
   font: 32rpx/44rpx PingFangSC;
 }
+
 .price-one {
   margin-right: 20rpx;
   font: 32rpx/44rpx PingFangSC;

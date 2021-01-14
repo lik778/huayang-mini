@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "课程",
   "usingComponents": {
-    "authModule": "../../components/auth/auth"
+    "authModule": "../../components/auth/auth",
+    "levelAlert": "../../components/levelAlert/levelAlert"
   }
 }
