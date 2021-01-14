@@ -1,6 +1,7 @@
 import request from "../../lib/request"
-import { GLOBAL_KEY, URL } from "../../lib/config"
+import { ErrorLevel, GLOBAL_KEY, URL } from "../../lib/config"
 import { getLocalStorage, setLocalStorage, toast } from "../../utils/util"
+import dayjs from "dayjs"
 
 /**
  * 用微信code换取服务端的用户信息
@@ -111,9 +112,47 @@ export const checkBecomeVip = (params) => {
 	})
 }
 
-// 抓取并上传问题
+/**
+ * 采集关键路径线上报错至sentry
+ * @param params
+ * userId 用户id
+ * nickname 用户昵称
+ * mobile 联系方式
+ * device 平台+设备型号
+ * wxVersion 微信客户端版本
+ * wxSDK 微信基础库版本
+ * create_at #YYYY-MM-DD HH:mm:ss
+ * -------------------------------------------
+ * location #page.api
+ * level [ p0, p1 ]
+ * error_code [ 400, wxminiprogram error code ]
+ * error_message
+ * arguments 其他自定义参数
+ * -------------------------------------------
+ */
 export const collectError = (params) => {
-	params = { ...params, platform: "applets" }
-	request._post(URL.collectError, params)
+	let userInfoString = getLocalStorage(GLOBAL_KEY.userInfo)
+	let accountInfoString = getLocalStorage(GLOBAL_KEY.accountInfo)
+	let systemInfoString = getLocalStorage(GLOBAL_KEY.systemParams)
+	let { user_id, nickname } = userInfoString ? JSON.parse(userInfoString) : {}
+	let { user_id: userId, nick_name, mobile } = accountInfoString ? JSON.parse(accountInfoString) : {}
+	let { model, system, SDKVersion, version } = systemInfoString ? JSON.parse(systemInfoString) : {}
+	let commonParams = {
+		userId: user_id || userId,
+		nickname: nickname || nick_name,
+		mobile,
+		device: `${system} ${model}`,
+		wxVersion: version,
+		wxSDK: SDKVersion,
+		create_at: dayjs().format('YYYY-MM-DD HH:mm:ss')
+	}
+
+	let compoundParams = {
+		page: params.page,
+		error_code: params.error_code,
+		error_message: {...commonParams, ...params},
+		platform: "applets"
+	}
+	request._post(params.level === ErrorLevel.p0 ? URL.collectP0Error : URL.collectError, compoundParams)
 }
 

@@ -5,24 +5,19 @@ import {
 	queryBootCampContentInToday,
 	updateBootcampStudyTime
 } from "../../api/course/index"
-import {
-	CourseLevels,
-	GLOBAL_KEY
-} from "../../lib/config"
+import { CourseLevels, GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
 import {
 	$notNull,
+	formatDate,
 	getLocalStorage,
 	hasAccountInfo,
 	hasUserInfo,
 	removeLocalStorage,
-	formatDate,
 	setLocalStorage
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
-import {
-	getTaskEntranceStatus
-} from "../../api/task/index"
+import { getTaskEntranceStatus } from "../../api/task/index"
 
 const CourseTypeImage = {
 	kecheng: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604371266ssIXdS.jpg",

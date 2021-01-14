@@ -1,9 +1,10 @@
 import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, queryWxAuth, toast } from "../../utils/util"
-import { GLOBAL_KEY, WX_AUTH_TYPE } from "../../lib/config"
+import { ErrorLevel, GLOBAL_KEY, WX_AUTH_TYPE } from "../../lib/config"
 import request from "../../lib/request"
 import { getOssCertificate, getTaskBelongList, publishTask } from "../../api/task/index"
 import VODUpload from "../../utils/aliyun-upload-sdk-1.0.1.min"
 import bxPoint from "../../utils/bxPoint"
+import { collectError } from "../../api/auth/index"
 
 const MAX_AUDIO_DURATION = 10 * 60 * 1000
 
@@ -282,8 +283,13 @@ Page({
 		})
 
 		// 监听录音错误
-		recorderManager.onError((e) => {
-			console.error("recorder error", e)
+		recorderManager.onError((err) => {
+			collectError({
+				level: ErrorLevel.p1,
+				page: 'dd.launchTask.recorderManager',
+				error_code: 401,
+				error_message: err
+			})
 		})
 
 		// 监听录音结束事件
@@ -340,8 +346,13 @@ Page({
 			console.log("录音播放结束")
 		})
 
-		innerAudioContext.onError((res) => {
-			console.error("innerAudioContext error", res)
+		innerAudioContext.onError((err) => {
+			collectError({
+				level: ErrorLevel.p1,
+				page: 'dd.launchTask.createInnerAudioContext',
+				error_code: 401,
+				error_message: err
+			})
 		})
 
 		this.setData({recorderManager, innerAudioContext})
@@ -454,7 +465,12 @@ Page({
 				})
 			},
 			fail(err) {
-				console.error("chooseDeviceImage fail ", err)
+				collectError({
+					level: ErrorLevel.p1,
+					page: 'dd.launchTask.chooseImage',
+					error_code: 401,
+					error_message: err
+				})
 			}
 		})
 	},
@@ -492,7 +508,12 @@ Page({
 				})
 			},
 			fail(err) {
-				console.error("chooseDeviceVideo fail ", err)
+				collectError({
+					level: ErrorLevel.p1,
+					page: 'dd.launchTask.chooseVideo',
+					error_code: 401,
+					error_message: err
+				})
 			}
 		})
 	},
@@ -510,7 +531,7 @@ Page({
 				filePath,
 				name: DEVELOPMENT_PICTURE_KEY_NAME[type],
 				header: {
-					"Content-Type": "multipart/form-data",
+					// "Content-Type": "multipart/form-data",
 					...extraHeaders
 				},
 				success(res) {
@@ -518,7 +539,12 @@ Page({
 					resolve(data)
 				},
 				error(err) {
-					console.error(err)
+					collectError({
+						level: ErrorLevel.p1,
+						page: 'dd.launchTask.uploadFile',
+						error_code: 401,
+						error_message: err
+					})
 					let {message} = JSON.parse(err)
 					reject(message)
 				},
@@ -538,7 +564,15 @@ Page({
 		})
 		wx.previewMedia({
 			sources,
-			current: e.currentTarget.dataset.index
+			current: e.currentTarget.dataset.index,
+			fail(err) {
+				collectError({
+					level: ErrorLevel.p1,
+					page: 'dd.launchTask.previewMedia',
+					error_code: 401,
+					error_message: err
+				})
+			}
 		})
 	},
 	/**

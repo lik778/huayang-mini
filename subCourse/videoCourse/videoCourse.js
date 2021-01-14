@@ -8,18 +8,18 @@ import {
   secondToMinute,
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
-import { checkFocusLogin } from "../../api/auth/index"
+import { collectError } from "../../api/auth/index"
 import {
   checkJoinVideoCourse,
   createFissionTask,
+  getIosCustomerLink,
   getVideoArticleLink,
   getVideoCourseDetail,
+  inviteFriend,
   joinVideoCourse,
-  getIosCustomerLink,
-  recordStudy,
-  inviteFriend
+  recordStudy
 } from "../../api/course/index"
-import { GLOBAL_KEY, Version } from "../../lib/config"
+import { ErrorLevel, GLOBAL_KEY } from "../../lib/config"
 
 const ButtonType = {
   freeAndNoLevelLimit: 1, // 免费且没有等级限制
@@ -154,7 +154,7 @@ Page({
       kecheng_series_id: this.data.courseData.id,
       kecheng_num: playIndex + 1
     })
-    
+
     // 2021-1-5
     // 学习课程打点
     bxPoint("series_content_click", {
@@ -262,6 +262,14 @@ Page({
           let link = encodeURIComponent(res.data)
           wx.navigateTo({
             url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
+            fail(err) {
+              collectError({
+                level: ErrorLevel.p0,
+                page: "videoCourse.navigateToH5ForPay",
+                error_code: 401,
+                error_message: err
+              })
+            }
           })
         })
       } else {
@@ -298,6 +306,12 @@ Page({
                   })
                 }
               }).catch(err => {
+                collectError({
+                  level: ErrorLevel.p0,
+                  page: "videoCourse.requestPayment",
+                  error_code: 401,
+                  error_message: err
+                })
                 this.backFun({
                   type: "fail"
                 })
@@ -719,7 +733,7 @@ Page({
 
       }, 5000)
     }
-    
+
   },
 
   /**

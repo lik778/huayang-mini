@@ -1,18 +1,10 @@
 // subCourse/campCredential/campCredential.js
-import {
-  getLocalStorage,
-  isIphoneXRSMax
-} from "../../utils/util"
-import {
-  drawFont,
-  drawImage,
-  drawImageAuto,
-  measureTextWidth,
-} from "../../utils/canvas"
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { getLocalStorage, isIphoneXRSMax } from "../../utils/util"
+import { drawFont, drawImage, drawImageAuto, measureTextWidth, } from "../../utils/canvas"
+import { ErrorLevel, GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
+import { collectError } from "../../api/auth/index"
+
 Page({
 
   /**
@@ -68,6 +60,14 @@ Page({
                       duration: 2000
                     })
                   }
+                },
+                fail(err) {
+                  collectError({
+                    level: ErrorLevel.p1,
+                    page: "jj.campCredential.saveImageToPhotosAlbum",
+                    error_code: 401,
+                    error_message: err
+                  })
                 }
               })
             }
@@ -85,6 +85,14 @@ Page({
                       duration: 2000
                     })
                   }
+                },
+                fail(err) {
+                  collectError({
+                    level: ErrorLevel.p1,
+                    page: "jj.campCredential.saveImageToPhotosAlbum",
+                    error_code: 401,
+                    error_message: err
+                  })
                 }
               })
             }

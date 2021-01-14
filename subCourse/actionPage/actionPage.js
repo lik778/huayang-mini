@@ -1,5 +1,5 @@
 import { $notNull, getLocalStorage } from "../../utils/util"
-import { GLOBAL_KEY } from "../../lib/config"
+import { ErrorLevel, GLOBAL_KEY } from "../../lib/config"
 import { LocaleVoice, voices_ary, voices_key, voices_number } from "../../lib/voices"
 import { completePractice, recordPracticeBehavior } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
@@ -130,7 +130,7 @@ Page({
 		// 背景音频实例
 		this.data.bgAudio = wx.getBackgroundAudioManager()
 		this.data.bgAudio.onPause(() => {
-			console.log("bgAudio pause 触发, 手动暂停背景播放器 ?= "+ this.data.accordPauseBgAudio)
+			// console.log("bgAudio pause 触发, 手动暂停背景播放器 ?= "+ this.data.accordPauseBgAudio)
 			if (this.data.accordPauseBgAudio) {
 				// 还原主动暂停背景播放器标示
 				this.setData({accordPauseBgAudio: false})
@@ -171,12 +171,12 @@ Page({
 			})
 
 			collectError({
-				page: "actionPage.mainPointAudio",
-				error_code: err.errCode,
-				error_message: err.errMsg,
+				level: ErrorLevel.p0,
+				location: "dd.actionPage.innerAudio",
+				error_code: 401,
+				error_message: err,
 				err_target_link: self.data.targetActionObj.link,
 				err_target_name: self.data.targetActionObj.name,
-				systemInfo: getLocalStorage(GLOBAL_KEY.systemParams)
 			})
 		})
 
@@ -502,12 +502,12 @@ Page({
 			// 兼容外置播放器解析音频报错问题
 			audio.onError((err) => {
 				collectError({
-					page: "actionPage.bgAudio",
-					error_code: err.errCode,
-					error_message: err.errMsg,
+					level: ErrorLevel.p0,
+					page: "dd.actionPage.bgAudio",
+					error_code: 401,
+					error_message: err,
 					err_target_link: link,
 					err_target_name: self.data.targetActionObj.name,
-					systemInfo: getLocalStorage(GLOBAL_KEY.systemParams)
 				})
 				resolve()
 			})

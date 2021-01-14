@@ -1,26 +1,10 @@
 // 加入训练营
-import {
-  GLOBAL_KEY,
-  Version
-} from "../../lib/config"
+import { ErrorLevel, GLOBAL_KEY } from "../../lib/config"
 
-import {
-  checkFocusLogin
-} from "../../api/auth/index"
+import { collectError } from "../../api/auth/index"
 
-import {
-  getCampDetail,
-  getHasJoinCamp,
-  joinCamp,
-  getIosCustomerLink
-} from "../../api/course/index"
-import {
-  $notNull,
-  getLocalStorage,
-  hasAccountInfo,
-  hasUserInfo,
-  payCourse
-} from "../../utils/util"
+import { getCampDetail, getHasJoinCamp, getIosCustomerLink, joinCamp } from "../../api/course/index"
+import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, payCourse } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -236,6 +220,14 @@ Page({
             let link = encodeURIComponent(res.data)
             wx.navigateTo({
               url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
+              fail(err) {
+                collectError({
+                  level: ErrorLevel.p0,
+                  page: "joinCamp.navigateToH5ForPay",
+                  error_code: 401,
+                  error_message: err
+                })
+              }
             })
           })
         } else {
@@ -261,6 +253,12 @@ Page({
                   })
                 }
               }).catch(err => {
+                collectError({
+                  level: ErrorLevel.p0,
+                  page: "joinCamp.requestPayment",
+                  error_code: 401,
+                  error_message: err
+                })
                 this.backFun({
                   type: "fail"
                 })

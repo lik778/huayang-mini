@@ -383,6 +383,9 @@ Page({
 
 						return res
 					})
+
+					handledList = handledList.filter(n => n.id && n.cover_pic && n.name && n.visit_count)
+
 					if (handledList.length > 0) {
 						let target = resultList.find(n => n.key === value)
 						target.content = handledList.slice()
@@ -456,6 +459,9 @@ Page({
 		getFindBanner({
 			scene: 8
 		}).then(bannerList => {
+
+			bannerList = bannerList.filter(b => b.pic_url && b.link)
+
 			this.setData({
 				bannerList
 			})
@@ -520,6 +526,8 @@ Page({
 				}
 				return item
 			})
+
+			list = list.filter(n => n.id && (n.intro_video_cover_pic || n.cover_pic) && n.name && n.summary)
 
 			this.setData({
 				campList: list

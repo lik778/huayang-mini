@@ -1,28 +1,12 @@
 // subCourse/inviteFriendStudy/inviteFriendStudy.js
-import {
-  getInviteFriendInfo,
-  receiveCreate,
-  checkReceiveCreate
-} from "../../api/course/index"
+import { checkReceiveCreate, getInviteFriendInfo, receiveCreate } from "../../api/course/index"
 // canvas
-import {
-  drawFont,
-  drawImage,
-  drawRact,
-  drawCircleHeadIcon,
-  drawLine,
-  drawBorderCircle,
-  measureTextWidth,
-  drawCircleFill
-} from "../../utils/canvas"
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  getLocalStorage,
-  isIphoneXRSMax
-} from "../../utils/util"
+import { drawCircleFill, drawCircleHeadIcon, drawFont, drawImage, measureTextWidth } from "../../utils/canvas"
+import { ErrorLevel, GLOBAL_KEY } from "../../lib/config"
+import { getLocalStorage, isIphoneXRSMax } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
+import { collectError } from "../../api/auth/index"
+
 Page({
 
   /**
@@ -132,6 +116,14 @@ Page({
                                               mask: true
                                             })
                                           }
+                                        },
+                                        fail(err) {
+                                          collectError({
+                                            level: ErrorLevel.p1,
+                                            page: "inviteFriendStudy.saveImageToPhotosAlbum",
+                                            error_code: 401,
+                                            error_message: err
+                                          })
                                         }
                                       })
                                     }
@@ -150,6 +142,14 @@ Page({
                                               mask: true
                                             })
                                           }
+                                        },
+                                        fail(err) {
+                                          collectError({
+                                            level: ErrorLevel.p1,
+                                            page: "inviteFriendStudy.saveImageToPhotosAlbum",
+                                            error_code: 401,
+                                            error_message: err
+                                          })
                                         }
                                       })
                                     }
