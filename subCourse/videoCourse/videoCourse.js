@@ -1,16 +1,14 @@
 // subCourse/videoCourseDetail/videoCourseDetail.js
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { ErrorLevel, GLOBAL_KEY } from "../../lib/config"
 import {
   checkJoinVideoCourse,
   createFissionTask,
+  getIosCustomerLink,
   getVideoArticleLink,
   getVideoCourseDetail,
+  inviteFriend,
   joinVideoCourse,
-  getIosCustomerLink,
-  recordStudy,
-  inviteFriend
+  recordStudy
 } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
 import {
@@ -19,10 +17,9 @@ import {
   hasAccountInfo,
   hasUserInfo,
   payCourse,
-  simpleDurationDate,
-  simpleDurationSimple,
   secondToMinute,
 } from "../../utils/util"
+import { collectError } from "../../api/auth"
 
 const ButtonType = {
   noLogin: 1, //未登录
@@ -696,6 +693,12 @@ Page({
               })
             }
           }).catch(err => {
+            collectError({
+              level: ErrorLevel.p0,
+              page: "videoCourse.requestPayment",
+              error_code: 401,
+              error_message: err
+            })
             this.setData({
               payLock: true
             })
@@ -816,6 +819,14 @@ Page({
       let link = encodeURIComponent(res.data)
       wx.navigateTo({
         url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
+        fail(err) {
+          collectError({
+            level: ErrorLevel.p0,
+            page: "videoCourse.navigateToH5ForPay",
+            error_code: 401,
+            error_message: err
+          })
+        }
       })
     })
   },
