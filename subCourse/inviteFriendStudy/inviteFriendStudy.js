@@ -120,7 +120,7 @@ Page({
                                         fail(err) {
                                           collectError({
                                             level: ErrorLevel.p1,
-                                            page: "inviteFriendStudy.saveImageToPhotosAlbum",
+                                            page: "jj.inviteFriendStudy.saveImageToPhotosAlbum",
                                             error_code: 401,
                                             error_message: err
                                           })
@@ -146,7 +146,7 @@ Page({
                                         fail(err) {
                                           collectError({
                                             level: ErrorLevel.p1,
-                                            page: "inviteFriendStudy.saveImageToPhotosAlbum",
+                                            page: "jj.inviteFriendStudy.saveImageToPhotosAlbum",
                                             error_code: 401,
                                             error_message: err
                                           })

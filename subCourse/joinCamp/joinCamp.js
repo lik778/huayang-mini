@@ -223,7 +223,7 @@ Page({
               fail(err) {
                 collectError({
                   level: ErrorLevel.p0,
-                  page: "joinCamp.navigateToH5ForPay",
+                  page: "jj.joinCamp.navigateToH5ForPay",
                   error_code: 401,
                   error_message: err
                 })
@@ -255,7 +255,7 @@ Page({
               }).catch(err => {
                 collectError({
                   level: ErrorLevel.p0,
-                  page: "joinCamp.requestPayment",
+                  page: "jj.joinCamp.requestPayment",
                   error_code: 401,
                   error_message: err
                 })

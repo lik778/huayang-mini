@@ -154,6 +154,7 @@ export const collectError = (params) => {
 		platform: "applets"
 	}
 
+	// 在sentry区分p1和p2级别的错误
 	if (params.level === ErrorLevel.p1) {
 		commonParams['error_level'] = 'p1'
 	}

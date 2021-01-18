@@ -159,7 +159,7 @@ Page({
           .catch(err => {
             collectError({
               level: ErrorLevel.p0,
-              page: "invitePage.requestPayment",
+              page: "jj.invitePage.requestPayment",
               error_code: 401,
               error_message: err
             })

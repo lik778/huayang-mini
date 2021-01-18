@@ -695,7 +695,7 @@ Page({
           }).catch(err => {
             collectError({
               level: ErrorLevel.p0,
-              page: "videoCourse.requestPayment",
+              page: "jj.videoCourse.requestPayment",
               error_code: 401,
               error_message: err
             })
@@ -822,7 +822,7 @@ Page({
         fail(err) {
           collectError({
             level: ErrorLevel.p0,
-            page: "videoCourse.navigateToH5ForPay",
+            page: "dd.videoCourse.navigateToH5ForPay",
             error_code: 401,
             error_message: err
           })
