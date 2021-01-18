@@ -282,7 +282,7 @@ Component({
 					collectError({
 						level: ErrorLevel.p1,
 						page: `dd.${this.data.parent}.component.taskLayout.previewMedia`,
-						error_code: 401,
+						error_code: 400,
 						error_message: err
 					})
 				}
@@ -375,7 +375,7 @@ Component({
 				collectError({
 					level: ErrorLevel.p1,
 					page: `dd.${this.data.parent}.component.taskLayout.bgAudio`,
-					error_code: 401,
+					error_code: 400,
 					error_message: err
 				})
 			})

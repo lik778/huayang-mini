@@ -579,11 +579,18 @@ Page({
       }, false)
 
       inviteFriend(params).then(res => {
+        this.setData({
+          inviteFriendLock: true
+        })
         if (res.code === 0) {
           wx.navigateTo({
             url: `/subCourse/inviteFriendStudy/inviteFriendStudy?inviteId=${res.data.gift.id}`,
           })
         }
+      }).catch(() => {
+        this.setData({
+          inviteFriendLock: true
+        })
       })
     }
   },
@@ -696,7 +703,7 @@ Page({
             collectError({
               level: ErrorLevel.p0,
               page: "jj.videoCourse.requestPayment",
-              error_code: 401,
+              error_code: 500,
               error_message: err
             })
             this.setData({
@@ -823,7 +830,7 @@ Page({
           collectError({
             level: ErrorLevel.p0,
             page: "dd.videoCourse.navigateToH5ForPay",
-            error_code: 401,
+            error_code: 500,
             error_message: err
           })
         }

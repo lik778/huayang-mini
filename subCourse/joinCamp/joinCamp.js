@@ -224,7 +224,7 @@ Page({
                 collectError({
                   level: ErrorLevel.p0,
                   page: "jj.joinCamp.navigateToH5ForPay",
-                  error_code: 401,
+                  error_code: 500,
                   error_message: err
                 })
               }
@@ -256,7 +256,7 @@ Page({
                 collectError({
                   level: ErrorLevel.p0,
                   page: "jj.joinCamp.requestPayment",
-                  error_code: 401,
+                  error_code: 500,
                   error_message: err
                 })
                 this.backFun({

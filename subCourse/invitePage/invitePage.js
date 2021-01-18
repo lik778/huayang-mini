@@ -160,7 +160,7 @@ Page({
             collectError({
               level: ErrorLevel.p0,
               page: "jj.invitePage.requestPayment",
-              error_code: 401,
+              error_code: 500,
               error_message: err
             })
           this.backFun({type: "fail"})

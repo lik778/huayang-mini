@@ -173,7 +173,7 @@ Page({
 			collectError({
 				level: ErrorLevel.p0,
 				location: "dd.actionPage.innerAudio",
-				error_code: 401,
+				error_code: 500,
 				error_message: err,
 				err_target_link: self.data.targetActionObj.link,
 				err_target_name: self.data.targetActionObj.name,
@@ -504,7 +504,7 @@ Page({
 				collectError({
 					level: ErrorLevel.p0,
 					page: "dd.actionPage.bgAudio",
-					error_code: 401,
+					error_code: 500,
 					error_message: err,
 					err_target_link: link,
 					err_target_name: self.data.targetActionObj.name,

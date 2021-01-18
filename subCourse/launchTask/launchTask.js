@@ -287,7 +287,7 @@ Page({
 			collectError({
 				level: ErrorLevel.p1,
 				page: 'dd.launchTask.recorderManager',
-				error_code: 401,
+				error_code: 400,
 				error_message: err
 			})
 		})
@@ -350,7 +350,7 @@ Page({
 			collectError({
 				level: ErrorLevel.p1,
 				page: 'dd.launchTask.createInnerAudioContext',
-				error_code: 401,
+				error_code: 400,
 				error_message: err
 			})
 		})
@@ -468,7 +468,7 @@ Page({
 				collectError({
 					level: ErrorLevel.p1,
 					page: 'dd.launchTask.chooseImage',
-					error_code: 401,
+					error_code: 400,
 					error_message: err
 				})
 			}
@@ -511,7 +511,7 @@ Page({
 				collectError({
 					level: ErrorLevel.p1,
 					page: 'dd.launchTask.chooseVideo',
-					error_code: 401,
+					error_code: 400,
 					error_message: err
 				})
 			}
@@ -542,7 +542,7 @@ Page({
 					collectError({
 						level: ErrorLevel.p1,
 						page: 'dd.launchTask.uploadFile',
-						error_code: 401,
+						error_code: 400,
 						error_message: err
 					})
 					let {message} = JSON.parse(err)
@@ -569,7 +569,7 @@ Page({
 				collectError({
 					level: ErrorLevel.p1,
 					page: 'dd.launchTask.previewMedia',
-					error_code: 401,
+					error_code: 400,
 					error_message: err
 				})
 			}

@@ -302,7 +302,7 @@ Page({
 							collectError({
 								level: ErrorLevel.p1,
 								page: "dd.actionPost.saveImageToPhotosAlbum",
-								error_code: 401,
+								error_code: 400,
 								error_message: err
 							})
 							toast('图片保存失败')

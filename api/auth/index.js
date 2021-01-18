@@ -1,5 +1,5 @@
 import request from "../../lib/request"
-import { ErrorLevel, GLOBAL_KEY, URL } from "../../lib/config"
+import { ErrorLevel, GLOBAL_KEY, ROOT_URL, URL } from "../../lib/config"
 import { getLocalStorage, setLocalStorage, toast } from "../../utils/util"
 import dayjs from "dayjs"
 
@@ -131,6 +131,8 @@ export const checkBecomeVip = (params) => {
  * -------------------------------------------
  */
 export const collectError = (params) => {
+	if (request.baseUrl === ROOT_URL.dev) return
+
 	let userInfoString = getLocalStorage(GLOBAL_KEY.userInfo)
 	let accountInfoString = getLocalStorage(GLOBAL_KEY.accountInfo)
 	let systemInfoString = getLocalStorage(GLOBAL_KEY.systemParams)
@@ -150,15 +152,25 @@ export const collectError = (params) => {
 	let compoundParams = {
 		page: params.page,
 		error_code: params.error_code,
-		error_message: {...commonParams, ...params},
+		error_message: JSON.stringify({...commonParams, ...params}),
 		platform: "applets"
 	}
 
-	// 在sentry区分p1和p2级别的错误
-	if (params.level === ErrorLevel.p1) {
-		commonParams['error_level'] = 'p1'
+	let url = ""
+	switch (params.level) {
+		case ErrorLevel.p0: {
+			url = URL.collectP0Error
+			break
+		}
+		case ErrorLevel.p1: {
+			url = URL.collectP1Error
+			break
+		}
+		default: {
+			url = URL.collectError
+		}
 	}
 
-	request._post(params.level === ErrorLevel.p0 ? URL.collectP0Error : URL.collectError, compoundParams)
+	request._post(url, compoundParams)
 }
 

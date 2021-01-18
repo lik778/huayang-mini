@@ -65,7 +65,7 @@ Page({
                   collectError({
                     level: ErrorLevel.p1,
                     page: "jj.campCredential.saveImageToPhotosAlbum",
-                    error_code: 401,
+                    error_code: 400,
                     error_message: err
                   })
                 }
@@ -90,7 +90,7 @@ Page({
                   collectError({
                     level: ErrorLevel.p1,
                     page: "jj.campCredential.saveImageToPhotosAlbum",
-                    error_code: 401,
+                    error_code: 400,
                     error_message: err
                   })
                 }
