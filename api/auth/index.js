@@ -123,10 +123,10 @@ export const checkBecomeVip = (params) => {
  * wxSDK 微信基础库版本
  * create_at #YYYY-MM-DD HH:mm:ss
  * -------------------------------------------
- * location #page.api
- * level [ p0, p1 ]
- * error_code [ 400, wxminiprogram error code ]
- * error_message
+ * location # developer.page.api
+ * level [ p0, p1, p2 ]
+ * error_code [ 300(控制台错误), 400(p1错误), 500(p2错误) ]
+ * error_message 完整错误信息
  * arguments 其他自定义参数
  * -------------------------------------------
  */
