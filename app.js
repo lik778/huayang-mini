@@ -1,6 +1,6 @@
 //app.js
 import { getLocalStorage, setLocalStorage } from './utils/util'
-import { ErrorLevel, GLOBAL_KEY } from './lib/config'
+import { GLOBAL_KEY } from './lib/config'
 import { collectError } from "./api/auth/index"
 
 App({
@@ -65,7 +65,6 @@ App({
 	},
 	onError(error) {
 		collectError({
-			level: ErrorLevel.p2,
 			page: "app.js",
 			error_code: 300,
 			error_message: error
