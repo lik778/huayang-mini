@@ -1,6 +1,7 @@
 import { getFissionDetail, getVideoCourseDetail, joinFissionTask } from "../../api/course/index"
 import { getLocalStorage, hasAccountInfo, hasUserInfo, payCourse } from "../../utils/util"
-import { GLOBAL_KEY } from "../../lib/config"
+import { ErrorLevel, GLOBAL_KEY } from "../../lib/config"
+import { collectError } from "../../api/auth/index"
 
 Page({
 
@@ -156,6 +157,12 @@ Page({
           }
         })
           .catch(err => {
+            collectError({
+              level: ErrorLevel.p0,
+              page: "jj.invitePage.requestPayment",
+              error_code: 500,
+              error_message: err
+            })
           this.backFun({type: "fail"})
         })
       }

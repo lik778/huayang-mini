@@ -6,7 +6,7 @@ import {
 	splitTargetNoString,
 	toast
 } from "../../utils/util"
-import { GLOBAL_KEY, WX_AUTH_TYPE } from "../../lib/config"
+import { ErrorLevel, GLOBAL_KEY, WX_AUTH_TYPE } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import { queryPunchCardBg, queryPunchCardQrCode, queryUserHaveClassesInfo } from "../../api/course/index"
 import { collectError } from "../../api/auth/index"
@@ -298,7 +298,13 @@ Page({
 							toast('图片保存成功', 3000, 'success')
 							self.punchCard()
 						},
-						fail() {
+						fail(err) {
+							collectError({
+								level: ErrorLevel.p1,
+								page: "dd.actionPost.saveImageToPhotosAlbum",
+								error_code: 400,
+								error_message: err
+							})
 							toast('图片保存失败')
 						}
 					})
@@ -332,12 +338,6 @@ Page({
 					resolve(result)
 				},
 				fail(err) {
-					collectError({
-						page: "actionPost.canvasToTempFilePath",
-						error_code: 400,
-						error_message: err.errMsg,
-						systemInfo: getLocalStorage(GLOBAL_KEY.systemParams)
-					})
 					reject(err)
 				}
 			})

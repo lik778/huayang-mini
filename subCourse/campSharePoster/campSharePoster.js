@@ -1,13 +1,9 @@
 // subCourse/campSharePoster/campSharePoster.js
-import {
-  getLocalStorage,
-  getNowDateAll,
-  isIphoneXRSMax
-} from "../../utils/util"
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { getLocalStorage, getNowDateAll, isIphoneXRSMax } from "../../utils/util"
+import { ErrorLevel, GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
+import { collectError } from "../../api/auth/index"
+
 Page({
 
   /**
@@ -59,6 +55,14 @@ Page({
                       day_num: this.data.campAllData.day_num
                     }, false)
                   }
+                },
+                fail(err) {
+                  collectError({
+                    level: ErrorLevel.p1,
+                    page: "jj.campSharePoster.saveImageToPhotosAlbum",
+                    error_code: 400,
+                    error_message: err
+                  })
                 }
               })
             }
@@ -81,6 +85,14 @@ Page({
                       day_num: this.data.campAllData.day_num
                     }, false)
                   }
+                },
+                fail(err) {
+                  collectError({
+                    level: ErrorLevel.p1,
+                    page: "jj.campSharePoster.saveImageToPhotosAlbum",
+                    error_code: 400,
+                    error_message: err
+                  })
                 }
               })
             }

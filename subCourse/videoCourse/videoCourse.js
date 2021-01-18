@@ -1,16 +1,14 @@
 // subCourse/videoCourseDetail/videoCourseDetail.js
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { ErrorLevel, GLOBAL_KEY } from "../../lib/config"
 import {
   checkJoinVideoCourse,
   createFissionTask,
+  getIosCustomerLink,
   getVideoArticleLink,
   getVideoCourseDetail,
+  inviteFriend,
   joinVideoCourse,
-  getIosCustomerLink,
-  recordStudy,
-  inviteFriend
+  recordStudy
 } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
 import {
@@ -19,10 +17,9 @@ import {
   hasAccountInfo,
   hasUserInfo,
   payCourse,
-  simpleDurationDate,
-  simpleDurationSimple,
   secondToMinute,
 } from "../../utils/util"
+import { collectError } from "../../api/auth/index"
 
 const ButtonType = {
   noLogin: 1, //未登录
@@ -582,11 +579,18 @@ Page({
       }, false)
 
       inviteFriend(params).then(res => {
+        this.setData({
+          inviteFriendLock: true
+        })
         if (res.code === 0) {
           wx.navigateTo({
             url: `/subCourse/inviteFriendStudy/inviteFriendStudy?inviteId=${res.data.gift.id}`,
           })
         }
+      }).catch(() => {
+        this.setData({
+          inviteFriendLock: true
+        })
       })
     }
   },
@@ -696,6 +700,12 @@ Page({
               })
             }
           }).catch(err => {
+            collectError({
+              level: ErrorLevel.p0,
+              page: "jj.videoCourse.requestPayment",
+              error_code: 500,
+              error_message: err
+            })
             this.setData({
               payLock: true
             })
@@ -816,6 +826,14 @@ Page({
       let link = encodeURIComponent(res.data)
       wx.navigateTo({
         url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
+        fail(err) {
+          collectError({
+            level: ErrorLevel.p0,
+            page: "dd.videoCourse.navigateToH5ForPay",
+            error_code: 500,
+            error_message: err
+          })
+        }
       })
     })
   },
