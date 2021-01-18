@@ -19,7 +19,7 @@ import {
   payCourse,
   secondToMinute,
 } from "../../utils/util"
-import { collectError } from "../../api/auth"
+import { collectError } from "../../api/auth/index"
 
 const ButtonType = {
   noLogin: 1, //未登录

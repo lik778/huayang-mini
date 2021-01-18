@@ -153,6 +153,11 @@ export const collectError = (params) => {
 		error_message: {...commonParams, ...params},
 		platform: "applets"
 	}
+
+	if (params.level === ErrorLevel.p1) {
+		commonParams['error_level'] = 'p1'
+	}
+
 	request._post(params.level === ErrorLevel.p0 ? URL.collectP0Error : URL.collectError, compoundParams)
 }
 
