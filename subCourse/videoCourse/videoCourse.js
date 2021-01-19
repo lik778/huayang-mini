@@ -144,10 +144,7 @@ Page({
 
     // 检查是否加入过该课程
     this.checkHasJoined()
-    // 页面pv打点
-    setTimeout(() => {
-      this.pageViewPoint()
-    }, 3000)
+
   },
 
   // 播放视频
@@ -494,6 +491,8 @@ Page({
               this.videoContext.play()
             }, 1000)
           }
+          // 页面pv打点
+          this.pageViewPoint()
         }
       })
     })
