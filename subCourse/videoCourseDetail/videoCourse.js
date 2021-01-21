@@ -776,7 +776,7 @@ Page({
     if (this.data.promoteUid !== '') {
       shareLink += `&promote_uid=${this.data.promoteUid}`
     } else {
-      if (this.data.userInfo !== '' && this.data.userInfo.kecheng_user.is_promoter === 1) {
+      if (this.data.userInfo !== '' &&this.data.userInfo.kecheng_user.is_promoter&& this.data.userInfo.kecheng_user.is_promoter === 1) {
         shareLink += `&promote_uid=${this.data.userInfo.id}`
       }
     }
