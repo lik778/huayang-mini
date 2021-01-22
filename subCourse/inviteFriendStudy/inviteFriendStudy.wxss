@@ -133,7 +133,7 @@
   height: 256rpx;
   vertical-align: bottom;
   background: #fff;
-  border: 24rpx solid #fff;
+  padding: 24rpx;
   box-sizing: border-box;
 }
 

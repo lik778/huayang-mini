@@ -260,7 +260,8 @@ Page({
             showStudyToast: false,
             studiedIndex: '',
             noPayForCourse: false,
-            nowCoursePlayIndex: this.data.nowCoursePlayIndex ? this.data.nowCoursePlayIndex : ''
+            nowCoursePlayIndex: this.data.nowCoursePlayIndex ? this.data.nowCoursePlayIndex : '',
+            userInfo:""
           })
           this.getVideoCourseData(ButtonType.noLogin)
         }
