@@ -65,7 +65,8 @@ App({
 	},
 	onError(error) {
 		collectError({
-			error_code: 400,
+			page: "app.js",
+			error_code: 300,
 			error_message: error
 		})
 	},

@@ -1,6 +1,6 @@
 <view class="index-task" wx:if="{{didShowIndexPage}}">
     <block wx:if="{{indexTaskList.length > 0}}">
-        <taskLayout bind:noAuth="onNoAuth" bind:thumbChange="onThumbChange" wx:for="{{indexTaskList}}" wx:key="index" taskInfo="{{item}}" id="{{'task-layout-' + item.kecheng_work.id}}"/>
+        <taskLayout bind:noAuth="onNoAuth" bind:thumbChange="onThumbChange" wx:for="{{indexTaskList}}" wx:key="index" taskInfo="{{item}}" parent="indexTask" id="{{'task-layout-' + item.kecheng_work.id}}"/>
 
         <view class="launch-layout">
             <image class="launch-btn" bindtap="goToDiscoveryPage" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608631699BZBnHP.jpg"></image>

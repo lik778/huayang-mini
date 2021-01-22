@@ -1,8 +1,9 @@
 import dayjs from "dayjs"
 import { deleteTaskRecord, thumbTask, unThumbTask } from "../../api/task/index"
 import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, toast } from "../../utils/util"
-import { GLOBAL_KEY } from "../../lib/config"
+import { ErrorLevel, GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
+import { collectError } from "../../api/auth/index"
 // 媒体资源类型
 const MEDIA_TYPE = {
 	image: 1,
@@ -27,6 +28,10 @@ Component({
 	 * 组件的属性列表
 	 */
 	properties: {
+		parent: {
+			type: String,
+			value: ""
+		},
 		taskInfo: {
 			type: Object,
 			value: null,
@@ -272,7 +277,15 @@ Component({
 			this.postTaskId()
 			wx.previewMedia({
 				sources,
-				current: e.currentTarget.dataset.index
+				current: e.currentTarget.dataset.index,
+				fail(err) {
+					collectError({
+						level: ErrorLevel.p1,
+						page: `dd.${this.data.parent}.component.taskLayout.previewMedia`,
+						error_code: 400,
+						error_message: err
+					})
+				}
 			})
 		},
 		/**
@@ -359,7 +372,12 @@ Component({
 			})
 
 			bgAudioInstance.onError((err) => {
-				console.error(err)
+				collectError({
+					level: ErrorLevel.p1,
+					page: `dd.${this.data.parent}.component.taskLayout.bgAudio`,
+					error_code: 400,
+					error_message: err
+				})
 			})
 
 			this.setData({bgAudioInstance})
@@ -384,6 +402,17 @@ Component({
 				created_at,
 				audio_length
 			} = kecheng_work
+
+			if (!$notNull(user)) {
+				collectError({
+					level: ErrorLevel.p1,
+					page: "dd.component.taskLayout",
+					error_code: 400,
+					error_message: `ID为${taskId}的作业没有创建者信息`
+				})
+				return this.setData({didReadyShowTask: false})
+			}
+
 			let {avatar_url, nick_name, id: userId} = user
 			work_comment_list = work_comment_list || []
 			work_comment_list = work_comment_list.map(item => {
