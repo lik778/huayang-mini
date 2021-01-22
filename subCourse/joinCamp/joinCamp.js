@@ -253,12 +253,14 @@ Page({
                   })
                 }
               }).catch(err => {
-                collectError({
-                  level: ErrorLevel.p0,
-                  page: "jj.joinCamp.requestPayment",
-                  error_code: 500,
-                  error_message: err
-                })
+                if (err.errMsg !== "requestPayment:fail cancel") {
+                  collectError({
+                    level: ErrorLevel.p0,
+                    page: "jj.joinCamp.requestPayment",
+                    error_code: 500,
+                    error_message: err
+                  })
+                }
                 this.backFun({
                   type: "fail"
                 })
@@ -438,7 +440,7 @@ Page({
     if (this.data.promoteUid !== '') {
       shareLink += `&promote_uid=${this.data.promoteUid}`
     } else {
-      if (this.data.userInfo !== '' && this.data.userInfo.kecheng_user.is_promoter === 1) {
+      if (this.data.userInfo !== '' &&this.data.userInfo.kecheng_user.is_promoter&& this.data.userInfo.kecheng_user.is_promoter === 1) {
         shareLink += `&promote_uid=${this.data.userInfo.id}`
       }
     }

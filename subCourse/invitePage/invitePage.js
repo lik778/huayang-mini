@@ -157,12 +157,14 @@ Page({
           }
         })
           .catch(err => {
-            collectError({
-              level: ErrorLevel.p0,
-              page: "jj.invitePage.requestPayment",
-              error_code: 500,
-              error_message: err
-            })
+            if (err.errMsg !== "requestPayment:fail cancel") {
+              collectError({
+                level: ErrorLevel.p0,
+                page: "jj.invitePage.requestPayment",
+                error_code: 500,
+                error_message: err
+              })
+            }
           this.backFun({type: "fail"})
         })
       }

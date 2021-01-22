@@ -62,10 +62,9 @@
     "miniprogram": {
       "list": [
         {
-          "id": 0,
           "name": "subLive/courseList/courseList",
           "pathName": "subLive/courseList/courseList",
-          "query": "id=551",
+          "query": "id=13",
           "scene": null
         },
         {
