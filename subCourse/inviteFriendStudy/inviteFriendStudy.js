@@ -152,6 +152,19 @@ Page({
                                           })
                                         }
                                       })
+                                    },
+                                    fail:()=>{
+                                      wx.showModal({
+                                        title: '相册授权',
+                                        content: '保存失败，未获得您的授权，请前往设置授权',
+                                        confirmText: '去设置',
+                                        confirmColor: '#33c71b',
+                                        success(res) {
+                                          if (res.confirm) {
+                                            wx.openSetting()
+                                          }
+                                        }
+                                      })
                                     }
                                   })
                                 }

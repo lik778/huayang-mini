@@ -141,10 +141,7 @@ Page({
 
     // 检查是否加入过该课程
     this.checkHasJoined()
-    // 页面pv打点
-    setTimeout(() => {
-      this.pageViewPoint()
-    }, 3000)
+
   },
 
   // 播放视频
@@ -263,7 +260,8 @@ Page({
             showStudyToast: false,
             studiedIndex: '',
             noPayForCourse: false,
-            nowCoursePlayIndex: this.data.nowCoursePlayIndex ? this.data.nowCoursePlayIndex : ''
+            nowCoursePlayIndex: this.data.nowCoursePlayIndex ? this.data.nowCoursePlayIndex : '',
+            userInfo:""
           })
           this.getVideoCourseData(ButtonType.noLogin)
         }
@@ -491,6 +489,8 @@ Page({
               this.videoContext.play()
             }, 1000)
           }
+          // 页面pv打点
+          this.pageViewPoint()
         }
       })
     })
@@ -951,7 +951,7 @@ Page({
     if (this.data.promoteUid !== '') {
       shareLink += `&promote_uid=${this.data.promoteUid}`
     } else {
-      if (this.data.userInfo !== '' && this.data.userInfo.kecheng_user.is_promoter === 1) {
+      if (this.data.userInfo !== '' &&this.data.userInfo.kecheng_user.is_promoter&& this.data.userInfo.kecheng_user.is_promoter === 1) {
         shareLink += `&promote_uid=${this.data.userInfo.id}`
       }
     }

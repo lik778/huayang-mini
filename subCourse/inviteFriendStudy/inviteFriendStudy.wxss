@@ -124,15 +124,17 @@
   left: 50%;
   transform: translateX(-50%);
   top: 570rpx;
-
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .qrcode image {
   width: 256rpx;
   height: 256rpx;
-  border-radius: 50%;
   vertical-align: bottom;
   background: #fff;
+  padding: 24rpx;
+  box-sizing: border-box;
 }
 
 .limit {
