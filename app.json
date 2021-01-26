@@ -34,7 +34,8 @@
     "audio",
     "location"
   ],
-  "subpackages": [{
+  "subpackages": [
+    {
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -96,7 +97,8 @@
         "themeTask/themeTask",
         "compositeTask/compositeTask",
         "indexTask/indexTask",
-        "videoCourseDetail/videoCourse"
+        "videoCourseDetail/videoCourse",
+        "cooperationPage/cooperation"
       ]
     },
     {
@@ -117,7 +119,8 @@
   },
   "tabBar": {
     "custom": true,
-    "list": [{
+    "list": [
+      {
         "pagePath": "pages/discovery/discovery"
       },
       {

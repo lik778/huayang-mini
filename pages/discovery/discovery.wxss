@@ -1,13 +1,13 @@
 @import "../../assets/css/common.wxss";
 
 .discovery {
-  padding-top: 16rpx;
+  /* padding-top: 16rpx; */
   background: #fff;
 }
 
 /*推广位*/
 .promotion {
-  padding: 0 30rpx 30rpx;
+  padding-bottom: 30rpx;
 }
 
 /*导航栏*/
@@ -65,19 +65,19 @@
 
 /* banner */
 .swiper-box {
-  height: 350rpx;
+  height: 216rpx;
   position: relative;
 }
 
 .swiper-item-box {
   width: 100%;
-  height: 320rpx;
+  height: 188rpx;
 }
 
 .swiper-item-box image {
   width: 100%;
   height: 100%;
-  border-radius: 8rpx;
+  /* border-radius: 8rpx; */
 }
 
 /* .swiper-item-box .swiper-cover {
