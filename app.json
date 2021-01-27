@@ -96,7 +96,8 @@
         "themeTask/themeTask",
         "compositeTask/compositeTask",
         "indexTask/indexTask",
-        "videoCourseDetail/videoCourse"
+        "videoCourseDetail/videoCourse",
+        "cooperationPage/cooperationPage"
       ]
     },
     {

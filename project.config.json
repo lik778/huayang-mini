@@ -4,7 +4,7 @@
     "ignore": []
   },
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": true,
     "enhance": true,
     "postcss": true,
@@ -23,6 +23,7 @@
     "compileHotReLoad": false,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
+    "useApiHostProcess": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -36,8 +37,7 @@
     "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
-    "minifyWXSS": true,
-    "useApiHostProcess": true
+    "minifyWXSS": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.12.0",
@@ -360,6 +360,12 @@
           "name": "mine/personCourse/personCourse",
           "pathName": "mine/personCourse/personCourse",
           "query": "",
+          "scene": null
+        },
+        {
+          "name": "subCourse/cooperationPage/cooperationPage",
+          "pathName": "subCourse/cooperationPage/cooperationPage",
+          "query": "packageId=9628767710351360",
           "scene": null
         }
       ]
