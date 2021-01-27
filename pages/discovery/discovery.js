@@ -381,6 +381,7 @@ Page({
 							if (+res.invite_open === 1) {
 								res.fission_price = (+res.price * res.invite_discount / 10000) // .toFixed(2)
 							}
+							res.discount_price = res.price
 						} else if (res.discount_price >= 0 && res.price > 0) {
 							// 收费但有折扣
 							res.discount_price = (res.discount_price / 100) // .toFixed(2)
