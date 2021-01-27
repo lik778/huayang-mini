@@ -44,6 +44,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let {
+      packageId = ''
+    } = options
+    if (packageId === '') {
+      wx.switchTab({
+        url: '/pages/discovery/discovery',
+      })
+      return
+    }
+    console.log('packageId=' + packageId)
     this.checkLogoStyle('https://pic1.zhimg.com/v2-5b5a2fa02cb65f2ab1910439fec5791f_l.jpg')
   },
 
