@@ -23,27 +23,31 @@
   <!-- 课程列表 -->
   <view class="course-list">
     <view class="course-list-title">免费精品课</view>
-    <view class="course-item">
+    <view class="course-item" wx:for="{{allData.kecheng_list}}" wx:key="index" bindtap="toCourseDetail"
+      data-item="{{item}}">
       <view class="course-item-left">
-        <image src="{{bannerList[1].url}}"></image>
+        <image src="{{item.cover_pic}}"></image>
       </view>
       <view class="course-item-right">
         <view class="course-item-right-top">
-          <view class="course-item-right-one">秋冬围巾搭配</view>
-          <view class="course-item-right-two">秋冬围巾搭配指南，时髦又温暖</view>
-          <view class="course-item-right-three">方圆老师 资深时尚老师</view>
+          <view class="course-item-right-one">{{item.teacher_desc}}</view>
+          <view class="course-item-right-two">{{item.name}}</view>
+          <view class="course-item-right-three">{{item.teacher_desc}} 资深时尚老师</view>
         </view>
-        <view class="course-item-right-four">共11万人学习</view>
+        <view class="course-item-right-four">共{{item.visit_count}}人学习</view>
       </view>
     </view>
   </view>
   <!-- 按钮 -->
   <view class="button-line">
-    <view class="button-one">
+    <view class="button-one" bindtap="toIndex">
       <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1611651682iGvsXo.jpg"></image>
     </view>
-    <view class="button-two">
+    <view class="button-two" bindtap="toCollegeIndex">
       <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1611651698OVICha.jpg"></image>
     </view>
   </view>
+  <!-- 授权弹窗 -->
+  <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
+  </authModule>
 </view>

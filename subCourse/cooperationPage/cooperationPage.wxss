@@ -1,4 +1,8 @@
 /* subCourse/cooperationPage/cooperation.wxss */
+.container {
+  padding-bottom: 160rpx;
+}
+
 .banner {
   width: 100vw;
   height: 216rpx;
@@ -145,6 +149,7 @@
   position: fixed;
   bottom: 0;
   left: 0;
+  background: #fff;
 }
 
 .button-line image {

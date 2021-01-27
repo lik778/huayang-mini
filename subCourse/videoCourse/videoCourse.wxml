@@ -59,7 +59,7 @@
   <view class="course-list" wx:if="{{tabIndex===0}}">
     <view
       class="{{(nowCoursePlayIndex===index&&inPlaying)||(nowCoursePlayIndex===index&&onlySelected)?'course-item course-item-active course-item-choosed':'course-item'}}"
-      wx:for="{{videoCourseData.series_detail.video_detail}}" wx:key="{{index}}"
+      wx:for="{{videoCourseData.series_detail.video_detail}}" wx:key="index"
       bindtap="{{item.type==='lock'?'':item.type==='试看'?'playVideo':hasLogin?'playVideo':'login'}}"
       data-index='{{index}}'>
       <view class="course-item-left">
@@ -92,7 +92,7 @@
   </view>
   <!-- 课程详情 -->
   <view class="course-detail" wx:else>
-    <image src="{{item}}" wx:for="{{videoCourseData.series_detail.detail_pics}}" wx:key="{{index}}" mode="widthFix">
+    <image src="{{item}}" wx:for="{{videoCourseData.series_detail.detail_pics}}" wx:key="index" mode="widthFix">
     </image>
   </view>
   <!-- 添加班主任 -->
@@ -195,7 +195,7 @@
           <view>¥{{videoCourseData.series_detail.discount_price}}</view>
         </view>
         <view class="pay-button-invite-two-right subject-bg-color" bindtap="initFissionTask">
-          <view>请好友助力6折优惠购</view>
+          <view>请好友助力{{videoCourseData.series_detail.invite_discount}}折优惠购</view>
           <view>¥{{videoCourseData.series_detail.fission_price}}</view>
         </view>
       </view>
