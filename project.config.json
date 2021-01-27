@@ -62,10 +62,9 @@
     "miniprogram": {
       "list": [
         {
-          "id": 0,
           "name": "subLive/courseList/courseList",
           "pathName": "subLive/courseList/courseList",
-          "query": "id=551",
+          "query": "id=13",
           "scene": null
         },
         {
@@ -364,9 +363,9 @@
           "scene": null
         },
         {
-          "name": "合作资源包",
-          "pathName": "subCourse/cooperationPage/cooperation",
-          "query": "",
+          "name": "subCourse/cooperationPage/cooperationPage",
+          "pathName": "subCourse/cooperationPage/cooperationPage",
+          "query": "packageId=9628767710351360",
           "scene": null
         }
       ]

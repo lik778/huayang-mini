@@ -701,3 +701,8 @@ export const receiveCreate = params => {
 export const checkReceiveCreate = params => {
 	return request._get(URL.checkReceiveCreate, params)
 }
+
+// 根据ID获取资源合作机构信息
+export const getCooperationById = params => {
+	return request._get(URL.getCooperationById, params)
+}
