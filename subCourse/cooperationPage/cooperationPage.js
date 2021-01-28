@@ -1,6 +1,7 @@
 // subCourse/cooperationPage/cooperation.js
 import {
-  getCooperationById
+  getCooperationById,
+  cooperationJoinVideoCourse
 } from "../../api/course/index"
 import {
   GLOBAL_KEY
@@ -40,12 +41,19 @@ Page({
       didShowAuth: false
     })
     if (this.data.authType === 0) {
-      wx.navigateTo({
-        url: `/subCourse/videoCourse/videoCourse?videoId=${this.data.currentGetVideoId}`,
-      })
-      this.setData({
-        currentGetVideoId: '',
-        authType: ''
+      cooperationJoinVideoCourse({
+        user_id: getLocalStorage(GLOBAL_KEY.userId),
+        series_id: this.data.currentGetVideoId
+      }).then(res => {
+        if (res.code === 0) {
+          wx.navigateTo({
+            url: `/subCourse/videoCourse/videoCourse?videoId=${this.data.currentGetVideoId}`,
+          })
+          this.setData({
+            currentGetVideoId: '',
+            authType: ''
+          })
+        }
       })
     } else {
       this.setData({
@@ -94,12 +102,19 @@ Page({
       this.setData({
         authType: 0,
         didShowAuth: true,
-        currentGetVideoId: courseData.id
+        currentGetVideoId: courseData.kecheng_series.id
       })
       return
     }
-    wx.navigateTo({
-      url: `/subCourse/videoCourse/videoCourse?videoId=${courseData.id}`,
+    cooperationJoinVideoCourse({
+      user_id: getLocalStorage(GLOBAL_KEY.userId),
+      series_id: courseData.kecheng_series.id
+    }).then(res => {
+      if (res.code === 0) {
+        wx.navigateTo({
+          url: `/subCourse/videoCourse/videoCourse?videoId=${courseData.kecheng_series.id}`,
+        })
+      }
     })
   },
 
@@ -135,11 +150,12 @@ Page({
       if (res.code === 0) {
         console.log(res.data)
         let list = res.data.kecheng_list
+        res.data.collaborate.logo_list = res.data.collaborate.logo_list.split(",")
         if (list.length > 0) {
           list.map(item => {
-            if (item.visit_count >= 10000) {
-              item.visit_count = (item.visit_count / 10000).toFixed(1) + "万"
-              item.visit_count = item.visit_count.split('.')[1] === '0万' ? item.visit_count[0] + "万" : item.visit_count
+            if (item.kecheng_series.visit_count >= 10000) {
+              item.kecheng_series.visit_count = (item.kecheng_series.visit_count / 10000).toFixed(1) + "万"
+              item.kecheng_series.visit_count = item.kecheng_series.visit_count.split('.')[1] === '0万' ? item.kecheng_series.visit_count[0] + "万" : item.kecheng_series.visit_count
             }
           })
         }

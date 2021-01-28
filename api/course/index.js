@@ -706,3 +706,8 @@ export const checkReceiveCreate = params => {
 export const getCooperationById = params => {
 	return request._get(URL.getCooperationById, params)
 }
+
+// 资源分享平台点击加入系列课
+export const cooperationJoinVideoCourse = params => {
+	return request._post(URL.cooperationJoinVideoCourse, params)
+}

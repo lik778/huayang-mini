@@ -15,26 +15,26 @@
   </view>
   <!-- logo -->
   <view class="{{logoStyle===0?'logo':'logo logo1'}}">
-    <image class="logo-one" src="{{bannerList[0].url}}"></image>
-    <image class="logo-two" src="{{bannerList[1].url}}"></image>
+    <image class="{{index===0?'logo-one':'logo-two'}}" src="{{item}}" wx:for="{{allData.collaborate.logo_list}}"
+      wx:key="index"></image>
   </view>
   <!-- 介绍 -->
-  <view class="desc">花样大学和浦锦街道合作，每月给大家送课啦，本月免费课程一起来学习吧！</view>
+  <view class="desc">{{allData.collaborate.description}}</view>
   <!-- 课程列表 -->
   <view class="course-list">
     <view class="course-list-title">免费精品课</view>
     <view class="course-item" wx:for="{{allData.kecheng_list}}" wx:key="index" bindtap="toCourseDetail"
       data-item="{{item}}">
       <view class="course-item-left">
-        <image src="{{item.cover_pic}}"></image>
+        <image src="{{item.kecheng_series.cover_pic}}"></image>
       </view>
       <view class="course-item-right">
         <view class="course-item-right-top">
-          <view class="course-item-right-one">{{item.teacher_desc}}</view>
-          <view class="course-item-right-two">{{item.name}}</view>
-          <view class="course-item-right-three">{{item.teacher_desc}} 资深时尚老师</view>
+          <view class="course-item-right-one">{{item.kecheng_series.teacher_desc}}</view>
+          <view class="course-item-right-two">{{item.kecheng_series.name}}</view>
+          <view class="course-item-right-three">{{item.kecheng_series.teacher_desc}} 资深时尚老师</view>
         </view>
-        <view class="course-item-right-four">共{{item.visit_count}}人学习</view>
+        <view class="course-item-right-four">共{{item.kecheng_series.visit_count}}人学习</view>
       </view>
     </view>
   </view>
