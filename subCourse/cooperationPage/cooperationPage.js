@@ -77,8 +77,9 @@ Page({
           wx.getImageInfo({
             src: res.tempFilePath,
             success: (res1) => {
+              console.log(res1)
               this.setData({
-                logoStyle: res1.width > res1.height ? 0 : 1
+                logoStyle: res1.height > res1.width ? 0 : 1
               })
             }
           })
@@ -142,6 +143,31 @@ Page({
     })
   },
 
+  // banner跳转
+  bannerNavigation() {
+    let type = this.data.allData.collaborate.banner_type
+    // banner_url配置规则：/pages/discovery/discovery
+    if (type === 1) {
+      // 小程序页面
+      let url = this.data.allData.collaborate.banner_url
+      if (url === '/pages/discovery/discovery' || url === '/pages/practice/practice' || url === '/pages/userCenter/userCenter') {
+        wx.switchTab({
+          url: this.data.allData.collaborate.banner_url,
+        })
+      } else {
+        wx.navigateTo({
+          url: this.data.allData.collaborate.banner_url,
+        })
+      }
+    } else if (type === 2) {
+      let link = encodeURIComponent(this.data.allData.collaborate.banner_url)
+      // 公众号文章页
+      wx.navigateTo({
+        url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`
+      })
+    }
+  },
+
   // 获取合作包信息
   getData(id) {
     getCooperationById({
@@ -150,7 +176,8 @@ Page({
       if (res.code === 0) {
         console.log(res.data)
         let list = res.data.kecheng_list
-        res.data.collaborate.logo_list = res.data.collaborate.logo_list.split(",")
+        res.data.collaborate.logo_list = res.data.collaborate.logo_list ? res.data.collaborate.logo_list.split(",") : []
+        res.data.collaborate.banner_pic = res.data.collaborate.banner_pic ? res.data.collaborate.banner_pic.split(",") : []
         if (list.length > 0) {
           list.map(item => {
             if (item.kecheng_series.visit_count >= 10000) {
@@ -158,6 +185,9 @@ Page({
               item.kecheng_series.visit_count = item.kecheng_series.visit_count.split('.')[1] === '0万' ? item.kecheng_series.visit_count[0] + "万" : item.kecheng_series.visit_count
             }
           })
+        }
+        if (res.data.collaborate.logo_list.length > 0) {
+          this.checkLogoStyle(res.data.collaborate.logo_list[0])
         }
         this.setData({
           allData: res.data
@@ -181,7 +211,7 @@ Page({
     }
     console.log('packageId=' + packageId)
     this.getData(packageId)
-    this.checkLogoStyle('https://pic1.zhimg.com/v2-5b5a2fa02cb65f2ab1910439fec5791f_l.jpg')
+
   },
 
   /**

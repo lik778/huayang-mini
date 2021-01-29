@@ -2,15 +2,15 @@
   <!-- banner -->
   <view class="banner">
     <swiper class="swiper" bindchange="changeCurrentBannerIndex" circular autoplay interval='3000'>
-      <block wx:for='{{bannerList}}' wx:key="index">
+      <block wx:for='{{allData.collaborate.banner_pic}}' wx:key="index">
         <swiper-item>
-          <image src="{{item.url}}"></image>
+          <image src="{{item}}" bindtap="bannerNavigation"></image>
         </swiper-item>
       </block>
     </swiper>
-    <view class="dots-list">
-      <view class="{{currentBannerIndex===index?'dots-item dots-item-active':'dots-item'}}" wx:for='{{bannerList}}'
-        wx:key="index"></view>
+    <view class="dots-list" wx:if='{{allData.collaborate.banner_pic.length>0}}'>
+      <view class="{{currentBannerIndex===index?'dots-item dots-item-active':'dots-item'}}"
+        wx:for='{{allData.collaborate.banner_pic}}' wx:key="index"></view>
     </view>
   </view>
   <!-- logo -->
