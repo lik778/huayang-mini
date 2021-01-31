@@ -9,6 +9,7 @@ import {
 import {
   getLocalStorage
 } from "../../utils/util"
+import bxPoint from "../../utils/bxPoint";
 Page({
 
   /**
@@ -47,7 +48,7 @@ Page({
       }).then(res => {
         if (res.code === 0) {
           wx.navigateTo({
-            url: `/subCourse/videoCourse/videoCourse?videoId=${this.data.currentGetVideoId}`,
+            url: `/subCourse/videoCourse/videoCourse?videoId=${this.data.currentGetVideoId}&from_co_channel=true`,
           })
           this.setData({
             currentGetVideoId: '',
@@ -63,7 +64,7 @@ Page({
       let colleage = this.data.allData.collaborate.work_belong
       colleage = colleage === "fashion" ? 2 : colleage === "fitness" ? 1 : 3
       wx.navigateTo({
-        url: `/subCourse/themeTask/themeTask?kecheng_type=1&kecheng_id=${colleage}`,
+        url: `/subCourse/themeTask/themeTask?kecheng_type=1&kecheng_id=${colleage}&from_co_channel=true`,
       })
     }
   },
@@ -90,6 +91,11 @@ Page({
 
   // 返回首页
   toIndex() {
+    bxPoint("co_channel_find_more", {
+      co_channel_id: this.data.allData.collaborate.id,
+      co_channel_tag: 'co_lndx'
+    }, false)
+    getApp().globalData.from_co_channel = true
     wx.switchTab({
       url: '/pages/discovery/discovery',
     })
@@ -107,20 +113,37 @@ Page({
       })
       return
     }
+    this.coursePoint(courseData)
     cooperationJoinVideoCourse({
       user_id: getLocalStorage(GLOBAL_KEY.userId),
       series_id: courseData.kecheng_series.id
     }).then(res => {
       if (res.code === 0) {
         wx.navigateTo({
-          url: `/subCourse/videoCourse/videoCourse?videoId=${courseData.kecheng_series.id}`,
+          url: `/subCourse/videoCourse/videoCourse?videoId=${courseData.kecheng_series.id}&from_co_channel=true`,
         })
       }
     })
   },
 
+  // 点击课程卡片打点
+  coursePoint(e) {
+    bxPoint("co_channel_course_Learn", {
+      co_channel_id: this.data.allData.collaborate.id,
+      co_channel_title: this.data.allData.collaborate.collaborator,
+      co_channel_tag: 'co_lndx',
+      series_id: e.kecheng_series.id,
+      kecheng_name: e.kecheng_series.teacher_desc,
+      kecheng_subname: e.kecheng_series.name,
+    }, false)
+  },
+
   // 发布课程作业
   toCollegeIndex() {
+    bxPoint("co_channel_practice", {
+      co_channel_id: this.data.allData.collaborate.id,
+      co_channel_tag: 'co_lndx'
+    }, false)
     let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo)
     if (!userInfo) {
       this.setData({
@@ -132,7 +155,7 @@ Page({
     let colleage = this.data.allData.collaborate.work_belong
     colleage = colleage === "fashion" ? 2 : colleage === "fitness" ? 1 : 3
     wx.navigateTo({
-      url: `/subCourse/themeTask/themeTask?kecheng_type=1&kecheng_id=${colleage}`,
+      url: `/subCourse/themeTask/themeTask?kecheng_type=1&kecheng_id=${colleage}&from_co_channel=true`,
     })
   },
 
@@ -147,6 +170,7 @@ Page({
   bannerNavigation() {
     let type = this.data.allData.collaborate.banner_type
     // banner_url配置规则：/pages/discovery/discovery
+    this.bannerPoint()
     if (type === 1) {
       // 小程序页面
       let url = this.data.allData.collaborate.banner_url
@@ -166,6 +190,19 @@ Page({
         url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`
       })
     }
+  },
+
+  // banner跳转打点
+  bannerPoint() {
+    console.log(this.data.allData)
+    let data = this.data.allData
+    bxPoint("co_channel_banner", {
+      co_channel_id: data.collaborate.id,
+      co_channel_tag: 'co_lndx',
+      // co_channel_banner_id:
+      // co_channel_banner_posititon:
+      // co_channel_banner_title:
+    }, false)
   },
 
   // 获取合作包信息
@@ -189,10 +226,21 @@ Page({
         if (res.data.collaborate.logo_list.length > 0) {
           this.checkLogoStyle(res.data.collaborate.logo_list[0])
         }
+        this.pvPoint(res.data)
         this.setData({
           allData: res.data
         })
       }
+    })
+  },
+
+  // 页面pv打点
+  pvPoint(e) {
+    bxPoint("co_channel_page", {
+      co_channel_id: e.collaborate.id,
+      co_channel_title: e.collaborate.collaborator,
+      co_channel_kecheng_id: e.collaborate.kecheng_list,
+      co_channel_tag: "co_lndx"
     })
   },
 
@@ -260,6 +308,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    // 分享打点
+    bxPoint("co_channel_share", {
+      co_channel_id: this.data.allData.collaborate.id,
+      co_channel_tag: 'co_lndx'
+    }, false)
   }
 })

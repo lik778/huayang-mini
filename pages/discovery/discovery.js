@@ -704,11 +704,15 @@ Page({
 
 		// 获取推荐数据
 		this.getRecommendList()
-
-		bxPoint("applets_find", {
+		let params = {
 			from_uid: getApp().globalData.super_user_id,
 			source: getApp().globalData.source,
-		})
+		}
+		// 记录合作资源包打点标识
+		if (getApp().globalData.from_co_channel) {
+			params.co_channel_tag = 'co_lndx'
+		}
+		bxPoint("applets_find", params)
 	},
 
 	/**

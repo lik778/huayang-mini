@@ -1,5 +1,8 @@
 // subCourse/videoCourseDetail/videoCourseDetail.js
-import { ErrorLevel, GLOBAL_KEY } from "../../lib/config"
+import {
+  ErrorLevel,
+  GLOBAL_KEY
+} from "../../lib/config"
 import {
   checkJoinVideoCourse,
   createFissionTask,
@@ -19,7 +22,9 @@ import {
   payCourse,
   secondToMinute,
 } from "../../utils/util"
-import { collectError } from "../../api/auth/index"
+import {
+  collectError
+} from "../../api/auth/index"
 
 const ButtonType = {
   noLogin: 1, //未登录
@@ -70,6 +75,7 @@ Page({
     inviteFriendLock: true, //请好友看按钮lock
     onlySelected: false,
     needRecordPlayTime: false, //是否需要记录播放打点时长
+    from_co_channel: false
   },
 
 
@@ -84,7 +90,8 @@ Page({
       promote_uid = '',
       showSuccess = false,
       series_invite_id = '',
-      playIndex = ''
+      playIndex = '',
+      from_co_channel = false
     } = options
 
     // 如果之前播放过或好友分享进入
@@ -127,7 +134,8 @@ Page({
     // 是否显示好友分享顶部弹窗
     this.setData({
       showSuccess,
-      systemParams
+      systemParams,
+      from_co_channel
     })
 
     // 5s后自动关闭好友分享顶部弹窗
@@ -150,11 +158,14 @@ Page({
     if (index >= 0) {
       let series_detail = this.data.videoCourseData.series_detail.video_detail
       // 2021-01-14上线
-
-      bxPoint("series_content_click", {
+      let paramsData = {
         series_id: this.data.videoCourseId,
         kecheng_title: series_detail[index].title
-      }, false)
+      }
+      if (this.data.from_co_channel) {
+        paramsData.co_channel_tag = 'co_lndx'
+      }
+      bxPoint("series_content_click", paramsData, false)
 
       this.setData({
         ['videoCourseData.series_detail.video_detail']: series_detail,
@@ -261,7 +272,7 @@ Page({
             studiedIndex: '',
             noPayForCourse: false,
             nowCoursePlayIndex: this.data.nowCoursePlayIndex ? this.data.nowCoursePlayIndex : '',
-            userInfo:""
+            userInfo: ""
           })
           this.getVideoCourseData(ButtonType.noLogin)
         }
@@ -499,10 +510,13 @@ Page({
   //猜你喜欢=>查看更多
   toVisitMore() {
     // 20210114上线
-    bxPoint("series_detail_find_more", {
+    let paramsData = {
       series_id: this.data.videoCourseId,
-    }, false)
-
+    }
+    if (this.data.from_co_channel) {
+      paramsData.co_channel_tag = 'co_lndx'
+    }
+    bxPoint("series_detail_find_more", paramsData, false)
     let type = this.data.videoCourseData.series_detail.category
     let index = type === 'quality_life' ? 3 : type === 'fitness' ? 1 : type === 'fashion' ? 2 : 0
     if (getCurrentPages().length > 6) {
@@ -519,11 +533,15 @@ Page({
   // 猜你喜欢=>训练营点击
   toCampPage() {
     // 20210114上线
-    bxPoint("series_recommend_traincamp_click", {
+    let paramsData = {
       series_id: this.data.videoCourseId,
       traincamp_is_recom_id: this.data.videoCourseData.recommend_traincamp.id,
       traincamp_is_recom_title: this.data.videoCourseData.recommend_traincamp.name
-    }, false)
+    }
+    if (this.data.from_co_channel) {
+      paramsData.co_channel_tag = 'co_lndx'
+    }
+    bxPoint("series_recommend_traincamp_click", paramsData, false)
     if (getCurrentPages().length > 8) {
       wx.reLaunch({
         url: `/subCourse/joinCamp/joinCamp?id=${this.data.videoCourseData.recommend_traincamp.id}`,
@@ -539,14 +557,18 @@ Page({
   toCoursePage(e) {
     // 20210114上线
     let item = e.currentTarget.dataset.item
-    bxPoint("series_recommend_lesson_click", {
+    let paramsData = {
       series_id: this.data.videoCourseId,
       kecheng_is_recom_id: item.kecheng_series.id,
       kecheng_is_recom_name: item.kecheng_series.teacher_desc,
       kecheng_is_recom_subname: item.kecheng_series.name,
       kecheng_is_recom_label: item.kecheng_series.series_tag === 0 ? "无" : item.kecheng_series.series_tag === 1 ? "口碑课程" : '新课',
       kecheng_is_recom_teacher: item.kecheng_series.teacher_id
-    }, false)
+    }
+    if (this.data.from_co_channel) {
+      paramsData.co_channel_tag = 'co_lndx'
+    }
+    bxPoint("series_recommend_lesson_click", paramsData, false)
     if (getCurrentPages().length > 8) {
       wx.reLaunch({
         url: `/subCourse/videoCourse/videoCourse?videoId=${item.kecheng_series.id}`,
@@ -573,10 +595,14 @@ Page({
         kecheng_series_num: index
       }
       // 请好友看-按钮打点（2020-12-28上线）
-      bxPoint("share_friend_learn", {
+      let paramsData = {
         series_id: videoId,
         kecheng_title: this.data.videoCourseData.series_detail.video_detail[index - 1].title
-      }, false)
+      }
+      if (this.data.from_co_channel) {
+        paramsData.co_channel_tag = 'co_lndx'
+      }
+      bxPoint("share_friend_learn", paramsData, false)
 
       inviteFriend(params).then(res => {
         this.setData({
@@ -610,9 +636,13 @@ Page({
   toAddteacher() {
     let link = this.data.articleLink
     // 2021-01-14上线
-    bxPoint("series_consult_chat_click", {
+    let paramsData = {
       series_id: this.data.videoCourseId
-    }, false)
+    }
+    if (this.data.from_co_channel) {
+      paramsData.co_channel_tag = 'co_lndx'
+    }
+    bxPoint("series_consult_chat_click", paramsData, false)
     wx.navigateTo({
       url: `/pages/webViewCommon/webViewCommon?link=${link}`,
     })
@@ -634,16 +664,18 @@ Page({
   // 切换tab
   changeTab(e) {
     let index = Number(e.currentTarget.dataset.index)
+    let paramsData = {
+      series_id: this.data.videoCourseId
+    }
+    if (this.data.from_co_channel) {
+      paramsData.co_channel_tag = 'co_lndx'
+    }
     if (index === 0) {
       // 2021-01-14上线
-      bxPoint("series_cont_click", {
-        series_id: this.data.videoCourseId
-      }, false)
+      bxPoint("series_cont_click", paramsData, false)
     } else {
       // 2021-01-14上线
-      bxPoint("series_desc_click", {
-        series_id: this.data.videoCourseId
-      }, false)
+      bxPoint("series_desc_click", paramsData, false)
     }
 
     this.setData({
@@ -654,9 +686,13 @@ Page({
   // 安卓调起微信支付
   pay() {
     // 2021-01-14上线
-    bxPoint("series_join", {
+    let paramsData = {
       series_id: this.data.videoCourseId
-    }, false)
+    }
+    if (this.data.from_co_channel) {
+      paramsData.co_channel_tag = 'co_lndx'
+    }
+    bxPoint("series_join", paramsData, false)
     if (this.data.userInfo !== '' && this.data.payLock) {
       this.setData({
         payLock: false
@@ -744,18 +780,26 @@ Page({
   // 分享好友按钮打点
   share() {
     // 2021-01-14上线
-    bxPoint("series_share", {
+    let paramsData = {
       series_id: this.data.videoCourseId
-    }, false)
+    }
+    if (this.data.from_co_channel) {
+      paramsData.co_channel_tag = 'co_lndx'
+    }
+    bxPoint("series_share", paramsData, false)
   },
 
   // 分销按钮打点
   shareCourse() {
-    bxPoint('promotion_videoCourse_page', {
+    let paramsData = {
       open_id: getLocalStorage(GLOBAL_KEY.openId),
       user_id: getLocalStorage(GLOBAL_KEY.userId),
       isPromoter: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).kecheng_user.is_promoter === 1 ? true : false
-    }, false)
+    }
+    if (this.data.from_co_channel) {
+      paramsData.co_channel_tag = 'co_lndx'
+    }
+    bxPoint('promotion_videoCourse_page', paramsData, false)
   },
 
   // 播放进度变化
@@ -806,7 +850,7 @@ Page({
     } else {
       listData = [`${arr[0]}-${arr[arr.length-1]}`]
     }
-    bxPoint("page_series", {
+    let paramsData = {
       scene: 'page_series',
       series_id: this.data.videoCourseId,
       video_src: this.data.videoPlayerSrc.split(VideoSrcHost)[1],
@@ -815,15 +859,23 @@ Page({
       time_snippet: timeList.length === 0 ? listData : timeList, //事件片段
       total_duration: time, //视频总时间
       total_visit_duration: arr.length, // 总观看时间
-    }, false)
+    }
+    if (this.data.from_co_channel) {
+      paramsData.co_channel_tag = 'co_lndx'
+    }
+    bxPoint("page_series", paramsData, false)
   },
 
   // 跳往ios购买私域文章
   toPayArticle() {
     // 2021-01-14上线
-    bxPoint("series_join", {
+    let paramsData = {
       series_id: this.data.videoCourseId
-    }, false)
+    }
+    if (this.data.from_co_channel) {
+      paramsData.co_channel_tag = 'co_lndx'
+    }
+    bxPoint("series_join", paramsData, false)
     getIosCustomerLink().then(res => {
       let link = encodeURIComponent(res.data)
       wx.navigateTo({
@@ -843,9 +895,13 @@ Page({
   // 打开等级限制弹窗
   openLevelLimitBox() {
     // 2021-01-14上线
-    bxPoint("series_join", {
+    let paramsData = {
       series_id: this.data.videoCourseId
-    }, false)
+    }
+    if (this.data.from_co_channel) {
+      paramsData.co_channel_tag = 'co_lndx'
+    }
+    bxPoint("series_join", paramsData, false)
     this.setData({
       showLevelLimit: true
     })
@@ -876,7 +932,7 @@ Page({
   pageViewPoint() {
     // 2021-01-14上线
     let data = this.data.videoCourseData.series_detail
-    bxPoint("series_detail", {
+    let params = {
       series_id: data.id,
       kecheng_name: data.teacher_desc,
       kecheng_subname: data.name,
@@ -884,8 +940,12 @@ Page({
       kecheng_total_amount: data.visit_count,
       kecheng_ori_price: data.price,
       kecheng_dis_price: data.discount_price,
-      kecheng_teacher: data.teacher_id //待改善
-    }, )
+      kecheng_teacher: data.teacher_id, //待改善
+    }
+    if (this.data.from_co_channel) {
+      params.co_channel_tag = 'co_lndx'
+    }
+    bxPoint("series_detail", params)
   },
 
   /**
@@ -951,7 +1011,7 @@ Page({
     if (this.data.promoteUid !== '') {
       shareLink += `&promote_uid=${this.data.promoteUid}`
     } else {
-      if (this.data.userInfo !== '' &&this.data.userInfo.kecheng_user.is_promoter&& this.data.userInfo.kecheng_user.is_promoter === 1) {
+      if (this.data.userInfo !== '' && this.data.userInfo.kecheng_user.is_promoter && this.data.userInfo.kecheng_user.is_promoter === 1) {
         shareLink += `&promote_uid=${this.data.userInfo.id}`
       }
     }
