@@ -194,14 +194,13 @@ Page({
 
   // banner跳转打点
   bannerPoint() {
-    console.log(this.data.allData)
     let data = this.data.allData
     bxPoint("co_channel_banner", {
       co_channel_id: data.collaborate.id,
       co_channel_tag: 'co_lndx',
-      // co_channel_banner_id:
-      // co_channel_banner_posititon:
-      // co_channel_banner_title:
+      co_channel_banner_src: data.collaborate.banner_pic.join(',') || '',
+      co_channel_banner_url: data.collaborate.banner_url,
+      co_channel_banner_mode: data.collaborate.banner_type,
     }, false)
   },
 
