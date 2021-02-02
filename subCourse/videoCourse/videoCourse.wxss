@@ -12,6 +12,7 @@
   transform: translateX(-50%);
   top: 0;
   z-index: 40;
+  border-bottom: 10px solid #fff;
 }
 
 .notice {

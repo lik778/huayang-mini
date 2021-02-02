@@ -103,8 +103,8 @@
   <view class="guess-like" wx:if='{{videoCourseData.recommend_series||videoCourseData.recommend_traincamp}}'>
     <view class="guess-like-title">猜你喜欢</view>
     <!-- 视频课 -->
-    <view class="guess-like-item" wx:for="{{videoCourseData.recommend_series}}" wx:key="{{index}}"
-      bindtap="toCoursePage" data-item='{{item}}' wx:if='{{videoCourseData.recommend_series}}'>
+    <view class="guess-like-item" wx:for="{{videoCourseData.recommend_series}}" wx:key="index" bindtap="toCoursePage"
+      data-item='{{item}}' wx:if='{{videoCourseData.recommend_series}}'>
       <view class="guess-like-item-left">
         <image class="guess-like-item-left-teach-img" src="{{item.kecheng_series.cover_pic}}"></image>
         <!-- 课程标签 -->

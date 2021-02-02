@@ -1,7 +1,19 @@
-import { getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
-import { GLOBAL_KEY } from "../../lib/config"
-import { getTaskStream } from "../../api/task/index"
-import { getCampDetail, getHasJoinCamp, getVideoTypeList } from "../../api/course/index"
+import {
+	getLocalStorage,
+	hasAccountInfo,
+	hasUserInfo
+} from "../../utils/util"
+import {
+	GLOBAL_KEY
+} from "../../lib/config"
+import {
+	getTaskStream
+} from "../../api/task/index"
+import {
+	getCampDetail,
+	getHasJoinCamp,
+	getVideoTypeList
+} from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
 
 const NAME = "themeTaskPage"
@@ -34,12 +46,30 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		let {kecheng_type, kecheng_id} = options
-		let {statusBarHeight} = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
-		this.setData({kecheng_type, kecheng_id, statusBarHeight})
+		let {
+			kecheng_type,
+			kecheng_id,
+			from_co_channel = false
+		} = options
+		let {
+			statusBarHeight
+		} = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
+		this.setData({
+			kecheng_type,
+			kecheng_id,
+			statusBarHeight
+		})
 		this.getDetail()
 
-		bxPoint("pv_theme_task_page", {})
+		if (from_co_channel) {
+			bxPoint("pv_theme_task_page", {
+				co_channel_tag: 'co_lndx'
+			})
+		} else {
+			bxPoint("pv_theme_task_page", {})
+		}
+
+
 	},
 
 	/**
@@ -53,11 +83,16 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		this.setData({didSignIn: hasAccountInfo() && hasUserInfo()})
+		this.setData({
+			didSignIn: hasAccountInfo() && hasUserInfo()
+		})
 
 		let needInitialPageName = getApp().globalData.needInitialPageName
 		if (needInitialPageName === NAME) {
-			wx.pageScrollTo({scrollTop: 0, duration: 0})
+			wx.pageScrollTo({
+				scrollTop: 0,
+				duration: 0
+			})
 			this.getThemeTask(true)
 			getApp().globalData.needInitialPageName = ""
 		}
@@ -76,7 +111,9 @@ Page({
 			queue.shift()
 
 			// 缓存正要播放的媒体ID
-			this.setData({mediaQueue: queue})
+			this.setData({
+				mediaQueue: queue
+			})
 		}
 	},
 
@@ -104,11 +141,15 @@ Page({
 	},
 
 	onPageScroll(e) {
-		this.setData({scrollTopNumber: e.scrollTop})
+		this.setData({
+			scrollTopNumber: e.scrollTop
+		})
 		if (this.data.themeTaskList.length === 0 && this.data.firstTaskCardHeight === 0) return
 		if (getApp().globalData.didShowedTaskTip) return
 		if (e.scrollTop >= (this.data.firstTaskCardHeight)) {
-			this.setData({didShowTip: true})
+			this.setData({
+				didShowTip: true
+			})
 			getApp().globalData.didShowedTaskTip = true
 		}
 	},
@@ -118,7 +159,11 @@ Page({
 	 */
 	onShareAppMessage: function (e) {
 		if (e.target) {
-			let {taskid, nickname, userid} = e.target.dataset
+			let {
+				taskid,
+				nickname,
+				userid
+			} = e.target.dataset
 			return {
 				imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608515904gwuBds.jpg",
 				title: `${nickname}的作业很棒哦，快来看看吧！`,
@@ -146,7 +191,9 @@ Page({
 			const query = wx.createSelectorQuery()
 			query.select(`#task-layout-${this.data.themeTaskList[1].kecheng_work.id}`).boundingClientRect()
 			query.exec(function (res) {
-				self.setData({firstTaskCardHeight: res[0].top - 100})
+				self.setData({
+					firstTaskCardHeight: res[0].top - 100
+				})
 			})
 		}
 	},
@@ -165,37 +212,64 @@ Page({
 	 */
 	onNoAuth(e) {
 		if (e) {
-			this.setData({cachedAction: e.detail.cb})
+			this.setData({
+				cachedAction: e.detail.cb
+			})
 		}
-		this.setData({didShowAuth: true})
+		this.setData({
+			didShowAuth: true
+		})
 	},
 	// 用户授权取消
 	authCancelEvent() {
-		this.setData({didShowAuth: false, cachedAction: null})
+		this.setData({
+			didShowAuth: false,
+			cachedAction: null
+		})
 	},
 	// 用户确认授权
 	authCompleteEvent() {
-		this.setData({didSignIn: hasAccountInfo() && hasUserInfo()})
+		this.setData({
+			didSignIn: hasAccountInfo() && hasUserInfo()
+		})
 
 		if (this.data.cachedAction) {
 			this.data.cachedAction()
-			this.setData({cachedAction: null})
+			this.setData({
+				cachedAction: null
+			})
 		}
 
-		this.setData({didShowAuth: false})
+		this.setData({
+			didShowAuth: false
+		})
 	},
 	goToJoinBootcamp() {
 		if (this.data.didSignIn) {
-			wx.navigateTo({url: `/subCourse/joinCamp/joinCamp?id=${this.data.kecheng_id}`})
+			wx.navigateTo({
+				url: `/subCourse/joinCamp/joinCamp?id=${this.data.kecheng_id}`
+			})
 		} else {
-			this.onNoAuth({detail: { cb: () => {wx.navigateTo({url: `/subCourse/joinCamp/joinCamp?id=${this.data.kecheng_id}`})} }})
+			this.onNoAuth({
+				detail: {
+					cb: () => {
+						wx.navigateTo({
+							url: `/subCourse/joinCamp/joinCamp?id=${this.data.kecheng_id}`
+						})
+					}
+				}
+			})
 		}
 	},
 	goToBootcampDetail() {
-		wx.navigateTo({url: `/subCourse/campDetail/campDetail?id=${this.data.kecheng_id}`})
+		wx.navigateTo({
+			url: `/subCourse/campDetail/campDetail?id=${this.data.kecheng_id}`
+		})
 	},
 	goToLaunchTaskPage() {
-		wx.navigateTo({url: `/subCourse/launchTask/launchTask?fromPageName=${NAME}&themeType=${this.data.kecheng_type}&themeId=${this.data.kecheng_id}&themeTitle=${this.data.themeTitle}`})
+		wx.navigateTo({
+			url: `/subCourse/launchTask/launchTask?fromPageName=${NAME}&themeType=${this.data.kecheng_type}&themeId=${this.data.kecheng_id}&themeTitle=${this.data.themeTitle}`
+		})
 	},
 	/**
 	 * 返回上一页
@@ -203,7 +277,9 @@ Page({
 	back() {
 		wx.navigateBack({
 			fail() {
-				wx.reLaunch({url: "/pages/discovery/discovery"})
+				wx.reLaunch({
+					url: "/pages/discovery/discovery"
+				})
 			}
 		})
 	},
@@ -214,8 +290,12 @@ Page({
 		switch (+this.data.kecheng_type) {
 			case 0: {
 				// 训练营
-				getHasJoinCamp({traincamp_id: this.data.kecheng_id}).then((data) => {
-					this.setData({isOwnBootcamp: +data.status === 1})
+				getHasJoinCamp({
+					traincamp_id: this.data.kecheng_id
+				}).then((data) => {
+					this.setData({
+						isOwnBootcamp: +data.status === 1
+					})
 				})
 
 				getCampDetail({
@@ -223,8 +303,14 @@ Page({
 					user_id: getLocalStorage(GLOBAL_KEY.userId)
 				}).then((data) => {
 					data = data || []
-					let {cover_pic, name} = data
-					this.setData({themeBannerImage: cover_pic, themeTitle: name})
+					let {
+						cover_pic,
+						name
+					} = data
+					this.setData({
+						themeBannerImage: cover_pic,
+						themeTitle: name
+					})
 				})
 				break
 			}
@@ -232,7 +318,10 @@ Page({
 				// 学院
 				getVideoTypeList().then((data) => {
 					let target = data.find(item => item.id === +this.data.kecheng_id)
-					this.setData({themeBannerImage: target.pic, themeTitle: target.value})
+					this.setData({
+						themeBannerImage: target.pic,
+						themeTitle: target.value
+					})
 				})
 			}
 		}
@@ -242,7 +331,9 @@ Page({
 	 */
 	getThemeTask(refresh = false) {
 		if (refresh) {
-			this.setData({themeTaskList: []})
+			this.setData({
+				themeTaskList: []
+			})
 		}
 		let params = {
 			kecheng_type: this.data.kecheng_type,
@@ -254,11 +345,17 @@ Page({
 		if (userId) {
 			params.user_id = userId
 		}
-		getTaskStream(params).then(({data}) => {
+		getTaskStream(params).then(({
+			data
+		}) => {
 			data = data || []
 			let oldData = this.data.themeTaskList.slice()
 			let themeTaskList = refresh ? [...data] : [...oldData, ...data]
-			this.setData({themeTaskList, hasMore: data.length === this.data.limit, offset: themeTaskList.length})
+			this.setData({
+				themeTaskList,
+				hasMore: data.length === this.data.limit,
+				offset: themeTaskList.length
+			})
 
 			if (refresh) wx.stopPullDownRefresh()
 
@@ -284,6 +381,8 @@ Page({
 
 		// 缓存正要播放的媒体ID
 		isDifferent && queue.push(taskId)
-		this.setData({mediaQueue: queue})
+		this.setData({
+			mediaQueue: queue
+		})
 	},
 })

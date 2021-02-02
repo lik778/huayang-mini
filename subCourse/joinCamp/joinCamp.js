@@ -158,9 +158,9 @@ Page({
           success: (res2) => {
             let isIosPlatform = false
             if (res2.platform == 'ios') {
-              isIosPlatform = true
+              // isIosPlatform = true
               if (hasUserInfo() && hasAccountInfo()) {
-                buttonType = buttonType === 10 ? 10 : 9
+                buttonType = buttonType === 10 ? 10 : buttonType
               }
             }
             this.setData({
