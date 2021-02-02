@@ -71,21 +71,24 @@ Page({
 
   // 判断logo是横版还是竖版
   checkLogoStyle(image) {
-    wx.downloadFile({
-      url: image,
-      success: (res) => {
-        if (res.statusCode === 200) {
-          wx.getImageInfo({
-            src: res.tempFilePath,
-            success: (res1) => {
-              console.log(res1)
-              this.setData({
-                logoStyle: res1.height > res1.width ? 0 : 1
-              })
-            }
-          })
+    return new Promise(resolve => {
+      wx.downloadFile({
+        url: image,
+        success: (res) => {
+          if (res.statusCode === 200) {
+            wx.getImageInfo({
+              src: res.tempFilePath,
+              success: (res1) => {
+                this.setData({
+                  logoStyle: res1.height > res1.width ? 0 : 1
+                })
+                resolve()
+              }
+            })
+          }
         }
-      }
+      })
+
     })
   },
 
@@ -223,12 +226,13 @@ Page({
           })
         }
         if (res.data.collaborate.logo_list.length > 0) {
-          this.checkLogoStyle(res.data.collaborate.logo_list[0])
+          this.checkLogoStyle(res.data.collaborate.logo_list[0]).then(() => {
+            this.pvPoint(res.data)
+            this.setData({
+              allData: res.data
+            })
+          })
         }
-        this.pvPoint(res.data)
-        this.setData({
-          allData: res.data
-        })
       }
     })
   },

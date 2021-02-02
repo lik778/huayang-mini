@@ -1,4 +1,4 @@
-<view class="container">
+<view class="container" wx:if="{{allData!==''}}">
   <!-- banner -->
   <view class="banner">
     <swiper class="swiper" bindchange="changeCurrentBannerIndex" circular autoplay interval='3000'>
@@ -8,7 +8,7 @@
         </swiper-item>
       </block>
     </swiper>
-    <view class="dots-list" wx:if='{{allData.collaborate.banner_pic.length>0}}'>
+    <view class="dots-list" wx:if='{{allData.collaborate.banner_pic.length>1}}'>
       <view class="{{currentBannerIndex===index?'dots-item dots-item-active':'dots-item'}}"
         wx:for='{{allData.collaborate.banner_pic}}' wx:key="index"></view>
     </view>

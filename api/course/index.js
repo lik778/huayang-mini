@@ -711,3 +711,8 @@ export const getCooperationById = params => {
 export const cooperationJoinVideoCourse = params => {
 	return request._post(URL.cooperationJoinVideoCourse, params)
 }
+
+// 获取系列课的购买方式
+export const checkNeedSpecialManage = params => {
+	return request._get(URL.checkNeedSpecialManage, params)
+}
