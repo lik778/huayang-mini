@@ -186,3 +186,38 @@ export function getUserGuideLink() {
     })
   })
 }
+
+// 查询畅学卡权益
+export const getFluentLearnInfo = params => {
+  return request._get(URL.queryFlunetLearnInfo, params)
+}
+
+// 获取畅学卡热门课程
+export const getFluentCardHotkecheng = (parasm) => {
+  return request._get(URL.queryFluentCardHotkecheng, parasm)
+}
+
+// 查询畅学卡最新课程
+export const getFluentCardNewkecheng = (parasm) => {
+  return request._get(URL.queryFluentCardNewkecheng, parasm)
+}
+
+// 畅学卡下单
+export const payForFluentCard = (parasm) => {
+  return request._post(URL.payFluentCard, parasm)
+}
+
+// 查询用户畅学卡信息
+export const getFluentCardInfo = (parasm) => {
+  return request._get(URL.queryFluentCardInfo, parasm)
+}
+
+// 获取畅学卡分销二维码
+export const getFluentQrCode = (parasm) => {
+  return request._get(URL.queryFluentQrCode, parasm)
+}
+
+// 获取用户余额记录
+export const getDistributeRecordList = (parasm) => {
+  return request._get(URL.queryDistributeRecordList, parasm)
+}

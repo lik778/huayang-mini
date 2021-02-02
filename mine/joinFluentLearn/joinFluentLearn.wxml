@@ -1,0 +1,53 @@
+<view class="join-video-member">
+    <video
+            class="preview-video"
+            src="{{video}}"
+            controls="{{false}}"
+            custom-cache="{{false}}"
+            object-fit="cover"
+            enable-play-gesture="{{false}}"
+            play-btn-position="top"
+            show-center-play-btn="{{false}}"
+            show-play-btn="{{false}}"
+            autoplay="{{false}}"
+            loop="{{true}}"
+    ></video>
+    <view class="member-card">
+        <view class="card-title">{{name}}</view>
+        <view class="card-desc">{{desc}}</view>
+    </view>
+
+    <view class="interest">畅学卡尊享<text>4</text>大权益</view>
+    <view class="interest-item" wx:for="{{features}}" wx:key="index">
+        <image class="interest-icon" src="{{item.icon}}" mode="aspectFit"></image>
+        <view class="interest-detail">
+             <view>{{item.title}}</view>
+             <view class="interest-text">{{item.desc}}</view>
+        </view>
+    </view>
+
+    <view class="course">花样精品课</view>
+    <view class="course-item" wx:for="{{hotList}}" wx:key="index">
+        <image class="teacher-image" src="{{item.teacherImg}}" mode="aspectFill"></image>
+        <view class="course-info">
+            <view>
+                <view class="course-name">{{item.name}}</view>
+                <view class="course-desc">{{item.desc}}</view>
+                <view class="course-teacher-info">{{item.teacherTxt}}</view>
+            </view>
+            <view class="visited">共{{item.visit_count}}人学习</view>
+        </view>
+    </view>
+
+    <view class="share-btn" bindtap="onShareBtnTap"></view>
+
+    <view class="footer">
+        <view class="footer-wrap" bindtap="buy">
+            <view>立即购买 188元/年</view>
+            <view class="line-price">原价 365元/年</view>
+        </view>
+    </view>
+
+    <!-- 授权弹窗 -->
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
+</view>

@@ -1,0 +1,51 @@
+<view class="fluent-card-distribute">
+    <cover-view class="navigation" style="padding-top:{{statusHeight+43}}px;">
+        <naviBar title="会员海报" color="#37383B" titleColor="white" hideIcon="{{true}}"></naviBar>
+    </cover-view>
+
+    <view class="canvas-wrap">
+        <canvas canvas-id="fluentCard" style="width:858px;height:1527px;"></canvas>
+    </view>
+
+    <view class="poster" style="top: {{statusHeight + 44 + 23}}px">
+        <image class="logo" src="{{logo}}" mode="aspectFit" />
+        <view class="user">
+            <image class="avatar" src="{{avatar}}" mode="aspectFit" />
+            <view class="user-info">
+                <text>我是{{nickname}}</text>
+                <text class="slogan">和我一起畅学花样大学</text>
+            </view>
+        </view>
+
+        <view class="desc-01">
+            <text>花样大学</text>
+            <text>上海首家获批线上老年大学</text>
+        </view>
+
+        <view class="preview-images">
+            <view class="preview-item" wx:for="{{previewList}}" wx:key="{{index}}">
+                <image class="preview-img" src="{{item.image}}" mode="aspectFit"></image>
+                <text class="preview-text">{{item.text}}</text>
+            </view>
+        </view>
+
+        <view class="desc-02">
+            <text>加入花样大学即享多门类专业课程！</text>
+            <text>更有精彩线下团队活动等你参加！</text>
+        </view>
+
+        <view class="desc-03">
+            <view class="price">
+                <view>限时特价<text class="discount-price">{{discount_price}}</text>元/年</view>
+                <text class="origin-price">原价{{price}}元/年</text>
+            </view>
+        </view>
+
+        <image class="qrcode" src="{{qrcode}}" mode="aspectFit" />
+    </view>
+
+    <view class="btns" style="height: {{108 + bottomNo}}rpx;">
+        <button open-type="share" class="btn">分享给好友</button>
+        <view class="btn extrude" bindtap="saveToLocalAlbum">保存到相册</view>
+    </view>
+</view>

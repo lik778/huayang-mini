@@ -1,10 +1,11 @@
 import { GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
-import { getPhoneNumber } from "../../api/course/index"
-import { getUserGuideLink, getUserInfo, getUserOwnerClasses } from "../../api/mine/index"
-import { getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage } from "../../utils/util"
+import { getFindBanner, getPhoneNumber } from "../../api/course/index"
+import { getFluentCardInfo, getUserGuideLink, getUserInfo, getUserOwnerClasses } from "../../api/mine/index"
+import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 import { getTaskEntranceStatus } from "../../api/task/index"
+import { getYouZanAppId } from "../../api/mall/index"
 
 Page({
 
@@ -22,7 +23,57 @@ Page({
     kecheng_count: 0,
     traincamp_count: 0,
     showPromotion: true,
-    visibleTaskEntrance: false
+    visibleTaskEntrance: false,
+    cardBtnText: "授权登录",
+    bannerList: [],
+    isFluentLearnUser: false, // 畅学卡会员
+    fluentCardExpireTime: undefined,
+    current: 0, // banner index
+  },
+  /**
+   * 跳转到提现页
+   */
+  goToConvertCashPage() {
+    if (!hasUserInfo() || !hasAccountInfo()) {
+      return this.setData({didShowAuth: true})
+    }
+    wx.navigateTo({url: "/mine/convertCash/convertCash"})
+  },
+  /**
+   * 处理广告位点击事件
+   * @param e
+   */
+  onBannerItemTap(e) {
+    if (e.currentTarget.dataset.item.need_auth === 1) {
+      if (!hasUserInfo() || !hasAccountInfo()) {
+        return this.setData({didShowAuth: true})
+      }
+    }
+    let {link, link_type, id} = e.currentTarget.dataset.item
+    if (link_type === 'youzan') {
+      getYouZanAppId().then(appId => {
+        wx.navigateToMiniProgram({appId, path: link})})
+    } else {
+      wx.navigateTo({url: link})
+    }
+  },
+  // swiper切换
+  changeSwiperIndex(e) {
+    this.setData({
+      current: e.detail.current
+    })
+  },
+  // 处理畅叙卡按钮点击事件
+  onFluentCardTap() {
+    if (!hasUserInfo() || !hasAccountInfo()) {
+      this.setData({didShowAuth: true})
+    } else {
+      if (this.data.isFluentLearnUser) {
+        wx.navigateTo({url: "/mine/fluentLearnInfo/fluentLearnInfo"})
+      } else {
+        wx.navigateTo({url: "/mine/joinFluentLearn/joinFluentLearn"})
+      }
+    }
   },
   // 跳往我的推广
   toPromotion() {
@@ -118,10 +169,31 @@ Page({
   // 获取用户信息
   getUserSingerInfo() {
     getUserInfo('scene=zhide').then(res => {
+      res.amount = Number(res.amount).toFixed(2)
       setLocalStorage(GLOBAL_KEY.accountInfo, res)
-      this.setData({
-        userInfo: res
-      })
+      this.setData({userInfo: res})
+    })
+  },
+  getBanner() {
+    getFindBanner({scene: 18}).then((list) => {
+      this.setData({bannerList: list})
+    })
+  },
+  /**
+   * 请求畅销卡信息
+   */
+  getFluentInfo() {
+    let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+    getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
+      if ($notNull(data)) {
+        this.setData({
+          isFluentLearnUser: !!data,
+          fluentCardExpireTime: dayjs(data.expire_time).format("YYYY-MM-DD"),
+          cardBtnText: "查看权益"
+        })
+      } else {
+        this.setData({cardBtnText: "立即加入"})
+      }
     })
   },
   // 获取授权
@@ -192,6 +264,7 @@ Page({
     this.getUserInfo()
     this.getNumber()
     this.getUserSingerInfo()
+    this.getFluentInfo()
   },
   // 联系客服
   callPhone(e) {
@@ -216,7 +289,8 @@ Page({
       this.kingOfTheWorld()
       this.setData({
         nodata: false,
-        showPromotion: true
+        showPromotion: true,
+        cardBtnText: "立即加入"
       })
     } else {
       // nothing
@@ -232,9 +306,7 @@ Page({
    */
   onLoad: function (options) {
     let data = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
-    this.setData({
-      statusHeight: data
-    })
+    this.setData({statusHeight: data})
   },
 
   /**
@@ -257,6 +329,11 @@ Page({
     bxPoint("applets_mine", {})
 
     this.queryContentInfo()
+    this.getBanner()
+
+    if (getApp().globalData.didNeedReloadUserCenterfluentLearnCardInfo && hasAccountInfo() && hasUserInfo()) {
+      this.getFluentInfo()
+    }
   },
 
   /**

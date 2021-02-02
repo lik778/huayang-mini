@@ -1,0 +1,162 @@
+.fluent-card-distribute {
+    height: 100vh;
+    background: #37383B;
+}
+
+.canvas-wrap {
+    position: fixed;
+    left: 1000px;
+}
+
+/* 海报 */
+.poster {
+    position: fixed;
+    left: 89rpx;
+    width: 572rpx;
+    height: 1018rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612146615YqecUz.jpg") no-repeat center;
+    background-size: contain;
+}
+
+.logo {
+    position: relative;
+    top: 62rpx;
+    left: 176rpx;
+    width: 242rpx;
+    height: 38rpx;
+}
+
+.user {
+    position: relative;
+    top: 100rpx;
+    left: 60rpx;
+    width: 452rpx;
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    width: 96rpx;
+    height: 96rpx;
+    border-radius: 999rpx;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-left: 24rpx;
+    height: 96rpx;
+    font: 32rpx/32rpx PingFangSC;
+}
+
+.slogan {
+    font-weight: 500;
+}
+
+.desc-01 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 155rpx;
+    left: 60rpx;
+    width: 452rpx;
+    font: 28rpx/42rpx PingFangSC;
+    color: #765534;
+}
+
+.preview-images {
+    position: relative;
+    top: 200rpx;
+    left: 60rpx;
+    width: 452rpx;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.preview-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.preview-img {
+    width: 100rpx;
+    height: 120rpx;
+}
+
+.preview-text {
+    margin-top: 16rpx;
+    font: 20rpx/28rpx PingFangSC;
+}
+
+.desc-02 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 250rpx;
+    left: 60rpx;
+    width: 452rpx;
+    font: 28rpx/42rpx PingFangSC;
+    color: #765534;
+}
+
+.desc-03 {
+    position: relative;
+    top: 375rpx;
+    left: 60rpx;
+    width: 452rpx;
+}
+
+.price {
+    font: 28rpx/48rpx PingFangSC;
+}
+
+.discount-price {
+    font: 48rpx/48rpx PingFangSC;
+    color: #CC0000;
+}
+
+.origin-price {
+    font: 24rpx/24rpx PingFangSC;
+    text-decoration: line-through;
+    color: rgba(0,0,0, 0.5)
+}
+
+.qrcode {
+    position: relative;
+    top: 250rpx;
+    left: 370rpx;
+    width: 132rpx;
+    height: 132rpx;
+    border-radius: 999rpx;
+}
+
+.btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 108rpx;
+    padding: 0 30rpx;
+}
+
+.btn {
+    height: 96rpx;
+    width: 330rpx;
+    border-radius: 999rpx;
+    font: 500 32rpx/96rpx PingFangSC;
+    text-align: center;
+    color: #CC0000;
+    background: white;
+}
+
+.extrude {
+    background: #CC0000;
+    color: white;
+}

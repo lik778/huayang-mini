@@ -34,7 +34,8 @@
     "audio",
     "location"
   ],
-  "subpackages": [{
+  "subpackages": [
+    {
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -53,7 +54,11 @@
         "personActivity/personActivity",
         "personBootcamp/personBootcamp",
         "personCourse/personCourse",
-        "normal-web-view/normal-web-view"
+        "normal-web-view/normal-web-view",
+        "joinFluentLearn/joinFluentLearn",
+        "fluentLearnInfo/fluentLearnInfo",
+        "fluentCardDistribute/fluentCardDistribute",
+        "convertCash/convertCash"
       ]
     },
     {
@@ -118,7 +123,8 @@
   },
   "tabBar": {
     "custom": true,
-    "list": [{
+    "list": [
+      {
         "pagePath": "pages/discovery/discovery"
       },
       {

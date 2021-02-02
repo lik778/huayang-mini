@@ -1,0 +1,21 @@
+<view class="covert-cash">
+   <view class="user-info">
+       <image class="avatar" mode="aspectFill" src="{{userInfo.avatar_url}}"></image>
+       <text class="nickname">{{userInfo.nick_name}}</text>
+   </view>
+
+    <view class="balance">
+        <view>余额：<text class="cash">{{userInfo.amount}}</text>元</view>
+        <view class="withdrawal" bindtap="withdrawal">提现</view>
+    </view>
+
+    <view class="separator"></view>
+
+    <view class="layout">变更记录</view>
+    <view class="record">
+        <view class="record-item" wx:for="{{recordList}}" wx:key="index">
+            <view class="record-item-01" style="margin-bottom: 32rpx;"><text>提现</text><text class="txt-02">-100.00元</text></view>
+            <view class="record-item-01"><text class="txt-03">2021-01-20 12:00</text><text class="txt-04">成功</text></view>
+        </view>
+    </view>
+</view>

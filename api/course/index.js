@@ -1,7 +1,5 @@
 import request from "../../lib/request"
-import {
-	URL
-} from "../../lib/config"
+import { URL } from "../../lib/config"
 
 
 // 获取结构化练习海报背景图

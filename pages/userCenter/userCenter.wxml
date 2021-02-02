@@ -15,9 +15,25 @@
 			</view>
 		</view>
 	</view>
-	<!-- 我的 -->
+	<!-- 畅学卡 -->
+	<view class="vip-card" bindtap="onFluentCardTap">
+		<view>
+			<view class="card-title">花样大学畅学卡</view>
+			<view class="card-desc">精彩课程，随时随地，想看就看</view>
+		</view>
+		<view class="card-data">
+			<view class="card-info">
+				<block wx:if="{{isFluentLearnUser}}">
+					<text>{{userInfo.nick_name}}</text>
+					<text class="expireDate">有效期至：{{fluentCardExpireTime}}</text>
+				</block>
+			</view>
+			<view class="vip-btn">{{cardBtnText}} ›</view>
+		</view>
+	</view>
+	<!-- 我的学习 -->
 	<view class="person">
-		<view class="layout">我的</view>
+		<view class="layout">我的学习</view>
 		<view class="person-content">
 			<view class="content-element" bindtap="handleCardTap" data-ele="bootcamp">
 				<view class="ele-no">{{traincamp_count}}</view>
@@ -38,6 +54,16 @@
 		<image bindtap="joinPrivateDomain" mode="aspectFit"
 			src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603873700ScBmHI.jpg" class="add-btn"></image>
 	</view>
+	<!-- 广告位 -->
+	<view class="ad" wx:if="{{bannerList.length > 0}}">
+		<swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}"
+				duration="{{500}}">
+			<swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="onBannerItemTap" data-item="{{item}}">
+				<view class="swiper-cover"></view>
+				<image mode="cover" src="{{item.pic_url}}"></image>
+			</swiper-item>
+		</swiper>
+	</view>
 	<!-- 功能栏 -->
 	<view class="function">
 		<view class="function-list">
@@ -49,6 +75,16 @@
 					<view class="function-item-box">
 						<view class="function-item-top">我的推广</view>
 						<view class="function-item-bottom">分享花样课，收获感谢金</view>
+					</view>
+				</view>
+				<image src="/assets/images/common/arrow.png"></image>
+			</view>
+			<view class="function-item" wx:if="{{userInfo.amount}}" bindtap="goToConvertCashPage">
+				<view class="function-item-left">
+					<image src="/assets/images/common/balance.png" class="task-image"></image>
+					<view class="function-item-box">
+						<view class="function-item-top">我的余额</view>
+						<view class="function-item-bottom">当前余额：<text>{{userInfo.amount}}元</text></view>
 					</view>
 				</view>
 				<image src="/assets/images/common/arrow.png"></image>
@@ -86,6 +122,5 @@
 		</view>
 	</view>
 	<!-- 授权弹窗 -->
-	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
-	</authModule>
+	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
 </view>

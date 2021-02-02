@@ -1,0 +1,84 @@
+.covert-cash {
+    min-height: 100vh;
+    background: white;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin:  70rpx 50rpx 0;
+}
+
+.avatar {
+    width: 128rpx;
+    height: 128rpx;
+    border-radius: 999rpx;
+    margin-right: 30rpx;
+}
+
+.nickname {
+    font: 500 52rpx/52rpx PingFangSC;
+}
+
+.balance {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 62rpx 50rpx 42rpx;
+    font: 40rpx/40rpx PingFangSC;
+}
+
+.cash {
+    font: 60rpx/60rpx PingFangSC;
+}
+
+.withdrawal {
+    width: 200rpx;
+    height: 64rpx;
+    box-sizing: border-box;
+    border: 4rpx solid #CC0000;
+    border-radius: 999rpx;
+    text-align: center;
+    font: 32rpx/58rpx PingFangSC;
+    color: #CC0000;
+}
+
+.separator {
+    height: 12rpx;
+    background: #F9F9F9;
+}
+
+.layout {
+    margin: 44rpx 50rpx 30rpx;
+    font: 500 44rpx/44rpx PingFangSC;
+}
+
+.record {
+
+}
+
+.record-item {
+    padding: 38rpx 50rpx 36rpx;
+    border-bottom: 2rpx solid #EFEFEF;
+}
+
+.record-item-01 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font: 40rpx/40rpx PingFangSC;
+}
+
+.txt-02 {
+    font-weight: 500;
+}
+
+.txt-03 {
+    font: 32rpx/32rpx PingFangSC;
+    color: #999999;
+}
+
+.txt-04 {
+    font: 500 32rpx/32rpx PingFangSC;
+    color: #CC0000;
+}
