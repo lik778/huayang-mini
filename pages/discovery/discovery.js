@@ -711,6 +711,7 @@ Page({
 		// 记录合作资源包打点标识
 		if (getApp().globalData.from_co_channel) {
 			params.co_channel_tag = 'co_lndx'
+			getApp().globalData.from_co_channel = ''
 		}
 		bxPoint("applets_find", params)
 	},
