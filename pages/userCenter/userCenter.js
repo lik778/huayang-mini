@@ -28,7 +28,8 @@ Page({
     visibleTaskEntrance: false,
     cardBtnText: "授权登录",
     bannerList: [],
-    isFluentLearnUser: false, // 畅学卡会员
+    disHasFluentLearnUserInfo: false, // 是否有畅学卡会员信息
+    isFluentLearnExpired: false, // 畅学卡依然有效
     fluentCardExpireTime: undefined,
   },
   /**
@@ -70,7 +71,7 @@ Page({
     if (!hasUserInfo() || !hasAccountInfo()) {
       this.setData({didShowAuth: true})
     } else {
-      if (this.data.isFluentLearnUser) {
+      if (this.data.disHasFluentLearnUserInfo && !this.data.isFluentLearnExpired) {
         this.data.fluentLearnUserInfo && bxPoint("mine_changxue_find", {
           changxue_id: this.data.fluentLearnUserInfo.id,
           xhangxue_buy_date: this.data.fluentLearnUserInfo.created_at,
@@ -195,12 +196,14 @@ Page({
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
     getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
       if ($notNull(data)) {
+        let isFluentLearnExpired = dayjs(data.expire_time).isBefore(dayjs())
         this.setData({
           fluentLearnUserInfo: data,
-          isFluentLearnUser: !!data,
+          disHasFluentLearnUserInfo: !!data,
+          isFluentLearnExpired,
           didVisibleVIPIcon: accountInfo.tag_list.includes("vip"),
           fluentCardExpireTime: dayjs(data.expire_time).format("YYYY-MM-DD"),
-          cardBtnText: "查看权益"
+          cardBtnText: isFluentLearnExpired ? "立即加入" : "查看权益"
         })
       } else {
         this.setData({cardBtnText: "立即加入"})

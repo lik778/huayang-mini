@@ -19,16 +19,17 @@
 		</view>
 	</view>
 	<!-- 畅学卡 -->
-	<view class="vip-card" bindtap="onFluentCardTap">
+	<view class="vip-card {{ isFluentLearnExpired && 'overdue'}}" bindtap="onFluentCardTap">
 		<view>
 			<view class="card-title">花样大学畅学卡</view>
 			<view class="card-desc">精彩课程，随时随地，想看就看</view>
 		</view>
 		<view class="card-data">
 			<view class="card-info">
-				<block wx:if="{{isFluentLearnUser}}">
-					<text>{{userInfo.nick_name}}</text>
-					<text class="expireDate">有效期至：{{fluentCardExpireTime}}</text>
+				<block wx:if="{{disHasFluentLearnUserInfo}}">
+					<text class="card-nick-name {{ isFluentLearnExpired && 'overdue'}}">{{userInfo.nick_name}}</text>
+					<text class="expireDate" wx:if="{{!isFluentLearnExpired}}">有效期至：{{fluentCardExpireTime}}</text>
+					<text class="expireDate overdue" wx:else>已过期</text>
 				</block>
 			</view>
 			<view class="vip-btn">{{cardBtnText}} ›</view>

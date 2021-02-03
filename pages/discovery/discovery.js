@@ -69,7 +69,7 @@ Page({
 		if (!hasUserInfo() || !hasAccountInfo()) return
 		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
 		getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
-			this.setData({isFluentLearnVIP: $notNull(data)})
+			this.setData({isFluentLearnVIP: $notNull(data) && dayjs(data.expire_time).isAfter(dayjs())})
 		})
 	},
 	calcTabsOffset() {

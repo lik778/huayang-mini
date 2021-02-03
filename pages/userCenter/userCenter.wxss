@@ -77,13 +77,17 @@
 }
 
 .vip-card.overdue {
-
+    background-image: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612340214KVXjtD.jpg");
 }
 
 .card-title {
     margin-bottom: 20rpx;
     font: 500 40rpx/40rpx PingFangSC;
     color: #834B25;
+}
+
+.card-title.overdue {
+    color: black;
 }
 
 .card-desc {
@@ -99,13 +103,24 @@
 .card-info {
     display: flex;
     flex-direction: column;
-    font: 500 28rpx/28rpx PingFangSC;
     color: #874F29;
+}
+
+.card-nick-name {
+    font: 500 28rpx/28rpx PingFangSC;
+}
+
+.card-nick-name.overdue {
+    color: #636363;
 }
 
 .expireDate {
     margin-top: 16rpx;
-    font-weight: 400;
+    font: 400 28rpx/28rpx PingFangSC;
+}
+
+.expireDate.overdue {
+    color: #990000;
 }
 
 .vip-btn {

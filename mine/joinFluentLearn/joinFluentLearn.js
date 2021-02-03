@@ -61,7 +61,7 @@ Page({
 		if (hasUserInfo() && hasAccountInfo()) {
 			let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
 			getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
-				if ($notNull(data)) {
+				if ($notNull(data) && dayjs(data.expire_time).isAfter(dayjs())) {
 					wx.redirectTo({url: "/mine/fluentLearnInfo/fluentLearnInfo"})
 				}
 			})
@@ -152,13 +152,18 @@ Page({
 		wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
 	},
 	/**
-	 * 授权成功
+	 * 授权失败
 	 */
 	authCancelEvent() {
 		this.setData({didShowAuth: false})
+	},
+	/**
+	 * 授权成功
+	 */
+	authCompleteEvent() {
 		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
 		getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
-			if ($notNull(data)) {
+			if ($notNull(data) && dayjs(data.expire_time).isAfter(dayjs())) {
 				wx.showModal({
 					title: '提示',
 					content: '您已拥有花样大学畅学卡',
@@ -172,11 +177,6 @@ Page({
 				})
 			}
 		})
-	},
-	/**
-	 * 授权失败
-	 */
-	authCompleteEvent() {
 		this.setData({didShowAuth: false})
 	},
 	/**

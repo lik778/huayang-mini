@@ -23,6 +23,7 @@ import {
 } from "../../utils/util"
 import { collectError } from "../../api/auth/index"
 import { getFluentCardInfo, getKechengWithFluentCard } from "../../api/mine/index"
+import dayjs from "dayjs"
 
 const ButtonType = {
   noLogin: 1, //未登录
@@ -164,13 +165,15 @@ Page({
     return new Promise((resolve) => {
       let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
       getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
-        if ($notNull(data)) {
+        if ($notNull(data) && dayjs(data.expire_time).isAfter(dayjs())) {
           getKechengWithFluentCard({
             user_snow_id: accountInfo.snow_id,
             kecheng_series_id: kechengId
           }).then(() => {
             resolve()
           })
+        } else {
+          resolve()
         }
       })
     })
