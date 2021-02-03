@@ -897,7 +897,9 @@ Page({
       paramsData.co_channel_tag = 'co_lndx'
     }
     bxPoint("series_join", paramsData, false)
-    getIosCustomerLink().then(res => {
+    getIosCustomerLink({
+      kecheng_series_id: this.data.videoCourseId
+    }).then(res => {
       let link = encodeURIComponent(res.data)
       wx.navigateTo({
         url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
