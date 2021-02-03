@@ -387,6 +387,7 @@ Page({
             let recordList = new Array(videoCourseList.length).fill('lock')
             // 处理课程列表不同状态
             videoCourseList.map((item, index) => {
+              item.timeSecond = item.time
               item.time = secondToMinute(item.time)
               item.type = 'lock'
               item.Index = convertToChinaNum(index + 1)
@@ -840,7 +841,7 @@ Page({
     let arr = this.data.playDurationsList.sort((a, b) => {
       return a - b
     })
-    let time = this.data.videoCourseData.series_detail.video_detail[this.data.nowCoursePlayIndex].time //视频总时长
+    let time = this.data.videoCourseData.series_detail.video_detail[this.data.nowCoursePlayIndex].timeSecond //视频总时长
     let splitIndexArr = []
     let index = 0
     let timeSnippetArr = []
