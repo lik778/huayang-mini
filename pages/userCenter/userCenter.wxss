@@ -1,6 +1,6 @@
 .user-center {
     background: #F9F9F9;
-    padding-bottom: 125rpx;
+    padding-bottom: 250rpx;
     min-height: 100vh;
     box-sizing: border-box;
 }
@@ -36,6 +36,18 @@
 .message .user-info {
     display: flex;
     flex-direction: column;
+}
+
+.message .user-info {
+    position: relative;
+}
+
+.message .user-info .vip-tag {
+    position: absolute;
+    width: 46rpx;
+    height: 26rpx;
+    border-radius: 0;
+    margin: 15rpx 0 0 10rpx;
 }
 
 .message text {

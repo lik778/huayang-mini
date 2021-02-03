@@ -1,10 +1,5 @@
 // pages/ discovery/discovery.js
-import {
-	$notNull,
-	getLocalStorage,
-	hasAccountInfo,
-	hasUserInfo,
-} from "../../utils/util"
+import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, } from "../../utils/util"
 import request from "../../lib/request"
 import {
 	getActivityList,
@@ -15,14 +10,11 @@ import {
 	queryBootcampFeatureList,
 	queryVideoCourseListByBuyTag
 } from "../../api/course/index"
-import {
-	GLOBAL_KEY
-} from "../../lib/config"
+import { GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
-import {
-	getYouZanAppId
-} from "../../api/mall/index"
+import { getYouZanAppId } from "../../api/mall/index"
 import dayjs from "dayjs"
+import { getFluentCardInfo } from "../../api/mine/index"
 
 const TRAINCAMP_SCENE = "traincamp"
 
@@ -35,6 +27,7 @@ Page({
 		current: 0,
 		liveNum: 0,
 		isIosPlatform: false,
+		isFluentLearnVIP: false, // 是否是畅学卡会员
 		campList: null,
 		showModelBanner: false,
 		didShowAuth: false,
@@ -68,6 +61,16 @@ Page({
 		tabsDomOffsetTopNo: 0,
 		obs: [], // 被监听的video标签队列
 		themeTabMinHeight: 0,
+	},
+	/**
+	 * 请求畅销卡信息
+	 */
+	getFluentInfo() {
+		if (!hasUserInfo() || !hasAccountInfo()) return
+		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+		getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
+			this.setData({isFluentLearnVIP: $notNull(data)})
+		})
 	},
 	calcTabsOffset() {
 		let self = this
@@ -701,6 +704,9 @@ Page({
 
 		// 获取banner数据
 		this.getBanner()
+
+		// 查询畅学卡信息
+		this.getFluentInfo()
 
 		// 获取推荐数据
 		this.getRecommendList()

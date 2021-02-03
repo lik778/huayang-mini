@@ -11,6 +11,7 @@ import {
 import { ErrorLevel, GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
 import { collectError } from "../../api/auth/index"
+import bxPoint from "../../utils/bxPoint"
 
 Page({
 
@@ -23,7 +24,7 @@ Page({
 		features: [],
 		video: "",
 		hotList: [],
-		didShowAuth: false
+		didShowAuth: false,
 	},
 
 	/**
@@ -55,7 +56,16 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-
+		bxPoint("changxue_buy", {})
+		// 已购买畅学卡的用户访问时跳转到权益页
+		if (hasUserInfo() && hasAccountInfo()) {
+			let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+			getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
+				if ($notNull(data)) {
+					wx.redirectTo({url: "/mine/fluentLearnInfo/fluentLearnInfo"})
+				}
+			})
+		}
 	},
 
 	/**
@@ -85,12 +95,34 @@ Page({
 	onReachBottom: function () {
 
 	},
+	/**
+	 * 页面分享
+	 * @param options
+	 * @returns {{path: string, title: string}}
+	 */
 	onShareAppMessage(options) {
-		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+		bxPoint("changxue_buy_wx_share", {}, false)
+		let accountInfoJsonData = getLocalStorage(GLOBAL_KEY.accountInfo)
+		let accountInfo = accountInfoJsonData ? JSON.parse(accountInfoJsonData) : {}
 		return {
 			title: "花样大学畅学卡，精彩课程，随时随地，想看就看",
-			path: `/mine/joinFluentLearn/joinFluentLearn?inviteId=${accountInfo.snow_id}`
+			path: `/mine/joinFluentLearn/joinFluentLearn${accountInfo.snow_id ? '?inviteId='+accountInfo.snow_id : ''}`
 		}
+	},
+	/**
+	 * 跳转到视频详情页
+	 * @param e
+	 */
+	goToVideoDetail(e) {
+		let {id, name, desc} = e.currentTarget.dataset.item
+		bxPoint("changxue_buy_course_Learn", {
+			series_id: id,
+			kecheng_name: name,
+			kecheng_subname: desc,
+		}, false)
+		wx.navigateTo({
+			url: `/subCourse/videoCourse/videoCourse?videoId=${id}`,
+		})
 	},
 	/**
    * 生成上级分销用户信息缓存
@@ -111,6 +143,11 @@ Page({
 	 * 分享按钮点击事件
 	 */
 	onShareBtnTap() {
+		bxPoint("changxue_buy_post", {}, false)
+		if (!hasUserInfo() || !hasAccountInfo()) {
+			return this.setData({didShowAuth: true})
+		}
+
 		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
 		wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
 	},
@@ -119,6 +156,22 @@ Page({
 	 */
 	authCancelEvent() {
 		this.setData({didShowAuth: false})
+		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+		getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
+			if ($notNull(data)) {
+				wx.showModal({
+					title: '提示',
+					content: '您已拥有花样大学畅学卡',
+					confirmText: '立即查看',
+					showCancel: false,
+					success: (res) => {
+						if (res.confirm) {
+							wx.reLaunch({url: "/pages/userCenter/userCenter"})
+						}
+					}
+				})
+			}
+		})
 	},
 	/**
 	 * 授权失败
@@ -131,6 +184,7 @@ Page({
 	 * @returns {Promise<void>}
 	 */
 	async buy() {
+		bxPoint("changxue_buy_pay", {}, false)
 		if (!hasUserInfo() || !hasAccountInfo()) {
 			return this.setData({didShowAuth: true})
 		}

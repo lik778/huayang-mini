@@ -3,6 +3,7 @@ import { getLocalStorage, isIphoneXRSMax, queryWxAuth, toast } from "../../utils
 import { ErrorLevel, GLOBAL_KEY, WX_AUTH_TYPE } from "../../lib/config"
 import { collectError } from "../../api/auth/index"
 import { getFluentLearnInfo, getFluentQrCode } from "../../api/mine/index"
+import bxPoint from "../../utils/bxPoint"
 
 Page({
 
@@ -18,7 +19,7 @@ Page({
 		previewList: [
 			{
 				image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612148124KmHnAl.jpg",
-				text: "形体学院"
+				text: "模特学院"
 			},
 			{
 				image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612148147kvOATW.jpg",
@@ -30,7 +31,7 @@ Page({
 			},
 			{
 				image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612148175AoUadT.jpg",
-				text: "品质学院"
+				text: "品质生活"
 			}
 		],
 		qrcode: "",
@@ -63,7 +64,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-
+		bxPoint("changxue_post", {})
 	},
 
 	/**
@@ -103,6 +104,12 @@ Page({
 			path: `/mine/joinFluentLearn/joinFluentLearn?inviteId=${this.data.distributeId}`
 		}
 	},
+	/**
+	 * 分享给好友
+	 */
+	shareToFriend() {
+		bxPoint("changxue_post_share", {}, false)
+	},
 	run() {
 		let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo))
 		this.setData({nickname: userInfo.nickname, avatar: userInfo.avatar_url})
@@ -124,6 +131,7 @@ Page({
 	 * 保存到相册
 	 */
 	saveToLocalAlbum() {
+		bxPoint("changxue_post_save", {}, false)
 		this.generateCanvas().then()
 	},
 	/**

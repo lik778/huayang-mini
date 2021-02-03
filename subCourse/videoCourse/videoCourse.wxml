@@ -153,31 +153,71 @@
 
   <!-- 购买按钮 -->
   <view class="pay-button" wx:if='{{!noPayForCourse}}'>
-    <!-- 原价 -->
-    <view class="pay-button-charge-no-discount subject-bg-color pay-button-common" wx:if="{{buttonType===6}}"
-      bindtap="pay">
-      立即加入 ¥{{videoCourseData.series_detail.price}}
+    <!-- 原价 && 畅学卡购买 -->
+    <view class="pay-or-fluent" wx:if='{{buttonType===6}}'>
+      <view class="pay-or-fluent-one-left" bindtap="pay">
+        <text class="pay-or-fluent-one-left-txt01" wx:if="{{isIos}}">立即加入</text>
+        <text class="pay-or-fluent-one-left-txt02" wx:else>立即加入{{videoCourseData.series_detail.price}}元</text>
+      </view>
+      <view class="pay-or-fluent-one-right subject-bg-color" bindtap="goToJoinFluentLearn">
+        <text class="pay-or-fluent-one-right-txt01">所有课程免费看</text>
+        <text class="pay-or-fluent-one-right-txt02">畅学卡 188元/年</text>
+      </view>
     </view>
-    <!-- 有折扣价 -->
-    <view class="pay-button-charge-discount subject-bg-color" wx:if="{{buttonType===5}}" bindtap="pay">
-      <view class="pay-button-charge-discount-top">原价¥{{videoCourseData.series_detail.price}}</view>
-      <view class="pay-button-charge-discount-bottom">立即加入 ¥{{videoCourseData.series_detail.discount_price}}</view>
+    <!-- 折扣价 && 畅学卡购买 -->
+    <view class="pay-or-fluent" wx:if='{{buttonType===5}}'>
+      <view class="pay-or-fluent-one-left" bindtap="pay">
+        <text class="pay-or-fluent-one-left-txt01" wx:if="{{isIos}}">立即加入</text>
+        <block wx:else>
+          <text class="pay-or-fluent-one-left-txt03">原价{{videoCourseData.series_detail.price}}元</text>
+          <text class="pay-or-fluent-one-left-txt04">立即加入{{videoCourseData.series_detail.discount_price}}元</text>
+        </block>
+      </view>
+      <view class="pay-or-fluent-one-right subject-bg-color" bindtap="goToJoinFluentLearn">
+        <text class="pay-or-fluent-one-right-txt01">所有课程免费看</text>
+        <text class="pay-or-fluent-one-right-txt02">畅学卡 188元/年</text>
+      </view>
     </view>
+
+    <!--    <view class="pay-button-charge-no-discount subject-bg-color pay-button-common" wx:if="{{buttonType===6}}"-->
+    <!--      bindtap="pay">-->
+    <!--      立即加入 ¥{{videoCourseData.series_detail.price}}-->
+    <!--    </view>-->
+    <!--    &lt;!&ndash; 有折扣价 &ndash;&gt;-->
+    <!--    <view class="pay-button-charge-discount subject-bg-color" wx:if="{{buttonType===5}}" bindtap="pay">-->
+    <!--      <view class="pay-button-charge-discount-top">原价¥{{videoCourseData.series_detail.price}}</view>-->
+    <!--      <view class="pay-button-charge-discount-bottom">立即加入 ¥{{videoCourseData.series_detail.discount_price}}</view>-->
+    <!--    </view>-->
     <!-- 免费 -->
-    <view class="pay-button-free subject-bg-color pay-button-common" bindtap="pay" wx:if="{{buttonType===3}}">
-      立即加入
+    <!--<view class="pay-button-free subject-bg-color pay-button-common" bindtap="pay" wx:if="{{buttonType===3}}">立即加入</view>-->
+    <view class="pay-or-fluent" wx:if='{{buttonType===3}}'>
+      <view class="pay-or-fluent-one-left" bindtap="toPayArticle">
+        <text class="pay-or-fluent-one-left-txt01">立即加入</text>
+      </view>
+      <view class="pay-or-fluent-one-right subject-bg-color" bindtap="goToJoinFluentLearn">
+        <text class="pay-or-fluent-one-right-txt01">所有课程免费看</text>
+        <text class="pay-or-fluent-one-right-txt02">畅学卡 188元/年</text>
+      </view>
     </view>
+
     <!-- 等级限制 -->
     <view class="pay-button-level-limit subject-bg-color pay-button-common" bindtap="openLevelLimitBox"
       wx:if="{{buttonType===4}}">
       Lv {{videoCourseData.series_detail.user_grade}} 等级开启
     </view>
     <!-- ios -->
-    <view class="pay-button-ios subject-bg-color pay-button-common" bindtap="toPayArticle" wx:if="{{buttonType===2}}">
-      立即加入</view>
-    <!-- 未登录 -->
-    <view class="pay-button-no-login subject-bg-color pay-button-common" bindtap="login" wx:if="{{buttonType===1}}">立即加入
+    <!--<view class="pay-button-ios subject-bg-color pay-button-common" bindtap="toPayArticle" wx:if="{{buttonType===2}}">立即加入</view>-->
+    <view class="pay-or-fluent" wx:if='{{buttonType===2}}'>
+      <view class="pay-or-fluent-one-left" bindtap="toPayArticle">
+        <text class="pay-or-fluent-one-left-txt01">立即加入</text>
+      </view>
+      <view class="pay-or-fluent-one-right subject-bg-color" bindtap="goToJoinFluentLearn">
+        <text class="pay-or-fluent-one-right-txt01">所有课程免费看</text>
+        <text class="pay-or-fluent-one-right-txt02">畅学卡 188元/年</text>
+      </view>
     </view>
+    <!-- 未登录 -->
+    <view class="pay-button-no-login subject-bg-color pay-button-common" bindtap="login" wx:if="{{buttonType===1}}">登录授权</view>
     <!-- 邀请折扣 -->
     <view class="pay-button-invite" wx:if='{{buttonType===7||buttonType===8}}'>
       <view class="pay-button-invite-one" wx:if='{{buttonType===7}}'>

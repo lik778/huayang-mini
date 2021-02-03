@@ -221,3 +221,8 @@ export const getFluentQrCode = (parasm) => {
 export const getDistributeRecordList = (parasm) => {
   return request._get(URL.queryDistributeRecordList, parasm)
 }
+
+// 畅学卡会员兑换视频课程
+export const getKechengWithFluentCard = (params) => {
+  return request._post(URL.acceptKechengWithFluentCard, params)
+}

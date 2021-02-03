@@ -1,6 +1,7 @@
 import { getDistributeRecordList, getUserInfo } from "../../api/mine/index"
 import { getLocalStorage } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
+import bxPoint from "../../utils/bxPoint"
 
 Page({
 
@@ -11,7 +12,8 @@ Page({
     userInfo: {},
     offset: 0,
     limit: 10,
-    recordList: []
+    recordList: [],
+    status: ["", "审核中", "审核失败", "审核成功"]
   },
 
   /**
@@ -67,6 +69,7 @@ Page({
 
   },
   withdrawal() {
+    bxPoint("mine_finalamount_withdraw", {}, false)
     wx.showModal({
       title: '提示',
       content: '感谢您的分享，提现正在准备中，计划3月初可提现，请等候',
@@ -77,8 +80,10 @@ Page({
     })
   },
   run() {
+    bxPoint("mine_finalamount_list", {})
+
     getUserInfo('scene=zhide').then(res => {
-      res.amount = Number(res.amount).toFixed(2)
+      res.amount = Number((res.amount / 100).toFixed(2))
       this.setData({userInfo: res})
     })
 
@@ -92,6 +97,13 @@ Page({
       limit: this.data.limit
     }).then(({data}) => {
       data = data || []
+      data = data.map((item) => ({
+        id: item.id,
+        change_title: item.change_title,
+        change_amount: Number((item.change_amount / 100).toFixed(2)),
+        created_at: item.created_at,
+        status: this.data.status[item.status],
+      }))
       this.setData({recordList: data, hasMore: data.length === this.data.limit})
     })
   }

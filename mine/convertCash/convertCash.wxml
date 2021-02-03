@@ -14,8 +14,8 @@
     <view class="layout">变更记录</view>
     <view class="record">
         <view class="record-item" wx:for="{{recordList}}" wx:key="index">
-            <view class="record-item-01" style="margin-bottom: 32rpx;"><text>提现</text><text class="txt-02">-100.00元</text></view>
-            <view class="record-item-01"><text class="txt-03">2021-01-20 12:00</text><text class="txt-04">成功</text></view>
+            <view class="record-item-01" style="margin-bottom: 32rpx;"><text>{{item.change_title}}</text><text class="txt-02">{{item.change_amount}}元</text></view>
+            <view class="record-item-01"><text class="txt-03">{{item.created_at}}</text><text class="txt-04">{{item.status}}</text></view>
         </view>
     </view>
 </view>

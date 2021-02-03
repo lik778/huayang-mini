@@ -1,6 +1,7 @@
 import { getFluentCardNewkecheng, getFluentLearnInfo } from "../../api/mine/index"
 import { getLocalStorage } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
+import bxPoint from "../../utils/bxPoint"
 
 Page({
 
@@ -34,7 +35,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    bxPoint("changxue_card", {})
   },
 
   /**
@@ -65,9 +66,32 @@ Page({
 
   },
   /**
+   * 跳转到视频详情页
+   * @param e
+   */
+  goToVideoDetail(e) {
+    let {id, name, desc} = e.currentTarget.dataset.item
+    bxPoint("changxue_card_course_Learn", {
+      series_id: id,
+      kecheng_name: name,
+      kecheng_subname: desc,
+    }, false)
+    wx.navigateTo({
+      url: `/subCourse/videoCourse/videoCourse?videoId=${id}`,
+    })
+  },
+  /**
+   * 跳转到首页
+   */
+  goToDiscovery() {
+    bxPoint("changxue_card_learn_click", {}, false)
+    wx.reLaunch({url: "/pages/discovery/discovery"})
+  },
+  /**
    * 分享按钮点击事件
    */
   onShareBtnTap() {
+    bxPoint("changxue_card_post", {}, false)
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
     wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
   },

@@ -1,18 +1,8 @@
 // subCourse/videoCourseList/videoCourseList.js
-import {
-  getVideoTypeList,
-  queryVideoCourseListByBuyTag
-} from "../../api/course/index"
-import {
-  checkFocusLogin
-} from "../../api/auth/index"
-import {
-  GLOBAL_KEY,
-  Version
-} from "../../lib/config"
-import {
-  getLocalStorage
-} from "../../utils/util"
+import { getVideoTypeList, queryVideoCourseListByBuyTag } from "../../api/course/index"
+import { GLOBAL_KEY } from "../../lib/config"
+import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
+import { getFluentCardInfo } from "../../api/mine/index"
 
 Page({
 
@@ -23,6 +13,7 @@ Page({
     titleList: [],
     currentIndex: 0,
     showMoney: true,
+    isFluentLearnVIP: false, // 是否是畅学卡会员
     keyArr: [],
     bottomLock: true,
     pageSize: {
@@ -30,6 +21,16 @@ Page({
       offset: 0
     },
     videoList: []
+  },
+  /**
+   * 请求畅销卡信息
+   */
+  getFluentInfo() {
+    if (!hasUserInfo() || !hasAccountInfo()) return
+    let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+    getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
+      this.setData({isFluentLearnVIP: $notNull(data)})
+    })
   },
   // 跳往视频课程详情页
   toVideoCourseDetail(e) {
@@ -202,7 +203,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getFluentInfo()
   },
 
   /**

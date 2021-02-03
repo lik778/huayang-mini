@@ -27,7 +27,7 @@
     </view>
 
     <view class="course">花样精品课</view>
-    <view class="course-item" wx:for="{{hotList}}" wx:key="index">
+    <view class="course-item" wx:for="{{hotList}}" wx:key="index" data-item="{{item}}" bindtap="goToVideoDetail">
         <image class="teacher-image" src="{{item.teacherImg}}" mode="aspectFill"></image>
         <view class="course-info">
             <view>

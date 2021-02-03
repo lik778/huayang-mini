@@ -10,7 +10,10 @@
 				bindtap="getAuth"></image>
 			<text wx:if="{{nodata}}" bindtap="getAuth">点击登录</text>
 			<view wx:else class="user-info">
-				<text>{{userInfo.nick_name||userInfo.nickname}}</text>
+				<view class="nick-name">
+					<text>{{userInfo.nick_name||userInfo.nickname}}</text>
+					<image wx:if="{{didVisibleVIPIcon}}" class="vip-tag" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612261464nXAbIu.jpg" mode="aspectFill"></image>
+				</view>
 				<text class="lifetime" wx:if="{{existNo}}">您已在花样第{{existNo}}天</text>
 			</view>
 		</view>
@@ -56,8 +59,7 @@
 	</view>
 	<!-- 广告位 -->
 	<view class="ad" wx:if="{{bannerList.length > 0}}">
-		<swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}"
-				duration="{{500}}">
+		<swiper class="swiper-item-box" circular autoplay interval="{{3000}}" duration="{{500}}">
 			<swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="onBannerItemTap" data-item="{{item}}">
 				<view class="swiper-cover"></view>
 				<image mode="cover" src="{{item.pic_url}}"></image>
@@ -67,24 +69,22 @@
 	<!-- 功能栏 -->
 	<view class="function">
 		<view class="function-list">
-			<view class="function-item" bindtap="toPromotion"
-				wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&showPromotion}}">
-				<view class="function-item-left">
-					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604487601QeseJU.jpg"
-						style="width:52rpx;height:52rpx;margin-right: 20rpx;margin-left:-4rpx;"></image>
-					<view class="function-item-box">
-						<view class="function-item-top">我的推广</view>
-						<view class="function-item-bottom">分享花样课，收获感谢金</view>
-					</view>
-				</view>
-				<image src="/assets/images/common/arrow.png"></image>
-			</view>
 			<view class="function-item" wx:if="{{userInfo.amount}}" bindtap="goToConvertCashPage">
 				<view class="function-item-left">
 					<image src="/assets/images/common/balance.png" class="task-image"></image>
 					<view class="function-item-box">
 						<view class="function-item-top">我的余额</view>
 						<view class="function-item-bottom">当前余额：<text>{{userInfo.amount}}元</text></view>
+					</view>
+				</view>
+				<image src="/assets/images/common/arrow.png"></image>
+			</view>
+			<view class="function-item" bindtap="toOrder">
+				<view class="function-item-left">
+					<image src="/assets/images/common/order.png"></image>
+					<view class="function-item-box">
+						<view class="function-item-top">我的订单</view>
+						<view class="function-item-bottom">查询订单信息</view>
 					</view>
 				</view>
 				<image src="/assets/images/common/arrow.png"></image>
@@ -99,12 +99,14 @@
 				</view>
 				<image src="/assets/images/common/arrow.png"></image>
 			</view>
-			<view class="function-item" bindtap="toOrder">
+			<view class="function-item" bindtap="toPromotion"
+				  wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&showPromotion}}">
 				<view class="function-item-left">
-					<image src="/assets/images/common/order.png"></image>
+					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604487601QeseJU.jpg"
+						   style="width:52rpx;height:52rpx;margin-right: 20rpx;margin-left:-4rpx;"></image>
 					<view class="function-item-box">
-						<view class="function-item-top">我的订单</view>
-						<view class="function-item-bottom">查询订单信息</view>
+						<view class="function-item-top">我的推广</view>
+						<view class="function-item-bottom">分享花样课，收获感谢金</view>
 					</view>
 				</view>
 				<image src="/assets/images/common/arrow.png"></image>

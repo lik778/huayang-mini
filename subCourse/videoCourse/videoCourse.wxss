@@ -738,3 +738,64 @@
   line-height: 32rpx;
   padding-top: 4rpx;
 }
+
+
+/* (原价 || 折扣价) && 畅学卡购买 */
+.pay-or-fluent {
+  display: flex;
+  justify-content: space-between;
+  width: calc(100% - 60rpx);
+}
+
+.pay-or-fluent-one-left {
+  width: 330rpx;
+  height: 96rpx;
+  border: 4rpx solid #CC0000;
+  border-radius: 999rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #CC0000;
+}
+
+.pay-or-fluent-one-left-txt01 {
+  font: 500 36rpx/36rpx PingFangSC;
+}
+
+.pay-or-fluent-one-left-txt02 {
+  font: 500 32rpx/32rpx PingFangSC;
+}
+
+.pay-or-fluent-one-left-txt03 {
+  margin-bottom: 14rpx;
+  text-decoration: line-through;
+  font: 24rpx/24rpx PingFangSC;
+}
+
+.pay-or-fluent-one-left-txt04 {
+  font: 500 32rpx/32rpx PingFangSC;
+}
+
+.pay-or-fluent-one-right {
+  width: 330rpx;
+  height: 96rpx;
+  border: 1px solid #CC0000;
+  border-radius: 999rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.pay-or-fluent-one-right-txt01 {
+  margin-bottom: 14rpx;
+  font: 500 24rpx/24rpx PingFangSC;
+  color: rgba(255,255,255, 0.8);
+}
+
+.pay-or-fluent-one-right-txt02 {
+  font: 500 32rpx/32rpx PingFangSC;
+}

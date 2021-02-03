@@ -14,7 +14,9 @@ Page({
    */
   data: {
     userInfo: null,
+    fluentLearnUserInfo: null,
     didShowAuth: false,
+    didVisibleVIPIcon: false,
     statusHeight: 0,
     nodata: true,
     phoneNumber: "",
@@ -28,12 +30,12 @@ Page({
     bannerList: [],
     isFluentLearnUser: false, // 畅学卡会员
     fluentCardExpireTime: undefined,
-    current: 0, // banner index
   },
   /**
    * 跳转到提现页
    */
   goToConvertCashPage() {
+    bxPoint("mine_finalamount", {mine_finalamount: this.data.userInfo.amount}, false)
     if (!hasUserInfo() || !hasAccountInfo()) {
       return this.setData({didShowAuth: true})
     }
@@ -44,12 +46,18 @@ Page({
    * @param e
    */
   onBannerItemTap(e) {
+    let {link, link_type, id, pic_url} = e.currentTarget.dataset.item
+    bxPoint("mine_banner", {
+      mine_banner_id: id,
+      mine_banner_src: pic_url,
+      mine_banner_url: link,
+      mine_banner_mode: link_type,
+    }, false)
     if (e.currentTarget.dataset.item.need_auth === 1) {
       if (!hasUserInfo() || !hasAccountInfo()) {
         return this.setData({didShowAuth: true})
       }
     }
-    let {link, link_type, id} = e.currentTarget.dataset.item
     if (link_type === 'youzan') {
       getYouZanAppId().then(appId => {
         wx.navigateToMiniProgram({appId, path: link})})
@@ -57,26 +65,27 @@ Page({
       wx.navigateTo({url: link})
     }
   },
-  // swiper切换
-  changeSwiperIndex(e) {
-    this.setData({
-      current: e.detail.current
-    })
-  },
   // 处理畅叙卡按钮点击事件
   onFluentCardTap() {
     if (!hasUserInfo() || !hasAccountInfo()) {
       this.setData({didShowAuth: true})
     } else {
       if (this.data.isFluentLearnUser) {
+        this.data.fluentLearnUserInfo && bxPoint("mine_changxue_find", {
+          changxue_id: this.data.fluentLearnUserInfo.id,
+          xhangxue_buy_date: this.data.fluentLearnUserInfo.created_at,
+          xhangxue_expire_date: this.data.fluentLearnUserInfo.expire_time,
+        }, false)
         wx.navigateTo({url: "/mine/fluentLearnInfo/fluentLearnInfo"})
       } else {
+        bxPoint("mine_changxue_buy", {}, false)
         wx.navigateTo({url: "/mine/joinFluentLearn/joinFluentLearn"})
       }
     }
   },
   // 跳往我的推广
   toPromotion() {
+    bxPoint("mine_promotion", {}, false)
     getUserInfo("scene=zhide").then(res => {
       setLocalStorage(GLOBAL_KEY.accountInfo, res)
       wx.navigateTo({
@@ -169,7 +178,7 @@ Page({
   // 获取用户信息
   getUserSingerInfo() {
     getUserInfo('scene=zhide').then(res => {
-      res.amount = Number(res.amount).toFixed(2)
+      res.amount = Number((res.amount / 100).toFixed(2))
       setLocalStorage(GLOBAL_KEY.accountInfo, res)
       this.setData({userInfo: res})
     })
@@ -187,7 +196,9 @@ Page({
     getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
       if ($notNull(data)) {
         this.setData({
+          fluentLearnUserInfo: data,
           isFluentLearnUser: !!data,
+          didVisibleVIPIcon: accountInfo.tag_list.includes("vip"),
           fluentCardExpireTime: dayjs(data.expire_time).format("YYYY-MM-DD"),
           cardBtnText: "查看权益"
         })
@@ -268,6 +279,7 @@ Page({
   },
   // 联系客服
   callPhone(e) {
+    bxPoint("mine_contact", {}, false)
     wx.makePhoneCall({
       phoneNumber: e.currentTarget.dataset.mobile
     })

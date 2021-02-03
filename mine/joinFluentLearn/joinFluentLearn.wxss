@@ -108,9 +108,9 @@
     position: fixed;
     bottom: 206rpx;
     right: 30rpx;
-    width: 180rpx;
+    width: 314rpx;
     height: 80rpx;
-    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1611915173KCUxPo.jpg") no-repeat center;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612331610edgRGS.jpg") no-repeat center;
     background-size: contain;
 }
 .share-btn:active {

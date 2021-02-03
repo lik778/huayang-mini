@@ -1,21 +1,19 @@
 // subCourse/videoCourseDetail/videoCourseDetail.js
-import {
-  ErrorLevel,
-  GLOBAL_KEY
-} from "../../lib/config"
+import { ErrorLevel, GLOBAL_KEY } from "../../lib/config"
 import {
   checkJoinVideoCourse,
+  checkNeedSpecialManage,
   createFissionTask,
   getIosCustomerLink,
   getVideoArticleLink,
   getVideoCourseDetail,
   inviteFriend,
   joinVideoCourse,
-  checkNeedSpecialManage,
   recordStudy
 } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
 import {
+  $notNull,
   convertToChinaNum,
   getLocalStorage,
   hasAccountInfo,
@@ -23,9 +21,8 @@ import {
   payCourse,
   secondToMinute,
 } from "../../utils/util"
-import {
-  collectError
-} from "../../api/auth/index"
+import { collectError } from "../../api/auth/index"
+import { getFluentCardInfo, getKechengWithFluentCard } from "../../api/mine/index"
 
 const ButtonType = {
   noLogin: 1, //未登录
@@ -151,7 +148,32 @@ Page({
 
     // 检查是否加入过该课程
     this.checkHasJoined()
-
+  },
+  /**
+   * 跳转到加入畅学卡页面
+   */
+  goToJoinFluentLearn() {
+    bxPoint("series_changxue", {series_id: this.data.videoCourseId}, false)
+    wx.navigateTo({url: "/mine/joinFluentLearn/joinFluentLearn"})
+  },
+  /**
+   * 畅学卡会员，兑换课程
+   * @param
+   */
+  exchangeKechengWithFluentCard(kechengId) {
+    return new Promise((resolve) => {
+      let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+      getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
+        if ($notNull(data)) {
+          getKechengWithFluentCard({
+            user_snow_id: accountInfo.snow_id,
+            kecheng_series_id: kechengId
+          }).then(() => {
+            resolve()
+          })
+        }
+      })
+    })
   },
 
   // 播放视频
@@ -246,8 +268,12 @@ Page({
               showStudyToast: false,
               studiedIndex: ''
             })
-            // 获取训练营详情
-            this.getVideoCourseData(-1)
+
+            // 畅学卡用户未领取过当前课程，自动领取
+            this.exchangeKechengWithFluentCard(this.data.videoCourseId).then(() => {
+              // 获取训练营详情
+              this.getVideoCourseData(-1)
+            })
           } else {
             // 加入过
             buttonType = ButtonType.joined
@@ -337,33 +363,8 @@ Page({
                   buttonType = ButtonType.ios
                 } else {
                   if (res.series_detail.discount_price === 0 || res.series_detail.price === 0) {
-                    // 价格免费
-                    if (res.series_detail.user_grade > 0) {
-                      // 有等级限制
-                      if (res.series_detail.user_grade > userGrade) {
-                        // 等级不够
-                        buttonType = ButtonType.freeAndLevelLimit
-                      } else {
-                        // 等级够了
-                        buttonType = ButtonType.free
-                      }
-                    } else {
-                      // 无等级限制，完全免费
-                      buttonType = ButtonType.free
-                    }
-                    if (res.series_detail.user_grade > 0) {
-                      // 免费但有等级限制
-                      if (res.series_detail.user_grade > userGrade) {
-                        // 等级不够
-                        buttonType = ButtonType.freeAndLevelLimit
-                      } else {
-                        // 等级够了
-                        buttonType = ButtonType.free
-                      }
-                    } else {
-                      // 完全免费
-                      buttonType = ButtonType.free
-                    }
+                    // 完全免费
+                    buttonType = ButtonType.free
                   } else {
                     // 收费
                     if (res.series_detail.discount_price > 0) {
@@ -379,8 +380,8 @@ Page({
               }
             }
             // 价格处理
-            res.series_detail.price = (res.series_detail.price / 100).toFixed(2)
-            res.series_detail.discount_price = res.series_detail.discount_price === -1 ? '' : (res.series_detail.discount_price / 100).toFixed(2)
+            res.series_detail.price = Number((res.series_detail.price / 100).toFixed(2))
+            res.series_detail.discount_price = res.series_detail.discount_price === -1 ? '' : Number((res.series_detail.discount_price / 100).toFixed(2))
             res.series_detail.sharePrice = res.series_detail.distribution_ratio > 0 ? res.series_detail.discount_price === '' ? res.series_detail.price * res.series_detail.distribution_ratio / 100 : res.series_detail.discount_price * res.series_detail.distribution_ratio / 100 : ''
             // 处理视频课程列表
             videoCourseList = JSON.parse(res.series_detail.video_detail) || []
@@ -486,17 +487,10 @@ Page({
                 if (res.series_detail.invite_count > 0 && +res.series_detail.invite_discount === 0) {
                   // 邀请人数不为0 & 优惠价格为0
                   buttonType = ButtonType.fissionAndCountLimitAndFreeDiscount
-                } else if (+res.series_detail.invite_count === 0 && res.series_detail.invite_discount > 0) {
-                  // 邀请人数为0 & 优惠价格不为0
-                  res.series_detail.discount_price = (+res.series_detail.price * res.series_detail.invite_discount / 100).toFixed(2)
-                  buttonType = ButtonType.chargeAndDiscounts
                 } else if (res.series_detail.invite_count > 0 && res.series_detail.invite_discount > 0) {
                   // 邀请人数不为0 & 优惠折扣不为0
                   res.series_detail.fission_price = (+res.series_detail.price * res.series_detail.invite_discount / 100).toFixed(2)
                   buttonType = ButtonType.fissionAndCountLimitAndDiscountLimit
-                } else if (+res.series_detail.invite_count === 0 && +res.series_detail.invite_discount === 0) {
-                  // 邀请人数为0 & 优惠折扣为0
-                  buttonType = ButtonType.freeAndNoLevelLimit
                 }
               }
             } else {
@@ -504,7 +498,6 @@ Page({
               buttonType = ButtonType.noLogin
             }
             res.series_detail.video_detail = videoCourseList
-            console.log(res)
             this.setData({
               videoCourseData: res,
               videoPlayerSrc,

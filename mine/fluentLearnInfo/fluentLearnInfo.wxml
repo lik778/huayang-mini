@@ -23,7 +23,7 @@
     </view>
 
     <view class="course">最新好课</view>
-    <view class="course-item" wx:for="{{newList}}" wx:key="index">
+    <view class="course-item" wx:for="{{newList}}" wx:key="index" data-item="{{item}}" bindtap="goToVideoDetail">
         <image class="teacher-image" src="{{item.teacherImg}}" mode="aspectFill"></image>
         <view class="course-info">
             <view>
@@ -41,7 +41,7 @@
     <view class="share-btn" bindtap="onShareBtnTap"></view>
 
     <view class="footer">
-        <view class="footer-wrap">
+        <view class="footer-wrap" bindtap="goToDiscovery">
             <view>开始学习吧</view>
             <view class="sub-text">让您的外在和内在都一样精彩</view>
         </view>
