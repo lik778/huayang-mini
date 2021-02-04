@@ -4,7 +4,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    inviteId: undefined
   },
 
   /**
@@ -16,10 +16,10 @@ Page({
       // 小程序二维码
       let sceneAry = decodeURIComponent(scene).split('/')
       let [sceneInviteId] = sceneAry
-      console.log(`scene invite id = ${sceneInviteId}`);
+      this.setData({inviteId: sceneInviteId})
     } else {
       // 小程序卡片
-      console.log(`card invite id = ${inviteId}`);
+      this.setData({inviteId: inviteId})
     }
   },
 
