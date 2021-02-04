@@ -1,3 +1,4 @@
 <view>
-    畅学卡售前页
+    <view>畅学卡售前页</view>
+    <view>id = {{inviteId}}</view>
 </view>
