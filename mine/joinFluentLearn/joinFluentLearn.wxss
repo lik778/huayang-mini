@@ -1,4 +1,5 @@
 /* 畅学卡售前页 */
+@import "../../assets/css/common.wxss";
 .join-video-member {
     padding-bottom: 338rpx;
 }

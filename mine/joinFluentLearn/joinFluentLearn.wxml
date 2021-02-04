@@ -31,8 +31,8 @@
         <image class="teacher-image" src="{{item.teacherImg}}" mode="aspectFill"></image>
         <view class="course-info">
             <view>
-                <view class="course-name">{{item.name}}</view>
-                <view class="course-desc">{{item.desc}}</view>
+                <view class="course-name limit-two-line">{{item.name}}</view>
+                <view class="course-desc limit-two-line">{{item.desc}}</view>
                 <view class="course-teacher-info">{{item.teacherTxt}}</view>
             </view>
             <view class="visited">共{{item.visit_count}}人学习</view>

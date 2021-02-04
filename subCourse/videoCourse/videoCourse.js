@@ -274,8 +274,29 @@ Page({
 
             // 畅学卡用户未领取过当前课程，自动领取
             this.exchangeKechengWithFluentCard(this.data.videoCourseId).then(() => {
-              // 获取训练营详情
-              this.getVideoCourseData(-1)
+              checkJoinVideoCourse({
+                kecheng_series_id: this.data.videoCourseId
+              }).then((res) => {
+                buttonType = ButtonType.joined
+                this.setData({
+                  showStudyToast: this.data.shareIndex ? false : this.data.nowCoursePlayIndex ? true : res.data.last_visit_num === 0 ? false : true,
+                  nowCoursePlayIndex: this.data.shareIndex ? this.data.shareIndex : this.data.nowCoursePlayIndex ? this.data.nowCoursePlayIndex : res.data.last_visit_num - 1 >= 0 ? res.data.last_visit_num - 1 : '',
+                  studiedIndex: res.data.last_visit_num === 0 ? '' : res.data.last_visit_num,
+                  noPayForCourse: true,
+                  videoPlayerLock: false
+                })
+                if (this.data.showStudyToast) {
+                  setTimeout(() => {
+                    this.setData({
+                      showStudyToast: false
+                    })
+                  }, 5000)
+                }
+                // 获取训练营详情
+                this.getVideoCourseData(buttonType)
+              }).catch(() => {
+                this.getVideoCourseData(-1)
+              })
             })
           } else {
             // 加入过

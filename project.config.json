@@ -390,6 +390,12 @@
           "pathName": "mine/convertCash/convertCash",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "二维码",
+          "pathName": "mine/joinFluentLearn/joinFluentLearn",
+          "query": "scene=11467959679586304",
+          "scene": null
         }
       ]
     }
