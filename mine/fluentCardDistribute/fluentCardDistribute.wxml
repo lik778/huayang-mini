@@ -19,7 +19,7 @@
 
         <view class="desc-01">
             <text>花样大学</text>
-            <text>上海首家获批线上老年大学</text>
+            <text>上海首批政府认证线上老年大学</text>
         </view>
 
         <view class="preview-images">
@@ -30,8 +30,17 @@
         </view>
 
         <view class="desc-02">
-            <text>加入花样大学即享多门类专业课程！</text>
-            <text>更有精彩线下团队活动等你参加！</text>
+            <image class="desc-layout" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612429738OxiISK.jpg" mode="aspectFit"></image>
+
+            <view class="permission">
+                <view class="permission-item" wx:for="{{permissionList}}" wx:key="index">
+                    <image class="permission-icon" src="{{item.icon}}" mode="aspectFit"></image>
+                    <view class="permission-info">
+                        <text>{{item.text01}}</text>
+                        <text>{{item.text02}}</text>
+                    </view>
+                </view>
+            </view>
         </view>
 
         <view class="desc-03">

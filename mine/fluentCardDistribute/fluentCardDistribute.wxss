@@ -108,10 +108,41 @@
     color: #765534;
 }
 
+.desc-layout {
+    width: 448rpx;
+    height: 48rpx;
+}
+
+.permission {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 22rpx;
+    margin-left: -4rpx;
+}
+
+.permission-item {
+    display: flex;
+    align-items: center;
+}
+
+.permission-icon {
+    width: 40rpx;
+    height: 40rpx;
+}
+
+.permission-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 6rpx;
+    font: 20rpx/28rpx PingFangSC;
+    color: black;
+}
+
 .desc-03 {
     position: relative;
-    top: 375rpx;
-    left: 60rpx;
+    top: 340rpx;
+    left: 70rpx;
     width: 452rpx;
 }
 
@@ -120,7 +151,7 @@
 }
 
 .discount-price {
-    font: 48rpx/48rpx PingFangSC;
+    font: 500 48rpx/48rpx PingFangSC;
     color: #CC0000;
 }
 
@@ -132,8 +163,8 @@
 
 .qrcode {
     position: relative;
-    top: 250rpx;
-    left: 370rpx;
+    top: 215rpx;
+    left: 380rpx;
     width: 132rpx;
     height: 132rpx;
     border-radius: 999rpx;

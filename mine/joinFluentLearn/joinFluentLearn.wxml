@@ -17,7 +17,7 @@
         <view class="card-desc">{{desc}}</view>
     </view>
 
-    <view class="interest">畅学卡尊享<text>3</text>大权益</view>
+    <image class="interest" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612429588oHXcVb.jpg" mode="aspectFit"></image>
     <view class="interest-item" wx:for="{{features}}" wx:key="index">
         <image class="interest-icon" src="{{item.icon}}" mode="aspectFit"></image>
         <view class="interest-detail">

@@ -380,7 +380,7 @@
           "scene": null
         },
         {
-          "name": "分销畅学卡",
+          "name": "畅学卡海报页",
           "pathName": "mine/fluentCardDistribute/fluentCardDistribute",
           "query": "inviteId=11467959679586304",
           "scene": null

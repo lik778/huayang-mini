@@ -12,12 +12,8 @@
 /* 权益 */
 .interest {
     margin: 40rpx 30rpx 48rpx;
-    font: 600 52rpx/52rpx PingFangSC;
-}
-
-.interest > text {
-    font: bold 88rpx/88rpx Condensed;
-    color: #E2B180;
+    width: 470rpx;
+    height: 88rpx;
 }
 
 .interest-item {
@@ -83,11 +79,13 @@
 .visited {
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
     font: 24rpx/24rpx PingFangSC;
     color: rgba(0,0,0, 0.6);
 }
 
 .learn {
+    font: 32rpx/32rpx PingFangSC;
     color: #CC0000;
 }
 

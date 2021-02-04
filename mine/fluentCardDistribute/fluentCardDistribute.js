@@ -21,6 +21,7 @@ Page({
 		statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
 		bg: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612146615YqecUz.jpg",
 		logo: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612147817dYEToM.jpg",
+		layout: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612429738OxiISK.jpg",
 		avatar: "",
 		nickname: "",
 		previewList: [
@@ -38,7 +39,24 @@ Page({
 			},
 			{
 				image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612148175AoUadT.jpg",
-				text: "品质生活"
+				text: "文旅学院"
+			}
+		],
+		permissionList: [
+			{
+				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612430103EMrieT.jpg",
+				text01: "线上课程",
+				text02: "全部免费"
+			},
+			{
+				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612430111OXTZLS.jpg",
+				text01: "线下课程",
+				text02: "优惠礼券"
+			},
+			{
+				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612430115CnWZwW.jpg",
+				text01: "线下活动",
+				text02: "免费特权"
 			}
 		],
 		qrcode: "",
@@ -123,8 +141,8 @@ Page({
 		this.setData({nickname: userInfo.nickname, avatar: userInfo.avatar_url})
 		this.getCodeImage()
 
-		getFluentLearnInfo().then(({data: { price, discount_price }}) => {
-			this.setData({discount_price: discount_price/100, price: price/100})
+		getFluentLearnInfo().then(({data: {price, discount_price}}) => {
+			this.setData({discount_price: discount_price / 100, price: price / 100})
 		})
 	},
 	/**
@@ -149,7 +167,15 @@ Page({
 			clearTimeout(t)
 		}, 500)
 
-		this.generateCanvas().then()
+		wx.showLoading({
+			title: '海报生成中...',
+			mask: true
+		})
+		this.generateCanvas().then(() => {
+			wx.hideLoading()
+		}).catch(() => {
+			wx.hideLoading()
+		})
 	},
 	/**
 	 * 生成Canvas
@@ -167,13 +193,17 @@ Page({
 		await drawFont(ctx, "和我一起畅学花样大学", '#000000', "500", "PingFangSC", 16, 90, 110)
 		// 介绍
 		await drawFont(ctx, "花样大学", '#765534', "400", "PingFangSC", 14, 30, 155)
-		await drawFont(ctx, "上海首家获批线上老年大学", '#765534', "400", "PingFangSC", 14, 30, 176)
+		await drawFont(ctx, "上海首批政府认证线上老年大学", '#765534', "400", "PingFangSC", 14, 30, 176)
 		for (let i = 0; i < 4; i++) {
 			await drawImage(ctx, this.data.previewList[i].image, 30 + 59 * i, 216, 50, 60)
 			await drawFont(ctx, this.data.previewList[i].text, '#000000', "400", "PingFangSC", 10, 35 + 59 * i, 284)
 		}
-		await drawFont(ctx, "加入花样大学即享多门类专业课程！", '#765534', "400", "PingFangSC", 14, 30, 317)
-		await drawFont(ctx, "更有精彩线下团队活动等你参加！", '#765534', "400", "PingFangSC", 14, 30, 338)
+		await drawImage(ctx, this.data.layout, 30, 317, 224, 24)
+		for (let i = 0; i < 3; i++) {
+			await drawImage(ctx, this.data.permissionList[i].icon, 28 + 84 * i, 356, 20, 20)
+			await drawFont(ctx, this.data.permissionList[i].text01, '#000000', "400", "PingFangSC", 10, 51 + 84 * i, 354)
+			await drawFont(ctx, this.data.permissionList[i].text02, '#000000', "400", "PingFangSC", 10, 51 + 84 * i, 354 + 14)
+		}
 		// 售价
 		await drawFont(ctx, "限时特价", '#000000', "400", "PingFangSC", 14, 35, 419 + 8)
 		ctx.font = '14px PingFang SC'
