@@ -1,6 +1,6 @@
 <view class="container" wx:if="{{allData!==''}}">
   <!-- banner -->
-  <view class="banner">
+  <view class="banner" style="height:{{allData.collaborate.banner_pic.length>1?'216rpx':'188rpx'}}">
     <swiper class="swiper" bindchange="changeCurrentBannerIndex" circular autoplay interval='3000'>
       <block wx:for='{{allData.collaborate.banner_pic}}' wx:key="index">
         <swiper-item>
@@ -32,7 +32,7 @@
         <view class="course-item-right-top">
           <view class="course-item-right-one">{{item.kecheng_series.teacher_desc}}</view>
           <view class="course-item-right-two">{{item.kecheng_series.name}}</view>
-          <view class="course-item-right-three">{{item.kecheng_series.teacher_desc}} 资深时尚老师</view>
+          <view class="course-item-right-three">{{item.teacher.name}} {{item.teacher.teacher_desc}}</view>
         </view>
         <view class="course-item-right-four">共{{item.kecheng_series.visit_count}}人学习</view>
       </view>
