@@ -1,5 +1,5 @@
 // subCourse/videoCourseDetail/videoCourseDetail.js
-import { ErrorLevel, GLOBAL_KEY } from "../../lib/config"
+import { ErrorLevel, FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import {
   checkJoinVideoCourse,
   checkNeedSpecialManage,
@@ -23,7 +23,6 @@ import {
 } from "../../utils/util"
 import { collectError } from "../../api/auth/index"
 import { getFluentCardInfo, getKechengWithFluentCard } from "../../api/mine/index"
-import dayjs from "dayjs"
 
 const ButtonType = {
   noLogin: 1, //未登录
@@ -165,7 +164,7 @@ Page({
     return new Promise((resolve) => {
       let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
       getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
-        if ($notNull(data) && dayjs(data.expire_time).isAfter(dayjs())) {
+        if ($notNull(data) && data.status === FluentLearnUserType.active) {
           getKechengWithFluentCard({
             user_snow_id: accountInfo.snow_id,
             kecheng_series_id: kechengId

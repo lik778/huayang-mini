@@ -116,10 +116,11 @@ Page({
       data = data || []
       let list = data.map(item => ({
         id: item.kecheng_series.id,
-        name: item.kecheng_series.name,
-        desc: item.kecheng_series.desc,
+        name: item.kecheng_series.teacher_desc,
+        desc: item.kecheng_series.name,
         visit_count: item.kecheng_series.visit_count,
         teacherImg: item.teacher.avatar,
+        coverImg: item.kecheng_series.cover_pic,
         teacherTxt: `${item.teacher.name}老师 ${item.teacher.teacher_desc}`
       }))
       this.setData({newList: list})

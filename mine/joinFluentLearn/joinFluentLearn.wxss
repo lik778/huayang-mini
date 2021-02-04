@@ -43,7 +43,6 @@
 .interest-item {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin: 0 30rpx 60rpx;
 }
 
@@ -59,7 +58,7 @@
 
 .interest-text {
     margin-top: 28rpx;
-    font: 28rpx/28rpx PingFangSC;
+    font: 28rpx/40rpx PingFangSC;
 }
 
 /* 精品课 */
@@ -74,9 +73,10 @@
     margin: 40rpx 30rpx 0;
 }
 
-.teacher-image {
+.cover-image {
     height: 220rpx;
     width: 166rpx;
+    border-radius: 8rpx;
 }
 
 .course-info {
@@ -92,7 +92,7 @@
 
 .course-desc {
     margin: 20rpx 0;
-    font: 28rpx/28rpx PingFangSC;
+    font: 28rpx/32rpx PingFangSC;
 }
 
 .course-teacher-info {

@@ -10,7 +10,7 @@ import {
 	queryBootcampFeatureList,
 	queryVideoCourseListByBuyTag
 } from "../../api/course/index"
-import { GLOBAL_KEY } from "../../lib/config"
+import { FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import { getYouZanAppId } from "../../api/mall/index"
 import dayjs from "dayjs"
@@ -69,7 +69,7 @@ Page({
 		if (!hasUserInfo() || !hasAccountInfo()) return
 		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
 		getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
-			this.setData({isFluentLearnVIP: $notNull(data) && dayjs(data.expire_time).isAfter(dayjs())})
+			this.setData({isFluentLearnVIP: $notNull(data) && data.status === FluentLearnUserType.active})
 		})
 	},
 	calcTabsOffset() {
@@ -646,6 +646,9 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
+
+		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=178`})
+
 		let {
 			scene,
 			invite_user_id = "",

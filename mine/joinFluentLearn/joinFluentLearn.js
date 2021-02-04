@@ -6,9 +6,10 @@ import {
 	hasUserInfo,
 	payFluentCard,
 	removeLocalStorage,
-	setLocalStorage
+	setLocalStorage,
+	toast
 } from "../../utils/util"
-import { ErrorLevel, GLOBAL_KEY } from "../../lib/config"
+import { ErrorLevel, FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
 import { collectError } from "../../api/auth/index"
 import bxPoint from "../../utils/bxPoint"
@@ -25,6 +26,7 @@ Page({
 		video: "",
 		hotList: [],
 		didShowAuth: false,
+		payLock: false
 	},
 
 	/**
@@ -50,6 +52,15 @@ Page({
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
+		// 已购买畅学卡的用户访问时跳转到权益页
+		if (hasUserInfo() && hasAccountInfo()) {
+			let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+			getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
+				if ($notNull(data) && data.status === FluentLearnUserType.active) {
+					wx.redirectTo({url: "/mine/fluentLearnInfo/fluentLearnInfo"})
+				}
+			})
+		}
 	},
 
 	/**
@@ -57,15 +68,6 @@ Page({
 	 */
 	onShow: function () {
 		bxPoint("changxue_buy", {})
-		// 已购买畅学卡的用户访问时跳转到权益页
-		if (hasUserInfo() && hasAccountInfo()) {
-			let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-			getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
-				if ($notNull(data) && dayjs(data.expire_time).isAfter(dayjs())) {
-					wx.redirectTo({url: "/mine/fluentLearnInfo/fluentLearnInfo"})
-				}
-			})
-		}
 	},
 
 	/**
@@ -163,7 +165,7 @@ Page({
 	authCompleteEvent() {
 		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
 		getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
-			if ($notNull(data) && dayjs(data.expire_time).isAfter(dayjs())) {
+			if ($notNull(data) && data.status === FluentLearnUserType.active) {
 				wx.showModal({
 					title: '提示',
 					content: '您已拥有花样大学畅学卡',
@@ -188,10 +190,18 @@ Page({
 		if (!hasUserInfo() || !hasAccountInfo()) {
 			return this.setData({didShowAuth: true})
 		}
+		// 支付锁
+		if (this.data.payLock) return
+		this.setData({payLock: true})
+		let t = setTimeout(() => {
+			this.setData({payLock: false})
+			clearTimeout(t)
+		}, 500)
+
 		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
 		let {data} = await getFluentCardInfo({user_snow_id: accountInfo.snow_id})
 		// 检查用户畅学卡是否有效，有效直接返回"用户中心" （true => 已过期， false =>  未过期）
-		let didUserFluentLearnCardExpired = $notNull(data) ? dayjs(data.expire_time).isBefore(dayjs()) : true
+		let didUserFluentLearnCardExpired = $notNull(data) ? data.status === FluentLearnUserType.deactive : true
 		if (!didUserFluentLearnCardExpired) {
 			return wx.switchTab({url: "/pages/userCenter/userCenter"})
 		}
@@ -211,22 +221,27 @@ Page({
 				this.clearSuperiorDistributeUserCache()
 			}
 		}
-		let {data: {id: order_id} = {}} = await payForFluentCard(params)
-		payFluentCard({id: order_id, name: "购买畅学卡"})
-			.then(() => {
-				getApp().globalData.didNeedReloadUserCenterfluentLearnCardInfo = true
-				wx.switchTab({url: "/pages/userCenter/userCenter"})
-			})
-			.catch((err) => {
-				if (err.errMsg !== "requestPayment:fail cancel") {
-					collectError({
-						level: ErrorLevel.p0,
-						page: "dd.joinFluentLearn.requestPayment",
-						error_code: 500,
-						error_message: err
+		payForFluentCard(params).then(({data, code, message}) => {
+			if (code === 0) {
+				payFluentCard({id: data.id, name: "购买畅学卡"})
+					.then(() => {
+						getApp().globalData.didNeedReloadUserCenterfluentLearnCardInfo = true
+						wx.switchTab({url: "/pages/userCenter/userCenter"})
 					})
-				}
-			})
+					.catch((err) => {
+						if (err.errMsg !== "requestPayment:fail cancel") {
+							collectError({
+								level: ErrorLevel.p0,
+								page: "dd.joinFluentLearn.requestPayment",
+								error_code: 500,
+								error_message: err
+							})
+						}
+					})
+			} else {
+				toast(message)
+			}
+		})
 	},
 	/**
 	 * 获取畅学卡权益
@@ -249,10 +264,11 @@ Page({
 			data = data || []
 			let list = data.map(item => ({
 				id: item.kecheng_series.id,
-				name: item.kecheng_series.name,
-				desc: item.kecheng_series.desc,
+				name: item.kecheng_series.teacher_desc,
+				desc: item.kecheng_series.name,
 				visit_count: item.kecheng_series.visit_count,
 				teacherImg: item.teacher.avatar,
+				coverImg: item.kecheng_series.cover_pic,
 				teacherTxt: `${item.teacher.name}老师 ${item.teacher.teacher_desc}`
 			}))
 			this.setData({hotList: list})

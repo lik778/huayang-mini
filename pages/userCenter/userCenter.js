@@ -1,8 +1,15 @@
-import { GLOBAL_KEY } from "../../lib/config"
+import { FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
 import { getFindBanner, getPhoneNumber } from "../../api/course/index"
 import { getFluentCardInfo, getUserGuideLink, getUserInfo, getUserOwnerClasses } from "../../api/mine/index"
-import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage } from "../../utils/util"
+import {
+  $notNull,
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  setLocalStorage,
+  splitTargetNoString
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 import { getTaskEntranceStatus } from "../../api/task/index"
 import { getYouZanAppId } from "../../api/mall/index"
@@ -31,6 +38,9 @@ Page({
     disHasFluentLearnUserInfo: false, // 是否有畅学卡会员信息
     isFluentLearnExpired: false, // 畅学卡依然有效
     fluentCardExpireTime: undefined,
+  },
+  handleNickname(name) {
+    return splitTargetNoString(name, 16)
   },
   /**
    * 跳转到提现页
@@ -181,6 +191,7 @@ Page({
     getUserInfo('scene=zhide').then(res => {
       res.amount = Number((res.amount / 100).toFixed(2))
       setLocalStorage(GLOBAL_KEY.accountInfo, res)
+      res.nick_name = this.handleNickname(res.nick_name)
       this.setData({userInfo: res})
     })
   },
@@ -196,12 +207,13 @@ Page({
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
     getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
       if ($notNull(data)) {
-        let isFluentLearnExpired = dayjs(data.expire_time).isBefore(dayjs())
+        // 畅学卡是否已过期
+        let isFluentLearnExpired = data.status === FluentLearnUserType.deactive
         this.setData({
           fluentLearnUserInfo: data,
           disHasFluentLearnUserInfo: !!data,
           isFluentLearnExpired,
-          didVisibleVIPIcon: accountInfo.tag_list.includes("vip"),
+          didVisibleVIPIcon: accountInfo.tag_list ? accountInfo.tag_list.includes("vip") : false,
           fluentCardExpireTime: dayjs(data.expire_time).format("YYYY-MM-DD"),
           cardBtnText: isFluentLearnExpired ? "立即加入" : "查看权益"
         })
@@ -235,8 +247,10 @@ Page({
   },
   // 获取个人信息
   getUserInfo() {
+    let info = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
+    info.nick_name = this.handleNickname(info.nick_name)
     this.setData({
-      userInfo: getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
+      userInfo: info
     })
   },
   // 我的作业
@@ -295,8 +309,10 @@ Page({
 
     if (hasUserInfo() && !hasAccountInfo()) {
       // 有微信信息没有手机号信息
+      let info = JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo))
+      info.nickname = this.handleNickname(info.nickname)
       this.setData({
-        userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)),
+        userInfo: info,
         nodata: false,
       })
     } else if (hasUserInfo() && hasAccountInfo()) {

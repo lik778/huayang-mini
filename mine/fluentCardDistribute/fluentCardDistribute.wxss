@@ -1,3 +1,4 @@
+@import "../../assets/css/common.wxss";
 .fluent-card-distribute {
     height: 100vh;
     background: #37383B;
@@ -48,6 +49,10 @@
     margin-left: 24rpx;
     height: 96rpx;
     font: 32rpx/32rpx PingFangSC;
+}
+
+.user-name {
+    width: 332rpx;
 }
 
 .slogan {

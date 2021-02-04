@@ -1,3 +1,4 @@
+@import "../../assets/css/common.wxss";
 .user-center {
     background: #F9F9F9;
     padding-bottom: 250rpx;
@@ -38,7 +39,7 @@
     flex-direction: column;
 }
 
-.message .user-info {
+.message .user-info .nick-name {
     position: relative;
 }
 

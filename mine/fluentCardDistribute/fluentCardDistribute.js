@@ -1,5 +1,12 @@
 import { drawCircleHeadIcon, drawFont, drawImage, drawLine, measureTextWidth } from "../../utils/canvas"
-import { getLocalStorage, isIphoneXRSMax, queryWxAuth, toast } from "../../utils/util"
+import {
+	calcStringLen,
+	getLocalStorage,
+	isIphoneXRSMax,
+	queryWxAuth,
+	splitTargetNoString,
+	toast
+} from "../../utils/util"
 import { ErrorLevel, GLOBAL_KEY, WX_AUTH_TYPE } from "../../lib/config"
 import { collectError } from "../../api/auth/index"
 import { getFluentLearnInfo, getFluentQrCode } from "../../api/mine/index"
@@ -38,7 +45,8 @@ Page({
 		price: 0,
 		discount_price: 0,
 		bottomNo: 0,
-		distributeId: 0
+		distributeId: 0,
+		saveLock: false
 	},
 
 	/**
@@ -132,6 +140,15 @@ Page({
 	 */
 	saveToLocalAlbum() {
 		bxPoint("changxue_post_save", {}, false)
+
+		// 支付锁
+		if (this.data.saveLock) return
+		this.setData({saveLock: true})
+		let t = setTimeout(() => {
+			this.setData({saveLock: false})
+			clearTimeout(t)
+		}, 500)
+
 		this.generateCanvas().then()
 	},
 	/**
@@ -146,7 +163,7 @@ Page({
 		await drawImage(ctx, this.data.logo, 88, 31, 121, 19)
 		// 用户信息
 		await drawCircleHeadIcon(ctx, this.data.avatar, 54, 106, 24)
-		await drawFont(ctx, this.data.nickname, '#000000', "400", "PingFangSC", 16, 90, 86)
+		await drawFont(ctx, calcStringLen(this.data.nickname) > 8 ? `我是${splitTargetNoString(this.data.nickname, 16)}..` : `我是${this.data.nickname}`, '#000000', "400", "PingFangSC", 16, 90, 86)
 		await drawFont(ctx, "和我一起畅学花样大学", '#000000', "500", "PingFangSC", 16, 90, 110)
 		// 介绍
 		await drawFont(ctx, "花样大学", '#765534', "400", "PingFangSC", 14, 30, 155)

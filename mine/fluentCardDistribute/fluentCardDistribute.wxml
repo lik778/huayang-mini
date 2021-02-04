@@ -12,7 +12,7 @@
         <view class="user">
             <image class="avatar" src="{{avatar}}" mode="aspectFit" />
             <view class="user-info">
-                <text>我是{{nickname}}</text>
+                <text class="user-name limit-one-line">我是{{nickname}}</text>
                 <text class="slogan">和我一起畅学花样大学</text>
             </view>
         </view>

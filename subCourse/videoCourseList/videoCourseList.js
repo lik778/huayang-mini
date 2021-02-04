@@ -1,9 +1,8 @@
 // subCourse/videoCourseList/videoCourseList.js
 import { getVideoTypeList, queryVideoCourseListByBuyTag } from "../../api/course/index"
-import { GLOBAL_KEY } from "../../lib/config"
+import { FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
 import { getFluentCardInfo } from "../../api/mine/index"
-import dayjs from "dayjs"
 
 Page({
 
@@ -30,7 +29,7 @@ Page({
     if (!hasUserInfo() || !hasAccountInfo()) return
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
     getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
-      this.setData({isFluentLearnVIP: $notNull(data) && dayjs(data.expire_time).isAfter(dayjs())})
+      this.setData({isFluentLearnVIP: $notNull(data) && data.status === FluentLearnUserType.active})
     })
   },
   // 跳往视频课程详情页
