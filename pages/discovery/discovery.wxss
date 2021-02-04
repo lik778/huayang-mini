@@ -7,7 +7,7 @@
 
 /*推广位*/
 .promotion {
-  padding-bottom: 30rpx;
+  padding-bottom: 60rpx;
 }
 
 /*导航栏*/

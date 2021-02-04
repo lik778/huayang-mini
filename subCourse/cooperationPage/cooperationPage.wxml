@@ -1,6 +1,6 @@
 <view class="container" wx:if="{{allData!==''}}">
   <!-- banner -->
-  <view class="banner">
+  <view class="banner" style="height:{{allData.collaborate.banner_pic.length>1?'216rpx':'188rpx'}}">
     <swiper class="swiper" bindchange="changeCurrentBannerIndex" circular autoplay interval='3000'>
       <block wx:for='{{allData.collaborate.banner_pic}}' wx:key="index">
         <swiper-item>
