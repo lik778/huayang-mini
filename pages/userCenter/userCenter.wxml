@@ -70,12 +70,13 @@
 	<!-- 功能栏 -->
 	<view class="function">
 		<view class="function-list">
-			<view class="function-item" wx:if="{{userInfo.amount}}" bindtap="goToConvertCashPage">
+			<view class="function-item" bindtap="goToConvertCashPage">
 				<view class="function-item-left">
 					<image src="/assets/images/common/balance.png" class="task-image"></image>
 					<view class="function-item-box">
 						<view class="function-item-top">我的余额</view>
-						<view class="function-item-bottom">当前余额：<text>{{userInfo.amount}}元</text></view>
+						<view class="function-item-bottom" wx:if="{{userInfo.amount}}">当前余额：<text>{{userInfo.amount}}元</text></view>
+						<view class="function-item-bottom" wx:else>查看余额信息</view>
 					</view>
 				</view>
 				<image src="/assets/images/common/arrow.png"></image>
