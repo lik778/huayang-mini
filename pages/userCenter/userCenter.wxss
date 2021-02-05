@@ -73,6 +73,7 @@
     margin: 0 auto 42rpx;
     padding: 40rpx 40rpx 30rpx;
     box-sizing: border-box;
+    border-radius: 20rpx;
     background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612507698FTkFlf.jpg") no-repeat center;
     background-size: contain;
 }

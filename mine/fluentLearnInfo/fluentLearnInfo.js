@@ -13,6 +13,7 @@ Page({
     desc: "",
     features: [],
     video: "",
+    video_cover: "",
     newList: []
   },
 
@@ -104,7 +105,8 @@ Page({
         name: data.card_name,
         desc: data.description,
         features: data.features,
-        video: data.video
+        video: data.video,
+        video_cover: data.video_cover
       })
     })
   },

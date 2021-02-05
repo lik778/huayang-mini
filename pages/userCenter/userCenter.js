@@ -225,7 +225,6 @@ Page({
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
     getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
       if ($notNull(data)) {
-        console.error(data, accountInfo)
         // 畅学卡是否已过期
         let isFluentLearnExpired = data.status === FluentLearnUserType.deactive
         this.setData({
@@ -260,6 +259,9 @@ Page({
   authCompleteEvent() {
     this.run()
     this.queryContentInfo()
+    this.getUserSingerInfo().then(() => {
+      this.getFluentInfo()
+    })
     this.setData({
       didShowAuth: false
     })

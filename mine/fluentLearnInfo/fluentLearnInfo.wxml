@@ -10,6 +10,7 @@
             show-center-play-btn="{{false}}"
             show-play-btn="{{false}}"
             autoplay="{{true}}"
+            poster="{{video_cover}}"
             loop="{{true}}"
     ></video>
 
