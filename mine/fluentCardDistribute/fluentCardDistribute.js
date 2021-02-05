@@ -132,7 +132,7 @@ Page({
 	 */
 	onShareAppMessage: function () {
 		return {
-			title: '花样大学畅学卡，精彩课程，随时随地，想看就看',
+			title: '课程全解锁，一卡学全年',
 			path: `/mine/joinFluentLearn/joinFluentLearn?inviteId=${this.data.distributeId}`
 		}
 	},
@@ -205,7 +205,7 @@ Page({
 			await drawFont(ctx, this.data.previewList[i].text, '#000000', "400", "PingFangSC", 10, 35 + 59 * i, 284)
 		}
 		await drawFont(ctx, "购买花样大学畅学卡，即享", '#765534', '500', 'PingFangSC', 14, 30, 323)
-		await drawFont(ctx, "3", '#DEA265', '700', 'PingFangSC', 24, 200, 317)
+		await drawFont(ctx, "3", '#DEA265', '700', 'PingFangSC', 24, 200, 316)
 		await drawFont(ctx, "大权益", '#765534', '500', 'PingFangSC', 14, 215, 323)
 		for (let i = 0; i < 3; i++) {
 			await drawImage(ctx, this.data.permissionList[i].icon, 28 + 84 * i, 356, 20, 20)

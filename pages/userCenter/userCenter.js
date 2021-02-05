@@ -47,6 +47,11 @@ Page({
     cardName: "", // 畅学卡名称
     cardDesc: "", // 畅学卡描述
   },
+  /**
+   * 处理长昵称
+   * @param name
+   * @returns {*}
+   */
   handleNickname(name) {
     return splitTargetNoString(name, 16)
   },
@@ -196,11 +201,16 @@ Page({
   },
   // 获取用户信息
   getUserSingerInfo() {
-    getUserInfo('scene=zhide').then(res => {
-      res.amount = Number((res.amount / 100).toFixed(2))
-      setLocalStorage(GLOBAL_KEY.accountInfo, res)
-      res.nick_name = this.handleNickname(res.nick_name)
-      this.setData({userInfo: res})
+    return new Promise((resolve, reject) => {
+      getUserInfo('scene=zhide').then(res => {
+        res.amount = Number((res.amount / 100).toFixed(2))
+        setLocalStorage(GLOBAL_KEY.accountInfo, res)
+        res.nick_name = this.handleNickname(res.nick_name)
+        this.setData({userInfo: res})
+        resolve()
+      }).catch((err) => {
+        reject(err)
+      })
     })
   },
   getBanner() {
@@ -215,6 +225,7 @@ Page({
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
     getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
       if ($notNull(data)) {
+        console.error(data, accountInfo)
         // 畅学卡是否已过期
         let isFluentLearnExpired = data.status === FluentLearnUserType.deactive
         this.setData({
@@ -253,14 +264,6 @@ Page({
       didShowAuth: false
     })
   },
-  // 获取个人信息
-  getUserInfo() {
-    let info = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
-    info.nick_name = this.handleNickname(info.nick_name)
-    this.setData({
-      userInfo: info
-    })
-  },
   // 我的作业
   goToTaskLaunchPage() {
     if (hasUserInfo() && hasAccountInfo()) {
@@ -297,10 +300,8 @@ Page({
   },
   // 公用方法
   kingOfTheWorld() {
-    this.getUserInfo()
     this.getNumber()
-    this.getUserSingerInfo()
-    this.getFluentInfo()
+    this.getUserSingerInfo().then()
   },
   // 联系客服
   callPhone(e) {
@@ -378,8 +379,11 @@ Page({
     this.queryContentInfo()
     this.getBanner()
 
-    if (getApp().globalData.didNeedReloadUserCenterfluentLearnCardInfo && hasAccountInfo() && hasUserInfo()) {
-      this.getFluentInfo()
+    // 每次访问个人中心更新最新的账户数据和畅学卡信息
+    if (hasAccountInfo() && hasUserInfo()) {
+      this.getUserSingerInfo().then(() => {
+        this.getFluentInfo()
+      })
     }
   },
 

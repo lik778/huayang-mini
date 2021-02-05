@@ -99,7 +99,7 @@ Page({
 		let accountInfoJsonData = getLocalStorage(GLOBAL_KEY.accountInfo)
 		let accountInfo = accountInfoJsonData ? JSON.parse(accountInfoJsonData) : {}
 		return {
-			title: "花样大学畅学卡，精彩课程，随时随地，想看就看",
+			title: "课程全解锁，一卡学全年",
 			path: `/mine/joinFluentLearn/joinFluentLearn${accountInfo.snow_id ? '?inviteId='+accountInfo.snow_id : ''}`
 		}
 	},
@@ -224,7 +224,6 @@ Page({
 			if (code === 0) {
 				payFluentCard({id: data.id, name: "购买畅学卡"})
 					.then(() => {
-						getApp().globalData.didNeedReloadUserCenterfluentLearnCardInfo = true
 						wx.switchTab({url: "/pages/userCenter/userCenter"})
 					})
 					.catch((err) => {
