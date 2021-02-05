@@ -1,4 +1,4 @@
-<view class="join-video-member">
+<view class="fluent-learn-info">
     <video
             class="preview-video"
             src="{{video}}"
@@ -13,22 +13,18 @@
             poster="{{video_cover}}"
             loop="{{true}}"
     ></video>
-    <view class="member-card">
-        <view class="card-title">{{name}}</view>
-        <view class="card-desc">{{desc}}</view>
-    </view>
 
     <image class="interest" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612507823pQZhhe.jpg" mode="aspectFit"></image>
     <view class="interest-item" wx:for="{{features}}" wx:key="index">
         <image class="interest-icon" src="{{item.icon}}" mode="aspectFit"></image>
         <view class="interest-detail">
-             <view>{{item.title}}</view>
-             <view class="interest-text">{{item.desc}}</view>
+            <view>{{item.title}}</view>
+            <view class="interest-text">{{item.desc}}</view>
         </view>
     </view>
 
-    <view class="course">花样精品课</view>
-    <view class="course-item" wx:for="{{hotList}}" wx:key="index" data-item="{{item}}" bindtap="goToVideoDetail">
+    <view class="course">最新好课</view>
+    <view class="course-item" wx:for="{{newList}}" wx:key="index" data-item="{{item}}" bindtap="goToVideoDetail">
         <image class="cover-image" src="{{item.coverImg}}" mode="aspectFill"></image>
         <view class="course-info">
             <view>
@@ -36,19 +32,19 @@
                 <view class="course-desc limit-two-line">{{item.desc}}</view>
                 <view class="course-teacher-info">{{item.teacherTxt}}</view>
             </view>
-            <view class="visited">共{{item.visit_count}}人学习</view>
+            <view class="visited">
+                <text class="learn">去学习</text>
+                <text>共{{item.visit_count}}人学习</text>
+            </view>
         </view>
     </view>
 
     <view class="share-btn" bindtap="onShareBtnTap"></view>
 
     <view class="footer">
-        <view class="footer-wrap" bindtap="buy">
-            <view>立即购买 188元/年</view>
-            <view class="line-price">原价 365元/年</view>
+        <view class="footer-wrap" bindtap="goToDiscovery">
+            <view>开始学习吧</view>
+            <view class="sub-text">让您的外在和内在都一样精彩</view>
         </view>
     </view>
-
-    <!-- 授权弹窗 -->
-    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
 </view>

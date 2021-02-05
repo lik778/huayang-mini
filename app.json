@@ -55,7 +55,10 @@
         "personBootcamp/personBootcamp",
         "personCourse/personCourse",
         "normal-web-view/normal-web-view",
-        "joinFluentLearn/joinFluentLearn"
+        "joinFluentLearn/joinFluentLearn",
+        "fluentLearnInfo/fluentLearnInfo",
+        "fluentCardDistribute/fluentCardDistribute",
+        "convertCash/convertCash"
       ]
     },
     {

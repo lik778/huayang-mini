@@ -1,0 +1,62 @@
+<view class="fluent-card-distribute">
+    <cover-view class="navigation" style="padding-top:{{statusHeight+43}}px;">
+        <naviBar title="畅学卡海报" color="#37383B" titleColor="white" hideIcon="{{true}}"></naviBar>
+    </cover-view>
+
+    <view class="canvas-wrap">
+        <canvas canvas-id="fluentCard" style="width:858px;height:1527px;"></canvas>
+    </view>
+
+    <view class="poster" style="top: {{statusHeight + 44 + 23}}px">
+        <image class="logo" src="{{logo}}" mode="aspectFit" />
+        <view class="user">
+            <image class="avatar" src="{{avatar}}" mode="aspectFit" />
+            <view class="user-info">
+                <text class="user-name limit-one-line">我是{{nickname}}</text>
+                <text class="slogan">和我一起畅学花样大学</text>
+            </view>
+        </view>
+
+        <view class="desc-01">
+            <text>花样大学</text>
+            <text>上海首批政府认证线上老年大学</text>
+        </view>
+
+        <view class="preview-images">
+            <view class="preview-item" wx:for="{{previewList}}" wx:key="{{index}}">
+                <image class="preview-img" src="{{item.image}}" mode="aspectFit"></image>
+                <text class="preview-text">{{item.text}}</text>
+            </view>
+        </view>
+
+        <view class="desc-02">
+            <view class="desc-layout">
+                <text>购买花样大学畅学卡，即享</text><text class="no">3</text><text>大权益</text>
+            </view>
+
+            <view class="permission">
+                <view class="permission-item" wx:for="{{permissionList}}" wx:key="index">
+                    <image class="permission-icon" src="{{item.icon}}" mode="aspectFit"></image>
+                    <view class="permission-info">
+                        <text>{{item.text01}}</text>
+                        <text>{{item.text02}}</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <view class="desc-03">
+            <view class="price">
+                <view>限时特价<text class="discount-price">{{discount_price}}</text>元/年</view>
+                <text class="origin-price">原价{{price}}元/年</text>
+            </view>
+        </view>
+
+        <image class="qrcode" src="{{qrcode}}" mode="aspectFit" />
+    </view>
+
+    <view class="btns" style="height: {{108 + bottomNo}}rpx;">
+        <button open-type="share" class="btn" bindtap="shareToFriend">分享给好友</button>
+        <view class="btn extrude" bindtap="saveToLocalAlbum">保存到相册</view>
+    </view>
+</view>

@@ -1,6 +1,6 @@
-/* 畅学卡售前页 */
+/* 畅学卡详情页 */
 @import "../../assets/css/common.wxss";
-.join-video-member {
+.fluent-learn-info {
     padding-bottom: 338rpx;
 }
 
@@ -9,30 +9,9 @@
     width: 100vw;
 }
 
-.member-card {
-    width: 650rpx;
-    height: 280rpx;
-    margin: 40rpx auto 58rpx;
-    box-sizing: border-box;
-    border-radius: 20rpx;
-    padding: 40rpx;
-    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612507698FTkFlf.jpg") no-repeat center;
-    background-size: contain;
-}
-
-.card-title {
-    font: 500 40rpx/40rpx PingFangSC;
-    color: #834B25;
-}
-
-.card-desc {
-    margin-top: 20rpx;
-    font: 32rpx/32rpx PingFangSC;
-}
-
 /* 权益 */
 .interest {
-    margin: 0 30rpx 48rpx;
+    margin: 40rpx 30rpx 48rpx;
     width: 470rpx;
     height: 88rpx;
 }
@@ -60,7 +39,7 @@
 
 /* 精品课 */
 .course {
-    margin: 80rpx 30rpx 0;
+    margin: 100rpx 30rpx 0;
     font: 500 52rpx/52rpx PingFangSC;
 }
 
@@ -98,8 +77,16 @@
 }
 
 .visited {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
     font: 24rpx/24rpx PingFangSC;
     color: rgba(0,0,0, 0.6);
+}
+
+.learn {
+    font: 500 32rpx/32rpx PingFangSC;
+    color: #CC0000;
 }
 
 .share-btn {
@@ -138,8 +125,7 @@
     background: #CC0000;
 }
 
-.line-price {
-    text-decoration: line-through;
+.sub-text {
     color: rgba(255,255,255, 0.8);
     font: 500 28rpx/28rpx PingFangSC;
 }

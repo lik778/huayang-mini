@@ -1,21 +1,9 @@
 import md5 from 'md5'
-import {
-	GLOBAL_KEY,
-	ROOT_URL,
-	URL,
-	WeChatLiveStatus
-} from '../lib/config'
-import {
-	createOrder
-} from "../api/mine/payVip"
-import {
-	getWatchLiveAuth,
-	statisticsWatchNo
-} from "../api/live/course"
+import { GLOBAL_KEY, ROOT_URL, URL, WeChatLiveStatus } from '../lib/config'
+import { createOrder } from "../api/mine/payVip"
+import { getWatchLiveAuth, statisticsWatchNo } from "../api/live/course"
 import request from "../lib/request"
-import {
-	getUserInfo
-} from "../api/mine/index"
+import { getUserInfo } from "../api/mine/index"
 
 const livePlayer = requirePlugin('live-player-plugin')
 
@@ -59,6 +47,32 @@ export const payCourse = function ({
 			data,
 			code
 		}) => {
+			if (code === 0) {
+				requestPayment({
+					prepay_id: data,
+					key: mallKey
+				}).then(res => {
+					resolve(res)
+				}).catch(err => {
+					reject(err)
+				})
+			}
+		})
+	})
+}
+
+// 购买花样畅学卡
+export const payFluentCard = function ({id, name}) {
+	// 调用获取支付凭证
+	let getPaySignParams = {
+		open_id: getLocalStorage(GLOBAL_KEY.openId),
+		product_title: name,
+		order_id: id,
+		app_id: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)).app_id
+	}
+	let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo" //商户key
+	return new Promise((resolve, reject) => {
+		request._post(URL.getPaySign, getPaySignParams).then(({data,code}) => {
 			if (code === 0) {
 				requestPayment({
 					prepay_id: data,
@@ -805,8 +819,8 @@ export const splitTargetNoString = (str, len) => {
 
 //将数字（整数）转为汉字，从零到一亿亿，需要小数的可自行截取小数点后面的数字直接替换对应arr1的读法就行了
 export const convertToChinaNum = (num) => {
-	var arr1 = new Array('零', '一', '二', '三', '四', '五', '六', '七', '八', '九');
-	var arr2 = new Array('', '十', '百', '千', '万', '十', '百', '千', '亿', '十', '百', '千', '万', '十', '百', '千', '亿'); //可继续追加更高位转换值
+	var arr1 = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
+	var arr2 = ['', '十', '百', '千', '万', '十', '百', '千', '亿', '十', '百', '千', '万', '十', '百', '千', '亿']; //可继续追加更高位转换值
 	if (!num || isNaN(num)) {
 		return "零";
 	}
@@ -992,11 +1006,11 @@ export const isIphoneXRSMax = function () {
 };
 
 
-/** 
- * 时间戳格式化函数 
- * @param  {string} format    格式 
- * @param  {int}    timestamp 要格式化的时间 默认为当前时间 
- * @return {string}           格式化的时间字符串 
+/**
+ * 时间戳格式化函数
+ * @param  {string} format    格式
+ * @param  {int}    timestamp 要格式化的时间 默认为当前时间
+ * @return {string}           格式化的时间字符串
  */
 export const formatDate = (format, timestamp) => {
 	var a, jsdate = ((timestamp) ? new Date(timestamp * 1000) : new Date());
@@ -1019,7 +1033,7 @@ export const formatDate = (format, timestamp) => {
 	};
 	var txt_months = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 	var f = {
-		// Day 
+		// Day
 		d: function () {
 			return pad(f.j(), 2)
 		},
@@ -1045,7 +1059,7 @@ export const formatDate = (format, timestamp) => {
 			return (jsdate - new Date(jsdate.getFullYear() + "/1/1")) / 864e5 >> 0
 		},
 
-		// Week 
+		// Week
 		W: function () {
 			var a = f.z(),
 				b = 364 + f.L() - a;
@@ -1062,7 +1076,7 @@ export const formatDate = (format, timestamp) => {
 			}
 		},
 
-		// Month 
+		// Month
 		F: function () {
 			return txt_months[f.n()]
 		},
@@ -1088,12 +1102,12 @@ export const formatDate = (format, timestamp) => {
 			}
 		},
 
-		// Year 
+		// Year
 		L: function () {
 			var y = f.Y();
 			return (!(y & 3) && (y % 1e2 || !(y % 4e2))) ? 1 : 0
 		},
-		//o not supported yet 
+		//o not supported yet
 		Y: function () {
 			return jsdate.getFullYear()
 		},
@@ -1101,7 +1115,7 @@ export const formatDate = (format, timestamp) => {
 			return (jsdate.getFullYear() + "").slice(2)
 		},
 
-		// Time 
+		// Time
 		a: function () {
 			return jsdate.getHours() > 11 ? "pm" : "am"
 		},
@@ -1109,7 +1123,7 @@ export const formatDate = (format, timestamp) => {
 			return f.a().toUpperCase()
 		},
 		B: function () {
-			// peter paul koch: 
+			// peter paul koch:
 			var off = (jsdate.getTimezoneOffset() + 60) * 60;
 			var theSeconds = (jsdate.getHours() * 3600) + (jsdate.getMinutes() * 60) + jsdate.getSeconds() + off;
 			var beat = Math.floor(theSeconds / 86.4);
@@ -1137,11 +1151,11 @@ export const formatDate = (format, timestamp) => {
 		s: function () {
 			return pad(jsdate.getSeconds(), 2)
 		},
-		//u not supported yet 
+		//u not supported yet
 
-		// Timezone 
-		//e not supported yet 
-		//I not supported yet 
+		// Timezone
+		//e not supported yet
+		//I not supported yet
 		O: function () {
 			var t = pad(Math.abs(jsdate.getTimezoneOffset() / 60 * 100), 4);
 			if (jsdate.getTimezoneOffset() > 0) t = "-" + t;
@@ -1152,14 +1166,14 @@ export const formatDate = (format, timestamp) => {
 			var O = f.O();
 			return (O.substr(0, 3) + ":" + O.substr(3, 2))
 		},
-		//T not supported yet 
-		//Z not supported yet 
+		//T not supported yet
+		//Z not supported yet
 
-		// Full Date/Time 
+		// Full Date/Time
 		c: function () {
 			return f.Y() + "-" + f.m() + "-" + f.d() + "T" + f.h() + ":" + f.i() + ":" + f.s() + f.P()
 		},
-		//r not supported yet 
+		//r not supported yet
 		U: function () {
 			return Math.round(jsdate.getTime() / 1000)
 		}
@@ -1168,13 +1182,13 @@ export const formatDate = (format, timestamp) => {
 	return format.replace(/[\\]?([a-zA-Z])/g, function (t, s) {
 		let ret = ''
 		if (t != s) {
-			// escaped 
+			// escaped
 			ret = s;
 		} else if (f[s]) {
-			// a date function exists 
+			// a date function exists
 			ret = f[s]();
 		} else {
-			// nothing special 
+			// nothing special
 			ret = s;
 		}
 		return ret;

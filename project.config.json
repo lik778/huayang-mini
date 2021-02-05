@@ -64,7 +64,7 @@
         {
           "name": "subLive/courseList/courseList",
           "pathName": "subLive/courseList/courseList",
-          "query": "id=13",
+          "query": "id=1",
           "scene": null
         },
         {
@@ -200,10 +200,9 @@
           "scene": null
         },
         {
-          "id": 20,
           "name": "subCourse/videoCourse/videoCourse",
           "pathName": "subCourse/videoCourse/videoCourse",
-          "query": "videoId=30",
+          "query": "videoId=56",
           "scene": null
         },
         {
@@ -366,6 +365,30 @@
           "name": "subCourse/cooperationPage/cooperationPage",
           "pathName": "subCourse/cooperationPage/cooperationPage",
           "query": "packageId=9628767710351360",
+          "scene": null
+        },
+        {
+          "name": "畅学卡售前页",
+          "pathName": "mine/joinFluentLearn/joinFluentLearn",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "畅学卡详情页",
+          "pathName": "mine/fluentLearnInfo/fluentLearnInfo",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "畅学卡海报页",
+          "pathName": "mine/fluentCardDistribute/fluentCardDistribute",
+          "query": "inviteId=11467959679586304",
+          "scene": null
+        },
+        {
+          "name": "提现页",
+          "pathName": "mine/convertCash/convertCash",
+          "query": "",
           "scene": null
         }
       ]

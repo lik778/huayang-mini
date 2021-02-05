@@ -1,19 +1,7 @@
-import {
-	getLocalStorage,
-	hasAccountInfo,
-	hasUserInfo
-} from "../../utils/util"
-import {
-	GLOBAL_KEY
-} from "../../lib/config"
-import {
-	getTaskStream
-} from "../../api/task/index"
-import {
-	getCampDetail,
-	getHasJoinCamp,
-	getVideoTypeList
-} from "../../api/course/index"
+import { getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
+import { getTaskStream } from "../../api/task/index"
+import { getCampDetail, getHasJoinCamp, getVideoTypeList } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
 
 const NAME = "themeTaskPage"
@@ -39,7 +27,8 @@ Page({
 		didShowTip: false,
 		firstTaskCardHeight: 0,
 		cachedAction: null,
-		scrollTopNumber: 0 // 页面滑动位置
+		scrollTopNumber: 0, // 页面滑动位置
+		didFromCooperationPage: false, // 是否来自资源合作页面
 	},
 
 	/**
@@ -57,7 +46,8 @@ Page({
 		this.setData({
 			kecheng_type,
 			kecheng_id,
-			statusBarHeight
+			statusBarHeight,
+			didFromCooperationPage: !!from_co_channel
 		})
 		this.getDetail()
 
@@ -176,6 +166,14 @@ Page({
 				path: `/subCourse/themeTask/themeTask?kecheng_type=${this.data.kecheng_type}&kecheng_id=${this.data.kecheng_id}`
 			}
 		}
+	},
+	/**
+	 * 发布作业
+	 */
+	goToLaunchPage() {
+		wx.navigateTo({
+			url: `/subCourse/launchTask/launchTask?fromPageName=${NAME}&themeType=${this.data.kecheng_type}&themeId=${this.data.kecheng_id}&themeTitle=${this.data.themeTitle}`
+		})
 	},
 	/**
 	 * 跳转到视频系列课
