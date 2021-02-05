@@ -52,15 +52,7 @@ Page({
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
-		// 已购买畅学卡的用户访问时跳转到权益页
-		if (hasUserInfo() && hasAccountInfo()) {
-			let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-			getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
-				if ($notNull(data) && data.status === FluentLearnUserType.active) {
-					wx.redirectTo({url: "/mine/fluentLearnInfo/fluentLearnInfo"})
-				}
-			})
-		}
+		this.checkUserFluentLearnStatus()
 	},
 
 	/**
@@ -163,6 +155,14 @@ Page({
 	 * 授权成功
 	 */
 	authCompleteEvent() {
+		this.checkUserFluentLearnStatus()
+		this.setData({didShowAuth: false})
+	},
+	/**
+	 * 检查用户畅学卡状态
+	 */
+	checkUserFluentLearnStatus() {
+		if (!hasUserInfo() || !hasAccountInfo()) return
 		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
 		getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
 			if ($notNull(data) && data.status === FluentLearnUserType.active) {
@@ -179,7 +179,6 @@ Page({
 				})
 			}
 		})
-		this.setData({didShowAuth: false})
 	},
 	/**
 	 * 购买畅学卡

@@ -18,7 +18,8 @@
             <image bindtap="goToJoinBootcamp" wx:else class="not-join-btn" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607760202LgfwLA.jpg"></image>
         </view>
         <view class="course-footer" wx:else>
-            <image bindtap="goToCoursePage" class="continue-btn" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608019654hdgrfl.jpg"></image>
+            <image wx:if="{{didFromCooperationPage}}" bindtap="goToLaunchPage" class="continue-btn" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1607997581SoBfDB.jpg"></image>
+            <image wx:else bindtap="goToCoursePage" class="continue-btn" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1608019654hdgrfl.jpg"></image>
         </view>
     </block>
 

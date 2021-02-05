@@ -189,7 +189,7 @@ Page({
 		await drawImage(ctx, this.data.logo, 88, 31, 121, 19)
 		// 用户信息
 		await drawCircleHeadIcon(ctx, this.data.avatar, 54, 106, 24)
-		await drawFont(ctx, calcStringLen(this.data.nickname) > 8 ? `我是${splitTargetNoString(this.data.nickname, 16)}..` : `我是${this.data.nickname}`, '#000000', "400", "PingFangSC", 16, 90, 86)
+		await drawFont(ctx, calcStringLen(this.data.nickname) > 16 ? `我是${splitTargetNoString(this.data.nickname, 16)}..` : `我是${this.data.nickname}`, '#000000', "400", "PingFangSC", 16, 90, 86)
 		await drawFont(ctx, "和我一起畅学花样大学", '#000000', "500", "PingFangSC", 16, 90, 110)
 		// 介绍
 		await drawFont(ctx, "花样大学", '#765534', "400", "PingFangSC", 14, 30, 155)
@@ -218,7 +218,6 @@ Page({
 		ctx.draw(false, () => {
 			this._saveCanvasImageToLocal("fluentCard")
 				.then(({tempFilePath, errMsg}) => {
-					console.log(errMsg)
 					if (errMsg === "canvasToTempFilePath:ok") {
 						queryWxAuth(WX_AUTH_TYPE.writePhotosAlbum)
 							.then(() => {
