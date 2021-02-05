@@ -30,7 +30,9 @@
         </view>
 
         <view class="desc-02">
-            <image class="desc-layout" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612429738OxiISK.jpg" mode="aspectFit"></image>
+            <view class="desc-layout">
+                <text>购买花样大学畅学卡，即享</text><text class="no">3</text><text>大权益</text>
+            </view>
 
             <view class="permission">
                 <view class="permission-item" wx:for="{{permissionList}}" wx:key="index">

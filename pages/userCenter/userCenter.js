@@ -1,7 +1,13 @@
 import { FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
 import { getFindBanner, getPhoneNumber } from "../../api/course/index"
-import { getFluentCardInfo, getUserGuideLink, getUserInfo, getUserOwnerClasses } from "../../api/mine/index"
+import {
+  getFluentCardInfo,
+  getFluentLearnInfo,
+  getUserGuideLink,
+  getUserInfo,
+  getUserOwnerClasses
+} from "../../api/mine/index"
 import {
   $notNull,
   getLocalStorage,
@@ -38,6 +44,8 @@ Page({
     disHasFluentLearnUserInfo: false, // 是否有畅学卡会员信息
     isFluentLearnExpired: false, // 畅学卡依然有效
     fluentCardExpireTime: undefined,
+    cardName: "", // 畅学卡名称
+    cardDesc: "", // 畅学卡描述
   },
   handleNickname(name) {
     return splitTargetNoString(name, 16)
@@ -331,6 +339,14 @@ Page({
     }
 
     this.calcUserCreatedTime()
+
+    // 获取畅学卡文案
+    getFluentLearnInfo().then(({data}) => {
+      this.setData({
+        cardName: data.card_name,
+        cardDesc: data.description,
+      })
+    })
   },
   /**
    * 生命周期函数--监听页面加载

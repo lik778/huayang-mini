@@ -85,7 +85,7 @@
 }
 
 .learn {
-    font: 32rpx/32rpx PingFangSC;
+    font: 500 32rpx/32rpx PingFangSC;
     color: #CC0000;
 }
 

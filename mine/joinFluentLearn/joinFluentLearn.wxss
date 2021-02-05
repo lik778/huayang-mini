@@ -11,11 +11,11 @@
 
 .member-card {
     width: 650rpx;
-    height: 282rpx;
+    height: 280rpx;
     margin: 40rpx auto 58rpx;
     box-sizing: border-box;
     padding: 40rpx;
-    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1611889498TCmAxy.jpg") no-repeat center;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612507698FTkFlf.jpg") no-repeat center;
     background-size: contain;
 }
 

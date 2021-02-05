@@ -109,8 +109,15 @@
 }
 
 .desc-layout {
-    width: 448rpx;
-    height: 48rpx;
+    display: flex;
+    align-items: center;
+    font: 500 28rpx/42rpx PingFangSC;
+    color: #765534;
+}
+
+.desc-layout .no {
+    font: bold 48rpx/48rpx PingFangSC;
+    color: #DEA265;
 }
 
 .permission {
@@ -167,6 +174,8 @@
     left: 380rpx;
     width: 132rpx;
     height: 132rpx;
+    padding: 6rpx;
+    background: white;
     border-radius: 999rpx;
 }
 

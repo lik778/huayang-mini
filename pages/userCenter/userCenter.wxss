@@ -69,16 +69,16 @@
     position: relative;
     top: -108rpx;
     width: 650rpx;
-    height: 282rpx;
+    height: 280rpx;
     margin: 0 auto 42rpx;
     padding: 40rpx 40rpx 30rpx;
     box-sizing: border-box;
-    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1611889498TCmAxy.jpg") no-repeat center;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612507698FTkFlf.jpg") no-repeat center;
     background-size: contain;
 }
 
 .vip-card.overdue {
-    background-image: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612340214KVXjtD.jpg");
+    background-image: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612507782rKcPcv.jpg");
 }
 
 .card-title {

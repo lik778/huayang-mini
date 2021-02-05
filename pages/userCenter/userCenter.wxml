@@ -21,8 +21,8 @@
 	<!-- 畅学卡 -->
 	<view class="vip-card {{ isFluentLearnExpired && 'overdue'}}" bindtap="onFluentCardTap">
 		<view>
-			<view class="card-title">花样大学畅学卡</view>
-			<view class="card-desc">精彩课程，随时随地，想看就看</view>
+			<view class="card-title">{{cardName}}</view>
+			<view class="card-desc">{{cardDesc}}</view>
 		</view>
 		<view class="card-data">
 			<view class="card-info">

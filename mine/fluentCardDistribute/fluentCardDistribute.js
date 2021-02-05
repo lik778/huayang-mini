@@ -1,4 +1,11 @@
-import { drawCircleHeadIcon, drawFont, drawImage, drawLine, measureTextWidth } from "../../utils/canvas"
+import {
+	drawBorderCircle,
+	drawCircleHeadIcon,
+	drawFont,
+	drawImage,
+	drawLine,
+	measureTextWidth
+} from "../../utils/canvas"
 import {
 	calcStringLen,
 	getLocalStorage,
@@ -21,7 +28,6 @@ Page({
 		statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
 		bg: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612146615YqecUz.jpg",
 		logo: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612147817dYEToM.jpg",
-		layout: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612429738OxiISK.jpg",
 		avatar: "",
 		nickname: "",
 		previewList: [
@@ -44,17 +50,17 @@ Page({
 		],
 		permissionList: [
 			{
-				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612430103EMrieT.jpg",
+				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612507927CdmYow.jpg",
 				text01: "线上课程",
 				text02: "全部免费"
 			},
 			{
-				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612430111OXTZLS.jpg",
+				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612507932rEqXBf.jpg",
 				text01: "线下课程",
 				text02: "优惠礼券"
 			},
 			{
-				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612430115CnWZwW.jpg",
+				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612507936gtNffM.jpg",
 				text01: "线下活动",
 				text02: "免费特权"
 			}
@@ -198,7 +204,9 @@ Page({
 			await drawImage(ctx, this.data.previewList[i].image, 30 + 59 * i, 216, 50, 60)
 			await drawFont(ctx, this.data.previewList[i].text, '#000000', "400", "PingFangSC", 10, 35 + 59 * i, 284)
 		}
-		await drawImage(ctx, this.data.layout, 30, 317, 224, 24)
+		await drawFont(ctx, "购买花样大学畅学卡，即享", '#765534', '500', 'PingFangSC', 14, 30, 323)
+		await drawFont(ctx, "3", '#DEA265', '700', 'PingFangSC', 24, 200, 317)
+		await drawFont(ctx, "大权益", '#765534', '500', 'PingFangSC', 14, 215, 323)
 		for (let i = 0; i < 3; i++) {
 			await drawImage(ctx, this.data.permissionList[i].icon, 28 + 84 * i, 356, 20, 20)
 			await drawFont(ctx, this.data.permissionList[i].text01, '#000000', "400", "PingFangSC", 10, 51 + 84 * i, 354)
@@ -214,7 +222,7 @@ Page({
 		await drawFont(ctx, "元/年", '#000000', "400", "PingFangSC", 14, 35 + text01Width + text02Width, 419 + 8)
 		await drawFont(ctx, `原价${this.data.price}元/年`, 'rgba(0,0,0, 0.5)', "400", "PingFangSC", 12, 35, 452)
 		await drawLine(ctx, 'rgba(0,0,0, 0.5)', 1, 35, 460, 35 + 76, 460)
-		await drawCircleHeadIcon(ctx, this.data.qrcode, 185 + 33, 408 + 33, 33)
+		await drawBorderCircle(ctx, this.data.qrcode, 185 + 33, 408 + 33, 36)
 		ctx.draw(false, () => {
 			this._saveCanvasImageToLocal("fluentCard")
 				.then(({tempFilePath, errMsg}) => {
@@ -261,20 +269,22 @@ Page({
 	// 保存canvas图片到本地
 	_saveCanvasImageToLocal(canvasId, x = 0, y = 0, fileType = 'png') {
 		return new Promise((resolve, reject) => {
-			wx.canvasToTempFilePath({
-				x,
-				y,
-				width: 858,
-				height: 1527,
-				canvasId,
-				fileType,
-				success(result) {
-					resolve(result)
-				},
-				fail(err) {
-					reject(err)
-				}
-			})
+			setTimeout(() => {
+				wx.canvasToTempFilePath({
+					x,
+					y,
+					width: 858,
+					height: 1527,
+					canvasId,
+					fileType,
+					success(result) {
+						resolve(result)
+					},
+					fail(err) {
+						reject(err)
+					}
+				})
+			}, 100)
 		})
 	},
 })
