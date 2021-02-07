@@ -18,4 +18,6 @@
             <view class="record-item-01"><text class="txt-03">{{item.created_at}}</text><text class="txt-04">{{item.status}}</text></view>
         </view>
     </view>
+
+    <fluentLearnModal show="{{didShowFluentLearnModal}}" message="感谢您的分享，提现正在准备中，计划3月初可提现，请等候" bind:confirm="onFluentLearnConfirm" />
 </view>

@@ -670,7 +670,7 @@
 .pay-button-invite-one-left {
   width: 236rpx;
   height: 96rpx;
-  border: 1px solid rgba(0, 0, 0, 0.7);
+  border: 1px solid #CC0000;
   border-radius: 999rpx;
   display: flex;
   flex-direction: column;
@@ -678,13 +678,11 @@
   justify-content: center;
 }
 
-.pay-button-invite-two-left,
+.pay-button-invite-two-left view:first-child,
 .pay-button-invite-one-left view:first-child {
-  font-size: 40rpx;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 600;
-  color: rgba(0, 0, 0, 0.7);
-  line-height: 40rpx;
+  margin-bottom: 14rpx;
+  font: 28rpx/28rpx PingFangSC;
+  color: #CC0000;
 }
 
 .pay-button-invite-one-right {
@@ -701,14 +699,10 @@
   justify-content: center;
 }
 
-.pay-button-invite-two-left,
+.pay-button-invite-two-left view:last-child,
 .pay-button-invite-one-left view:last-child {
-  font-size: 32rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: #000000;
-  line-height: 32rpx;
-  padding-top: 4rpx;
+  font: 500 32rpx/32rpx PingFangSC;
+  color: #CC0000;
 }
 
 .pay-button-invite-two-right {
@@ -723,20 +717,14 @@
 }
 
 .pay-button-invite-two-right view:first-child {
-  font-size: 40rpx;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 600;
-  color: #FFFFFF;
-  line-height: 40rpx;
+  margin-bottom: 14rpx;
+  font: 500 28rpx/28rpx PingFangSC;
+  color: rgba(255,255,255,0.8);
 }
 
 .pay-button-invite-two-right view:last-child {
-  font-size: 32rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
+  font: 500 32rpx/32rpx PingFangSC;
   color: #FFFFFF;
-  line-height: 32rpx;
-  padding-top: 4rpx;
 }
 
 

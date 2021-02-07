@@ -390,6 +390,12 @@
           "pathName": "mine/convertCash/convertCash",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "视频课程详情",
+          "pathName": "subCourse/videoCourse/videoCourse",
+          "query": "videoId=37",
+          "scene": null
         }
       ]
     }

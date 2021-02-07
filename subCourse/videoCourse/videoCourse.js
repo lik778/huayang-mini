@@ -513,7 +513,7 @@ Page({
                   buttonType = ButtonType.fissionAndCountLimitAndFreeDiscount
                 } else if (res.series_detail.invite_count > 0 && res.series_detail.invite_discount > 0) {
                   // 邀请人数不为0 & 优惠折扣不为0
-                  res.series_detail.fission_price = (+res.series_detail.price * res.series_detail.invite_discount / 100).toFixed(2)
+                  res.series_detail.fission_price = Number((+res.series_detail.discount_price * res.series_detail.invite_discount / 100).toFixed(2))
                   buttonType = ButtonType.fissionAndCountLimitAndDiscountLimit
                 }
               }

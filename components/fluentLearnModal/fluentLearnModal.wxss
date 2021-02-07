@@ -1,0 +1,89 @@
+.fluent-learn-modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .4);
+    color: black;
+    z-index: 90;
+}
+
+.box-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 40% auto;
+    width: 600rpx;
+    padding: 116rpx 32rpx 60rpx;
+    box-sizing: border-box;
+    border-radius: 40rpx;
+    background: #F5DFC3;
+}
+
+.box-fade-in {
+    animation: fadeIn 323ms ease-in;
+}
+
+.box-fade-out {
+    animation: fadeOut 161ms ease-out forwards;
+}
+
+.modal-message {
+    text-align: center;
+    font: 36rpx/60rpx PingFangSC;
+    color: black;
+}
+
+.btn {
+    margin-top: 88rpx;
+    width: 504rpx;
+    height: 96rpx;
+    border-radius: 999rpx;
+    box-sizing: border-box;
+    background: linear-gradient(90deg, #262321 0%, #3E3733 100%);
+    font: 500 40rpx/96rpx PingFangSC;
+    text-align: center;
+    color: #F6E5D0;
+}
+
+.btn:active {
+    opacity: 0.9;
+}
+@keyframes fadeIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    25% {
+        transform: scale(0.5);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    75% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(0.5);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}

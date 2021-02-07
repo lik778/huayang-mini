@@ -27,7 +27,8 @@ Page({
 		video_cover: "",
 		hotList: [],
 		didShowAuth: false,
-		payLock: false
+		payLock: false,
+		didShowFluentLearnModal: false
 	},
 
 	/**
@@ -105,6 +106,13 @@ Page({
 		}
 	},
 	/**
+	 * 畅学卡专属弹窗回调事件
+	 */
+	onFluentLearnConfirm() {
+		this.setData({didShowFluentLearnModal: false})
+		wx.reLaunch({url: "/pages/userCenter/userCenter"})
+	},
+	/**
 	 * 跳转到视频详情页
 	 * @param e
 	 */
@@ -167,17 +175,7 @@ Page({
 		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
 		getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
 			if ($notNull(data) && data.status === FluentLearnUserType.active) {
-				wx.showModal({
-					title: '提示',
-					content: '您已拥有花样大学畅学卡',
-					confirmText: '立即查看',
-					showCancel: false,
-					success: (res) => {
-						if (res.confirm) {
-							wx.reLaunch({url: "/pages/userCenter/userCenter"})
-						}
-					}
-				})
+				this.setData({didShowFluentLearnModal: true})
 			}
 		})
 	},
