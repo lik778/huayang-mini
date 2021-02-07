@@ -59,7 +59,7 @@ Page({
    * 跳转到提现页
    */
   goToConvertCashPage() {
-    bxPoint("mine_finalamount", {mine_finalamount: this.data.userInfo.amount}, false)
+    bxPoint("mine_finalamount", {mine_finalamount: $notNull(this.data.userInfo) ? this.data.userInfo.amount : 0}, false)
     if (!hasUserInfo() || !hasAccountInfo()) {
       return this.setData({didShowAuth: true})
     }
