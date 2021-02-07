@@ -237,7 +237,7 @@ Page({
 									fail(err) {
 										collectError({
 											level: ErrorLevel.p1,
-											page: "dd.actionPost.saveImageToPhotosAlbum",
+											page: "dd.fluentCardDistribute.saveImageToPhotosAlbum",
 											error_code: 400,
 											error_message: err
 										})
