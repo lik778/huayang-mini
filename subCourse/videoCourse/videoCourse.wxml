@@ -222,8 +222,8 @@
     <view class="pay-button-invite" wx:if='{{buttonType===7||buttonType===8}}'>
       <view class="pay-button-invite-one" wx:if='{{buttonType===7}}'>
         <view class="pay-button-invite-one-left" bindtap="pay">
+          <view>{{videoCourseData.series_detail.discount_price}}元</view>
           <view>直接购买</view>
-          <view>¥{{videoCourseData.series_detail.discount_price}}</view>
         </view>
         <view class="pay-button-invite-one-right subject-bg-color" bindtap="initFissionTask">
           请好友助力解锁课程
@@ -231,12 +231,12 @@
       </view>
       <view class="pay-button-invite-two" wx:if='{{buttonType===8}}'>
         <view class="pay-button-invite-two-left" bindtap="pay">
+          <view>{{videoCourseData.series_detail.discount_price}}元</view>
           <view>直接购买</view>
-          <view>¥{{videoCourseData.series_detail.discount_price}}</view>
         </view>
         <view class="pay-button-invite-two-right subject-bg-color" bindtap="initFissionTask">
+          <view>{{videoCourseData.series_detail.fission_price}}元</view>
           <view>请好友助力{{videoCourseData.series_detail.invite_discount/10}}折优惠购</view>
-          <view>¥{{videoCourseData.series_detail.fission_price}}</view>
         </view>
       </view>
     </view>

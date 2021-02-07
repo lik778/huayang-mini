@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "fluentLearnModal": "../../components/fluentLearnModal/fluentLearnModal"
+  },
   "enablePullDownRefresh": true
 }
