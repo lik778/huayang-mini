@@ -13,8 +13,7 @@ Page({
     offset: 0,
     limit: 10,
     recordList: [],
-    status: ["", "审核中", "审核失败", "审核成功"],
-    didShowFluentLearnModal: false
+    status: ["", "审核中", "审核失败", "审核成功"]
   },
 
   /**
@@ -69,15 +68,16 @@ Page({
     }
 
   },
-  /**
-   * 畅学卡专属弹窗回调事件
-   */
-  onFluentLearnConfirm() {
-    this.setData({didShowFluentLearnModal: false})
-  },
   withdrawal() {
     bxPoint("mine_finalamount_withdraw", {}, false)
-    this.setData({didShowFluentLearnModal: true})
+    wx.showModal({
+      title: '提示',
+      content: '感谢您的分享，提现正在准备中，计划3月初可提现，请等候',
+      showCancel: false,
+      success: (res) => {
+        if (res.confirm) {}
+      }
+    })
   },
   run() {
     bxPoint("mine_finalamount_list", {})
