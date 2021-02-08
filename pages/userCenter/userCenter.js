@@ -3,6 +3,7 @@ import dayjs from "dayjs"
 import { getFindBanner, getPhoneNumber } from "../../api/course/index"
 import {
   getFluentCardInfo,
+  getFluentDistributeGuide,
   getFluentLearnInfo,
   getUserGuideLink,
   getUserInfo,
@@ -46,6 +47,21 @@ Page({
     fluentCardExpireTime: undefined,
     cardName: "", // 畅学卡名称
     cardDesc: "", // 畅学卡描述
+    auditInfo: null, // 畅学卡引导私域配置信息
+    didVisibleAuditBtn: false, // 是否展示成为花样合伙人按钮
+  },
+  /**
+   * 指导按钮点击事件
+   */
+  onGuideBtnTap() {
+    wx.navigateTo({
+      url: `/mine/normal-web-view/normal-web-view?link=${this.data.auditInfo.link}`,
+      fail() {
+        wx.switchTab({
+          url: "pages/userCenter/userCenter"
+        })
+      }
+    })
   },
   /**
    * 处理长昵称
@@ -227,6 +243,17 @@ Page({
       if ($notNull(data)) {
         // 畅学卡是否已过期
         let isFluentLearnExpired = data.status === FluentLearnUserType.deactive
+
+        // 畅学卡有效的用户引导加私域
+        if (!isFluentLearnExpired) {
+          getFluentDistributeGuide().then(({data}) => {
+            this.setData({
+              didVisibleAuditBtn: data.status === 1,
+              auditInfo: data
+            })
+          })
+        }
+
         this.setData({
           fluentLearnUserInfo: data,
           disHasFluentLearnUserInfo: !!data,
@@ -302,7 +329,6 @@ Page({
   },
   // 公用方法
   kingOfTheWorld() {
-    this.getNumber()
     this.getUserSingerInfo().then()
   },
   // 联系客服
@@ -380,6 +406,7 @@ Page({
 
     this.queryContentInfo()
     this.getBanner()
+    this.getNumber()
 
     // 每次访问个人中心更新最新的账户数据和畅学卡信息
     if (hasAccountInfo() && hasUserInfo()) {

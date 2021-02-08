@@ -226,3 +226,8 @@ export const getDistributeRecordList = (parasm) => {
 export const getKechengWithFluentCard = (params) => {
   return request._post(URL.acceptKechengWithFluentCard, params)
 }
+
+// 获取畅学卡引导私域配置信息
+export const getFluentDistributeGuide = () => {
+  return request._get(URL.queryFluentDistributeGuide)
+}
