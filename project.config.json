@@ -370,7 +370,7 @@
         {
           "name": "畅学卡售前页",
           "pathName": "mine/joinFluentLearn/joinFluentLearn",
-          "query": "scene=0%2F2",
+          "query": "scene=123123123&channel=3",
           "scene": null
         },
         {
