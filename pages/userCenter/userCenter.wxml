@@ -21,8 +21,8 @@
 	<!-- 畅学卡 -->
 	<view class="vip-card {{ isFluentLearnExpired && 'overdue'}}" bindtap="onFluentCardTap">
 		<view>
-			<view class="card-title">{{cardName}}</view>
-			<view class="card-desc">{{cardDesc}}</view>
+			<view class="card-title {{ isFluentLearnExpired && 'overdue'}}">{{cardName}}</view>
+			<view class="card-desc {{ isFluentLearnExpired && 'overdue'}}">{{cardDesc}}</view>
 		</view>
 		<view class="card-data">
 			<view class="card-info">
@@ -32,9 +32,13 @@
 					<text class="expireDate overdue" wx:else>已过期</text>
 				</block>
 			</view>
-			<view class="vip-btn">{{cardBtnText}} ›</view>
+			<view class="vip-btn {{ isFluentLearnExpired && 'overdue'}}">{{cardBtnText}} ›</view>
 		</view>
 	</view>
+
+	<!-- 引导按钮 -->
+	<view class="guide-btn" wx:if="{{didVisibleAuditBtn}}" bindtap="onGuideBtnTap">{{auditInfo.text}}</view>
+
 	<!-- 我的学习 -->
 	<view class="person">
 		<view class="layout">我的学习</view>
@@ -55,7 +59,7 @@
 				<view class="ele-btn">查看</view>
 			</view>
 		</view>
-		<image bindtap="joinPrivateDomain" mode="aspectFit"
+		<image bindtap="joinPrivateDomain" wx:if="{{!didVisibleAuditBtn}}" mode="aspectFit"
 			src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603873700ScBmHI.jpg" class="add-btn"></image>
 	</view>
 	<!-- 广告位 -->

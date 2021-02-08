@@ -28,7 +28,8 @@ Page({
 		hotList: [],
 		didShowAuth: false,
 		payLock: false,
-		didShowFluentLearnModal: false
+		didShowFluentLearnModal: false,
+		payChannel: undefined, // 支付渠道字段
 	},
 
 	/**
@@ -36,15 +37,23 @@ Page({
 	 */
 	onLoad: function (options) {
 		let {scene, inviteId} = options
-    if (scene) {
-      // 小程序二维码
-      let sceneAry = decodeURIComponent(scene).split('/')
-      let [sceneInviteId] = sceneAry
-      this.generateSuperiorDistributeUserCache(sceneInviteId)
-    } else {
-      // 小程序卡片
-      this.generateSuperiorDistributeUserCache(inviteId)
-    }
+		if (scene) {
+			// 小程序二维码
+			let sceneAry = decodeURIComponent(scene).split('/')
+			let [sceneInviteId, channel] = sceneAry
+
+			/**
+			 * 小程序码中满足 sceneInviteId=0 且 channel!=undefined 时，在支付时上传渠道来源
+			 */
+			if (sceneInviteId == 0 && channel != undefined) {
+				this.setData({payChannel: channel})
+			}
+
+			this.generateSuperiorDistributeUserCache(sceneInviteId)
+		} else {
+			// 小程序卡片
+			this.generateSuperiorDistributeUserCache(inviteId)
+		}
 
 		this.getCardInfo()
 		this.getHotkecheng()
@@ -102,7 +111,7 @@ Page({
 		let accountInfo = accountInfoJsonData ? JSON.parse(accountInfoJsonData) : {}
 		return {
 			title: "课程全解锁，一卡学全年",
-			path: `/mine/joinFluentLearn/joinFluentLearn${accountInfo.snow_id ? '?inviteId='+accountInfo.snow_id : ''}`
+			path: `/mine/joinFluentLearn/joinFluentLearn${accountInfo.snow_id ? '?inviteId=' + accountInfo.snow_id : ''}`
 		}
 	},
 	/**
@@ -128,13 +137,13 @@ Page({
 		})
 	},
 	/**
-   * 生成上级分销用户信息缓存
-   */
-  generateSuperiorDistributeUserCache(superiorId) {
-    if (!superiorId) return
-    setLocalStorage(GLOBAL_KEY.superiorDistributeUserId, superiorId)
-    setLocalStorage(GLOBAL_KEY.superiorDistributeExpireTime, dayjs().add(2, "hour").format("YYYY-MM-DD HH:mm:ss"))
-  },
+	 * 生成上级分销用户信息缓存
+	 */
+	generateSuperiorDistributeUserCache(superiorId) {
+		if (!superiorId) return
+		setLocalStorage(GLOBAL_KEY.superiorDistributeUserId, superiorId)
+		setLocalStorage(GLOBAL_KEY.superiorDistributeExpireTime, dayjs().add(2, "hour").format("YYYY-MM-DD HH:mm:ss"))
+	},
 	/**
 	 * 清除上级分销用户信息缓存
 	 */
@@ -210,7 +219,7 @@ Page({
 		// 检查是否存在分销上级用户ID
 		let distributeUserId = getLocalStorage(GLOBAL_KEY.superiorDistributeUserId)
 		if (distributeUserId) {
-			let distributeUserExpireTime= getLocalStorage(GLOBAL_KEY.superiorDistributeExpireTime)
+			let distributeUserExpireTime = getLocalStorage(GLOBAL_KEY.superiorDistributeExpireTime)
 			if (dayjs(distributeUserExpireTime).isAfter(dayjs())) {
 				// 分销ID有效，上传分销上级用户ID
 				params['recommend_user_snow_id'] = distributeUserId
@@ -218,6 +227,10 @@ Page({
 				// 分销ID过期，清除分销信息
 				this.clearSuperiorDistributeUserCache()
 			}
+		}
+		// 检查是否存在渠道字段
+		if (this.data.payChannel != undefined) {
+			params['channel'] = this.data.payChannel
 		}
 		payForFluentCard(params).then(({data, code, message}) => {
 			if (code === 0) {

@@ -74,7 +74,7 @@
     padding: 40rpx 40rpx 30rpx;
     box-sizing: border-box;
     border-radius: 20rpx;
-    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612507698FTkFlf.jpg") no-repeat center;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612780577ayAFJu.jpg") no-repeat center;
     background-size: contain;
 }
 
@@ -85,7 +85,7 @@
 .card-title {
     margin-bottom: 20rpx;
     font: 500 40rpx/40rpx PingFangSC;
-    color: #834B25;
+    color: #FFE8D0;
 }
 
 .card-title.overdue {
@@ -94,6 +94,11 @@
 
 .card-desc {
     font: 32rpx/32rpx PingFangSC;
+    color: #FFFFFF;
+}
+
+.card-desc.overdue {
+    color: black;
 }
 
 .card-data {
@@ -109,6 +114,7 @@
 }
 
 .card-nick-name {
+    color: #FFE8D0;
     font: 500 28rpx/28rpx PingFangSC;
 }
 
@@ -119,6 +125,7 @@
 .expireDate {
     margin-top: 16rpx;
     font: 400 28rpx/28rpx PingFangSC;
+    color: #FFE8D0;
 }
 
 .expireDate.overdue {
@@ -126,13 +133,42 @@
 }
 
 .vip-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 216rpx;
     height: 72rpx;
     border-radius: 999rpx;
+    border: 2rpx solid #F0D3B4;
+    box-sizing: border-box;
     text-align: center;
+    color: #F2D7B9;
+    font: 32rpx/32rpx PingFangSC;
+}
+
+.vip-btn.overdue {
+    border: 0 none;
     color: #F6E5D0;
-    font: 32rpx/72rpx PingFangSC;
     background: linear-gradient(90deg, #262321 0%, #3E3733 100%);
+}
+
+/* 引导按钮 */
+.guide-btn {
+    position: relative;
+    top: -108rpx;
+    width: 630rpx;
+    height: 88rpx;
+    margin: 0 auto 40rpx;
+    border-radius: 999rpx;
+    color: #834B25;
+    font: 500 36rpx/88rpx PingFangSC;
+    text-align: center;
+    background: linear-gradient(90deg, #FBD8B3 0%, #ECCBA9 100%);
+    animation: flashing 5s ease infinite;
+}
+
+.guide-btn:active {
+    opacity: 0.9;
 }
 
 /* 我的 */
