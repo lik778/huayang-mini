@@ -21,8 +21,8 @@
 	<!-- 畅学卡 -->
 	<view class="vip-card {{ isFluentLearnExpired && 'overdue'}}" bindtap="onFluentCardTap">
 		<view>
-			<view class="card-title">{{cardName}}</view>
-			<view class="card-desc">{{cardDesc}}</view>
+			<view class="card-title {{ isFluentLearnExpired && 'overdue'}}">{{cardName}}</view>
+			<view class="card-desc {{ isFluentLearnExpired && 'overdue'}}">{{cardDesc}}</view>
 		</view>
 		<view class="card-data">
 			<view class="card-info">
@@ -32,7 +32,7 @@
 					<text class="expireDate overdue" wx:else>已过期</text>
 				</block>
 			</view>
-			<view class="vip-btn">{{cardBtnText}} ›</view>
+			<view class="vip-btn {{ isFluentLearnExpired && 'overdue'}}">{{cardBtnText}} ›</view>
 		</view>
 	</view>
 
