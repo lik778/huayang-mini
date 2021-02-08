@@ -36,31 +36,16 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		let {scene, inviteId, channel} = options
-		if (scene) {
-			// 小程序二维码
-			let sceneAry = decodeURIComponent(scene).split('/')
-			let [sceneInviteId, sceneChannel] = sceneAry
+		let { inviteId, channel} = options
 
-			/**
-			 * 小程序码中满足 sceneInviteId=0 且 sceneChannel!=undefined 时，在支付时上传渠道来源
-			 */
-			if (sceneInviteId == 0 && sceneChannel != undefined) {
-				this.setData({payChannel: sceneChannel})
-			}
-
-			this.generateSuperiorDistributeUserCache(sceneInviteId)
-		} else {
-
-			/**
-			 * 小程序卡片中满足 sceneInviteId=0 且 channel!=undefined 时，在支付时上传渠道来源
-			 */
-			if (inviteId == 0 && channel != undefined) {
-				this.setData({payChannel: channel})
-			}
-			// 小程序卡片
-			this.generateSuperiorDistributeUserCache(inviteId)
+		/**
+		 * 小程序卡片中满足 sceneInviteId=0 且 channel!=undefined 时，在支付时上传渠道来源
+		 */
+		if (inviteId == 0 && channel != undefined) {
+			this.setData({payChannel: channel})
 		}
+		// 小程序卡片
+		this.generateSuperiorDistributeUserCache(inviteId)
 
 		this.getCardInfo()
 		this.getHotkecheng()
