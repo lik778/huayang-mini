@@ -36,21 +36,28 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		let {scene, inviteId} = options
+		let {scene, inviteId, channel} = options
 		if (scene) {
 			// 小程序二维码
 			let sceneAry = decodeURIComponent(scene).split('/')
-			let [sceneInviteId, channel] = sceneAry
+			let [sceneInviteId, sceneChannel] = sceneAry
 
 			/**
-			 * 小程序码中满足 sceneInviteId=0 且 channel!=undefined 时，在支付时上传渠道来源
+			 * 小程序码中满足 sceneInviteId=0 且 sceneChannel!=undefined 时，在支付时上传渠道来源
 			 */
-			if (sceneInviteId == 0 && channel != undefined) {
-				this.setData({payChannel: channel})
+			if (sceneInviteId == 0 && sceneChannel != undefined) {
+				this.setData({payChannel: sceneChannel})
 			}
 
 			this.generateSuperiorDistributeUserCache(sceneInviteId)
 		} else {
+
+			/**
+			 * 小程序卡片中满足 sceneInviteId=0 且 channel!=undefined 时，在支付时上传渠道来源
+			 */
+			if (inviteId == 0 && channel != undefined) {
+				this.setData({payChannel: channel})
+			}
 			// 小程序卡片
 			this.generateSuperiorDistributeUserCache(inviteId)
 		}
@@ -218,7 +225,7 @@ Page({
 		}
 		// 检查是否存在分销上级用户ID
 		let distributeUserId = getLocalStorage(GLOBAL_KEY.superiorDistributeUserId)
-		if (distributeUserId) {
+		if (distributeUserId != 0) {
 			let distributeUserExpireTime = getLocalStorage(GLOBAL_KEY.superiorDistributeExpireTime)
 			if (dayjs(distributeUserExpireTime).isAfter(dayjs())) {
 				// 分销ID有效，上传分销上级用户ID
