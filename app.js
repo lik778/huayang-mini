@@ -1,5 +1,5 @@
 //app.js
-import { getLocalStorage, setLocalStorage } from './utils/util'
+import { getLocalStorage, hasAccountInfo, removeLocalStorage, setLocalStorage } from './utils/util'
 import { GLOBAL_KEY } from './lib/config'
 import { collectError } from "./api/auth/index"
 
@@ -10,6 +10,15 @@ App({
 			family: 'Condensed',
 			source: 'url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/font/DIN%20Condensed%20Bold.ttf")'
 		})
+
+		// 每次打开小程序执行一次，检查用户本地账户信息是否存在snow_id，不存在则清除本地账户相关数据
+		if (hasAccountInfo()) {
+			let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) || {}
+			if (!accountInfo.snow_id) {
+				removeLocalStorage(GLOBAL_KEY.accountInfo)
+			}
+		}
+
 		// wx.getLocation({
 		// 	type: 'wgs84',
 		// 	isHighAccuracy:true,
