@@ -80,7 +80,7 @@ Page({
               src: res.tempFilePath,
               success: (res1) => {
                 this.setData({
-                  logoStyle: res1.height > res1.width ? 0 : 1
+                  logoStyle: res1.height >= res1.width ? 0 : 1
                 })
                 resolve()
               }
