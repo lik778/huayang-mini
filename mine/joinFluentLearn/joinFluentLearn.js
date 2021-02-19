@@ -195,7 +195,7 @@ Page({
 		let t = setTimeout(() => {
 			this.setData({payLock: false})
 			clearTimeout(t)
-		}, 500)
+		}, 1000)
 
 		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
 		let {data} = await getFluentCardInfo({user_snow_id: accountInfo.snow_id})

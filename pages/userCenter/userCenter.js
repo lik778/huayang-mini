@@ -5,6 +5,7 @@ import {
   getFluentCardInfo,
   getFluentDistributeGuide,
   getFluentLearnInfo,
+  getPartnerInfo,
   getUserGuideLink,
   getUserInfo,
   getUserOwnerClasses
@@ -21,6 +22,20 @@ import bxPoint from "../../utils/bxPoint"
 import { getTaskEntranceStatus } from "../../api/task/index"
 import { getYouZanAppId } from "../../api/mall/index"
 
+const Level = [
+  {
+    label: "初级合伙人",
+    value: 1,
+  },
+  {
+    label: "中级合伙人",
+    value: 2,
+  },
+  {
+    label: "高级合伙人",
+    value: 3,
+  },
+];
 Page({
 
   /**
@@ -49,6 +64,8 @@ Page({
     cardDesc: "", // 畅学卡描述
     auditInfo: null, // 畅学卡引导私域配置信息
     didVisibleAuditBtn: false, // 是否展示成为花样合伙人按钮
+    partnerInfo: null, // 合伙人信息
+    isPartner: false, // 当前用户是否是合伙人
   },
   /**
    * 指导按钮点击事件
@@ -338,6 +355,23 @@ Page({
       phoneNumber: e.currentTarget.dataset.mobile
     })
   },
+  // 查询用户合伙人信息
+  queryUserPartnerInfo() {
+    let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+    getPartnerInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
+      if ($notNull(data)) {
+        let lv = Level.find(_=> _.value === +data.distribute_user.level)
+        let partnerData = {
+          firstNo: data.distribute_user.first_num,
+          secondNo: data.distribute_user.second_num,
+          firstUserAvatars: $notNull(data.first_list) ? data.first_list.map(_=>_.user.avatar_url) : [],
+          secondUserAvatars: $notNull(data.second_list) ? data.second_list.map(_=>_.user.avatar_url) : [],
+          level: $notNull(lv) ? lv.label : ""
+        }
+        this.setData({partnerInfo: partnerData, isPartner: data.distribute_user.status === 2})
+      }
+    })
+  },
   run() {
     // 检查是否展示作业秀入口
     getTaskEntranceStatus().then(({data}) => {
@@ -408,11 +442,15 @@ Page({
     this.getBanner()
     this.getNumber()
 
-    // 每次访问个人中心更新最新的账户数据和畅学卡信息
+
     if (hasAccountInfo() && hasUserInfo()) {
+      // 每次访问个人中心更新最新的账户数据和畅学卡信息
       this.getUserSingerInfo().then(() => {
         this.getFluentInfo()
       })
+
+      // 检查用户合伙人状态
+      this.queryUserPartnerInfo()
     }
   },
 
