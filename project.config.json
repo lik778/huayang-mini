@@ -227,23 +227,8 @@
           "scene": null
         },
         {
-          "id": -1,
-          "name": "pages/userCenter/userCenter",
+          "name": "个人中心",
           "pathName": "pages/userCenter/userCenter",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": 25,
-          "name": "mine/personBootcamp/personBootcamp",
-          "pathName": "mine/personBootcamp/personBootcamp",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "mine/personCourse/personCourse",
-          "pathName": "mine/personCourse/personCourse",
           "query": "",
           "scene": null
         },
@@ -395,6 +380,12 @@
           "name": "视频课程详情",
           "pathName": "subCourse/videoCourse/videoCourse",
           "query": "videoId=37",
+          "scene": null
+        },
+        {
+          "name": "我的学员",
+          "pathName": "mine/distributeRecord/distributeRecord",
+          "query": "",
           "scene": null
         }
       ]

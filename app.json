@@ -58,7 +58,8 @@
         "joinFluentLearn/joinFluentLearn",
         "fluentLearnInfo/fluentLearnInfo",
         "fluentCardDistribute/fluentCardDistribute",
-        "convertCash/convertCash"
+        "convertCash/convertCash",
+        "distributeRecord/distributeRecord"
       ]
     },
     {

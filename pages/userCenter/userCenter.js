@@ -306,6 +306,7 @@ Page({
     this.getUserSingerInfo().then(() => {
       this.getFluentInfo()
     })
+    this.queryUserPartnerInfo()
     this.setData({
       didShowAuth: false
     })
@@ -371,6 +372,11 @@ Page({
         this.setData({partnerInfo: partnerData, isPartner: data.distribute_user.status === 2})
       }
     })
+  },
+  // 跳转到分销人列表页
+  goToDistributeListPage(e) {
+    // e.currentTarget.dataset.index
+    wx.navigateTo({url: ""})
   },
   run() {
     // 检查是否展示作业秀入口
