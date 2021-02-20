@@ -9,7 +9,7 @@ Page({
    */
   data: {
     list: null,
-    currentTab: 2
+    currentTab: 1
   },
 
   /**
@@ -18,7 +18,7 @@ Page({
   onLoad: function (options) {
     let {index} = options
     if (index) {
-      this.setData({currentTab: index})
+      this.setData({currentTab: +index})
     }
   },
 
@@ -101,7 +101,14 @@ Page({
           limit: 10,
           offset: 0
         }).then(({data}) => {
-          console.log(data);
+          data = data || []
+          data = data.map((_) => ({
+            isPartner: _ ? _.status === 2 : false,
+            avatar: _.avatar_url,
+            nickname: _.nick_name,
+            date: _.created_at
+          }))
+          this.setData({list: data.slice()})
         })
         break;
       }

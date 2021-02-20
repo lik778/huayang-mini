@@ -14,6 +14,7 @@ Page({
 		backUrl: "/pages/discovery/discovery",
 		didShowFluentLearnModal: false,
 		didShowAuth: false,
+		btnText: "立即购买"
 	},
 
 	/**
@@ -87,12 +88,11 @@ Page({
 
 		// 合伙人检查
 		let partnerInfo = await getPartnerInfo({user_snow_id: accountInfo.snow_id})
-		console.error(partnerInfo.data);
 		if ($notNull(partnerInfo.data)) {
 			if (partnerInfo.data.distribute_user.status === 2) {
-				this.setData({tipMsg: "您的花样合伙人申请已通过啦", didShowFluentLearnModal: true})
+				this.setData({tipMsg: "您的花样合伙人申请已通过啦", btnText: "去查看", didShowFluentLearnModal: true, backUrl: "/pages/userCenter/userCenter"})
 			} else {
-				this.setData({tipMsg: "您的花样合伙人申请已提交，审核结果会有客服联系您，先去花样大学学习吧", didShowFluentLearnModal: true, backUrl: "/pages/userCenter/userCenter"})
+				this.setData({tipMsg: "您的花样合伙人申请已提交，审核结果会有客服联系您，先去花样大学学习吧", btnText: "去学习", didShowFluentLearnModal: true})
 			}
 			return false
 		}
@@ -106,14 +106,20 @@ Page({
 	// 允许授权
 	authCompleteEvent() {
 		this.setData({didShowAuth: false})
-		this.run()
+		this.reload()
 	},
 	// 取消授权
 	authCancelEvent() {
 		this.setData({didShowAuth: false})
-		this.run()
+		this.reload()
 	},
 	onFluentLearnConfirm() {
 		wx.reLaunch({url: this.data.backUrl})
+	},
+	reload() {
+		let t = setTimeout(() => {
+			this.run()
+			clearTimeout(t)
+		}, 300)
 	}
 })

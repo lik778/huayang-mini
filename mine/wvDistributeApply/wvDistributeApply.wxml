@@ -2,5 +2,5 @@
     <web-view wx:if="{{h5Url}}" src="{{h5Url}}"></web-view>
     <!-- 授权弹窗 -->
     <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent" />
-    <fluentLearnModal show="{{didShowFluentLearnModal}}" message="{{tipMsg}}" confirmText="立即查看" bind:confirm="onFluentLearnConfirm" />
+    <fluentLearnModal show="{{didShowFluentLearnModal}}" message="{{tipMsg}}" confirmText="{{btnText}}" bind:confirm="onFluentLearnConfirm" />
 </view>

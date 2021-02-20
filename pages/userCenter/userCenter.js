@@ -366,7 +366,7 @@ Page({
           firstNo: data.distribute_user.first_num,
           secondNo: data.distribute_user.second_num,
           firstUserAvatars: $notNull(data.first_list) ? data.first_list.map(_=>_.user.avatar_url) : [],
-          secondUserAvatars: $notNull(data.second_list) ? data.second_list.map(_=>_.user.avatar_url) : [],
+          secondUserAvatars: $notNull(data.second_list) ? data.second_list.map(_=>_.avatar_url) : [],
           level: $notNull(lv) ? lv.label : ""
         }
         this.setData({partnerInfo: partnerData, isPartner: data.distribute_user.status === 2})
