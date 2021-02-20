@@ -191,7 +191,7 @@
     <!-- 免费 -->
     <!--<view class="pay-button-free subject-bg-color pay-button-common" bindtap="pay" wx:if="{{buttonType===3}}">立即加入</view>-->
     <view class="pay-or-fluent" wx:if='{{buttonType===3}}'>
-      <view class="pay-or-fluent-one-left" style="width: 100vw;" bindtap="toPayArticle">
+      <view class="pay-or-fluent-one-left free-course" bindtap="toPayArticle">
         <text class="pay-or-fluent-one-left-txt01">立即加入</text>
       </view>
     </view>
