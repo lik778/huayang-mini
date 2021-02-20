@@ -1,0 +1,78 @@
+/* components/contact/contact.wxss */
+@import "../../assets/css/common.wxss";
+
+.contact {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: #E1E1E1;
+  z-index: 999;
+}
+
+.contact-module {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.guide-module {
+  width: 100%;
+  background: #fff;
+  border-radius: 10px 10px 0px 0px;
+  position: absolute;
+  bottom: 120rpx;
+  left: 0;
+  height: 720rpx;
+}
+
+.guide-module-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.guide-close-icon {
+  position: absolute;
+  right: 44rpx;
+  top: 48rpx;
+  width: 40rpx;
+  height: 40rpx;
+  z-index: 1000;
+}
+
+.guide-button {
+  position: absolute;
+  bottom: 80rpx;
+  left: 50%;
+  width: calc(100% - 120rpx);
+  border-radius: 999rpx;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+}
+
+.contact-module-desc {
+  font-size: 36rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 52rpx;
+  top: 60rpx;
+  left: 0;
+  width: 100%;
+  position: absolute;
+  text-align: center;
+}
+
+.contact-module-desc-image {
+  width: calc(100% - 200rpx);
+  height: 300rpx;
+  position: absolute;
+  top: 204rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
