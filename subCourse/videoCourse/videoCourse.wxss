@@ -758,6 +758,11 @@
   font: 500 36rpx/36rpx PingFangSC;
 }
 
+.pay-or-fluent-one-left-txt01.free-course {
+  font-weight: 500;
+  font-size: 40rpx;
+}
+
 .pay-or-fluent-one-left-txt02 {
   font: 500 32rpx/32rpx PingFangSC;
 }
