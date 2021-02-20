@@ -913,22 +913,27 @@ Page({
       paramsData.co_channel_tag = 'co_lndx'
     }
     bxPoint("series_join", paramsData, false)
-    getIosCustomerLink({
-      kecheng_series_id: this.data.videoCourseId
-    }).then(res => {
-      let link = encodeURIComponent(res.data)
-      wx.navigateTo({
-        url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
-        fail(err) {
-          collectError({
-            level: ErrorLevel.p0,
-            page: "dd.videoCourse.navigateToH5ForPay",
-            error_code: 500,
-            error_message: err
-          })
-        }
+
+    if (this.data.special) {
+      getIosCustomerLink({
+        kecheng_series_id: this.data.videoCourseId
+      }).then(res => {
+        let link = encodeURIComponent(res.data)
+        wx.navigateTo({
+          url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
+          fail(err) {
+            collectError({
+              level: ErrorLevel.p0,
+              page: "dd.videoCourse.navigateToH5ForPay",
+              error_code: 500,
+              error_message: err
+            })
+          }
+        })
       })
-    })
+    } else {
+      this.pay()
+    }
   },
 
   // 打开等级限制弹窗
