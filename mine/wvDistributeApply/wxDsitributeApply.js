@@ -87,7 +87,7 @@ Page({
 
 		// 合伙人检查
 		let partnerInfo = await getPartnerInfo({user_snow_id: accountInfo.snow_id})
-		console.log(partnerInfo.data);
+		console.error(partnerInfo.data);
 		if ($notNull(partnerInfo.data)) {
 			if (partnerInfo.data.distribute_user.status === 2) {
 				this.setData({tipMsg: "您的花样合伙人申请已通过啦", didShowFluentLearnModal: true})

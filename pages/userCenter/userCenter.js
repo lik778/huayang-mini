@@ -359,7 +359,7 @@ Page({
   // 查询用户合伙人信息
   queryUserPartnerInfo() {
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-    getPartnerInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
+    getPartnerInfo({user_snow_id: accountInfo.snow_id, with_child: 1}).then(({data}) => {
       if ($notNull(data)) {
         let lv = Level.find(_=> _.value === +data.distribute_user.level)
         let partnerData = {
@@ -375,8 +375,7 @@ Page({
   },
   // 跳转到分销人列表页
   goToDistributeListPage(e) {
-    // e.currentTarget.dataset.index
-    wx.navigateTo({url: ""})
+    wx.navigateTo({url: `/mine/distributeRecord/distributeRecord?index=${e.currentTarget.dataset.index}`})
   },
   run() {
     // 检查是否展示作业秀入口
