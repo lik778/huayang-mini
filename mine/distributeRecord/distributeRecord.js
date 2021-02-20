@@ -1,4 +1,4 @@
-import { getDistributeFirstList } from "../../api/mine/index"
+import { getDistributeFirstList, getDistributeSecondList } from "../../api/mine/index"
 import { getLocalStorage } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
 
@@ -8,7 +8,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    currentTab: 1
+    list: null,
+    currentTab: 2
   },
 
   /**
@@ -69,6 +70,7 @@ Page({
   // tab按钮点击事件
   onTapChange(e) {
     this.setData({currentTab: +e.currentTarget.dataset.id})
+    this.getList()
   },
   getList () {
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
@@ -81,17 +83,23 @@ Page({
         }).then(({data}) => {
           data = data || []
           data = data.map((_) => ({
-            isPartner: _.distribute_user.status === 2,
+            isPartner: _.distribute_user ? _.distribute_user.status === 2 : false,
             avatar: _.user.avatar_url,
             nickname: _.user.nick_name,
             date: _.user.created_at
           }))
-
-          console.log(data);
+          this.setData({list: data.slice()})
         })
         break;
       }
       case 2: {
+        getDistributeSecondList({
+          user_snow_id: accountInfo.snow_id,
+          limit: 10,
+          offset: 0
+        }).then(({data}) => {
+          console.log(data);
+        })
         break;
       }
     }

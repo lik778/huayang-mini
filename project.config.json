@@ -387,6 +387,18 @@
           "pathName": "mine/distributeRecord/distributeRecord",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "畅学卡下单结果页",
+          "pathName": "mine/fluentCardCallback/fluentCardCallback",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "二级分销申请",
+          "pathName": "mine/wvDistributeApply/wxDsitributeApply",
+          "query": "",
+          "scene": null
         }
       ]
     }

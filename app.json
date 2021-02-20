@@ -59,7 +59,9 @@
         "fluentLearnInfo/fluentLearnInfo",
         "fluentCardDistribute/fluentCardDistribute",
         "convertCash/convertCash",
-        "distributeRecord/distributeRecord"
+        "distributeRecord/distributeRecord",
+        "fluentCardCallback/fluentCardCallback",
+        "wvDistributeApply/wxDsitributeApply"
       ]
     },
     {
