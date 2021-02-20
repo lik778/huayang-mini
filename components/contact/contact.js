@@ -17,7 +17,7 @@ Component({
       value: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1613793879bWSJjA.jpg",
       type: String
     }, //猜你要发图片地址
-    isRootPAge: {
+    isRootPage: {
       value: false,
       type: Boolean
     }, //是否是tab页,如果是tab页距离底部高度需要兼容tab高度

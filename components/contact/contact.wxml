@@ -1,4 +1,4 @@
-<view class="contact" style="bottom:{{isRootPAge?'160rpx':0}}">
+<view class="contact" style="bottom:{{isRootPage?'160rpx':0}}">
   <view class="contact-module">
     <view class="guide-module">
       <view class="guide-module-inner">
