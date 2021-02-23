@@ -1,4 +1,4 @@
-<view wx:if="{{didShowContact}}" class="contact" style="bottom:{{isRootPage?safePageSize+120+'rpx':0}}">
+<view wx:if="{{didShowContact}}" class="contact" style="bottom:{{isRootPage?safePageSize+60+'px':0}}">
   <view class="contact-module {{show?'contact-opacity-in':'contact-opacity-out'}}">
     <view class="guide-module {{show?'guide-module-move-in':'guide-module-move-out'}}">
       <view class="guide-module-inner">

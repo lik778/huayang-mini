@@ -78,7 +78,7 @@ Component({
   pageLifetimes: {
     show: function () {
       let {screenHeight, safeArea: { bottom }} = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
-      this.setData({safePageSize: (screenHeight - bottom) * 2})
+      this.setData({safePageSize: screenHeight - bottom})
     }
   }
 })
