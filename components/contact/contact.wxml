@@ -1,9 +1,8 @@
-<view class="contact" style="bottom:{{isRootPAge?'160rpx':0}}">
-  <view class="contact-module">
-    <view class="guide-module">
+<view wx:if="{{didShowContact}}" class="contact" style="bottom:{{isRootPage?'120rpx':0}}">
+  <view class="contact-module {{show?'contact-opacity-in':'contact-opacity-out'}}">
+    <view class="guide-module {{show?'guide-module-move-in':'guide-module-move-out'}}">
       <view class="guide-module-inner">
-        <image class="guide-close-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1613792685ZgzOVy.jpg"
-          bindtap="close">
+        <image class="guide-close-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1613792685ZgzOVy.jpg" bindtap="close">
         </image>
         <view class="contact-module-desc">
           <view class="contact-module-desc-top">
@@ -15,8 +14,7 @@
         </view>
         <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1613793729ILQXIa.jpg"
           class="contact-module-desc-image"></image>
-        <button class="guide-button subject-bg-color" open-type="contact" show-message-card="showMessageCard"
-          bindtap="setScene" send-message-img='{{contactImageSrc}}' send-message-title='{{sendMessageTitle}}'
+        <button class="guide-button subject-bg-color" bindtap="onButtonTap" open-type="contact" show-message-card="showMessageCard" send-message-img='{{contactImageSrc}}' send-message-title='{{sendMessageTitle}}'
           session-from='{{sessionFrom}}'>{{buttonName}}</button>
       </view>
     </view>

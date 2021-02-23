@@ -11,10 +11,16 @@ App({
 			source: 'url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/font/DIN%20Condensed%20Bold.ttf")'
 		})
 
-		// 每次打开小程序执行一次，检查用户本地账户信息是否存在snow_id，不存在则清除本地账户相关数据
+		// 每次打开小程序执行一次
 		if (hasAccountInfo()) {
 			let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) || {}
+			// 检查用户本地账户信息是否存在snow_id，不存在则清除本地账户相关数据
 			if (!accountInfo.snow_id) {
+				removeLocalStorage(GLOBAL_KEY.accountInfo)
+			}
+
+			// 检查用户本地账户信息中的snow_id类型是否为数字类型，是则删除本地账户数据，授权获取字符类型snow_id
+			else if (typeof accountInfo.snow_id === "number") {
 				removeLocalStorage(GLOBAL_KEY.accountInfo)
 			}
 		}

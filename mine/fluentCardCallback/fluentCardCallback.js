@@ -1,10 +1,12 @@
+import bxPoint from "../../utils/bxPoint"
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    didShowContact: false
   },
 
   /**
@@ -25,7 +27,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    bxPoint("changxue_card_buy_success", {})
   },
 
   /**
@@ -54,5 +56,13 @@ Page({
    */
   onReachBottom: function () {
 
+  },
+  onBtnTap() {
+    this.setData({didShowContact: true})
+    bxPoint("changxue_card_buy_contact", {}, false)
+    bxPoint("join_chat", {})
+  },
+  onCloseContactModal() {
+    this.setData({didShowContact: false})
   }
 })

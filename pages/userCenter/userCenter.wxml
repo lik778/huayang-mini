@@ -24,7 +24,7 @@
 				<text>直接推荐学员 {{ partnerInfo.firstNo }} 人</text>
 				<view class="distribute-content" bindtap="goToDistributeListPage" data-index="1">
 					<image class="distribute-avatar" mode="aspectFill" src="{{item}}" wx:for="{{ partnerInfo.firstUserAvatars }}"></image>
-					<text class="more-list" wx:if="{{partnerInfo.firstNo > 0}}">查看更多 ›</text>
+					<text class="more-list">查看更多 ›</text>
 				</view>
 			</view>
 
@@ -32,11 +32,11 @@
 				<text>间接推荐学员 {{ partnerInfo.secondNo }} 人</text>
 				<view class="distribute-content" bindtap="goToDistributeListPage" data-index="2">
 					<image class="distribute-avatar" mode="aspectFill" src="{{item}}" wx:for="{{ partnerInfo.secondUserAvatars }}"></image>
-					<text class="more-list" wx:if="{{partnerInfo.secondNo > 0}}">查看更多 ›</text>
+					<text class="more-list">查看更多 ›</text>
 				</view>
 			</view>
 
-			<view class="distribute-btn">获取专属邀请海报</view>
+			<view class="distribute-btn" bindtap="generatePoster">获取专属邀请海报</view>
 		</block>
 	</view>
 	<!-- 畅学卡 -->
@@ -152,4 +152,6 @@
 	</view>
 	<!-- 授权弹窗 -->
 	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
+
+	<contact show="{{didShowContact}}" isRootPage="{{true}}" sessionFrom="distribute" bind:closeContactModal="onCloseContactModal"/>
 </view>

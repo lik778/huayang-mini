@@ -90,11 +90,10 @@ Page({
 		let partnerInfo = await getPartnerInfo({user_snow_id: accountInfo.snow_id})
 		if ($notNull(partnerInfo.data)) {
 			if (partnerInfo.data.distribute_user.status === 2) {
-				this.setData({tipMsg: "您的花样合伙人申请已通过啦", btnText: "去查看", didShowFluentLearnModal: true, backUrl: "/pages/userCenter/userCenter"})
-			} else {
-				this.setData({tipMsg: "您的花样合伙人申请已提交，审核结果会有客服联系您，先去花样大学学习吧", btnText: "去学习", didShowFluentLearnModal: true})
+				return this.setData({tipMsg: "您的花样合伙人申请已通过啦", btnText: "去查看", didShowFluentLearnModal: true, backUrl: "/pages/userCenter/userCenter"})
+			} else if (partnerInfo.data.distribute_user.status === 1) {
+				return this.setData({tipMsg: "您的花样合伙人申请已提交，会由客服告知您最终的审核结果，先去花样大学学习吧", btnText: "去学习", didShowFluentLearnModal: true})
 			}
-			return false
 		}
 
 		this.generateURL(accountInfo.snow_id)

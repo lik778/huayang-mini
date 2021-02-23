@@ -67,6 +67,7 @@
 .message .lifetime {
     margin-top: 10rpx;
     font: 36rpx/44rpx Helvetica;
+    color: white;
 }
 
 .first-distribute {
@@ -104,7 +105,7 @@
 
 .distribute-btn {
     position: absolute;
-    top: 570rpx;
+    top: 550rpx;
     left: 136rpx;
     width: 480rpx;
     height: 80rpx;

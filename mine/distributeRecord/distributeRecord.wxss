@@ -80,3 +80,38 @@
     color: rgba(0,0,0, 0.5);
     font: 28rpx/36rpx PingFangSC;
 }
+
+.empty {
+    position: fixed;
+    top: 374rpx;
+    right: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font: 500 36rpx/50rpx PingFangSC;
+    color: #999999;
+}
+
+.empty-image {
+    width: 320rpx;
+    height: 230rpx;
+}
+
+.footer {
+    position: fixed;
+    bottom: 100rpx;
+    left: 60rpx;
+    width: 630rpx;
+    height: 96rpx;
+    border-radius: 999rpx;
+    text-align: center;
+    font:  500 40rpx/96rpx PingFangSC;
+    color: white;
+    background: #CC0000;
+}
+
+.footer:active {
+    opacity: 0.9;
+}

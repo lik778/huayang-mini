@@ -9,7 +9,11 @@ Page({
    */
   data: {
     list: null,
-    currentTab: 1
+    currentTab: 2,
+    offset: 0,
+    limit: 10,
+    hasMore: true,
+    didEmpty: false
   },
 
   /**
@@ -61,14 +65,15 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    if (this.data.hasMore) {
+      this.setData({offset: this.data.offset + this.data.limit})
+      this.getList()
+    }
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  // 跳转专属海报页
+  goToFluentCardDistribute() {
+    let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+    wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
   },
   // tab按钮点击事件
   onTapChange(e) {
@@ -81,34 +86,34 @@ Page({
       case 1: {
         getDistributeFirstList({
           user_snow_id: accountInfo.snow_id,
-          limit: 10,
-          offset: 0
+          limit: this.data.limit,
+          offset: this.data.offset
         }).then(({data}) => {
           data = data || []
           data = data.map((_) => ({
             isPartner: _.distribute_user ? _.distribute_user.status === 2 : false,
             avatar: _.user.avatar_url,
             nickname: _.user.nick_name,
-            date: _.user.created_at
+            date: _.user.updated_at
           }))
-          this.setData({list: data.slice()})
+          this.setData({list: data.slice(), hasMore: data.length === this.data.limit, didEmpty: data.length === 0})
         })
         break;
       }
       case 2: {
         getDistributeSecondList({
           user_snow_id: accountInfo.snow_id,
-          limit: 10,
-          offset: 0
+          limit: this.data.limit,
+          offset: this.data.offset
         }).then(({data}) => {
           data = data || []
           data = data.map((_) => ({
-            isPartner: _ ? _.status === 2 : false,
+            isPartner: false,
             avatar: _.avatar_url,
             nickname: _.nick_name,
-            date: _.created_at
+            date: _.updated_at
           }))
-          this.setData({list: data.slice()})
+          this.setData({list: data.slice(), hasMore: data.length === this.data.limit, didEmpty: data.length === 0})
         })
         break;
       }

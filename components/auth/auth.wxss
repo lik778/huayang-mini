@@ -1,4 +1,5 @@
 @import "../../assets/css/common.wxss";
+
 .auth {
     position: fixed;
     top: 0;
@@ -28,14 +29,17 @@
 .box-fade-out {
     animation: fadeOut 161ms ease-out forwards;
 }
+
 .tip {
     text-align: center;
     font: 48rpx/48rpx PingFang SC;
 }
+
 .txt {
     margin: 50rpx 0;
     font: 40rpx/56rpx PingFang SC;
 }
+
 .rules {
     text-align: center;
     font: 32rpx/44rpx PingFang SC;
@@ -45,6 +49,7 @@
 .important {
     color: #748BBE;
 }
+
 .confirm {
     position: relative;
 }
@@ -76,6 +81,7 @@
 .hidden-button::after {
     border: 0 none;
 }
+
 .cancel {
     height: 40rpx;
     width: 500rpx;
@@ -85,9 +91,11 @@
     text-align: center;
     color: #9A9A9A;
 }
+
 .cancel:active {
     opacity: 0.8;
 }
+
 @keyframes fadeIn {
     0% {
         transform: scale(0);
