@@ -9,7 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    list: null,
+    list: [],
     currentTab: 1,
     offset: 0,
     limit: 10,
@@ -78,7 +78,7 @@ Page({
   },
   // tab按钮点击事件
   onTapChange(e) {
-    this.setData({currentTab: +e.currentTarget.dataset.id})
+    this.setData({list: [], offset: 0, currentTab: +e.currentTarget.dataset.id})
     this.getList()
   },
   getList () {
@@ -93,11 +93,11 @@ Page({
           data = data || []
           data = data.map((_) => ({
             isPartner: _.distribute_user ? _.distribute_user.status === 2 : false,
-            avatar: _.user.avatar_url,
-            nickname: _.user.nick_name,
+            avatar: _.user ? _.user.avatar_url : "",
+            nickname: _.user ? _.user.nick_name : "",
             date: dayjs(_.bind_time).format("YYYY-MM-DD HH:mm")
           }))
-          this.setData({list: data.slice(), hasMore: data.length === this.data.limit, didEmpty: data.length === 0})
+          this.setData({list: this.data.list.concat(data), hasMore: data.length === this.data.limit, didEmpty: data.length === 0})
         })
         break;
       }
@@ -114,7 +114,7 @@ Page({
             nickname: _.user.nick_name,
             date: dayjs(_.bind_time).format("YYYY-MM-DD HH:mm")
           }))
-          this.setData({list: data.slice(), hasMore: data.length === this.data.limit, didEmpty: data.length === 0})
+          this.setData({list: this.data.list.concat(data), hasMore: data.length === this.data.limit, didEmpty: data.length === 0})
         })
         break;
       }
