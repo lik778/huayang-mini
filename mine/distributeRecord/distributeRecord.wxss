@@ -62,7 +62,7 @@
 }
 
 .nickname {
-    max-width: 300rpx;
+    max-width: 240rpx;
     margin: 0 12rpx;
     font: 32rpx/32rpx PingFangSC;
     color: black;

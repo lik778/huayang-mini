@@ -1,6 +1,7 @@
 import { getDistributeFirstList, getDistributeSecondList } from "../../api/mine/index"
 import { getLocalStorage } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
+import dayjs from "dayjs"
 
 Page({
 
@@ -94,7 +95,7 @@ Page({
             isPartner: _.distribute_user ? _.distribute_user.status === 2 : false,
             avatar: _.user.avatar_url,
             nickname: _.user.nick_name,
-            date: _.distribute_user.created_at
+            date: dayjs(_.distribute_user.created_at).format("YYYY-MM-DD HH:mm")
           }))
           this.setData({list: data.slice(), hasMore: data.length === this.data.limit, didEmpty: data.length === 0})
         })
@@ -111,7 +112,7 @@ Page({
             isPartner: false,
             avatar: _.avatar_url,
             nickname: _.nick_name,
-            date: _.created_at
+            date: dayjs(_.created_at).format("YYYY-MM-DD HH:mm")
           }))
           this.setData({list: data.slice(), hasMore: data.length === this.data.limit, didEmpty: data.length === 0})
         })
