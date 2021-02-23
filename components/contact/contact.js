@@ -1,6 +1,11 @@
 import bxPoint from "../../utils/bxPoint"
-import { getLocalStorage } from "../../utils/util"
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  getLocalStorage,
+  isIphoneXRSMax
+} from "../../utils/util"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 
 Component({
   /**
@@ -77,8 +82,15 @@ Component({
   },
   pageLifetimes: {
     show: function () {
-      let {screenHeight, safeArea: { bottom }} = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
-      this.setData({safePageSize: (screenHeight - bottom) * 2})
+      let {
+        screenHeight,
+        safeArea: {
+          bottom
+        }
+      } = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
+      this.setData({
+        safePageSize: isIphoneXRSMax() ? 40 : 0
+      })
     }
   }
 })
