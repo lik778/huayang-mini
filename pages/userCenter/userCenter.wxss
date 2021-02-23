@@ -100,12 +100,12 @@
 }
 
 .more-list {
-    font: 24rpx/24rpx PingFangSC;
+    font: 32rpx/32rpx PingFangSC;
 }
 
 .distribute-btn {
     position: absolute;
-    top: 550rpx;
+    top: 560rpx;
     left: 136rpx;
     width: 480rpx;
     height: 80rpx;
@@ -114,7 +114,7 @@
     border-radius: 999rpx;
     color: #834B25;
     background: #CC0000 linear-gradient(90deg, #FBD8B3 0%, #ECCBA9 100%);
-    animation: flashing 5s ease infinite;
+    animation: flashing 4s ease infinite;
 }
 
 /* 畅学卡 */
