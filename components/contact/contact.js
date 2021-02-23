@@ -1,4 +1,6 @@
 import bxPoint from "../../utils/bxPoint"
+import { getLocalStorage } from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
 
 Component({
   /**
@@ -57,7 +59,8 @@ Component({
    * 组件的初始数据
    */
   data: {
-    didShowContact: false
+    didShowContact: false,
+    safePageSize: 0,
   },
 
   /**
@@ -70,6 +73,12 @@ Component({
     // 关闭
     close() {
       this.triggerEvent('closeContactModal')
+    }
+  },
+  pageLifetimes: {
+    show: function () {
+      let {screenHeight, safeArea: { bottom }} = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
+      this.setData({safePageSize: (screenHeight - bottom) * 2})
     }
   }
 })

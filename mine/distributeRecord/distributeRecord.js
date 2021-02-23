@@ -95,7 +95,7 @@ Page({
             isPartner: _.distribute_user ? _.distribute_user.status === 2 : false,
             avatar: _.user.avatar_url,
             nickname: _.user.nick_name,
-            date: dayjs(_.distribute_user.created_at).format("YYYY-MM-DD HH:mm")
+            date: dayjs(_.user.created_at).format("YYYY-MM-DD HH:mm")
           }))
           this.setData({list: data.slice(), hasMore: data.length === this.data.limit, didEmpty: data.length === 0})
         })
