@@ -9,7 +9,7 @@ Page({
    */
   data: {
     list: null,
-    currentTab: 2,
+    currentTab: 1,
     offset: 0,
     limit: 10,
     hasMore: true,
@@ -94,7 +94,7 @@ Page({
             isPartner: _.distribute_user ? _.distribute_user.status === 2 : false,
             avatar: _.user.avatar_url,
             nickname: _.user.nick_name,
-            date: _.user.updated_at
+            date: _.distribute_user.created_at
           }))
           this.setData({list: data.slice(), hasMore: data.length === this.data.limit, didEmpty: data.length === 0})
         })
@@ -111,7 +111,7 @@ Page({
             isPartner: false,
             avatar: _.avatar_url,
             nickname: _.nick_name,
-            date: _.updated_at
+            date: _.created_at
           }))
           this.setData({list: data.slice(), hasMore: data.length === this.data.limit, didEmpty: data.length === 0})
         })
