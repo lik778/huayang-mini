@@ -1,0 +1,121 @@
+@import "../../assets/css/common.wxss";
+.distribute-record {
+    padding-top: 110rpx;
+    min-height: 100vh;
+    box-sizing: border-box;
+    background: #F9F9F9;
+}
+
+.tabs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    height: 110rpx;
+    background: #F9F9F9;
+}
+
+.tab-item {
+    width: 50%;
+    text-align: center;
+    font: 44rpx/110rpx PingFangSC;
+    color: black;
+}
+
+.tab-item.active {
+    font-weight: 500;
+    color: #CC0000;
+}
+
+.tab-line {
+    position: absolute;
+    bottom: 0;
+    left: calc(25% - 42rpx);
+    height: 8rpx;
+    width: 84rpx;
+    border-radius: 999rpx;
+    background: #CC0000;
+}
+
+.tab-line.active {
+    left: calc(75% - 42rpx);
+}
+
+.record {
+    padding: 50rpx 40rpx;
+}
+
+.record-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 48rpx;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 999rpx;
+}
+
+.nickname {
+    max-width: 240rpx;
+    margin: 0 12rpx;
+    font: 32rpx/32rpx PingFangSC;
+    color: black;
+}
+
+.tag {
+    border-radius: 4rpx;
+    padding: 4rpx 6rpx;
+    color: #834B25;
+    font: 20rpx/20rpx PingFangSC;
+    background: linear-gradient(90deg, #F9ECDC 0%, #EAC7A3 100%);
+}
+
+.date {
+    color: rgba(0,0,0, 0.5);
+    font: 28rpx/36rpx PingFangSC;
+}
+
+.empty {
+    position: fixed;
+    top: 374rpx;
+    right: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font: 500 36rpx/50rpx PingFangSC;
+    color: #999999;
+}
+
+.empty-image {
+    width: 320rpx;
+    height: 230rpx;
+}
+
+.footer {
+    position: fixed;
+    bottom: 100rpx;
+    left: 60rpx;
+    width: 630rpx;
+    height: 96rpx;
+    border-radius: 999rpx;
+    text-align: center;
+    font:  500 40rpx/96rpx PingFangSC;
+    color: white;
+    background: #CC0000;
+}
+
+.footer:active {
+    opacity: 0.9;
+}

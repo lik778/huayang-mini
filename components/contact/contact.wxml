@@ -1,0 +1,22 @@
+<view wx:if="{{didShowContact}}" class="contact" style="bottom:{{isRootPage?safePageSize+60+'px':0}}">
+  <view class="contact-module {{show?'contact-opacity-in':'contact-opacity-out'}}">
+    <view class="guide-module {{show?'guide-module-move-in':'guide-module-move-out'}}">
+      <view class="guide-module-inner">
+        <image class="guide-close-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1613792685ZgzOVy.jpg" bindtap="close">
+        </image>
+        <view class="contact-module-desc">
+          <view class="contact-module-desc-top">
+            请在下个页面
+          </view>
+          <view class="contact-module-desc-bottom">
+            点击右下角的“客服”按钮，获取客服二维码
+          </view>
+        </view>
+        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1613793729ILQXIa.jpg"
+          class="contact-module-desc-image"></image>
+        <button class="guide-button subject-bg-color" bindtap="onButtonTap" open-type="contact" show-message-card="showMessageCard" send-message-img='{{contactImageSrc}}' send-message-title='{{sendMessageTitle}}'
+          session-from='{{sessionFrom}}'>{{buttonName}}</button>
+      </view>
+    </view>
+  </view>
+</view>

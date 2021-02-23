@@ -55,14 +55,14 @@ Page({
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
-		this.checkUserFluentLearnStatus()
 	},
 
 	/**
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		bxPoint("changxue_buy", {})
+		bxPoint("changxue_buy", {remmend_id: getLocalStorage(GLOBAL_KEY.superiorDistributeUserId)})
+		this.checkUserFluentLearnStatus()
 	},
 
 	/**
@@ -195,7 +195,7 @@ Page({
 		let t = setTimeout(() => {
 			this.setData({payLock: false})
 			clearTimeout(t)
-		}, 500)
+		}, 1000)
 
 		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
 		let {data} = await getFluentCardInfo({user_snow_id: accountInfo.snow_id})
@@ -228,7 +228,7 @@ Page({
 			if (code === 0) {
 				payFluentCard({id: data.id, name: "购买畅学卡"})
 					.then(() => {
-						wx.switchTab({url: "/pages/userCenter/userCenter"})
+						wx.navigateTo({url: "/mine/fluentCardCallback/fluentCardCallback"})
 					})
 					.catch((err) => {
 						if (err.errMsg !== "requestPayment:fail cancel") {

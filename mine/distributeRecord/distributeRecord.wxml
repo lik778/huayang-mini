@@ -1,0 +1,25 @@
+<view class="distribute-record">
+    <view class="tabs">
+        <view class="tab-item {{currentTab === 1 && 'active'}}" bindtap="onTapChange" data-id="1">直接推荐学员</view>
+        <view class="tab-item {{currentTab === 2 && 'active'}}" bindtap="onTapChange" data-id="2">间接推荐学员</view>
+        <view class="tab-line {{currentTab === 2 && 'active'}}"></view>
+    </view>
+
+    <view class="record">
+        <view class="record-item" wx:for="{{ list }}" wx:key="index" >
+            <view class="info">
+                <image mode="aspectFill" src="{{ item.avatar }}" class="avatar"></image>
+                <text class="nickname limit-one-line">{{ item.nickname }}</text>
+                <view class="tag" wx:if="{{item.isPartner}}">合伙人</view>
+            </view>
+            <text class="date">{{ item.date }}</text>
+        </view>
+        <view class="empty" wx:if="{{ didEmpty }}">
+            <image class="empty-image" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1614051174rYwAgS.jpg" mode="aspectFit"></image>
+            <text>您暂无推荐学员</text>
+            <text>快去获取专属邀请海报分享吧</text>
+        </view>
+    </view>
+
+    <view class="footer" wx:if="{{didEmpty}}" bindtap="goToFluentCardDistribute">获取专属邀请海报</view>
+</view>
