@@ -5,6 +5,7 @@ import {
   getFluentCardInfo,
   getFluentDistributeGuide,
   getFluentLearnInfo,
+  getPartnerInfo,
   getUserGuideLink,
   getUserInfo,
   getUserOwnerClasses
@@ -21,6 +22,20 @@ import bxPoint from "../../utils/bxPoint"
 import { getTaskEntranceStatus } from "../../api/task/index"
 import { getYouZanAppId } from "../../api/mall/index"
 
+const Level = [
+  {
+    label: "初级合伙人",
+    value: 1,
+  },
+  {
+    label: "中级合伙人",
+    value: 2,
+  },
+  {
+    label: "高级合伙人",
+    value: 3,
+  },
+];
 Page({
 
   /**
@@ -49,19 +64,19 @@ Page({
     cardDesc: "", // 畅学卡描述
     auditInfo: null, // 畅学卡引导私域配置信息
     didVisibleAuditBtn: false, // 是否展示成为花样合伙人按钮
+    partnerInfo: null, // 合伙人信息
+    isPartner: false, // 当前用户是否是合伙人
+    didShowContact: false,
+  },
+  onCloseContactModal() {
+    this.setData({didShowContact: false})
   },
   /**
    * 指导按钮点击事件
    */
   onGuideBtnTap() {
-    wx.navigateTo({
-      url: `/mine/normal-web-view/normal-web-view?link=${this.data.auditInfo.link}`,
-      fail() {
-        wx.switchTab({
-          url: "pages/userCenter/userCenter"
-        })
-      }
-    })
+    this.setData({didShowContact: true})
+    bxPoint("join_chat", {})
   },
   /**
    * 处理长昵称
@@ -113,8 +128,8 @@ Page({
       if (this.data.disHasFluentLearnUserInfo && !this.data.isFluentLearnExpired) {
         this.data.fluentLearnUserInfo && bxPoint("mine_changxue_find", {
           changxue_id: this.data.fluentLearnUserInfo.id,
-          xhangxue_buy_date: this.data.fluentLearnUserInfo.created_at,
-          xhangxue_expire_date: this.data.fluentLearnUserInfo.expire_time,
+          changxue_buy_date: this.data.fluentLearnUserInfo.created_at,
+          changxue_expire_date: this.data.fluentLearnUserInfo.expire_time,
         }, false)
         wx.navigateTo({url: "/mine/fluentLearnInfo/fluentLearnInfo"})
       } else {
@@ -235,7 +250,7 @@ Page({
     })
   },
   /**
-   * 请求畅销卡信息
+   * 请求畅学卡信息
    */
   getFluentInfo() {
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
@@ -289,6 +304,7 @@ Page({
     this.getUserSingerInfo().then(() => {
       this.getFluentInfo()
     })
+    this.queryUserPartnerInfo()
     this.setData({
       didShowAuth: false
     })
@@ -338,6 +354,38 @@ Page({
       phoneNumber: e.currentTarget.dataset.mobile
     })
   },
+  // 查询用户合伙人信息
+  queryUserPartnerInfo() {
+    let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+    getPartnerInfo({user_snow_id: accountInfo.snow_id, with_child: 1}).then(({data}) => {
+      if ($notNull(data)) {
+        let lv = Level.find(_=> _.value === +data.distribute_user.level)
+        let partnerData = {
+          firstNo: data.distribute_user.first_num,
+          secondNo: data.distribute_user.second_num,
+          firstUserAvatars: $notNull(data.first_list) ? data.first_list.filter(_ => _.user).map(_=>_.user.avatar_url) : [],
+          secondUserAvatars: $notNull(data.second_list) ? data.second_list.filter(_ => _).map(_=>_.avatar_url) : [],
+          level: $notNull(lv) ? lv.label : ""
+        }
+        this.setData({partnerInfo: partnerData, isPartner: data.distribute_user.status === 2})
+      }
+    })
+  },
+  // 跳转到分销人列表页
+  goToDistributeListPage(e) {
+    wx.navigateTo({url: `/mine/distributeRecord/distributeRecord?index=${e.currentTarget.dataset.index}`})
+  },
+  // 生成海报
+  generatePoster() {
+    bxPoint("mine_distributer_post", {}, false)
+
+    if (!hasUserInfo() || !hasAccountInfo()) {
+      return this.setData({didShowAuth: true})
+    }
+
+    let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+    wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
+  },
   run() {
     // 检查是否展示作业秀入口
     getTaskEntranceStatus().then(({data}) => {
@@ -358,7 +406,6 @@ Page({
       this.setData({
         nodata: false,
         showPromotion: true,
-        cardBtnText: "立即加入"
       })
     } else {
       // nothing
@@ -408,11 +455,15 @@ Page({
     this.getBanner()
     this.getNumber()
 
-    // 每次访问个人中心更新最新的账户数据和畅学卡信息
+
     if (hasAccountInfo() && hasUserInfo()) {
+      // 每次访问个人中心更新最新的账户数据和畅学卡信息
       this.getUserSingerInfo().then(() => {
         this.getFluentInfo()
       })
+
+      // 检查用户合伙人状态
+      this.queryUserPartnerInfo()
     }
   },
 
@@ -420,7 +471,11 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    if (this.data.didShowContact) {
+      wx.nextTick(() => {
+        this.setData({didShowContact: false})
+      })
+    }
   },
 
   /**

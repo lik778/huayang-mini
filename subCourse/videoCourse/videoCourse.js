@@ -913,6 +913,7 @@ Page({
       paramsData.co_channel_tag = 'co_lndx'
     }
     bxPoint("series_join", paramsData, false)
+
     getIosCustomerLink({
       kecheng_series_id: this.data.videoCourseId
     }).then(res => {

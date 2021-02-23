@@ -55,6 +55,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    this.setData({offset: 0})
     this.getRecordList(true)
   },
 
@@ -104,6 +105,9 @@ Page({
         created_at: item.created_at,
         status: this.data.status[item.status],
       }))
+      if (!isRefresh) {
+        data = [...this.data.recordList, ...data]
+      }
       this.setData({recordList: data, hasMore: data.length === this.data.limit})
     })
   }

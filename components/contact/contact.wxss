@@ -1,79 +1,130 @@
-/* components/contact/contact.wxss */
 @import "../../assets/css/common.wxss";
 
 .contact {
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  left: 0;
-  /* top: 0; */
-  bottom: 160rpx;
-  background: #E1E1E1;
-  z-index: 999;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    bottom: 160rpx;
+}
+
+.contact-opacity-in {
+    animation: opacityIn 322ms ease-in;
+}
+
+.contact-opacity-out {
+    animation: opacityOut 322ms ease-in;
 }
 
 .contact-module {
-  width: 100%;
-  height: 100%;
-  position: relative;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 90;
+    position: relative;
 }
 
 .guide-module {
-  width: 100%;
-  background: #fff;
-  border-radius: 10px 10px 0px 0px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 720rpx;
+    width: 100%;
+    background: #fff;
+    border-radius: 10px 10px 0px 0px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 720rpx;
+}
+
+.guide-module-move-in {
+    animation: moveIn 161ms ease-in;
+}
+
+.guide-module-move-out {
+    animation: moveOut 161ms ease-out forwards;
 }
 
 .guide-module-inner {
-  width: 100%;
-  height: 100%;
-  position: relative;
+    width: 100%;
+    height: 100%;
+    position: relative;
 }
 
 .guide-close-icon {
-  position: absolute;
-  right: 44rpx;
-  top: 48rpx;
-  width: 40rpx;
-  height: 40rpx;
-  z-index: 1000;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 40rpx;
+    width: 40rpx;
+    height: 40rpx;
+    z-index: 1000;
 }
 
 .guide-button {
-  position: absolute;
-  bottom: 80rpx;
-  left: 50%;
-  width: calc(100% - 120rpx);
-  border-radius: 999rpx;
-  transform: translateX(-50%);
-  color: #fff;
-  font-size: 40rpx;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 600;
+    position: absolute;
+    bottom: 80rpx;
+    left: 50%;
+    width: calc(100% - 120rpx);
+    border-radius: 999rpx;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 40rpx;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 600;
 }
 
 .contact-module-desc {
-  font-size: 36rpx;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 600;
-  color: #000000;
-  line-height: 52rpx;
-  top: 60rpx;
-  left: 0;
-  width: 100%;
-  position: absolute;
-  text-align: center;
+    font-size: 36rpx;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 600;
+    color: #000000;
+    line-height: 52rpx;
+    top: 60rpx;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    text-align: center;
 }
 
 .contact-module-desc-image {
-  width: calc(100% - 200rpx);
-  height: 300rpx;
-  position: absolute;
-  top: 204rpx;
-  left: 50%;
-  transform: translateX(-50%);
+    width: calc(100% - 200rpx);
+    height: 300rpx;
+    position: absolute;
+    top: 204rpx;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+@keyframes opacityIn {
+    0% {
+        background: rgba(0, 0, 0, 0);
+    }
+    100% {
+        background: rgba(0, 0, 0, 0.4);
+    }
+}
+
+@keyframes opacityOut {
+    0% {
+        background: rgba(0, 0, 0, 0.4);
+    }
+    100% {
+        background: rgba(0, 0, 0, 0);
+    }
+}
+
+@keyframes moveIn {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes moveOut {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(100%);
+    }
 }

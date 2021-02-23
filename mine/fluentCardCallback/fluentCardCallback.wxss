@@ -1,0 +1,45 @@
+.fluent-card-callback {
+    position: relative;
+}
+
+.image {
+    position: absolute;
+    top: 232rpx;
+    left: 268rpx;
+    width: 220rpx;
+    height: 220rpx;
+}
+
+.text-01 {
+    position: absolute;
+    top: 508rpx;
+    width: 100vw;
+    text-align: center;
+    font: 500 48rpx/48rpx "PingFang SC";
+}
+
+.text-02 {
+    position: absolute;
+    top: 588rpx;
+    margin: 0 86rpx;
+    text-align: center;
+    font: 32rpx/48rpx "PingFang SC";
+    color: rgba(0,0,0,0.5);
+}
+
+.footer {
+    position: fixed;
+    bottom: 120rpx;
+    left: 60rpx;
+    width: 630rpx;
+    height: 96rpx;
+    border-radius: 999rpx;
+    background: #CC0000;
+    font: 40rpx/96rpx PingFangSC;
+    text-align: center;
+    color: white;
+}
+
+.footer:active {
+    opacity: 0.9;
+}

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "花样大学畅学卡",
+  "usingComponents": {
+    "contact": "../../components/contact/contact"
+  }
+}
