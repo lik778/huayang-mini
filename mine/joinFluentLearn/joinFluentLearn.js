@@ -134,7 +134,7 @@ Page({
 	generateSuperiorDistributeUserCache(superiorId) {
 		if (!superiorId) return
 		setLocalStorage(GLOBAL_KEY.superiorDistributeUserId, superiorId)
-		setLocalStorage(GLOBAL_KEY.superiorDistributeExpireTime, dayjs().add(5, "minute").format("YYYY-MM-DD HH:mm:ss"))
+		setLocalStorage(GLOBAL_KEY.superiorDistributeExpireTime, dayjs().add(2, "hour").format("YYYY-MM-DD HH:mm:ss"))
 	},
 	/**
 	 * 清除上级分销用户信息缓存
