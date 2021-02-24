@@ -28,6 +28,8 @@ Page({
 		statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
 		bg: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612146615YqecUz.jpg",
 		logo: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612147817dYEToM.jpg",
+		comma01: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1614164632gVVvYN.jpg",
+		comma02: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1614164636uBajQv.jpg",
 		avatar: "",
 		nickname: "",
 		previewList: [
@@ -195,8 +197,12 @@ Page({
 		await drawImage(ctx, this.data.logo, 88, 31, 121, 19)
 		// 用户信息
 		await drawCircleHeadIcon(ctx, this.data.avatar, 54, 106, 24)
-		await drawFont(ctx, calcStringLen(this.data.nickname) > 16 ? `我是${splitTargetNoString(this.data.nickname, 16)}..` : `我是${this.data.nickname}`, '#000000', "400", "PingFangSC", 16, 90, 86)
-		await drawFont(ctx, "和我一起加入花样大学", '#000000', "500", "PingFangSC", 16, 90, 110)
+		await drawImage(ctx, this.data.comma01, 90, 86 - 20, 17, 14)
+		await drawFont(ctx, calcStringLen(this.data.nickname) > 16 ? `我是${splitTargetNoString(this.data.nickname, 16)}..` : `我是${this.data.nickname}`, '#000000', "400", "PingFangSC", 14, 90, 86)
+		await drawFont(ctx, "和我一起加入花样大学吧!", '#000000', "500", "PingFangSC", 14, 90, 110)
+		ctx.font = '14px PingFang SC'
+		let title01Width = measureTextWidth(ctx, "和我一起加入花样大学吧") - 12
+		await drawImage(ctx, this.data.comma02, 90 + title01Width, 110 + 20, 17, 14)
 		// 介绍
 		await drawFont(ctx, "花样大学", '#765534', "400", "PingFangSC", 14, 30, 155)
 		await drawFont(ctx, "上海首批政府认证线上老年大学", '#765534', "400", "PingFangSC", 14, 30, 176)
