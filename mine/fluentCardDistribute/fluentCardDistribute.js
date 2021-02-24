@@ -196,7 +196,7 @@ Page({
 		// 用户信息
 		await drawCircleHeadIcon(ctx, this.data.avatar, 54, 106, 24)
 		await drawFont(ctx, calcStringLen(this.data.nickname) > 16 ? `我是${splitTargetNoString(this.data.nickname, 16)}..` : `我是${this.data.nickname}`, '#000000', "400", "PingFangSC", 16, 90, 86)
-		await drawFont(ctx, "和我一起畅学花样大学", '#000000', "500", "PingFangSC", 16, 90, 110)
+		await drawFont(ctx, "和我一起加入花样大学吧", '#000000', "500", "PingFangSC", 16, 90, 110)
 		// 介绍
 		await drawFont(ctx, "花样大学", '#765534', "400", "PingFangSC", 14, 30, 155)
 		await drawFont(ctx, "上海首批政府认证线上老年大学", '#765534', "400", "PingFangSC", 14, 30, 176)
