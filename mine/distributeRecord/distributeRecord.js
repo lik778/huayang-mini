@@ -97,7 +97,7 @@ Page({
             nickname: _.user ? _.user.nick_name : "",
             date: dayjs(_.bind_time).format("YYYY-MM-DD HH:mm")
           }))
-          this.setData({list: this.data.list.concat(data), hasMore: data.length === this.data.limit, didEmpty: data.length === 0})
+          this.setData({list: this.data.list.concat(data), hasMore: data.length === this.data.limit, didEmpty: this.data.length === 0})
         })
         break;
       }
@@ -114,7 +114,7 @@ Page({
             nickname: _.user.nick_name,
             date: dayjs(_.bind_time).format("YYYY-MM-DD HH:mm")
           }))
-          this.setData({list: this.data.list.concat(data), hasMore: data.length === this.data.limit, didEmpty: data.length === 0})
+          this.setData({list: this.data.list.concat(data), hasMore: data.length === this.data.limit, didEmpty: this.data.length === 0})
         })
         break;
       }
