@@ -97,7 +97,8 @@ Page({
             nickname: _.user ? _.user.nick_name : "",
             date: dayjs(_.bind_time).format("YYYY-MM-DD HH:mm")
           }))
-          this.setData({list: this.data.list.concat(data), hasMore: data.length === this.data.limit, didEmpty: data.length === 0})
+          let newList = this.data.list.concat(data)
+          this.setData({list: newList, hasMore: data.length === this.data.limit, didEmpty: newList.length === 0})
         })
         break;
       }
@@ -110,11 +111,12 @@ Page({
           data = data || []
           data = data.map((_) => ({
             isPartner: false,
-            avatar: _.user.avatar_url,
-            nickname: _.user.nick_name,
+            avatar: _.user ? _.user.avatar_url : "",
+            nickname: _.user ? _.user.nick_name : "",
             date: dayjs(_.bind_time).format("YYYY-MM-DD HH:mm")
           }))
-          this.setData({list: this.data.list.concat(data), hasMore: data.length === this.data.limit, didEmpty: data.length === 0})
+          let newList = this.data.list.concat(data)
+          this.setData({list: newList, hasMore: data.length === this.data.limit, didEmpty: newList.length === 0})
         })
         break;
       }
