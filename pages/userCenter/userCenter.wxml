@@ -1,8 +1,8 @@
 <!--pages/userCenter/userCenter.wxml-->
 <view class="user-center">
-	<view class="banner">
+	<view class="banner {{ isPartner && 'partner' }}">
 		<!-- 背景图 -->
-		<image src="/assets/images/common/banner-bg.png"></image>
+		<image class="banner-bg {{isPartner && 'partner'}}" src="{{ isPartner ? '/assets/images/common/banner-bg-partner.png' : '/assets/images/common/banner-bg.png' }}"></image>
 		<!-- 个人信息 -->
 		<view class="message">
 			<image
@@ -11,15 +11,36 @@
 			<text wx:if="{{nodata}}" bindtap="getAuth">点击登录</text>
 			<view wx:else class="user-info">
 				<view class="nick-name">
-					<text>{{userInfo.nick_name||userInfo.nickname}}</text>
+					<text class="name">{{userInfo.nick_name||userInfo.nickname}}</text>
 					<image wx:if="{{didVisibleVIPIcon}}" class="vip-tag" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612261464nXAbIu.jpg" mode="aspectFill"></image>
 				</view>
-				<text class="lifetime" wx:if="{{existNo}}">您已在花样第{{existNo}}天</text>
+				<text class="lifetime" wx:if="{{isPartner}}">花样{{ partnerInfo.level }}</text>
+				<text class="lifetime" wx:elif="{{existNo}}">您已在花样第{{existNo}}天</text>
 			</view>
 		</view>
+
+		<block wx:if="{{isPartner}}">
+			<view class="first-distribute">
+				<text>直接推荐学员 {{ partnerInfo.firstNo }} 人</text>
+				<view class="distribute-content" bindtap="goToDistributeListPage" data-index="1">
+					<image class="distribute-avatar" mode="aspectFill" src="{{item}}" wx:for="{{ partnerInfo.firstUserAvatars }}"></image>
+					<text class="more-list">查看更多 ›</text>
+				</view>
+			</view>
+
+			<view class="first-distribute second-distribute">
+				<text>间接推荐学员 {{ partnerInfo.secondNo }} 人</text>
+				<view class="distribute-content" bindtap="goToDistributeListPage" data-index="2">
+					<image class="distribute-avatar" mode="aspectFill" src="{{item}}" wx:for="{{ partnerInfo.secondUserAvatars }}"></image>
+					<text class="more-list">查看更多 ›</text>
+				</view>
+			</view>
+
+			<view class="distribute-btn" bindtap="generatePoster">获取专属邀请海报</view>
+		</block>
 	</view>
 	<!-- 畅学卡 -->
-	<view class="vip-card {{ isFluentLearnExpired && 'overdue'}}" bindtap="onFluentCardTap">
+	<view class="vip-card {{ isFluentLearnExpired && 'overdue' }} {{ isPartner && 'partner' }}" bindtap="onFluentCardTap">
 		<view>
 			<view class="card-title {{ isFluentLearnExpired && 'overdue'}}">{{cardName}}</view>
 			<view class="card-desc {{ isFluentLearnExpired && 'overdue'}}">{{cardDesc}}</view>
@@ -37,10 +58,10 @@
 	</view>
 
 	<!-- 引导按钮 -->
-	<view class="guide-btn" wx:if="{{didVisibleAuditBtn}}" bindtap="onGuideBtnTap">{{auditInfo.text}}</view>
+	<view class="guide-btn {{ isPartner && 'partner' }}" wx:if="{{didVisibleAuditBtn && !isPartner}}" bindtap="onGuideBtnTap">{{auditInfo.text}}</view>
 
 	<!-- 我的学习 -->
-	<view class="person">
+	<view class="person {{ isPartner && 'partner' }}">
 		<view class="layout">我的学习</view>
 		<view class="person-content">
 			<view class="content-element" bindtap="handleCardTap" data-ele="bootcamp">
@@ -63,7 +84,7 @@
 			src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603873700ScBmHI.jpg" class="add-btn"></image>
 	</view>
 	<!-- 广告位 -->
-	<view class="ad" wx:if="{{bannerList.length > 0}}">
+	<view class="ad {{ isPartner && 'partner' }}" wx:if="{{bannerList.length > 0}}">
 		<swiper class="swiper-item-box" circular autoplay interval="{{3000}}" duration="{{500}}">
 			<swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="onBannerItemTap" data-item="{{item}}">
 				<view class="swiper-cover"></view>
@@ -72,7 +93,7 @@
 		</swiper>
 	</view>
 	<!-- 功能栏 -->
-	<view class="function">
+	<view class="function {{ isPartner && 'partner' }}">
 		<view class="function-list">
 			<view class="function-item" bindtap="goToConvertCashPage">
 				<view class="function-item-left">
@@ -131,4 +152,6 @@
 	</view>
 	<!-- 授权弹窗 -->
 	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
+
+	<contact show="{{didShowContact}}" isRootPage="{{true}}" sessionFrom="distribute" bind:closeContactModal="onCloseContactModal"/>
 </view>

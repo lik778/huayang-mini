@@ -231,3 +231,18 @@ export const getKechengWithFluentCard = (params) => {
 export const getFluentDistributeGuide = () => {
   return request._get(URL.queryFluentDistributeGuide)
 }
+
+// 获取合伙人信息
+export const getPartnerInfo = (params) => {
+  return request._get(URL.queryPartnerInfo, params)
+}
+
+// 获取直接合伙人
+export const getDistributeFirstList = (params) => {
+  return request._get(URL.queryDistributeFirstList, params)
+}
+
+// 获取间接合伙人
+export const getDistributeSecondList = (params) => {
+  return request._get(URL.queryDistributeSecondList, params)
+}

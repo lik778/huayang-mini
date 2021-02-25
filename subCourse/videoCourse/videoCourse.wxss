@@ -748,8 +748,19 @@
   color: #CC0000;
 }
 
+.pay-or-fluent-one-left.free-course {
+  width: 100vw;
+  background: #CC0000;
+  color: white;
+}
+
 .pay-or-fluent-one-left-txt01 {
   font: 500 36rpx/36rpx PingFangSC;
+}
+
+.pay-or-fluent-one-left-txt01.free-course {
+  font-weight: 500;
+  font-size: 40rpx;
 }
 
 .pay-or-fluent-one-left-txt02 {

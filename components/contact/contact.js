@@ -1,22 +1,34 @@
-// components/contact/contact.js
-import {
-  getScene
-} from "../../api/mine/index"
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  getLocalStorage
-} from "../../utils/util"
+import bxPoint from "../../utils/bxPoint"
+import { getLocalStorage } from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
+
 Component({
   /**
    * 组件的属性列表
    */
   properties: {
+    show: {
+      value: false,
+      type: Boolean,
+      observer(newVal) {
+        if (newVal) {
+          this.setData({
+            didShowContact: newVal
+          })
+        } else {
+          let timer = setTimeout(() => {
+            this.setData({
+              didShowContact: newVal
+            })
+            clearTimeout(timer)
+          }, 200)
+        }
+      }
+    },
     contactImageSrc: {
       value: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1613793879bWSJjA.jpg",
       type: String
-    }, //猜你要发图片地址
+    }, //传你要发图片地址
     isRootPage: {
       value: false,
       type: Boolean
@@ -36,30 +48,37 @@ Component({
     sessionFrom: {
       value: "",
       type: String
-    } //猜你要发携带信息至后端
+    }, //猜你要发携带信息至后端
+    sceneValue: {
+      value: "distribute",
+      type: String
+    }
   },
 
   /**
    * 组件的初始数据
    */
   data: {
-
+    didShowContact: false,
+    safePageSize: 0,
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
+    onButtonTap() {
+      bxPoint("join_contact", {}, false)
+    },
     // 关闭
     close() {
-      this.triggerEvent('closeContactModal', true)
-    },
-    // 设置场景值
-    setScene() {
-      getScene({
-        open_id: getLocalStorage(GLOBAL_KEY.openId),
-        scene: 'distribute'
-      })
+      this.triggerEvent('closeContactModal')
+    }
+  },
+  pageLifetimes: {
+    show: function () {
+      let {screenHeight, safeArea: { bottom }} = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
+      this.setData({safePageSize: screenHeight - bottom})
     }
   }
 })

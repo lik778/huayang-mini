@@ -22,7 +22,7 @@
 .logo {
     position: relative;
     top: 62rpx;
-    left: 176rpx;
+    right: -272rpx;
     width: 242rpx;
     height: 38rpx;
 }
@@ -48,7 +48,7 @@
     justify-content: space-around;
     margin-left: 24rpx;
     height: 96rpx;
-    font: 32rpx/32rpx PingFangSC;
+    font: 28rpx/32rpx PingFangSC;
 }
 
 .user-name {
@@ -56,7 +56,22 @@
 }
 
 .slogan {
-    font-weight: 500;
+}
+
+.comma-01, .comma-02 {
+    position: absolute;
+    width: 34rpx;
+    height: 28rpx;
+}
+
+.comma-01 {
+    top: -33rpx;
+    left: 120rpx;
+}
+
+.comma-02 {
+    top: 100rpx;
+    left: 395rpx;
 }
 
 .desc-01 {

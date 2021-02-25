@@ -1,7 +1,7 @@
 <view class="auth" wx:if="{{didVisible}}">
     <view class="box {{show?'box-fade-in':'box-fade-out'}}">
         <view class="tip">提示</view>
-        <view class="txt">{{didGetPhoneNumber ? "绑定手机以记录您的学习及训练营信息" : "我们需要获取您的授权以便为您提供服务"}}</view>
+        <view class="txt">{{didGetPhoneNumber ? " 绑定手机以便记录您的学习信息 " : "我们需要获取您的授权以便为您提供服务"}}</view>
         <view class="rules">授权即代表同意<text class="important" bindtap="jumpToPrivacy">隐私协议</text>和<text class="important" bindtap="jumpToService">服务条款</text></view>
         <view class="confirm">
             <view class="sure">
