@@ -1,0 +1,25 @@
+<view class="withdraw">
+    <!-- 主体 -->
+    <view class="main">
+        <view class="withdraw-box">
+            <view class="withdraw-title">提现金额</view>
+            <view class="withdraw-input">
+                <view class="withdraw-input-left">
+                    <text class="sign">¥</text>
+                    <input type="number" placeholder="100元起提" bindblur="changeInputValue" placeholder-class="input-place" value="{{cashNo}}"/>
+                </view>
+                <text class="all-withdraw subject-font-color" bindtap="getAllCash">全部提现</text>
+            </view>
+            <view class="withdraw-text">
+                <text>最多可提现余额：</text>
+                <text class="subject-font-color">¥{{userInfo.amount}}</text>
+            </view>
+        </view>
+        <view class="withdraw-button-module">
+            <view class="button subject-bg-color" bindtap="giveMeCash">提交</view>
+            <view class="withdraw-introduce">
+                提交提现申请后会在3个工作日内审核，审核通过后会直接打款到微信中。
+            </view>
+        </view>
+    </view>
+</view>

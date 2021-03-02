@@ -14,8 +14,9 @@
     <view class="layout">变更记录</view>
     <view class="record">
         <view class="record-item" wx:for="{{recordList}}" wx:key="index">
-            <view class="record-item-01" style="margin-bottom: 32rpx;"><text>{{item.change_title}}</text><text class="txt-02">{{item.change_amount}}元</text></view>
-            <view class="record-item-01"><text class="txt-03">{{item.created_at}}</text><text class="txt-04">{{item.status}}</text></view>
+            <view class="record-item-01" style="margin-bottom: 32rpx;"><text>{{item.change_title}}</text><text class="txt-02">{{item.change_amount}}</text></view>
+            <view class="record-item-01"><text class="txt-03">{{item.created_at}}</text><text class="txt-04" style="color: {{item.color}}">{{item.zh_status}}</text></view>
+            <view class="record-item-02" wx:if="{{item.status === 2}}">原因：{{item.remark}}，您可以联系班主任了解详情。</view>
         </view>
     </view>
 </view>
