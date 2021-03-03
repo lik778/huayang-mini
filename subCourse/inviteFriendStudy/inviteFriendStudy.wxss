@@ -75,7 +75,7 @@
   color: #000000;
   line-height: 36rpx;
   white-space: nowrap;
-  width: 500rpx;
+  width: 556rpx;
   text-align: center;
 }
 
