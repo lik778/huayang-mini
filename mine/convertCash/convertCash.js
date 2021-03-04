@@ -13,7 +13,8 @@ Page({
     offset: 0,
     limit: 10,
     recordList: [],
-    status: ["", "审核中", "审核失败", "审核成功"]
+    status: ["", "审核中", "失败", "成功"],
+    statusColors: ["", "#EEA156", "#CC0000", "#40A100"]
   },
 
   /**
@@ -55,8 +56,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    this.setData({offset: 0})
-    this.getRecordList(true)
+    this.run()
   },
 
   /**
@@ -71,14 +71,7 @@ Page({
   },
   withdrawal() {
     bxPoint("mine_finalamount_withdraw", {}, false)
-    wx.showModal({
-      title: '提示',
-      content: '感谢您的分享，提现正在准备中，计划3月初可提现，请等候',
-      showCancel: false,
-      success: (res) => {
-        if (res.confirm) {}
-      }
-    })
+    wx.redirectTo({url: "/mine/cardWithdraw/cardWithdraw"})
   },
   run() {
     bxPoint("mine_finalamount_list", {})
@@ -101,14 +94,21 @@ Page({
       data = data.map((item) => ({
         id: item.id,
         change_title: item.change_title,
-        change_amount: Number((item.change_amount / 100).toFixed(2)),
+        change_amount: (item.change_type === 1 ? "+" : "-") + Number((item.change_amount / 100).toFixed(2)),
         created_at: item.created_at,
-        status: this.data.status[item.status],
+        zh_status: this.data.status[item.status],
+        status: item.status,
+        remark: item.remark,
+        color: this.data.statusColors[item.status]
       }))
-      if (!isRefresh) {
+      let didHasMore = data.length === this.data.limit
+      if (isRefresh) {
+        this.setData({offset: 0})
+        wx.stopPullDownRefresh()
+      } else {
         data = [...this.data.recordList, ...data]
       }
-      this.setData({recordList: data, hasMore: data.length === this.data.limit})
+      this.setData({recordList: data, hasMore: didHasMore})
     })
   }
 })
