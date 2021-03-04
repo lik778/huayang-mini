@@ -6,7 +6,7 @@
             <view class="withdraw-input">
                 <view class="withdraw-input-left">
                     <text class="sign">¥</text>
-                    <input type="number" placeholder="100元起提" bindblur="changeInputValue" placeholder-class="input-place" value="{{cashNo}}"/>
+                    <input type="digit" placeholder="100元起提" bindblur="changeInputValue" placeholder-class="input-place" value="{{cashNo}}"/>
                 </view>
                 <text class="all-withdraw subject-font-color" bindtap="getAllCash">全部提现</text>
             </view>

@@ -103,7 +103,6 @@
 }
 
 .all-withdraw {
-
     font-size: 32rpx;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
@@ -112,11 +111,11 @@
 }
 
 .withdraw-text {
-    font-size: 28rpx;
+    font-size: 32rpx;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: #999999;
-    line-height: 40rpx;
+    line-height: 44rpx;
     padding-top: 30rpx;
 }
 
@@ -140,10 +139,10 @@
 .withdraw-introduce {
     width: 630rpx;
     text-align: center;
-    font-size: 28rpx;
+    font-size: 32rpx;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: #999999;
-    line-height: 40rpx;
+    line-height: 44rpx;
     padding-top: 40rpx;
 }

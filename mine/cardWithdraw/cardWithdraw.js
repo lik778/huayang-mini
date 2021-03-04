@@ -23,7 +23,7 @@ Page({
 
 	// 全部提现
 	getAllCash() {
-		if (parseInt(this.data.userInfo.amount) > 0) {
+		if (parseFloat(this.data.userInfo.amount) > 0) {
 			this.setData({cashNo: this.data.userInfo.amount})
 		}
 	},
@@ -63,7 +63,7 @@ Page({
 			if (this.data.cashLock) {
 				this.setData({cashLock: false})
 				withDrawFun({
-					amount: this.data.cashNo * 100,
+					amount: this.data.cashNo * 100 | 0,
 					open_id: getLocalStorage(GLOBAL_KEY.openId),
 				}).then(() => {
 					wx.redirectTo({

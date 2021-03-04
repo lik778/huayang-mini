@@ -56,8 +56,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    this.setData({offset: 0})
-    this.getRecordList(true)
+    this.run()
   },
 
   /**
@@ -102,10 +101,14 @@ Page({
         remark: item.remark,
         color: this.data.statusColors[item.status]
       }))
-      if (!isRefresh) {
+      let didHasMore = data.length === this.data.limit
+      if (isRefresh) {
+        this.setData({offset: 0})
+        wx.stopPullDownRefresh()
+      } else {
         data = [...this.data.recordList, ...data]
       }
-      this.setData({recordList: data, hasMore: data.length === this.data.limit})
+      this.setData({recordList: data, hasMore: didHasMore})
     })
   }
 })
