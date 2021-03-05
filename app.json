@@ -106,7 +106,8 @@
         "compositeTask/compositeTask",
         "indexTask/indexTask",
         "videoCourseDetail/videoCourse",
-        "cooperationPage/cooperationPage"
+        "cooperationPage/cooperationPage",
+        "cps/cps"
       ]
     },
     {
