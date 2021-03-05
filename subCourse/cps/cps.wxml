@@ -1,5 +1,5 @@
 <!--subCourse/cps/cps.wxml-->
-<view>
+<view class="cps">
   <!-- 授权弹窗 -->
   <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
   </authModule>

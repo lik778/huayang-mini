@@ -55,8 +55,8 @@ Page({
         name: '抖音视频包'
       }).then(res1 => {
         if (res1.errMsg === 'requestPayment:ok') {
-          wx.navigateTo({
-            url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.url}&login=true&pay=1`,
+          wx.reLaunch({
+            url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.url}${encodeURIComponent('true&pay=1')}`,
           })
         } else {
           let data = hasAccountInfo() ? true : ''
@@ -110,14 +110,12 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-  },
+  onShow: function () {},
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
-  },
+  onHide: function () {},
 
   /**
    * 生命周期函数--监听页面卸载

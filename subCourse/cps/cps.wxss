@@ -1,1 +1,5 @@
 /* subCourse/cps/cps.wxss */
+.cps {
+  height: 100vh;
+  background: rgb(173, 20, 23)
+}
