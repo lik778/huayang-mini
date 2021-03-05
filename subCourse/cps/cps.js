@@ -1,6 +1,9 @@
 import {
   GLOBAL_KEY
 } from "../../lib/config"
+import {
+  douyinWxPay
+} from "../../api/cps/index"
 // subCourse/cps/cps.js
 import {
   payCourse,
@@ -16,7 +19,8 @@ Page({
   data: {
     didShowAuth: false,
     userInfo: '',
-    orderId: ''
+    orderId: '',
+    cpsData: ''
   },
 
   authCancelEvent() {
@@ -37,29 +41,49 @@ Page({
   },
   // 支付
   pay() {
-    payCourse({
-      id: this.data.orderId,
-      name: '抖音视频包'
+    douyinWxPay({
+      cps_id: this.data.cpsData.id,
+      mobile: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).mobile,
+      from: this.data.cpsData.from,
+      mode: this.data.cpsData.mode,
     }).then(res => {
-      console.log(res)
+      payCourse({
+        id: res.data.id,
+        name: '抖音视频包'
+      }).then(res1 => {
+        if (res1.errMsg === 'requestPayment:ok') {
+          wx.navigateTo({
+            url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.url}&login=true&pay=1`,
+          })
+        } else {
+          if (res1.errMsg === 'requestPayment:ok') {
+            let data = hasAccountInfo() ? true : ''
+            wx.navigateTo({
+              url: `/subCourse/noAuthWebview/noAuthWebview?link=${encodeURIComponent(this.data.cpsData.url)}&login=${data}&pay=0`,
+            })
+          }
+        }
+      })
     })
-    // console.log(this.data.orderId)
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    options = JSON.parse(options.params)
     if (options.id) {
       if (hasAccountInfo() && hasUserInfo()) {
         this.setData({
           userInfo: getLocalStorage(GLOBAL_KEY.accountInfo),
-          orderId: options.id
+          orderId: options.id,
+          cpsData: options
         })
         this.pay()
       } else {
         this.setData({
           didShowAuth: true,
-          orderId: options.id
+          orderId: options.id,
+          cpsData: options
         })
       }
     } else {

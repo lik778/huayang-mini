@@ -1,4 +1,7 @@
 // subCourse/noAuthWebview/noAuthWebview.js
+import {
+  hasAccountInfo
+} from "../../utils/util"
 Page({
 
   /**
@@ -13,10 +16,14 @@ Page({
    */
   onLoad: function (options) {
     let {
-      link
+      link,
+      needAuthMsg = false
     } = options
     link = decodeURIComponent(link)
-    console.log(link)
+    if (needAuthMsg) {
+      let hasLogin = hasAccountInfo() ? true : ''
+      link = link + '&login=' + hasLogin
+    }
     this.setData({
       link
     })
