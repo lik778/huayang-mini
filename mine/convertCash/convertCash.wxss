@@ -43,6 +43,10 @@
     color: #CC0000;
 }
 
+.withdrawal:active {
+    opacity: 0.9;
+}
+
 .separator {
     height: 12rpx;
     background: #F9F9F9;
@@ -74,11 +78,17 @@
 }
 
 .txt-03 {
-    font: 32rpx/32rpx PingFangSC;
+    font: 28rpx/28rpx PingFangSC;
     color: #999999;
 }
 
 .txt-04 {
-    font: 500 32rpx/32rpx PingFangSC;
+    font: 500 36rpx/36rpx PingFangSC;
+    color: #CC0000;
+}
+
+.record-item-02 {
+    margin-top: 18rpx;
+    font: 32rpx/48rpx PingFangSC;
     color: #CC0000;
 }

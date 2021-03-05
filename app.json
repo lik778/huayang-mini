@@ -61,7 +61,8 @@
         "convertCash/convertCash",
         "distributeRecord/distributeRecord",
         "fluentCardCallback/fluentCardCallback",
-        "wvDistributeApply/wvDistributeApply"
+        "wvDistributeApply/wvDistributeApply",
+        "cardWithdraw/cardWithdraw"
       ]
     },
     {

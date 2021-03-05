@@ -371,7 +371,7 @@
           "scene": null
         },
         {
-          "name": "提现页",
+          "name": "余额记录页",
           "pathName": "mine/convertCash/convertCash",
           "query": "",
           "scene": null
@@ -397,6 +397,12 @@
         {
           "name": "二级分销申请",
           "pathName": "mine/wvDistributeApply/wvDistributeApply",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "余额提现",
+          "pathName": "mine/cardWithdraw/cardWithdraw",
           "query": "",
           "scene": null
         }
