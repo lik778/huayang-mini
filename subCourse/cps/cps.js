@@ -27,7 +27,7 @@ Page({
     this.setData({
       didShowAuth: false
     })
-    wx.navigateTo({
+    wx.reLaunch({
       url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.url}&login=''&pay=0`,
     })
   },
@@ -60,14 +60,14 @@ Page({
           })
         } else {
           let data = hasAccountInfo() ? true : ''
-          wx.navigateTo({
-            url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.url}&login=${data}&pay=0`,
+          wx.reLaunch({
+            url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.url}${encodeURIComponent(`${data}&pay=0`)}`,
           })
         }
       }).catch(() => {
         let data = hasAccountInfo() ? true : ''
-        wx.navigateTo({
-          url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.url}&login=${data}&pay=0`,
+        wx.reLaunch({
+          url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.url}${encodeURIComponent(`${data}&pay=0`)}`,
         })
       })
     })
@@ -111,14 +111,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
   },
 
   /**
@@ -141,11 +139,4 @@ Page({
   onReachBottom: function () {
 
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })
