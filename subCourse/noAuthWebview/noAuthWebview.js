@@ -22,6 +22,7 @@ Page({
       needAuthMsg = false
     } = options
     link = decodeURIComponent(link)
+    console.log(needAuthMsg)
     if (needAuthMsg) {
       let hasLogin = hasAccountInfo() ? true : ''
       link = link + '&login=' + hasLogin
