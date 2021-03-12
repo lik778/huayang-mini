@@ -284,7 +284,7 @@ Page({
 	onShareAppMessage: function () {
 		return {
 			title: "我在花样百姓，和我一起学习、游玩吧，开心每一天！",
-			path: `/subCourse/videoCourseList/videoCourseList?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
+			path: `/pages/practice/practice?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
 		}
 	}
 })
