@@ -1,0 +1,161 @@
+@import "../../assets/css/common.wxss";
+.best-course-layout {
+    margin: 0 30rpx;
+}
+
+.recommend-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 100rpx 0 40rpx;
+}
+
+.title {
+    font: 500 52rpx/52rpx PingFangSC;
+}
+
+.sub-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font: 28rpx/28rpx PingFangSC;
+    color: #CC0000;
+}
+
+.sub-title:active {
+    opacity: 0.9;
+}
+
+.recommend-tag {
+    width: 92rpx;
+    height: 40rpx;
+    margin-right: 12rpx;
+    border-radius: 6rpx;
+    text-align: center;
+    line-height: 40rpx;
+    color: #996633;
+    background: #F4DABE;
+}
+
+.course-item {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    margin-bottom: 40rpx;
+}
+
+.course-item:active {
+    opacity: 0.9;
+}
+
+.course-image {
+    width: 166rpx;
+    height: 220rpx;
+    font-size: 0;
+    border-radius: 8rpx;
+    margin-right: 24rpx;
+    vertical-align: bottom;
+}
+
+.course-logo {
+    position: relative;
+}
+
+.course-logo-icon {
+    position: absolute;
+    right: 24rpx;
+    top: 0;
+    width: 52rpx;
+    height: 30rpx;
+    border-top-right-radius: 8rpx;
+}
+
+.course-logo-icon-one {
+    width: 32rpx;
+}
+
+.course-info {
+    width: calc(100% - 190rpx);
+    height: 220rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.course-main-title {
+    height: 36rpx;
+    font: 500 36rpx/36rpx PingFangSC;
+    color: #000000;
+    padding-top: 6rpx;
+    padding-bottom: 20rpx;
+}
+
+.course-sub-title {
+    height: 32rpx;
+    font: 32rpx/32rpx PingFangSC;
+    color: #000000;
+}
+
+.course-teacher-desc {
+    height: 32rpx;
+    font: 32rpx/32rpx PingFangSC;
+    color: rgba(0, 0, 0, 0.6);
+    padding-top: 20rpx;
+}
+
+.course-item-bottom-module {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.course-item-bottom-module-left-dis {}
+
+.course-item-bottom-module-right {
+    font: 24rpx/24rpx PingFangSC;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.course-item-bottom-module-left-price {
+    font: 28rpx/28rpx PingFangSC;
+    color: rgba(0, 0, 0, 0.6);
+    text-decoration: line-through;
+    padding-left: 10rpx;
+}
+
+.course-item-bottom-module-left-dis {
+    font: 500 32rpx/32rpx PingFangSC;
+    color: #CC0000;
+}
+
+.course-item-bottom-module-left-one {
+    font-size: 32rpx;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 600;
+    color: #CC0000;
+    line-height: 32rpx;
+}
+
+.course-item-bottom-module-left-two {
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.6);
+    padding-left: 10rpx;
+    line-height: 28rpx;
+}
+
+.course-item-more-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 690rpx;
+    height: 88rpx;
+    margin: 40rpx auto 80rpx;
+    border-radius: 999rpx;
+    border: 1rpx solid black;
+    font: 500 36rpx/36rpx PingFangSC;
+}
+.course-item-more-btn:active {
+    opacity: 0.9;
+}

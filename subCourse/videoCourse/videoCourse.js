@@ -1,25 +1,25 @@
 // subCourse/videoCourseDetail/videoCourseDetail.js
 import { ErrorLevel, FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import {
-  checkJoinVideoCourse,
-  checkNeedSpecialManage,
-  createFissionTask,
-  getIosCustomerLink,
-  getVideoArticleLink,
-  getVideoCourseDetail,
-  inviteFriend,
-  joinVideoCourse,
-  recordStudy
+	checkJoinVideoCourse,
+	checkNeedSpecialManage,
+	createFissionTask,
+	getIosCustomerLink,
+	getVideoArticleLink,
+	getVideoCourseDetail,
+	inviteFriend,
+	joinVideoCourse,
+	recordStudy
 } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
 import {
-  $notNull,
-  convertToChinaNum,
-  getLocalStorage,
-  hasAccountInfo,
-  hasUserInfo,
-  payCourse,
-  secondToMinute,
+	$notNull,
+	convertToChinaNum,
+	getLocalStorage,
+	hasAccountInfo,
+	hasUserInfo,
+	payCourse,
+	secondToMinute,
 } from "../../utils/util"
 import { collectError } from "../../api/auth/index"
 import { getFluentCardInfo, getKechengWithFluentCard } from "../../api/mine/index"
@@ -492,7 +492,7 @@ Page({
                   nowCoursePlayIndex = ''
                 } else if (has_free_visit !== -1) {
                   // 有试看课
-                  videoPlayerSrc = videoCourseList[has_friend_visit + 1].url
+                  videoPlayerSrc = videoCourseList[has_free_visit].url
                   nowCoursePlayIndex = has_free_visit
                 } else if (has_friend_visit !== -1) {
                   // 有好友相送课

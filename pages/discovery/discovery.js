@@ -1,22 +1,18 @@
-// pages/ discovery/discovery.js
-import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, } from "../../utils/util"
-import request from "../../lib/request"
-import {
-	getActivityList,
-	getCampList,
-	getFindBanner,
-	getVideoTypeList,
-	liveTotalNum,
-	queryBootcampFeatureList,
-	queryVideoCourseListByBuyTag
-} from "../../api/course/index"
-import { FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
+import { $notNull, getLocalStorage, getSchedule, hasAccountInfo, hasUserInfo, } from "../../utils/util"
+import { getActivityList, getFindBanner, } from "../../api/course/index"
+import { FluentLearnUserType, GLOBAL_KEY, WeChatLiveStatus } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import { getYouZanAppId } from "../../api/mall/index"
-import dayjs from "dayjs"
 import { getFluentCardInfo } from "../../api/mine/index"
-
-const TRAINCAMP_SCENE = "traincamp"
+import {
+	addTravelVisitNumber,
+	getRecommendLiveList,
+	queryQualityVideoList,
+	queryTodayRecommendCourse,
+	queryTravelList,
+	updateLiveStatus
+} from "../../api/live/index"
+import dayjs from "dayjs"
 
 Page({
 
@@ -25,10 +21,8 @@ Page({
 	 */
 	data: {
 		current: 0,
-		liveNum: 0,
 		isIosPlatform: false,
 		isFluentLearnVIP: false, // 是否是畅学卡会员
-		campList: null,
 		showModelBanner: false,
 		didShowAuth: false,
 		isModelLink: true,
@@ -37,34 +31,154 @@ Page({
 		recommendCourseList: [],
 		modelBannerLink: "",
 		activityList: null,
-		tabs: [{
-				id: 0,
-				name: "推荐"
-			},
-			{
-				id: 1,
-				name: "主题营"
-			},
-			{
-				id: 2,
-				name: "课程"
-			},
-		],
-		tabIndex: 0,
-		cacheCampList: [],
-		scrollTop: 0,
-		scrollIng: false,
-		didFirstLoad: true,
-		tabsOffsetLeftAry: [],
-		featureList: [],
-		didFixedTab: false,
-		tabsDomOffsetTopNo: 0,
-		obs: [], // 被监听的video标签队列
-		themeTabMinHeight: 0,
+		liveList: [],
+		travelList: [],
+		courseList: [],
+		todayRecommendCourse: {},
+		previewVideoLink: "",
+		previewVideoCover: "",
+		weekdays: ['日', '一', '二', '三', '四', '五', '六'],
+		liveStatusIntervalTimer: null,
+	},
+	async run() {
+		// 推荐直播间
+		let list = await getRecommendLiveList()
+		list = list.map(item => ({
+			zhiboRoomId: item.id,
+			roomId: item.num,
+			roomType: item.room_type,
+			roomName: item.title.length > 17 ? `${item.title.slice(0, 17)}...` : item.title,
+			title: item.title,
+			desc: item.desc,
+			visitCount: item.visit_count,
+			coverPicture: item.cover_pic,
+			status: item.status,
+			liveStatus: "",
+			link: item.link,
+			startTime: item.start_time,
+			endTime: item.end_time
+		}))
+		this.setData({liveList: list})
+		const roomIds = list.filter(_ => _.roomId).map(t => t.roomId)
+		getSchedule(roomIds).then(this.handleLiveStatusCallback)
+
+		// 花样游学
+		let travelList = await queryTravelList()
+		travelList = travelList.map(n => {
+			let t = {...n, covers: n.pics.split(",")}
+			if (!t.discount_price) {
+				t.discount_price = t.price
+				t.price = 0
+			}
+			return t
+		})
+		this.setData({travelList})
+
+		// 今日推荐
+		let recommendCourse = await queryTodayRecommendCourse()
+		if ($notNull(recommendCourse)) {
+			let tname = recommendCourse.kecheng_series.name
+			recommendCourse.kecheng_series.name = tname.length > 15 ? `${tname.slice(0, 15)}...` : tname
+			this.setData({todayRecommendCourse: recommendCourse})
+			let lessons = JSON.parse(recommendCourse.kecheng_series.video_detail)
+			if (lessons.length > 0) {
+				this.setData({previewVideoLink: lessons[0].url, previewVideoCover: lessons[0].video_pic})
+			}
+			this.initVideoListener()
+		}
+
+		// 精品课程
+		let params = {offset: 0, limit: 9999}
+		if (hasAccountInfo()) {
+			params["user_id"] = getLocalStorage(GLOBAL_KEY.userId)
+		}
+
+		let courseList = await queryQualityVideoList(params)
+		this.setData({courseList})
+	},
+	// 打开微信授权
+	openUserAuth() {
+		this.setData({didShowAuth: true})
 	},
 	/**
-	 * 请求畅销卡信息
+	 * 处理直播间状态回调
+	 * @param callbackLiveStatus
 	 */
+	handleLiveStatusCallback(callbackLiveStatus) {
+		if (callbackLiveStatus.length > 0) {
+			let originLiveList = [...this.data.liveList]
+			originLiveList.forEach(_ => {
+				let tar = callbackLiveStatus.find(o => o.roomId === _.roomId)
+				if (tar && _.status !== 2) {
+					// status -> [0：默认；1：直播中；2：直播已结束]
+					_.liveStatus = tar.liveStatus
+					if (tar.liveStatus === WeChatLiveStatus[103]) {
+						// 如果微信返回的直播间状态为103-已过期
+						updateLiveStatus({
+							status: 2, // 2->直播已结束
+							zhibo_room_id: _.zhiboRoomId
+						})
+					} else if (tar.liveStatus === WeChatLiveStatus[104] || tar.liveStatus === WeChatLiveStatus[107]) {
+						// 如果微信返回的直播间状态为104、107-禁播、已过期
+						updateLiveStatus({
+							status: 3, // 3->直播禁播或删除
+							zhibo_room_id: _.zhiboRoomId
+						})
+					} else if (tar.liveStatus === WeChatLiveStatus[102]) {
+						// 如果微信返回的直播间状态为102-未开始，计算星期
+						let originDate = dayjs(_.startTime)
+						// let originDate = dayjs("2021-03-13 18:00:00")
+						let todayDate = dayjs(dayjs().format("YYYY-MM-DD"))
+						let liveStartDate = dayjs(originDate.format("YYYY-MM-DD"))
+						let time = originDate.format("HH:mm")
+						let firstDayInWeek = todayDate.startOf('week')
+						let diffNo = liveStartDate.diff(firstDayInWeek, "day")
+						let todayDiffNo = liveStartDate.diff(todayDate, "day")
+						switch (todayDiffNo) {
+							case 0: {
+								_.liveStatus = `今日${time}开播`
+								break
+							}
+							case 1: {
+								_.liveStatus = `明日${time}开播`
+								break
+							}
+							default: {
+								_.liveStatus = `${diffNo > 7 ? "下周" : "本周"}${this.data.weekdays[diffNo % 7]}${time}开播`
+								break
+							}
+						}
+					} else if (tar.liveStatus === WeChatLiveStatus[101]) {
+						// 如果微信返回的直播间状态为101-直播中
+						updateLiveStatus({
+							status: 1, // 1->直播中
+							zhibo_room_id: _.zhiboRoomId
+						})
+					}
+				}
+			})
+			this.setData({liveList: [...originLiveList]})
+		}
+	},
+	initVideoListener() {
+		let ob = wx.createIntersectionObserver()
+		ob.relativeToViewport({
+			top: -50,
+			bottom: -50
+		})
+			.observe('.preview-video', res => {
+				if (res && res.intersectionRatio > 0) {
+					// 进入可视区域
+					let videoInstance = wx.createVideoContext("preview-video-content")
+					videoInstance.play()
+				} else {
+					// 离开可视区域
+					let videoInstance = wx.createVideoContext("preview-video-content")
+					videoInstance.pause()
+				}
+			})
+	},
+	// 请求畅销卡信息
 	getFluentInfo() {
 		if (!hasUserInfo() || !hasAccountInfo()) return
 		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
@@ -72,163 +186,35 @@ Page({
 			this.setData({isFluentLearnVIP: $notNull(data) && data.status === FluentLearnUserType.active})
 		})
 	},
-	calcTabsOffset() {
-		let self = this
-		let tabQuery = wx.createSelectorQuery()
-		tabQuery.select("#tabs").boundingClientRect()
-		tabQuery.exec(function (res) {
-			let bool = res[0].top <= 0
-			if (bool !== self.data.didFixedTab) {
-				self.setData({
-					didFixedTab: bool
-				})
-			}
-		})
-	},
-	touchMove(e) {
-		this.calcTabsOffset()
-	},
-	initBootcampListener() {
-		let obs = []
-		for (let index = 0; index < this.data.campList.length; index++) {
-			let ob = wx.createIntersectionObserver()
-			ob.relativeToViewport({
-					top: -50,
-					bottom: -50
-				})
-				.observe('.card-' + index, res => {
-					let campList = this.data.campList.slice()
-					if (res && res.intersectionRatio > 0) {
-						// 进入可视区域
-						campList = campList.map((item, itemIndex) => {
-							if (itemIndex === index && item.intro_video_cover_pic && item.intro_video_link) {
-								item.show = true
-							}
-							return item
-						})
-						// 滚动结束，更新可视区域位置
-						if (!this.data.scrollIng) {
-							this.setData({
-								cacheCampList: campList.slice()
-							})
-							let target = this.data.campList.find(n => n.id === index)
-							if ($notNull(target) && target.show) {
-								let videoInstance = wx.createVideoContext("video-" + index)
-								videoInstance.play()
-							}
-						}
-					} else {
-						// 离开可视区域
-						campList = campList.map((item, itemIndex) => {
-							if (itemIndex === index) {
-								item.show = false
-							}
-							return item
-						})
-						// 滚动结束，跟新可视区域位置
-						if (!this.data.scrollIng) {
-							this.setData({
-								cacheCampList: campList.slice()
-							})
-							let target = this.data.campList.find(n => n.id === index)
-							if ($notNull(target) && target.show) {
-								let videoInstance = wx.createVideoContext("video-" + index)
-								videoInstance.pause()
-							}
-						}
-					}
-					// 可视区域首次渲染
-					if (this.data.didFirstLoad) {
-						let t = setTimeout(() => {
-							this.setData({
-								campList: campList.slice(),
-								didFirstLoad: false
-							})
-							clearTimeout(t)
-						}, 50)
-					}
-				})
-			obs.push(ob)
-		}
-		this.setData({
-			obs
-		})
-	},
-	handleTab(e) {
-		let {
-			id,
-			name
-		} = e.currentTarget.dataset.item
-
-		if (this.data.tabIndex === +id) return
-
-		this.setData({
-			tabIndex: id
-		})
-
-		// 检查是否存在obs，存在的话清除队列
-		if (this.data.obs.length > 0) {
-			this.data.obs.forEach(o => {
-				o.disconnect()
-			})
-		}
-
-		switch (id) {
-			case 2: {
-				this.getVideoCourse()
-				break
-			}
-			default: {
-				// 推荐、主题营TAB切换时，清除视频位置数据缓存
-				this.setData({
-					didFirstLoad: true,
-					cacheCampList: []
-				})
-				this.getRecommendList()
-				break
-			}
-		}
-
-		bxPoint("discovery_tab", {
-			tab: name
+	onTravelTap(e) {
+		let item = e.currentTarget.dataset.item
+		let path = item.buy_link
+		addTravelVisitNumber({travel_product_id: item.id})
+		getYouZanAppId().then(appId => {wx.navigateToMiniProgram({appId, path})})
+		bxPoint("homepage_edu_travel_click", {
+			edu_travel_id: item.id,
+			edu_travel_name: item.name,
+			edu_travel_title: item.title,
+			edu_travel_ori_price: item.price,
+			edu_travel_dis_price: item.discount_price,
+			edu_travel_visit_count: item.visit_count,
 		}, false)
-
-		if (this.data.scrollTop >= this.data.tabsDomOffsetTopNo) {
-			let scrollTop = this.data.tabsDomOffsetTopNo
-			wx.pageScrollTo({
-				duration: 0,
-				scrollTop
-			})
-		}
 	},
-	initTabOffset() {
-		let self = this
-		let query = wx.createSelectorQuery()
-		query.selectAll('.tab-ep').boundingClientRect()
-		query.exec(function (res) {
-			let domAry = res[0]
-			let tabsOffsetLeftAry = []
-			domAry.forEach(item => {
-				let diff = (item.width - 44) / 2
-				tabsOffsetLeftAry.push(item.left + diff)
-			})
-			self.setData({
-				tabsOffsetLeftAry
-			})
-		})
-
-		// 计算tabs的scrollTop位置
-		let tabQuery = wx.createSelectorQuery()
-		tabQuery.select("#tabs").boundingClientRect()
-		tabQuery.exec(function (res) {
-			self.setData({
-				tabsDomOffsetTopNo: res[0].top
-			})
-		})
-		// 计算主题营TAB最小高度
-		this.setData({
-			themeTabMinHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenHeight - 264
-		})
+	onTodayRecommendTap() {
+		let item = this.data.todayRecommendCourse.kecheng_series
+		wx.navigateTo({url: `/subCourse/videoCourse/videoCourse?videoId=${item.id}`, complete() {
+				bxPoint("homepage_today_recom_click", {
+					is_today_recom: 1,
+					series_id: item.id,
+					today_recom_id: this.data.todayRecommendCourse.id,
+					kecheng_name: item.teacher_desc,
+					kecheng_subname: item.name,
+				}, false)
+			}})
+	},
+	onMoreTravelLineTap() {
+		getYouZanAppId().then(appId => {wx.navigateToMiniProgram({appId, path: "pages/common/blank-page/index?weappSharePath=pages%2Fhome%2Fdashboard%2Findex%3Fkdt_id%3D43257500"})})
+		bxPoint("homepage_more_edu_travel_button", {}, false)
 	},
 	// 获取授权
 	getAuth() {
@@ -248,15 +234,6 @@ Page({
 			didShowAuth: false,
 		})
 		this.initToCompetitionFun()
-	},
-	// 加入课程
-	toCourse(e) {
-		bxPoint("find_join", {
-			join_type: "kecheng"
-		}, false)
-		wx.navigateTo({
-			url: `/subCourse/practiceDetail/practiceDetail?courseId=${e.currentTarget.dataset.item.id}`,
-		})
 	},
 	// swiper切换
 	changeSwiperIndex(e) {
@@ -292,7 +269,6 @@ Page({
 				url: this.data.modelBannerLink,
 			})
 		}
-
 	},
 	// 跳转到模特大赛
 	toModelCompetition(e) {
@@ -310,7 +286,6 @@ Page({
 			})
 		}
 	},
-
 	// 处理是否显示模特大赛banner
 	initModelBanner() {
 		getFindBanner({
@@ -320,123 +295,6 @@ Page({
 				competitionBannerList: res,
 				showModelBanner: res.length !== 0
 			})
-		})
-	},
-	// 跳往视频课程全部列表
-	toVideoList(e) {
-		let {
-			key
-		} = e.currentTarget.dataset.item
-		let activeIndex = this.data.recommendCourseList.findIndex(n => n.key === key) + 1
-		bxPoint("discovery_more_college_info", {
-			collegeName: key
-		}, false)
-		wx.navigateTo({
-			url: `/subCourse/videoCourseList/videoCourseList?index=${activeIndex}`
-		})
-	},
-	// 跳转至直播列表
-	toLiveList() {
-		wx.navigateTo({
-			url: '/pages/index/index',
-		})
-	},
-	// 加载"全部"或"推荐"的视频系列课
-	getVideoCourse() {
-		getVideoTypeList().then((list) => {
-			let processIndex = 1
-			let resultList = []
-			list.forEach(({
-				key,
-				value
-			}) => {
-				resultList.push({
-					key: value,
-					content: []
-				})
-				let params = {
-					limit: 5,
-					category: key
-				}
-				if (getLocalStorage(GLOBAL_KEY.userId)) {
-					params.user_id = getLocalStorage(GLOBAL_KEY.userId)
-				}
-				queryVideoCourseListByBuyTag(params).then(data => {
-					// if (getLocalStorage(GLOBAL_KEY.userId)) {
-					data = data.map(_ => {
-						return {
-							..._.kecheng_series,
-							teacher: _.teacher,
-							didBought: _.buy_tag === "已购",
-							buy_tag: _.buy_tag
-						}
-					})
-					// }
-					let handledList = data.map((res) => {
-						if (res.visit_count >= 10000) {
-							res.visit_count = (res.visit_count / 10000).toFixed(1) + "万"
-							res.visit_count = res.visit_count.split('.')[1] === '0万' ? res.visit_count[0] + "万" : res.visit_count
-						}
-						res.price = (res.price / 100) // .toFixed(2)
-						if (res.discount_price === -1 && res.price > 0) {
-							// 原价出售
-							// 是否有营销活动
-							if (+res.invite_open === 1) {
-								res.fission_price = (+res.price * res.invite_discount / 10000) // .toFixed(2)
-							}
-							res.discount_price = res.price
-						} else if (res.discount_price >= 0 && res.price > 0) {
-							// 收费但有折扣
-							res.discount_price = (res.discount_price / 100) // .toFixed(2)
-							// 是否有营销活动
-							if (+res.invite_open === 1) {
-								res.fission_price = (+res.discount_price * res.invite_discount / 10000) // .toFixed(2)
-							}
-						} else if (+res.discount_price === -1 && +res.price === 0) {
-							res.discount_price = 0
-						}
-
-						// 只显示开启营销活动的数据
-						if (+res.invite_open === 1 && (res.price > 0 || res.discount_price > 0)) {
-							res.tipsText = res.fission_price == 0 ? "邀好友免费学" : `邀好友${(res.invite_discount / 10)}折购`
-						}
-
-						return res
-					})
-
-					handledList = handledList.filter(n => n.id && n.cover_pic && n.name && n.visit_count)
-
-					if (handledList.length > 0) {
-						let target = resultList.find(n => n.key === value)
-						target.content = handledList.slice()
-					}
-					if (processIndex === list.length) {
-						resultList = resultList.filter(n => n.content.length > 0)
-						this.setData({
-							recommendCourseList: resultList
-						})
-					}
-					processIndex += 1
-				})
-			})
-		})
-	},
-	// 跳往视频详情页
-	toVideoDetail(e) {
-		let item = e.currentTarget.dataset.item
-		let id = e.currentTarget.dataset.item.id
-		bxPoint("series_discovery_click", {
-			series_id: id,
-			kecheng_name: item.teacher_desc,
-			kecheng_subname: item.name,
-			kecheng_label: item.series_tag === 1 ? "口碑好课" : item.series_tag === 2 ? "新课" : "无",
-			kecheng_total_amount: item.visit_count,
-			kecheng_ori_price: item.price > 0 ? item.price : 0,
-			kecheng_dis_price: item.discount_price < 0 ? '' : item.discount_price,
-			kecheng_teacher: item.teacher.name,
-		}, false)
-		wx.navigateTo({
-			url: `/subCourse/videoCourse/videoCourse?videoId=${id}`,
 		})
 	},
 	// 处理轮播点击事件
@@ -457,10 +315,6 @@ Page({
 			link_type,
 			id
 		} = e.currentTarget.dataset.item
-		bxPoint("applets_banner", {
-			position: 'page/discovery/discovery',
-			bannerId: id || ""
-		}, false)
 		if (link_type === 'youzan') {
 			getYouZanAppId().then(appId => {
 				wx.navigateToMiniProgram({
@@ -473,14 +327,11 @@ Page({
 				url: link
 			})
 		}
-	},
-	// 临时跳转至抽奖工具
-	toWebview() {
-		if (request.baseUrl === 'https://huayang.baixing.cn') {
-			wx.navigateTo({
-				url: '/subCourse/lotteryWebview/lotteryWebview?activity_id=2',
-			})
-		}
+
+		bxPoint("homepage_banner", {
+			position: 'page/discovery/discovery',
+			bannerId: id || ""
+		}, false)
 	},
 	// 获取banner列表
 	getBanner() {
@@ -493,102 +344,6 @@ Page({
 			this.setData({
 				bannerList
 			})
-		})
-	},
-	// 加载"推荐"或"全部"的训练营列表
-	getRecommendList() {
-		let params = {
-			offset: 0,
-			limit: 999,
-		}
-
-		// 监听tab变化，传递额外参数
-		switch (this.data.tabIndex) {
-			case 0: {
-				// 推荐，传递用户ID，获取推荐训练营
-				params.user_id = getLocalStorage(GLOBAL_KEY.userId) || ""
-				break
-			}
-			case 1: {
-				// 主题营，传递scene，获取除读书营之外所有训练营
-				params.scene = TRAINCAMP_SCENE
-				break
-			}
-		}
-		// 获取训练营列表
-		getCampList(params).then(({
-			list
-		}) => {
-			list = list.map(item => {
-				// 处理训练营特色标签
-				item.feature = item.feature.split(",").map(k => {
-					let target = this.data.featureList.find(({
-						key
-					}) => key === k)
-					if ($notNull(target)) {
-						return target
-					}
-				})
-
-				// 处理训练营价格单位
-				if (item.discount_price > 0) {
-					item.price = (item.price / 100) // .toFixed(2)
-					item.discount_price = (item.discount_price / 100) // .toFixed(2)
-				} else {
-					// 折扣价小于等于零时，不显示折扣价，仅显示原价
-					item.discount_price = (item.price / 100) // .toFixed(2)
-					item.price = 0
-				}
-
-				// 计算下次开营时间
-				item.next_bootcamp_start_date = "即将开营"
-				if (item.start_date) {
-					let dates = item.start_date.split(",")
-					let nextStartDate = ""
-					dates.forEach(date => {
-						if (dayjs(date).isAfter(dayjs())) {
-							nextStartDate = date
-						}
-					})
-					if (nextStartDate) {
-						item.next_bootcamp_start_date = nextStartDate
-					}
-				}
-				return item
-			})
-
-			list = list.filter(n => n.id && (n.intro_video_cover_pic || n.cover_pic) && n.name && n.summary)
-
-			this.setData({
-				campList: list
-			})
-
-			if (this.data.tabIndex === 0) {
-				// 获取视频系列课
-				this.getVideoCourse()
-				// 获取直播列表个数
-				this.getLiveTotalNum()
-			}
-
-			// 监听每个video标签在视口的位置
-			this.initBootcampListener()
-		})
-	},
-	// 获取直播列表个数
-	getLiveTotalNum() {
-		liveTotalNum().then(res => {
-			this.setData({
-				liveNum: res
-			})
-		})
-	},
-	// 跳转到训练营详情
-	joinCamp(e) {
-		bxPoint("find_join", {
-			join_type: "bootcamp"
-		}, false)
-		wx.navigateTo({
-			url: `/subCourse/joinCamp/joinCamp?id=${e.currentTarget.dataset.index.id}&share=true`,
 		})
 	},
 	// 检查用户是否引导
@@ -647,13 +402,9 @@ Page({
 	 */
 	onLoad: function (options) {
 
-		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=178`})
+		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=205`})
 
-		let {
-			scene,
-			invite_user_id = "",
-			source
-		} = options
+		let {scene, invite_user_id = "", source} = options
 		// 通过小程序码进入 scene=${source}
 		if (scene) {
 			let sceneAry = decodeURIComponent(scene).split('/')
@@ -672,14 +423,6 @@ Page({
 			}
 		}
 
-		// 获取训练营特色标签列表
-		queryBootcampFeatureList().then(({
-			data
-		}) => {
-			this.setData({
-				featureList: data
-			})
-		})
 		// 检查用户是否需要引导
 		this.checkUserGuide()
 		// 处理ios
@@ -689,8 +432,13 @@ Page({
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
-		// 计算tab偏移位置
-		this.initTabOffset()
+		if (this.data.liveStatusIntervalTimer == null) {
+			this.liveStatusIntervalTimer = setInterval(() => {
+				// 筛选出直播间状态不是"回看"的房间号
+				const roomIds = this.data.liveList.filter(_ => _.roomId).map(t => t.roomId)
+				getSchedule(roomIds).then(this.handleLiveStatusCallback)
+			}, 60 * 1000)
+		}
 	},
 
 	/**
@@ -703,6 +451,9 @@ Page({
 				selected: 0
 			})
 		}
+
+		this.run()
+
 		this.initModelBanner()
 
 		// 获取banner数据
@@ -712,7 +463,6 @@ Page({
 		this.getFluentInfo()
 
 		// 获取推荐数据
-		this.getRecommendList()
 		let params = {
 			from_uid: getApp().globalData.super_user_id,
 			source: getApp().globalData.source,
@@ -722,7 +472,7 @@ Page({
 			params.co_channel_tag = 'co_lndx'
 			getApp().globalData.from_co_channel = ''
 		}
-		bxPoint("applets_find", params)
+		bxPoint("homepage_visit", params)
 	},
 
 	/**
@@ -734,7 +484,7 @@ Page({
 	 * 生命周期函数--监听页面卸载
 	 */
 	onUnload: function () {
-
+		clearInterval(this.data.liveStatusIntervalTimer)
 	},
 
 	/**
@@ -743,39 +493,16 @@ Page({
 	onPullDownRefresh: function () {
 
 	},
-
 	/**
 	 * 页面上拉触底事件的处理函数
 	 */
 	onReachBottom: function () {},
-	onPageScroll(e) {
-		this.setData({
-			scrollTop: e.scrollTop,
-			scrollIng: true
-		})
-		this.calcTabsOffset()
-		let timer = setTimeout(() => {
-			if (this.data.scrollTop === e.scrollTop) {
-				this.setData({
-					scrollTop: e.scrollTop,
-					scrollIng: false
-				})
-				// 视频位置数据为空时，不更新视图
-				if (this.data.cacheCampList.length > 0) {
-					this.setData({
-						campList: this.data.cacheCampList.slice()
-					})
-				}
-				clearTimeout(timer)
-			}
-		}, 300)
-	},
 	/**
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
 		return {
-			title: "这里有好多好课，快来一起变美，变自信",
+			title: "我在花样百姓，和我一起学习、游玩吧，开心每一天！",
 			path: `/pages/discovery/discovery?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
 		}
 	}

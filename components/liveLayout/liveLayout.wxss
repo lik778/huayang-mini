@@ -1,0 +1,136 @@
+.liveLayout {
+    background: white;
+}
+.header {
+    display: flex;
+    align-items: flex-start;
+    padding: 0 0 40rpx 30rpx;
+}
+.title {
+    font: 500 52rpx/52rpx PingFangSC;
+}
+.tag {
+    width: 36rpx;
+    height: 30rpx;
+    margin-left: 12rpx;
+    background: #CC0000;
+    color: white;
+    border-radius: 8rpx 2rpx 8rpx 2rpx;
+    text-align: center;
+    font: 20rpx/30rpx PingFangSC;
+}
+
+.live-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 30rpx;
+    box-sizing: border-box;
+}
+
+.live-list .status .status-dot {
+    width: 12rpx;
+    height: 12rpx;
+}
+
+.live-list .status .status-text {
+    font-size: 28rpx;
+}
+
+.live-item {
+    width: calc(50% - 8rpx);
+    margin-bottom: 32rpx;
+}
+
+.live-cover {
+    position: relative;
+    overflow: hidden;
+    height: 420rpx;
+    background-position: center;
+    background-size: cover;
+    border-radius: 16rpx 16rpx 6rpx 6rpx;
+}
+
+.status {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6rpx 20rpx;
+    border-radius: 16rpx 0 16rpx 0;
+    background: rgb(255, 68, 51);
+    color: rgb(255, 255, 255);
+}
+
+.status.disabled {
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(17, 17, 17, .6);
+}
+
+.status .status-dot {
+    width: 16rpx;
+    height: 16rpx;
+    border-radius: 915rpx;
+    background: rgb(255, 187, 17);
+}
+
+.status .status-dot.disabled {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.status .status-text {
+    margin-left: 8rpx;
+    font-size: 28rpx;
+    font-weight: 400;
+}
+
+.swiper-image .course-name {
+    position: absolute;
+    top: 108rpx;
+    left: 40rpx;
+    width: 288rpx;
+    font: 48rpx/66rpx PingFangSC;
+}
+
+.swiper-image .course-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24rpx 26rpx;
+    font-weight: 300;
+    z-index: 10;
+}
+
+.swiper-image .course-info .author {
+    font-size: 32rpx;
+}
+
+.swiper-image .course-info .course-no {
+    font-size: 28rpx;
+}
+
+.live-title {
+    margin-top: 16rpx;
+    font: 500 36rpx/50rpx PingFangSC;
+}
+
+.more {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 690rpx;
+    height: 88rpx;
+    margin: 0 auto 100rpx;
+    border-radius: 999rpx;
+    border: 1rpx solid black;
+    font: 500 36rpx/36rpx PingFangSC;
+}
+.more:active {
+    opacity: 0.9;
+}

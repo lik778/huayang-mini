@@ -2,10 +2,83 @@ import request from "../../lib/request"
 import { URL } from "../../lib/config"
 
 export function getLiveList(params) {
-	return new Promise(resolve => {
+	return new Promise((resolve, reject) => {
 		request._get(URL.liveList, params).then(({data}) => {
 			data = data || []
 			resolve(data)
+		}).catch((err) => {
+			reject(err)
+		})
+	})
+}
+
+// 获取推荐直播课程
+export function getRecommendLiveList(params) {
+	return new Promise((resolve, reject) => {
+		request._get(URL.recommendLiveList, params).then(({data}) => {
+			data = data || []
+			resolve(data)
+		}).catch((err) => {
+			reject(err)
+		})
+	})
+}
+
+// 获取游学产品列表
+export function queryTravelList(params) {
+	return new Promise((resolve, reject) => {
+		request._get(URL.getTravelList, params).then(({data}) => {
+			data = data || []
+			resolve(data)
+		}).catch((err) => {
+			reject(err)
+		})
+	})
+}
+
+// 增加游学产品访问数量
+export function addTravelVisitNumber(params) {
+	return new Promise((resolve, reject) => {
+		request._post(URL.addTravelVisitNo, params).then(() => {
+			resolve()
+		}).catch((err) => {
+			reject(err)
+		})
+	})
+}
+
+// 获取今日推荐课程
+export function queryTodayRecommendCourse(params) {
+	return new Promise((resolve, reject) => {
+		request._get(URL.getTodayRecommendCourse, params).then(({data}) => {
+			data = data || {}
+			resolve(data)
+		}).catch((err) => {
+			reject(err)
+		})
+	})
+}
+
+// 获取精品课程列表
+export function queryQualityVideoList(params) {
+	return new Promise((resolve, reject) => {
+		request._get(URL.getQualityVideoList, params).then(({data}) => {
+			data = data || []
+			resolve(data)
+		}).catch((err) => {
+			reject(err)
+		})
+	})
+}
+
+// 获取专栏课程
+export function querySectionCourseList(params) {
+	return new Promise((resolve, reject) => {
+		request._get(URL.getSectionCourseList, params).then(({data}) => {
+			data = data || []
+			resolve(data)
+		}).catch((err) => {
+			reject(err)
 		})
 	})
 }
