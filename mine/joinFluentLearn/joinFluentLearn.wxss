@@ -1,5 +1,6 @@
 /* 畅学卡售前页 */
 @import "../../assets/css/common.wxss";
+
 .join-video-member {
     padding-bottom: 338rpx;
 }
@@ -100,7 +101,7 @@
 
 .visited {
     font: 24rpx/24rpx PingFangSC;
-    color: rgba(0,0,0, 0.6);
+    color: rgba(0, 0, 0, 0.6);
 }
 
 .share-btn {
@@ -112,6 +113,7 @@
     background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612331610edgRGS.jpg") no-repeat center;
     background-size: contain;
 }
+
 .share-btn:active {
     opacity: 0.9;
 }
@@ -141,6 +143,70 @@
 
 .line-price {
     text-decoration: line-through;
-    color: rgba(255,255,255, 0.8);
+    color: rgba(255, 255, 255, 0.8);
     font: 500 28rpx/28rpx PingFangSC;
+}
+
+
+/* 购买按钮 */
+.button-module {
+    display: flex;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 120rpx;
+    background: #fff;
+    align-items: center;
+    z-index: 50;
+}
+
+.button-module button {
+    font-size: 14px;
+}
+
+
+/* 邀请码购买弹窗 */
+.invite-code-box {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    background: #fff;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.invite-code-bg {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 60;
+}
+
+.invite-code-box input {
+    width: 500rpx;
+    height: 80rpx;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    padding-left: 16rpx;
+}
+
+.invite-code-text {
+    padding: 40rpx 0;
+}
+
+.invite-code-box button {
+    margin-top: 40rpx;
+    width: calc(100% - 120rpx);
+}
+
+.invite-code-box {
+    padding-bottom: 50rpx;
 }

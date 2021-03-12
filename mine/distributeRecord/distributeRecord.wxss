@@ -1,6 +1,6 @@
 @import "../../assets/css/common.wxss";
 .distribute-record {
-    padding-top: 110rpx;
+    /* padding-top: 110rpx; */
     min-height: 100vh;
     box-sizing: border-box;
     background: #F9F9F9;

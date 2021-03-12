@@ -2,7 +2,9 @@
 <view class="user-center">
 	<view class="banner {{ isPartner && 'partner' }}">
 		<!-- 背景图 -->
-		<image class="banner-bg {{isPartner && 'partner'}}" src="{{ isPartner ? '/assets/images/common/banner-bg-partner.png' : '/assets/images/common/banner-bg.png' }}"></image>
+		<image class="banner-bg {{isPartner && 'partner'}}"
+			src="{{ isPartner ? '/assets/images/common/banner-bg-partner.png' : '/assets/images/common/banner-bg.png' }}">
+		</image>
 		<!-- 个人信息 -->
 		<view class="message">
 			<image
@@ -12,7 +14,8 @@
 			<view wx:else class="user-info">
 				<view class="nick-name">
 					<text class="name">{{userInfo.nick_name||userInfo.nickname}}</text>
-					<image wx:if="{{didVisibleVIPIcon}}" class="vip-tag" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612261464nXAbIu.jpg" mode="aspectFill"></image>
+					<image wx:if="{{didVisibleVIPIcon}}" class="vip-tag"
+						src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612261464nXAbIu.jpg" mode="aspectFill"></image>
 				</view>
 				<text class="lifetime" wx:if="{{isPartner}}">花样{{ partnerInfo.level }}</text>
 				<text class="lifetime" wx:elif="{{existNo}}">您已在花样第{{existNo}}天</text>
@@ -23,20 +26,22 @@
 			<view class="first-distribute">
 				<text>直接推荐学员 {{ partnerInfo.firstNo }} 人</text>
 				<view class="distribute-content" bindtap="goToDistributeListPage" data-index="1">
-					<image class="distribute-avatar" mode="aspectFill" src="{{item}}" wx:for="{{ partnerInfo.firstUserAvatars }}"></image>
+					<image class="distribute-avatar" mode="aspectFill" src="{{item}}" wx:for="{{ partnerInfo.firstUserAvatars }}">
+					</image>
 					<text class="more-list">查看更多 ›</text>
 				</view>
+
 			</view>
 
-			<view class="first-distribute second-distribute">
-				<text>间接推荐学员 {{ partnerInfo.secondNo }} 人</text>
-				<view class="distribute-content" bindtap="goToDistributeListPage" data-index="2">
-					<image class="distribute-avatar" mode="aspectFill" src="{{item}}" wx:for="{{ partnerInfo.secondUserAvatars }}"></image>
-					<text class="more-list">查看更多 ›</text>
-				</view>
+
+
+			<view class="first-distribute second-distribute" wx:if='{{partnerInfo.exclusiveCode}}'>
+				专属邀请码：{{partnerInfo.exclusiveCode}}
 			</view>
 
-			<view class="distribute-btn" bindtap="generatePoster">获取专属邀请海报</view>
+			<view class="distribute-btn" bindtap="generatePoster">
+				获取专属邀请海报
+			</view>
 		</block>
 	</view>
 	<!-- 畅学卡 -->
@@ -58,7 +63,8 @@
 	</view>
 
 	<!-- 引导按钮 -->
-	<view class="guide-btn {{ isPartner && 'partner' }}" wx:if="{{didVisibleAuditBtn && !isPartner}}" bindtap="onGuideBtnTap">{{auditInfo.text}}</view>
+	<view class="guide-btn {{ isPartner && 'partner' }}" wx:if="{{didVisibleAuditBtn && !isPartner}}"
+		bindtap="onGuideBtnTap">{{auditInfo.text}}</view>
 
 	<!-- 我的学习 -->
 	<view class="person {{ isPartner && 'partner' }}">
@@ -127,10 +133,10 @@
 				<image src="/assets/images/common/arrow.png"></image>
 			</view>
 			<view class="function-item" bindtap="toPromotion"
-				  wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&showPromotion}}">
+				wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&showPromotion}}">
 				<view class="function-item-left">
 					<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604487601QeseJU.jpg"
-						   style="width:52rpx;height:52rpx;margin-right: 20rpx;margin-left:-4rpx;"></image>
+						style="width:52rpx;height:52rpx;margin-right: 20rpx;margin-left:-4rpx;"></image>
 					<view class="function-item-box">
 						<view class="function-item-top">我的推广</view>
 						<view class="function-item-bottom">分享花样课，收获感谢金</view>
@@ -151,7 +157,9 @@
 		</view>
 	</view>
 	<!-- 授权弹窗 -->
-	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
+	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
+	</authModule>
 
-	<contact show="{{didShowContact}}" isRootPage="{{true}}" sessionFrom="distribute" bind:closeContactModal="onCloseContactModal"/>
+	<contact show="{{didShowContact}}" isRootPage="{{true}}" sessionFrom="distribute"
+		bind:closeContactModal="onCloseContactModal" />
 </view>

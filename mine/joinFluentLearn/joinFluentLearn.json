@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "authModule": "../../components/auth/auth",
-    "fluentLearnModal": "../../components/fluentLearnModal/fluentLearnModal"
+    "fluentLearnModal": "../../components/fluentLearnModal/fluentLearnModal",
+    "contact":"../../components/contact/contact"
   }
 }

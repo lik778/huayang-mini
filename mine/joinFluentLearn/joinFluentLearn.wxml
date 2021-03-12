@@ -1,29 +1,19 @@
 <view class="join-video-member">
-    <video
-            class="preview-video"
-            src="{{video}}"
-            controls="{{false}}"
-            custom-cache="{{false}}"
-            object-fit="cover"
-            enable-play-gesture="{{false}}"
-            play-btn-position="top"
-            show-center-play-btn="{{false}}"
-            show-play-btn="{{false}}"
-            autoplay="{{true}}"
-            poster="{{video_cover}}"
-            loop="{{true}}"
-    ></video>
+    <video class="preview-video" src="{{video}}" controls="{{false}}" custom-cache="{{false}}" object-fit="cover"
+        enable-play-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}"
+        show-play-btn="{{false}}" autoplay="{{true}}" poster="{{video_cover}}" loop="{{true}}"></video>
     <view class="member-card">
         <view class="card-title">{{name}}</view>
         <view class="card-desc">{{desc}}</view>
     </view>
 
-    <image class="interest" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612507823pQZhhe.jpg" mode="aspectFit"></image>
+    <image class="interest" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612507823pQZhhe.jpg"
+        mode="aspectFit"></image>
     <view class="interest-item" wx:for="{{features}}" wx:key="index">
         <image class="interest-icon" src="{{item.icon}}" mode="aspectFit"></image>
         <view class="interest-detail">
-             <view>{{item.title}}</view>
-             <view class="interest-text">{{item.desc}}</view>
+            <view>{{item.title}}</view>
+            <view class="interest-text">{{item.desc}}</view>
         </view>
     </view>
 
@@ -42,16 +32,47 @@
 
     <view class="share-btn" bindtap="onShareBtnTap"></view>
 
-    <view class="footer">
+    <!-- <view class="footer">
         <view class="footer-wrap" bindtap="buy">
             <view>立即购买 188元/年</view>
             <view class="line-price">原价 365元/年</view>
         </view>
+    </view> -->
+
+    <!-- 新版购买按钮 -->
+    <view class="button-module">
+        <view class="contact-module" bindtap="contactService">
+            <button>联系客服</button>
+        </view>
+        <view class="original-price" bindtap="buy">
+            <button>{{superiorDistributeUserId===0?'原价购买365/年':'立即购买188元/年'}}</button>
+        </view>
+        <view class="invite-code-price" bindtap="openCodeModal" wx:if='{{superiorDistributeUserId===0}}'>
+            <button>邀请码购买188元/年</button>
+        </view>
     </view>
 
+
     <!-- 授权弹窗 -->
-    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent"
+        bind:authCompleteEvent="authCompleteEvent"></authModule>
 
     <!-- 畅学卡弹窗 -->
-    <fluentLearnModal show="{{didShowFluentLearnModal}}" message="您已拥有花样大学畅学卡" confirmText="立即查看" bind:confirm="onFluentLearnConfirm" />
+    <fluentLearnModal show="{{didShowFluentLearnModal}}" message="您已拥有花样大学畅学卡" confirmText="立即查看"
+        bind:confirm="onFluentLearnConfirm" />
+
+    <!-- 邀请码购买弹窗 -->
+    <view class="invite-code-module" wx:if='{{showCodeBox}}'>
+        <view class="invite-code-bg" bindtap="closeCodeBox"></view>
+        <view class="invite-code-box">
+            <view class="invite-code-text">请填写邀请码，即可享188元/年优惠</view>
+            <input type="text" placeholder="请输入您的邀请码" bindinput="inputInviteCode" />
+            <button type="primary" bindtap="inviteCodeBuy" class="invite-code-buy-button">去支付</button>
+            <button type="default" bindtap="contactService">获取邀请码</button>
+        </view>
+    </view>
+
+
+    <!-- 联系客服 -->
+    <contact show='{{showContact}}' bind:closeContactModal="onCloseContactModal"></contact>
 </view>

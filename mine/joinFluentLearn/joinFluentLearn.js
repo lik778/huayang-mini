@@ -1,4 +1,10 @@
-import { getFluentCardHotkecheng, getFluentCardInfo, getFluentLearnInfo, payForFluentCard } from "../../api/mine/index"
+import {
+	getFluentCardHotkecheng,
+	getFluentCardInfo,
+	getFluentLearnInfo,
+	payForFluentCard
+} from "../../api/mine/index"
+
 import {
 	$notNull,
 	getLocalStorage,
@@ -9,9 +15,15 @@ import {
 	setLocalStorage,
 	toast
 } from "../../utils/util"
-import { ErrorLevel, FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
+import {
+	ErrorLevel,
+	FluentLearnUserType,
+	GLOBAL_KEY
+} from "../../lib/config"
 import dayjs from "dayjs"
-import { collectError } from "../../api/auth/index"
+import {
+	collectError
+} from "../../api/auth/index"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -30,23 +42,30 @@ Page({
 		payLock: false,
 		didShowFluentLearnModal: false,
 		payChannel: undefined, // 支付渠道字段
+		showContact: false,
+		showCodeBox: false,
+		superiorDistributeUserId: 0,
+		inviteCode: '', //邀请码
 	},
 
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		let { inviteId, channel} = options
-
+		let {
+			inviteId,
+			channel
+		} = options
 		/**
 		 * 小程序卡片中满足 sceneInviteId=0 且 channel!=undefined 时，在支付时上传渠道来源
 		 */
 		if (inviteId == 0 && channel != undefined) {
-			this.setData({payChannel: channel})
+			this.setData({
+				payChannel: channel
+			})
 		}
 		// 小程序卡片
 		this.generateSuperiorDistributeUserCache(inviteId)
-
 		this.getCardInfo()
 		this.getHotkecheng()
 	},
@@ -54,14 +73,15 @@ Page({
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
-	onReady: function () {
-	},
+	onReady: function () {},
 
 	/**
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		bxPoint("changxue_buy", {remmend_id: getLocalStorage(GLOBAL_KEY.superiorDistributeUserId)})
+		bxPoint("changxue_buy", {
+			remmend_id: getLocalStorage(GLOBAL_KEY.superiorDistributeUserId)
+		})
 		this.checkUserFluentLearnStatus()
 	},
 
@@ -110,15 +130,23 @@ Page({
 	 * 畅学卡专属弹窗回调事件
 	 */
 	onFluentLearnConfirm() {
-		this.setData({didShowFluentLearnModal: false})
-		wx.reLaunch({url: "/pages/userCenter/userCenter"})
+		this.setData({
+			didShowFluentLearnModal: false
+		})
+		wx.reLaunch({
+			url: "/pages/userCenter/userCenter"
+		})
 	},
 	/**
 	 * 跳转到视频详情页
 	 * @param e
 	 */
 	goToVideoDetail(e) {
-		let {id, name, desc} = e.currentTarget.dataset.item
+		let {
+			id,
+			name,
+			desc
+		} = e.currentTarget.dataset.item
 		bxPoint("changxue_buy_course_Learn", {
 			series_id: id,
 			kecheng_name: name,
@@ -133,6 +161,9 @@ Page({
 	 */
 	generateSuperiorDistributeUserCache(superiorId) {
 		if (!superiorId) return
+		this.setData({
+			superiorDistributeUserId: superiorId
+		})
 		setLocalStorage(GLOBAL_KEY.superiorDistributeUserId, superiorId)
 		setLocalStorage(GLOBAL_KEY.superiorDistributeExpireTime, dayjs().add(2, "hour").format("YYYY-MM-DD HH:mm:ss"))
 	},
@@ -149,24 +180,32 @@ Page({
 	onShareBtnTap() {
 		bxPoint("changxue_buy_post", {}, false)
 		if (!hasUserInfo() || !hasAccountInfo()) {
-			return this.setData({didShowAuth: true})
+			return this.setData({
+				didShowAuth: true
+			})
 		}
 
 		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-		wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
+		wx.navigateTo({
+			url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id
+		})
 	},
 	/**
 	 * 授权失败
 	 */
 	authCancelEvent() {
-		this.setData({didShowAuth: false})
+		this.setData({
+			didShowAuth: false
+		})
 	},
 	/**
 	 * 授权成功
 	 */
 	authCompleteEvent() {
 		this.checkUserFluentLearnStatus()
-		this.setData({didShowAuth: false})
+		this.setData({
+			didShowAuth: false
+		})
 	},
 	/**
 	 * 检查用户畅学卡状态
@@ -174,9 +213,15 @@ Page({
 	checkUserFluentLearnStatus() {
 		if (!hasUserInfo() || !hasAccountInfo()) return
 		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-		getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
+		getFluentCardInfo({
+			user_snow_id: accountInfo.snow_id
+		}).then(({
+			data
+		}) => {
 			if ($notNull(data) && data.status === FluentLearnUserType.active) {
-				this.setData({didShowFluentLearnModal: true})
+				this.setData({
+					didShowFluentLearnModal: true
+				})
 			}
 		})
 	},
@@ -187,29 +232,41 @@ Page({
 	async buy() {
 		bxPoint("changxue_buy_pay", {}, false)
 		if (!hasUserInfo() || !hasAccountInfo()) {
-			return this.setData({didShowAuth: true})
+			return this.setData({
+				didShowAuth: true
+			})
 		}
 		// 支付锁
 		if (this.data.payLock) return
-		this.setData({payLock: true})
+		this.setData({
+			payLock: true
+		})
 		let t = setTimeout(() => {
-			this.setData({payLock: false})
+			this.setData({
+				payLock: false
+			})
 			clearTimeout(t)
 		}, 1000)
 
 		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-		let {data} = await getFluentCardInfo({user_snow_id: accountInfo.snow_id})
+		let {
+			data
+		} = await getFluentCardInfo({
+			user_snow_id: accountInfo.snow_id
+		})
 		// 检查用户畅学卡是否有效，有效直接返回"用户中心" （true => 已过期， false =>  未过期）
 		let didUserFluentLearnCardExpired = $notNull(data) ? data.status === FluentLearnUserType.deactive : true
 		if (!didUserFluentLearnCardExpired) {
-			return wx.switchTab({url: "/pages/userCenter/userCenter"})
+			return wx.switchTab({
+				url: "/pages/userCenter/userCenter"
+			})
 		}
 		let params = {
 			user_snow_id: accountInfo.snow_id,
 			open_id: getLocalStorage(GLOBAL_KEY.openId),
 		}
 		// 检查是否存在分销上级用户ID
-		let distributeUserId = getLocalStorage(GLOBAL_KEY.superiorDistributeUserId)
+		let distributeUserId = this.data.superiorDistributeUserId
 		if (distributeUserId != 0) {
 			let distributeUserExpireTime = getLocalStorage(GLOBAL_KEY.superiorDistributeExpireTime)
 			if (dayjs(distributeUserExpireTime).isAfter(dayjs())) {
@@ -224,11 +281,24 @@ Page({
 		if (this.data.payChannel != undefined) {
 			params['channel'] = this.data.payChannel
 		}
-		payForFluentCard(params).then(({data, code, message}) => {
+		// 如果是邀请码购买
+		if (this.data.inviteCode !== '') {
+			params.invite_code = this.data.inviteCode
+		}
+		payForFluentCard(params).then(({
+			data,
+			code,
+			message
+		}) => {
 			if (code === 0) {
-				payFluentCard({id: data.id, name: "购买畅学卡"})
+				payFluentCard({
+						id: data.id,
+						name: "购买畅学卡"
+					})
 					.then(() => {
-						wx.navigateTo({url: "/mine/fluentCardCallback/fluentCardCallback"})
+						wx.navigateTo({
+							url: "/mine/fluentCardCallback/fluentCardCallback"
+						})
 					})
 					.catch((err) => {
 						if (err.errMsg !== "requestPayment:fail cancel") {
@@ -249,7 +319,9 @@ Page({
 	 * 获取畅学卡权益
 	 */
 	getCardInfo() {
-		getFluentLearnInfo().then(({data}) => {
+		getFluentLearnInfo().then(({
+			data
+		}) => {
 			this.setData({
 				name: data.card_name,
 				desc: data.description,
@@ -263,7 +335,11 @@ Page({
 	 * 获取热门课程
 	 */
 	getHotkecheng() {
-		getFluentCardHotkecheng({limit: 5}).then(({data}) => {
+		getFluentCardHotkecheng({
+			limit: 5
+		}).then(({
+			data
+		}) => {
 			data = data || []
 			let list = data.map(item => ({
 				id: item.kecheng_series.id,
@@ -274,7 +350,52 @@ Page({
 				coverImg: item.kecheng_series.cover_pic,
 				teacherTxt: `${item.teacher.name}老师 ${item.teacher.teacher_desc}`
 			}))
-			this.setData({hotList: list})
+			this.setData({
+				hotList: list
+			})
+		})
+	},
+
+	// 联系客服
+	contactService() {
+		this.setData({
+			showContact: true
+		})
+	},
+	// 关闭联系客服
+	onCloseContactModal() {
+		this.setData({
+			showContact: false
+		})
+	},
+	// 打开邀请码购买弹窗
+	openCodeModal() {
+		this.setData({
+			showCodeBox: true
+		})
+	},
+	// 关闭邀请码购买弹窗
+	closeCodeBox() {
+		this.setData({
+			showCodeBox: false,
+			inviteCode: ''
+		})
+	},
+	// 邀请码购买
+	inviteCodeBuy() {
+		if (this.data.inviteCode.trim() === '') {
+			wx.showToast({
+				title: '请输入您的邀请码',
+				icon: 'none'
+			})
+		} else {
+			this.buy()
+		}
+	},
+	// 输入邀请码
+	inputInviteCode(e) {
+		this.setData({
+			inviteCode: e.detail.value
 		})
 	}
 })
