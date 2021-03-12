@@ -1,7 +1,7 @@
 {
   "plugins": {
     "live-player-plugin": {
-      "version": "1.2.8",
+      "version": "1.2.9",
       "provider": "wx2b03c6e691cd7370"
     }
   },
@@ -28,7 +28,8 @@
     "pages/webViewCommon/webViewCommon",
     "pages/activePlatform/activePlatform",
     "pages/activePay/activePay",
-    "pages/activePayCancel/activePayCancel"
+    "pages/activePayCancel/activePayCancel",
+    "components/bestCourseLayout/bestCourseLayout"
   ],
   "requiredBackgroundModes": [
     "audio",
@@ -106,7 +107,8 @@
         "compositeTask/compositeTask",
         "indexTask/indexTask",
         "videoCourseDetail/videoCourse",
-        "cooperationPage/cooperationPage"
+        "cooperationPage/cooperationPage",
+        "liveback/liveback"
       ]
     },
     {
