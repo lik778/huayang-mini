@@ -28,7 +28,7 @@
     "pages/webViewCommon/webViewCommon",
     "pages/activePlatform/activePlatform",
     "pages/activePay/activePay",
-    "pages/activePayCancel/activePayCancel",
+    "pages/activePayCancel/activePayCancel"
   ],
   "requiredBackgroundModes": [
     "audio",
