@@ -230,7 +230,6 @@ Page({
 	 * @returns {Promise<void>}
 	 */
 	async buy() {
-		bxPoint("changxue_buy_pay", {}, false)
 		if (!hasUserInfo() || !hasAccountInfo()) {
 			return this.setData({
 				didShowAuth: true
@@ -284,7 +283,22 @@ Page({
 		// 如果是邀请码购买
 		if (this.data.inviteCode !== '') {
 			params.invite_code = this.data.inviteCode
+			// jj-2021-03-12梨花
+			bxPoint("changxue_invite_buy_pay", {
+				remmend_id: this.data.superiorDistributeUserId
+			}, false)
+		} else {
+			if (this.data.superiorDistributeUserId !== 0) {
+				// jj-2021-03-12梨花
+				bxPoint("changxue_invite_buy_pay", {
+					remmend_id: this.data.superiorDistributeUserId
+				}, false)
+				return
+			}
+			// jj-2021-03-12梨花
+			bxPoint("changxue_buy_pay", {}, false)
 		}
+
 		payForFluentCard(params).then(({
 			data,
 			code,
@@ -361,6 +375,8 @@ Page({
 		this.setData({
 			showContact: true
 		})
+		// jj-2021-03-12梨花
+		bxPoint("changxue_contact", {}, false)
 	},
 	// 关闭联系客服
 	onCloseContactModal() {
@@ -373,6 +389,11 @@ Page({
 		this.setData({
 			showCodeBox: true
 		})
+		// jj-2021-03-12梨花
+		bxPoint("changxue_invite_buy", {
+			remmend_id: this.data.superiorDistributeUserId
+		}, false)
+
 	},
 	// 关闭邀请码购买弹窗
 	closeCodeBox() {
