@@ -122,7 +122,10 @@ Page({
 		this.setData({sectionList: handledList})
 
 		// 直播回看列表
-		let list = await getLiveList()
+		let list = await getLiveList({
+			limit: 9999,
+			offset: 0
+		})
 		list = list.map(item => ({
 			zhiboRoomId: item.zhibo_room.id,
 			roomId: item.zhibo_room.num,
