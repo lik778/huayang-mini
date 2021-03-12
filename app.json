@@ -107,6 +107,7 @@
         "indexTask/indexTask",
         "videoCourseDetail/videoCourse",
         "cooperationPage/cooperationPage",
+        "cps/cps",
         "liveback/liveback"
       ]
     },
