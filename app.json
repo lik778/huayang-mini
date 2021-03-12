@@ -29,7 +29,6 @@
     "pages/activePlatform/activePlatform",
     "pages/activePay/activePay",
     "pages/activePayCancel/activePayCancel",
-    "components/bestCourseLayout/bestCourseLayout"
   ],
   "requiredBackgroundModes": [
     "audio",
