@@ -13,8 +13,10 @@ Component({
 			values: [],
 			observer(newArray) {
 				newArray = newArray.map(_ => {
+					let tname = _.kecheng_series.name
 					return {
 						..._.kecheng_series,
+						name: tname.length > 15 ? `${tname.slice(0, 15)}...` : tname,
 						teacher: _.teacher,
 						didBought: _.buy_tag === "已购",
 						buy_tag: _.buy_tag

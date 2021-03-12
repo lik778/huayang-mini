@@ -330,11 +330,8 @@
 .course-item-bottom-module-left-dis {}
 
 .course-item-bottom-module-right {
-  font-size: 24rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
+  font: 24rpx/24rpx PingFangSC;
   color: rgba(0, 0, 0, 0.6);
-  line-height: 28rpx;
 }
 
 .course-item-bottom-module-left-price {

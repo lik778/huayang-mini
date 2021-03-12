@@ -281,6 +281,10 @@
   font: 36rpx/36rpx PingFangSC;
 }
 
+.recommend-course-info-title {
+  width: 580rpx;
+}
+
 .about-recommend-course {
   color: rgba(0,0,0,0.6)
 }

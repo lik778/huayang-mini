@@ -20,7 +20,7 @@
     left: 0;
     right: 0;
     z-index: 10;
-    padding: 40rpx 30rpx 20rpx;
+    padding: 26rpx 30rpx 20rpx;
     background: #fff;
 }
 

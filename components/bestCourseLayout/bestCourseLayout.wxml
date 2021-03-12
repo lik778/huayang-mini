@@ -15,7 +15,7 @@
         <view class="course-info">
             <view class="course-info-top">
                 <view class="course-main-title limit-one-line">{{item.teacher_desc}}</view>
-                <view class="course-sub-title limit-one-line">{{item.name}}</view>
+                <view class="course-sub-title">{{item.name}}</view>
                 <view class="course-teacher-desc">{{item.teacher.name}} {{item.teacher.teacher_desc}}</view>
             </view>
             <!-- 价格+学习人数 -->

@@ -77,6 +77,8 @@ Page({
 		// 今日推荐
 		let recommendCourse = await queryTodayRecommendCourse()
 		if ($notNull(recommendCourse)) {
+			let tname = recommendCourse.kecheng_series.name
+			recommendCourse.kecheng_series.name = tname.length > 15 ? `${tname.slice(0, 15)}...` : tname
 			this.setData({todayRecommendCourse: recommendCourse})
 			let lessons = JSON.parse(recommendCourse.kecheng_series.video_detail)
 			if (lessons.length > 0) {

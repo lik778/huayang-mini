@@ -648,7 +648,6 @@ Page({
 	onLoad: function (options) {
 
 		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=178`})
-		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=178`})
 
 		let {
 			scene,

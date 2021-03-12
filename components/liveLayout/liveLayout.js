@@ -57,18 +57,6 @@ Component({
             url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${roomId}&custom_params=${encodeURIComponent(JSON.stringify(this.data.customParams))}`
           })
         }
-        setTimeout(() => {
-          // 更新直播间观看次数
-          let list = [...this.data.liveList]
-          list.forEach(_ => {
-            if (_.zhiboRoomId === zhiboRoomId) {
-              _.visitCount += 1
-            }
-          })
-          this.setData({
-            liveList: [...list]
-          })
-        }, 1000)
       })
 
       bxPoint("homepage_live_click", {

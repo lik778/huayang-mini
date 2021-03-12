@@ -18,13 +18,13 @@
     </view>
 
     <!-- 直播 -->
-    <liveLayout wx:if="{{liveList.length > 0}}" liveList="{{liveList}}" bind:openUserAuth="openUserAuth" />
+    <liveLayout wx:if="{{liveList.length > 0}}" class="limit-two-line" liveList="{{liveList}}" bind:openUserAuth="openUserAuth" />
 
     <!-- 花样游学 -->
-    <view class="travel">
+    <view class="travel" wx:if="{{travelList.length > 0}}">
         <view class="travel-layout">花样游学</view>
         <view class="travel-item" wx:for="{{travelList}}" wx:key="index" bindtap="onTravelTap" data-item="{{item}}">
-            <swiper class="travel-cover" circular autoplay interval="{{3000}}" duration="{{500}}">
+            <swiper class="travel-cover" circular autoplay interval="{{3500 + index * 300}}" duration="{{500}}">
                 <swiper-item wx:for="{{item.covers}}" wx:for-item="coverItem" wx:key="index" bindtap="joinCampFromBanner" data-item="{{coverItem}}">
                     <image class="travel-cover" src="{{coverItem}}" mode="aspectFill"></image>
                 </swiper-item>
@@ -59,7 +59,7 @@
         ></video>
         <view class="recommend-course-title">{{todayRecommendCourse.kecheng_series.teacher_desc}}</view>
         <view class="recommend-course-info">
-            <view>{{todayRecommendCourse.kecheng_series.name}}</view>
+            <view class="recommend-course-info-title limit-one-line">{{todayRecommendCourse.kecheng_series.name}}</view>
             <view class="about-recommend-course">查看 ›</view>
         </view>
     </view>

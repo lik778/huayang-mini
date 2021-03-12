@@ -3,12 +3,3 @@
   src: url('https://huayang-img.oss-cn-shanghai.aliyuncs.com/font/DIN%20Condensed%20Bold.ttf'), url('https://huayang-img.oss-cn-shanghai.aliyuncs.com/font/DIN%20Condensed%20Bold.otf'), url('https://huayang-img.oss-cn-shanghai.aliyuncs.com/font/DIN%20Condensed%20Bold.woff');
 }
 
-/* .container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 200rpx 0;
-  box-sizing: border-box;
-} */
