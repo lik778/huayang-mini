@@ -1,0 +1,46 @@
+<view class="best-course-layout">
+
+    <!-- 精品课程 -->
+    <view class="recommend-layout">
+        <text class="title">精品课程</text>
+        <view class="sub-title" bindtap="goToJoinFluentLearn">
+            <view class="recommend-tag">畅学卡</view>
+            <text>一键解锁所有课程 ›</text>
+        </view>
+    </view>
+    <view class="course-item" wx:for="{{list}}" wx:key="index" bindtap="navigateToVideoDetail" data-item="{{item}}">
+        <view class="course-logo">
+            <image class="course-image" src="{{item.cover_pic}}"></image>
+        </view>
+        <view class="course-info">
+            <view class="course-info-top">
+                <view class="course-main-title limit-one-line">{{item.teacher_desc}}</view>
+                <view class="course-sub-title limit-one-line">{{item.name}}</view>
+                <view class="course-teacher-desc">{{item.teacher.name}} {{item.teacher.teacher_desc}}</view>
+            </view>
+            <!-- 价格+学习人数 -->
+            <view class="course-item-bottom-module">
+                <view class='course-item-bottom-module-left' wx:if="{{item.tipsText&&!isIosPlatform&&!isFluentLearnVIP}}">
+                    <text class="course-item-bottom-module-left-dis subject-font-color">{{item.tipsText}}</text>
+                    <text class="course-item-bottom-module-left-price"
+                          wx:if='{{item.price>0}}'>¥{{item.price}}</text>
+                </view>
+                <view class='course-item-bottom-module-left' wx:if="{{!item.tipsText&&!isIosPlatform&&!isFluentLearnVIP}}">
+                    <text class="course-item-bottom-module-left-one">
+                        <text wx:if="{{item.didBought}}">已购</text>
+                        <text wx:else>{{item.discount_price ? '¥' + item.discount_price : '免费'}}</text>
+                    </text>
+                    <text class="course-item-bottom-module-left-two"
+                          style="text-decoration: {{item.didBought?'none':'line-through'}};">
+                        <text wx:if="{{item.didBought}}">去学习</text>
+                        <text wx:else>{{item.price > 0 ? "¥" + item.price : ""}}</text>
+                    </text>
+                </view>
+                <view class='course-item-bottom-module-right'>
+                    共{{item.visit_count}}人学习
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="course-item-more-btn" bindtap="goToPractice">查看全部课程 ›</view>
+</view>

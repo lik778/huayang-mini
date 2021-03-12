@@ -360,9 +360,7 @@ Page({
       this.getFluentInfo()
     })
     this.queryUserPartnerInfo()
-    this.setData({
-      didShowAuth: false
-    })
+    this.setData({didShowAuth: false})
   },
   // 我的作业
   goToTaskLaunchPage() {
@@ -623,7 +621,7 @@ Page({
    */
   onShareAppMessage: function (res) {
     return {
-      title: '跟着花样一起变美，变自信',
+      title: '我在花样百姓，和我一起学习、游玩吧，开心每一天！',
       path: `/pages/discovery/discovery?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
     }
   }

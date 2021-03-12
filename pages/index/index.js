@@ -1,15 +1,6 @@
 // pages/live/live.js
-import {
-	getLiveBannerList,
-	getLiveList,
-	getRemind,
-	updateLiveStatus
-} from "../../api/live/index"
-import {
-	GLOBAL_KEY,
-	SHARE_PARAMS,
-	WeChatLiveStatus
-} from '../../lib/config'
+import { getLiveBannerList, getLiveList, getRemind, updateLiveStatus } from "../../api/live/index"
+import { GLOBAL_KEY, SHARE_PARAMS, WeChatLiveStatus } from '../../lib/config'
 import {
 	$notNull,
 	checkIdentity,
@@ -18,19 +9,11 @@ import {
 	removeLocalStorage,
 	setLocalStorage
 } from '../../utils/util'
-import {
-	statisticsWatchNo
-} from "../../api/live/course"
-import {
-	bindWxPhoneNumber
-} from "../../api/auth/index"
-import {
-	checkAuth
-} from "../../utils/auth"
+import { statisticsWatchNo } from "../../api/live/course"
+import { bindWxPhoneNumber } from "../../api/auth/index"
+import { checkAuth } from "../../utils/auth"
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog'
-import {
-	getUserInfo
-} from "../../api/mine/index"
+import { getUserInfo } from "../../api/mine/index"
 
 Page({
 	/**
@@ -183,7 +166,7 @@ Page({
 			didShowAuth: false
 		})
 	},
-	
+
 	/**
 	 * 跳转至课程列表
 	 */
@@ -264,7 +247,6 @@ Page({
 			})
 			// 筛选出直播间状态不是"回看"的房间号
 			const roomIds = result.filter(_ => _.roomId && _.status !== 2).map(t => t.roomId)
-
 			getSchedule(roomIds).then(this.handleLiveStatusCallback)
 			let arr = [...this.data.liveList, ...result]
 			this.setData({

@@ -5,7 +5,8 @@ Component({
     selected: 0,
     color: "#666666",
     selectedColor: "#CC0000",
-    list: [{
+    list: [
+      {
         "pagePath": "/pages/discovery/discovery",
         "selectedIconPath": "../assets/images/common/homeActive.png",
         "iconPath": "../assets/images/common/home.png",
