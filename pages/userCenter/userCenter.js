@@ -360,7 +360,9 @@ Page({
       this.getFluentInfo()
     })
     this.queryUserPartnerInfo()
-    this.setData({didShowAuth: false})
+    this.setData({
+      didShowAuth: false
+    })
   },
   // 我的作业
   goToTaskLaunchPage() {
@@ -527,7 +529,13 @@ Page({
     })
     wx.showModal({
       title: "提示",
-      content: "我是模拟弹窗"
+      content: "我是模拟提示图的，暂时替代，等ui更改即可",
+      success: (res) => {
+        wx.pageScrollTo({
+          duration: 200,
+          scrollTop: 0
+        })
+      }
     })
   },
 
