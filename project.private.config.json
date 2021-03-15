@@ -1,4 +1,5 @@
 {
+  "setting": {},
   "condition": {
     "plugin": {
       "list": []
@@ -215,7 +216,7 @@
         {
           "name": "训练营详情",
           "pathName": "subCourse/campDetail/campDetail",
-          "query": "id=40",
+          "query": "id=1",
           "scene": null
         },
         {

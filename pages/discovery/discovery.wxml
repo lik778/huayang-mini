@@ -50,11 +50,11 @@
                 custom-cache="{{false}}"
                 object-fit="cover"
                 enable-play-gesture="{{false}}"
+                enable-progress-gesture="{{false}}"
                 play-btn-position="top"
                 show-center-play-btn="{{false}}"
                 show-play-btn="{{false}}"
                 autoplay="{{false}}"
-                poster="{{previewVideoCover}}"
                 loop="{{true}}"
         ></video>
         <view class="recommend-course-title">{{todayRecommendCourse.kecheng_series.teacher_desc}}</view>
