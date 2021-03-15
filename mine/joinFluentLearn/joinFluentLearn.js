@@ -48,7 +48,8 @@ Page({
 		superiorDistributeUserId: 0,
 		inviteCode: '', //邀请码
 		price: '',
-		discountPrice: ''
+		discountPrice: '',
+		inviteId: ''
 	},
 
 	/**
@@ -67,6 +68,9 @@ Page({
 				payChannel: channel
 			})
 		}
+		this.setData({
+			inviteId
+		})
 
 		// 小程序卡片
 		this.generateSuperiorDistributeUserCache(inviteId)
@@ -165,21 +169,15 @@ Page({
 	 */
 	generateSuperiorDistributeUserCache(superiorId) {
 		if (!superiorId) return
-		getPartnerInfo({
-			user_snow_id: superiorId
-		}).then(res => {
-			if (res.data.distribute_user && res.data.distribute_user.status === 2) {
-				this.setData({
-					superiorDistributeUserId: superiorId
-				})
-			}
-		})
+		this.initSuperId()
+
 		// this.setData({
 		// 	superiorDistributeUserId: superiorId
 		// })
 		setLocalStorage(GLOBAL_KEY.superiorDistributeUserId, superiorId)
 		setLocalStorage(GLOBAL_KEY.superiorDistributeExpireTime, dayjs().add(2, "hour").format("YYYY-MM-DD HH:mm:ss"))
 	},
+
 	/**
 	 * 清除上级分销用户信息缓存
 	 */
@@ -215,6 +213,7 @@ Page({
 	 * 授权成功
 	 */
 	authCompleteEvent() {
+		this.initSuperId()
 		this.checkUserFluentLearnStatus()
 		this.setData({
 			didShowAuth: false
@@ -306,10 +305,10 @@ Page({
 				bxPoint("changxue_invite_buy_pay", {
 					remmend_id: this.data.superiorDistributeUserId
 				}, false)
-				return
+			} else {
+				// jj-2021-03-12梨花
+				bxPoint("changxue_buy_pay", {}, false)
 			}
-			// jj-2021-03-12梨花
-			bxPoint("changxue_buy_pay", {}, false)
 		}
 
 		payForFluentCard(params).then(({
@@ -323,6 +322,10 @@ Page({
 						name: "购买畅学卡"
 					})
 					.then(() => {
+						// 关闭邀请码购买弹窗
+						this.setData({
+							showCodeBox: false
+						})
 						wx.navigateTo({
 							url: "/mine/fluentCardCallback/fluentCardCallback"
 						})
@@ -434,5 +437,22 @@ Page({
 		this.setData({
 			inviteCode: e.detail.value
 		})
+	},
+	// 初始化id值 
+	initSuperId() {
+		let superiorId = this.data.inviteId
+		let userData = getLocalStorage(GLOBAL_KEY.accountInfo)
+		let snowId = userData ? JSON.parse(userData).snow_id : ''
+		if (snowId && String(snowId) !== String(superiorId)) {
+			getPartnerInfo({
+				user_snow_id: superiorId
+			}).then(res => {
+				if (res.data.distribute_user && res.data.distribute_user.status === 2) {
+					this.setData({
+						superiorDistributeUserId: superiorId
+					})
+				}
+			})
+		}
 	}
 })

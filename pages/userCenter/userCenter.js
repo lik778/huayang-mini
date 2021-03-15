@@ -428,7 +428,10 @@ Page({
           level: $notNull(lv) ? lv.label : "",
           exclusiveCode: data.distribute_user.num
         }
-        this.initIndicatePic(1)
+        if (data.distribute_user && data.distribute_user.status === 2) {
+          this.initIndicatePic(1)
+        }
+
         this.setData({
           partnerInfo: partnerData,
           isPartner: data.distribute_user.status === 2
@@ -635,5 +638,5 @@ Page({
       title: '我在花样百姓，和我一起学习、游玩吧，开心每一天！',
       path: `/pages/discovery/discovery?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
     }
-  }
+  },
 })

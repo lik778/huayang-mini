@@ -74,5 +74,5 @@
 
 
     <!-- 联系客服 -->
-    <contact show='{{showContact}}' bind:closeContactModal="onCloseContactModal"></contact>
+    <contact show='{{showContact}}' sessionFrom="distribute" bind:closeContactModal="onCloseContactModal"></contact>
 </view>
