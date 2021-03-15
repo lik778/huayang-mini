@@ -159,7 +159,32 @@
 	<!-- 授权弹窗 -->
 	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
 	</authModule>
-
+	<!-- 客服弹窗 -->
 	<contact show="{{didShowContact}}" isRootPage="{{true}}" sessionFrom="distribute"
 		bind:closeContactModal="onCloseContactModal" />
+	<!-- 余额提示弹窗 -->
+	<view class="money-notice" wx:if='{{showMoneyNotice}}'>
+		<view class="money-notice-bg" catchtap="closeMoneyNotice">
+			<view class="money-notice-main">
+				<view class="money-notice-main-left">
+					<view class="money-notice-main-left-icon">
+						<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1615804138YeVQmv.jpg"></image>
+					</view>
+					<view class="money-notice-main-left-desc">
+						<view class="money-notice-main-left-desc-top">我的余额</view>
+						<view class="money-notice-main-left-desc-bottom">当前余额：<text>{{userInfo.amount}}元</text></view>
+					</view>
+				</view>
+				<view class="money-notice-main-right">
+					<image src="/assets/images/common/arrow.png"></image>
+				</view>
+			</view>
+			<view class="money-notice-sign">
+				<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1615805274CurqeO.jpg"></image>
+				<view>点击“我的余额”</view>
+				<view>可以查看具体明细哦</view>
+			</view>
+		</view>
+
+	</view>
 </view>

@@ -79,6 +79,7 @@ Page({
     partnerInfo: null, // 合伙人信息
     isPartner: false, // 当前用户是否是合伙人
     didShowContact: false,
+    showMoneyNotice: false
   },
   onCloseContactModal() {
     this.setData({
@@ -524,25 +525,34 @@ Page({
     }
   },
 
-  // 显示指示弹窗
-  showIndicatePic() {
+  // 关闭指示弹窗
+  closeMoneyNotice() {
+    this.setData({
+      showMoneyNotice: false
+    })
     wx.pageScrollTo({
       duration: 1000,
-      scrollTop: 500,
-      success: () => {
-        wx.showModal({
-          title: "提示",
-          content: "我是模拟提示图的，暂时替代，等ui更改即可",
-          success: (res) => {
-            wx.pageScrollTo({
-              duration: 1000,
-              scrollTop: 0
+      scrollTop: 0
+    })
+  },
+  // 显示指示弹窗
+  showIndicatePic() {
+
+    setTimeout(() => {
+      var query = wx.createSelectorQuery();
+      query.select('.function-list').boundingClientRect()
+      query.exec((res) => {
+        wx.pageScrollTo({
+          duration: 1000,
+          scrollTop: res[0].top - 296,
+          success: () => {
+            this.setData({
+              showMoneyNotice: true
             })
           }
         })
-      }
-    })
-
+      })
+    }, 200)
   },
 
   /**

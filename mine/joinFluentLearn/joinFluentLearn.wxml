@@ -66,7 +66,7 @@
         <view class="invite-code-bg" bindtap="closeCodeBox"></view>
         <view class="invite-code-box">
             <view class="invite-code-text">请填写邀请码，即可享188元/年优惠</view>
-            <input type="text" placeholder="请输入您的邀请码" bindinput="inputInviteCode" />
+            <input type="text" placeholder="请输入您的邀请码" bindinput="inputInviteCode" cursor-spacing='260'/>
             <button type="primary" bindtap="inviteCodeBuy" class="invite-code-buy-button">去支付</button>
             <button type="default" bindtap="contactService">获取邀请码</button>
         </view>

@@ -1,4 +1,5 @@
 @import "../../assets/css/common.wxss";
+
 .user-center {
     background: #F9F9F9;
     padding-bottom: 250rpx;
@@ -60,14 +61,21 @@
 }
 
 .message .name {
-    font: 600 52rpx/74rpx PingFangSC;
-    color: rgba(255, 255, 255, 1);
+    font-size: 52rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 52rpx;
 }
 
 .message .lifetime {
-    margin-top: 10rpx;
-    font: 36rpx/44rpx Helvetica;
-    color: white;
+    margin-top: 24rpx;
+    color: #EECDAB;
+    font-size: 36rpx;
+    font-family: PingFangSC-Light, PingFang SC;
+    font-weight: 300;
+    color: #EECDAB;
+    line-height: 36rpx;
 }
 
 .first-distribute {
@@ -375,7 +383,7 @@
     border: none;
 }
 
-.function-item > image {
+.function-item>image {
     width: 16rpx;
     height: 28rpx;
     vertical-align: bottom;
@@ -409,7 +417,7 @@
     font: 28rpx/40rpx PingFangSC;
 }
 
-.function-item-bottom > text {
+.function-item-bottom>text {
     font: 28rpx/28rpx PingFangSC;
     color: #CC0000;
 }
@@ -433,16 +441,120 @@
     0% {
         transform: scale(1);
     }
+
     4% {
         transform: scale(1.05);
     }
+
     8% {
         transform: scale(1);
     }
+
     12% {
         transform: scale(1.05);
     }
+
     16% {
         transform: scale(1);
     }
+}
+
+
+/* 余额指示弹窗 */
+.money-notice {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    z-index: 50;
+    background: rgba(0, 0, 0, 0.67);
+}
+
+.money-notice-bg {
+    position: relative;
+    width: calc(100% - 60rpx);
+    height: 100%;
+    margin: 0 auto;
+}
+
+.money-notice-main {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 300px;
+    width: calc(100% - 60rpx);
+    display: flex;
+    justify-content: space-between;
+    background: #fff;
+    align-items: center;
+    padding: 30rpx;
+}
+
+.money-notice-main-left {
+    display: flex;
+    align-items: center;
+}
+
+.money-notice-main-left-icon image {
+    width: 52rpx;
+    height: 52rpx;
+    padding-right: 28rpx;
+    vertical-align: bottom;
+}
+
+.money-notice-main-left-desc-top {
+    font-size: 36rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #000000;
+    line-height: 36rpx;
+    padding-bottom: 20rpx;
+}
+
+.money-notice-main-left-desc-bottom {
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.6);
+    line-height: 28rpx;
+}
+
+.money-notice-main-left-desc-bottom text {
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #CC0000;
+    line-height: 28rpx;
+}
+
+.money-notice-main-right image {
+    width: 12rpx;
+    height: 24rpx;
+    vertical-align: bottom;
+}
+
+.money-notice-sign {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.money-notice-sign image {
+    width: 16rpx;
+    height: 94rpx;
+    vertical-align: bottom;
+
+}
+
+.money-notice-sign view {
+    font-size: 36rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #FFFFFF;
+    line-height: 60rpx;
 }
