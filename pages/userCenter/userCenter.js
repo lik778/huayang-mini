@@ -524,19 +524,22 @@ Page({
   // 显示指示弹窗
   showIndicatePic() {
     wx.pageScrollTo({
-      duration: 200,
-      scrollTop: 500
-    })
-    wx.showModal({
-      title: "提示",
-      content: "我是模拟提示图的，暂时替代，等ui更改即可",
-      success: (res) => {
-        wx.pageScrollTo({
-          duration: 200,
-          scrollTop: 0
+      duration: 1000,
+      scrollTop: 500,
+      success: () => {
+        wx.showModal({
+          title: "提示",
+          content: "我是模拟提示图的，暂时替代，等ui更改即可",
+          success: (res) => {
+            wx.pageScrollTo({
+              duration: 1000,
+              scrollTop: 0
+            })
+          }
         })
       }
     })
+
   },
 
   /**

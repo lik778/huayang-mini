@@ -2,6 +2,7 @@ import {
 	getFluentCardHotkecheng,
 	getFluentCardInfo,
 	getFluentLearnInfo,
+	getPartnerInfo,
 	payForFluentCard
 } from "../../api/mine/index"
 
@@ -66,6 +67,7 @@ Page({
 				payChannel: channel
 			})
 		}
+
 		// 小程序卡片
 		this.generateSuperiorDistributeUserCache(inviteId)
 		this.getCardInfo()
@@ -163,9 +165,18 @@ Page({
 	 */
 	generateSuperiorDistributeUserCache(superiorId) {
 		if (!superiorId) return
-		this.setData({
-			superiorDistributeUserId: superiorId
+		getPartnerInfo({
+			user_snow_id: superiorId
+		}).then(res => {
+			if (res.data.distribute_user && res.data.distribute_user.status === 2) {
+				this.setData({
+					superiorDistributeUserId: superiorId
+				})
+			}
 		})
+		// this.setData({
+		// 	superiorDistributeUserId: superiorId
+		// })
 		setLocalStorage(GLOBAL_KEY.superiorDistributeUserId, superiorId)
 		setLocalStorage(GLOBAL_KEY.superiorDistributeExpireTime, dayjs().add(2, "hour").format("YYYY-MM-DD HH:mm:ss"))
 	},
@@ -411,6 +422,7 @@ Page({
 		if (this.data.inviteCode.trim() === '') {
 			wx.showToast({
 				title: '请输入您的邀请码',
+				duration: 2000,
 				icon: 'none'
 			})
 		} else {

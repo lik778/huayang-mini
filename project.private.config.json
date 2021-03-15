@@ -21,7 +21,7 @@
         {
           "name": "畅学卡售前页",
           "pathName": "mine/joinFluentLearn/joinFluentLearn",
-          "query": "inviteIds=11467720000278528",
+          "query": "inviteId=11467720000278528",
           "scene": null
         },
         {
