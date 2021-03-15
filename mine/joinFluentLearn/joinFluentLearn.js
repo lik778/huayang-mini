@@ -46,6 +46,8 @@ Page({
 		showCodeBox: false,
 		superiorDistributeUserId: 0,
 		inviteCode: '', //邀请码
+		price: '',
+		discountPrice: ''
 	},
 
 	/**
@@ -341,7 +343,9 @@ Page({
 				desc: data.description,
 				features: data.features,
 				video: data.video,
-				video_cover: data.video_cover
+				video_cover: data.video_cover,
+				price: data.price / 100,
+				discountPrice: data.discount_price / 100
 			})
 		})
 	},

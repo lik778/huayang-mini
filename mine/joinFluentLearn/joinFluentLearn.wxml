@@ -45,10 +45,10 @@
             <button>联系客服</button>
         </view>
         <view class="original-price" bindtap="buy">
-            <button>{{superiorDistributeUserId===0?'原价购买365/年':'立即购买188元/年'}}</button>
+            <button>{{superiorDistributeUserId===0?'原价购买'+price+'/年':'立即购买'+discountPrice+'元/年'}}</button>
         </view>
         <view class="invite-code-price" bindtap="openCodeModal" wx:if='{{superiorDistributeUserId===0}}'>
-            <button>邀请码购买188元/年</button>
+            <button>邀请码购买{{discountPrice}}元/年</button>
         </view>
     </view>
 
