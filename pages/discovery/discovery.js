@@ -36,28 +36,30 @@ Page({
 		courseList: [],
 		todayRecommendCourse: {},
 		previewVideoLink: "",
-		previewVideoCover: "",
 		weekdays: ['日', '一', '二', '三', '四', '五', '六'],
 		liveStatusIntervalTimer: null,
 	},
 	async run() {
 		// 推荐直播间
 		let list = await getRecommendLiveList()
-		list = list.map(item => ({
-			zhiboRoomId: item.id,
-			roomId: item.num,
-			roomType: item.room_type,
-			roomName: item.title.length > 17 ? `${item.title.slice(0, 17)}...` : item.title,
-			title: item.title,
-			desc: item.desc,
-			visitCount: item.visit_count,
-			coverPicture: item.cover_pic,
-			status: item.status,
-			liveStatus: "",
-			link: item.link,
-			startTime: item.start_time,
-			endTime: item.end_time
-		}))
+		list = list.map(item => {
+			item.liveStatus = this.calcStartTime(item.start_time)
+			return {
+				zhiboRoomId: item.id,
+				roomId: item.num,
+				roomType: item.room_type,
+				roomName: item.title.length > 17 ? `${item.title.slice(0, 17)}...` : item.title,
+				title: item.title,
+				desc: item.desc,
+				visitCount: item.visit_count,
+				coverPicture: item.cover_pic,
+				status: item.status,
+				liveStatus: item.liveStatus,
+				link: item.link,
+				startTime: item.start_time,
+				endTime: item.end_time
+			}
+		})
 		this.setData({liveList: list})
 		const roomIds = list.filter(_ => _.roomId).map(t => t.roomId)
 		getSchedule(roomIds).then(this.handleLiveStatusCallback)
@@ -82,7 +84,7 @@ Page({
 			this.setData({todayRecommendCourse: recommendCourse})
 			let lessons = JSON.parse(recommendCourse.kecheng_series.video_detail)
 			if (lessons.length > 0) {
-				this.setData({previewVideoLink: lessons[0].url, previewVideoCover: lessons[0].video_pic})
+				this.setData({previewVideoLink: lessons[0].url})
 			}
 			this.initVideoListener()
 		}
@@ -95,6 +97,32 @@ Page({
 
 		let courseList = await queryQualityVideoList(params)
 		this.setData({courseList})
+	},
+	// 计算开播时间
+	calcStartTime(datetime) {
+		let result = ""
+		let originDate = dayjs(datetime)
+		let todayDate = dayjs(dayjs().format("YYYY-MM-DD"))
+		let liveStartDate = dayjs(originDate.format("YYYY-MM-DD"))
+		let time = originDate.format("HH:mm")
+		let firstDayInWeek = todayDate.startOf('week')
+		let diffNo = liveStartDate.diff(firstDayInWeek, "day")
+		let todayDiffNo = liveStartDate.diff(todayDate, "day")
+		switch (todayDiffNo) {
+			case 0: {
+				result = `今日${time}开播`
+				break
+			}
+			case 1: {
+				result = `明日${time}开播`
+				break
+			}
+			default: {
+				result = `${diffNo > 7 ? "下周" : "本周"}${this.data.weekdays[diffNo % 7]}${time}开播`
+				break
+			}
+		}
+		return result
 	},
 	// 打开微信授权
 	openUserAuth() {
@@ -125,29 +153,8 @@ Page({
 							zhibo_room_id: _.zhiboRoomId
 						})
 					} else if (tar.liveStatus === WeChatLiveStatus[102]) {
-						// 如果微信返回的直播间状态为102-未开始，计算星期
-						let originDate = dayjs(_.startTime)
-						// let originDate = dayjs("2021-03-13 18:00:00")
-						let todayDate = dayjs(dayjs().format("YYYY-MM-DD"))
-						let liveStartDate = dayjs(originDate.format("YYYY-MM-DD"))
-						let time = originDate.format("HH:mm")
-						let firstDayInWeek = todayDate.startOf('week')
-						let diffNo = liveStartDate.diff(firstDayInWeek, "day")
-						let todayDiffNo = liveStartDate.diff(todayDate, "day")
-						switch (todayDiffNo) {
-							case 0: {
-								_.liveStatus = `今日${time}开播`
-								break
-							}
-							case 1: {
-								_.liveStatus = `明日${time}开播`
-								break
-							}
-							default: {
-								_.liveStatus = `${diffNo > 7 ? "下周" : "本周"}${this.data.weekdays[diffNo % 7]}${time}开播`
-								break
-							}
-						}
+						// 如果微信返回的直播间状态为102-未开始
+						_.liveStatus = this.calcStartTime(_.startTime)
 					} else if (tar.liveStatus === WeChatLiveStatus[101]) {
 						// 如果微信返回的直播间状态为101-直播中
 						updateLiveStatus({
@@ -190,7 +197,9 @@ Page({
 		let item = e.currentTarget.dataset.item
 		let path = item.buy_link
 		addTravelVisitNumber({travel_product_id: item.id})
-		getYouZanAppId().then(appId => {wx.navigateToMiniProgram({appId, path})})
+		getYouZanAppId().then(appId => {
+			wx.navigateToMiniProgram({appId, path})
+		})
 		bxPoint("homepage_edu_travel_click", {
 			edu_travel_id: item.id,
 			edu_travel_name: item.name,
@@ -202,7 +211,8 @@ Page({
 	},
 	onTodayRecommendTap() {
 		let item = this.data.todayRecommendCourse.kecheng_series
-		wx.navigateTo({url: `/subCourse/videoCourse/videoCourse?videoId=${item.id}`, complete() {
+		wx.navigateTo({
+			url: `/subCourse/videoCourse/videoCourse?videoId=${item.id}`, complete() {
 				bxPoint("homepage_today_recom_click", {
 					is_today_recom: 1,
 					series_id: item.id,
@@ -210,10 +220,16 @@ Page({
 					kecheng_name: item.teacher_desc,
 					kecheng_subname: item.name,
 				}, false)
-			}})
+			}
+		})
 	},
 	onMoreTravelLineTap() {
-		getYouZanAppId().then(appId => {wx.navigateToMiniProgram({appId, path: "pages/common/blank-page/index?weappSharePath=pages%2Fhome%2Fdashboard%2Findex%3Fkdt_id%3D43257500"})})
+		getYouZanAppId().then(appId => {
+			wx.navigateToMiniProgram({
+				appId,
+				path: "pages/common/blank-page/index?weappSharePath=pages%2Fhome%2Fdashboard%2Findex%3Fkdt_id%3D43257500"
+			})
+		})
 		bxPoint("homepage_more_edu_travel_button", {}, false)
 	},
 	// 获取授权
@@ -364,7 +380,7 @@ Page({
 				if (data.length > 0) {
 					wx.navigateTo({
 						url: "/pages/coopen/coopen",
-						success(res) {
+						success() {
 							getApp().globalData.didVisibleCooPenPage = true
 						}
 					})
@@ -388,8 +404,8 @@ Page({
 	// 检查ios环境
 	checkIos() {
 		wx.getSystemInfo({
-			success: (res2) => {
-				if (res2.platform == 'ios') {
+			success: (res) => {
+				if (res.platform === 'ios') {
 					this.setData({
 						isIosPlatform: true
 					})
@@ -402,7 +418,7 @@ Page({
 	 */
 	onLoad: function (options) {
 
-		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=205`})
+		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=188`})
 
 		let {scene, invite_user_id = "", source} = options
 		// 通过小程序码进入 scene=${source}
@@ -478,7 +494,8 @@ Page({
 	/**
 	 * 生命周期函数--监听页面隐藏
 	 */
-	onHide: function () {},
+	onHide: function () {
+	},
 
 	/**
 	 * 生命周期函数--监听页面卸载
@@ -496,7 +513,8 @@ Page({
 	/**
 	 * 页面上拉触底事件的处理函数
 	 */
-	onReachBottom: function () {},
+	onReachBottom: function () {
+	},
 	/**
 	 * 用户点击右上角分享
 	 */

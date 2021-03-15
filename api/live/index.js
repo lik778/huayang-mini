@@ -38,13 +38,7 @@ export function queryTravelList(params) {
 
 // 增加游学产品访问数量
 export function addTravelVisitNumber(params) {
-	return new Promise((resolve, reject) => {
-		request._post(URL.addTravelVisitNo, params).then(() => {
-			resolve()
-		}).catch((err) => {
-			reject(err)
-		})
-	})
+	request._post(URL.addTravelVisitNo, params)
 }
 
 // 获取今日推荐课程
@@ -93,16 +87,7 @@ export function getLiveBannerList(params) {
 }
 
 export function updateLiveStatus(params) {
-	return new Promise((resolve, reject) => {
-		request._post(URL.updateLiveStatus, params).then(({code}) => {
-			if (code === 0) {
-				resolve()
-			}
-			reject()
-		}).catch(() => {
-			reject()
-		})
-	})
+	request._post(URL.updateLiveStatus, params)
 }
 
 export function setPoint(params) {
