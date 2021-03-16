@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText":"花样大学",
+  "navigationBarTitleText":"花样游学",
   "usingComponents": {
     "authModule": "../../components/auth/auth",
     "liveLayout": "../../components/liveLayout/liveLayout",
