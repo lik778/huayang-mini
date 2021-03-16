@@ -24,7 +24,7 @@
 
 		<block wx:if="{{isPartner}}">
 			<view class="first-distribute">
-				<text>直接推荐学员<text>{{ partnerInfo.firstNo }}人</text></text>
+				<text>直接推荐学员<text>{{ partnerInfo.firstNo }} 人</text></text>
 				<view class="distribute-content" bindtap="goToDistributeListPage" data-index="1">
 					<image class="distribute-avatar" mode="aspectFill" src="{{item}}" wx:for="{{ partnerInfo.firstUserAvatars }}">
 					</image>
