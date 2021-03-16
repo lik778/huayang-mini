@@ -40,7 +40,7 @@
     </view> -->
 
     <!-- 新版购买按钮 -->
-    <view class="button-module">
+    <view class="button-module" style="padding-bottom:{{isIphoneXRSMax?'20px':''}}">
         <view class="contact-module" bindtap="contactService">
             <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1615860399FvXKHL.jpg"></image>
             <text>联系客服</text>

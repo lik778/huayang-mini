@@ -14,7 +14,8 @@ import {
 	payFluentCard,
 	removeLocalStorage,
 	setLocalStorage,
-	toast
+	toast,
+	isIphoneXRSMax
 } from "../../utils/util"
 import {
 	ErrorLevel,
@@ -49,7 +50,8 @@ Page({
 		inviteCode: '', //邀请码
 		price: '',
 		discountPrice: '',
-		inviteId: ''
+		inviteId: '',
+		isIphoneXRSMax: false
 	},
 
 	/**
@@ -69,7 +71,8 @@ Page({
 			})
 		}
 		this.setData({
-			inviteId
+			inviteId,
+			isIphoneXRSMax: isIphoneXRSMax()
 		})
 
 		// 小程序卡片
