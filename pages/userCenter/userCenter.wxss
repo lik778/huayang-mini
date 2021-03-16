@@ -15,7 +15,7 @@
 }
 
 .banner.partner {
-    height: 904rpx;
+    height: 828rpx;
 }
 
 .banner-bg {
@@ -24,7 +24,7 @@
 }
 
 .banner-bg.partner {
-    height: 904rpx;
+    height: 828rpx;
 }
 
 .message {
@@ -80,7 +80,7 @@
 
 .first-distribute {
     position: absolute;
-    top: 380rpx;
+    top: 384rpx;
     width: 100vw;
     box-sizing: border-box;
     padding: 0 40rpx;
@@ -89,6 +89,10 @@
     align-items: center;
     font: 32rpx/32rpx PingFangSC;
     color: white;
+}
+
+.first-distribute text text {
+    padding-left: 12rpx;
 }
 
 .first-distribute.second-distribute {
@@ -108,7 +112,11 @@
 }
 
 .more-list {
-    font: 32rpx/32rpx PingFangSC;
+    font-size: 32rpx;
+    font-family: PingFangSC-Light, PingFang SC;
+    font-weight: 300;
+    color: rgba(250, 250, 250, 0.7);
+    line-height: 32rpx;
 }
 
 .distribute-btn {
@@ -123,6 +131,48 @@
     color: #834B25;
     background: #CC0000 linear-gradient(90deg, #FBD8B3 0%, #ECCBA9 100%);
     animation: flashing 4s ease infinite;
+}
+
+/* 专属邀请码 */
+.invite-self-code {
+    position: absolute;
+    top: 480rpx;
+    width: 100vw;
+    box-sizing: border-box;
+    padding: 0 40rpx;
+    align-items: center;
+    font: 32rpx/32rpx PingFangSC;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.invite-self-code text {
+    font-size: 48rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #EECDAB;
+    line-height: 48rpx;
+}
+
+.invite-self-code-left {
+    display: flex;
+    align-items: center;
+}
+
+.invite-self-code-right {
+    width: 288rpx;
+    height: 72rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32rpx;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #834B25;
+    background: #EECDAB;
+    border-radius: 999rpx;
 }
 
 /* 畅学卡 */
@@ -143,7 +193,7 @@
 }
 
 .vip-card.partner {
-    top: -212rpx;
+    top: -208rpx;
 }
 
 .vip-card.overdue {

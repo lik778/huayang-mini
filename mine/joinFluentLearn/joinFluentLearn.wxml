@@ -42,13 +42,26 @@
     <!-- 新版购买按钮 -->
     <view class="button-module">
         <view class="contact-module" bindtap="contactService">
-            <button>联系客服</button>
+            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1615860399FvXKHL.jpg"></image>
+            <text>联系客服</text>
         </view>
-        <view class="original-price" bindtap="buy">
-            <button>{{superiorDistributeUserId===0?'原价购买'+price+'/年':'立即购买'+discountPrice+'元/年'}}</button>
-        </view>
-        <view class="invite-code-price" bindtap="openCodeModal" wx:if='{{superiorDistributeUserId===0}}'>
-            <button>邀请码购买{{discountPrice}}元/年</button>
+        <view class="button-module-right">
+            <!-- 邀请码+原价 -->
+            <view class="button-module-type-one" wx:if='{{superiorDistributeUserId===0}}'>
+                <view class="button-module-type-old-price" bindtap="buy">
+                    <text>立即购买</text>
+                    <text>{{price}}元/年</text>
+                </view>
+                <view class="button-module-type-invite-price" bindtap="openCodeModal">
+                    <text>邀请码购买</text>
+                    <text>{{discountPrice}}元/年</text>
+                </view>
+            </view>
+            <!-- 原价 -->
+            <view class="button-module-type-two" wx:else bindtap="openCodeModal">
+                <text>立即购买 {{discountPrice}}元/年</text>
+                <text>原价 {{price}}元/年</text>
+            </view>
         </view>
     </view>
 
@@ -66,9 +79,9 @@
         <view class="invite-code-bg" bindtap="closeCodeBox"></view>
         <view class="invite-code-box">
             <view class="invite-code-text">请填写邀请码，即可享188元/年优惠</view>
-            <input type="text" placeholder="请输入您的邀请码" bindinput="inputInviteCode" cursor-spacing='260'/>
-            <button type="primary" bindtap="inviteCodeBuy" class="invite-code-buy-button">去支付</button>
-            <button type="default" bindtap="contactService">获取邀请码</button>
+            <input type="text" placeholder="邀请码" bindinput="inputInviteCode" cursor-spacing='292' />
+            <view type="primary" bindtap="inviteCodeBuy" class="invite-code-buy-button">去支付</view>
+            <view type="default" bindtap="contactService" class="invite-code-module-get">获取邀请码</view>
         </view>
     </view>
 

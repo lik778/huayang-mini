@@ -441,9 +441,10 @@ Page({
 	// 初始化id值 
 	initSuperId() {
 		let superiorId = this.data.inviteId
+		if (!superiorId) return
 		let userData = getLocalStorage(GLOBAL_KEY.accountInfo)
 		let snowId = userData ? JSON.parse(userData).snow_id : ''
-		if (snowId && String(snowId) !== String(superiorId)) {
+		if (String(snowId) !== String(superiorId)) {
 			getPartnerInfo({
 				user_snow_id: superiorId
 			}).then(res => {

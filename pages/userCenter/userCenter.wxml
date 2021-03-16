@@ -24,7 +24,7 @@
 
 		<block wx:if="{{isPartner}}">
 			<view class="first-distribute">
-				<text>直接推荐学员 {{ partnerInfo.firstNo }} 人</text>
+				<text>直接推荐学员<text>{{ partnerInfo.firstNo }}人</text></text>
 				<view class="distribute-content" bindtap="goToDistributeListPage" data-index="1">
 					<image class="distribute-avatar" mode="aspectFill" src="{{item}}" wx:for="{{ partnerInfo.firstUserAvatars }}">
 					</image>
@@ -35,13 +35,15 @@
 
 
 
-			<view class="first-distribute second-distribute" wx:if='{{partnerInfo.exclusiveCode}}'>
-				专属邀请码：{{partnerInfo.exclusiveCode}}
+			<view class="invite-self-code" wx:if='{{partnerInfo.exclusiveCode}}'>
+				<view class="invite-self-code-left">
+					专属邀请码：<text>{{partnerInfo.exclusiveCode}}</text>
+				</view>
+				<view class="invite-self-code-right" bindtap="generatePoster">
+					专属邀请海报
+				</view>
 			</view>
-
-			<view class="distribute-btn" bindtap="generatePoster">
-				获取专属邀请海报
-			</view>
+			
 		</block>
 	</view>
 	<!-- 畅学卡 -->
