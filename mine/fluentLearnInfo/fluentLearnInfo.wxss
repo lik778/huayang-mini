@@ -1,5 +1,6 @@
 /* 畅学卡详情页 */
 @import "../../assets/css/common.wxss";
+
 .fluent-learn-info {
     padding-bottom: 338rpx;
 }
@@ -13,7 +14,7 @@
 .interest {
     margin: 40rpx 30rpx 48rpx;
     width: 470rpx;
-    height: 88rpx;
+    height: 80rpx;
 }
 
 .interest-item {
@@ -29,12 +30,12 @@
 
 .interest-detail {
     width: 574rpx;
-    font: 500 32rpx/32rpx PingFangSC;
+    font: 500 36rpx/36rpx PingFangSC;
 }
 
 .interest-text {
-    margin-top: 28rpx;
-    font: 28rpx/40rpx PingFangSC;
+    margin-top: 20rpx;
+    font: 32rpx/48rpx PingFangSC;
 }
 
 /* 精品课 */
@@ -63,17 +64,19 @@
 }
 
 .course-name {
-    font: 500 32rpx/32rpx PingFangSC;
+    font: 500 36rpx/36rpx PingFangSC;
 }
 
 .course-desc {
-    margin: 20rpx 0;
-    font: 28rpx/32rpx PingFangSC;
+    margin-top: 28rpx;
+    margin-bottom: 20rpx;
+    font: 32rpx/32rpx PingFangSC;
 }
 
 .course-teacher-info {
-    font: 28rpx/28rpx PingFangSC;
-    color: #666666;
+    font: 32rpx/32rpx PingFangSC;
+    color: #000000;
+    opacity: 0.6;
 }
 
 .visited {
@@ -81,7 +84,7 @@
     justify-content: space-between;
     align-items: flex-end;
     font: 24rpx/24rpx PingFangSC;
-    color: rgba(0,0,0, 0.6);
+    color: rgba(0, 0, 0, 0.6);
 }
 
 .learn {
@@ -98,6 +101,7 @@
     background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612331610edgRGS.jpg") no-repeat center;
     background-size: contain;
 }
+
 .share-btn:active {
     opacity: 0.9;
 }
@@ -126,6 +130,6 @@
 }
 
 .sub-text {
-    color: rgba(255,255,255, 0.8);
+    color: rgba(255, 255, 255, 0.8);
     font: 500 28rpx/28rpx PingFangSC;
 }
