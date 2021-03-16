@@ -58,7 +58,7 @@
                 </view>
             </view>
             <!-- 原价 -->
-            <view class="button-module-type-two" wx:else bindtap="openCodeModal">
+            <view class="button-module-type-two" wx:else bindtap="buy">
                 <text>立即购买 {{discountPrice}}元/年</text>
                 <text>原价 {{price}}元/年</text>
             </view>
