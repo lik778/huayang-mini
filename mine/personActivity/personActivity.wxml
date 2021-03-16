@@ -1,5 +1,5 @@
 <view class="person-bootcamp">
-    <block wx:if="{{recommendList.length > 0}}">
+    <block wx:if="{{activityList.length === 0}}">
         <view class="no-data-tips">
             <image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603973963OlgcIC.jpg"></image>
             <text>加入主题营</text>

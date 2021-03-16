@@ -1,11 +1,7 @@
-import {
-  getVideoCourseList,
-  getVideoPracticeData
-} from "../../api/course/index"
+import { getVideoCourseList, getVideoPracticeData } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
-import {
-  getNowDateAll
-} from "../../utils/util"
+import { getNowDateAll } from "../../utils/util"
+
 Page({
 
   /**
@@ -132,7 +128,7 @@ Page({
               noMoreRecommend: true
             })
           }
-         
+
           let oldRecommendOffset = this.data.recommendOffset
           let oldRecommendList = this.data.recommendList
           this.setData({

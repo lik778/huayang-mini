@@ -1,7 +1,8 @@
 <view class="join-video-member">
     <video class="preview-video" src="{{video}}" controls="{{false}}" custom-cache="{{false}}" object-fit="cover"
-        enable-play-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}"
-        show-play-btn="{{false}}" autoplay="{{true}}" poster="{{video_cover}}" loop="{{true}}"></video>
+        enable-play-gesture="{{false}}" enable-progress-gesture="{{false}}" play-btn-position="top"
+        show-center-play-btn="{{false}}" show-play-btn="{{false}}" autoplay="{{true}}" poster="{{video_cover}}"
+        loop="{{true}}"></video>
     <view class="member-card">
         <view class="card-title">{{name}}</view>
         <view class="card-desc">{{desc}}</view>

@@ -1,11 +1,11 @@
 <view class="person-bootcamp">
-    <block wx:if="{{recommendList.length > 0}}">
+    <block wx:if="{{campList.length === 0}}">
         <view class="no-data-tips">
             <image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603951961KBNQXM.jpg"></image>
             <text>您还没有参加主题营</text>
-            <text>快去参加吧！</text>
+            <text wx:if="{{recommendList.length > 0}}">快去参加吧！</text>
         </view>
-        <view class="layout">主题营推荐</view>
+        <view wx:if="{{recommendList.length > 0}}" class="layout">主题营推荐</view>
     </block>
     <view class="camp-list">
         <view class="camp-item" wx:for="{{campList.length > 0 ? campList : recommendList}}" wx:key="index" bindtap="joinCamp" data-index="{{item}}">

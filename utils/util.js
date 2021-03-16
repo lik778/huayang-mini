@@ -316,6 +316,7 @@ export const hasAccountInfo = function () {
  * @returns {Promise<unknown[]>}
  */
 export const getSchedule = async function (roomIds = []) {
+	let delayTimes = 3 * 60 * 1000
 	// 课程ID去重
 	roomIds = Array.from(new Set(roomIds))
 	let scheduleData = getLocalStorage(GLOBAL_KEY.schedule) ? JSON.parse(getLocalStorage(GLOBAL_KEY.schedule) || "") : []
@@ -330,7 +331,7 @@ export const getSchedule = async function (roomIds = []) {
 			scheduleData.push({
 				roomId: roomId,
 				liveStatus: WeChatLiveStatus[liveStatus],
-				timestamp: +new Date() + 5 * 60 * 1000
+				timestamp: +new Date() + delayTimes
 			})
 		} else {
 			let targetRoomId = target.roomId
@@ -345,7 +346,7 @@ export const getSchedule = async function (roomIds = []) {
 				} = await queryLiveStatus(targetRoomId)
 
 				target.liveStatus = WeChatLiveStatus[liveStatus]
-				target.timestamp = +new Date() + 5 * 60 * 1000
+				target.timestamp = +new Date() + delayTimes
 			}
 		}
 	}

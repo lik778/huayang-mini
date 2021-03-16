@@ -13,7 +13,10 @@ Page({
 	data: {
 		sectionList: [],
 		liveList: [],
-		isFluentLearnVIP: false
+		isFluentLearnVIP: false,
+		offset: 0,
+		limit: 10,
+		hasMore: true
 	},
 
 	/**
@@ -62,7 +65,7 @@ Page({
 	 * Called when page reach bottom
 	 */
 	onReachBottom: function () {
-
+		this.queryLiveList()
 	},
 
 	/**
@@ -121,22 +124,34 @@ Page({
 		// handledList = handledList.filter(n => n.id && n.cover_pic && n.name && n.visit_count)
 		this.setData({sectionList: handledList})
 
-		// 直播回看列表
-		let list = await getLiveList({
-			limit: 9999,
-			offset: 0
-		})
-		list = list.map(item => ({
-			zhiboRoomId: item.zhibo_room.id,
-			roomId: item.zhibo_room.num,
-			roomType: item.zhibo_room.room_type,
-			roomTitle: item.zhibo_room.title,
-			roomDesc: item.zhibo_room.desc,
-			startTime: item.zhibo_room.start_time,
-			visitCount: item.zhibo_room.visit_count,
-			coverPicture: item.zhibo_room.cover_pic,
-		}))
-		this.setData({liveList: list})
+		this.queryLiveList()
+	},
+	// 直播回看列表
+	queryLiveList(isRefresh = false) {
+		if (isRefresh) {
+			this.setData({hasMore: true, offset: 0})
+		}
+		if (!this.data.hasMore) return
+		getLiveList({limit: this.data.limit, offset: this.data.offset})
+			.then((list) => {
+				if (list.length !== this.data.limit) {
+					this.setData({hasMore: false})
+				}
+				list = list.map(item => ({
+					zhiboRoomId: item.zhibo_room.id,
+					roomId: item.zhibo_room.num,
+					roomType: item.zhibo_room.room_type,
+					roomTitle: item.zhibo_room.title,
+					roomDesc: item.zhibo_room.desc,
+					startTime: item.zhibo_room.start_time,
+					visitCount: item.zhibo_room.visit_count,
+					coverPicture: item.zhibo_room.cover_pic,
+				}))
+				this.setData({liveList: [...this.data.liveList, ...list]})
+				wx.nextTick(() => {
+					this.setData({offset: this.data.liveList.length})
+				})
+			})
 	},
 	navigateToVideoDetail(e) {
 		let item = e.currentTarget.dataset.item
