@@ -22,9 +22,9 @@
         <image class="cover-image" src="{{item.coverImg}}" mode="aspectFill"></image>
         <view class="course-info">
             <view>
-                <view class="course-name limit-two-line">{{item.name}}</view>
-                <view class="course-desc limit-two-line">{{item.desc}}</view>
-                <view class="course-teacher-info">{{item.teacherTxt}}</view>
+                <view class="course-name limit-one-line">{{item.name}}</view>
+                <view class="course-desc limit-one-line">{{item.desc}}</view>
+                <view class="course-teacher-info limit-one-line">{{item.teacherTxt}}</view>
             </view>
             <view class="visited">共{{item.visit_count}}人学习</view>
         </view>
@@ -76,8 +76,9 @@
 
     <!-- 邀请码购买弹窗 -->
     <view class="invite-code-module" wx:if='{{showCodeBox}}'>
-        <view class="invite-code-bg" bindtap="closeCodeBox"></view>
-        <view class="invite-code-box">
+        <view class="{{showCodeBoxAnimate?'bg-code-box-close invite-code-bg':'invite-code-bg'}}" bindtap="closeCodeBox">
+        </view>
+        <view class="{{showCodeBoxAnimate?'close-code-box invite-code-box':'invite-code-box'}}">
             <view class="invite-code-text">请填写邀请码，即可享188元/年优惠</view>
             <input type="text" placeholder="邀请码" bindinput="inputInviteCode" cursor-spacing='292' />
             <view type="primary" bindtap="inviteCodeBuy" class="invite-code-buy-button">去支付</view>

@@ -317,7 +317,13 @@
     align-items: center;
     border-radius: 20rpx 20rpx 0 0;
     padding-bottom: 45px;
+    animation: slideContentUp 0.25s linear;
 }
+
+.close-code-box {
+    animation: slideContentDown 0.25s linear forwards;
+}
+
 
 .invite-code-bg {
     position: fixed;
@@ -327,7 +333,11 @@
     bottom: 0;
     background: rgba(0, 0, 0, 0.67);
     z-index: 60;
+    animation: slideContentBgUp 0.25s linear;
+}
 
+.bg-code-box-close {
+    animation: slideContentBgDown 0.25s linear;
 }
 
 .invite-code-box input {
@@ -379,4 +389,50 @@
     color: #CC0000;
     line-height: 20px;
     padding-top: 28px;
+}
+
+@keyframes slideContentUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0.5;
+        /*设置为正数则底部弹出来，负数则相反*/
+    }
+
+    to {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes slideContentBgUp {
+    from {
+        opacity: 0;
+
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideContentBgDown {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes slideContentDown {
+    from {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(100%);
+        opacity: 0;
+    }
 }

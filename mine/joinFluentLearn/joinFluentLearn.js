@@ -46,6 +46,7 @@ Page({
 		payChannel: undefined, // 支付渠道字段
 		showContact: false,
 		showCodeBox: false,
+		showCodeBoxAnimate: false,
 		superiorDistributeUserId: 0,
 		inviteCode: '', //邀请码
 		price: '',
@@ -326,9 +327,10 @@ Page({
 					})
 					.then(() => {
 						// 关闭邀请码购买弹窗
-						this.setData({
-							showCodeBox: false
-						})
+						this.closeCodeBox()
+						// this.setData({
+						// 	showCodeBox: false
+						// })
 						wx.navigateTo({
 							url: "/mine/fluentCardCallback/fluentCardCallback"
 						})
@@ -414,14 +416,24 @@ Page({
 		bxPoint("changxue_invite_buy", {
 			remmend_id: this.data.superiorDistributeUserId
 		}, false)
-
 	},
 	// 关闭邀请码购买弹窗
 	closeCodeBox() {
 		this.setData({
-			showCodeBox: false,
-			inviteCode: ''
+			showCodeBoxAnimate: true
 		})
+		setTimeout(() => {
+			this.setData({
+				showCodeBox: false,
+				inviteCode: '',
+			})
+
+			wx.nextTick(() => {
+				this.setData({
+					showCodeBoxAnimate: false
+				})
+			})
+		}, 230)
 	},
 	// 邀请码购买
 	inviteCodeBuy() {
@@ -458,5 +470,5 @@ Page({
 				}
 			})
 		}
-	}
+	},
 })

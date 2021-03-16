@@ -141,11 +141,17 @@
     box-sizing: border-box;
     padding: 0 40rpx;
     align-items: center;
-    font: 32rpx/32rpx PingFangSC;
-    color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.invite-self-code-left {
+    font-size: 32rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #FFFFFF;
+    line-height: 32rpx;
 }
 
 .invite-self-code text {

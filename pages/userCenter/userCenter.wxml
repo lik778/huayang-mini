@@ -165,7 +165,7 @@
 	<contact show="{{didShowContact}}" isRootPage="{{true}}" sessionFrom="distribute"
 		bind:closeContactModal="onCloseContactModal" />
 	<!-- 余额提示弹窗 -->
-	<view class="money-notice" wx:if='{{showMoneyNotice}}'>
+	<view class="money-notice" wx:if='{{showMoneyNotice}}' catchtouchmove="ture">
 		<view class="money-notice-bg" catchtap="closeMoneyNotice">
 			<view class="money-notice-main">
 				<view class="money-notice-main-left">

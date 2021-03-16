@@ -537,18 +537,21 @@ Page({
   },
   // 显示指示弹窗
   showIndicatePic() {
-
     setTimeout(() => {
       var query = wx.createSelectorQuery();
       query.select('.function-list').boundingClientRect()
+      query.selectViewport().scrollOffset()
       query.exec((res) => {
         wx.pageScrollTo({
           duration: 1000,
-          scrollTop: res[0].top - 296,
+          scrollTop: res[0].top + res[1].scrollTop - 296,
           success: () => {
             this.setData({
               showMoneyNotice: true
             })
+            setTimeout(() => {
+              this.closeMoneyNotice()
+            }, 2000)
           }
         })
       })
