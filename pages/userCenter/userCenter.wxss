@@ -526,7 +526,7 @@
     width: calc(100vw - 30px);
     height: 100%;
     z-index: 11;
-    animation: slideContentUp 0.2s linear forwards;
+    animation: slideContentUp 0.3s linear forwards;
 }
 
 .money-notice-main-position>view {
@@ -635,11 +635,11 @@
 }
 
 .money-notice-hide {
-    animation: slideContentDown 0.2s linear forwards;
+    animation: slideContentDown 0.3s linear forwards;
 }
 
 .money-notice-main-position-hide {
-    animation: slideContentDown 0.2s linear forwards;
+    animation: slideContentDown 0.3s linear forwards;
 }
 
 /* 动画 */

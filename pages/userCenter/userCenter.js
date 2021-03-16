@@ -375,7 +375,7 @@ Page({
         query.selectViewport().scrollOffset()
         query.exec((res) => {
           this.setData({
-            showMoneyNoticeTop: parseInt(res[0].top) - 400,
+            showMoneyNoticeTop: parseInt(res[0].top) - 350,
           })
         })
       }, 500)
@@ -527,7 +527,7 @@ Page({
         query.selectViewport().scrollOffset()
         query.exec((res) => {
           this.setData({
-            showMoneyNoticeTop: parseInt(res[0].top) - 400,
+            showMoneyNoticeTop: parseInt(res[0].top) - 350,
           })
         })
       }, 500)
@@ -550,6 +550,11 @@ Page({
         this.setData({
           showMoneyNotice: true
         })
+        setTimeout(() => {
+          this.setData({
+            showMoneyNotice: false
+          })
+        }, 2000)
         setLocalStorage('need_show_mine_sign', 'false')
       }
     }
@@ -578,7 +583,7 @@ Page({
     }
     let data = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     this.setData({
-      statusHeight: data
+      statusHeight: data,
     })
 
   },
@@ -604,7 +609,9 @@ Page({
     this.queryContentInfo()
     this.getBanner()
     this.getNumber()
-
+    this.setData({
+      showMoneyNotice: false
+    })
 
     if (hasAccountInfo() && hasUserInfo()) {
       // 每次访问个人中心更新最新的账户数据和畅学卡信息

@@ -113,7 +113,9 @@
 					</view>
 				</view>
 				<image src="/assets/images/common/arrow.png"></image>
-				<view class="{{changeMoneyNoticeClass?'money-notice-main-position':'money-notice-main-position money-notice-main-position-hide'}}" catchtouchmove="ture" wx:if='{{showMoneyNotice}}'>
+				<view
+					class="{{changeMoneyNoticeClass?'money-notice-main-position':'money-notice-main-position money-notice-main-position-hide'}}"
+					catchtouchmove="ture" wx:if='{{showMoneyNotice}}'>
 					<view>
 						<view class="money-notice-main">
 							<view class="money-notice-main-left">
@@ -189,7 +191,8 @@
 	<contact show="{{didShowContact}}" isRootPage="{{true}}" sessionFrom="distribute"
 		bind:closeContactModal="onCloseContactModal" />
 	<!-- 余额提示弹窗 -->
-	<view class="{{changeMoneyNoticeClass?'money-notice':'money-notice money-notice-hide'}} " wx:if='{{showMoneyNotice}}' catchtouchmove="ture">
+	<view class="{{changeMoneyNoticeClass?'money-notice':'money-notice money-notice-hide'}} " wx:if='{{showMoneyNotice}}'
+		catchtouchmove="ture">
 		<view class="money-notice-bg" catchtap="closeMoneyNotice">
 		</view>
 	</view>
