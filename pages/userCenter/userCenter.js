@@ -79,7 +79,9 @@ Page({
     partnerInfo: null, // 合伙人信息
     isPartner: false, // 当前用户是否是合伙人
     didShowContact: false,
-    showMoneyNotice: false
+    showMoneyNotice: false,
+    showMoneyNoticeTop: '',
+    changeMoneyNoticeClass: true
   },
   onCloseContactModal() {
     this.setData({
@@ -364,6 +366,20 @@ Page({
     this.setData({
       didShowAuth: false
     })
+    // 获取加入学习群高度，用来判断显示余额显示
+    let userId = getLocalStorage(GLOBAL_KEY.userId) ? true : false
+    if (userId) {
+      setTimeout(() => {
+        let query = wx.createSelectorQuery();
+        query.select('.function-list').boundingClientRect()
+        query.selectViewport().scrollOffset()
+        query.exec((res) => {
+          this.setData({
+            showMoneyNoticeTop: parseInt(res[0].top) - 400,
+          })
+        })
+      }, 500)
+    }
   },
   // 我的作业
   goToTaskLaunchPage() {
@@ -427,12 +443,9 @@ Page({
           firstUserAvatars: $notNull(data.first_list) ? data.first_list.filter(_ => _.user).map(_ => _.user.avatar_url) : [],
           secondUserAvatars: $notNull(data.second_list) ? data.second_list.filter(_ => _.user).map(_ => _.user.avatar_url) : [],
           level: $notNull(lv) ? lv.label : "",
-          exclusiveCode: data.distribute_user.num
+          exclusiveCode: data.distribute_user.num,
+          distribute_user: data.distribute_user
         }
-        if (data.distribute_user && data.distribute_user.status === 2) {
-          this.initIndicatePic(1)
-        }
-
         this.setData({
           partnerInfo: partnerData,
           isPartner: data.distribute_user.status === 2
@@ -505,6 +518,20 @@ Page({
         cardDesc: data.description,
       })
     })
+    // 获取加入学习群高度，用来判断显示余额显示
+    let userId = getLocalStorage(GLOBAL_KEY.userId) ? true : false
+    if (userId) {
+      setTimeout(() => {
+        let query = wx.createSelectorQuery();
+        query.select('.function-list').boundingClientRect()
+        query.selectViewport().scrollOffset()
+        query.exec((res) => {
+          this.setData({
+            showMoneyNoticeTop: parseInt(res[0].top) - 400,
+          })
+        })
+      }, 500)
+    }
   },
 
 
@@ -519,7 +546,10 @@ Page({
     } else if (type === 1) {
       // 成为会员首次进入我的，删除标识,显示指示图
       if (sign === true) {
-        this.showIndicatePic()
+        // 获取加入学习群高度，用来判断显示余额显示
+        this.setData({
+          showMoneyNotice: true
+        })
         setLocalStorage('need_show_mine_sign', 'false')
       }
     }
@@ -528,35 +558,16 @@ Page({
   // 关闭指示弹窗
   closeMoneyNotice() {
     this.setData({
-      showMoneyNotice: false
+      changeMoneyNoticeClass: false
     })
-    wx.pageScrollTo({
-      duration: 1000,
-      scrollTop: 0
-    })
-  },
-  // 显示指示弹窗
-  showIndicatePic() {
     setTimeout(() => {
-      var query = wx.createSelectorQuery();
-      query.select('.function-list').boundingClientRect()
-      query.selectViewport().scrollOffset()
-      query.exec((res) => {
-        wx.pageScrollTo({
-          duration: 1000,
-          scrollTop: res[0].top + res[1].scrollTop - 296,
-          success: () => {
-            this.setData({
-              showMoneyNotice: true
-            })
-            setTimeout(() => {
-              this.closeMoneyNotice()
-            }, 2000)
-          }
-        })
+      this.setData({
+        showMoneyNotice: false,
+        changeMoneyNoticeClass: true
       })
     }, 200)
   },
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -590,7 +601,6 @@ Page({
     }
     this.calcUserCreatedTime()
     bxPoint("applets_mine", {})
-
     this.queryContentInfo()
     this.getBanner()
     this.getNumber()
@@ -652,4 +662,11 @@ Page({
       path: `/pages/discovery/discovery?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
     }
   },
+  onPageScroll(res) {
+    let userId = getLocalStorage(GLOBAL_KEY.userId) ? true : false
+    let distribute_user = this.data.partnerInfo
+    if (userId && distribute_user && distribute_user.distribute_user && distribute_user.distribute_user.status === 2 && res.scrollTop > this.data.showMoneyNoticeTop) {
+      this.initIndicatePic(1)
+    }
+  }
 })

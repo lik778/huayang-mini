@@ -80,7 +80,7 @@
         </view>
         <view class="{{showCodeBoxAnimate?'close-code-box invite-code-box':'invite-code-box'}}">
             <view class="invite-code-text">请填写邀请码，即可享188元/年优惠</view>
-            <input type="text" placeholder="邀请码" bindinput="inputInviteCode" cursor-spacing='292' />
+            <input type="text" placeholder="邀请码" bindinput="inputInviteCode" cursor-spacing='170' />
             <view type="primary" bindtap="inviteCodeBuy" class="invite-code-buy-button">去支付</view>
             <view type="default" bindtap="contactService" class="invite-code-module-get">获取邀请码</view>
         </view>

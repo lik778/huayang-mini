@@ -385,7 +385,7 @@
 .invite-code-module-get {
     font-size: 20px;
     font-family: PingFangSC-Medium, PingFang SC;
-    font-weight: 600;
+    font-weight: 400;
     color: #CC0000;
     line-height: 20px;
     padding-top: 28px;
