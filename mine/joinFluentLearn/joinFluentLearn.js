@@ -409,13 +409,19 @@ Page({
 	},
 	// 打开邀请码购买弹窗
 	openCodeModal() {
-		this.setData({
-			showCodeBox: true
-		})
-		// jj-2021-03-12梨花
-		bxPoint("changxue_invite_buy", {
-			remmend_id: this.data.superiorDistributeUserId
-		}, false)
+		if (hasUserInfo() && hasAccountInfo()) {
+			this.setData({
+				showCodeBox: true
+			})
+			// jj-2021-03-12梨花
+			bxPoint("changxue_invite_buy", {
+				remmend_id: this.data.superiorDistributeUserId
+			}, false)
+		} else {
+			this.setData({
+				didShowAuth: true
+			})
+		}
 	},
 	// 关闭邀请码购买弹窗
 	closeCodeBox() {
