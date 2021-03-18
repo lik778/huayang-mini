@@ -465,12 +465,12 @@ Page({
 		if (!superiorId) return
 		let userData = getLocalStorage(GLOBAL_KEY.accountInfo)
 		let snowId = userData ? JSON.parse(userData).snow_id : ''
-		if (Number(superiorId) === 0) {
-			this.setData({
-				superiorDistributeUserId: superiorId
-			})
-			return
-		}
+		// if (Number(superiorId) === 0) {
+		// 	this.setData({
+		// 		superiorDistributeUserId: superiorId
+		// 	})
+		// 	return
+		// }
 		if (String(snowId) !== String(superiorId)) {
 			getPartnerInfo({
 				user_snow_id: superiorId
