@@ -485,6 +485,8 @@ Page({
       })
     })
 
+    
+
     if (hasUserInfo() && !hasAccountInfo()) {
       // 有微信信息没有手机号信息
       let info = JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo))
