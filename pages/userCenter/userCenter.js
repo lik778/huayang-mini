@@ -286,6 +286,17 @@ Page({
         })
         resolve()
       }).catch((err) => {
+        if (err === -2) {
+          setTimeout(() => {
+            this.setData({
+              isPartner: false,
+              nodata: true,
+              userInfo: null,
+              cardBtnText: "授权登录",
+            })
+          }, 1000)
+          return
+        }
         reject(err)
       })
     })
@@ -485,7 +496,6 @@ Page({
       })
     })
 
-    
 
     if (hasUserInfo() && !hasAccountInfo()) {
       // 有微信信息没有手机号信息
