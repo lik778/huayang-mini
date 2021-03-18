@@ -1,6 +1,11 @@
 import bxPoint from "../../utils/bxPoint"
-import { getLocalStorage } from "../../utils/util"
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  getLocalStorage,
+  isIphoneXRSMax
+} from "../../utils/util"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 
 Component({
   /**

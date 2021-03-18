@@ -465,7 +465,6 @@ Page({
 		if (!superiorId) return
 		let userData = getLocalStorage(GLOBAL_KEY.accountInfo)
 		let snowId = userData ? JSON.parse(userData).snow_id : ''
-		console.log(superiorId)
 		if (Number(superiorId) === 0) {
 			this.setData({
 				superiorDistributeUserId: superiorId
