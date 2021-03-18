@@ -1,11 +1,16 @@
 // subCourse/noAuthWebview/noAuthWebview.js
+import {
+  hasAccountInfo
+} from "../../utils/util"
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    link: ""
+    link: "",
+    needAuthMsg: '',
+    changeTitle: false
   },
 
   /**
@@ -13,9 +18,23 @@ Page({
    */
   onLoad: function (options) {
     let {
-      link
+      link,
+      needAuthMsg = false
     } = options
     link = decodeURIComponent(link)
+    console.log(needAuthMsg)
+    if (needAuthMsg) {
+      let hasLogin = hasAccountInfo() ? true : ''
+      link = link + '&login=' + hasLogin
+      this.setData({
+        needAuthMsg: needAuthMsg
+      })
+    }
+    if (link.indexOf('huayangDouyinCps') !== -1) {
+      this.setData({
+        changeTitle: true
+      })
+    }
     console.log(link)
     this.setData({
       link
@@ -69,5 +88,11 @@ Page({
    */
   onShareAppMessage: function () {
 
+    let path = this.data.needAuthMsg ? `/subCourse/noAuthWebview/noAuthWebview?link=${encodeURIComponent(this.data.link)}&login=${this.data.needAuthMsg}` : `/subCourse/noAuthWebview/noAuthWebview?link=${encodeURIComponent(this.data.link)}`
+    let title = this.data.changeTitle ? '花样大学精品课程包' : ''
+    return {
+      title: title,
+      path: path
+    }
   }
 })

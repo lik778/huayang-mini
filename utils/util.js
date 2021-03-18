@@ -1,9 +1,21 @@
 import md5 from 'md5'
-import { GLOBAL_KEY, ROOT_URL, URL, WeChatLiveStatus } from '../lib/config'
-import { createOrder } from "../api/mine/payVip"
-import { getWatchLiveAuth, statisticsWatchNo } from "../api/live/course"
+import {
+	GLOBAL_KEY,
+	ROOT_URL,
+	URL,
+	WeChatLiveStatus
+} from '../lib/config'
+import {
+	createOrder
+} from "../api/mine/payVip"
+import {
+	getWatchLiveAuth,
+	statisticsWatchNo
+} from "../api/live/course"
 import request from "../lib/request"
-import { getUserInfo } from "../api/mine/index"
+import {
+	getUserInfo
+} from "../api/mine/index"
 
 const livePlayer = requirePlugin('live-player-plugin')
 
@@ -62,7 +74,10 @@ export const payCourse = function ({
 }
 
 // 购买花样畅学卡
-export const payFluentCard = function ({id, name}) {
+export const payFluentCard = function ({
+	id,
+	name
+}) {
 	// 调用获取支付凭证
 	let getPaySignParams = {
 		open_id: getLocalStorage(GLOBAL_KEY.openId),
@@ -72,7 +87,10 @@ export const payFluentCard = function ({id, name}) {
 	}
 	let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo" //商户key
 	return new Promise((resolve, reject) => {
-		request._post(URL.getPaySign, getPaySignParams).then(({data,code}) => {
+		request._post(URL.getPaySign, getPaySignParams).then(({
+			data,
+			code
+		}) => {
 			if (code === 0) {
 				requestPayment({
 					prepay_id: data,
@@ -298,6 +316,7 @@ export const hasAccountInfo = function () {
  * @returns {Promise<unknown[]>}
  */
 export const getSchedule = async function (roomIds = []) {
+	let delayTimes = 3 * 60 * 1000
 	// 课程ID去重
 	roomIds = Array.from(new Set(roomIds))
 	let scheduleData = getLocalStorage(GLOBAL_KEY.schedule) ? JSON.parse(getLocalStorage(GLOBAL_KEY.schedule) || "") : []
@@ -312,7 +331,7 @@ export const getSchedule = async function (roomIds = []) {
 			scheduleData.push({
 				roomId: roomId,
 				liveStatus: WeChatLiveStatus[liveStatus],
-				timestamp: +new Date() + 5 * 60 * 1000
+				timestamp: +new Date() + delayTimes
 			})
 		} else {
 			let targetRoomId = target.roomId
@@ -327,7 +346,7 @@ export const getSchedule = async function (roomIds = []) {
 				} = await queryLiveStatus(targetRoomId)
 
 				target.liveStatus = WeChatLiveStatus[liveStatus]
-				target.timestamp = +new Date() + 5 * 60 * 1000
+				target.timestamp = +new Date() + delayTimes
 			}
 		}
 	}

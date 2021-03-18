@@ -1,7 +1,7 @@
 {
   "plugins": {
     "live-player-plugin": {
-      "version": "1.2.8",
+      "version": "1.2.10",
       "provider": "wx2b03c6e691cd7370"
     }
   },
@@ -61,7 +61,8 @@
         "convertCash/convertCash",
         "distributeRecord/distributeRecord",
         "fluentCardCallback/fluentCardCallback",
-        "wvDistributeApply/wvDistributeApply"
+        "wvDistributeApply/wvDistributeApply",
+        "cardWithdraw/cardWithdraw"
       ]
     },
     {
@@ -105,7 +106,9 @@
         "compositeTask/compositeTask",
         "indexTask/indexTask",
         "videoCourseDetail/videoCourse",
-        "cooperationPage/cooperationPage"
+        "cooperationPage/cooperationPage",
+        "cps/cps",
+        "liveback/liveback"
       ]
     },
     {

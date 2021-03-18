@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText":"花样大学",
+  "usingComponents": {
+    "authModule": "../../components/auth/auth"
+  }
+}

@@ -1,0 +1,220 @@
+@import "../../assets/css/common.wxss";
+
+.live-back {
+    margin: 40rpx 30rpx;
+}
+
+.top {
+    margin-bottom: 80rpx;
+}
+
+.title {
+    margin-bottom: 40rpx;
+    font: 500 52rpx/52rpx PingFangSC;
+}
+
+.course-item {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    margin-bottom: 40rpx;
+}
+
+.course-item:active {
+    opacity: 0.9;
+}
+
+.course-image {
+    width: 166rpx;
+    height: 220rpx;
+    font-size: 0;
+    border-radius: 8rpx;
+    margin-right: 24rpx;
+    vertical-align: bottom;
+}
+
+.course-logo {
+    position: relative;
+}
+
+.course-logo-icon {
+    position: absolute;
+    right: 24rpx;
+    top: 0;
+    width: 52rpx;
+    height: 30rpx;
+    border-top-right-radius: 8rpx;
+}
+
+.course-logo-icon-one {
+    width: 32rpx;
+}
+
+.course-info {
+    width: calc(100% - 190rpx);
+    height: 220rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.course-main-title {
+    font-size: 32rpx;
+    font-family: PingFangSC-Medium, PingFang SC, SourceHanSansCN-Regular, SourceHanSansCN;
+    font-weight: 500;
+    color: #000000;
+    line-height: 32rpx;
+    padding-top: 6rpx;
+    padding-bottom: 20rpx;
+}
+
+.course-sub-title {
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #000000;
+    line-height: 28rpx;
+    height: 28rpx;
+}
+
+.course-teacher-desc {
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.6);
+    line-height: 28rpx;
+    padding-top: 20rpx;
+}
+
+.course-item-bottom-module {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.course-item-bottom-module-left-dis {}
+
+.course-item-bottom-module-right {
+    font: 24rpx/24rpx PingFangSC;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.course-item-bottom-module-left-price {
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.6);
+    line-height: 28rpx;
+    text-decoration: line-through;
+    padding-left: 10rpx;
+}
+
+.course-item-bottom-module-left-dis {
+    font-size: 32rpx;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 600;
+    color: #CC0000;
+    line-height: 32rpx;
+}
+
+.course-item-bottom-module-left-one {
+    font-size: 32rpx;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 600;
+    color: #CC0000;
+    line-height: 32rpx;
+}
+
+.course-item-bottom-module-left-two {
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.6);
+    padding-left: 10rpx;
+    line-height: 28rpx;
+}
+
+.course-item-more-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 690rpx;
+    height: 88rpx;
+    margin: 40rpx auto 80rpx;
+    border-radius: 999rpx;
+    border: 1rpx solid black;
+    font: 500 36rpx/36rpx PingFangSC;
+}
+.course-item-more-btn:active {
+    opacity: 0.9;
+}
+
+.live-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.live-list .status .status-dot {
+    width: 12rpx;
+    height: 12rpx;
+}
+
+.live-list .status .status-text {
+    font-size: 28rpx;
+}
+
+.live-item {
+    width: calc(50% - 8rpx);
+    margin-bottom: 32rpx;
+}
+
+.live-cover {
+    position: relative;
+    overflow: hidden;
+    height: 420rpx;
+    background-position: center;
+    background-size: cover;
+    border-radius: 16rpx 16rpx 6rpx 6rpx;
+}
+
+.status {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6rpx 20rpx;
+    border-radius: 16rpx 0 16rpx 0;
+    background: rgb(255, 68, 51);
+    color: rgb(255, 255, 255);
+}
+
+.status.disabled {
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(17, 17, 17, .6);
+}
+
+.status .status-dot {
+    width: 16rpx;
+    height: 16rpx;
+    border-radius: 915rpx;
+    background: rgb(255, 187, 17);
+}
+
+.status .status-dot.disabled {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.status .status-text {
+    margin-left: 8rpx;
+    font-size: 28rpx;
+    font-weight: 400;
+}
+
+.live-title {
+    margin-top: 16rpx;
+    font: 500 36rpx/50rpx PingFangSC;
+}

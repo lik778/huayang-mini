@@ -82,15 +82,8 @@ Component({
   },
   pageLifetimes: {
     show: function () {
-      let {
-        screenHeight,
-        safeArea: {
-          bottom
-        }
-      } = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
-      this.setData({
-        safePageSize: isIphoneXRSMax() ? 40 : 0
-      })
+      let {screenHeight, safeArea: { bottom }} = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
+      this.setData({safePageSize: screenHeight - bottom})
     }
   }
 })

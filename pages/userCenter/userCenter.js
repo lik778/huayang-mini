@@ -1,6 +1,12 @@
-import { FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
+import {
+  FluentLearnUserType,
+  GLOBAL_KEY
+} from "../../lib/config"
 import dayjs from "dayjs"
-import { getFindBanner, getPhoneNumber } from "../../api/course/index"
+import {
+  getFindBanner,
+  getPhoneNumber
+} from "../../api/course/index"
 import {
   getFluentCardInfo,
   getFluentDistributeGuide,
@@ -19,11 +25,17 @@ import {
   splitTargetNoString
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
-import { getTaskEntranceStatus } from "../../api/task/index"
-import { getYouZanAppId } from "../../api/mall/index"
+import {
+  getTaskEntranceStatus
+} from "../../api/task/index"
+import {
+  getYouZanAppId
+} from "../../api/mall/index"
 
-const Level = [
-  {
+const Level = [{
+    label: "准合伙人",
+    value: 0,
+  }, {
     label: "初级合伙人",
     value: 1,
   },
@@ -67,15 +79,22 @@ Page({
     partnerInfo: null, // 合伙人信息
     isPartner: false, // 当前用户是否是合伙人
     didShowContact: false,
+    showMoneyNotice: false,
+    showMoneyNoticeTop: '',
+    changeMoneyNoticeClass: true
   },
   onCloseContactModal() {
-    this.setData({didShowContact: false})
+    this.setData({
+      didShowContact: false
+    })
   },
   /**
    * 指导按钮点击事件
    */
   onGuideBtnTap() {
-    this.setData({didShowContact: true})
+    this.setData({
+      didShowContact: true
+    })
     bxPoint("join_chat", {})
   },
   /**
@@ -90,18 +109,29 @@ Page({
    * 跳转到提现页
    */
   goToConvertCashPage() {
-    bxPoint("mine_finalamount", {mine_finalamount: $notNull(this.data.userInfo) ? this.data.userInfo.amount : 0}, false)
+    bxPoint("mine_finalamount", {
+      mine_finalamount: $notNull(this.data.userInfo) ? this.data.userInfo.amount : 0
+    }, false)
     if (!hasUserInfo() || !hasAccountInfo()) {
-      return this.setData({didShowAuth: true})
+      return this.setData({
+        didShowAuth: true
+      })
     }
-    wx.navigateTo({url: "/mine/convertCash/convertCash"})
+    wx.navigateTo({
+      url: "/mine/convertCash/convertCash"
+    })
   },
   /**
    * 处理广告位点击事件
    * @param e
    */
   onBannerItemTap(e) {
-    let {link, link_type, id, pic_url} = e.currentTarget.dataset.item
+    let {
+      link,
+      link_type,
+      id,
+      pic_url
+    } = e.currentTarget.dataset.item
     bxPoint("mine_banner", {
       mine_banner_id: id,
       mine_banner_src: pic_url,
@@ -110,20 +140,30 @@ Page({
     }, false)
     if (e.currentTarget.dataset.item.need_auth === 1) {
       if (!hasUserInfo() || !hasAccountInfo()) {
-        return this.setData({didShowAuth: true})
+        return this.setData({
+          didShowAuth: true
+        })
       }
     }
     if (link_type === 'youzan') {
       getYouZanAppId().then(appId => {
-        wx.navigateToMiniProgram({appId, path: link})})
+        wx.navigateToMiniProgram({
+          appId,
+          path: link
+        })
+      })
     } else {
-      wx.navigateTo({url: link})
+      wx.navigateTo({
+        url: link
+      })
     }
   },
   // 处理畅叙卡按钮点击事件
   onFluentCardTap() {
     if (!hasUserInfo() || !hasAccountInfo()) {
-      this.setData({didShowAuth: true})
+      this.setData({
+        didShowAuth: true
+      })
     } else {
       if (this.data.disHasFluentLearnUserInfo && !this.data.isFluentLearnExpired) {
         this.data.fluentLearnUserInfo && bxPoint("mine_changxue_find", {
@@ -131,10 +171,14 @@ Page({
           changxue_buy_date: this.data.fluentLearnUserInfo.created_at,
           changxue_expire_date: this.data.fluentLearnUserInfo.expire_time,
         }, false)
-        wx.navigateTo({url: "/mine/fluentLearnInfo/fluentLearnInfo"})
+        wx.navigateTo({
+          url: "/mine/fluentLearnInfo/fluentLearnInfo"
+        })
       } else {
         bxPoint("mine_changxue_buy", {}, false)
-        wx.navigateTo({url: "/mine/joinFluentLearn/joinFluentLearn"})
+        wx.navigateTo({
+          url: "/mine/joinFluentLearn/joinFluentLearn"
+        })
       }
     }
   },
@@ -237,7 +281,9 @@ Page({
         res.amount = Number((res.amount / 100).toFixed(2))
         setLocalStorage(GLOBAL_KEY.accountInfo, res)
         res.nick_name = this.handleNickname(res.nick_name)
-        this.setData({userInfo: res})
+        this.setData({
+          userInfo: res
+        })
         resolve()
       }).catch((err) => {
         reject(err)
@@ -245,8 +291,12 @@ Page({
     })
   },
   getBanner() {
-    getFindBanner({scene: 18}).then((list) => {
-      this.setData({bannerList: list})
+    getFindBanner({
+      scene: 18
+    }).then((list) => {
+      this.setData({
+        bannerList: list
+      })
     })
   },
   /**
@@ -254,14 +304,20 @@ Page({
    */
   getFluentInfo() {
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-    getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
+    getFluentCardInfo({
+      user_snow_id: accountInfo.snow_id
+    }).then(({
+      data
+    }) => {
       if ($notNull(data)) {
         // 畅学卡是否已过期
         let isFluentLearnExpired = data.status === FluentLearnUserType.deactive
 
         // 畅学卡有效的用户引导加私域
         if (!isFluentLearnExpired) {
-          getFluentDistributeGuide().then(({data}) => {
+          getFluentDistributeGuide().then(({
+            data
+          }) => {
             this.setData({
               didVisibleAuditBtn: data.status === 1,
               auditInfo: data
@@ -278,7 +334,9 @@ Page({
           cardBtnText: isFluentLearnExpired ? "立即加入" : "查看权益"
         })
       } else {
-        this.setData({cardBtnText: "立即加入"})
+        this.setData({
+          cardBtnText: "立即加入"
+        })
       }
     })
   },
@@ -308,6 +366,20 @@ Page({
     this.setData({
       didShowAuth: false
     })
+    // 获取加入学习群高度，用来判断显示余额显示
+    let userId = getLocalStorage(GLOBAL_KEY.userId) ? true : false
+    if (userId) {
+      setTimeout(() => {
+        let query = wx.createSelectorQuery();
+        query.select('.function-list').boundingClientRect()
+        query.selectViewport().scrollOffset()
+        query.exec((res) => {
+          this.setData({
+            showMoneyNoticeTop: parseInt(res[0].top) - 350,
+          })
+        })
+      }, 500)
+    }
   },
   // 我的作业
   goToTaskLaunchPage() {
@@ -357,39 +429,60 @@ Page({
   // 查询用户合伙人信息
   queryUserPartnerInfo() {
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-    getPartnerInfo({user_snow_id: accountInfo.snow_id, with_child: 1}).then(({data}) => {
+    getPartnerInfo({
+      user_snow_id: accountInfo.snow_id,
+      with_child: 1
+    }).then(({
+      data
+    }) => {
       if ($notNull(data)) {
-        let lv = Level.find(_=> _.value === +data.distribute_user.level)
+        let lv = Level.find(_ => _.value === +data.distribute_user.level)
         let partnerData = {
           firstNo: data.distribute_user.first_num,
           secondNo: data.distribute_user.second_num,
-          firstUserAvatars: $notNull(data.first_list) ? data.first_list.filter(_ => _.user).map(_=>_.user.avatar_url) : [],
-          secondUserAvatars: $notNull(data.second_list) ? data.second_list.filter(_ => _).map(_=>_.avatar_url) : [],
-          level: $notNull(lv) ? lv.label : ""
+          firstUserAvatars: $notNull(data.first_list) ? data.first_list.filter(_ => _.user).map(_ => _.user.avatar_url) : [],
+          secondUserAvatars: $notNull(data.second_list) ? data.second_list.filter(_ => _.user).map(_ => _.user.avatar_url) : [],
+          level: $notNull(lv) ? lv.label : "",
+          exclusiveCode: data.distribute_user.num,
+          distribute_user: data.distribute_user
         }
-        this.setData({partnerInfo: partnerData, isPartner: data.distribute_user.status === 2})
+        this.setData({
+          partnerInfo: partnerData,
+          isPartner: data.distribute_user.status === 2
+        })
+
       }
     })
   },
   // 跳转到分销人列表页
   goToDistributeListPage(e) {
-    wx.navigateTo({url: `/mine/distributeRecord/distributeRecord?index=${e.currentTarget.dataset.index}`})
+    wx.navigateTo({
+      url: `/mine/distributeRecord/distributeRecord?index=${e.currentTarget.dataset.index}`
+    })
   },
   // 生成海报
   generatePoster() {
     bxPoint("mine_distributer_post", {}, false)
 
     if (!hasUserInfo() || !hasAccountInfo()) {
-      return this.setData({didShowAuth: true})
+      return this.setData({
+        didShowAuth: true
+      })
     }
 
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-    wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
+    wx.navigateTo({
+      url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id
+    })
   },
   run() {
     // 检查是否展示作业秀入口
-    getTaskEntranceStatus().then(({data}) => {
-      this.setData({visibleTaskEntrance: data == 1})
+    getTaskEntranceStatus().then(({
+      data
+    }) => {
+      this.setData({
+        visibleTaskEntrance: data == 1
+      })
     })
 
     if (hasUserInfo() && !hasAccountInfo()) {
@@ -417,19 +510,82 @@ Page({
     this.calcUserCreatedTime()
 
     // 获取畅学卡文案
-    getFluentLearnInfo().then(({data}) => {
+    getFluentLearnInfo().then(({
+      data
+    }) => {
       this.setData({
         cardName: data.card_name,
         cardDesc: data.description,
       })
     })
+    // 获取加入学习群高度，用来判断显示余额显示
+    let userId = getLocalStorage(GLOBAL_KEY.userId) ? true : false
+    if (userId) {
+      setTimeout(() => {
+        let query = wx.createSelectorQuery();
+        query.select('.function-list').boundingClientRect()
+        query.selectViewport().scrollOffset()
+        query.exec((res) => {
+          this.setData({
+            showMoneyNoticeTop: parseInt(res[0].top) - 350,
+          })
+        })
+      }, 500)
+    }
   },
+
+
+  // 初始化指示图
+  initIndicatePic(type = 0) {
+    let sign = getLocalStorage("need_show_mine_sign")
+    if (type === 0) {
+      // 首次进入我的，加上标识
+      if (sign === undefined) {
+        setLocalStorage("need_show_mine_sign", true)
+      }
+    } else if (type === 1) {
+      // 成为会员首次进入我的，删除标识,显示指示图
+      if (sign === true) {
+        // 获取加入学习群高度，用来判断显示余额显示
+        this.setData({
+          showMoneyNotice: true
+        })
+        setTimeout(() => {
+          this.setData({
+            showMoneyNotice: false
+          })
+        }, 2000)
+        setLocalStorage('need_show_mine_sign', 'false')
+      }
+    }
+  },
+
+  // 关闭指示弹窗
+  closeMoneyNotice() {
+    this.setData({
+      changeMoneyNoticeClass: false
+    })
+    setTimeout(() => {
+      this.setData({
+        showMoneyNotice: false,
+        changeMoneyNoticeClass: true
+      })
+    }, 200)
+  },
+
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if (getLocalStorage("need_show_mine_sign") === undefined) {
+      this.initIndicatePic()
+    }
     let data = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
-    this.setData({statusHeight: data})
+    this.setData({
+      statusHeight: data,
+    })
+
   },
 
   /**
@@ -450,20 +606,23 @@ Page({
     }
     this.calcUserCreatedTime()
     bxPoint("applets_mine", {})
-
     this.queryContentInfo()
     this.getBanner()
     this.getNumber()
-
+    this.setData({
+      showMoneyNotice: false
+    })
 
     if (hasAccountInfo() && hasUserInfo()) {
       // 每次访问个人中心更新最新的账户数据和畅学卡信息
+
       this.getUserSingerInfo().then(() => {
         this.getFluentInfo()
       })
 
       // 检查用户合伙人状态
       this.queryUserPartnerInfo()
+
     }
   },
 
@@ -473,7 +632,9 @@ Page({
   onHide: function () {
     if (this.data.didShowContact) {
       wx.nextTick(() => {
-        this.setData({didShowContact: false})
+        this.setData({
+          didShowContact: false
+        })
       })
     }
   },
@@ -504,8 +665,15 @@ Page({
    */
   onShareAppMessage: function (res) {
     return {
-      title: '跟着花样一起变美，变自信',
+      title: '我在花样百姓，和我一起学习、游玩吧，开心每一天！',
       path: `/pages/discovery/discovery?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
+    }
+  },
+  onPageScroll(res) {
+    let userId = getLocalStorage(GLOBAL_KEY.userId) ? true : false
+    let distribute_user = this.data.partnerInfo
+    if (userId && distribute_user && distribute_user.distribute_user && distribute_user.distribute_user.status === 2 && res.scrollTop > this.data.showMoneyNoticeTop) {
+      this.initIndicatePic(1)
     }
   }
 })

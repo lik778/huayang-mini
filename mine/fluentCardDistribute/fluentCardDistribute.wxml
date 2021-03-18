@@ -13,8 +13,10 @@
             <image class="avatar" src="{{avatar}}" mode="aspectFit" />
             <view class="user-info">
                 <text class="user-name limit-one-line">我是{{nickname}}</text>
-                <text class="slogan">和我一起畅学花样大学</text>
+                <text class="slogan">和我一起加入花样大学吧!</text>
             </view>
+            <image class="comma-01" src="{{comma01}}" mode="aspectFit"></image>
+            <image class="comma-02" src="{{comma02}}" mode="aspectFit"></image>
         </view>
 
         <view class="desc-01">

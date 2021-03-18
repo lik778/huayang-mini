@@ -1,0 +1,60 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "个人中心",
+          "pathName": "pages/userCenter/userCenter",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "畅学卡售前页",
+          "pathName": "mine/joinFluentLearn/joinFluentLearn",
+          "query": "inviteIds=11466455342125056",
+          "scene": null
+        },
+        {
+          "name": "畅学卡详情页",
+          "pathName": "mine/fluentLearnInfo/fluentLearnInfo",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "畅学卡海报页",
+          "pathName": "mine/fluentCardDistribute/fluentCardDistribute",
+          "query": "inviteId=11467959679586304",
+          "scene": null
+        },
+        {
+          "name": "我的学员",
+          "pathName": "mine/distributeRecord/distributeRecord",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "畅学卡下单结果页",
+          "pathName": "mine/fluentCardCallback/fluentCardCallback",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "二级分销申请",
+          "pathName": "mine/wvDistributeApply/wvDistributeApply",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

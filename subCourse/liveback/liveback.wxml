@@ -1,0 +1,54 @@
+<view class="live-back">
+    <view class="top">
+        <view class="title">直播回看专栏</view>
+        <view class="course-item" wx:for="{{sectionList}}" wx:key="index" bindtap="navigateToVideoDetail" data-item="{{item}}">
+            <view class="course-logo">
+                <image class="course-image" src="{{item.cover_pic}}"></image>
+            </view>
+            <view class="course-info">
+                <view class="course-info-top">
+                    <view class="course-main-title limit-one-line">{{item.teacher_desc}}</view>
+                    <view class="course-sub-title limit-one-line">{{item.name}}</view>
+                    <view class="course-teacher-desc">{{item.teacher.name}} {{item.teacher.teacher_desc}}</view>
+                </view>
+                <!-- 价格+学习人数 -->
+                <view class="course-item-bottom-module">
+                    <view class='course-item-bottom-module-left'
+                          wx:if="{{item.tipsText&&!isIosPlatform&&!isFluentLearnVIP}}">
+                        <text class="course-item-bottom-module-left-dis subject-font-color">{{item.tipsText}}</text>
+                        <text class="course-item-bottom-module-left-price"
+                              wx:if='{{item.price>0}}'>¥{{item.price}}</text>
+                    </view>
+                    <view class='course-item-bottom-module-left' wx:if="{{!item.tipsText&&!isIosPlatform&&!isFluentLearnVIP}}">
+                        <text class="course-item-bottom-module-left-one">
+                            <text wx:if="{{item.didBought}}">已购</text>
+                            <text wx:else>{{item.discount_price ? '¥' + item.discount_price : '免费'}}</text>
+                        </text>
+                        <text class="course-item-bottom-module-left-two"
+                              style="text-decoration: {{item.didBought?'none':'line-through'}};">
+                            <text wx:if="{{item.didBought}}">去学习</text>
+                            <text wx:else>{{item.price > 0 ? "¥" + item.price : ""}}</text>
+                        </text>
+                    </view>
+                    <view class='course-item-bottom-module-right'>
+                        共{{item.visit_count}}人学习
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="top">
+        <view class="title">更多直播回看</view>
+        <view class="live-list">
+            <view class="live-item" bindtap="navigateToLive" data-item="{{item}}" wx:for="{{liveList}}" wx:key="index">
+                <view class="live-cover" style="background-image: url('{{item.coverPicture}}')">
+                    <view class="status disabled">
+                        <text class="status-dot disabled"></text>
+                        <text class="status-text">回看</text>
+                    </view>
+                </view>
+                <view class="live-title limit-two-line">{{item.roomTitle}}</view>
+            </view>
+        </view>
+    </view>
+</view>

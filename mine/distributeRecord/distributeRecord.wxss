@@ -1,9 +1,10 @@
 @import "../../assets/css/common.wxss";
+
 .distribute-record {
-    padding-top: 110rpx;
+    /* padding-top: 110rpx; */
     min-height: 100vh;
     box-sizing: border-box;
-    background: #F9F9F9;
+    /* background: #F9F9F9; */
 }
 
 .tabs {
@@ -44,14 +45,17 @@
 }
 
 .record {
-    padding: 50rpx 40rpx;
+    padding: 0 40rpx;
+    padding-top: 8rpx;
+    margin-bottom: 200rpx;
 }
 
 .record-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 48rpx;
+    height: 140rpx;
+    border-bottom: 1px solid #EFEFEF;
 }
 
 .info {
@@ -67,21 +71,21 @@
 
 .nickname {
     max-width: 240rpx;
-    margin: 0 12rpx;
+    margin: 0 20rpx;
     font: 32rpx/32rpx PingFangSC;
     color: black;
 }
 
 .tag {
     border-radius: 4rpx;
-    padding: 4rpx 6rpx;
+    padding: 6rpx;
     color: #834B25;
     font: 20rpx/20rpx PingFangSC;
     background: linear-gradient(90deg, #F9ECDC 0%, #EAC7A3 100%);
 }
 
 .date {
-    color: rgba(0,0,0, 0.5);
+    color: rgba(0, 0, 0, 0.5);
     font: 28rpx/36rpx PingFangSC;
 }
 
@@ -111,7 +115,7 @@
     height: 96rpx;
     border-radius: 999rpx;
     text-align: center;
-    font:  500 40rpx/96rpx PingFangSC;
+    font: 500 40rpx/96rpx PingFangSC;
     color: white;
     background: #CC0000;
 }

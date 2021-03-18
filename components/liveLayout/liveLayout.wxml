@@ -1,0 +1,20 @@
+<view class="liveLayout">
+    <view class="header">
+        <text class="title">近期直播</text>
+        <view class="tag">热</view>
+    </view>
+
+    <view class="live-list">
+        <view class="live-item" bindtap="navigateToLive" data-item="{{item}}" wx:for="{{list}}" wx:key="index">
+            <view class="live-cover" style="background-image: url('{{item.coverPicture}}')">
+                <view class="status {{item.liveStatus !== '直播中' && 'disabled'}}">
+                    <text class="status-dot {{item.liveStatus !== '直播中' && 'disabled'}}"></text>
+                    <text class="status-text">{{item.status === 2 ? '回看' : item.liveStatus}}</text>
+                </view>
+            </view>
+            <view class="live-title limit-two-line">{{item.roomName}}</view>
+        </view>
+    </view>
+
+    <view class="more" bindtap="goToLiveback">直播回看 ›</view>
+</view>

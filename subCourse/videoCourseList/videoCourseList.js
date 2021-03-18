@@ -1,4 +1,3 @@
-// subCourse/videoCourseList/videoCourseList.js
 import { getVideoTypeList, queryVideoCourseListByBuyTag } from "../../api/course/index"
 import { FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
@@ -125,11 +124,7 @@ Page({
         titleList: arr,
         keyArr: keyArr
       })
-      if (index !== '') {
-        this.changeTab(index)
-      } else {
-        this.changeTab(index)
-      }
+      this.changeTab(index)
     })
   },
   // 切换tab
