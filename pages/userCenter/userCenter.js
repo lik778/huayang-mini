@@ -539,13 +539,27 @@ Page({
     let userId = getLocalStorage(GLOBAL_KEY.userId) ? true : false
     if (userId) {
       setTimeout(() => {
+        let screenHeight = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenHeight
+        let signHeight = ''
         let query = wx.createSelectorQuery();
         query.select('.function-list').boundingClientRect()
         query.selectViewport().scrollOffset()
         query.exec((res) => {
-          this.setData({
-            showMoneyNoticeTop: parseInt(res[0].top) - 350,
-          })
+          signHeight = parseInt(res[0].top)
+          let reduceHeight = signHeight - screenHeight
+          let showMoneyNoticeTop = 0
+          if (reduceHeight < 0) {
+            let userId = getLocalStorage(GLOBAL_KEY.userId) ? true : false
+            let distribute_user = this.data.partnerInfo
+            if (userId && distribute_user && distribute_user.distribute_user && distribute_user.distribute_user.status === 2) {
+              this.initIndicatePic(1)
+            }
+          } else {
+            showMoneyNoticeTop = reduceHeight + 100
+            this.setData({
+              showMoneyNoticeTop: showMoneyNoticeTop
+            })
+          }
         })
       }, 500)
     }
