@@ -44,7 +44,7 @@ App({
 				}
 			})
 			// 开始下载更新
-			updateManage.onUpdateReady((res) => {
+			updateManage.onUpdateReady(() => {
 				wx.showModal({
 					title: "提示",
 					content: "新版本已经准备好，是否马上重启小程序？",
