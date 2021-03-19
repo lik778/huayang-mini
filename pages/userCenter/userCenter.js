@@ -382,20 +382,6 @@ Page({
     this.setData({
       didShowAuth: false
     })
-    // 获取加入学习群高度，用来判断显示余额显示
-    let userId = getLocalStorage(GLOBAL_KEY.userId) ? true : false
-    if (userId) {
-      setTimeout(() => {
-        let query = wx.createSelectorQuery();
-        query.select('.function-list').boundingClientRect()
-        query.selectViewport().scrollOffset()
-        query.exec((res) => {
-          this.setData({
-            showMoneyNoticeTop: parseInt(res[0].top) - 350,
-          })
-        })
-      }, 500)
-    }
   },
   // 我的作业
   goToTaskLaunchPage() {
@@ -466,7 +452,6 @@ Page({
           partnerInfo: partnerData,
           isPartner: data.distribute_user.status === 2
         })
-
       }
     })
   },
@@ -535,34 +520,8 @@ Page({
         cardDesc: data.description,
       })
     })
-    // 获取加入学习群高度，用来判断显示余额显示
-    let userId = getLocalStorage(GLOBAL_KEY.userId) ? true : false
-    if (userId) {
-      setTimeout(() => {
-        let screenHeight = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenHeight
-        let signHeight = ''
-        let query = wx.createSelectorQuery();
-        query.select('.function-list').boundingClientRect()
-        query.selectViewport().scrollOffset()
-        query.exec((res) => {
-          signHeight = parseInt(res[0].top)
-          let reduceHeight = signHeight - screenHeight
-          let showMoneyNoticeTop = 0
-          if (reduceHeight < 0) {
-            let userId = getLocalStorage(GLOBAL_KEY.userId) ? true : false
-            let distribute_user = this.data.partnerInfo
-            if (userId && distribute_user && distribute_user.distribute_user && distribute_user.distribute_user.status === 2) {
-              this.initIndicatePic(1)
-            }
-          } else {
-            showMoneyNoticeTop = reduceHeight + 100
-            this.setData({
-              showMoneyNoticeTop: showMoneyNoticeTop
-            })
-          }
-        })
-      }, 500)
-    }
+
+    this.calcEle()
   },
 
 
@@ -602,6 +561,38 @@ Page({
         changeMoneyNoticeClass: true
       })
     }, 200)
+  },
+
+  calcEle() {
+    // 获取加入学习群高度，用来判断显示余额显示
+    let userId = getLocalStorage(GLOBAL_KEY.userId) ? true : false
+    if (userId) {
+      setTimeout(() => {
+        let screenHeight = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenHeight
+        let signHeight = ''
+        let query = wx.createSelectorQuery();
+        query.select('.function-list').boundingClientRect()
+        query.selectViewport().scrollOffset()
+        query.exec((res) => {
+          console.error(parseInt(res[0].top), parseInt(res[1].scrollTop));
+          signHeight = parseInt(res[0].top) + parseInt(res[1].scrollTop)
+          let reduceHeight = signHeight - screenHeight
+          let showMoneyNoticeTop = 0
+          console.log(reduceHeight, signHeight, screenHeight)
+          if (reduceHeight < 0) {
+            let distribute_user = this.data.partnerInfo
+            if (userId && distribute_user && distribute_user.distribute_user && distribute_user.distribute_user.status === 2) {
+              this.initIndicatePic(1)
+            }
+          } else {
+            showMoneyNoticeTop = reduceHeight + 70
+            this.setData({
+              showMoneyNoticeTop: showMoneyNoticeTop
+            })
+          }
+        })
+      }, 500)
+    }
   },
 
 
@@ -652,7 +643,6 @@ Page({
 
       // 检查用户合伙人状态
       this.queryUserPartnerInfo()
-
     }
   },
 
