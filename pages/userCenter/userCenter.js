@@ -293,6 +293,11 @@ Page({
               nodata: true,
               userInfo: null,
               cardBtnText: "授权登录",
+              disHasFluentLearnUserInfo: false,
+              traincamp_count: 0,
+              kecheng_count: 0,
+              activity_count: 0,
+              didVisibleAuditBtn: false
             })
           }, 1000)
           return
