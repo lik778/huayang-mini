@@ -597,7 +597,6 @@ Page({
     this.setData({
       statusHeight: data,
     })
-
   },
 
   /**
