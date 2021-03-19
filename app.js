@@ -38,15 +38,15 @@ App({
 		if (wx.canIUse('getUpdateManager')) {
 			let updateManage = wx.getUpdateManager()
 			updateManage.onCheckForUpdate((res) => {
-				// 有更新
+				// 有新版本
 				if (res.hasUpdate) {
-					console.log("要更新啦")
+					console.log("您好，小程序已有新版本")
 				}
 			})
 			// 开始下载更新
 			updateManage.onUpdateReady(() => {
 				wx.showModal({
-					title: "提示",
+					title: "更新提示",
 					content: "新版本已经准备好，是否马上重启小程序？",
 					success: (res) => {
 						if (res.confirm) {
