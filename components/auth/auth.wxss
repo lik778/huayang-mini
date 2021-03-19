@@ -71,25 +71,25 @@
 
 .hidden-button {
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    width: 100%;
     background: transparent;
+    height: 96rpx;
 }
 
 .hidden-button::after {
-    border: 0 none;
+    border: none;
 }
 
 .cancel {
-    height: 40rpx;
-    width: 500rpx;
+    height: 66rpx;
+    display: flex;
+    width: 100%;
     margin: 0 auto;
-    padding: 40rpx 0;
     font: 40rpx/40rpx PingFang SC;
-    text-align: center;
     color: #9A9A9A;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30rpx;
 }
 
 .cancel:active {
@@ -101,17 +101,21 @@
         transform: scale(0);
         opacity: 0;
     }
+
     25% {
         transform: scale(0.5);
         opacity: 0.5;
     }
+
     50% {
         transform: scale(1);
         opacity: 1;
     }
+
     75% {
         transform: scale(1.05);
     }
+
     100% {
         transform: scale(1);
     }
@@ -122,10 +126,12 @@
         transform: scale(1);
         opacity: 1;
     }
+
     50% {
         transform: scale(0.5);
         opacity: 0.5;
     }
+
     100% {
         transform: scale(0);
         opacity: 0;

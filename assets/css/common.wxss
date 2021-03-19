@@ -35,3 +35,121 @@
 .subject-bg-color {
     background-color: #CC0000 !important;
 }
+
+
+/* 动画相关 */
+.sliderUpAnimation {
+    animation: sliderUpAnimate 0.3s linear;
+}
+
+.sliderDownAnimation {
+    animation: sliderDownAnimate 0.3s linear forwards !important;
+}
+
+.fadeInAnimation {
+    animation: fadeInAnimate 0.3s ease-in;
+}
+
+.fadeOutAnimation {
+    animation: fadeOutAnimate 0.3s ease-out forwards;
+}
+
+.sharkAnimation {
+    animation: shark 5s ease infinite;
+}
+
+/* 从下往上弹出 */
+@keyframes sliderUpAnimate {
+    from {
+        transform: translateY(100%);
+        opacity: 0.5;
+    }
+
+    to {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}
+
+/* 从上往下隐藏 */
+@keyframes sliderDownAnimate {
+    from {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
+
+/* 从里往外显示 */
+@keyframes fadeInAnimate {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    25% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+
+    75% {
+        transform: scale(0.9);
+        opacity: 1;
+    }
+
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
+/* 从外往里消失 */
+@keyframes fadeOutAnimate {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+
+/* 按钮忽大忽小 */
+
+
+@keyframes shark {
+    0% {
+        transform: scale(1);
+    }
+
+    4% {
+        transform: scale(1.05);
+    }
+
+    8% {
+        transform: scale(1);
+    }
+
+    12% {
+        transform: scale(1.05);
+    }
+
+    16% {
+        transform: scale(1);
+    }
+}

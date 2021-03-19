@@ -34,6 +34,9 @@
     display: flex;
     align-items: center;
     top: 190rpx;
+    color: #fff;
+    font-size: 44rpx;
+    font-weight: bold;
 }
 
 .message image {
