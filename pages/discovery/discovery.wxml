@@ -4,7 +4,8 @@
     <view class="promotion" wx:if="{{bannerList.length!==0}}">
         <!-- banner 滚动区域 -->
         <view class="swiper-box" id="swiper-box">
-            <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}" duration="{{500}}">
+            <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}"
+                duration="{{500}}">
                 <swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="joinCampFromBanner" data-item="{{item}}">
                     <view class="swiper-cover"></view>
                     <image mode="cover" src="{{item.pic_url}}"></image>
@@ -18,45 +19,16 @@
     </view>
 
     <!-- 直播 -->
-    <liveLayout wx:if="{{liveList.length > 0}}" class="limit-two-line" liveList="{{liveList}}" bind:openUserAuth="openUserAuth" />
-
-    <!-- 花样游学 -->
-    <view class="travel" wx:if="{{travelList.length > 0}}">
-        <view class="travel-layout">花样游学</view>
-        <view class="travel-item" wx:for="{{travelList}}" wx:key="index" bindtap="onTravelTap" data-item="{{item}}">
-            <swiper class="travel-cover" circular autoplay interval="{{3500 + index * 300}}" duration="{{500}}">
-                <swiper-item wx:for="{{item.covers}}" wx:for-item="coverItem" wx:key="index" bindtap="joinCampFromBanner" data-item="{{coverItem}}">
-                    <image class="travel-cover" src="{{coverItem}}" mode="aspectFill"></image>
-                </swiper-item>
-            </swiper>
-            <view class="travel-title limit-two-line">{{item.title}}</view>
-            <view class="travel-info">
-                <view class="travel-price">¥<text class="price-01">{{item.discount_price}}</text><text wx:if="{{item.price}}" class="price-02">¥{{item.price}}</text></view>
-                <view class="travel-visit-no">{{item.visit_count}}人看过</view>
-            </view>
-        </view>
-
-        <view class="more-travel" bindtap="onMoreTravelLineTap">查看更多游学路线 ›</view>
-    </view>
+    <liveLayout wx:if="{{liveList.length > 0}}" class="limit-two-line" liveList="{{liveList}}"
+        bind:openUserAuth="openUserAuth" />
 
     <!-- 今日推荐 -->
     <view class="today-recommend" wx:if="{{previewVideoLink}}" bindtap="onTodayRecommendTap">
         <view>今日推荐课程</view>
-        <video
-                id="preview-video-content"
-                class="preview-video"
-                src="{{previewVideoLink}}"
-                controls="{{false}}"
-                custom-cache="{{false}}"
-                object-fit="cover"
-                enable-play-gesture="{{false}}"
-                enable-progress-gesture="{{false}}"
-                play-btn-position="top"
-                show-center-play-btn="{{false}}"
-                show-play-btn="{{false}}"
-                autoplay="{{false}}"
-                loop="{{true}}"
-        ></video>
+        <video id="preview-video-content" class="preview-video" src="{{previewVideoLink}}" controls="{{false}}"
+            custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}"
+            enable-progress-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}"
+            show-play-btn="{{false}}" autoplay="{{false}}" loop="{{true}}"></video>
         <view class="recommend-course-title">{{todayRecommendCourse.kecheng_series.teacher_desc}}</view>
         <view class="recommend-course-info">
             <view class="recommend-course-info-title limit-one-line">{{todayRecommendCourse.kecheng_series.name}}</view>
@@ -65,8 +37,29 @@
     </view>
 
     <!-- 精品课程 -->
-    <bestCourseLayout wx:if="{{courseList.length > 0}}" courseList="{{courseList}}"/>
+    <bestCourseLayout wx:if="{{courseList.length > 0}}" courseList="{{courseList}}" />
 
+    <!-- 花样游学 -->
+    <view class="travel" wx:if="{{travelList.length > 0}}">
+        <view class="travel-layout">花样游学</view>
+        <view class="travel-item" wx:for="{{travelList}}" wx:key="index" bindtap="onTravelTap" data-item="{{item}}">
+            <swiper class="travel-cover" circular autoplay interval="{{3500 + index * 300}}" duration="{{500}}">
+                <swiper-item wx:for="{{item.covers}}" wx:for-item="coverItem" wx:key="index"
+                    bindtap="joinCampFromBanner" data-item="{{coverItem}}">
+                    <image class="travel-cover" src="{{coverItem}}" mode="aspectFill"></image>
+                </swiper-item>
+            </swiper>
+            <view class="travel-title limit-two-line">{{item.title}}</view>
+            <view class="travel-info">
+                <view class="travel-price">¥<text class="price-01">{{item.discount_price}}</text><text
+                        wx:if="{{item.price}}" class="price-02">¥{{item.price}}</text></view>
+                <view class="travel-visit-no">{{item.visit_count}}人看过</view>
+            </view>
+        </view>
+
+        <view class="more-travel" bindtap="onMoreTravelLineTap">查看更多游学路线 ›</view>
+    </view>
+    
     <!-- 分隔 -->
     <view class="separate-line"></view>
 
@@ -77,7 +70,7 @@
             <view class="competition-title">大赛</view>
             <view class="competition-list">
                 <view class="competition-item" bindtap="toModelCompetition" data-item='{{item}}'
-                      wx:for="{{competitionBannerList}}" wx:key="index">
+                    wx:for="{{competitionBannerList}}" wx:key="index">
                     <image mode="aspectFill" src="{{item.pic_url}}"></image>
                     <view class="competition-item-title">{{item.title}}</view>
                 </view>
