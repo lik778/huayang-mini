@@ -27,8 +27,9 @@ Page({
     this.setData({
       didShowAuth: false
     })
+    // console.log(this.data.cpsData)
     wx.reLaunch({
-      url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.url}&login=''&pay=0`,
+      url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.noAuthUrl}&login=''&pay=0`,
     })
   },
 
@@ -63,13 +64,13 @@ Page({
         } else {
           let data = hasAccountInfo() ? true : ''
           wx.reLaunch({
-            url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.url}${encodeURIComponent(`${data}&pay=0`)}`,
+            url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.noAuthUrl}${encodeURIComponent(`${data}&pay=0`)}`,
           })
         }
       }).catch(() => {
         let data = hasAccountInfo() ? true : ''
         wx.reLaunch({
-          url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.url}${encodeURIComponent(`${data}&pay=0`)}`,
+          url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.noAuthUrl}${encodeURIComponent(`${data}&pay=0`)}`,
         })
       })
     })
