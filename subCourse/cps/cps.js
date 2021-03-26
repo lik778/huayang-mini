@@ -27,7 +27,6 @@ Page({
     this.setData({
       didShowAuth: false
     })
-    // console.log(this.data.cpsData)
     wx.reLaunch({
       url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.noAuthUrl}&login=''&pay=0`,
     })
