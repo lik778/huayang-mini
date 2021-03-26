@@ -25,13 +25,13 @@
         <view class="travel-layout">花样游学</view>
         <view class="travel-item" wx:for="{{travelList}}" wx:key="index" bindtap="onTravelTap" data-item="{{item}}">
             <swiper class="travel-cover" circular autoplay interval="{{3500 + index * 300}}" duration="{{500}}">
-                <swiper-item wx:for="{{item.covers}}" wx:for-item="coverItem" wx:key="index" bindtap="joinCampFromBanner" data-item="{{coverItem}}">
+                <swiper-item wx:for="{{item.covers}}" wx:for-item="coverItem" wx:key="index" data-item="{{coverItem}}">
                     <image class="travel-cover" src="{{coverItem}}" mode="aspectFill"></image>
                 </swiper-item>
             </swiper>
             <view class="travel-title limit-two-line">{{item.title}}</view>
             <view class="travel-info">
-                <view class="travel-price">¥<text class="price-01">{{item.discount_price}}</text><text wx:if="{{item.price}}" class="price-02">¥{{item.price}}</text></view>
+                <view class="travel-price">¥<text class="price-01">{{item.discount_price / 100}}</text><text wx:if="{{item.price}}" class="price-02">¥{{item.price / 100}}</text></view>
                 <view class="travel-visit-no">{{item.visit_count}}人看过</view>
             </view>
         </view>
