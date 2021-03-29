@@ -20,7 +20,7 @@
       </view>
       <view class="icon" wx:if="{{!inPlaying||onlySelected}}">
         <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610091513AyQCFg.jpg" class="video-player-lock"
-          wx:if='{{videoPlayerSrc===""}}'>
+          wx:if='{{videoPlayerSrc===""}}' bindtap="{{buttonType===1?'login':''}}">
         </image>
 
         <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610084939NUbObx.jpg" class="video-player-play"
@@ -213,7 +213,8 @@
       </view>
     </view>
     <!-- 未登录 -->
-    <view class="pay-button-no-login subject-bg-color pay-button-common" bindtap="login" wx:if="{{buttonType===1}}">登录授权</view>
+    <view class="pay-button-no-login subject-bg-color pay-button-common" bindtap="login" wx:if="{{buttonType===1}}">登录授权
+    </view>
     <!-- 邀请折扣 -->
     <view class="pay-button-invite" wx:if='{{buttonType===7||buttonType===8}}'>
       <view class="pay-button-invite-one" wx:if='{{buttonType===7}}'>
