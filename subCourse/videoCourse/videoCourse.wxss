@@ -487,7 +487,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 40;
+  z-index: 42;
 }
 
 .pay-button-common {
@@ -719,7 +719,7 @@
 .pay-button-invite-two-right view:first-child {
   margin-bottom: 14rpx;
   font: 500 28rpx/28rpx PingFangSC;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .pay-button-invite-two-right view:last-child {
@@ -792,9 +792,66 @@
 .pay-or-fluent-one-right-txt01 {
   margin-bottom: 14rpx;
   font: 500 24rpx/24rpx PingFangSC;
-  color: rgba(255,255,255, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .pay-or-fluent-one-right-txt02 {
   font: 500 32rpx/32rpx PingFangSC;
+}
+
+
+/* 登录提示 */
+.auth-notice-module {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.56);
+  z-index: 41;
+}
+
+.auth-notice-cover {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.56);
+  z-index: 41;
+}
+
+.auth-notice-box {
+  position: relative;
+  width: 100%;
+  z-index: 43;
+  height: 100%;
+}
+
+.auth-notice-desc {
+  z-index: 41;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 276rpx;
+  color: #fff;
+  font-size: 18px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 30px;
+  width: 100%;
+  text-align: center;
+}
+
+.auth-notice-icon {
+  position: absolute;
+  bottom: 168rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.auth-notice-icon image {
+  width: 16rpx;
+  height: 94rpx;
 }
