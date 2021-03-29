@@ -102,10 +102,9 @@
           "scene": null
         },
         {
-          "id": 13,
           "name": "subCourse/campDetail/campDetail",
           "pathName": "subCourse/campDetail/campDetail",
-          "query": "id=21",
+          "query": "id=5",
           "scene": null
         },
         {
@@ -270,7 +269,7 @@
         {
           "name": "邀请好友看课",
           "pathName": "subCourse/inviteFriendStudy/inviteFriendStudy",
-          "query": "inviteId=74",
+          "query": "inviteId=5",
           "scene": null
         },
         {
