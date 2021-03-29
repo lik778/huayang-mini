@@ -196,5 +196,6 @@
 		<view class="money-notice-bg" catchtap="closeMoneyNotice">
 		</view>
 	</view>
-
+	<!-- 加入俱乐部会员弹窗 -->
+	<clubVipAlert show="{{showClubVipAlert}}" bind:closeClubVipAlert='closeClubVipAlert'></clubVipAlert>
 </view>

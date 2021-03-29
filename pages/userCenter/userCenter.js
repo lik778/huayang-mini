@@ -81,8 +81,16 @@ Page({
     didShowContact: false,
     showMoneyNotice: false,
     showMoneyNoticeTop: '',
-    changeMoneyNoticeClass: true
+    changeMoneyNoticeClass: true,
+    showClubVipAlert: false
   },
+  // 关闭加入花样俱乐部弹窗
+  closeClubVipAlert() {
+    this.setData({
+      showClubVipAlert: false
+    })
+  },
+
   onCloseContactModal() {
     this.setData({
       didShowContact: false
@@ -281,6 +289,18 @@ Page({
         res.amount = Number((res.amount / 100).toFixed(2))
         setLocalStorage(GLOBAL_KEY.accountInfo, res)
         res.nick_name = this.handleNickname(res.nick_name)
+        // 判断是否成为俱乐部会员，未成为则跳转填写信息
+        if (!$notNull(res.student)) {
+          let hasShowClubVipAlertSign = getLocalStorage('hy_daxue_show_club_vip_alert_sign')
+          let threeDayTime = 259200 //s
+          let threeDayLaterTimeStr = parseInt(new Date().getTime() / 1000) + threeDayTime
+          if (!hasShowClubVipAlertSign) {
+            this.setData({
+              showClubVipAlert: true
+            })
+            setLocalStorage("hy_daxue_show_club_vip_alert_sign", threeDayLaterTimeStr)
+          }
+        }
         this.setData({
           userInfo: res
         })
@@ -597,6 +617,11 @@ Page({
   onLoad: function (options) {
     if (getLocalStorage("need_show_mine_sign") === undefined) {
       this.initIndicatePic()
+    }
+    let nowTimeStr = parseInt(new Date().getTime() / 1000)
+    let threeDayLaterTimeStr = getLocalStorage('hy_daxue_show_club_vip_alert_sign')
+    if (threeDayLaterTimeStr && nowTimeStr > threeDayLaterTimeStr) {
+      wx.removeStorageSync('hy_daxue_show_club_vip_alert_sign')
     }
     let data = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
     this.setData({
