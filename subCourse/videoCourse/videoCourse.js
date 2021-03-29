@@ -575,12 +575,12 @@ Page({
     let type = this.data.videoCourseData.series_detail.category
     let index = type === 'quality_life' ? 3 : type === 'fitness' ? 1 : type === 'fashion' ? 2 : 0
     if (getCurrentPages().length > 6) {
-      wx.reLaunch({
-        url: `/subCourse/videoCourseList/videoCourseList?index=${index}`,
+      wx.switchTab({
+        url: `/pages/practice/practice?index=${index}`,
       })
     } else {
-      wx.navigateTo({
-        url: `/subCourse/videoCourseList/videoCourseList?index=${index}`,
+      wx.switchTab({
+        url: `/pages/practice/practice?index=${index}`,
       })
     }
   },
