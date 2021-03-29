@@ -35,7 +35,7 @@ Component({
       let link = encodeURIComponent(`${rootUrl}/#/home/huayangClubForm?id=${userId}`)
       this.triggerEvent("closeClubVipAlert")
       wx.navigateTo({
-        url: `/pages/commonWebview/commonWebview?link=${link}`,
+        url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
       })
     },
     // 关闭
