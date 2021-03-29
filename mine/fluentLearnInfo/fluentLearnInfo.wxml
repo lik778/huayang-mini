@@ -29,9 +29,9 @@
         <image class="cover-image" src="{{item.coverImg}}" mode="aspectFill"></image>
         <view class="course-info">
             <view>
-                <view class="course-name limit-two-line">{{item.name}}</view>
-                <view class="course-desc limit-two-line">{{item.desc}}</view>
-                <view class="course-teacher-info">{{item.teacherTxt}}</view>
+                <view class="course-name limit-one-line">{{item.name}}</view>
+                <view class="course-desc limit-one-line">{{item.desc}}</view>
+                <view class="course-teacher-info limit-one-line">{{item.teacherTxt}}</view>
             </view>
             <view class="visited">
                 <text class="learn">去学习</text>

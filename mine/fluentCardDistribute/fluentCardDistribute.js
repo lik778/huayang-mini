@@ -52,19 +52,19 @@ Page({
 		],
 		permissionList: [
 			{
-				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612507927CdmYow.jpg",
+				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1616658662RsHOdU.jpg",
 				text01: "线上课程",
-				text02: "全部免费"
+				text02: "免费观看"
 			},
 			{
-				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612507932rEqXBf.jpg",
-				text01: "线下课程",
-				text02: "优惠礼券"
+				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1616658681tBniup.jpg",
+				text01: "全年专属",
+				text02: "伴读服务"
 			},
 			{
-				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612507936gtNffM.jpg",
-				text01: "线下活动",
-				text02: "免费特权"
+				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1616658626RNwkMj.jpg",
+				text01: "每月学员",
+				text02: "专属福利"
 			}
 		],
 		qrcode: "",

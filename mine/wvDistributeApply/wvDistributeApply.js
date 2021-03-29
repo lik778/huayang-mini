@@ -81,10 +81,10 @@ Page({
 		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
 
 		// 畅学卡检查
-		let fluentCardInfo = await getFluentCardInfo({user_snow_id: accountInfo.snow_id})
-		if (!$notNull(fluentCardInfo.data)) {
-			return this.setData({tipMsg: "您还没有花样大学畅学卡", didShowFluentLearnModal: true, backUrl: "/mine/joinFluentLearn/joinFluentLearn"})
-		}
+		// let fluentCardInfo = await getFluentCardInfo({user_snow_id: accountInfo.snow_id})
+		// if (!$notNull(fluentCardInfo.data)) {
+		// 	return this.setData({tipMsg: "您还没有花样大学畅学卡", didShowFluentLearnModal: true, backUrl: "/mine/joinFluentLearn/joinFluentLearn"})
+		// }
 
 		// 合伙人检查
 		let partnerInfo = await getPartnerInfo({user_snow_id: accountInfo.snow_id})

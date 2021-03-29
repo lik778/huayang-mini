@@ -1,9 +1,21 @@
 import md5 from 'md5'
-import { GLOBAL_KEY, ROOT_URL, URL, WeChatLiveStatus } from '../lib/config'
-import { createOrder } from "../api/mine/payVip"
-import { getWatchLiveAuth, statisticsWatchNo } from "../api/live/course"
+import {
+	GLOBAL_KEY,
+	ROOT_URL,
+	URL,
+	WeChatLiveStatus
+} from '../lib/config'
+import {
+	createOrder
+} from "../api/mine/payVip"
+import {
+	getWatchLiveAuth,
+	statisticsWatchNo
+} from "../api/live/course"
 import request from "../lib/request"
-import { getUserInfo } from "../api/mine/index"
+import {
+	getUserInfo
+} from "../api/mine/index"
 
 const livePlayer = requirePlugin('live-player-plugin')
 
@@ -62,7 +74,10 @@ export const payCourse = function ({
 }
 
 // 购买花样畅学卡
-export const payFluentCard = function ({id, name}) {
+export const payFluentCard = function ({
+	id,
+	name
+}) {
 	// 调用获取支付凭证
 	let getPaySignParams = {
 		open_id: getLocalStorage(GLOBAL_KEY.openId),
@@ -72,7 +87,10 @@ export const payFluentCard = function ({id, name}) {
 	}
 	let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo" //商户key
 	return new Promise((resolve, reject) => {
-		request._post(URL.getPaySign, getPaySignParams).then(({data,code}) => {
+		request._post(URL.getPaySign, getPaySignParams).then(({
+			data,
+			code
+		}) => {
 			if (code === 0) {
 				requestPayment({
 					prepay_id: data,

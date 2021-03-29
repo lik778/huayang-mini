@@ -1,5 +1,7 @@
 @import "../../assets/css/common.wxss";
+
 .user-center {
+    position: relative;
     background: #F9F9F9;
     padding-bottom: 250rpx;
     min-height: 100vh;
@@ -14,7 +16,7 @@
 }
 
 .banner.partner {
-    height: 904rpx;
+    height: 828rpx;
 }
 
 .banner-bg {
@@ -23,7 +25,7 @@
 }
 
 .banner-bg.partner {
-    height: 904rpx;
+    height: 828rpx;
 }
 
 .message {
@@ -32,6 +34,9 @@
     display: flex;
     align-items: center;
     top: 190rpx;
+    color: #fff;
+    font-size: 44rpx;
+    font-weight: bold;
 }
 
 .message image {
@@ -60,19 +65,26 @@
 }
 
 .message .name {
-    font: 600 52rpx/74rpx PingFangSC;
-    color: rgba(255, 255, 255, 1);
+    font-size: 52rpx;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 52rpx;
 }
 
 .message .lifetime {
-    margin-top: 10rpx;
-    font: 36rpx/44rpx Helvetica;
-    color: white;
+    margin-top: 24rpx;
+    color: #EECDAB;
+    font-size: 36rpx;
+    font-family: PingFangSC-Light, PingFang SC;
+    font-weight: 300;
+    color: #EECDAB;
+    line-height: 36rpx;
 }
 
 .first-distribute {
     position: absolute;
-    top: 380rpx;
+    top: 384rpx;
     width: 100vw;
     box-sizing: border-box;
     padding: 0 40rpx;
@@ -81,6 +93,10 @@
     align-items: center;
     font: 32rpx/32rpx PingFangSC;
     color: white;
+}
+
+.first-distribute text text {
+    padding-left: 12rpx;
 }
 
 .first-distribute.second-distribute {
@@ -100,7 +116,11 @@
 }
 
 .more-list {
-    font: 32rpx/32rpx PingFangSC;
+    font-size: 32rpx;
+    font-family: PingFangSC-Light, PingFang SC;
+    font-weight: 300;
+    color: rgba(250, 250, 250, 0.7);
+    line-height: 32rpx;
 }
 
 .distribute-btn {
@@ -115,6 +135,54 @@
     color: #834B25;
     background: #CC0000 linear-gradient(90deg, #FBD8B3 0%, #ECCBA9 100%);
     animation: flashing 4s ease infinite;
+}
+
+/* 专属邀请码 */
+.invite-self-code {
+    position: absolute;
+    top: 480rpx;
+    width: 100vw;
+    box-sizing: border-box;
+    padding: 0 40rpx;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.invite-self-code-left {
+    font-size: 32rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #FFFFFF;
+    line-height: 32rpx;
+}
+
+.invite-self-code text {
+    font-size: 48rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #EECDAB;
+    line-height: 48rpx;
+}
+
+.invite-self-code-left {
+    display: flex;
+    align-items: center;
+}
+
+.invite-self-code-right {
+    width: 288rpx;
+    height: 72rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32rpx;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #834B25;
+    background: #EECDAB;
+    border-radius: 999rpx;
 }
 
 /* 畅学卡 */
@@ -135,7 +203,7 @@
 }
 
 .vip-card.partner {
-    top: -212rpx;
+    top: -208rpx;
 }
 
 .vip-card.overdue {
@@ -369,13 +437,14 @@
     margin-right: 38rpx;
     border-bottom: 1px solid #F2F2F2;
     padding: 24rpx 0 20rpx 0;
+    position: relative;
 }
 
 .function-item:last-child {
     border: none;
 }
 
-.function-item > image {
+.function-item>image {
     width: 16rpx;
     height: 28rpx;
     vertical-align: bottom;
@@ -409,7 +478,7 @@
     font: 28rpx/40rpx PingFangSC;
 }
 
-.function-item-bottom > text {
+.function-item-bottom>text {
     font: 28rpx/28rpx PingFangSC;
     color: #CC0000;
 }
@@ -433,16 +502,167 @@
     0% {
         transform: scale(1);
     }
+
     4% {
         transform: scale(1.05);
     }
+
     8% {
         transform: scale(1);
     }
+
     12% {
         transform: scale(1.05);
     }
+
     16% {
         transform: scale(1);
+    }
+}
+
+
+/* 余额指示弹窗 */
+.money-notice-main-position {
+    position: absolute;
+    left: -20px;
+    top: 0;
+    width: calc(100vw - 30px);
+    height: 100%;
+    z-index: 11;
+    animation: slideContentUp 0.3s linear forwards;
+}
+
+.money-notice-main-position>view {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.money-notice {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.67);
+    animation: slideContentUp 0.2s linear forwards;
+}
+
+.money-notice-bg {
+    position: relative;
+    width: calc(100% - 60rpx);
+    height: 100%;
+    margin: 0 auto;
+}
+
+.money-notice-main {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    width: calc(100% - 60rpx);
+    display: flex;
+    justify-content: space-between;
+    background: #fff;
+    align-items: center;
+    padding: 30rpx;
+}
+
+.money-notice-main-left {
+    display: flex;
+    align-items: center;
+}
+
+.money-notice-main-left-icon image {
+    width: 52rpx;
+    height: 52rpx;
+    padding-right: 28rpx;
+    vertical-align: bottom;
+}
+
+.money-notice-main-left-desc-top {
+    font-size: 36rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #000000;
+    line-height: 36rpx;
+    padding-bottom: 20rpx;
+}
+
+.money-notice-main-left-desc-bottom {
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.6);
+    line-height: 28rpx;
+}
+
+.money-notice-main-left-desc-bottom text {
+    font-size: 28rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #CC0000;
+    line-height: 28rpx;
+}
+
+.money-notice-main-right image {
+    width: 12rpx;
+    height: 24rpx;
+    vertical-align: bottom;
+}
+
+.money-notice-sign {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 160rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.money-notice-sign image {
+    width: 16rpx;
+    height: 94rpx;
+    vertical-align: bottom;
+
+}
+
+.money-notice-sign view {
+    font-size: 36rpx;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #FFFFFF;
+    line-height: 60rpx;
+}
+
+.money-notice-hide {
+    animation: slideContentDown 0.3s linear forwards;
+}
+
+.money-notice-main-position-hide {
+    animation: slideContentDown 0.3s linear forwards;
+}
+
+/* 动画 */
+@keyframes slideContentUp {
+    from {
+        opacity: 0;
+        /*设置为正数则底部弹出来，负数则相反*/
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideContentDown {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
     }
 }

@@ -43,7 +43,14 @@ Component({
         bxPoint("series_homepage_visit", {}, false)
       } else if (this.data.selected === 1 && url === '/pages/userCenter/userCenter') {
         bxPoint("series_mine_visit", {}, false)
+      } else if (this.data.selected === 2 && url === '/pages/discovery/discovery') {
+        // jj-2021-03-12梨花
+        bxPoint("applets_mine_homepage", {}, false)
+      } else if (this.data.selected === 2 && url === '/pages/practice/practice') {
+        // jj-2021-03-12梨花
+        bxPoint("applets_mine_series", {}, false)
       }
+
       wx.switchTab({
         url
       })

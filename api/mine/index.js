@@ -10,7 +10,7 @@ export const getUserInfo = (params) => {
       if (code === 0) {
         resolve(data)
       } else {
-        reject()
+        reject(code)
       }
     })
   })
