@@ -1,25 +1,25 @@
 // subCourse/videoCourseDetail/videoCourseDetail.js
 import { ErrorLevel, FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import {
-	checkJoinVideoCourse,
-	checkNeedSpecialManage,
-	createFissionTask,
-	getIosCustomerLink,
-	getVideoArticleLink,
-	getVideoCourseDetail,
-	inviteFriend,
-	joinVideoCourse,
-	recordStudy
+  checkJoinVideoCourse,
+  checkNeedSpecialManage,
+  createFissionTask,
+  getIosCustomerLink,
+  getVideoArticleLink,
+  getVideoCourseDetail,
+  inviteFriend,
+  joinVideoCourse,
+  recordStudy
 } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
 import {
-	$notNull,
-	convertToChinaNum,
-	getLocalStorage,
-	hasAccountInfo,
-	hasUserInfo,
-	payCourse,
-	secondToMinute,
+  $notNull,
+  convertToChinaNum,
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  payCourse,
+  secondToMinute,
 } from "../../utils/util"
 import { collectError } from "../../api/auth/index"
 import { getFluentCardInfo, getKechengWithFluentCard } from "../../api/mine/index"
@@ -557,12 +557,12 @@ Page({
     let type = this.data.videoCourseData.series_detail.category
     let index = type === 'quality_life' ? 3 : type === 'fitness' ? 1 : type === 'fashion' ? 2 : 0
     if (getCurrentPages().length > 6) {
-      wx.reLaunch({
-        url: `/subCourse/videoCourseList/videoCourseList?index=${index}`,
+      wx.switchTab({
+        url: `/pages/practice/practice?index=${index}`,
       })
     } else {
-      wx.navigateTo({
-        url: `/subCourse/videoCourseList/videoCourseList?index=${index}`,
+      wx.switchTab({
+        url: `/pages/practice/practice?index=${index}`,
       })
     }
   },
