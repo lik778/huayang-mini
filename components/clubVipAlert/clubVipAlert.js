@@ -32,7 +32,7 @@ Component({
     join() {
       let rootUrl = baseUrl.baseUrl
       let userId = getLocalStorage(GLOBAL_KEY.userId)
-      let link = encodeURIComponent(`${rootUrl}/#/home/huayangClubForm?id=${userId}`)
+      let link = encodeURIComponent(`${rootUrl}/#/home/huayangClubForm?id=${userId}&from=daxue`)
       this.triggerEvent("closeClubVipAlert")
       wx.navigateTo({
         url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
