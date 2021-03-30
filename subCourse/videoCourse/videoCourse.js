@@ -24,6 +24,7 @@ import {
   hasUserInfo,
   payCourse,
   secondToMinute,
+  isIphoneXRSMax
 } from "../../utils/util"
 import {
   collectError
@@ -84,7 +85,8 @@ Page({
     needRecordPlayTime: false, //是否需要记录播放打点时长
     from_co_channel: false,
     special: false, //该课程是否是安卓特殊处理课程
-    showNoticeBox: true
+    showNoticeBox: true,
+    isIphoneXRSMax:isIphoneXRSMax()
   },
 
 

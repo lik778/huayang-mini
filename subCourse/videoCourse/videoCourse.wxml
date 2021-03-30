@@ -152,7 +152,7 @@
   </view>
 
   <!-- 购买按钮 -->
-  <view class="pay-button" wx:if='{{!noPayForCourse}}'>
+  <view class="pay-button" wx:if='{{!noPayForCourse}}' style="padding-bottom:{{isIphoneXRSMax?'20px':''}}">
     <!-- 原价 && 畅学卡购买 -->
     <view class="pay-or-fluent" wx:if='{{buttonType===6}}'>
       <view class="pay-or-fluent-one-left" bindtap="pay">
@@ -271,11 +271,11 @@
   <view class="auth-notice-module" bindtap="closeAuth" wx:if='{{showNoticeBox&&buttonType===1}}'>
     <view class="auth-notice-cover"></view>
     <view class="auth-notice-box">
-      <view class="auth-notice-desc">
+      <view class="auth-notice-desc" style="bottom:{{isIphoneXRSMax?'158px':'138px'}}">
         <view>请点击下方按钮</view>
         <view>登录后可观看属于您的课程</view>
       </view>
-      <view class="auth-notice-icon">
+      <view class="auth-notice-icon" style="bottom:{{isIphoneXRSMax?'104px':'84px'}}">
         <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617011944xNwDpF.jpg"></image>
       </view>
     </view>
