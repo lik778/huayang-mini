@@ -14,8 +14,9 @@
 			<view wx:else class="user-info">
 				<view class="nick-name">
 					<text class="name">{{userInfo.nick_name||userInfo.nickname}}</text>
-					<image wx:if="{{didVisibleVIPIcon}}" class="vip-tag"
-						src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612261464nXAbIu.jpg" mode="aspectFill"></image>
+					<image wx:if="{{didVisibleVIPIcon||true}}" class="vip-tag"
+						src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617084326OPjkYJ.jpg"></image>
+					<text>俱乐部会员</text>
 				</view>
 				<text class="lifetime" wx:if="{{isPartner}}">花样{{ partnerInfo.level }}</text>
 				<text class="lifetime" wx:elif="{{existNo}}">您已在花样第{{existNo}}天</text>

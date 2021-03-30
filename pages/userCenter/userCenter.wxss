@@ -58,10 +58,26 @@
 
 .message .user-info .vip-tag {
     position: absolute;
-    width: 46rpx;
-    height: 26rpx;
+    width: 32rpx;
+    height: 32rpx;
     border-radius: 0;
-    margin: 15rpx 0 0 10rpx;
+    margin: 12rpx 0 0 14rpx;
+    vertical-align: bottom;
+}
+
+.nick-name text:last-child {
+    position: absolute;
+    font-size: 24rpx;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 600;
+    color: #DEB78F;
+    line-height: 12px;
+    background: linear-gradient(90deg, #F2D6B8 0%, #CEA375 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+    margin-left: 50rpx;
+    margin-top: 16rpx;
 }
 
 .message .name {
