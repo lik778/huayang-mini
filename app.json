@@ -11,7 +11,8 @@
   "navigateToMiniProgramAppIdList": [
     "wx95fb6b5dbe8739b7",
     "wx6593cf087b7686dd",
-    "wx85d130227f745fc5"
+    "wx85d130227f745fc5",
+    "wx2ea757d51abc1f47"
   ],
   "pages": [
     "pages/discovery/discovery",
