@@ -3,8 +3,9 @@
   "navigationBarTextStyle": "white",
   "backgroundColor": "#0C0D0E",
   "usingComponents": {
-    "levelAlert":"../../components/levelAlert/levelAlert",
-    "authModule":"../../components/auth/auth",
-    "contact": "../../components/contact/contact"
+    "levelAlert": "../../components/levelAlert/levelAlert",
+    "authModule": "../../components/auth/auth",
+    "contact": "../../components/contact/contact",
+    "clubVipAlert": "../../components/clubVipAlert/clubVipAlert"
   }
 }

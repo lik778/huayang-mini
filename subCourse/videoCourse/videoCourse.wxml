@@ -20,7 +20,7 @@
       </view>
       <view class="icon" wx:if="{{!inPlaying||onlySelected}}">
         <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610091513AyQCFg.jpg" class="video-player-lock"
-          wx:if='{{videoPlayerSrc===""}}'>
+          wx:if='{{videoPlayerSrc===""}}' bindtap="{{buttonType===1?'login':''}}">
         </image>
 
         <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610084939NUbObx.jpg" class="video-player-play"
@@ -152,7 +152,7 @@
   </view>
 
   <!-- 购买按钮 -->
-  <view class="pay-button" wx:if='{{!noPayForCourse}}'>
+  <view class="pay-button" wx:if='{{!noPayForCourse}}' style="padding-bottom:{{isIphoneXRSMax?'20px':''}}">
     <!-- 原价 && 畅学卡购买 -->
     <view class="pay-or-fluent" wx:if='{{buttonType===6}}'>
       <view class="pay-or-fluent-one-left" bindtap="pay">
@@ -213,7 +213,8 @@
       </view>
     </view>
     <!-- 未登录 -->
-    <view class="pay-button-no-login subject-bg-color pay-button-common" bindtap="login" wx:if="{{buttonType===1}}">登录授权</view>
+    <view class="pay-button-no-login subject-bg-color pay-button-common" bindtap="login" wx:if="{{buttonType===1}}">登录授权
+    </view>
     <!-- 邀请折扣 -->
     <view class="pay-button-invite" wx:if='{{buttonType===7||buttonType===8}}'>
       <view class="pay-button-invite-one" wx:if='{{buttonType===7}}'>
@@ -265,4 +266,18 @@
   <!-- 授权弹窗 -->
   <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
   </authModule>
+
+  <!-- 登录授权提示 -->
+  <view class="auth-notice-module" bindtap="closeAuth" wx:if='{{showNoticeBox&&buttonType===1}}'>
+    <view class="auth-notice-cover"></view>
+    <view class="auth-notice-box">
+      <view class="auth-notice-desc" style="bottom:{{isIphoneXRSMax?'158px':'138px'}}">
+        <view>请点击下方按钮</view>
+        <view>登录后可观看属于您的课程</view>
+      </view>
+      <view class="auth-notice-icon" style="bottom:{{isIphoneXRSMax?'104px':'84px'}}">
+        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617011944xNwDpF.jpg"></image>
+      </view>
+    </view>
+  </view>
 </view>
