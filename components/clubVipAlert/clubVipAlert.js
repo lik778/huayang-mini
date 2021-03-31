@@ -21,7 +21,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-
+    showCloseAnimation: true
   },
 
   /**
@@ -40,7 +40,12 @@ Component({
     },
     // 关闭
     close() {
-      this.triggerEvent("closeClubVipAlert")
+      this.setData({
+        showCloseAnimation: false
+      })
+      setTimeout(() => {
+        this.triggerEvent("closeClubVipAlert")
+      }, 300)
     }
   }
 })

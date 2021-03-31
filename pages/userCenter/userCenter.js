@@ -295,10 +295,12 @@ Page({
           let threeDayTime = 259200 //s
           let threeDayLaterTimeStr = parseInt(new Date().getTime() / 1000) + threeDayTime
           if (!hasShowClubVipAlertSign) {
-            this.setData({
-              showClubVipAlert: true
-            })
-            setLocalStorage("hy_daxue_show_club_vip_alert_sign", threeDayLaterTimeStr)
+            setTimeout(() => {
+              this.setData({
+                showClubVipAlert: true
+              })
+              setLocalStorage("hy_daxue_show_club_vip_alert_sign", threeDayLaterTimeStr)
+            },1000)
           }
         }
         this.setData({

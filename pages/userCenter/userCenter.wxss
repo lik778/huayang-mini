@@ -65,7 +65,7 @@
     vertical-align: bottom;
 }
 
-.nick-name text:last-child {
+.nick-name .name-text {
     position: absolute;
     font-size: 24rpx;
     font-family: PingFangSC-Medium, PingFang SC;

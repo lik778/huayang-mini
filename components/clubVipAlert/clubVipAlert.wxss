@@ -1,4 +1,6 @@
 /* components/clubVipAlert/clubVipAlert.wxss */
+@import "../../assets/css/common.wxss";
+
 .container {}
 
 .bg-cover {
@@ -14,7 +16,8 @@
 .alert-box {
   position: fixed;
   left: 50%;
-  transform: translateX(-50%);
+  /* transform: translateX(-50%); */
+  margin-left: -300rpx;
   top: 28%;
   z-index: 30;
   background: #fff;

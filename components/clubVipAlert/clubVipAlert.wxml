@@ -2,7 +2,7 @@
 <view class="container">
   <view wx:if='{{show}}'>
     <view class='bg-cover' bindtap="close"></view>
-    <view class='alert-box'>
+    <view class='alert-box {{showCloseAnimation?"fadeInAnimation":"fadeOutAnimation"}}'>
       <view class="alert-module">
         <view class="top-icon">
           <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617006649CazOVv.jpg"></image>
