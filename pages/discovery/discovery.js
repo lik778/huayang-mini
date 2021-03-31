@@ -68,7 +68,7 @@ Page({
 		let travelList = await queryTravelList()
 		travelList = travelList.map(n => {
 			let t = {...n, covers: n.pics.split(",")}
-			if (!t.discount_price) {
+			if (t.discount_price <= 0) {
 				t.discount_price = t.price
 				t.price = 0
 			}
@@ -195,11 +195,14 @@ Page({
 	},
 	onTravelTap(e) {
 		let item = e.currentTarget.dataset.item
-		let path = item.buy_link
 		addTravelVisitNumber({travel_product_id: item.id})
-		getYouZanAppId().then(appId => {
-			wx.navigateToMiniProgram({appId, path})
+
+		// 跳转花样游学小程序
+		wx.navigateToMiniProgram({
+			appId: "wx2ea757d51abc1f47",
+			path: item.buy_link,
 		})
+
 		bxPoint("homepage_edu_travel_click", {
 			edu_travel_id: item.id,
 			edu_travel_name: item.name,
@@ -418,7 +421,7 @@ Page({
 	 */
 	onLoad: function (options) {
 
-		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=188`})
+		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=218`})
 
 		let {scene, invite_user_id = "", source} = options
 		// 通过小程序码进入 scene=${source}
