@@ -37,6 +37,10 @@
 }
 
 
+
+
+
+
 /* 动画相关 */
 .sliderUpAnimation {
     animation: sliderUpAnimate 0.3s linear;
@@ -47,7 +51,7 @@
 }
 
 .fadeInAnimation {
-    animation: fadeInAnimate 0.3s ease-in;
+    animation: fadeInAnimate 0.4s ease-in;
 }
 
 .fadeOutAnimation {
@@ -98,12 +102,12 @@
     }
 
     50% {
-        transform: scale(1.05);
+        transform: scale(1.01);
         opacity: 1;
     }
 
     75% {
-        transform: scale(0.9);
+        transform: scale(0.95);
         opacity: 1;
     }
 

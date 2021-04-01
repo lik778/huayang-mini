@@ -17,7 +17,7 @@ Page({
    */
   data: {
     backPath: "/pages/practice/practice",
-    ageList: ['50岁以下', '50~60岁', '60-70岁', '70岁以上'],
+    ageList: ['40～50岁', '51～60岁', '61～70岁', '其他'],
     statusList: ['在职', '退休', '返聘'],
     jobList: ['国家机关/党群组织/企业', "事业单位负责人", '专业技术人员', '商业/服务人员'],
     jobIndex: '',

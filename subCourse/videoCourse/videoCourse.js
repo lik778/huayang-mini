@@ -1,28 +1,38 @@
 // subCourse/videoCourseDetail/videoCourseDetail.js
-import { ErrorLevel, FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import {
-	checkJoinVideoCourse,
-	checkNeedSpecialManage,
-	createFissionTask,
-	getIosCustomerLink,
-	getVideoArticleLink,
-	getVideoCourseDetail,
-	inviteFriend,
-	joinVideoCourse,
-	recordStudy
+  ErrorLevel,
+  FluentLearnUserType,
+  GLOBAL_KEY
+} from "../../lib/config"
+import {
+  checkJoinVideoCourse,
+  checkNeedSpecialManage,
+  createFissionTask,
+  getIosCustomerLink,
+  getVideoArticleLink,
+  getVideoCourseDetail,
+  inviteFriend,
+  joinVideoCourse,
+  recordStudy
 } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
 import {
-	$notNull,
-	convertToChinaNum,
-	getLocalStorage,
-	hasAccountInfo,
-	hasUserInfo,
-	payCourse,
-	secondToMinute,
+  $notNull,
+  convertToChinaNum,
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  payCourse,
+  secondToMinute,
+  isIphoneXRSMax
 } from "../../utils/util"
-import { collectError } from "../../api/auth/index"
-import { getFluentCardInfo, getKechengWithFluentCard } from "../../api/mine/index"
+import {
+  collectError
+} from "../../api/auth/index"
+import {
+  getFluentCardInfo,
+  getKechengWithFluentCard
+} from "../../api/mine/index"
 
 const ButtonType = {
   noLogin: 1, //未登录
@@ -75,6 +85,8 @@ Page({
     needRecordPlayTime: false, //是否需要记录播放打点时长
     from_co_channel: false,
     special: false, //该课程是否是安卓特殊处理课程
+    showNoticeBox: true,
+    isIphoneXRSMax:isIphoneXRSMax()
   },
 
 
@@ -153,8 +165,12 @@ Page({
    * 跳转到加入畅学卡页面
    */
   goToJoinFluentLearn() {
-    bxPoint("series_changxue", {series_id: this.data.videoCourseId}, false)
-    wx.navigateTo({url: "/mine/joinFluentLearn/joinFluentLearn"})
+    bxPoint("series_changxue", {
+      series_id: this.data.videoCourseId
+    }, false)
+    wx.navigateTo({
+      url: "/mine/joinFluentLearn/joinFluentLearn"
+    })
   },
   /**
    * 畅学卡会员，兑换课程
@@ -163,7 +179,11 @@ Page({
   exchangeKechengWithFluentCard(kechengId) {
     return new Promise((resolve) => {
       let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-      getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
+      getFluentCardInfo({
+        user_snow_id: accountInfo.snow_id
+      }).then(({
+        data
+      }) => {
         if ($notNull(data) && data.status === FluentLearnUserType.active) {
           getKechengWithFluentCard({
             user_snow_id: accountInfo.snow_id,
@@ -557,12 +577,12 @@ Page({
     let type = this.data.videoCourseData.series_detail.category
     let index = type === 'quality_life' ? 3 : type === 'fitness' ? 1 : type === 'fashion' ? 2 : 0
     if (getCurrentPages().length > 6) {
-      wx.reLaunch({
-        url: `/subCourse/videoCourseList/videoCourseList?index=${index}`,
+      wx.switchTab({
+        url: `/pages/practice/practice?index=${index}`,
       })
     } else {
-      wx.navigateTo({
-        url: `/subCourse/videoCourseList/videoCourseList?index=${index}`,
+      wx.switchTab({
+        url: `/pages/practice/practice?index=${index}`,
       })
     }
   },
@@ -958,6 +978,13 @@ Page({
   closeLevelLimit() {
     this.setData({
       showLevelLimit: false
+    })
+  },
+
+  // 关闭登录提示
+  closeAuth() {
+    this.setData({
+      showNoticeBox: false
     })
   },
 

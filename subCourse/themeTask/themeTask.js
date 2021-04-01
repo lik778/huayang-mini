@@ -179,8 +179,8 @@ Page({
 	 * 跳转到视频系列课
 	 */
 	goToCoursePage() {
-		wx.navigateTo({
-			url: `/subCourse/videoCourseList/videoCourseList?index=${this.data.kecheng_id}`
+		wx.switchTab({
+			url: `/pages/practice/practice?index=${this.data.kecheng_id}`
 		})
 	},
 	initPageScroll() {

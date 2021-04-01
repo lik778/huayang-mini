@@ -28,7 +28,7 @@ Page({
       didShowAuth: false
     })
     wx.reLaunch({
-      url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.url}&login=''&pay=0`,
+      url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.noAuthUrl}&login=''&pay=0`,
     })
   },
 
@@ -44,9 +44,10 @@ Page({
   },
   // 支付
   pay() {
+    let mobile = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).mobile
     douyinWxPay({
       cps_id: this.data.cpsData.id,
-      mobile: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).mobile,
+      mobile: mobile,
       from: this.data.cpsData.from,
       mode: this.data.cpsData.mode,
     }).then(res => {
@@ -55,19 +56,20 @@ Page({
         name: '抖音视频包'
       }).then(res1 => {
         if (res1.errMsg === 'requestPayment:ok') {
+          let redirectLink = this.data.cpsData.url + `${encodeURIComponent(`&mobile=${mobile}`)}`
           wx.reLaunch({
-            url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.url}${encodeURIComponent('true&pay=1')}`,
+            url: `/subCourse/noAuthWebview/noAuthWebview?link=${redirectLink}`,
           })
         } else {
           let data = hasAccountInfo() ? true : ''
           wx.reLaunch({
-            url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.url}${encodeURIComponent(`${data}&pay=0`)}`,
+            url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.noAuthUrl}${encodeURIComponent(`${data}&pay=0`)}`,
           })
         }
       }).catch(() => {
         let data = hasAccountInfo() ? true : ''
         wx.reLaunch({
-          url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.url}${encodeURIComponent(`${data}&pay=0`)}`,
+          url: `/subCourse/noAuthWebview/noAuthWebview?link=${this.data.cpsData.noAuthUrl}${encodeURIComponent(`${data}&pay=0`)}`,
         })
       })
     })

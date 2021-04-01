@@ -25,7 +25,7 @@
                     <text class="course-item-bottom-module-left-price"
                           wx:if='{{item.price>0}}'>¥{{item.price}}</text>
                 </view>
-                <view class='course-item-bottom-module-left' wx:if="{{!item.tipsText&&!isIosPlatform&&!isFluentLearnVIP}}">
+                <view class='course-item-bottom-module-left' wx:elif="{{!isIosPlatform&&!isFluentLearnVIP}}">
                     <text class="course-item-bottom-module-left-one">
                         <text wx:if="{{item.didBought}}">已购</text>
                         <text wx:else>{{item.discount_price ? '¥' + item.discount_price : '免费'}}</text>

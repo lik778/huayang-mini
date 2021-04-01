@@ -1,0 +1,82 @@
+/* components/clubVipAlert/clubVipAlert.wxss */
+@import "../../assets/css/common.wxss";
+
+.container {}
+
+.bg-cover {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.56);
+  z-index: 20;
+}
+
+.alert-box {
+  position: fixed;
+  left: 50%;
+  /* transform: translateX(-50%); */
+  margin-left: -300rpx;
+  top: 28%;
+  z-index: 30;
+  background: #fff;
+  border-radius: 16rpx;
+  padding-bottom: 80rpx;
+}
+
+.alert-module {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.top-icon image {
+  width: 160rpx;
+  height: 150rpx;
+  vertical-align: bottom;
+}
+
+.top-icon {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -86rpx;
+}
+
+.alert-module {
+
+  width: 600rpx;
+}
+
+.alert-title view:first-child {
+  padding-top: 126rpx;
+}
+
+.alert-title view {
+  text-align: center;
+  font-size: 40rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 56rpx;
+}
+
+.alert-button {
+  width: 464rpx;
+  height: 88rpx;
+  border-radius: 999rpx;
+  background: #FF4444;
+  text-align: center;
+  font-size: 36rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 88rpx;
+  margin-top: 74rpx;
+}
+
+/* .alert-title view:last-child {
+  padding-top: 126rpx;
+} */

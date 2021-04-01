@@ -84,17 +84,26 @@ Component({
 
 	pageLifetimes: {
 		show: function () {
-			// 检查IOS
-			this.checkIos()
-			// 查询畅学卡信息
-			this.getFluentInfo()
+			this.run()
 		}
+	},
+
+	lifetimes: {
+		attached: function() {
+			this.run()
+		},
 	},
 
 	/**
 	 * Component methods
 	 */
 	methods: {
+		run() {
+			// 检查IOS
+			this.checkIos()
+			// 查询畅学卡信息
+			this.getFluentInfo()
+		},
 		/**
 		 * 请求畅销卡信息
 		 */
@@ -108,10 +117,8 @@ Component({
 		// 检查ios环境
 		checkIos() {
 			wx.getSystemInfo({
-				success: (res2) => {
-					if (res2.platform == 'ios') {
-						this.setData({isIosPlatform: true})
-					}
+				success: (res) => {
+					this.setData({isIosPlatform: res.platform === "ios"})
 				}
 			})
 		},

@@ -1,11 +1,30 @@
 // subCourse/inviteFriendStudy/inviteFriendStudy.js
-import { checkReceiveCreate, getInviteFriendInfo, receiveCreate } from "../../api/course/index"
+import {
+  checkReceiveCreate,
+  getInviteFriendInfo,
+  receiveCreate
+} from "../../api/course/index"
 // canvas
-import { drawCircleFill, drawCircleHeadIcon, drawFont, drawImage, measureTextWidth } from "../../utils/canvas"
-import { ErrorLevel, GLOBAL_KEY } from "../../lib/config"
-import { getLocalStorage, isIphoneXRSMax } from "../../utils/util"
+import {
+  drawCircleFill,
+  drawCircleHeadIcon,
+  drawFont,
+  drawImage,
+  measureTextWidth
+} from "../../utils/canvas"
+import {
+  ErrorLevel,
+  GLOBAL_KEY
+} from "../../lib/config"
+import {
+  getLocalStorage,
+  isIphoneXRSMax,
+  setLocalStorage
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
-import { collectError } from "../../api/auth/index"
+import {
+  collectError
+} from "../../api/auth/index"
 
 Page({
 
@@ -153,7 +172,7 @@ Page({
                                         }
                                       })
                                     },
-                                    fail:()=>{
+                                    fail: () => {
                                       wx.showModal({
                                         title: '相册授权',
                                         content: '保存失败，未获得您的授权，请前往设置授权',
@@ -231,7 +250,7 @@ Page({
           limit_num: this.data.inviteInfo.gift.limit_count,
           share_uid: this.data.inviteInfo.gift.user_id,
           receive_num: res.data,
-        },false)
+        }, false)
 
 
 
@@ -357,18 +376,41 @@ Page({
         isInviter: false
       })
     }
-
-    let width = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth
-    let height3 = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenHeight
-    let height = ((width - 60) / 7 * 11).toFixed(2)
-    let height1 = ((width - 60) / 2 * 3).toFixed(2)
+    let systemParams = ''
+    if (!getLocalStorage(GLOBAL_KEY.systemParams)) {
+      wx.getSystemInfo({
+        complete: (res) => {
+          setLocalStorage(GLOBAL_KEY.systemParams, res)
+          systemParams = res
+          let width = systemParams.screenWidth
+          let height3 = systemParams.screenHeight
+          let height = ((width - 60) / 7 * 11).toFixed(2)
+          let height1 = ((width - 60) / 2 * 3).toFixed(2)
+          this.setData({
+            width,
+            height,
+            height1,
+            height3,
+            lineWithdh: ((width - 196) / 2).toFixed(2),
+          })
+        },
+      })
+    } else {
+      systemParams = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
+      let width = systemParams.screenWidth
+      let height3 = systemParams.screenHeight
+      let height = ((width - 60) / 7 * 11).toFixed(2)
+      let height1 = ((width - 60) / 2 * 3).toFixed(2)
+      this.setData({
+        width,
+        height,
+        height1,
+        height3,
+        lineWithdh: ((width - 196) / 2).toFixed(2),
+      })
+    }
     this.setData({
       inviteId,
-      width,
-      height,
-      height1,
-      height3,
-      lineWithdh: ((width - 196) / 2).toFixed(2),
       userId: getLocalStorage(GLOBAL_KEY.userId) || ''
     })
     // 兼容x以上机型底部按钮触碰区
