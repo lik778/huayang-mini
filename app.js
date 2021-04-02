@@ -1,16 +1,7 @@
 //app.js
-import {
-	getLocalStorage,
-	hasAccountInfo,
-	removeLocalStorage,
-	setLocalStorage
-} from './utils/util'
-import {
-	GLOBAL_KEY
-} from './lib/config'
-import {
-	collectError
-} from "./api/auth/index"
+import { getLocalStorage, hasAccountInfo, removeLocalStorage, setLocalStorage } from './utils/util'
+import { GLOBAL_KEY } from './lib/config'
+import { collectError } from "./api/auth/index"
 
 App({
 	onLaunch: function () {
