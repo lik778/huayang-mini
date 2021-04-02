@@ -1,21 +1,7 @@
-import {
-  wxGetUserInfoPromise,
-  wxLoginPromise
-} from "../../utils/auth"
-import {
-  bindUserInfo,
-  bindWxPhoneNumber,
-  getWxInfo
-} from "../../api/auth/index"
-import {
-  APP_LET_ID,
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  $notNull,
-  getLocalStorage,
-  setLocalStorage
-} from "../../utils/util"
+import { wxLoginPromise } from "../../utils/auth"
+import { bindUserInfo, bindWxPhoneNumber, getWxInfo } from "../../api/auth/index"
+import { APP_LET_ID, GLOBAL_KEY } from "../../lib/config"
+import { $notNull, getLocalStorage, setLocalStorage } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Component({
