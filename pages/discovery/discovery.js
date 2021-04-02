@@ -227,11 +227,9 @@ Page({
 		})
 	},
 	onMoreTravelLineTap() {
-		getYouZanAppId().then(appId => {
-			wx.navigateToMiniProgram({
-				appId,
-				path: "pages/common/blank-page/index?weappSharePath=pages%2Fhome%2Fdashboard%2Findex%3Fkdt_id%3D43257500"
-			})
+		wx.navigateToMiniProgram({
+			appId: "wx2ea757d51abc1f47",
+			path: "pages/index/index"
 		})
 		bxPoint("homepage_more_edu_travel_button", {}, false)
 	},
@@ -421,7 +419,7 @@ Page({
 	 */
 	onLoad: function (options) {
 
-		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=218`})
+		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=219`})
 
 		let {scene, invite_user_id = "", source} = options
 		// 通过小程序码进入 scene=${source}
