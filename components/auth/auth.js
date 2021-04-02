@@ -127,6 +127,9 @@ Component({
           let originAccountInfo = await bindWxPhoneNumber(params)
           setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
         }
+        this.setData({
+          hasNoWxAuth: false
+        })
         this.complete()
         bxPoint("applets_auth_status", {
           auth_type: "phone",
