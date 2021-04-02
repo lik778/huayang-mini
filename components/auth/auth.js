@@ -1,4 +1,4 @@
-import { wxGetUserInfoPromise, wxLoginPromise } from "../../utils/auth"
+import { wxLoginPromise } from "../../utils/auth"
 import { bindUserInfo, bindWxPhoneNumber, getWxInfo } from "../../api/auth/index"
 import { APP_LET_ID, GLOBAL_KEY } from "../../lib/config"
 import { $notNull, getLocalStorage, setLocalStorage } from "../../utils/util"
@@ -35,6 +35,7 @@ Component({
   data: {
     didVisible: false, // 控制显隐
     didGetPhoneNumber: false, // 授权类型
+    hasNoWxAuth: false
   },
 
   /**
@@ -45,21 +46,21 @@ Component({
      * 一键微信授权
      */
     getUserInfo() {
-      try {
-        wxLoginPromise()
-          .then(async (code) => {
-            // 用code查询服务端是否有该用户信息，如果有更新本地用户信息，反之从微信获取用户信息保存到服务端
-            let wxOriginUserInfo = await getWxInfo({
-              code,
-              app_id: APP_LET_ID.tx
-            })
-            // 缓存openId
-            setLocalStorage(GLOBAL_KEY.openId, wxOriginUserInfo.openid)
-
-            wxGetUserInfoPromise().then(async (response) => {
-              const userInfo = response.userInfo
+      wx.getUserProfile({
+        desc: '用于完善会员资料',
+        success: async res => {
+          let userInfo = res.userInfo
+          wxLoginPromise()
+            .then(async (code) => {
+              // 用code查询服务端是否有该用户信息，如果有更新本地用户信息，反之从微信获取用户信息保存到服务端
+              let wxOriginUserInfo = await getWxInfo({
+                code,
+                app_id: APP_LET_ID.tx
+              })
+              // openid
+              setLocalStorage(GLOBAL_KEY.openId, wxOriginUserInfo.openid)
               let params = {
-                open_id: getLocalStorage(GLOBAL_KEY.openId),
+                open_id: wxOriginUserInfo.openid,
                 avatar_url: userInfo.avatarUrl,
                 city: userInfo.city,
                 nickname: userInfo.nickName,
@@ -71,14 +72,14 @@ Component({
               setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
               bxPoint("applets_auth_status", {auth_type: "weixin", auth_result: "success"}, false)
               this.checkLogin()
-            }).catch(() => {
-              // 用户取消微信授权
-              this.cancel()
-              bxPoint("applets_auth_status", {auth_type: "weixin", auth_result: "fail"}, false)
             })
-          })
-      } catch (error) {
-      }
+        },
+        fail: () => {
+          // 用户取消微信授权
+          this.cancel()
+          bxPoint("applets_auth_status", {auth_type: "weixin", auth_result: "fail"}, false)
+        }
+      })
     },
     /**
      * 一键获取微信手机号
@@ -145,9 +146,9 @@ Component({
             setLocalStorage(GLOBAL_KEY.openId, originUserInfo.openid)
             setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
             // 用户已完成微信授权，引导用户手机号授权
-            this.setData({
-              didGetPhoneNumber: true
-            })
+            this.setData({didGetPhoneNumber: true, hasNoWxAuth: false})
+          } else {
+            this.setData({hasNoWxAuth: true})
           }
         })
         .catch((error) => {
