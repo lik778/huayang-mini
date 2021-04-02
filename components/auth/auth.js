@@ -158,7 +158,8 @@ Component({
             setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
             // 用户已完成微信授权，引导用户手机号授权
             this.setData({
-              didGetPhoneNumber: true
+              didGetPhoneNumber: true,
+              hasNoWxAuth: false
             })
           } else {
             this.setData({
