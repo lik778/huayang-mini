@@ -127,9 +127,6 @@ Component({
           let originAccountInfo = await bindWxPhoneNumber(params)
           setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
         }
-        this.setData({
-          hasNoWxAuth: false
-        })
         this.complete()
         bxPoint("applets_auth_status", {
           auth_type: "phone",
@@ -175,7 +172,8 @@ Component({
             setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
             // 用户已完成微信授权，引导用户手机号授权
             this.setData({
-              didGetPhoneNumber: true
+              didGetPhoneNumber: true,
+              hasNoWxAuth: false
             })
           } else {
             this.setData({
