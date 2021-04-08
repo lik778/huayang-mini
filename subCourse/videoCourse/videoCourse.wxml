@@ -161,7 +161,7 @@
       </view>
       <view class="pay-or-fluent-one-right subject-bg-color" bindtap="goToJoinFluentLearn">
         <text class="pay-or-fluent-one-right-txt01">所有课程免费看</text>
-        <text class="pay-or-fluent-one-right-txt02">畅学卡 188元/年</text>
+        <text class="pay-or-fluent-one-right-txt02">畅学卡 599元/年</text>
       </view>
     </view>
     <!-- 折扣价 && 畅学卡购买 -->
@@ -175,7 +175,7 @@
       </view>
       <view class="pay-or-fluent-one-right subject-bg-color" bindtap="goToJoinFluentLearn">
         <text class="pay-or-fluent-one-right-txt01">所有课程免费看</text>
-        <text class="pay-or-fluent-one-right-txt02">畅学卡 188元/年</text>
+        <text class="pay-or-fluent-one-right-txt02">畅学卡 599元/年</text>
       </view>
     </view>
 
@@ -209,7 +209,7 @@
       </view>
       <view class="pay-or-fluent-one-right subject-bg-color" bindtap="goToJoinFluentLearn">
         <text class="pay-or-fluent-one-right-txt01">所有课程免费看</text>
-        <text class="pay-or-fluent-one-right-txt02">畅学卡 188元/年</text>
+        <text class="pay-or-fluent-one-right-txt02">畅学卡 599元/年</text>
       </view>
     </view>
     <!-- 未登录 -->

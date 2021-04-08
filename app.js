@@ -1,16 +1,7 @@
 //app.js
-import {
-	getLocalStorage,
-	hasAccountInfo,
-	removeLocalStorage,
-	setLocalStorage
-} from './utils/util'
-import {
-	GLOBAL_KEY
-} from './lib/config'
-import {
-	collectError
-} from "./api/auth/index"
+import { getLocalStorage, hasAccountInfo, removeLocalStorage, setLocalStorage } from './utils/util'
+import { GLOBAL_KEY } from './lib/config'
+import { collectError } from "./api/auth/index"
 
 App({
 	onLaunch: function () {
@@ -39,7 +30,6 @@ App({
 			let updateManage = wx.getUpdateManager()
 			updateManage.onCheckForUpdate((res) => {
 				// 有新版本
-				console.log(res)
 				if (res.hasUpdate) {
 					console.log("您好，小程序已有新版本")
 				}
