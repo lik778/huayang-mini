@@ -5,7 +5,7 @@
         <!-- banner 滚动区域 -->
         <view class="swiper-box" id="swiper-box">
             <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}"
-                duration="{{500}}">
+                    duration="{{500}}">
                 <swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="joinCampFromBanner" data-item="{{item}}">
                     <view class="swiper-cover"></view>
                     <image mode="cover" src="{{item.pic_url}}"></image>
@@ -13,22 +13,22 @@
             </swiper>
             <view class="swiper-dot">
                 <view wx:for="{{bannerList}}" wx:key="index" wx:if="{{bannerList.length>1}}"
-                    class="{{current===index?'active swiper-dot-item':'swiper-dot-item'}}"></view>
+                      class="{{current===index?'active swiper-dot-item':'swiper-dot-item'}}"></view>
             </view>
         </view>
     </view>
 
     <!-- 直播 -->
     <liveLayout wx:if="{{liveList.length > 0}}" class="limit-two-line" liveList="{{liveList}}"
-        bind:openUserAuth="openUserAuth" />
+                bind:openUserAuth="openUserAuth"/>
 
     <!-- 今日推荐 -->
     <view class="today-recommend" wx:if="{{previewVideoLink}}" bindtap="onTodayRecommendTap">
         <view>今日推荐课程</view>
         <video id="preview-video-content" class="preview-video" src="{{previewVideoLink}}" controls="{{false}}"
-            custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}"
-            enable-progress-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}"
-            show-play-btn="{{false}}" autoplay="{{false}}" loop="{{true}}"></video>
+               custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}"
+               enable-progress-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}"
+               show-play-btn="{{false}}" autoplay="{{false}}" loop="{{true}}"></video>
         <view class="recommend-course-title">{{todayRecommendCourse.kecheng_series.teacher_desc}}</view>
         <view class="recommend-course-info">
             <view class="recommend-course-info-title limit-one-line">{{todayRecommendCourse.kecheng_series.name}}</view>
@@ -37,7 +37,7 @@
     </view>
 
     <!-- 精品课程 -->
-    <bestCourseLayout wx:if="{{courseList.length > 0}}" courseList="{{courseList}}" />
+    <bestCourseLayout wx:if="{{courseList.length > 0}}" courseList="{{courseList}}"/>
 
     <!-- 花样游学 -->
     <view class="travel" wx:if="{{travelList.length > 0}}">
@@ -50,14 +50,16 @@
             </swiper>
             <view class="travel-title limit-two-line">{{item.title}}</view>
             <view class="travel-info">
-                <view class="travel-price">¥<text class="price-01">{{item.discount_price / 100}}</text><text wx:if="{{item.price}}" class="price-02">¥{{item.price / 100}}</text></view>
+                <view class="travel-price">¥<text class="price-01">{{item.discount_price / 100}}</text><text
+                        wx:if="{{item.price}}" class="price-02">¥{{item.price / 100}}</text>
+                </view>
                 <view class="travel-visit-no">{{item.visit_count}}人看过</view>
             </view>
         </view>
 
         <view class="more-travel" bindtap="onMoreTravelLineTap">查看更多游学路线 ›</view>
     </view>
-    
+
     <!-- 分隔 -->
     <view class="separate-line"></view>
 
@@ -68,7 +70,7 @@
             <view class="competition-title">大赛</view>
             <view class="competition-list">
                 <view class="competition-item" bindtap="toModelCompetition" data-item='{{item}}'
-                    wx:for="{{competitionBannerList}}" wx:key="index">
+                      wx:for="{{competitionBannerList}}" wx:key="index">
                     <image mode="aspectFill" src="{{item.pic_url}}"></image>
                     <view class="competition-item-title">{{item.title}}</view>
                 </view>
@@ -94,8 +96,37 @@
         </view>
     </view>
 
+    <!-- 全局消息弹窗 -->
+    <view class="information" catchtouchmove="onCatchtouchmove" wx:if="{{didShowInformation}}">
+        <view class="information-mask {{showInformationPopAnime ? 'animation' : ''}}"></view>
+        <block wx:if="{{popData.type === 'new_kecheng'}}">
+            <view class="information-content {{showInformationPopAnime ? 'animation' : ''}}">
+                <view class="information-pop-title">{{popData.popTitle}}</view>
+                <view class="information-pop-info">
+                    <image class="information-teacher-avatar" mode="aspectFit" src="{{popData.avatar}}"></image>
+                    <view class="information-course-info">
+                        <text class="information-course-name limit-one-line">{{popData.title}}</text>
+                        <text class="information-course-desc limit-two-line">{{popData.desc}}</text>
+                        <text class="information-course-teacher-info limit-one-line">{{popData.name}}</text>
+                    </view>
+                </view>
+                <view class="information-pop-btn" bindtap="onInformationPopTap">立即查看</view>
+                <image class="information-pop-close" bindtap="closeInformationPop" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617938508Usopwi.jpg"></image>
+                <view class="information-pop-clock">
+                    <view class="information-pop-clock-item {{showInformationPopAnime ? 'animation' : ''}}"></view>
+                </view>
+            </view>
+        </block>
+        <block wx:if="{{popData.type === 'normal'}}">
+            <view class="information-pop-picture-wrap" style="top: calc(50vh - 300rpx / {{popData.pictureRatio}});">
+                <image class="information-pop-picture {{showInformationPopAnime ? 'animation' : ''}}" bindtap="jumpToLink" src="{{popData.picture}}" mode="widthFix"></image>
+                <image class="information-pop-close" bindtap="closeInformationPop" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617938508Usopwi.jpg"></image>
+            </view>
+        </block>
+    </view>
+
     <!-- 授权弹窗 -->
     <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent"
-        bind:authCompleteEvent="authCompleteEvent">
+                bind:authCompleteEvent="authCompleteEvent">
     </authModule>
 </view>

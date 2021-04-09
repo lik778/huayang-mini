@@ -1,7 +1,13 @@
-//app.js
-import { getLocalStorage, hasAccountInfo, removeLocalStorage, setLocalStorage } from './utils/util'
+import {
+	getLocalStorage,
+	hasAccountInfo,
+	removeLocalStorage,
+	setLocalStorage,
+	setWxUserInfoExpiredTime
+} from './utils/util'
 import { GLOBAL_KEY } from './lib/config'
 import { collectError } from "./api/auth/index"
+import dayjs from "dayjs"
 
 App({
 	onLaunch: function () {
@@ -13,7 +19,7 @@ App({
 
 		// 每次打开小程序执行一次
 		if (hasAccountInfo()) {
-			let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) || {}
+			let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo) || null)
 			// 检查用户本地账户信息是否存在snow_id，不存在则清除本地账户相关数据
 			if (!accountInfo.snow_id) {
 				removeLocalStorage(GLOBAL_KEY.accountInfo)
@@ -80,6 +86,23 @@ App({
 					setLocalStorage(GLOBAL_KEY.systemParams, res)
 				},
 			})
+		}
+
+		// 检查用户微信授权有效期
+		let expireTime = getLocalStorage(GLOBAL_KEY.userInfoExpireTime)
+
+		if (expireTime) {
+			let didExpired = dayjs(expireTime).isBefore(dayjs())
+			if (didExpired) {
+				removeLocalStorage(GLOBAL_KEY.openId)
+				removeLocalStorage(GLOBAL_KEY.userInfo)
+				removeLocalStorage(GLOBAL_KEY.userInfoExpireTime)
+				removeLocalStorage(GLOBAL_KEY.userId)
+				removeLocalStorage(GLOBAL_KEY.token)
+				removeLocalStorage(GLOBAL_KEY.accountInfo)
+			}
+		} else {
+			setWxUserInfoExpiredTime()
 		}
 
 		// 将"口令"包文件至本地缓存文件

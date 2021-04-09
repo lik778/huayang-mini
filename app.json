@@ -109,7 +109,8 @@
         "videoCourseDetail/videoCourse",
         "cooperationPage/cooperationPage",
         "cps/cps",
-        "liveback/liveback"
+        "liveback/liveback",
+        "videoCourseUnitShare/videoCourseUnitShare"
       ]
     },
     {

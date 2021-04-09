@@ -303,21 +303,9 @@
           "scene": null
         },
         {
-          "name": "畅学卡售前页",
-          "pathName": "mine/joinFluentLearn/joinFluentLearn",
-          "query": "inviteId=123123123123",
-          "scene": null
-        },
-        {
           "name": "畅学卡详情页",
           "pathName": "mine/fluentLearnInfo/fluentLearnInfo",
           "query": "",
-          "scene": null
-        },
-        {
-          "name": "畅学卡海报页",
-          "pathName": "mine/fluentCardDistribute/fluentCardDistribute",
-          "query": "inviteId=11467959679586304",
           "scene": null
         },
         {
@@ -360,6 +348,18 @@
           "name": "直播回看",
           "pathName": "subCourse/liveback/liveback",
           "query": "",
+          "scene": null
+        },
+        {
+          "name": "单节系列课分享页",
+          "pathName": "subCourse/videoCourseUnitShare/videoCourseUnitShare",
+          "query": "videoId=55&playIndex=3&showSuccess=true",
+          "scene": null
+        },
+        {
+          "name": "系列课详情页",
+          "pathName": "subCourse/videoCourse/videoCourse",
+          "query": "videoId=68",
           "scene": null
         }
       ]

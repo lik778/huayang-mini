@@ -71,7 +71,8 @@
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 600;
     color: #DEB78F;
-    line-height: 12px;
+    line-height: 24rpx;
+    height: 24rpx;
     background: linear-gradient(90deg, #F2D6B8 0%, #CEA375 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

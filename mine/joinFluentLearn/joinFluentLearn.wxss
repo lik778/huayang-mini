@@ -136,8 +136,8 @@
     position: fixed;
     bottom: 206rpx;
     right: 30rpx;
-    width: 314rpx;
-    height: 80rpx;
+    width: 157px;
+    height: 40px;
     background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612331610edgRGS.jpg") no-repeat center;
     background-size: contain;
 }

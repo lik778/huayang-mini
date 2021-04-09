@@ -1,36 +1,26 @@
-import {
-  FluentLearnUserType,
-  GLOBAL_KEY
-} from "../../lib/config"
+import { FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
+import { getFindBanner, getPhoneNumber } from "../../api/course/index"
 import {
-  getFindBanner,
-  getPhoneNumber
-} from "../../api/course/index"
-import {
-  getFluentCardInfo,
-  getFluentDistributeGuide,
-  getFluentLearnInfo,
-  getPartnerInfo,
-  getUserGuideLink,
-  getUserInfo,
-  getUserOwnerClasses
+	getFluentCardInfo,
+	getFluentDistributeGuide,
+	getFluentLearnInfo,
+	getPartnerInfo,
+	getUserGuideLink,
+	getUserInfo,
+	getUserOwnerClasses
 } from "../../api/mine/index"
 import {
-  $notNull,
-  getLocalStorage,
-  hasAccountInfo,
-  hasUserInfo,
-  setLocalStorage,
-  splitTargetNoString
+	$notNull,
+	getLocalStorage,
+	hasAccountInfo,
+	hasUserInfo,
+	setLocalStorage,
+	splitTargetNoString
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
-import {
-  getTaskEntranceStatus
-} from "../../api/task/index"
-import {
-  getYouZanAppId
-} from "../../api/mall/index"
+import { getTaskEntranceStatus } from "../../api/task/index"
+import { getYouZanAppId } from "../../api/mall/index"
 
 const Level = [{
     label: "准合伙人",
@@ -284,7 +274,8 @@ Page({
   },
   // 获取用户信息
   getUserSingerInfo() {
-    return new Promise((resolve, reject) => {
+    if (!hasUserInfo() || !hasAccountInfo()) return Promise.reject()
+		return new Promise((resolve, reject) => {
       getUserInfo('scene=zhide').then(res => {
         res.amount = Number((res.amount / 100).toFixed(2))
         setLocalStorage(GLOBAL_KEY.accountInfo, res)
@@ -395,17 +386,18 @@ Page({
   },
   // 用户确认授权
   authCompleteEvent() {
+    this.reloadUserCenter()
+    this.setData({didShowAuth: false})
+  },
+  reloadUserCenter() {
     this.run()
     this.queryContentInfo()
     this.getUserSingerInfo().then(() => {
       this.getFluentInfo()
     })
     this.queryUserPartnerInfo()
-    this.setData({
-      didShowAuth: false
-    })
     // 获取加入学习群高度，用来判断显示余额显示
-    let userId = getLocalStorage(GLOBAL_KEY.userId) ? true : false
+    let userId = !!getLocalStorage(GLOBAL_KEY.userId)
     if (userId) {
       setTimeout(() => {
         let query = wx.createSelectorQuery();
@@ -466,6 +458,7 @@ Page({
   },
   // 查询用户合伙人信息
   queryUserPartnerInfo() {
+    if (!hasAccountInfo()) return
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
     getPartnerInfo({
       user_snow_id: accountInfo.snow_id,
@@ -558,7 +551,7 @@ Page({
       })
     })
     // 获取加入学习群高度，用来判断显示余额显示
-    let userId = getLocalStorage(GLOBAL_KEY.userId) ? true : false
+    let userId = !!getLocalStorage(GLOBAL_KEY.userId)
     if (userId) {
       setTimeout(() => {
         let query = wx.createSelectorQuery();
@@ -713,7 +706,7 @@ Page({
     }
   },
   onPageScroll(res) {
-    let userId = getLocalStorage(GLOBAL_KEY.userId) ? true : false
+    let userId = !!getLocalStorage(GLOBAL_KEY.userId)
     let distribute_user = this.data.partnerInfo
     if (userId && distribute_user && distribute_user.distribute_user && distribute_user.distribute_user.status === 2 && res.scrollTop > this.data.showMoneyNoticeTop) {
       this.initIndicatePic(1)
