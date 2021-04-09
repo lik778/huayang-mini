@@ -12,7 +12,17 @@ Page({
     coreData: null,
     _invokeSaveToLocalAction: false, // 用户是否已经点击保存图片到本地
     _didDrawCanvasDone: false, // 绘制canvas是否已经结束
-    covers: ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617860455BexQhv.jpg"]
+    covers: [
+      "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617951566SXOrPK.jpg",
+      "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617951576UQNpIK.jpg",
+      "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617951576PqHFlQ.jpg",
+      "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617951576tUTfGI.jpg",
+      "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617951576YceIcx.jpg",
+      "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617951576hNXPBh.jpg",
+      "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617951576XNRpmQ.jpg",
+      "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617951576pJcUfG.jpg",
+      "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617951576DLWiqq.jpg",
+    ]
   },
 
   /**
@@ -22,7 +32,7 @@ Page({
     const self = this
     const eventChannel = this.getOpenerEventChannel()
     eventChannel.on("transmitUnitShareData", function ({data}) {
-      self.setData({coreData: {...data, cover: self.data.covers[0]}})
+      self.setData({coreData: {...data, cover: self.data.covers[Math.random() * self.data.covers.length | 0]}})
       bxPoint("series_learn_check_in_page", {
         series_id: data.id,
         lesson_num: data.lesson_num,

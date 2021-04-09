@@ -1,4 +1,3 @@
-// subCourse/videoCourseDetail/videoCourseDetail.js
 import { ErrorLevel, FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import {
 	checkJoinVideoCourse,
@@ -84,6 +83,7 @@ Page({
     showContact: false,
     trialData: null, // 观看有效期对象
     trialDiffDays: 0, // 剩余观看有效期时长
+    isFluentCardVip: false, // 是否是畅学卡会员
   },
 
 
@@ -1061,6 +1061,15 @@ Page({
     })
   },
 
+  getUserFluentInfo() {
+    let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+    getFluentCardInfo({
+      user_snow_id: accountInfo.snow_id
+    }).then(({data}) => {
+      this.setData({isFluentCardVip: $notNull(data) && data.status === FluentLearnUserType.active})
+    })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -1102,6 +1111,10 @@ Page({
     this.videoContext = wx.createVideoContext('videoPlayer')
     // 获取视频课程引流文章地址
     this.getArticleLink()
+    // 查询用户畅学卡信息
+    if (hasUserInfo() && hasAccountInfo()) {
+      this.getUserFluentInfo()
+    }
   },
 
   /**

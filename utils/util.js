@@ -1211,6 +1211,6 @@ export function setWxUserInfoExpiredTime () {
 	if (expireTime) {
 		return false
 	} else {
-		setLocalStorage(GLOBAL_KEY.userInfoExpireTime, dayjs().add(5, 'minute').format("YYYY-MM-DD HH:mm:ss"))
+		setLocalStorage(GLOBAL_KEY.userInfoExpireTime, dayjs().add(15, 'day').format("YYYY-MM-DD HH:mm:ss"))
 	}
 }

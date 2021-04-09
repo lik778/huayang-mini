@@ -51,7 +51,7 @@
     </view>
 
     <!-- 过期提醒 -->
-    <view class="trial" wx:if="{{trialData}}">
+    <view class="trial" wx:if="{{!isFluentCardVip && trialData}}">
       <text class="remind">提醒：</text>
       <text>课程有效期还有<text class="remind">{{trialDiffDays}}</text>天，快联系花样客服</text>
       <view class="trial-contact" bindtap="contactService">联系客服</view>

@@ -161,7 +161,7 @@
   border: 2rpx solid #00BB66;
   border-radius: 999rpx;
   text-align: center;
-  font: 24rpx/48rpx PingFangSC;
+  font: 24rpx/44rpx PingFangSC;
   color: #00BB66;
 }
 
