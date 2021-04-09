@@ -141,6 +141,30 @@
   margin: 0 30rpx;
 }
 
+/* 过期提醒 */
+.trial {
+  margin-top: 28rpx;
+  font: 26rpx/36rpx PingFangSC;
+  color: #7F7F7F;
+}
+
+.remind {
+  color: #CC0000;
+}
+
+.trial-contact {
+  display: inline-block;
+  width: 144rpx;
+  height: 48rpx;
+  margin-left: 14rpx;
+  box-sizing: border-box;
+  border: 2rpx solid #00BB66;
+  border-radius: 999rpx;
+  text-align: center;
+  font: 24rpx/48rpx PingFangSC;
+  color: #00BB66;
+}
+
 /* tab */
 .tab-list {
   margin: 0 30rpx;
@@ -738,7 +762,7 @@
 .pay-or-fluent-one-left {
   width: 330rpx;
   height: 96rpx;
-  border: 4rpx solid #CC0000;
+  border: 2rpx solid #CC0000;
   border-radius: 999rpx;
   box-sizing: border-box;
   display: flex;
@@ -854,4 +878,99 @@
 .auth-notice-icon image {
   width: 16rpx;
   height: 94rpx;
+}
+
+/* 单节课程完成提示弹窗 */
+.unit-lesson-done-pop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 95;
+}
+
+.unit-pop-mask {
+  opacity: 0;
+  height: 100vh;
+  background: rgba(0,0,0, 0.5);
+  transition: opacity 0.25s ease-in;
+}
+
+.unit-pop-mask.animation {
+  opacity: 1;
+}
+
+.unit-pop-content {
+  position: absolute;
+  top: calc(50vh - 300rpx);
+  left: calc(50vw - 300rpx);
+  width: 600rpx;
+  height: 570rpx;
+  padding: 40rpx 0 60rpx;
+  box-sizing: border-box;
+  border-radius: 16rpx;
+  background: white;
+  transform: translateY(100%) scale(0);
+  transition: transform 0.25s cubic-bezier(.5,.21,.43,.95);
+  z-index: 96;
+}
+
+.unit-pop-light {
+  position: absolute;
+  top: -232rpx;
+  left: -63rpx;
+  width: 726rpx;
+  height: 360rpx;
+  background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617863472WnCdNl.jpg") no-repeat center;
+  background-size: contain;
+  z-index: 95;
+  transform: scale(0);
+  transition: transform 0.3s cubic-bezier(.5,.21,.43,.95) 0.1s;
+}
+
+.unit-pop-light.animation {
+  transform: scale(1);
+}
+
+.unit-pop-content.animation {
+  transform: translateY(0%) scale(1);
+}
+
+.unit-pop-icon {
+  display: block;
+  margin: 0 auto;
+  width: 200rpx;
+  height: 158rpx;
+}
+
+.unit-pop-tips {
+  margin: 50rpx auto 56rpx;
+}
+
+.unit-pop-tips > text {
+  display: block;
+  text-align: center;
+  font: bold 40rpx/56rpx PingFangSC;
+}
+
+.unit-pop-btn {
+  width: 500rpx;
+  height: 96rpx;
+  margin: 0 auto;
+  font: 500 40rpx/96rpx PingFangSC;
+  color: white;
+  text-align: center;
+  border-radius: 999rpx;
+  background: #CC0000;
+}
+
+.unit-pop-close {
+  position: absolute;
+  top: -92rpx;
+  right: 0;
+  margin: 30rpx 0 30rpx 30rpx;
+  width: 32rpx;
+  height: 32rpx;
+  z-index: 96;
 }

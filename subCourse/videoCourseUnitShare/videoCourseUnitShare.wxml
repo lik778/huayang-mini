@@ -1,0 +1,34 @@
+<view class="course-unit-share">
+    <!-- 页面海报 -->
+    <view class="picture">
+        <image class="bg" mode="aspectFill" src="{{coreData.cover}}"></image>
+        <view class="date">{{coreData.date}}</view>
+        <view class="user-info">
+            <view class="avatar-wrap">
+                <image class="avatar" mode="aspectFill" src="{{coreData.avatar}}"></image>
+            </view>
+            <view class="name-wrap">
+                <text class="user-name limit-one-line">{{coreData.nickname}}</text>
+                <text class="slogan">正在花样大学学习</text>
+            </view>
+        </view>
+        <view class="course">
+            <text class="course-name limit-one-line">{{coreData.name}}</text>
+            <text class="course-sub-name limit-one-line">{{coreData.desc}}</text>
+        </view>
+        <view class="qrcode-wrap">
+            <image class="qrcode" mode="aspectFit" src="{{coreData.qrCode}}"></image>
+            <text class="qrcode-tips">长按识别二维码</text>
+            <text class="qrcode-tips">一起学习</text>
+        </view>
+    </view>
+
+    <!-- 操作区域 -->
+    <view class="operate">
+        <view class="continue-learn" bindtap="onContinueTap">继续学习课程</view>
+        <view class="save-btn" bindtap="saveToLocal">保存分享好友</view>
+    </view>
+
+    <!-- 画布 -->
+    <canvas style="height:1440px;width:900px;" id="unit-share-canvas" canvas-id="unitShareCanvas"></canvas>
+</view>

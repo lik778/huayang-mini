@@ -1,4 +1,12 @@
-import { $notNull, getLocalStorage, getSchedule, hasAccountInfo, hasUserInfo, } from "../../utils/util"
+import {
+	$notNull,
+	getLocalStorage,
+	getSchedule,
+	hasAccountInfo,
+	hasUserInfo,
+	removeLocalStorage,
+	setLocalStorage,
+} from "../../utils/util"
 import { getActivityList, getFindBanner, } from "../../api/course/index"
 import { FluentLearnUserType, GLOBAL_KEY, WeChatLiveStatus } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
@@ -6,6 +14,7 @@ import { getYouZanAppId } from "../../api/mall/index"
 import { getFluentCardInfo } from "../../api/mine/index"
 import {
 	addTravelVisitNumber,
+	getDiscoveryRemindData,
 	getRecommendLiveList,
 	queryQualityVideoList,
 	queryTodayRecommendCourse,
@@ -38,8 +47,52 @@ Page({
 		previewVideoLink: "",
 		weekdays: ['日', '一', '二', '三', '四', '五', '六'],
 		liveStatusIntervalTimer: null,
+		didShowInformation: true,
+		showInformationPopAnime: false,
+		popData: {}, // 弹窗数据
 	},
 	async run() {
+		// 请求花样大学首页弹窗任务
+		getDiscoveryRemindData().then((data) => {
+			if (!$notNull(data.remind)) return
+			let popData = {
+				id: data.kecheng.id,
+				type: data.remind.remind_type,
+				picture: data.remind.pic_url,
+				name: `${data.teacher.name} ${data.teacher.teacher_desc}`,
+				avatar: data.teacher.avatar,
+				title: data.kecheng.teacher_desc,
+				desc: data.kecheng.name,
+				popTitle: data.remind.title,
+			}
+			if (data.remind.pic_width && data.remind.pic_height) {
+				popData["pictureRatio"] = data.remind.pic_width / data.remind.pic_height
+				popData["link"] = data.remind.link
+			}
+			this.setData({popData})
+			let key = `hy_remind_${data.remind.id}_expire_time`
+			let old_remind_expire_time = getLocalStorage(key)
+			if (old_remind_expire_time) {
+				// 存在
+				if (dayjs(old_remind_expire_time).isAfter(dayjs())) {
+					// 未过期
+				} else {
+					// 过期
+					removeLocalStorage(key)
+					let t = setTimeout(() => {
+						this.openInformationPop()
+						clearTimeout(t)
+					}, 1000)
+				}
+			} else {
+				// 不存在
+				setLocalStorage(key, data.remind.expire_time)
+				let t = setTimeout(() => {
+					this.openInformationPop()
+					clearTimeout(t)
+				}, 1000)
+			}
+		})
 		// 推荐直播间
 		let list = await getRecommendLiveList()
 		list = list.map(item => {
@@ -414,12 +467,52 @@ Page({
 			}
 		})
 	},
+	onInformationPopTap() {
+		let item = this.data.popData
+		wx.navigateTo({
+			url: `/subCourse/videoCourse/videoCourse?videoId=${item.id}`,
+			complete() {
+				bxPoint("new_series_join", {
+					series_id: item.id,
+					kecheng_name: item.name
+				}, false)
+			}
+		})
+	},
+	onCatchtouchmove() {
+		return false
+	},
+	openInformationPop() {
+		this.setData({didShowInformation: true})
+		wx.nextTick(() => {this.setData({showInformationPopAnime: true})})
+		bxPoint("new_series_visit", {
+			series_id: this.data.popData.id,
+			kecheng_name: this.data.popData.name
+		})
+	},
+	closeInformationPop() {
+		this.setData({showInformationPopAnime: false})
+		let t = setTimeout(() => {
+			this.setData({didShowInformation: false})
+			clearTimeout(t)
+		}, 400)
+	},
+	jumpToLink() {
+		let link = this.data.popData.link
+		if (link) {
+			wx.navigateTo({
+				url: link,
+				fail() {
+					wx.switchTab({url: link})
+				}
+			})
+		}
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-
-		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=219`})
+		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=223`})
 
 		let {scene, invite_user_id = "", source} = options
 		// 通过小程序码进入 scene=${source}
@@ -496,6 +589,9 @@ Page({
 	 * 生命周期函数--监听页面隐藏
 	 */
 	onHide: function () {
+		if (this.data.didShowInformation) {
+			this.closeInformationPop()
+		}
 	},
 
 	/**

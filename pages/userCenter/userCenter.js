@@ -15,7 +15,6 @@ import {
 	getLocalStorage,
 	hasAccountInfo,
 	hasUserInfo,
-	removeLocalStorage,
 	setLocalStorage,
 	splitTargetNoString
 } from "../../utils/util"
@@ -239,23 +238,6 @@ Page({
       this.setData({
         existNo: no || 1
       })
-    }
-  },
-  // 计算微信授权信息过期时间
-  calcUserInfoExpireTime() {
-    let expireTime = getLocalStorage(GLOBAL_KEY.userInfoExpireTime)
-    if (!expireTime) return
-
-    let didExpired = dayjs(expireTime).isBefore(dayjs())
-    if (didExpired) {
-      removeLocalStorage(GLOBAL_KEY.openId)
-      removeLocalStorage(GLOBAL_KEY.userInfo)
-      removeLocalStorage(GLOBAL_KEY.userId)
-      removeLocalStorage(GLOBAL_KEY.token)
-      removeLocalStorage(GLOBAL_KEY.accountInfo)
-      getApp().globalData.ignoreHyServerSavedUserInfo = true
-
-      this.reloadUserCenter()
     }
   },
   // 处理用户卡片点击
@@ -659,7 +641,6 @@ Page({
       })
     }
     this.calcUserCreatedTime()
-    this.calcUserInfoExpireTime()
     bxPoint("applets_mine", {})
     this.queryContentInfo()
     this.getBanner()

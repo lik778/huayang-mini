@@ -1,9 +1,8 @@
 import { wxLoginPromise } from "../../utils/auth"
 import { bindUserInfo, bindWxPhoneNumber, getWxInfo } from "../../api/auth/index"
 import { APP_LET_ID, GLOBAL_KEY } from "../../lib/config"
-import { $notNull, getLocalStorage, setLocalStorage } from "../../utils/util"
+import { $notNull, getLocalStorage, setLocalStorage, setWxUserInfoExpiredTime } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
-import dayjs from "dayjs"
 
 Component({
   /**
@@ -36,7 +35,6 @@ Component({
   data: {
     didVisible: false, // 控制显隐
     didGetPhoneNumber: false, // 授权类型
-    hasNoWxAuth: false
   },
 
   /**
@@ -72,7 +70,7 @@ Component({
               let originUserInfo = await bindUserInfo(params)
               setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
 
-              setLocalStorage(GLOBAL_KEY.userInfoExpireTime, dayjs().add(1, 'minute').format("YYYY-MM-DD HH:mm:ss"))
+              setWxUserInfoExpiredTime()
 
               bxPoint("applets_auth_status", {auth_type: "weixin", auth_result: "success"}, false)
               this.checkLogin()
@@ -114,7 +112,7 @@ Component({
         }
         this.complete()
 
-        setLocalStorage(GLOBAL_KEY.userInfoExpireTime, dayjs().add(1, 'minute').format("YYYY-MM-DD HH:mm:ss"))
+        setWxUserInfoExpiredTime()
 
         bxPoint("applets_auth_status", {auth_type: "phone", auth_result: "success"}, false)
       } else {
@@ -144,22 +142,15 @@ Component({
     checkLogin() {
       wxLoginPromise()
         .then(async (code) => {
-          let expireTime = getLocalStorage(GLOBAL_KEY.userInfoExpireTime)
-          let didExpired = dayjs(expireTime).isBefore(dayjs())
-
-          if (didExpired) {
-            this.setData({didGetPhoneNumber: false})
+          let originUserInfo = await getWxInfo({code, app_id: APP_LET_ID.tx})
+          if ($notNull(originUserInfo) && originUserInfo.nickname) {
+            // 缓存openId、userInfo
+            setLocalStorage(GLOBAL_KEY.openId, originUserInfo.openid)
+            setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
+            // 用户已完成微信授权，引导用户手机号授权
+            this.setData({didGetPhoneNumber: true})
           } else {
-            let originUserInfo = await getWxInfo({code, app_id: APP_LET_ID.tx})
-            if ($notNull(originUserInfo) && originUserInfo.nickname) {
-              // 缓存openId、userInfo
-              setLocalStorage(GLOBAL_KEY.openId, originUserInfo.openid)
-              setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
-              // 用户已完成微信授权，引导用户手机号授权
-              this.setData({didGetPhoneNumber: true, hasNoWxAuth: false})
-            } else {
-              this.setData({hasNoWxAuth: true})
-            }
+            this.setData({didGetPhoneNumber: false})
           }
         })
         .catch((error) => {
