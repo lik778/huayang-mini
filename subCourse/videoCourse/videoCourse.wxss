@@ -903,7 +903,7 @@
 
 .unit-pop-content {
   position: absolute;
-  top: calc(50vh - 300rpx);
+  top: calc(45vh - 300rpx);
   left: calc(50vw - 300rpx);
   width: 600rpx;
   height: 570rpx;

@@ -210,12 +210,9 @@ Page({
   },
   // 保存图片到相册
   saveToLocal() {
+    wx.showLoading({title: '海报生成中...', mask: true})
     let self = this
     if (!this.data._didDrawCanvasDone) {
-      wx.showLoading({
-        title: '海报生成中...',
-        mask: true
-      })
       this.setData({
         _invokeSaveToLocalAction: true
       })

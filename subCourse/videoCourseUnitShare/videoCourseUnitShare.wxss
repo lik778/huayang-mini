@@ -33,19 +33,12 @@
     left: 30rpx;
 }
 
-.avatar-wrap {
+.avatar {
     float: left;
     width: 120rpx;
     height: 120rpx;
-    padding: 4rpx;
     box-sizing: border-box;
-    border-radius: 999rpx;
-    background: white;
-}
-
-.avatar {
-    width: 112rpx;
-    height: 112rpx;
+    border: 4rpx solid #fff;
     border-radius: 999rpx;
 }
 

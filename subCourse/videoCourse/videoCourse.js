@@ -1,26 +1,26 @@
 // subCourse/videoCourseDetail/videoCourseDetail.js
 import { ErrorLevel, FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import {
-  checkJoinVideoCourse,
-  checkNeedSpecialManage,
-  createFissionTask,
-  getIosCustomerLink,
-  getVideoArticleLink,
-  getVideoCourseDetail,
-  inviteFriend,
-  joinVideoCourse,
-  recordStudy
+	checkJoinVideoCourse,
+	checkNeedSpecialManage,
+	createFissionTask,
+	getIosCustomerLink,
+	getVideoArticleLink,
+	getVideoCourseDetail,
+	inviteFriend,
+	joinVideoCourse,
+	recordStudy
 } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
 import {
-  $notNull,
-  convertToChinaNum,
-  getLocalStorage,
-  hasAccountInfo,
-  hasUserInfo,
-  isIphoneXRSMax,
-  payCourse,
-  secondToMinute
+	$notNull,
+	convertToChinaNum,
+	getLocalStorage,
+	hasAccountInfo,
+	hasUserInfo,
+	isIphoneXRSMax,
+	payCourse,
+	secondToMinute
 } from "../../utils/util"
 import { collectError } from "../../api/auth/index"
 import { getFluentCardInfo, getKechengWithFluentCard } from "../../api/mine/index"
@@ -204,7 +204,7 @@ Page({
       let paramsData = {
         series_id: this.data.videoCourseId,
         lesson_num: `第${this.data.nowCoursePlayIndex + 1}节课`,
-        lesson_name: series_detail.name,
+        lesson_name: series_detail[this.data.nowCoursePlayIndex].title,
       }
       if (this.data.from_co_channel) {
         paramsData.co_channel_tag = 'co_lndx'
@@ -257,7 +257,9 @@ Page({
       inPlaying: false,
       ['videoCourseData.series_detail.video_detail']: videoData,
     })
-    this.openUnitPop()
+    if (hasUserInfo() && hasAccountInfo()) {
+      this.openUnitPop()
+    }
   },
 
   // 未授权，点击授权
@@ -920,7 +922,7 @@ Page({
       series_id: this.data.videoCourseId,
       video_src: this.data.videoPlayerSrc.split(VideoSrcHost)[1],
       lesson_num: `第${this.data.nowCoursePlayIndex + 1}节课`,
-      lesson_name: this.data.videoCourseData.series_detail.video_detail.name,
+      lesson_name: this.data.videoCourseData.series_detail.video_detail[this.data.nowCoursePlayIndex].title,
       time_snippet: timeList.length === 0 ? listData : timeList, //事件片段
       total_duration: time, //视频总时间
       total_visit_duration: arr.length, // 总观看时间

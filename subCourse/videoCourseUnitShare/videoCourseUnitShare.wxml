@@ -4,9 +4,7 @@
         <image class="bg" mode="aspectFill" src="{{coreData.cover}}"></image>
         <view class="date">{{coreData.date}}</view>
         <view class="user-info">
-            <view class="avatar-wrap">
-                <image class="avatar" mode="aspectFill" src="{{coreData.avatar}}"></image>
-            </view>
+            <image class="avatar" mode="aspectFill" src="{{coreData.avatar}}"></image>
             <view class="name-wrap">
                 <text class="user-name limit-one-line">{{coreData.nickname}}</text>
                 <text class="slogan">正在花样大学学习</text>

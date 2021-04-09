@@ -63,7 +63,7 @@ Page({
 				avatar: data.teacher.avatar,
 				title: data.kecheng.teacher_desc,
 				desc: data.kecheng.name,
-				popTitle: data.remind.title,
+				popTitle: data.remind.title.slice(0, 9),
 			}
 			if (data.remind.pic_width && data.remind.pic_height) {
 				popData["pictureRatio"] = data.remind.pic_width / data.remind.pic_height
