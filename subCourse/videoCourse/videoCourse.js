@@ -1,25 +1,25 @@
 import { ErrorLevel, FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import {
-	checkJoinVideoCourse,
-	checkNeedSpecialManage,
-	createFissionTask,
-	getIosCustomerLink,
-	getVideoArticleLink,
-	getVideoCourseDetail,
-	inviteFriend,
-	joinVideoCourse,
-	recordStudy
+  checkJoinVideoCourse,
+  checkNeedSpecialManage,
+  createFissionTask,
+  getIosCustomerLink,
+  getVideoArticleLink,
+  getVideoCourseDetail,
+  inviteFriend,
+  joinVideoCourse,
+  recordStudy
 } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
 import {
-	$notNull,
-	convertToChinaNum,
-	getLocalStorage,
-	hasAccountInfo,
-	hasUserInfo,
-	isIphoneXRSMax,
-	payCourse,
-	secondToMinute
+  $notNull,
+  convertToChinaNum,
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  isIphoneXRSMax,
+  payCourse,
+  secondToMinute
 } from "../../utils/util"
 import { collectError } from "../../api/auth/index"
 import { getFluentCardInfo, getKechengWithFluentCard } from "../../api/mine/index"
@@ -1068,6 +1068,10 @@ Page({
     }).then(({data}) => {
       this.setData({isFluentCardVip: $notNull(data) && data.status === FluentLearnUserType.active})
     })
+  },
+
+  onCatchtouchmove() {
+    return false
   },
 
   /**

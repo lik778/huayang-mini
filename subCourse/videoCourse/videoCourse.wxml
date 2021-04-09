@@ -288,7 +288,7 @@
   </view>
 
   <!-- 单节课程完成提示弹窗 -->
-  <view class="unit-lesson-done-pop" wx:if="{{didShowUnitPop}}">
+  <view class="unit-lesson-done-pop" wx:if="{{didShowUnitPop}}" catchtouchmove="onCatchtouchmove">
     <view class="unit-pop-mask {{showUnitPopAnime ? 'animation' : ''}}" bindtap="closeUnitPop"></view>
     <view class="unit-pop-content {{showUnitPopAnime ? 'animation' : ''}}">
       <image class="unit-pop-icon" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617863472FvMjUu.jpg"></image>
