@@ -98,7 +98,7 @@
 
     <!-- 全局消息弹窗 -->
     <view class="information" catchtouchmove="onCatchtouchmove" wx:if="{{didShowInformation}}">
-        <view class="information-mask {{showInformationPopAnime ? 'animation' : ''}}" bindtap="closeInformationPop"></view>
+        <view class="information-mask {{showInformationPopAnime ? 'animation' : ''}}"></view>
         <block wx:if="{{popData.type === 'new_kecheng'}}">
             <view class="information-content {{showInformationPopAnime ? 'animation' : ''}}">
                 <view class="information-pop-title">{{popData.popTitle}}</view>
