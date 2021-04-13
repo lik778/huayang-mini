@@ -1,0 +1,135 @@
+@import "../../assets/css/common.wxss";
+.course-unit-share {
+    height: 100vh;
+    background: #37383B;
+}
+
+.picture {
+    position: fixed;
+    top: calc(50vh - 64rpx - 480rpx);
+    left: 76rpx;
+    width: 600rpx;
+    height: 960rpx;
+    background: white;
+}
+
+.bg {
+    width: 600rpx;
+    height: 694rpx;
+    background: black;
+}
+
+.date {
+    position: absolute;
+    top: 50rpx;
+    left: 30rpx;
+    font: bold 56rpx/56rpx PingFangSC;
+    color: white;
+}
+
+.user-info {
+    position: absolute;
+    top: 634rpx;
+    left: 30rpx;
+}
+
+.avatar {
+    float: left;
+    width: 120rpx;
+    height: 120rpx;
+    box-sizing: border-box;
+    border: 4rpx solid #fff;
+    border-radius: 999rpx;
+}
+
+.name-wrap {
+    margin-left: 140rpx;
+    width: 400rpx;
+}
+
+.user-name {
+    display: block;
+    width: 400rpx;
+    margin-bottom: 44rpx;
+    white-space: nowrap;
+    color: white;
+    font: 500 36rpx/36rpx PingFangSC;
+}
+
+.slogan {
+    display: block;
+    font: 26rpx/26rpx PingFangSC;
+}
+
+.course {
+    position: absolute;
+    bottom: 56rpx;
+    left: 30rpx;
+}
+
+.course-name, .course-sub-name {
+    display: block;
+    width: 370rpx;
+    white-space: nowrap;
+}
+
+.course-name {
+    margin-bottom: 24rpx;
+    font: 500 36rpx/36rpx PingFangSC;
+}
+
+.course-sub-name {
+    font: 28rpx/28rpx PingFangSC;
+}
+
+.qrcode-wrap {
+    position: absolute;
+    bottom: 30rpx;
+    right: 30rpx;
+}
+
+.qrcode {
+    width: 136rpx;
+    height: 136rpx;
+    margin-bottom: 12rpx;
+}
+
+.qrcode-tips {
+    display: block;
+    font: 20rpx/28rpx PingFangSC;
+}
+
+/* 操作区域 */
+.operate {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    height: 128rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30rpx env(safe-area-inset-bottom);
+    box-sizing: border-box;
+}
+
+.continue-learn, .save-btn {
+    width: 330rpx;
+    height: 96rpx;
+    bottom: 0;
+    border-radius: 999rpx;
+    text-align: center;
+    font: 500 32rpx/96rpx PingFangSC;
+    color: white;
+    background: #CC0000;
+}
+
+.continue-learn {
+    background: white;
+    color: #CC0000;
+}
+
+/* 画布 */
+#unit-share-canvas {
+    position: fixed;
+    left: 300%;
+}

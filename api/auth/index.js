@@ -10,9 +10,7 @@ import dayjs from "dayjs"
  */
 export function getWxInfo(params) {
 	return new Promise(resolve => {
-		request._get(URL.getWxInfo, params).then(({
-																								data
-																							}) => {
+		request._get(URL.getWxInfo, params).then(({data}) => {
 			resolve(data)
 		})
 	})
@@ -25,10 +23,7 @@ export function getWxInfo(params) {
  */
 export function bindUserInfo(params) {
 	return new Promise(resolve => {
-		request._post(URL.bindUserInfo, params).then(({
-																										code,
-																										data
-																									}) => {
+		request._post(URL.bindUserInfo, params).then(({code,data}) => {
 			if (code === 0) {
 				resolve(data)
 			}
@@ -43,10 +38,7 @@ export function bindUserInfo(params) {
  */
 export function bindWxPhoneNumber(params) {
 	return new Promise(resolve => {
-		request._post(URL.bindWxPhoneNumber, params).then(({
-																												 data,
-																												 code
-																											 }) => {
+		request._post(URL.bindWxPhoneNumber, params).then(({data, code}) => {
 			// 服务端解析微信敏感数据失败
 			if (code === 112) {
 				toast('授权失败，请重试')
@@ -136,9 +128,9 @@ export const collectError = (params) => {
 	let userInfoString = getLocalStorage(GLOBAL_KEY.userInfo)
 	let accountInfoString = getLocalStorage(GLOBAL_KEY.accountInfo)
 	let systemInfoString = getLocalStorage(GLOBAL_KEY.systemParams)
-	let { user_id, nickname } = userInfoString ? JSON.parse(userInfoString) : {}
-	let { user_id: userId, nick_name, mobile } = accountInfoString ? JSON.parse(accountInfoString) : {}
-	let { model, system, SDKVersion, version } = systemInfoString ? JSON.parse(systemInfoString) : {}
+	let {user_id, nickname} = userInfoString ? JSON.parse(userInfoString) : {}
+	let {user_id: userId, nick_name, mobile} = accountInfoString ? JSON.parse(accountInfoString) : {}
+	let {model, system, SDKVersion, version} = systemInfoString ? JSON.parse(systemInfoString) : {}
 	let commonParams = {
 		userId: user_id || userId,
 		nickname: nickname || nick_name,

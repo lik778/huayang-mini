@@ -1,9 +1,4 @@
-// subCourse/videoCourseDetail/videoCourseDetail.js
-import {
-  ErrorLevel,
-  FluentLearnUserType,
-  GLOBAL_KEY
-} from "../../lib/config"
+import { ErrorLevel, FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import {
   checkJoinVideoCourse,
   checkNeedSpecialManage,
@@ -22,17 +17,13 @@ import {
   getLocalStorage,
   hasAccountInfo,
   hasUserInfo,
+  isIphoneXRSMax,
   payCourse,
-  secondToMinute,
-  isIphoneXRSMax
+  secondToMinute
 } from "../../utils/util"
-import {
-  collectError
-} from "../../api/auth/index"
-import {
-  getFluentCardInfo,
-  getKechengWithFluentCard
-} from "../../api/mine/index"
+import { collectError } from "../../api/auth/index"
+import { getFluentCardInfo, getKechengWithFluentCard } from "../../api/mine/index"
+import dayjs from "dayjs"
 
 const ButtonType = {
   noLogin: 1, //未登录
@@ -86,7 +77,13 @@ Page({
     from_co_channel: false,
     special: false, //该课程是否是安卓特殊处理课程
     showNoticeBox: true,
-    isIphoneXRSMax:isIphoneXRSMax()
+    isIphoneXRSMax:isIphoneXRSMax(),
+    didShowUnitPop: false,
+    showUnitPopAnime: false,
+    showContact: false,
+    trialData: null, // 观看有效期对象
+    trialDiffDays: 0, // 剩余观看有效期时长
+    isFluentCardVip: false, // 是否是畅学卡会员
   },
 
 
@@ -175,7 +172,7 @@ Page({
   /**
    * 畅学卡会员，兑换课程
    * @param
-   */
+   * */
   exchangeKechengWithFluentCard(kechengId) {
     return new Promise((resolve) => {
       let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
@@ -206,7 +203,8 @@ Page({
       // 2021-01-14上线
       let paramsData = {
         series_id: this.data.videoCourseId,
-        kecheng_title: series_detail[index].title
+        lesson_num: `第${this.data.nowCoursePlayIndex + 1}节课`,
+        lesson_name: series_detail[this.data.nowCoursePlayIndex].title,
       }
       if (this.data.from_co_channel) {
         paramsData.co_channel_tag = 'co_lndx'
@@ -259,6 +257,9 @@ Page({
       inPlaying: false,
       ['videoCourseData.series_detail.video_detail']: videoData,
     })
+    if (hasUserInfo() && hasAccountInfo()) {
+      this.openUnitPop()
+    }
   },
 
   // 未授权，点击授权
@@ -325,7 +326,7 @@ Page({
               nowCoursePlayIndex: this.data.shareIndex ? this.data.shareIndex : this.data.nowCoursePlayIndex ? this.data.nowCoursePlayIndex : res.data.last_visit_num - 1 >= 0 ? res.data.last_visit_num - 1 : '',
               studiedIndex: res.data.last_visit_num === 0 ? '' : res.data.last_visit_num,
               noPayForCourse: true,
-              videoPlayerLock: false
+              videoPlayerLock: false,
             })
             if (this.data.showStudyToast) {
               setTimeout(() => {
@@ -336,6 +337,15 @@ Page({
             }
             // 获取训练营详情
             this.getVideoCourseData(buttonType)
+            // 计算观看有效期
+            if (res.data.expire_at) {
+              let didExpire = dayjs(res.data.expire_at).isAfter(dayjs())
+              let legal = dayjs(res.data.expire_at).isBefore(dayjs().add(15, 'day'))
+              let diffDays = dayjs(res.data.expire_at).diff(dayjs().format("YYYY-MM-DD HH:mm:ss"), 'day')
+              if (didExpire && legal) {
+                this.setData({trialData: {...res.data}, trialDiffDays: diffDays})
+              }
+            }
           }
         } else {
           this.setData({
@@ -912,7 +922,7 @@ Page({
       series_id: this.data.videoCourseId,
       video_src: this.data.videoPlayerSrc.split(VideoSrcHost)[1],
       lesson_num: `第${this.data.nowCoursePlayIndex + 1}节课`,
-      kecheng_title: this.data.videoCourseData.series_detail.video_detail[this.data.nowCoursePlayIndex].title,
+      lesson_name: this.data.videoCourseData.series_detail.video_detail[this.data.nowCoursePlayIndex].title,
       time_snippet: timeList.length === 0 ? listData : timeList, //事件片段
       total_duration: time, //视频总时间
       total_visit_duration: arr.length, // 总观看时间
@@ -988,11 +998,86 @@ Page({
     })
   },
 
+  openUnitPop() {
+    this.setData({didShowUnitPop: true})
+    wx.nextTick(() => {this.setData({showUnitPopAnime: true})})
+    let data = this.data.videoCourseData.series_detail
+    bxPoint("series_check_in", {
+      series_id: data.id,
+      lesson_num: `第${this.data.nowCoursePlayIndex + 1}节课`,
+      lesson_name: data.name,
+    }, false)
+  },
+
+  closeUnitPop() {
+    this.setData({showUnitPopAnime: false})
+    let t = setTimeout(() => {
+      this.setData({didShowUnitPop: false})
+      clearTimeout(t)
+    }, 400)
+  },
+
+  goToUnitSharePage() {
+    const self = this
+
+    wx.navigateTo({
+      url: "/subCourse/videoCourseUnitShare/videoCourseUnitShare",
+      success(res) {
+        res.eventChannel.emit("transmitUnitShareData", {
+        	data: {
+        	  id: self.data.videoCourseData.series_detail.id,
+        	  date: dayjs().format("YYYY/MM/DD"),
+        		name: self.data.videoCourseData.series_detail.teacher_desc,
+						desc: self.data.videoCourseData.series_detail.name,
+            qrCode: self.data.videoCourseData.series_detail.qrcode,
+						avatar: self.data.userInfo.avatar_url,
+						nickname: self.data.userInfo.nick_name,
+            lesson_num: `第${self.data.nowCoursePlayIndex + 1}节课`,
+            lesson_name: self.data.videoCourseData.series_detail.name,
+					}
+        })
+      },
+      complete() {
+        bxPoint("series_video_friends", {series_id: self.data.videoCourseData.series_detail.id}, false)
+      }
+    })
+  },
+  // 联系客服
+  contactService() {
+    this.setData({
+      showContact: true
+    })
+    let data = this.data.videoCourseData.series_detail
+    bxPoint("series_check_in_share", {
+      series_id: data.id,
+      lesson_num: `第${this.data.nowCoursePlayIndex + 1}节课`,
+      lesson_name: data.name,
+    }, false)
+  },
+  // 关闭联系客服
+  onCloseContactModal() {
+    this.setData({
+      showContact: false
+    })
+  },
+
+  getUserFluentInfo() {
+    let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+    getFluentCardInfo({
+      user_snow_id: accountInfo.snow_id
+    }).then(({data}) => {
+      this.setData({isFluentCardVip: $notNull(data) && data.status === FluentLearnUserType.active})
+    })
+  },
+
+  onCatchtouchmove() {
+    return false
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
   },
 
   //页面pv打点
@@ -1030,6 +1115,10 @@ Page({
     this.videoContext = wx.createVideoContext('videoPlayer')
     // 获取视频课程引流文章地址
     this.getArticleLink()
+    // 查询用户畅学卡信息
+    if (hasUserInfo() && hasAccountInfo()) {
+      this.getUserFluentInfo()
+    }
   },
 
   /**
@@ -1042,6 +1131,10 @@ Page({
       this.setData({
         needRecordPlayTime: false
       })
+    }
+
+    if (this.data.didShowUnitPop) {
+      this.closeUnitPop()
     }
 
   },

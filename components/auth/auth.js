@@ -1,7 +1,7 @@
 import { wxLoginPromise } from "../../utils/auth"
 import { bindUserInfo, bindWxPhoneNumber, getWxInfo } from "../../api/auth/index"
 import { APP_LET_ID, GLOBAL_KEY } from "../../lib/config"
-import { $notNull, getLocalStorage, setLocalStorage } from "../../utils/util"
+import { $notNull, getLocalStorage, setLocalStorage, setWxUserInfoExpiredTime } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Component({
@@ -35,7 +35,6 @@ Component({
   data: {
     didVisible: false, // 控制显隐
     didGetPhoneNumber: false, // 授权类型
-    hasNoWxAuth: false
   },
 
   /**
@@ -70,6 +69,9 @@ Component({
               }
               let originUserInfo = await bindUserInfo(params)
               setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
+
+              setWxUserInfoExpiredTime()
+
               bxPoint("applets_auth_status", {auth_type: "weixin", auth_result: "success"}, false)
               this.checkLogin()
             })
@@ -109,6 +111,9 @@ Component({
           setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
         }
         this.complete()
+
+        setWxUserInfoExpiredTime()
+
         bxPoint("applets_auth_status", {auth_type: "phone", auth_result: "success"}, false)
       } else {
         // 用户拒绝手机号授权
@@ -137,18 +142,15 @@ Component({
     checkLogin() {
       wxLoginPromise()
         .then(async (code) => {
-          let originUserInfo = await getWxInfo({
-            code,
-            app_id: APP_LET_ID.tx
-          })
+          let originUserInfo = await getWxInfo({code, app_id: APP_LET_ID.tx})
           if ($notNull(originUserInfo) && originUserInfo.nickname) {
             // 缓存openId、userInfo
             setLocalStorage(GLOBAL_KEY.openId, originUserInfo.openid)
             setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
             // 用户已完成微信授权，引导用户手机号授权
-            this.setData({didGetPhoneNumber: true, hasNoWxAuth: false})
+            this.setData({didGetPhoneNumber: true})
           } else {
-            this.setData({hasNoWxAuth: true})
+            this.setData({didGetPhoneNumber: false})
           }
         })
         .catch((error) => {

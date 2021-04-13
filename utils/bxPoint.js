@@ -56,7 +56,6 @@ function getKeyValue(keyAry = [], targetObject = {}) {
  * @param siteId
  * @param params 数据属性参数
  * @param ispv
- * @returns {Promise<unknown>}
  */
 const bxPoint = function(siteId, params, ispv = true) {
   const commonParams = {}
@@ -81,11 +80,7 @@ const bxPoint = function(siteId, params, ispv = true) {
     tracktype: ispv ? "pageview" : "event",
     event_type: 'huayang'
   }
-  return new Promise(resolve => {
-    request._get('https://www.baixing.com/c/ev/huayang', params).then(() => {
-      resolve()
-    })
-  })
+  request._get('https://www.baixing.com/c/ev/huayang', params).then()
 }
 
 export default bxPoint

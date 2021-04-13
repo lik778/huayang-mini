@@ -1,5 +1,5 @@
 <!--subCourse/videoCourseDetail/videoCourseDetail.wxml-->
-<view class="video-detail" wx:if='{{videoCourseData!=""}}'>
+<view class="video-detail" wx:if='{{videoCourseData!==""}}'>
   <!-- 横条区域 -->
   <!-- 请好友看课 -->
   <view class="notice subject-bg-color" wx:if='{{showSuccess}}' bindtap="playVideo">
@@ -48,6 +48,13 @@
       <text class="video-description-msg-line-text">{{videoCourseData.series_detail.video_detail.length}}节课</text>
       <text class="video-description-msg-wire"></text>
       <text class="video-description-msg-line-text">{{videoCourseData.series_detail.visit_count}}人学习</text>
+    </view>
+
+    <!-- 过期提醒 -->
+    <view class="trial" wx:if="{{!isFluentCardVip && trialData}}">
+      <text class="remind">提醒：</text>
+      <text>课程有效期还有<text class="remind">{{trialDiffDays}}</text>天，快联系花样客服</text>
+      <view class="trial-contact" bindtap="contactService">联系客服</view>
     </view>
   </view>
   <!-- tab区域 -->
@@ -257,15 +264,14 @@
     </view>
   </view>
   <!-- 分享微信好友 -->
-  <view class="share" bindtap="share" wx:else style="bottom:{{noPayForCourse?'80rpx':'140rpx'}}">
+  <view class="share" bindtap="share" wx:else style="bottom:{{noPayForCourse?'80rpx':'180rpx'}}">
     <view class="share-box">
       <button open-type="share"></button>
       <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599118170RBWnFr.jpg"></image>
     </view>
   </view>
   <!-- 授权弹窗 -->
-  <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
-  </authModule>
+  <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
 
   <!-- 登录授权提示 -->
   <view class="auth-notice-module" bindtap="closeAuth" wx:if='{{showNoticeBox&&buttonType===1}}'>
@@ -280,4 +286,22 @@
       </view>
     </view>
   </view>
+
+  <!-- 单节课程完成提示弹窗 -->
+  <view class="unit-lesson-done-pop" wx:if="{{didShowUnitPop}}" catchtouchmove="onCatchtouchmove">
+    <view class="unit-pop-mask {{showUnitPopAnime ? 'animation' : ''}}" bindtap="closeUnitPop"></view>
+    <view class="unit-pop-content {{showUnitPopAnime ? 'animation' : ''}}">
+      <image class="unit-pop-icon" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617863472FvMjUu.jpg"></image>
+      <view class="unit-pop-tips">
+        <text>太棒啦!</text>
+        <text>恭喜您学完这节课程</text>
+      </view>
+      <view class="unit-pop-btn" bindtap="goToUnitSharePage">打卡分享</view>
+      <image class="unit-pop-close" bindtap="closeUnitPop" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617938508Usopwi.jpg"></image>
+      <view class="unit-pop-light {{showUnitPopAnime ? 'animation' : ''}}"></view>
+    </view>
+  </view>
+
+  <!-- 联系客服 -->
+  <contact show='{{showContact}}' sessionFrom="distribute" bind:closeContactModal="onCloseContactModal"></contact>
 </view>

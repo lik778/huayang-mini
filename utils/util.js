@@ -1,21 +1,10 @@
 import md5 from 'md5'
-import {
-	GLOBAL_KEY,
-	ROOT_URL,
-	URL,
-	WeChatLiveStatus
-} from '../lib/config'
-import {
-	createOrder
-} from "../api/mine/payVip"
-import {
-	getWatchLiveAuth,
-	statisticsWatchNo
-} from "../api/live/course"
+import { GLOBAL_KEY, ROOT_URL, URL, WeChatLiveStatus } from '../lib/config'
+import { createOrder } from "../api/mine/payVip"
+import { getWatchLiveAuth, statisticsWatchNo } from "../api/live/course"
 import request from "../lib/request"
-import {
-	getUserInfo
-} from "../api/mine/index"
+import { getUserInfo } from "../api/mine/index"
+import dayjs from "dayjs"
 
 const livePlayer = requirePlugin('live-player-plugin')
 
@@ -1212,4 +1201,16 @@ export const formatDate = (format, timestamp) => {
 		}
 		return ret;
 	});
+}
+
+/**
+ * 设置微信头像信息过期时间
+ */
+export function setWxUserInfoExpiredTime () {
+	let expireTime = getLocalStorage(GLOBAL_KEY.userInfoExpireTime)
+	if (expireTime) {
+		return false
+	} else {
+		setLocalStorage(GLOBAL_KEY.userInfoExpireTime, dayjs().add(15, 'day').format("YYYY-MM-DD HH:mm:ss"))
+	}
 }

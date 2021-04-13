@@ -146,3 +146,19 @@ export function getAttempt(params) {
 		})
 	})
 }
+
+/**
+ * 花样大学首页弹窗任务
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export function getDiscoveryRemindData(params) {
+	return new Promise((resolve, reject) => {
+		request._get(URL.queryDiscoveryRemindData, params).then(({data}) => {
+			data = data || {}
+			resolve(data)
+		}).catch((err) => {
+			reject(err)
+		})
+	})
+}
