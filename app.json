@@ -110,7 +110,11 @@
         "cooperationPage/cooperationPage",
         "cps/cps",
         "liveback/liveback",
-        "videoCourseUnitShare/videoCourseUnitShare"
+        "videoCourseUnitShare/videoCourseUnitShare",
+        "offlineCourse/offlineCourse",
+        "offlineCourseDetail/offlineCourseDetail",
+        "freeOnlineCourse/freeOnlineCourse",
+        "collegeActivity/collegeActivity"
       ]
     },
     {

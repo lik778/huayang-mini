@@ -15,6 +15,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
+    white-space: nowrap;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
 }

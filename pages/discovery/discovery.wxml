@@ -18,9 +18,53 @@
         </view>
     </view>
 
+    <!-- 金刚位 -->
+    <view class="king-kong">
+        <view class="king-kong-item">生活学院</view>
+        <view class="king-kong-item">时尚学院</view>
+        <view class="king-kong-item">兴趣学院</view>
+        <view class="king-kong-item">游学学院</view>
+    </view>
+
+    <!-- 花样大学介绍 -->
+    <view class="hy-intro">
+        <view class="hy-intro-layer">
+            <text>花样大学介绍</text>
+            <view class="hy-intro-btn">加入花样大学</view>
+        </view>
+        <video id="hy-video-content" class="hy-video" src="" controls="{{false}}"
+               custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}"
+               enable-progress-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}"
+               show-play-btn="{{false}}" autoplay="{{false}}" loop="{{true}}"></video>
+    </view>
+
     <!-- 直播 -->
     <liveLayout wx:if="{{liveList.length > 0}}" class="limit-two-line" liveList="{{liveList}}"
                 bind:openUserAuth="openUserAuth"/>
+
+    <!-- 线下精品课 -->
+    <view class="offline-course">
+        <view class="offline-course-item">
+            <image class=""></image>
+            <view class="offline-course-item-title">花样香道课</view>
+            <view class="offline-course-item-info">
+                <view class="offline-course-item-info-title limit-one-line">香道课，一起去领略香道文化</view>
+                <view class="about-offline-course-btn">查看 ›</view>
+            </view>
+        </view>
+    </view>
+
+    <!-- 大学活动 -->
+    <view class="college-activity">
+        <view class="college-activity-item">
+            <image class=""></image>
+            <view class="college-activity-title">花样香道课</view>
+            <view class="college-activity-info">
+                <view class="college-activity-info-title limit-one-line">香道课，一起去领略香道文化</view>
+                <view class="about-college-activity-btn">查看 ›</view>
+            </view>
+        </view>
+    </view>
 
     <!-- 今日推荐 -->
     <view class="today-recommend" wx:if="{{previewVideoLink}}" bindtap="onTodayRecommendTap">
@@ -96,6 +140,13 @@
         </view>
     </view>
 
+    <!-- 引导加入花样学习活动群 -->
+    <view class="guide">
+        <image class="guide-pic"></image>
+        <text class="guide-text">立即加入花样学习活动群</text>
+        <view class="guide-btn">进群</view>
+    </view>
+
     <!-- 全局消息弹窗 -->
     <view class="information" catchtouchmove="onCatchtouchmove" wx:if="{{didShowInformation}}">
         <view class="information-mask {{showInformationPopAnime ? 'animation' : ''}}"></view>
@@ -111,7 +162,8 @@
                     </view>
                 </view>
                 <view class="information-pop-btn" bindtap="onInformationPopTap">立即查看</view>
-                <image class="information-pop-close" bindtap="closeInformationPop" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617938508Usopwi.jpg"></image>
+                <image class="information-pop-close" bindtap="closeInformationPop" mode="aspectFit"
+                       src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617938508Usopwi.jpg"></image>
                 <view class="information-pop-clock">
                     <view class="information-pop-clock-item {{showInformationPopAnime ? 'animation' : ''}}"></view>
                 </view>
@@ -119,8 +171,10 @@
         </block>
         <block wx:if="{{popData.type === 'normal'}}">
             <view class="information-pop-picture-wrap" style="top: calc(50vh - 300rpx / {{popData.pictureRatio}});">
-                <image class="information-pop-picture {{showInformationPopAnime ? 'animation' : ''}}" bindtap="jumpToLink" src="{{popData.picture}}" mode="widthFix"></image>
-                <image class="information-pop-close" bindtap="closeInformationPop" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617938508Usopwi.jpg"></image>
+                <image class="information-pop-picture {{showInformationPopAnime ? 'animation' : ''}}"
+                       bindtap="jumpToLink" src="{{popData.picture}}" mode="widthFix"></image>
+                <image class="information-pop-close" bindtap="closeInformationPop" mode="aspectFit"
+                       src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617938508Usopwi.jpg"></image>
             </view>
         </block>
     </view>

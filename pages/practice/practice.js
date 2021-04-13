@@ -3,6 +3,7 @@ import { FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
 import { getFluentCardInfo } from "../../api/mine/index"
 import bxPoint from "../../utils/bxPoint"
+import { getYouZanAppId } from "../../api/mall/index"
 
 Page({
 
@@ -10,6 +11,8 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
+		current: 0,
+		bannerList: [],
 		titleList: [],
 		currentIndex: 0,
 		showMoney: true,
@@ -199,6 +202,43 @@ Page({
 			}
 		})
 	},
+	// swiper切换
+	changeSwiperIndex(e) {
+		this.setData({
+			current: e.detail.current
+		})
+	},
+	// 处理轮播点击事件
+	joinCampFromBanner(e) {
+		if (e.currentTarget.dataset.item.need_auth === 1) {
+			if (!hasUserInfo() || !hasAccountInfo()) {
+				let link = e.currentTarget.dataset.item.link
+				this.setData({
+					didShowAuth: true,
+					modelBannerLink: link,
+					isModelLink: false
+				})
+				return
+			}
+		}
+		let {
+			link,
+			link_type,
+			id
+		} = e.currentTarget.dataset.item
+		if (link_type === 'youzan') {
+			getYouZanAppId().then(appId => {
+				wx.navigateToMiniProgram({
+					appId,
+					path: link,
+				})
+			})
+		} else {
+			wx.navigateTo({
+				url: link
+			})
+		}
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
@@ -283,7 +323,7 @@ Page({
 	 */
 	onShareAppMessage: function () {
 		return {
-			title: "我在花样百姓，和我一起学习、游玩吧，开心每一天！",
+			title: "花样大学精品课程，让退休生活更精彩！",
 			path: `/pages/practice/practice?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
 		}
 	}

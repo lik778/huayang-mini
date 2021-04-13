@@ -1,5 +1,31 @@
 <view class="list">
-    <cover-view class="tabs-fixed-line"></cover-view>
+    <!-- 活动banner -->
+    <view class="promotion" wx:if="{{bannerList.length!==0}}">
+        <!-- banner 滚动区域 -->
+        <view class="swiper-box" id="swiper-box">
+            <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}"
+                    duration="{{500}}">
+                <swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="joinCampFromBanner" data-item="{{item}}">
+                    <view class="swiper-cover"></view>
+                    <image mode="cover" src="{{item.pic_url}}"></image>
+                </swiper-item>
+            </swiper>
+            <view class="swiper-dot">
+                <view wx:for="{{bannerList}}" wx:key="index" wx:if="{{bannerList.length>1}}"
+                      class="{{current===index?'swiper-dot-item-active swiper-dot-item':'swiper-dot-item'}}"></view>
+            </view>
+        </view>
+    </view>
+
+    <!-- 分类课程快速入口 -->
+    <view class="hyper-channel">
+        <view class="hyper-item">线上免费课</view>
+        <view class="hyper-item">大学活动</view>
+        <view class="hyper-item">线下精品课</view>
+        <view class="hyper-item">游学课程</view>
+    </view>
+
+    <!-- 学院Tabs -->
     <view class="type-list">
         <view class="{{currentIndex===index?'main-title-item active':'main-title-item'}}" wx:for="{{titleList}}"
               wx:key="index" bindtap="changeTab" data-index="{{index}}">

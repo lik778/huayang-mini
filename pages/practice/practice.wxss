@@ -3,23 +3,61 @@
     padding-bottom: 160rpx;
 }
 
-.tabs-fixed-line {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 1px;
-    background: white;
+/*推广位*/
+.promotion {
+    padding-bottom: 60rpx;
 }
 
+/* banner */
+.swiper-box {
+    height: 278rpx;
+    position: relative;
+}
+
+.swiper-item-box {
+    width: 100%;
+    height: 250rpx;
+}
+
+.swiper-item-box image {
+    width: 100%;
+    height: 100%;
+    /* border-radius: 8rpx; */
+}
+
+/* .swiper-item-box .swiper-cover {
+  width: 100%;
+  height: 100%;
+  background: #D8D8D8;
+} */
+
+.swiper-dot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+}
+
+.swiper-dot-item {
+    width: 22rpx;
+    height: 8rpx;
+    border-radius: 4rpx;
+    background: rgba(216, 216, 216, 1);
+    margin-right: 8rpx;
+}
+
+.swiper-dot-item-active {
+    background: #3A3C48;
+}
+
+/* 学院选项卡 */
 .type-list {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
     padding: 26rpx 30rpx 20rpx;
     background: #fff;
 }
@@ -54,7 +92,7 @@
 /* 视频课程列表 */
 .list-main {
     margin: 0 auto;
-    padding: 130rpx 0 50rpx;
+    padding: 20rpx 0 50rpx;
     width: calc(100% - 60rpx);
 }
 
