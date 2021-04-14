@@ -1,0 +1,57 @@
+<!--pages/studentMoments/studentMoments.wxml-->
+<view class="container">
+  <!-- 点赞+N人在看 -->
+  <view class='top-module'>
+    <view class="top-module-left">
+      <image src='{{likeUserInfo.avator}}'></image>
+      <text>{{likeUserInfo.name}}王元点赞了{{likeUserInfo.courseName}}</text>
+    </view>
+    <view class="top-module-right">
+      <view class="top-module-right-image">
+        <image src="{{item}}" wx:for="{{visitUserData.visitUserList}}" wx:key="index"></image>
+      </view>
+      <view class="top-module-right-desc">{{visitUserData.visitNum}}人在看</view>
+    </view>
+  </view>
+  <!-- 弹幕 -->
+  <view class="barrage-module">
+    <view class="barrage-scroll-module"></view>
+    <view class="barrage-publish-module">
+      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618366807TjCuKV.jpg"></image>
+    </view>
+  </view>
+  <!-- 动态列表 -->
+  <view class="main-module">
+    <view class="list">
+      <view class="item" bindtap="toDetail">
+        <view class="item-title">
+          <image src="https://wzrylt.oss-cn-beijing.aliyuncs.com/WechatIMG46.jpeg"></image>
+          <text>花样百姓</text>
+        </view>
+        <view class="item-main">
+          <image src="https://wzrylt.oss-cn-beijing.aliyuncs.com/WechatIMG46.jpeg"></image>
+          <view class="item-main-title">时尚学院朗斯的线下活动</view>
+        </view>
+        <view class="item-bottom">
+          <view class="item-like-module">
+            <image src="{{commonIcon.likeIcon[0]}}"></image>
+            <text>100</text>
+          </view>
+          <view class="item-comment-module">
+            <image src="{{commonIcon.commentIcon}}"></image>
+            <text>100</text>
+          </view>
+          <view class="item-comment-module">
+            <image src="{{commonIcon.shareIcon}}"></image>
+            <text>100</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 投稿 -->
+  <view class="contribute-button">
+    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618368640idsRLA.jpg"></image>
+    <text>投稿</text>
+  </view>
+</view>

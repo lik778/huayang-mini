@@ -5,12 +5,18 @@ Component({
     selected: 0,
     color: "#666666",
     selectedColor: "#CC0000",
-    list: [
-      {
+    list: [{
         "pagePath": "/pages/discovery/discovery",
         "selectedIconPath": "../assets/images/common/homeActive.png",
         "iconPath": "../assets/images/common/home.png",
         "text": "首页",
+        isDIY: false
+      },
+      {
+        "pagePath": "/pages/studentMoments/studentMoments",
+        "selectedIconPath": "../assets/images/common/student-moments-active.png",
+        "iconPath": "../assets/images/common/student-moments.png",
+        "text": "校友动态",
         isDIY: false
       },
       {

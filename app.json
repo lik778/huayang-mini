@@ -29,7 +29,9 @@
     "pages/webViewCommon/webViewCommon",
     "pages/activePlatform/activePlatform",
     "pages/activePay/activePay",
-    "pages/activePayCancel/activePayCancel"
+    "pages/activePayCancel/activePayCancel",
+    "pages/studentMoments/studentMoments",
+    "studentMoments/studentMomentsDetail/studentMomentsDetail"
   ],
   "requiredBackgroundModes": [
     "audio",
@@ -134,6 +136,9 @@
     "list": [
       {
         "pagePath": "pages/discovery/discovery"
+      },
+      {
+        "pagePath": "pages/studentMoments/studentMoments"
       },
       {
         "pagePath": "pages/practice/practice"
