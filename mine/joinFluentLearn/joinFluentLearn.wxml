@@ -48,20 +48,20 @@
         </view>
         <view class="button-module-right">
             <!-- 邀请码+原价 -->
-            <view class="button-module-type-one" wx:if='{{superiorDistributeUserId===0}}'>
-                <view class="button-module-type-old-price" bindtap="buy">
-                    <text>立即购买</text>
-                    <text>{{price}}元/年</text>
-                </view>
-                <view class="button-module-type-invite-price" bindtap="openCodeModal">
-                    <text>邀请码购买</text>
-                    <text>{{discountPrice}}元/年</text>
-                </view>
-            </view>
+            <!--<view class="button-module-type-one" wx:if='{{superiorDistributeUserId===0}}'>-->
+            <!--    <view class="button-module-type-old-price" bindtap="buy">-->
+            <!--        <text>立即购买</text>-->
+            <!--        <text>{{price}}元/年</text>-->
+            <!--    </view>-->
+            <!--    <view class="button-module-type-invite-price" bindtap="openCodeModal">-->
+            <!--        <text>邀请码购买</text>-->
+            <!--        <text>{{discountPrice}}元/年</text>-->
+            <!--    </view>-->
+            <!--</view>-->
             <!-- 原价 -->
-            <view class="button-module-type-two" wx:else bindtap="buy">
+            <view class="button-module-type-two" bindtap="buy">
                 <text>立即购买 {{discountPrice}}元/年</text>
-                <text>原价 {{price}}元/年</text>
+                <!--<text>原价 {{price}}元/年</text>-->
             </view>
         </view>
     </view>

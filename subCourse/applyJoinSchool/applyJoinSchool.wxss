@@ -14,48 +14,45 @@
 .logo {
   text-align: center;
   padding-top: 70rpx;
+  font-size: 0;
 }
 
 .logo image {
-  width: 300rpx;
-  height: 224rpx;
+  width: 276rpx;
+  height: 240rpx;
 }
 
 .title {
-  padding-top: 50rpx;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.title-line {
-  width: 116rpx;
-  height: 2rpx;
-  background: rgba(0, 0, 0, 0.2);
-}
 
 .title-text {
-  padding: 0 20rpx;
-  font-size: 36rpx;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 600;
-  color: #000000;
-  line-height: 52rpx;
+  margin: 74rpx 0 28rpx;
+  font: 500 48rpx/48rpx PingFangSC;
+  text-align: center;
+  color: #996633;
 }
 
 .warning {
-  padding: 0 60rpx;
-  font-size: 36rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: #000000;
-  line-height: 30px;
-  margin-top: 50rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40rpx;
+  font: 36rpx/60rpx PingFangSC;
+  text-align: center;
+}
+
+.warning-line {
+  width: 80rpx;
+  height: 2rpx;
+  background: black;
 }
 
 .input-module {
-  padding: 0 60rpx;
-  padding-top: 60rpx;
+  padding: 80rpx 60rpx 0;
 }
 
 .name-item,
@@ -135,7 +132,6 @@
   background: transparent;
   left: 0;
   top: 0;
-
 }
 
 .job-list {

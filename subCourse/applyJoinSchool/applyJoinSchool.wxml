@@ -1,19 +1,21 @@
 <view class="container">
   <!--  自定义头部  -->
   <view class="navigation" style="padding-top:{{statusHeight+43}}px;background:#5F5F5F;">
-    <naviBar title="入学申请" backPath='{{backPath}}' backPathBelongTab="{{true}}"></naviBar>
+    <naviBar title="花样会员注册" backPath='{{backPath}}' backPathBelongTab="{{true}}"></naviBar>
   </view>
   <!-- 主体区域 -->
   <view class="main">
     <view class="logo">
-      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1605151342LrKwov.jpg"></image>
+      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1616666005IQbVWI.jpg"></image>
     </view>
     <view class="title">
-      <view class="title-line"></view>
-      <view class="title-text">恭喜您成为花样大学学生</view>
-      <view class="title-line"></view>
+      <view class="title-text">恭喜您加入花样百姓</view>
     </view>
-    <view class="warning">请完善您的学员信息，花样会根据您的兴趣推荐合适的课程哦！</view>
+    <view class="warning">
+      <view class="warning-line"></view>
+      <view>请填写资料完成花样会员注册</view>
+      <view class="warning-line"></view>
+    </view>
     <view class="input-module">
       <view class="name-item">
         <view class="name-label">姓名</view>

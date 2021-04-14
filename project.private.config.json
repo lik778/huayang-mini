@@ -285,8 +285,8 @@
           "scene": null
         },
         {
-          "name": "subCourse/videoCourseList/videoCourseList",
-          "pathName": "subCourse/videoCourseList/videoCourseList",
+          "name": "畅学卡售前页",
+          "pathName": "mine/joinFluentLearn/joinFluentLearn",
           "query": "",
           "scene": null
         },
@@ -360,6 +360,18 @@
           "name": "系列课详情页",
           "pathName": "subCourse/videoCourse/videoCourse",
           "query": "videoId=68",
+          "scene": null
+        },
+        {
+          "name": "班级报道",
+          "pathName": "subCourse/schoolReport/schoolReport",
+          "query": "stage_id=17&class_num=1",
+          "scene": null
+        },
+        {
+          "name": "训练营中注册花样大学",
+          "pathName": "subCourse/applyJoinSchool/applyJoinSchool",
+          "query": "",
           "scene": null
         }
       ]

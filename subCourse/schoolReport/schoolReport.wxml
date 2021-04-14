@@ -1,16 +1,54 @@
-<!--subCourse/schoolReport/schoolReport.wxml-->
 <view class="container" wx:if="{{info!==''}}">
-  <!-- tabbar -->
-  <view class="back" style="padding-top:{{statusBarHeight}}px">
-    <view class="back-module">
-      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604458365vukBeP.jpg" bindtap="back"></image>
-      <text>班级报道</text>
+    <!-- tabbar -->
+    <view class="back" style="padding-top:{{statusBarHeight}}px">
+        <view class="back-module">
+            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604458365vukBeP.jpg" bindtap="back"></image>
+            <text>班级报道</text>
+        </view>
     </view>
-  </view>
-  <view class="main" style="padding-top:{{statusBarHeight+40}}px">
-    <view class="desc">欢迎加入花样训练营，开启课程学习之旅。请您确认所在的班级，然后点击下方按钮完成新生报到。</view>
-    <view class="title">{{info.name}}</view>
-    <view class="date">{{info.date}}期 {{info.class_num}}班</view>
-    <view class="button subject-bg-color" bindtap="toResult">立即报到</view>
-  </view>
+    <view class="main" style="padding-top:{{statusBarHeight+40}}px">
+        <view class="desc">
+            {{isAnniversary ? "欢迎加入花样大学周年庆的学习训练营，开启课程学习之旅。请您确认所在的班级，并填写礼包的收货信息，点击下方按钮完成新生报到。" : "欢迎加入花样训练营，开启课程学习之旅。请您确认所在的班级，然后点击下方按钮完成新生报到。"}}
+        </view>
+        <view class="title">{{info.name}}</view>
+        <view class="date">{{info.date}}期 {{info.class_num}}班</view>
+
+        <!-- 21年Q2周年庆信息采集区域 -->
+        <view class="form" wx:if="{{isAnniversary}}">
+            <view class="form-item">
+                <view class="label">联系手机号</view>
+                <input class="common-input" type="number" bindblur="onMobileBlur"/>
+            </view>
+
+            <view class="form-item">
+                <view class="label">联系姓名</view>
+                <input class="common-input"  bindblur="onNameBlur"/>
+            </view>
+
+            <view class="form-item">
+                <view class="label">所在地区</view>
+                <view class="select-content" bindtap="onAreaTap">
+                    <view class="select-content-text">{{areaString}}</view>
+                    <view class="select-arrow">
+                        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618370594WiYMnA.jpg" mode="aspectFit"></image>
+                    </view>
+                </view>
+            </view>
+
+            <view class="form-item">
+                <view class="label">详细地址</view>
+                <input class="common-input" bindblur="onAddressBlur"/>
+            </view>
+        </view>
+
+        <view class="button subject-bg-color" bindtap="toResult">立即报到</view>
+    </view>
+
+    <!-- 地区选择器 -->
+    <view class="area-pop" wx:if="{{didShowArea}}">
+        <view class="area-pop-mask {{didShowAreaAnime ? 'animation' : ''}}" catchtap="onAreaClose" catchtouchmove="onCatchtouchmove"></view>
+        <view class="area-content {{didShowAreaAnime ? 'animation' : ''}}">
+            <van-area class="v-area" area-list="{{ areaList }}" bind:confirm="onAreaConfirm" bind:cancel="onAreaClose" value="{{currentAreaCode}}"/>
+        </view>
+    </view>
 </view>
