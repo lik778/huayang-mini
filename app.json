@@ -30,15 +30,13 @@
     "pages/activePlatform/activePlatform",
     "pages/activePay/activePay",
     "pages/activePayCancel/activePayCancel",
-    "pages/studentMoments/studentMoments",
-    "studentMoments/studentMomentsDetail/studentMomentsDetail"
+    "pages/studentMoments/studentMoments"
   ],
   "requiredBackgroundModes": [
     "audio",
     "location"
   ],
-  "subpackages": [
-    {
+  "subpackages": [{
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -77,6 +75,12 @@
         "review/review",
         "videoPage/videoPage",
         "attempt/attempt"
+      ]
+    },
+    {
+      "root": "studentMoments",
+      "pages": [
+        "studentMomentsDetail/studentMomentsDetail"
       ]
     },
     {
@@ -133,8 +137,7 @@
   },
   "tabBar": {
     "custom": true,
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/discovery/discovery"
       },
       {

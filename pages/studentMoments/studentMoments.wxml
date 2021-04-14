@@ -1,57 +1,75 @@
 <!--pages/studentMoments/studentMoments.wxml-->
 <view class="container">
-  <!-- 点赞+N人在看 -->
-  <view class='top-module'>
-    <view class="top-module-left">
-      <image src='{{likeUserInfo.avator}}'></image>
-      <text>{{likeUserInfo.name}}王元点赞了{{likeUserInfo.courseName}}</text>
-    </view>
-    <view class="top-module-right">
-      <view class="top-module-right-image">
-        <image src="{{item}}" wx:for="{{visitUserData.visitUserList}}" wx:key="index"></image>
+  <!-- 顶部固定区域 -->
+  <view class="fixed-top">
+    <!-- 点赞+N人在看 -->
+    <view class='top-module'>
+      <view class="top-module-left">
+        <image src='{{likeUserInfo.avator}}'></image>
+        <text>{{likeUserInfo.name}}王元点赞了{{likeUserInfo.courseName}}</text>
       </view>
-      <view class="top-module-right-desc">{{visitUserData.visitNum}}人在看</view>
+      <view class="top-module-right">
+        <view class="top-module-right-image">
+          <image src="{{item}}" wx:for="{{visitUserData.visitUserList}}" wx:key="index"></image>
+        </view>
+        <view class="top-module-right-desc">{{visitUserData.visitNum}}人在看</view>
+      </view>
     </view>
-  </view>
-  <!-- 弹幕 -->
-  <view class="barrage-module">
-    <view class="barrage-scroll-module"></view>
-    <view class="barrage-publish-module">
-      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618366807TjCuKV.jpg"></image>
+    <!-- 弹幕 -->
+    <view class="barrage-module">
+      <view class="barrage-scroll-module"></view>
+      <view class="barrage-publish-module" bindtap="openBarrage">
+        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618366807TjCuKV.jpg"></image>
+      </view>
     </view>
   </view>
   <!-- 动态列表 -->
   <view class="main-module">
     <view class="list">
-      <view class="item" bindtap="toDetail">
+      <view class="item" bindtap="toDetail" wx:for='{{commentsList}}' wx:key='index'>
         <view class="item-title">
           <image src="https://wzrylt.oss-cn-beijing.aliyuncs.com/WechatIMG46.jpeg"></image>
           <text>花样百姓</text>
         </view>
         <view class="item-main">
-          <image src="https://wzrylt.oss-cn-beijing.aliyuncs.com/WechatIMG46.jpeg"></image>
-          <view class="item-main-title">时尚学院朗斯的线下活动</view>
+          <image src="{{item.pics}}"></image>
+          <view class="item-main-title">{{item.title}}</view>
         </view>
         <view class="item-bottom">
           <view class="item-like-module">
             <image src="{{commonIcon.likeIcon[0]}}"></image>
-            <text>100</text>
+            <text>{{item.like_count}}</text>
           </view>
           <view class="item-comment-module">
             <image src="{{commonIcon.commentIcon}}"></image>
-            <text>100</text>
+            <text>{{item.comment_count}}</text>
           </view>
           <view class="item-comment-module">
             <image src="{{commonIcon.shareIcon}}"></image>
-            <text>100</text>
+            <text>分享</text>
           </view>
         </view>
       </view>
     </view>
   </view>
   <!-- 投稿 -->
-  <view class="contribute-button">
+  <view class="contribute-button" bindtap="openContribute">
     <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618368640idsRLA.jpg"></image>
     <text>投稿</text>
   </view>
+  <!-- 发布弹幕 -->
+  <view class="publish-barrage-module" wx:if='{{showPublishBarrage}}'>
+    <view class="publish-barrage-module-cover" bindtap="closeBarrage"></view>
+    <view class="publish-barrage-module-main" style="bottom:{{isIphoneXRSMax?'160rpx':'120rpx'}}">
+      <view class="publish-barrage-title">发布弹幕</view>
+      <textarea class="publish-barrage-textarea" placeholder="请输入弹幕内容" cursor-spacing='162'></textarea>
+      <view class="publish-barrage-button-line">
+        <view class="publish-barrage-cancel" bindtap="closeBarrage">取消</view>
+        <view class="publish-barrage-sure">发布弹幕</view>
+      </view>
+    </view>
+  </view>
+  <!-- 客服弹窗 -->
+  <contact show="{{didShowContact}}" isRootPage="{{true}}" sessionFrom="distribute"
+    bind:closeContactModal="onCloseContactModal" />
 </view>

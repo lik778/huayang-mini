@@ -41,7 +41,7 @@
         </view>
         <view class="desc-share">
           <image src="{{commonIcon.shareIcon}}"></image>
-          <text>100</text>
+          <text>分享</text>
         </view>
       </view>
     </view>
