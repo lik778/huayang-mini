@@ -223,7 +223,6 @@ export const verifyPhone = (phone = '') => {
  * 查询storage
  * @param key
  * @param noParse
- * @returns {{}}
  */
 export const getLocalStorage = function (key, noParse = false) {
 	try {

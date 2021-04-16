@@ -1,2 +1,85 @@
-<!--subCourse/offlineCourseDetail/offlineCourseDetail.wxml-->
-<text>subCourse/offlineCourseDetail/offlineCourseDetail.wxml</text>
+<view class="offline-course-detail" wx:if="{{info}}">
+    <!-- banner -->
+    <view class="swiper-box">
+        <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}"
+                duration="{{500}}">
+            <swiper-item wx:for="{{info.covers}}" wx:key="index">
+                <view class="swiper-cover"></view>
+                <image mode="aspectFill" src="{{item}}"></image>
+            </swiper-item>
+        </swiper>
+        <view class="swiper-dot">
+            <view wx:for="{{info.covers}}" wx:key="index" wx:if="{{info.covers.length>1}}"
+                  class="{{current===index?'active swiper-dot-item':'swiper-dot-item'}}"></view>
+        </view>
+    </view>
+
+    <!-- 线下课信息 -->
+    <view class="introduce">
+        <view class="name limit-one-line">{{info.name}}</view>
+        <view class="title limit-two-line">{{info.title}}</view>
+        <view class="info">
+            <view class="info-wrap">
+                <view class="price-wrap">
+                    <text>¥</text><text class="price">{{info.price}}</text>
+                </view>
+                <view class="discount-price-wrap">
+                    <text class="discount-price">¥{{info.discount_price}}</text>
+                    <image class="tag" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618455791dTGykq.jpg"
+                           mode="aspectFit"></image>
+                </view>
+            </view>
+            <view class="no">{{info.buy_count}}人已购</view>
+        </view>
+    </view>
+
+    <!-- separator -->
+    <view class="separator"></view>
+
+    <!-- 课程介绍 -->
+    <view class="layer">课程介绍</view>
+    <view class="pictures">
+        <image class="picture-item" mode="widthFix" lazy-load="{{true}}" wx:for="{{info.details}}"
+               src="{{item}}"></image>
+    </view>
+
+    <!-- 固定按钮 -->
+    <view class="footer" wx:if="{{didShowFooterBtn}}">
+        <!-- 未授权 -->
+        <view class="no-auth" wx:if="{{btnType === 'no-auth'}}" bindtap="onAuthTap">授权登录</view>
+
+        <!-- 非学生卡用户购买 -->
+        <view class="non-member" wx:if="{{btnType === 'non-member'}}">
+            <view class="non-member-price-wrap" bindtap="createOrder" data-key="1">
+                <text class="non-member-price">¥{{info.price}}</text>
+                <text>立即购买</text>
+            </view>
+            <view class="non-member-discount-price-wrap" bindtap="createOrder" data-key="2">
+                <text class="member-price">¥{{info.new_member_price}}（含学院费）</text>
+                <text>加入花样大学，终身享受学员价</text>
+            </view>
+        </view>
+
+        <!-- 学生卡用户购买 -->
+        <view class="member" wx:if="{{btnType === 'member'}}">
+            <view class="contact">
+                <image class="contact-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618465081cKInuK.jpg"
+                       mode="aspectFit"></image>
+                <text class="contact-text">联系客服</text>
+            </view>
+
+            <view class="member-price-wrap" bindtap="createOrder" data-key="2">
+                <text class="member-price">学员专属价¥{{info.discount_price}}</text>
+                <text>立即购买</text>
+            </view>
+        </view>
+    </view>
+
+    <!-- 授权弹窗 -->
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent"
+                bind:authCompleteEvent="authCompleteEvent">
+    </authModule>
+
+    <!-- 客服弹窗 -->
+    <contact show="{{didShowContact}}" sessionFrom="distribute" bind:closeContactModal="onCloseContactModal" />
+</view>

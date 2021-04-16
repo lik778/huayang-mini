@@ -1,3 +1,7 @@
 {
-  "usingComponents": {}
+  "navigationBarTitleText":"花样大学线下课程",
+  "usingComponents": {
+    "authModule": "../../components/auth/auth",
+    "contact": "../../components/contact/contact"
+  }
 }

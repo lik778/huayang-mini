@@ -1,66 +1,167 @@
-// subCourse/offlineCourseDetail/offlineCourseDetail.js
+import { createNewOfflineCourseOrder, getOfflineCourseDetail } from "../../api/course/index"
+import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, payFluentCard } from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
+import { getFluentCardInfo, getFluentLearnInfo } from "../../api/mine/index"
+
 Page({
 
-  /**
-   * 页面的初始数据
-   */
-  data: {
+	/**
+	 * 页面的初始数据
+	 */
+	data: {
+		current: 0,
+		productId: 0,
+		info: null,
+		didShowFooterBtn: false,
+		btnType: 'no-auth',
+		isFluentCardUser: false,
+		didShowAuth: false,
+		didShowContact: false,
+		payLock: false
+	},
 
-  },
+	/**
+	 * 生命周期函数--监听页面加载
+	 */
+	onLoad: function (options) {
+		let {id} = options
+		if (id) this.setData({productId: id})
+	},
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
+	/**
+	 * 生命周期函数--监听页面初次渲染完成
+	 */
+	onReady: function () {
+		this.run()
+	},
 
-  },
+	/**
+	 * 生命周期函数--监听页面显示
+	 */
+	onShow: function () {
+		this.getUserInformation()
+	},
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
+	/**
+	 * 生命周期函数--监听页面隐藏
+	 */
+	onHide: function () {
 
-  },
+	},
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
+	/**
+	 * 生命周期函数--监听页面卸载
+	 */
+	onUnload: function () {
 
-  },
+	},
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
+	/**
+	 * 页面相关事件处理函数--监听用户下拉动作
+	 */
+	onPullDownRefresh: function () {
 
-  },
+	},
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
+	/**
+	 * 页面上拉触底事件的处理函数
+	 */
+	onReachBottom: function () {
 
-  },
+	},
+	/**
+	 * 用户点击右上角分享
+	 */
+	onShareAppMessage: function () {
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
+	},
+	async run() {
+		// 获取线下课详情
+		if (this.data.productId) {
+			let {data: fluentCardData} = await getFluentLearnInfo()
+			let {data} = await getOfflineCourseDetail({kecheng_offline_id: this.data.productId})
+			if ($notNull(data)) {
+				this.setData({
+					info: {
+						...data,
+						covers: data.cover_pic.split(","),
+						details: data.detail_pics.split(","),
+						discount_price: data.discount_price / 100,
+						price: data.price / 100,
+						new_member_price: (data.discount_price + fluentCardData.discount_price) / 100
+					}
+				})
+			}
+		}
 
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
+	},
+	// 判别用户账号类型
+	getUserInformation() {
+		// 判别用户类型
+		if (hasUserInfo() && hasAccountInfo()) {
+			let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+			getFluentCardInfo({user_snow_id: accountInfo.snow_id})
+				.then(({data}) => {
+					this.setData({isFluentCardUser: !!data})
+					if (data) {
+						// 花样会员
+						this.setData({btnType: 'member', didShowFooterBtn: true})
+					} else {
+						// 非花样会员
+						this.setData({btnType: 'non-member', didShowFooterBtn: true})
+					}
+				})
+		} else {
+			// 未登录
+			this.setData({btnType: 'no-auth', didShowFooterBtn: true})
+		}
+	},
+	// 创建订单
+	createOrder(e) {
+		if (this.data.payLock) return
+		let order_type = e.currentTarget.dataset.key
+		this.setData({payLock: true})
+		createNewOfflineCourseOrder({
+			kecheng_offline_id: this.data.productId,
+			open_id: getLocalStorage(GLOBAL_KEY.openId),
+			user_id: getLocalStorage(GLOBAL_KEY.userId),
+			order_type
+		}).then(({data}) => {
+			payFluentCard({id: data.id, name: "线下精品课购买"})
+				.then(() => {
+					this.setData({payLock: false})
+					wx.navigateTo({url: '/mine/personCourse/personCourse'})
+				})
+				.catch((err) => {
+					if (err.errMsg !== "requestPayment:fail cancel") {}
+					this.setData({payLock: false})
+				})
+		}).catch(() => {
+			this.setData({payLock: false})
+		})
+	},
+	onAuthTap() {
+		this.setData({didShowAuth: true})
+	},
+	// 用户授权取消
+	authCancelEvent() {
+		this.getUserInformation()
+		this.setData({didShowAuth: false})
+	},
+	// 用户确认授权
+	authCompleteEvent() {
+		this.getUserInformation()
+		this.setData({didShowAuth: false})
+	},
+	onCloseContactModal() {
+		this.setData({
+			didShowContact: false
+		})
+	},
+	// swiper切换
+	changeSwiperIndex(e) {
+		this.setData({
+			current: e.detail.current
+		})
+	},
 })

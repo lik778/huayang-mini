@@ -7,7 +7,7 @@
                     duration="{{500}}">
                 <swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="joinCampFromBanner" data-item="{{item}}">
                     <view class="swiper-cover"></view>
-                    <image mode="cover" src="{{item.pic_url}}"></image>
+                    <image mode="aspectFill" src="{{item.pic_url}}"></image>
                 </swiper-item>
             </swiper>
             <view class="swiper-dot">
@@ -19,10 +19,10 @@
 
     <!-- 分类课程快速入口 -->
     <view class="hyper-channel">
-        <view class="hyper-item">线上免费课</view>
-        <view class="hyper-item">大学活动</view>
-        <view class="hyper-item">线下精品课</view>
-        <view class="hyper-item">游学课程</view>
+        <view class="hyper-item" wx:for="{{fastMarkAry}}" wx:key="index">
+            <image class="hyper-image" src="{{item.picture}}"></image>
+            <view class="hyper-text">{{item.name}}</view>
+        </view>
     </view>
 
     <!-- 学院Tabs -->
@@ -32,7 +32,16 @@
             {{item}}
         </view>
     </view>
-    <view class="list-main" wx:if="{{videoList.length>0}}">
+
+    <!-- 固定学员Tabs -->
+    <view class="fixed-type-list" wx:if="{{didShowFixedTabsLayout}}">
+        <view class="{{currentIndex===index?'main-title-item active':'main-title-item'}}" wx:for="{{titleList}}"
+              wx:key="index" bindtap="changeTab" data-index="{{index}}">
+            {{item}}
+        </view>
+    </view>
+
+    <view class="list-main" wx:if="{{currentIndex === 3 || videoList.length>0}}">
         <view class="course-item" wx:for="{{videoList}}" wx:key="index" bindtap="toVideoCourseDetail" data-item="{{item}}">
             <view class="course-logo">
                 <image class="course-image" src="{{item.cover_pic}}"></image>
@@ -77,7 +86,16 @@
                 </view>
             </view>
         </view>
-
+        <block wx:if="{{currentIndex === 3 && structuredList.length > 0}}">
+            <!-- 结构化课程 -->
+            <view class="structure-item" wx:for="{{structuredList}}" wx:key="index" bindtap="onStructureItemTap" style="background-image: url('{{item.cover_pic}}');" data-id="{{item.id}}">
+                <text class="structure-title limit-one-line">{{item.name}}</text>
+                <view class="structure-bottom">
+                    <text class="structure-desc limit-one-line">{{item.desc}}</text>
+                    <view class="structure-btn">立即参加</view>
+                </view>
+            </view>
+        </block>
     </view>
     <view class="list-main" wx:else>
         <view class="list-none">

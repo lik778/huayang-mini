@@ -4,9 +4,7 @@
 }
 
 /*推广位*/
-.promotion {
-    padding-bottom: 60rpx;
-}
+.promotion {}
 
 /* banner */
 .swiper-box {
@@ -24,12 +22,6 @@
     height: 100%;
     /* border-radius: 8rpx; */
 }
-
-/* .swiper-item-box .swiper-cover {
-  width: 100%;
-  height: 100%;
-  background: #D8D8D8;
-} */
 
 .swiper-dot {
     display: flex;
@@ -53,13 +45,62 @@
     background: #3A3C48;
 }
 
+/* 分类课程快速入口 */
+.hyper-channel {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 60rpx 43rpx;
+}
+
+.hyper-item {
+    overflow: hidden;
+    position: relative;
+    width: 320rpx;
+    height: 160rpx;
+    border-radius: 8rpx;
+}
+
+.hyper-item:active {
+    opacity: 0.8;
+}
+
+.hyper-item:first-child, .hyper-item:nth-child(2) {
+    margin-bottom: 24rpx;
+}
+
+.hyper-image {
+    width: 320rpx;
+    height: 160rpx;
+}
+
+.hyper-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16rpx;
+    font: bold 28rpx/28rpx PingFangSC;
+    background: rgba(0,0,0, .4);
+    color: white;
+}
+
 /* 学院选项卡 */
-.type-list {
+.type-list,.fixed-type-list {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 26rpx 30rpx 20rpx;
+    padding: 20rpx 30rpx 20rpx;
     background: #fff;
+}
+
+.fixed-type-list {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 30;
 }
 
 .main-title-item {
@@ -94,6 +135,7 @@
     margin: 0 auto;
     padding: 20rpx 0 50rpx;
     width: calc(100% - 60rpx);
+    min-height: 900rpx;
 }
 
 .list-none {
@@ -256,4 +298,61 @@
     margin-right: 20rpx;
     font: 32rpx/32rpx PingFangSC;
     color: #CC0000;
+}
+
+
+/* 结构化课程 */
+.structure-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    height: 200rpx;
+    border-radius: 8rpx;
+    margin-bottom: 30rpx;
+    box-sizing: border-box;
+    padding: 30rpx 20rpx 30rpx 30rpx;
+    font-size: 0;
+    color: white;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.structure-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.structure-title {
+    white-space: nowrap;
+    font: 500 44rpx/60rpx PingFangSC;
+}
+
+.structure-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font: 32rpx/44rpx PingFangSC;
+    color: white;
+}
+
+.structure-desc {
+    max-width: 400rpx;
+}
+
+.structure-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200rpx;
+    height: 64rpx;
+    border-radius: 999rpx;
+    border: 3rpx solid white;
+    box-sizing: border-box;
 }

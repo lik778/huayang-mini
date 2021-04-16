@@ -643,7 +643,6 @@ export const getCampStageMessgae = params => {
 }
 
 // 班级报道
-
 export const classCheckin = params => {
 	return request._post(URL.classCheckin, params)
 }
@@ -713,4 +712,29 @@ export const cooperationJoinVideoCourse = params => {
 // 获取系列课的购买方式
 export const checkNeedSpecialManage = params => {
 	return request._get(URL.checkNeedSpecialManage, params)
+}
+
+// 获取线下精品课
+export function getOfflineCourseAllData(params) {
+	return request._get(URL.queryOfflineCourseAllData, params)
+}
+
+// 根据ID查询线下精品课详情
+export function getOfflineCourseList(params) {
+	return request._get(URL.queryOfflineCourseList, params)
+}
+
+// 获取线下精品课（包含人气课，和全部课）
+export function getOfflineCourseDetail(params) {
+	return request._get(URL.queryOfflineCourseDetail, params)
+}
+
+// 创建线下课下单接口
+export function createNewOfflineCourseOrder(params) {
+	return request._post(URL.createOfflineCourseOrder, params)
+}
+
+// 获取模特训练列表数据
+export function getModelDataList(params) {
+	return request._get(URL.queryModelDataList, params)
 }

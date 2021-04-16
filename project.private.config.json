@@ -143,10 +143,9 @@
           "scene": null
         },
         {
-          "id": -1,
           "name": "pages/practice/practice",
           "pathName": "pages/practice/practice",
-          "query": "",
+          "query": "didFromDiscovery=yes&index=3",
           "scene": null
         },
         {
@@ -360,6 +359,18 @@
           "name": "系列课详情页",
           "pathName": "subCourse/videoCourse/videoCourse",
           "query": "videoId=68",
+          "scene": null
+        },
+        {
+          "name": "线下课列表",
+          "pathName": "subCourse/offlineCourse/offlineCourse",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "线下课详情页",
+          "pathName": "subCourse/offlineCourseDetail/offlineCourseDetail",
+          "query": "id=13",
           "scene": null
         }
       ]
