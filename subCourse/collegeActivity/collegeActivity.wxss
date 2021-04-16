@@ -1,0 +1,26 @@
+.activitybox {
+    display: flex;
+    padding: 40rpx 30rpx;
+    flex-direction: column;
+}
+.activity {
+    width: 690rpx;
+    margin-bottom: 40rpx;
+}
+
+.activity-img {
+    border-radius: 16rpx 16rpx 6rpx 6rpx;
+    width: inherit;
+    height: 344rpx;
+    background-color: lightpink;
+    margin-bottom: 20rpx;
+}
+.activity-title {
+    font-size: 36rpx;
+    font-weight: 600;
+    line-height: 50rpx;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+     -webkit-line-clamp: 2; /*需要显示时文本行数 */
+    overflow: hidden;
+}

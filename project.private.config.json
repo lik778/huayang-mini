@@ -373,6 +373,17 @@
           "pathName": "subCourse/applyJoinSchool/applyJoinSchool",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "大学活动",
+          "pathName": "subCourse/collegeActivity/collegeActivity",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "线上免费课",
+          "pathName": "subCourse/freeOnlineCourse/freeOnlineCourse",
+          "scene": null
         }
       ]
     }
