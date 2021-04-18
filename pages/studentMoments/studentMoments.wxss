@@ -1,4 +1,6 @@
 /* pages/studentMoments/studentMoments.wxss */
+@import "../../assets/css/common.wxss";
+
 .container {
   padding-bottom: 200rpx;
   background: #D8D8D8;
@@ -28,8 +30,31 @@
 }
 
 .top-module-left {
+  overflow: hidden;
+  height: 80rpx;
+  width: 400rpx;
+  position: relative;
+}
+
+.top-module-left-cover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 21;
+}
+
+.top-module-left swiper {
+  height: 80rpx;
+}
+
+.top-module-left view {
   display: flex;
   align-items: center;
+  height: 80rpx;
+  /* transform: translateY(-100%);
+  transition: transform 3s linear; */
 }
 
 .top-module-left image {
@@ -46,6 +71,7 @@
   color: #000000;
   line-height: 28rpx;
   padding-left: 8rpx;
+  width: 350rpx;
 }
 
 .top-module-right {
@@ -71,6 +97,51 @@
 }
 
 /* 弹幕 */
+.barrage-scroll-item {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  margin-right: 68rpx;
+  height: 60rpx;
+  position: relative;
+}
+
+.barrage-scroll-top {
+  margin-bottom: 16rpx;
+  /* transform: translateX(-100px); */
+}
+
+.barrage-scroll-top,
+.barrage-scroll-bottom {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  flex-wrap: nowrap;
+  height: 64rpx;
+}
+
+.barrage-scroll-item image {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  z-index: 2;
+}
+
+.barrage-scroll-item view {
+  height: 48rpx;
+  padding-right: 16rpx;
+  padding-left: 60rpx;
+  background: #FFE0E0;
+  border-radius: 9999rpx;
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 48rpx;
+  margin-left: -50rpx;
+}
+
 .barrage-module {
   height: 168rpx;
   width: 100%;
@@ -78,6 +149,7 @@
 
 .barrage-scroll-module {
   background: #fff;
+  padding: 16rpx 0;
 }
 
 .barrage-publish-module {
@@ -91,8 +163,19 @@
   width: 100rpx;
   height: 100rpx;
   vertical-align: bottom;
-  margin-right: -6rpx;
+  margin-right: -8rpx;
 }
+
+/* @keyframes first {
+  from {
+    left: 100%;
+  }
+
+  to {
+    left: -100%;
+  }
+} */
+
 
 /* 动态列表 */
 .main-module {
@@ -116,6 +199,7 @@
   height: 64rpx;
   vertical-align: bottom;
   border-radius: 50%;
+  background: #fff;
 }
 
 .item-title text {
@@ -127,13 +211,28 @@
   padding-left: 16rpx;
 }
 
-.item-main {}
+.item-main {
+  position: relative;
+}
 
-.item-main image {
+
+
+.item-main image,
+video {
   width: 100%;
   height: 300rpx;
   vertical-align: bottom;
   border-radius: 16rpx 16rpx 6rpx 6rpx;
+}
+
+.item-main .video-play-icon {
+  position: absolute;
+  left: 50%;
+  top: 102rpx;
+  transform: translateX(-50%);
+  width: 96rpx;
+  height: 96rpx;
+  vertical-align: bottom;
 }
 
 .item-main-title {
@@ -175,7 +274,19 @@
   display: flex;
   align-items: center;
   padding-right: 66rpx;
+  position: relative;
 }
+
+.item-comment-module button {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  padding: 0;
+}
+
 
 .item-comment-module image {
   width: 48rpx;

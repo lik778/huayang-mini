@@ -3,7 +3,13 @@ import {
   createStoreBindings
 } from 'mobx-miniprogram-bindings'
 import {
-  isIphoneXRSMax
+  userList
+} from "../../utils/mock"
+import {
+  isIphoneXRSMax,
+  getRandomNumberByRange,
+  getNElmentFromArray,
+  getLocalStorage
 } from "../../utils/util"
 import {
   getBarrageList,
@@ -14,6 +20,9 @@ import {
 import {
   store
 } from '../../store/index'
+import {
+  GLOBAL_KEY
+} from '../../lib/config'
 Page({
 
   /**
@@ -23,16 +32,15 @@ Page({
     commonIcon: {
       likeIcon: ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618367647LTWDYU.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618367660dslOOQ.jpg'],
       commentIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618367678kxmCLk.jpg',
+      playIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618535781FCwFCm.jpg',
       shareIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618367691MgBtuD.jpg'
     }, //点赞+评论+分享icon
-    likeUserInfo: {
-      avator: "https://wzrylt.oss-cn-beijing.aliyuncs.com/WechatIMG46.jpeg",
-      name: "嘟嘟",
-      courseName: "时尚课程"
-    }, //点赞人信息
+    likeUserInfo: [], //点赞人信息
+    interval: 5000, //点赞翻转自动滑动时间
+    swiperCurrent: 0, //当前swiper下标 
     visitUserData: {
-      visitUserList: ['https://wzrylt.oss-cn-beijing.aliyuncs.com/WechatIMG46.jpeg', 'https://wzrylt.oss-cn-beijing.aliyuncs.com/WechatIMG46.jpeg', 'https://wzrylt.oss-cn-beijing.aliyuncs.com/WechatIMG46.jpeg'],
-      visitNum: 239
+      visitUserList: [],
+      visitNum: 0
     }, //N人在看列表
     getBarragePageData: {
       offset: 0,
@@ -42,63 +50,88 @@ Page({
       offset: 0,
       limit: 10
     }, //动态分页参数
-    barrageList: [], //弹幕列表
+    barrageList: {
+      topArr: [],
+      bottomArr: []
+    }, //弹幕列表
     commentsList: [], //动态列表
     isIphoneXRSMax: isIphoneXRSMax(), //是否是x系列以上手机
     showPublishBarrage: false, //发布弹幕弹窗
     didShowContact: false, //显示客服消息弹窗
-
+    playingIndex: '', //视频播放下标
+    likeLock: true, //点赞锁
+    createBarrageLock: true, //创建弹幕锁
+    userId: "",
+    userInfo: '',
+    changeAnimationClass: true,
+    didShowAuth: false, //授权弹窗
+    createBarrageContent: '', //发送弹幕弹窗内容
+    noMomentData: false, //是否还有动态数据
+    showStudentMomentLike: false, //显示点赞动画
   },
 
-  // 
-  changeNum() {
-    console.log(this.data.numB)
-  },
-
-  // 点击进入详情页
-  toDetail() {
-    wx.navigateTo({
-      url: '/studentMoments/studentMomentsDetail/studentMomentsDetail',
-    })
-  },
-
-  // 获取弹幕列表
-  getBarrage() {
-    getBarrageList(this.data.getBarragePageData).then(({
-      data = []
-    }) => {
+  // 点赞/取消点赞动态
+  toLike(e) {
+    if (!this.data.userInfo) {
       this.setData({
-        barrageList: data
+        didShowAuth: true
       })
-      console.log(data)
+      return
+    }
+    // 处理延时点赞
+    let item = e.currentTarget.dataset.item
+    let {
+      hasLike,
+      likeCount
+    } = item
+    let nowHasLike = ''
+    let nowLikeCount = ''
+    if (hasLike === 1) {
+      nowHasLike = 0
+      nowLikeCount = likeCount - 1
+    } else {
+      nowHasLike = 1
+      nowLikeCount = likeCount + 1
+    }
+    this.updateMomentsLikeStatus({
+      id: item.bubble.id,
+      hasLike: nowHasLike,
+      likeCount: nowLikeCount
     })
-  },
-
-  // 获取动态列表
-  getCommentsList() {
-    getStudentCommentList(this.data.getCommentsPageData).then(({
-      data = []
-    }) => {
+    this.like({
+      hasLike,
+      id: item.bubble.id,
+    })
+    // 处理顶部点赞
+    if (item.has_like === 0) {
       this.setData({
-        commentsList: data
+        showStudentMomentLike: true
       })
-    })
+      // 关闭点赞动画
+      setTimeout(() => {
+        this.setData({
+          showStudentMomentLike: false
+        })
+      }, 1500)
+
+      let arr = this.data.likeUserInfo.concat([])
+      arr.splice(this.data.swiperCurrent + 1, 0, {
+        avator: this.data.userInfo.avatar_url,
+        name: this.data.userInfo.nick_name,
+        courseName: item.bubble.title
+      })
+      this.setData({
+        likeUserInfo: arr
+      })
+    }
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    //mobx初始化
-    this.storeBindings = createStoreBindings(this, {
-      store,
-      fields: ['numA', 'numB', 'sum'],
-      actions: ['update'],
-    })
-    // 获取弹幕列表
-    this.getBarrage()
-    // 获取动态列表
-    this.getCommentsList()
+    // 初始化一切数据+mobx
+    this.initData()
   },
 
   /**
@@ -118,6 +151,7 @@ Page({
         selected: 1
       })
     }
+    this.videoContext = wx.createVideoContext('my-video')
   },
 
   /**
@@ -142,18 +176,35 @@ Page({
   },
 
   /**
-   * 页面上拉触底事件的处理函数
+   * 用户点击右上角分享
    */
-  onReachBottom: function () {
-
+  onShareAppMessage: function (res) {
+    let src = `/studentMoments/studentMomentsDetail/studentMomentsDetail`
+    if (res.from === 'button') {
+      src += `?id=${res.target.dataset.item.bubble.id}`
+    }
+    return {
+      title: "快来看看花样大学精彩的校友动态！",
+      path: src
+    }
   },
 
   /**
-   * 用户点击右上角分享
+   * 页面上拉触底事件的处理函数
    */
-  onShareAppMessage: function () {
-
+  onReachBottom: function () {
+    if (this.data.noMomentData) {
+      this.setData({
+        ['getCommentsPageData.offset']: this.data.getCommentsPageData.limit + this.data.getCommentsPageData.offset
+      })
+      this.getCommentsList(this.data.getCommentsPageData, true).then((data) => {
+        this.setData({
+          noMomentData: data.type
+        })
+      })
+    }
   },
+
   // 关闭客服消息弹窗
   onCloseContactModal() {
     this.setData({
@@ -170,14 +221,229 @@ Page({
 
   // 打开发布弹幕弹窗
   openBarrage() {
+    if (!this.data.userInfo) {
+      this.setData({
+        didShowAuth: true
+      })
+      return
+    }
     this.setData({
-      showPublishBarrage: true
+      changeAnimationClass: true,
+      showPublishBarrage: true,
+      createBarrageContent: ''
     })
   },
+
   // 关闭发布弹幕弹窗
   closeBarrage() {
     this.setData({
-      showPublishBarrage: false
+      changeAnimationClass: false
     })
+    setTimeout(() => {
+      this.setData({
+        showPublishBarrage: false,
+      })
+    }, 300)
+
+  },
+
+  // 改变swiper下标
+  changeSwiperCurrent(e) {
+    this.setData({
+      swiperCurrent: e.detail.current
+    })
+  },
+
+  // 动态设置N人在看(每10s刷新一次)
+  initVisitData(start) {
+    let randomNum = ''
+    if (start) {
+      randomNum = getRandomNumberByRange(start - 10, start + 10)
+    } else {
+      randomNum = getRandomNumberByRange(100, 300)
+    }
+    let userInfo = this.data.userInfo
+    let userListData = []
+    if (userInfo && start === undefined) {
+      getNElmentFromArray(userList, 2).map(item => {
+        userListData.push(item.headImage)
+      })
+      userListData.push(userInfo.avatar_url)
+    } else {
+      getNElmentFromArray(userList, 3).map(item => {
+        userListData.push(item.headImage)
+      })
+    }
+    this.setData({
+      visitUserData: {
+        visitUserList: userListData,
+        visitNum: randomNum
+      }
+    })
+    setTimeout(() => {
+      this.initVisitData(randomNum + 1)
+    }, 1000000)
+  },
+
+  // 动态设置x点赞(每10s刷新一次)
+  initLikeMessage() {
+    let arr = getNElmentFromArray(userList, 40)
+    let realArr = []
+    for (let i in arr) {
+      let randomNum = Math.floor(Math.random() * (0, this.data.studentMoments.length))
+      let courseName = this.data.studentMoments[randomNum].bubble.title
+      realArr.push({
+        avator: arr[i].headImage,
+        name: arr[i].name,
+        courseName
+      })
+    }
+    this.setData({
+      likeUserInfo: realArr
+    })
+  },
+
+  // 初始化本地用户信息
+  initUserInfo() {
+    let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo)
+    let userId = getLocalStorage(GLOBAL_KEY.userId)
+    userInfo = userInfo ? JSON.parse(userInfo) : ''
+    userId = userId ? userId : ''
+    this.setData({
+      userInfo,
+      userId
+    })
+  },
+
+  // 初始化一切假数据
+  initData() {
+    // 初始化本地用户信息
+    this.initUserInfo()
+    this.initVisitData()
+    //mobx初始化
+    this.storeBindings = createStoreBindings(this, {
+      store,
+      fields: ['studentMoments'],
+      actions: ['getCommentsList', 'change', 'like', 'updateMomentsLikeStatus'],
+    })
+    // 获取弹幕列表
+    this.getBarrage()
+    this.getMomentList()
+  },
+
+  // 获取动态列表
+  getMomentList() {
+    this.getCommentsList(this.data.getCommentsPageData).then((data) => {
+      this.setData({
+        noMomentData: data.type
+      }, () => {
+        // 初始化点赞
+        this.initLikeMessage()
+      })
+    })
+
+  },
+  // 取消授权
+  authCancelEvent() {
+    this.setData({
+      didShowAuth: false
+    })
+  },
+
+  // 确认授权
+  authCompleteEvent(e) {
+    this.initUserInfo()
+    this.setData({
+      didShowAuth: false
+    })
+    this.getMomentList()
+  },
+
+  // 点击进入详情页
+  toDetail(e) {
+    let id = e.currentTarget.dataset.item.bubble.id
+    wx.navigateTo({
+      url: `/studentMoments/studentMomentsDetail/studentMomentsDetail?id=${id}`,
+    })
+  },
+
+  // 播放视频
+  playVideo(e) {
+    let index = e.currentTarget.dataset.index
+    this.setData({
+      playingIndex: index,
+    })
+    setTimeout(() => {
+      this.videoContext.play()
+    }, 500)
+  },
+
+  // 获取弹幕列表
+  getBarrage() {
+    getBarrageList(this.data.getBarragePageData).then(({
+      data = []
+    }) => {
+      let topArr = []
+      let bottomArr = []
+      data.map(item => {
+        if (topArr.length > bottomArr.length) {
+          bottomArr.push(item)
+        } else {
+          topArr.push(item)
+        }
+      })
+      this.setData({
+        barrageList: {
+          topArr,
+          bottomArr
+        }
+      })
+    })
+  },
+
+  // 更新弹幕评论内容
+  updateTextareaText(e) {
+    let value = e.detail.value
+    this.setData({
+      createBarrageContent: value
+    })
+  },
+
+  // 发布弹幕
+  createBarrageNow() {
+    if (this.data.createBarrageContent.trim() === '') {
+      wx.showToast({
+        title: '请输入弹幕内容',
+        icon: 'none'
+      })
+      return
+    }
+    if (this.data.createBarrageLock) {
+      this.setData({
+        createBarrageLock: false
+      })
+      createBarrage({
+        content: this.data.createBarrageContent,
+        user_id: this.data.userId
+      }).then(res => {
+        if (res.code === 0) {
+          this.closeBarrage()
+          this.setData({
+            createBarrageContent: ''
+          })
+          wx.showToast({
+            title: '发布成功',
+            icon: 'success',
+            mask: true
+          })
+        }
+      })
+      setTimeout(() => {
+        this.setData({
+          createBarrageLock: true
+        })
+      }, 1500)
+    }
+
   },
 })

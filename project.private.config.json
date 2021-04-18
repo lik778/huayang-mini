@@ -33,7 +33,7 @@
         {
           "name": "校友动态详情",
           "pathName": "studentMoments/studentMomentsDetail/studentMomentsDetail",
-          "query": "",
+          "query": "id=1",
           "scene": null
         }
       ]
