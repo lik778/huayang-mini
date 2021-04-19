@@ -1,6 +1,6 @@
 import {
-    getActivityColledgeList
-} from "../../api/newapi/index";
+    getActivityList
+} from "../../api/course/index";
 Page({
     data: {
         pagesControl:{
@@ -10,7 +10,7 @@ Page({
         activityList: []
     },
     getActivityList() {
-        getActivityColledgeList({
+        getActivityList({
             colleage_activity:1,
             limit:this.data.pagesControl.limit,
             offset:this.data.pagesControl.offset

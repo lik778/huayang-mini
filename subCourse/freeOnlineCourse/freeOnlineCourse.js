@@ -1,7 +1,7 @@
 
 import {
     getFreeOnlineCourse
-} from "../../api/newapi/index";
+} from "../../api/course/index";
 
 Page({
     data:{
