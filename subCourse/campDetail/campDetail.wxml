@@ -112,31 +112,31 @@
     </view>
   </view>
   <!-- 我的结营证书 -->
-  <view class="my-credential" wx:else bindtap="toMyCredential">
+  <view class="my-credential" wx:if="{{showMyCredential}}" bindtap="toMyCredential">
     <view class="my-credential-text subject-font-color">我的结营证书</view>
   </view>
   <!-- 遮罩层 -->
   <!-- <view class="cover-bg" wx:if="{{showAddTeacherCover&&!showMyCredential}}" bindtap="closeCover"> -->
-  <view class="cover-bg" wx:if="{{false}}" bindtap="closeCover"></view>
-  <view class="cover-bg-box">
-    <view class="cover-text">
-      <view>请务必添加班主任</view>
-      <view>否则无法参与学习</view>
+  <view class="cover-bg" wx:if="{{false}}" bindtap="closeCover">
+    <view class="cover-bg-box">
+      <view class="cover-text">
+        <view>请务必添加班主任</view>
+        <view>否则无法参与学习</view>
+      </view>
+      <image src="/assets/images/common/long-down-arrow.png"></image>
     </view>
-    <image src="/assets/images/common/long-down-arrow.png"></image>
   </view>
-</view>
-<!-- 分销按钮 -->
-<view class="share-friend" bindtap="shareCamp"
-  wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&campData.sharePrice!==''}}">
-  <view class="share-friend-box">
-    <view class="share-friend-bg">
-      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606186110bQsZDj.jpg"></image>
+  <!-- 分销按钮 -->
+  <view class="share-friend" bindtap="shareCamp"
+    wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&campData.sharePrice!==''}}">
+    <view class="share-friend-box">
+      <view class="share-friend-bg">
+        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606186110bQsZDj.jpg"></image>
+      </view>
+      <button open-type="share">推广成功赚{{campData.sharePrice}}元</button>
+      <view class="share-friend-text-top">推广成功</view>
+      <view class="share-friend-text-bottom">赚{{campData.sharePrice}}元</view>
+      <!-- <view class="share-text subject-bg-color">推广成功赚{{campData.sharePrice}}元</view> -->
     </view>
-    <button open-type="share">推广成功赚{{campData.sharePrice}}元</button>
-    <view class="share-friend-text-top">推广成功</view>
-    <view class="share-friend-text-bottom">赚{{campData.sharePrice}}元</view>
-    <!-- <view class="share-text subject-bg-color">推广成功赚{{campData.sharePrice}}元</view> -->
   </view>
-</view>
 </view>
