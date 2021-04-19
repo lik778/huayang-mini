@@ -320,7 +320,9 @@ Page({
       fields: ['studentMoments'],
       actions: ['getCommentsList', 'change', 'like', 'updateMomentsLikeStatus'],
     })
+    // 获取弹幕
     this.getBarrage()
+    // 获取动态列表
     this.getMomentList()
   },
 

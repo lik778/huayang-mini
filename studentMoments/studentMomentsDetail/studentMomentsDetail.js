@@ -18,9 +18,7 @@ import {
 import {
   GLOBAL_KEY
 } from "../../lib/config"
-import {
-  flow
-} from "mobx-miniprogram"
+
 Page({
 
   /**
@@ -265,11 +263,12 @@ Page({
         appId: "wx2ea757d51abc1f47",
         path: '/pages/index/index',
       })
-
     } else if (index === 4) {
       // 精品课
+      wx.navigateTo({
+        url: `/subCourse/videoCourse/videoCourse?videoId=${item.kecheng_series.id}`,
+      })
     }
-    console.log(e)
   },
 
 
