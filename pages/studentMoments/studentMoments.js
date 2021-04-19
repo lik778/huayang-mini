@@ -116,7 +116,8 @@ Page({
     createBarrageContent: '', //发送弹幕弹窗内容
     noMomentData: false, //是否还有动态数据
     showStudentMomentLike: false, //显示点赞动画
-
+    authType: '', //0是点赞授权，1是评论授权，控制授完权的自动请求数据操作,2是发布弹幕
+    authData: "", //点赞函导致授权的类型
   },
 
   /**
@@ -145,6 +146,8 @@ Page({
         selected: 1
       })
     }
+    // 初始化本地用户信息
+    this.initUserInfo()
     // pv打点
     bxPoint("bbs_visit")
 
@@ -231,14 +234,15 @@ Page({
 
   // 打开发布弹幕弹窗
   openBarrage() {
-    // 发布弹幕打点-4.19-JJ
-    bxPoint("bbs_screen_comment", {}, false)
     if (!this.data.userInfo) {
       this.setData({
-        didShowAuth: true
+        didShowAuth: true,
+        authType: 2
       })
       return
     }
+    // 发布弹幕打点-4.19-JJ
+    bxPoint("bbs_screen_comment", {}, false)
     this.setData({
       changeAnimationClass: true,
       showPublishBarrage: true,
@@ -329,8 +333,7 @@ Page({
 
   // 初始化一切假数据
   async initData() {
-    // 初始化本地用户信息
-    this.initUserInfo()
+
     this.initVisitData()
     //mobx初始化
     this.storeBindings = createStoreBindings(this, {
@@ -364,7 +367,9 @@ Page({
   // 取消授权
   authCancelEvent() {
     this.setData({
-      didShowAuth: false
+      didShowAuth: false,
+      authType: '',
+      authData: ''
     })
   },
 
@@ -377,6 +382,24 @@ Page({
     let pageData = Object.assign({}, this.data.getCommentsPageData)
     let limit = pageData.offset + pageData.limit
     this.getMomentList(limit)
+    if (this.data.authType === 0) {
+      if (this.data.authData.hasLike === 0) {
+        this.toLike(this.data.authData)
+      }
+    } else if (this.data.authType === 1) {
+      let item = this.data.authData.currentTarget.dataset.item
+      wx.navigateTo({
+        url: `/studentMoments/studentMomentsDetail/studentMomentsDetail?id=${item.bubble.id}&showCommentBox=true`,
+      })
+    } else if (this.data.authType === 2) {
+      this.openBarrage()
+    }
+    setTimeout(() => {
+      this.setData({
+        authData: '',
+        authType: ''
+      })
+    }, 1000)
   },
 
   // 点击进入详情页
@@ -393,10 +416,23 @@ Page({
         message_time: item.bubble.created_at,
         message_publisher_id: item.bubble.user_id === 0 ? '' : item.bubble.user_id,
       }, false)
+      if (!this.data.userInfo) {
+        this.setData({
+          didShowAuth: true,
+          authType: 1,
+          authData: e
+        })
+        return
+      }
+      wx.navigateTo({
+        url: `/studentMoments/studentMomentsDetail/studentMomentsDetail?id=${id}&showCommentBox=true`,
+      })
+    } else {
+      wx.navigateTo({
+        url: `/studentMoments/studentMomentsDetail/studentMomentsDetail?id=${id}`,
+      })
     }
-    wx.navigateTo({
-      url: `/studentMoments/studentMomentsDetail/studentMomentsDetail?id=${id}`,
-    })
+
   },
 
   // 播放视频
@@ -549,7 +585,9 @@ Page({
     let item = e.currentTarget.dataset.item
     if (!this.data.userInfo) {
       this.setData({
-        didShowAuth: true
+        didShowAuth: true,
+        authType: 0,
+        authData: e
       })
       return
     }

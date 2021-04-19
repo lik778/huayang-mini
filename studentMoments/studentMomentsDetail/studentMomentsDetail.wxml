@@ -15,7 +15,7 @@
         circular='{{swiperData.circular}}' bindchange="changeSwiperCurrent">
         <block wx:for="{{detailData.bubble.pics}}" wx:key="index">
           <swiper-item>
-            <image src="{{item}}"></image>
+            <image src="{{item}}" bindtap="showBigImage" data-index="{{index}}"></image>
           </swiper-item>
         </block>
       </swiper>
@@ -64,16 +64,15 @@
           </image>
           <image class="comment-input-icon" wx:else
             src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618451480ZWGEID.jpg"></image>
-          <view class="comment-textarea-module">
-            <textarea auto-height="{{false}}" type="text" class="{{inInputComment?'comment-input-line':''}}"
-              bindblur="inputLeave" bindinput="changeCommentText" focus="{{inInputComment}}"
-              value="{{commentInputValue}}" />
-            <view bindtap="{{inInputComment?'':'inputNow'}}" class="comment-textarea-module-cover" wx:if='{{!inInputComment}}'>请写下您的评论</view>
-            <view class="publish-button" wx:if='{{inInputComment}}' bindtap="publishComment">发布评论</view>
+          <view class="comment-textarea-module" bindtap="showCommentBox">
+            <view class="comment-textarea-module-cover" style="color:{{commentInputValue===''?'#999999':'#000'}}">
+              {{commentInputValue===''?'请写下您的评论':commentInputValue}}</view>
           </view>
         </view>
         <view class="comment-item" wx:for="{{commentList}}" wx:key='index'>
-          <image src="{{item.user?item.user.avatar_url:'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618451480ZWGEID.jpg'}}"></image>
+          <image
+            src="{{item.user?item.user.avatar_url:'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618451480ZWGEID.jpg'}}">
+          </image>
           <view class="comment-item-right">
             <view class="comment-item-right-top">
               <text>{{item.user.nick_name}}</text>
@@ -92,12 +91,13 @@
     <!-- 课程 -->
     <view class="course-module">
       <view class="course-module-title">
-        {{detailData.bubble.relate_type<=0?'花样精品课程':detailData.bubble.relate_type===3?"也参加该活动":"也参加该课程"}}
+        {{detailData.bubble.relate_type<=0?'花样精品课程':detailData.bubble.relate_type===3?"也参加该活动":detailData.bubble.relate_type===4?"也参加该游学线路":"也参加该课程"}}
       </view>
       <!-- 也参加该课程 -->
       <view class="course-list" wx:if='{{detailData.bubble.relate_type>0}}'>
         <!-- 线上课程 -->
-        <view class="online-course-item" bindtap="toCourseDetail" data-item='{{detailData.kecheng_series}}' data-index='0' wx:if="{{detailData.bubble.relate_type===1}}">
+        <view class="online-course-item" bindtap="toCourseDetail" data-item='{{detailData.kecheng_series}}'
+          data-index='0' wx:if="{{detailData.bubble.relate_type===1}}">
           <view class="online-course-logo">
             <image src="{{detailData.kecheng_series.cover_pic}}"></image>
           </view>
@@ -113,7 +113,8 @@
           </view>
         </view>
         <!-- 线下课程 -->
-        <view class="offline-course-item" data-index='1' bindtap="toCourseDetail" data-item='{{detailData.kecheng_offline}}' wx:if="{{detailData.bubble.relate_type===2}}">
+        <view class="offline-course-item" data-index='1' bindtap="toCourseDetail"
+          data-item='{{detailData.kecheng_offline}}' wx:if="{{detailData.bubble.relate_type===2}}">
           <view class="offline-course-logo">
             <image src="{{detailData.kecheng_offline.logo_pic}}"></image>
           </view>
@@ -131,14 +132,16 @@
           </view>
         </view>
         <!-- 活动 -->
-        <view class="activity-item" bindtap="toCourseDetail" data-item='{{detailData.activity}}' wx:if="{{detailData.bubble.relate_type===3}}" data-index='2'>
+        <view class="activity-item" bindtap="toCourseDetail" data-item='{{detailData.activity}}'
+          wx:if="{{detailData.bubble.relate_type===3}}" data-index='2'>
           <view class="activity-item-logo">
             <image src="{{detailData.activity.cover_url}}"></image>
           </view>
           <view class="activity-item-title limit-one-line">{{detailData.activity.title}}</view>
         </view>
         <!-- 游学 -->
-        <view class="travel-item" bindtap="toCourseDetail" data-item='{{detailData.travel_product}}' data-index='3' wx:if="{{detailData.bubble.relate_type===4}}">
+        <view class="travel-item" bindtap="toCourseDetail" data-item='{{detailData.travel_product}}' data-index='3'
+          wx:if="{{detailData.bubble.relate_type===4}}">
           <view class="travel-item-logo">
             <image src="{{detailData.travel_product.logo_pic}}"></image>
           </view>
@@ -157,7 +160,8 @@
       </view>
       <!-- 精品课程 -->
       <view class="course-list" wx:else>
-        <view class="online-course-item" wx:for="{{courseList}}" wx:key='index' bindtap="toCourseDetail" data-item="{{item}}" data-index='4'>
+        <view class="online-course-item" wx:for="{{courseList}}" wx:key='index' bindtap="toCourseDetail"
+          data-item="{{item}}" data-index='4'>
           <view class="online-course-logo">
             <image src="{{item.kecheng_series.cover_pic}}"></image>
           </view>
@@ -165,7 +169,8 @@
             <view class="online-course-right-top">
               <view class="online-course-main-name limit-one-line">{{item.kecheng_series.teacher_desc}}</view>
               <view class="online-course-sub-name limit-one-line">{{item.kecheng_series.name}}</view>
-              <view class="online-course-teacher-name limit-one-line">{{item.teacher.name}} {{item.teacher.teacher_desc}}</view>
+              <view class="online-course-teacher-name limit-one-line">{{item.teacher.name}}
+                {{item.teacher.teacher_desc}}</view>
             </view>
             <view class="online-course-right-bottom">
               共{{item.kecheng_series.visit_count}}人学习
@@ -180,4 +185,18 @@
   <!-- 授权弹窗 -->
   <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
   </authModule>
+  <!-- 发布评论 -->
+  <view class="publish-barrage-module" wx:if='{{showPublishComment}}'>
+    <view class="publish-barrage-module-cover" bindtap="closeBarrage"></view>
+    <view class="publish-barrage-module-main {{changeAnimationClass?'sliderUpAnimation':'sliderDownAnimation'}}"
+      style="bottom:{{isIphoneXRSMax?'20px':0}}">
+      <view class="publish-barrage-title">发布评论</view>
+      <textarea class="publish-barrage-textarea" placeholder="请输入评论内容" cursor-spacing='162' maxlength="200"
+        value="{{commentInputValue}}" bindinput="updateTextareaText"></textarea>
+      <view class="publish-barrage-button-line">
+        <view class="publish-barrage-cancel" bindtap="closePublishComment">取消</view>
+        <view class="publish-barrage-sure" bindtap="createComment">发布评论</view>
+      </view>
+    </view>
+  </view>
 </view>

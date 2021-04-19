@@ -64,10 +64,10 @@
         </view>
         <view class="item-main">
           <view class="type-image" wx:if='{{item.bubble.content_type===1}}'>
-            <image bindtap="toDetail" data-item='{{item}}' src="{{item.bubble.pics[0]}}"></image>
+            <image bindtap="toDetail" mode='center' data-item='{{item}}' src="{{item.bubble.pics[0]}}"></image>
           </view>
           <view class="type-video" wx:else>
-            <image src="{{item.bubble.video_cover}}" wx:if='{{playingIndex!==index}}'>
+            <image src="{{item.bubble.video_cover}}" mode='center' wx:if='{{playingIndex!==index}}'>
             </image>
             <image src="{{commonIcon.playIcon}}" class="video-play-icon" bindtap="playVideo" data-index='{{index}}'
               wx:if='{{playingIndex!==index}}'>
@@ -106,7 +106,7 @@
     <view class="publish-barrage-module-main {{changeAnimationClass?'sliderUpAnimation':'sliderDownAnimation'}}"
       style="bottom:{{isIphoneXRSMax?'160rpx':'120rpx'}}">
       <view class="publish-barrage-title">发布弹幕</view>
-      <textarea class="publish-barrage-textarea" placeholder="请输入弹幕内容" cursor-spacing='162'
+      <textarea class="publish-barrage-textarea" placeholder="请输入弹幕内容" cursor-spacing='162' maxlength="40"
         bindinput="updateTextareaText"></textarea>
       <view class="publish-barrage-button-line">
         <view class="publish-barrage-cancel" bindtap="closeBarrage">取消</view>

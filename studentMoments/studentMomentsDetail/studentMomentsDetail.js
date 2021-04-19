@@ -13,7 +13,8 @@ import {
   createStoreBindings
 } from 'mobx-miniprogram-bindings'
 import {
-  getLocalStorage
+  getLocalStorage,
+  isIphoneXRSMax
 } from "../../utils/util"
 import {
   GLOBAL_KEY
@@ -53,11 +54,15 @@ Page({
     userId: '',
     commentInputValue: '', //评论输入框内容
     userInfo: '',
+    isIphoneXRSMax: isIphoneXRSMax(),
     showStudentMomentLike: false, //显示点赞动画
     likeLock: true, //点赞锁
     didShowAuth: false, //显示授权
     courseList: '', //精品课程列表
     inPlayVideo: false, //是否在播放视频
+    showPublishComment: false,
+    changeAnimationClass: true,
+    authType: '', //0是点赞授权，1是评论授权，控制授完权的自动请求数据操作
   },
 
   // swiper下标更改
@@ -67,10 +72,41 @@ Page({
     })
   },
 
+  // 显示评论弹窗
+  showCommentBox() {
+    // 评论打点-4.19.JJ
+    bxPoint("bbs_detail_comment_box", {
+      message_id: this.data.id
+    })
+    if (!this.data.userInfo) {
+      this.setData({
+        didShowAuth: true,
+        authType: 1
+      })
+      return
+    }
+    this.setData({
+      showPublishComment: true
+    })
+  },
+
+  closePublishComment() {
+    this.setData({
+      changeAnimationClass: false
+    })
+    setTimeout(() => {
+      this.setData({
+        showPublishComment: false,
+        changeAnimationClass: true
+      })
+    }, 300)
+  },
+
   // 取消授权
   authCancelEvent() {
     this.setData({
-      didShowAuth: false
+      didShowAuth: false,
+      authType: ''
     })
   },
 
@@ -80,6 +116,12 @@ Page({
     this.setData({
       didShowAuth: false
     })
+    this.getDetailData()
+    if (this.data.authType === 0) {
+      this.likeTap()
+    } else if (this.data.authType === 1) {
+      this.showCommentBox()
+    }
   },
 
   // 播放视频
@@ -119,17 +161,18 @@ Page({
 
   // 点赞
   likeTap() {
+    // 授权判断
+    if (!this.data.userInfo) {
+      this.setData({
+        didShowAuth: true,
+        authType: 0
+      })
+      return
+    }
     // 点赞打点-4.19.JJ
     bxPoint('bbs_detail_like', {
       message_id: this.data.id
     })
-    // 授权判断
-    if (!this.data.userInfo) {
-      this.setData({
-        didShowAuth: true
-      })
-      return
-    }
     // 处理延时点赞
     let item = this.data.detailData
     let {
@@ -144,6 +187,14 @@ Page({
     } else {
       nowHasLike = 1
       nowLikeCount = likeCount + 1
+      this.setData({
+        showStudentMomentLike: true
+      })
+      setTimeout(() => {
+        this.setData({
+          showStudentMomentLike: false
+        })
+      }, 1500)
     }
     if (this.data.studentMoments.length) {
       this.updateMomentsLikeStatus({
@@ -156,8 +207,6 @@ Page({
       ['detailData.likeCount']: nowLikeCount,
       ['detailData.hasLike']: nowHasLike,
     })
-
-
     this.like({
       hasLike,
       id: item.bubble.id,
@@ -168,6 +217,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if (options.showCommentBox) {
+      this.setData({
+        showPublishComment: true
+      })
+    }
     this.initData(options)
   },
 
@@ -232,6 +286,16 @@ Page({
       path: `/studentMoments/studentMomentsDetail/studentMomentsDetail?id=${this.data.id}`,
       imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618803112KiZxTl.jpg"
     }
+  },
+
+
+  // 显示大图预览
+  showBigImage(e) {
+    let index = e.currentTarget.dataset.index
+    wx.previewImage({
+      urls: this.data.detailData.bubble.pics,
+      current: this.data.detailData.bubble.pics[index]
+    })
   },
 
   // 获取详情信息
@@ -326,7 +390,7 @@ Page({
   },
 
   // 实时更改评论输入框内容
-  changeCommentText(e) {
+  updateTextareaText(e) {
     let value = e.detail.value
     this.setData({
       commentInputValue: value
@@ -334,7 +398,7 @@ Page({
   },
 
   // 发布评论
-  publishComment() {
+  createComment() {
     // 发布评论打点-4.19.JJ
     bxPoint("bbs_detail_comment_publish", {
       message_id: this.data.id
@@ -344,9 +408,6 @@ Page({
         title: '请输入评论内容',
         icon: "none"
       })
-      setTimeout(() => {
-        this.inputNow()
-      }, 20)
       return
     }
     publishComment({
@@ -358,7 +419,9 @@ Page({
         this.setData({
           inInputComment: false,
           commentInputValue: '',
-          ['detailData.bubble.comment_count']: this.data.detailData.bubble.comment_count + 1
+          ['detailData.bubble.comment_count']: this.data.detailData.bubble.comment_count + 1,
+          showPublishComment: false,
+          changeAnimationClass: true
         })
         this.getCommentMsg()
         if (this.data.studentMoments.length > 0) {
@@ -406,26 +469,6 @@ Page({
       this.setData({
         commentList: res.data,
       })
-    })
-  },
-
-  // 评论框焦点获取
-  inputNow() {
-    // 评论打点-4.19.JJ
-    bxPoint("bbs_detail_comment_box", {
-      message_id: this.data.id
-    })
-    if (!this.data.userInfo) {
-      this.setData({
-        didShowAuth: true
-      })
-      return
-    }
-    wx.pageScrollTo({
-      scrollTop: 200
-    })
-    this.setData({
-      inInputComment: true,
     })
   },
 
