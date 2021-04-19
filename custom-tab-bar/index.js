@@ -23,7 +23,7 @@ Component({
         "pagePath": "/pages/practice/practice",
         "selectedIconPath": "../assets/images/common/practiceActive.png",
         "iconPath": "../assets/images/common/practice.png",
-        "text": "课程",
+        "text": "学校课程",
         isDIY: false
       },
       {

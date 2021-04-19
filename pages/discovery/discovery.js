@@ -7,7 +7,7 @@ import {
 	removeLocalStorage,
 	setLocalStorage,
 } from "../../utils/util"
-import { getActivityList, getFindBanner, } from "../../api/course/index"
+import { getActivityList, getFindBanner, getOfflineCourseAllData, getVideoTypeList, } from "../../api/course/index"
 import { FluentLearnUserType, GLOBAL_KEY, WeChatLiveStatus } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import { getYouZanAppId } from "../../api/mall/index"
@@ -40,6 +40,8 @@ Page({
 		recommendCourseList: [],
 		modelBannerLink: "",
 		activityList: null,
+		kingKongs: [],
+		offlineList: [],
 		liveList: [],
 		travelList: [],
 		courseList: [],
@@ -50,11 +52,16 @@ Page({
 		didShowInformation: false,
 		showInformationPopAnime: false,
 		popData: {}, // 弹窗数据
+		didShowContact: false,
+		didFluentCardUser: false, // 是否是花样大学学生
+		didShowGuide: true, // 是否展示入群引导
 	},
 	async run() {
 		// 请求花样大学首页弹窗任务
 		getDiscoveryRemindData().then((data) => {
 			if (!$notNull(data.remind)) return
+			data.kecheng = $notNull(data.kecheng) ? data.kecheng : {}
+			data.teacher = $notNull(data.teacher) ? data.teacher : {}
 			let popData = {
 				id: data.kecheng.id,
 				type: data.remind.remind_type,
@@ -117,6 +124,18 @@ Page({
 		const roomIds = list.filter(_ => _.roomId).map(t => t.roomId)
 		getSchedule(roomIds).then(this.handleLiveStatusCallback)
 
+		// 金刚位
+		let kingKongs = await getVideoTypeList()
+		this.setData({kingKongs})
+
+		// 线下精品课
+		let {data: offlineList} = await getOfflineCourseAllData()
+		this.setData({offlineList: offlineList.map(n => (({...n, price: n.price / 100, discount_price: n.discount_price / 100, cover: n.detail_pics.split(",")[0]})))})
+
+		// 大学活动
+		let {list: activityList} = await getActivityList({offset: 0, limit: 9999, colleage_activity: 1})
+		this.setData({activityList})
+
 		// 花样游学
 		let travelList = await queryTravelList()
 		travelList = travelList.map(n => {
@@ -147,9 +166,15 @@ Page({
 		if (hasAccountInfo()) {
 			params["user_id"] = getLocalStorage(GLOBAL_KEY.userId)
 		}
-
 		let courseList = await queryQualityVideoList(params)
 		this.setData({courseList})
+
+		// 检查用户类型
+		if (hasUserInfo() && hasAccountInfo()) {
+			let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+			let {data: fluentCardInfo} = await getFluentCardInfo({user_snow_id: accountInfo.snow_id})
+			this.setData({didFluentCardUser: !!fluentCardInfo})
+		}
 	},
 	// 计算开播时间
 	calcStartTime(datetime) {
@@ -246,6 +271,11 @@ Page({
 			this.setData({isFluentLearnVIP: $notNull(data) && data.status === FluentLearnUserType.active})
 		})
 	},
+	// 跳转到线下精品课详情页
+	goToOfflineCourseDetail(e) {
+		let {id} = e.currentTarget.dataset.item
+		wx.navigateTo({url: `/subCourse/offlineCourseDetail/offlineCourseDetail?id=${id}`})
+	},
 	onTravelTap(e) {
 		let item = e.currentTarget.dataset.item
 		addTravelVisitNumber({travel_product_id: item.id})
@@ -285,6 +315,15 @@ Page({
 			path: "pages/index/index"
 		})
 		bxPoint("homepage_more_edu_travel_button", {}, false)
+	},
+	// 点击金刚位
+	onKingKongTap(e) {
+		getApp().globalData.discoveryToPracticeTabIndex = e.currentTarget.dataset.item.id - 1
+		wx.switchTab({url: `/pages/practice/practice`})
+	},
+	// 关闭入群引导弹窗
+	closeGuide() {
+		this.setData({didShowGuide: false})
 	},
 	// 获取授权
 	getAuth() {
@@ -508,11 +547,20 @@ Page({
 			})
 		}
 	},
+	goToJoinFluentCardPage() {
+		wx.navigateTo({url: "/mine/joinFluentLearn/joinFluentLearn"})
+	},
+	// 关闭联系客服
+	onCloseContactModal() {
+		this.setData({
+			didShowContact: false
+		})
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=223`})
+		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=225`})
 
 		let {scene, invite_user_id = "", source} = options
 		// 通过小程序码进入 scene=${source}

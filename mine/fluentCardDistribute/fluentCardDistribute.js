@@ -27,37 +27,37 @@ Page({
 		nickname: "",
 		previewList: [
 			{
-				image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612148124KmHnAl.jpg",
-				text: "模特学院"
+				image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618795678iYbowi.jpg",
+				text: "品质生活"
 			},
 			{
-				image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612148147kvOATW.jpg",
-				text: "时尚学院"
+				image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618795682SVxayP.jpg",
+				text: "时尚潮流"
 			},
 			{
-				image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612148161erGsKD.jpg",
-				text: "声乐学院"
+				image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618795692HwYOyV.jpg",
+				text: "兴趣爱好"
 			},
 			{
-				image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612148175AoUadT.jpg",
-				text: "文旅学院"
+				image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618795698AltZXv.jpg",
+				text: "模特训练"
 			}
 		],
 		permissionList: [
 			{
-				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1616658662RsHOdU.jpg",
+				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618795707BlnIDa.jpg",
+				text01: "线下精品",
+				text02: "课参与权"
+			},
+			{
+				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618795712nabBBP.jpg",
+				text01: "每月组织",
+				text02: "校友活动"
+			},
+			{
+				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618795720FvzYdk.jpg",
 				text01: "线上课程",
-				text02: "免费观看"
-			},
-			{
-				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1616658681tBniup.jpg",
-				text01: "全年专属",
-				text02: "伴读服务"
-			},
-			{
-				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1616658626RNwkMj.jpg",
-				text01: "每月学员",
-				text02: "专属福利"
+				text02: "终生畅学"
 			}
 		],
 		qrcode: "",
@@ -160,7 +160,11 @@ Page({
 	saveToLocalAlbum() {
 		bxPoint("changxue_post_save", {}, false)
 
-		// 支付锁
+		wx.showLoading({
+			title: '海报生成中...',
+			mask: true
+		})
+
 		if (this.data.saveLock) return
 		this.setData({saveLock: true})
 		let t = setTimeout(() => {
@@ -168,15 +172,7 @@ Page({
 			clearTimeout(t)
 		}, 500)
 
-		wx.showLoading({
-			title: '海报生成中...',
-			mask: true
-		})
-		this.generateCanvas().then(() => {
-			wx.hideLoading()
-		}).catch(() => {
-			wx.hideLoading()
-		})
+		this.generateCanvas().then()
 	},
 	/**
 	 * 生成Canvas
@@ -203,9 +199,9 @@ Page({
 			await drawImage(ctx, this.data.previewList[i].image, 30 + 59 * i, 216, 50, 60)
 			await drawFont(ctx, this.data.previewList[i].text, '#000000', "400", "PingFangSC", 10, 35 + 59 * i, 284)
 		}
-		await drawFont(ctx, "购买花样大学畅学卡，即享", '#765534', '500', 'PingFangSC', 14, 30, 323)
-		await drawFont(ctx, "3", '#DEA265', '700', 'PingFangSC', 24, 200, 316)
-		await drawFont(ctx, "大权益", '#765534', '500', 'PingFangSC', 14, 215, 323)
+		await drawFont(ctx, "加入花样大学，即享", '#765534', '500', 'PingFangSC', 14, 30, 323)
+		await drawFont(ctx, "3", '#DEA265', '700', 'PingFangSC', 24, 200-40, 316)
+		await drawFont(ctx, "大权益", '#765534', '500', 'PingFangSC', 14, 215-38, 323)
 		for (let i = 0; i < 3; i++) {
 			await drawImage(ctx, this.data.permissionList[i].icon, 28 + 84 * i, 356, 20, 20)
 			await drawFont(ctx, this.data.permissionList[i].text01, '#000000', "400", "PingFangSC", 10, 51 + 84 * i, 354)
@@ -223,6 +219,7 @@ Page({
 		// await drawLine(ctx, 'rgba(0,0,0, 0.5)', 1, 35, 460, 35 + 76, 460)
 		await drawBorderCircle(ctx, this.data.qrcode, 185 + 33, 412 + 33, 36)
 		ctx.draw(false, () => {
+			wx.hideLoading()
 			this._saveCanvasImageToLocal("fluentCard")
 				.then(({tempFilePath, errMsg}) => {
 					if (errMsg === "canvasToTempFilePath:ok") {

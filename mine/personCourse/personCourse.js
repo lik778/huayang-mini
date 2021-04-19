@@ -1,4 +1,4 @@
-import { getVideoCourseList, getVideoPracticeData } from "../../api/course/index"
+import { getJoinedOfflineCourseList, getVideoCourseList, getVideoPracticeData } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
 import { getNowDateAll } from "../../utils/util"
 
@@ -16,6 +16,7 @@ Page({
     recommendLimit: 10,
     recommendOffset: 0,
     noMoreRecommend: false,
+    currentIndex: 0
   },
 
   /**
@@ -72,6 +73,9 @@ Page({
       this.main()
     }
   },
+  onTabTap (e) {
+    this.setData({currentIndex: +e.currentTarget.dataset.index})
+  },
 
   more() {
     wx.reLaunch({
@@ -98,7 +102,8 @@ Page({
     getVideoPracticeData({
       offset: this.data.offset,
       limit: this.data.limit
-    }).then((list) => {
+    })
+      .then((list) => {
       list = list || []
       if (list.length !== this.data.limit) {
         this.setData({
@@ -139,5 +144,10 @@ Page({
         })
       }
     })
+
+    getJoinedOfflineCourseList({offset: this.data.offset, limit: this.data.limit})
+      .then(({data}) => {
+        console.log(data);
+      })
   }
 })

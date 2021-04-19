@@ -1,0 +1,101 @@
+@import "../../assets/css/common.wxss";
+.old-invite-new {
+    position: relative;
+    height: 100vh;
+    background: #37383B;
+}
+
+.canvas-wrap {
+    position: fixed;
+    left: 1000px;
+}
+
+.poster {
+    position: absolute;
+    left: 139rpx;
+    width: 472rpx;
+    height: 1024rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618799340LotLdi.jpg") no-repeat center;
+    background-size: contain;
+}
+
+.user-info {
+    position: absolute;
+    top: 130rpx;
+    left: 56rpx;
+    right: 36rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.avatar-image {
+    width: 72rpx;
+    height: 72rpx;
+    margin-right: 20rpx;
+    border-radius: 999rpx;
+}
+
+.content {
+    position: relative;
+    font: 24rpx/34rpx PingFangSC;
+    color: white;
+}
+
+.content::before, .content::after {
+    content: "“";
+    position: absolute;
+    top: -50rpx;
+    left: -8rpx;
+    color: #C13525;
+    font: 80rpx/112rpx PingFangSC;
+}
+
+.content::after {
+    content: "”";
+    left: 226rpx;
+    top: 60rpx;
+}
+
+.content > view {
+    width: 288rpx;
+}
+
+.qrcode-wrap {
+    position: absolute;
+    bottom: 50rpx;
+    left: 46rpx;
+    width: 120rpx;
+    height: 120rpx;
+    border: 6rpx solid white;
+    box-sizing: border-box;
+    border-radius: 999rpx;
+    background: white;
+}
+
+.btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 108rpx;
+    padding: 0 30rpx;
+}
+
+.btn {
+    height: 96rpx;
+    width: 330rpx;
+    border-radius: 999rpx;
+    font: 500 32rpx/96rpx PingFangSC;
+    text-align: center;
+    color: #CC0000;
+    background: white;
+}
+
+.extrude {
+    background: #CC0000;
+    color: white;
+}
