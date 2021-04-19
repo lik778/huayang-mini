@@ -1,4 +1,4 @@
-import { getVideoCourseList, getVideoPracticeData } from "../../api/course/index"
+import { getJoinedOfflineCourseList, getVideoCourseList, getVideoPracticeData } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
 import { getNowDateAll } from "../../utils/util"
 
@@ -98,7 +98,8 @@ Page({
     getVideoPracticeData({
       offset: this.data.offset,
       limit: this.data.limit
-    }).then((list) => {
+    })
+      .then((list) => {
       list = list || []
       if (list.length !== this.data.limit) {
         this.setData({
@@ -139,5 +140,10 @@ Page({
         })
       }
     })
+
+    getJoinedOfflineCourseList({offset: this.data.offset, limit: this.data.limit})
+      .then(({data}) => {
+        console.log(data);
+      })
   }
 })

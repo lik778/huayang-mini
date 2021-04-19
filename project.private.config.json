@@ -145,7 +145,7 @@
         {
           "name": "pages/practice/practice",
           "pathName": "pages/practice/practice",
-          "query": "didFromDiscovery=yes&index=3",
+          "query": "index=3",
           "scene": null
         },
         {

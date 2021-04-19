@@ -146,5 +146,6 @@ App({
 		source: "", // 用户场景来源
 		needInitialPageName: "", // 需要重新加载的页面  [ 综合作业广场｜主题作业广场 ]
 		didShowedTaskTip: false, // 是否已经展示过作业提示
+		discoveryToPracticeTabIndex: undefined, // 首页金刚位跳转
 	}
 })

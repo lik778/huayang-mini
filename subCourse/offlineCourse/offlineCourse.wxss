@@ -3,7 +3,6 @@
 .offline-course {
     padding: 0 30rpx 80rpx;
 }
-
 .layer {
     position: relative;
     padding: 40rpx 0;
@@ -42,7 +41,7 @@
 .info {
     display: flex;
     justify-content: space-between;
-    align-content: center;
+    align-items: center;
 }
 
 .info-wrap {
@@ -67,7 +66,7 @@
 
 .discount-price {
     line-height: 32rpx;
-     vertical-align: middle;
+    vertical-align: middle;
     font: 32rpx/32rpx PingFangSC;
 }
 
@@ -82,3 +81,4 @@
     font: 32rpx/32rpx PingFangSC;
     color: rgba(0,0,0, .6)
 }
+

@@ -34,37 +34,37 @@ Page({
 		nickname: "",
 		previewList: [
 			{
-				image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612148124KmHnAl.jpg",
-				text: "模特学院"
+				image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618795678iYbowi.jpg",
+				text: "品质生活"
 			},
 			{
-				image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612148147kvOATW.jpg",
-				text: "时尚学院"
+				image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618795682SVxayP.jpg",
+				text: "时尚潮流"
 			},
 			{
-				image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612148161erGsKD.jpg",
-				text: "声乐学院"
+				image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618795692HwYOyV.jpg",
+				text: "兴趣爱好"
 			},
 			{
-				image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612148175AoUadT.jpg",
-				text: "文旅学院"
+				image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618795698AltZXv.jpg",
+				text: "模特训练"
 			}
 		],
 		permissionList: [
 			{
-				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1616658662RsHOdU.jpg",
+				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618795707BlnIDa.jpg",
+				text01: "线下精品",
+				text02: "课参与权"
+			},
+			{
+				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618795712nabBBP.jpg",
+				text01: "每月组织",
+				text02: "校友活动"
+			},
+			{
+				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618795720FvzYdk.jpg",
 				text01: "线上课程",
-				text02: "免费观看"
-			},
-			{
-				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1616658681tBniup.jpg",
-				text01: "全年专属",
-				text02: "伴读服务"
-			},
-			{
-				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1616658626RNwkMj.jpg",
-				text01: "每月学员",
-				text02: "专属福利"
+				text02: "终生畅学"
 			}
 		],
 		qrcode: "",

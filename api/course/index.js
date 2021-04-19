@@ -738,3 +738,8 @@ export function createNewOfflineCourseOrder(params) {
 export function getModelDataList(params) {
 	return request._get(URL.queryModelDataList, params)
 }
+
+// 获取用户已经购买的线下课程
+export function getJoinedOfflineCourseList(params) {
+	return request._get(URL.queryJoinedOfflineCourseList, params)
+}

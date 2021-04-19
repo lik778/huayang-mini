@@ -322,11 +322,6 @@ Page({
 			getApp().globalData.super_user_id = options.invite_user_id
 		}
 
-		// 首页金刚位进入，页面Tabs固定在顶部
-		if (options.didFromDiscovery === "yes") {
-			this.setData({didFromDiscovery: true})
-		}
-
 		this.getBanner()
 		this.getTabList(index)
 		// ios规则适配
@@ -352,6 +347,15 @@ Page({
 		}
 
 		this.getFluentInfo()
+
+		// 首页金刚位进入，页面Tabs固定在顶部
+		let index = getApp().globalData.discoveryToPracticeTabIndex
+		if (index !== undefined) {
+			this.setData({didFromDiscovery: index, currentIndex: index})
+			this.getTabList(index)
+
+			getApp().globalData.discoveryToPracticeTabIndex = undefined
+		}
 
 		bxPoint("series_visit", {})
 	},

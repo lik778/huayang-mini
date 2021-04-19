@@ -23,7 +23,6 @@
                     <view class="continue-btn" wx:if="{{courseList.length > 0}}">继续学习</view>
                 </view>
             </block>
-
         </view>
     </view>
     <view class="more-btn" bindtap="more" wx:if="{{recommendList.length > 0}}">更多课程</view>

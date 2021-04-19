@@ -20,17 +20,17 @@
 
     <!-- 金刚位 -->
     <view class="king-kong">
-        <view class="king-kong-item">生活学院</view>
-        <view class="king-kong-item">时尚学院</view>
-        <view class="king-kong-item">兴趣学院</view>
-        <view class="king-kong-item">游学学院</view>
+        <view class="king-kong-item" wx:for="{{kingKongs}}" wx:key="index" bindtap="onKingKongTap" data-item="{{item}}">
+            <image class="king-kong-picture" src="{{item.pic}}" mode="aspectFit"></image>
+            <text class="king-kong-text">{{item.value}}</text>
+        </view>
     </view>
 
     <!-- 花样大学介绍 -->
-    <view class="hy-intro">
-        <view class="hy-intro-layer">
+    <view class="hy-intro" wx:if="{{didFluentCardUser}}" bindtap="goToJoinFluentCardPage">
+        <view class="layer">
             <text>花样大学介绍</text>
-            <view class="hy-intro-btn">加入花样大学</view>
+            <view class="hy-intro-btn">加入花样大学 ›</view>
         </view>
         <video id="hy-video-content" class="hy-video" src="" controls="{{false}}"
                custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}"
@@ -44,25 +44,32 @@
 
     <!-- 线下精品课 -->
     <view class="offline-course">
-        <view class="offline-course-item">
-            <image class=""></image>
-            <view class="offline-course-item-title">花样香道课</view>
-            <view class="offline-course-item-info">
-                <view class="offline-course-item-info-title limit-one-line">香道课，一起去领略香道文化</view>
-                <view class="about-offline-course-btn">查看 ›</view>
+        <view class="layer">线下课程</view>
+        <view class="offline-course-item" wx:for="{{offlineList}}" wx:key="index" data-item="{{item}}" bindtap="goToOfflineCourseDetail">
+            <image class="pic" src="{{item.cover}}" mode="aspectFill"></image>
+            <view class="title limit-two-line">{{item.title}}</view>
+            <view class="info">
+                <view class="info-wrap">
+                    <view class="price-wrap">
+                        <text>¥</text><text class="price">{{item.price}}</text>
+                    </view>
+                    <view class="discount-price-wrap">
+                        <text class="discount-price">¥{{item.discount_price}}</text>
+                        <image class="tag" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618455791dTGykq.jpg"
+                               mode="aspectFit"></image>
+                    </view>
+                </view>
+                <view class="no">xxx人已购</view>
             </view>
         </view>
     </view>
 
     <!-- 大学活动 -->
     <view class="college-activity">
-        <view class="college-activity-item">
-            <image class=""></image>
-            <view class="college-activity-title">花样香道课</view>
-            <view class="college-activity-info">
-                <view class="college-activity-info-title limit-one-line">香道课，一起去领略香道文化</view>
-                <view class="about-college-activity-btn">查看 ›</view>
-            </view>
+        <view class="layer">大学活动</view>
+        <view class="college-activity-item" wx:for="{{activityList}}" wx:key="index" data-item="{{item}}">
+            <image class="college-activity-picture" mode="aspectFill" src="{{item.cover_url}}"></image>
+            <view class="college-activity-title limit-two-line">{{item.title}}</view>
         </view>
     </view>
 
@@ -110,7 +117,7 @@
     <!-- 大赛&活动 -->
     <view class="other-activity" wx:if="{{showModelBanner}}">
         <!-- 大赛 -->
-        <view class="competition">
+        <view>
             <view class="competition-title">大赛</view>
             <view class="competition-list">
                 <view class="competition-item" bindtap="toModelCompetition" data-item='{{item}}'
@@ -120,31 +127,16 @@
                 </view>
             </view>
         </view>
-        <!-- 活动 -->
-        <view class="activity" wx:if="{{activityList.length!==0&&activityList!==null}}">
-            <view class="activity-title">活动</view>
-            <view class="activity-list">
-                <view class="activity-item" wx:for="{{activityList}}" wx:key="index">
-                    <image mode="aspectFill" src="{{item.cover_url}}"></image>
-                    <view class="activity-item-desc">
-                        <view class="activity-item-desc-title">{{item.title}}</view>
-                        <view class="activity-item-desc-time">{{item.start_time}}</view>
-                        <view class="activity-item-desc-area">{{item.address}}</view>
-                        <view class="activity-item-desc-price" wx:if="{{item.discount_price!==-1}}">
-                            <text>¥{{item.price}}</text>
-                            <text>¥{{item.discount_price}}</text>
-                        </view>
-                    </view>
-                </view>
-            </view>
-        </view>
     </view>
 
     <!-- 引导加入花样学习活动群 -->
-    <view class="guide">
-        <image class="guide-pic"></image>
-        <text class="guide-text">立即加入花样学习活动群</text>
+    <view class="guide" wx:if="{{didShowGuide}}">
+        <view>
+            <image class="guide-pic" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618560928medyIv.jpg"></image>
+            <text class="guide-text">立即加入花样学习活动群</text>
+        </view>
         <view class="guide-btn">进群</view>
+        <image class="guide-close-icon" catchtap="closeGuide" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618560964nUbRZc.jpg"></image>
     </view>
 
     <!-- 全局消息弹窗 -->
@@ -183,4 +175,8 @@
     <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent"
                 bind:authCompleteEvent="authCompleteEvent">
     </authModule>
+
+    <!-- 客服弹窗 -->
+    <contact show="{{didShowContact}}" isRootPage="{{true}}" sessionFrom="distribute"
+             bind:closeContactModal="onCloseContactModal" />
 </view>
