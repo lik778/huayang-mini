@@ -8,7 +8,7 @@
           <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617006649CazOVv.jpg"></image>
         </view>
         <view class="alert-title">
-          <view>恭喜您加入花样百姓俱乐部</view>
+          <view>恭喜您加入花样百姓</view>
           <view>跟着花样一起学、一起游</view>
         </view>
         <view class="alert-button" bindtap="join">立即加入</view>

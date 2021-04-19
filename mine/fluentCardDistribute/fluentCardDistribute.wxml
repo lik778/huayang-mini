@@ -50,7 +50,7 @@
         <view class="desc-03">
             <view class="price">
                 <view>限时特价<text class="discount-price">{{discount_price}}</text>元/年</view>
-                <text class="origin-price">原价{{price}}元/年</text>
+                <!--<text class="origin-price">原价{{price}}元/年</text>-->
             </view>
         </view>
 

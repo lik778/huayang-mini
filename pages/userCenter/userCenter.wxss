@@ -53,20 +53,20 @@
 }
 
 .message .user-info .nick-name {
-    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .message .user-info .vip-tag {
-    position: absolute;
     width: 32rpx;
     height: 32rpx;
     border-radius: 0;
-    margin: 12rpx 0 0 14rpx;
-    vertical-align: bottom;
+    margin: 0 4rpx 0 14rpx;
+    vertical-align: middle;
 }
 
 .nick-name .name-text {
-    position: absolute;
     font-size: 24rpx;
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 600;
@@ -77,8 +77,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     white-space: nowrap;
-    margin-left: 50rpx;
-    margin-top: 16rpx;
+    vertical-align: middle;
 }
 
 .message .name {

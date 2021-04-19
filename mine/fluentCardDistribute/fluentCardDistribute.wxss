@@ -163,7 +163,7 @@
 
 .desc-03 {
     position: relative;
-    top: 340rpx;
+    top: 350rpx;
     left: 70rpx;
     width: 452rpx;
 }
@@ -185,8 +185,8 @@
 
 .qrcode {
     position: relative;
-    top: 215rpx;
-    left: 380rpx;
+    top: 250rpx;
+    left: 370rpx;
     width: 132rpx;
     height: 132rpx;
     padding: 6rpx;
