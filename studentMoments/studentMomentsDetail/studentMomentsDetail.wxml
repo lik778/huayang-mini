@@ -1,0 +1,183 @@
+<!--studentMoments/studentMomentsDetail/studentMomentsDetail.wxml-->
+<view class="container" wx:if='{{detailData}}'>
+  <!-- 发布人 -->
+  <view class="title">
+    <image wx:if="{{!detailData.bubble.mobile}}"
+      src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618451480ZWGEID.jpg"></image>
+    <text wx:if="{{!detailData.bubble.mobile}}">花样百姓</text>
+    <image wx:if="{{detailData.bubble.mobile}}" src="{{detailData.bubble.user.avatar_url}}"></image>
+    <text wx:if="{{detailData.bubble.mobile}}">{{detailData.bubble.user.nick_name}}</text>
+  </view>
+  <!-- 图片+视频 -->
+  <view class="banner">
+    <view class="banner-image" wx:if='{{detailData.bubble.content_type===1}}'>
+      <swiper autoplay="{{swiperData.autoplay}}" interval="{{swiperData.interval}}" duration="{{swiperData.duration}}"
+        circular='{{swiperData.circular}}' bindchange="changeSwiperCurrent">
+        <block wx:for="{{detailData.bubble.pics}}" wx:key="index">
+          <swiper-item>
+            <image src="{{item}}"></image>
+          </swiper-item>
+        </block>
+      </swiper>
+      <view class="swiper-dot" wx:if='{{detailData.bubble.pics.length>1}}'>
+        <block wx:for='{{detailData.bubble.pics}}' wx:key='index'>
+          <view class="{{index==swiperData.current?'swiper-dot-item swiper-dot-item-active':'swiper-dot-item'}}">
+          </view>
+        </block>
+      </view>
+    </view>
+    <view class="banner-video" wx:else>
+      <image src="{{detailData.bubble.video_cover}}" wx:if='{{!inPlayVideo}}' class="video-cover-image"></image>
+      <image class="video-cover-play" src="{{commonIcon.playIcon}}" wx:if='{{!inPlayVideo}}' bindtap="playVideo">
+      </image>
+      <video src="{{detailData.bubble.video_url}}" object-fit="fill" show-fullscreen-btn="{{false}}"
+        id='myVideo'></video>
+    </view>
+  </view>
+  <!-- 主体：以边距分模块 -->
+  <view class="main">
+    <!-- 标题+点赞分享 -->
+    <view class="desc">
+      <view class="desc-title">
+        <text></text>
+        <text>{{detailData.bubble.title}}</text>
+      </view>
+      <view class="desc-main">
+        <view class="desc-like" bindtap="likeTap">
+          <image src="{{detailData.hasLike===0?commonIcon.likeIcon[1]:commonIcon.likeIcon[0]}}"></image>
+          <text>{{detailData.likeCount}}</text>
+        </view>
+        <view class="desc-share">
+          <image src="{{commonIcon.shareIcon}}"></image>
+          <text>分享</text>
+          <button class="share-button" open-type="share"></button>
+        </view>
+      </view>
+    </view>
+    <!-- 评论 -->
+    <view class="comment-module">
+      <view class="comment-title">评论 {{detailData.bubble.comment_count}}</view>
+      <view class="comment-main">
+        <view class="comment-input">
+          <image class="comment-input-icon" wx:if='{{userId}}'
+            src="{{userInfo?userInfo.avatar_url:'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618451480ZWGEID.jpg'}}">
+          </image>
+          <image class="comment-input-icon" wx:else
+            src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618451480ZWGEID.jpg"></image>
+          <view class="comment-textarea-module">
+            <textarea auto-height="{{false}}" type="text" class="{{inInputComment?'comment-input-line':''}}"
+              bindblur="inputLeave" bindinput="changeCommentText" focus="{{inInputComment}}"
+              value="{{commentInputValue}}" />
+            <view bindtap="{{inInputComment?'':'inputNow'}}" class="comment-textarea-module-cover" wx:if='{{!inInputComment}}'>请写下您的评论</view>
+            <view class="publish-button" wx:if='{{inInputComment}}' bindtap="publishComment">发布评论</view>
+          </view>
+        </view>
+        <view class="comment-item" wx:for="{{commentList}}" wx:key='index'>
+          <image src="{{item.user?item.user.avatar_url:'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618451480ZWGEID.jpg'}}"></image>
+          <view class="comment-item-right">
+            <view class="comment-item-right-top">
+              <text>{{item.user.nick_name}}</text>
+              <text>{{item.created_at}}</text>
+            </view>
+            <view class="comment-item-right-bottom">{{item.content}}</view>
+          </view>
+        </view>
+        <view class="comment-more" wx:if="{{!noCommentData}}">
+          <view class="comment-more-line"></view>
+          <text bindtap="visitMoreComment">查看更多评论</text>
+          <view class="comment-more-line"></view>
+        </view>
+      </view>
+    </view>
+    <!-- 课程 -->
+    <view class="course-module">
+      <view class="course-module-title">
+        {{detailData.bubble.relate_type<=0?'花样精品课程':detailData.bubble.relate_type===3?"也参加该活动":"也参加该课程"}}
+      </view>
+      <!-- 也参加该课程 -->
+      <view class="course-list" wx:if='{{detailData.bubble.relate_type>0}}'>
+        <!-- 线上课程 -->
+        <view class="online-course-item" bindtap="toCourseDetail" data-item='{{detailData.kecheng_series}}' data-index='0' wx:if="{{detailData.bubble.relate_type===1}}">
+          <view class="online-course-logo">
+            <image src="{{detailData.kecheng_series.cover_pic}}"></image>
+          </view>
+          <view class="online-course-right">
+            <view class="online-course-right-top">
+              <view class="online-course-main-name limit-one-line">{{detailData.kecheng_series.teacher_desc}}</view>
+              <view class="online-course-sub-name limit-one-line">{{detailData.kecheng_series.name}}</view>
+              <view class="online-course-teacher-name limit-one-line">方圆老师 资深时尚老师</view>
+            </view>
+            <view class="online-course-right-bottom">
+              共{{detailData.kecheng_series.visit_count}}人学习
+            </view>
+          </view>
+        </view>
+        <!-- 线下课程 -->
+        <view class="offline-course-item" data-index='1' bindtap="toCourseDetail" data-item='{{detailData.kecheng_offline}}' wx:if="{{detailData.bubble.relate_type===2}}">
+          <view class="offline-course-logo">
+            <image src="{{detailData.kecheng_offline.logo_pic}}"></image>
+          </view>
+          <view class="offline-course-title">{{detailData.kecheng_offline.name}}</view>
+          <view class="offline-course-bottom">
+            <view class="offline-course-bottom-left">
+              <text class="offline-course-price-sign">¥</text>
+              <text class="offline-course-old-price">{{detailData.kecheng_offline.discount_price/100}}</text>
+              <text class="offline-course-new-price">¥{{detailData.kecheng_offline.price/100}}</text>
+              <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618540316zdHech.jpg"></image>
+            </view>
+            <view class="offline-course-bottom-right">
+              {{detailData.kecheng_offline.buy_count}}人已购
+            </view>
+          </view>
+        </view>
+        <!-- 活动 -->
+        <view class="activity-item" bindtap="toCourseDetail" data-item='{{detailData.activity}}' wx:if="{{detailData.bubble.relate_type===3}}" data-index='2'>
+          <view class="activity-item-logo">
+            <image src="{{detailData.activity.cover_url}}"></image>
+          </view>
+          <view class="activity-item-title limit-one-line">{{detailData.activity.title}}</view>
+        </view>
+        <!-- 游学 -->
+        <view class="travel-item" bindtap="toCourseDetail" data-item='{{detailData.travel_product}}' data-index='3' wx:if="{{detailData.bubble.relate_type===4}}">
+          <view class="travel-item-logo">
+            <image src="{{detailData.travel_product.logo_pic}}"></image>
+          </view>
+          <view class="travel-item-title limit-two-line">{{detailData.travel_product.name}}</view>
+          <view class="travel-item-bottom">
+            <view class="travel-item-bottom-left">
+              <text class="travel-item-price-sign">¥</text>
+              <text class="travel-item-old-price">{{detailData.travel_product.discount_price/100}}</text>
+              <text class="travel-item-new-price">¥{{detailData.travel_product.price/100}}</text>
+            </view>
+            <view class="travel-item-bottom-right">
+              {{detailData.travel_product.buy_count}}人已购
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 精品课程 -->
+      <view class="course-list" wx:else>
+        <view class="online-course-item" wx:for="{{courseList}}" wx:key='index' bindtap="toCourseDetail" data-item="{{item}}" data-index='4'>
+          <view class="online-course-logo">
+            <image src="{{item.kecheng_series.cover_pic}}"></image>
+          </view>
+          <view class="online-course-right">
+            <view class="online-course-right-top">
+              <view class="online-course-main-name limit-one-line">{{item.kecheng_series.teacher_desc}}</view>
+              <view class="online-course-sub-name limit-one-line">{{item.kecheng_series.name}}</view>
+              <view class="online-course-teacher-name limit-one-line">{{item.teacher.name}} {{item.teacher.teacher_desc}}</view>
+            </view>
+            <view class="online-course-right-bottom">
+              共{{item.kecheng_series.visit_count}}人学习
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 点赞动画 -->
+  <studentMomentLike showStudentMomentLike='{{showStudentMomentLike}}'></studentMomentLike>
+  <!-- 授权弹窗 -->
+  <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
+  </authModule>
+</view>

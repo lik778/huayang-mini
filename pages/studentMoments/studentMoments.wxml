@@ -1,0 +1,126 @@
+<!--pages/studentMoments/studentMoments.wxml-->
+<view class="container wx:if='{{studentMoments}}'">
+  <!-- 顶部固定区域 -->
+  <view class="fixed-top">
+    <!-- 点赞+N人在看 -->
+    <view class='top-module'>
+      <view class="top-module-left">
+        <swiper autoplay interval='{{interval}}' circular vertical='{{true}}' current="{{swiperCurrent}}"
+          bindchange="changeSwiperCurrent">
+          <block wx:for="{{likeUserInfo}}" wx:key='index'>
+            <swiper-item>
+              <view>
+                <image src='{{item.avator}}'></image>
+                <text class="limit-one-line">{{item.name}}点赞了{{item.courseName}}</text>
+              </view>
+            </swiper-item>
+          </block>
+        </swiper>
+        <view class="top-module-left-cover"></view>
+      </view>
+      <view class="top-module-right">
+        <view class="top-module-right-image">
+          <image src="{{item}}" wx:for="{{visitUserData.visitUserList}}" wx:key="index"></image>
+        </view>
+        <view class="top-module-right-desc">{{visitUserData.visitNum}}人在看</view>
+      </view>
+    </view>
+    <!-- 弹幕 -->
+    <view class="barrage-module">
+      <view class="barrage-scroll-module">
+        <view class="barrage-scroll-top">
+          <block wx:for="{{doommDataTop}}" wx:key="id">
+            <view wx:if="{{item.display}}" style="animation: first {{item.time}}s linear forwards;"
+              class="barrage-scroll-item">
+              <image src="{{item.src}}"></image>
+              <view>{{item.text}}</view>
+            </view>
+          </block>
+        </view>
+        <view class="barrage-scroll-bottom">
+          <block wx:for="{{doommDataBottom}}" wx:key="id">
+            <view wx:if="{{item.display}}" style="animation: first {{item.time}}s linear forwards;"
+              class="barrage-scroll-item">
+              <image src="{{item.src}}"></image>
+              <view>{{item.text}}</view>
+            </view>
+          </block>
+        </view>
+      </view>
+      <view class="barrage-publish-module" bindtap="openBarrage">
+        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618366807TjCuKV.jpg"></image>
+      </view>
+    </view>
+  </view>
+  <!-- 动态列表 -->
+  <view class="main-module">
+    <view class="list">
+      <view class="item" wx:for='{{studentMoments}}' wx:key='index'>
+        <view class="item-title" bindtap="toDetail" data-item='{{item}}'>
+          <image src="{{item.bubble.user.avatar_url}}" wx:if='{{item.bubble.mobile}}'></image>
+          <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618451480ZWGEID.jpg" wx:else></image>
+          <text wx:if='{{item.bubble.mobile}}'>{{item.bubble.user.nick_name}}</text>
+          <text wx:else>花样百姓</text>
+        </view>
+        <view class="item-main">
+          <view class="type-image" wx:if='{{item.bubble.content_type===1}}'>
+            <image bindtap="toDetail" data-item='{{item}}' src="{{item.bubble.pics[0]}}"></image>
+          </view>
+          <view class="type-video" wx:else>
+            <image src="{{item.bubble.video_cover}}" wx:if='{{playingIndex!==index}}'>
+            </image>
+            <image src="{{commonIcon.playIcon}}" class="video-play-icon" bindtap="playVideo" data-index='{{index}}'
+              wx:if='{{playingIndex!==index}}'>
+            </image>
+            <video src="{{item.bubble.video_url}}" wx:else id="my-video" object-fit="fill"
+              show-fullscreen-btn='{{false}}'></video>
+          </view>
+          <view class="item-main-title" bindtap="toDetail" data-item='{{item}}'>{{item.bubble.title}}</view>
+        </view>
+        <view class="item-bottom">
+          <view class="item-like-module" bindtap="toLike" data-item='{{item}}'>
+            <image src="{{item.hasLike===0?commonIcon.likeIcon[1]:commonIcon.likeIcon[0]}}"></image>
+            <text>{{item.likeCount}}</text>
+          </view>
+          <view class="item-comment-module" bindtap="toDetail" data-item='{{item}}'>
+            <image src="{{commonIcon.commentIcon}}"></image>
+            <text>{{item.bubble.comment_count}}</text>
+          </view>
+          <view class="item-comment-module" bindtap="shareMoment">
+            <image src="{{commonIcon.shareIcon}}"></image>
+            <text>分享</text>
+            <button open-type="share" data-item='{{item}}'></button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 投稿 -->
+  <view class="contribute-button" bindtap="openContribute" style="bottom:{{isIphoneXRSMax?'186rpx':'146rpx'}}">
+    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618368640idsRLA.jpg"></image>
+    <text>投稿</text>
+  </view>
+  <!-- 发布弹幕 -->
+  <view class="publish-barrage-module" wx:if='{{showPublishBarrage}}'>
+    <view class="publish-barrage-module-cover" bindtap="closeBarrage"></view>
+    <view class="publish-barrage-module-main {{changeAnimationClass?'sliderUpAnimation':'sliderDownAnimation'}}"
+      style="bottom:{{isIphoneXRSMax?'160rpx':'120rpx'}}">
+      <view class="publish-barrage-title">发布弹幕</view>
+      <textarea class="publish-barrage-textarea" placeholder="请输入弹幕内容" cursor-spacing='162'
+        bindinput="updateTextareaText"></textarea>
+      <view class="publish-barrage-button-line">
+        <view class="publish-barrage-cancel" bindtap="closeBarrage">取消</view>
+        <view class="publish-barrage-sure" bindtap="createBarrageNow">发布弹幕</view>
+      </view>
+    </view>
+  </view>
+  <!-- 客服弹窗 -->
+  <contact show="{{didShowContact}}" isRootPage="{{true}}" sessionFrom="distribute"
+    bind:closeContactModal="onCloseContactModal" />
+  <!-- 点赞弹窗 -->
+  <studentMomentLike bindcloseLikeModule='closeLike' showStudentMomentLike='{{showStudentMomentLike}}'>
+  </studentMomentLike>
+  <!-- 授权弹窗 -->
+  <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
+  </authModule>
+</view>
