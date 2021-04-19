@@ -23,8 +23,50 @@ import {
 import {
   GLOBAL_KEY
 } from '../../lib/config'
-Page({
 
+var timer = null
+var timerBottom = null
+var i = 0;
+var iBottom = 0
+var doommList = []
+var doommListBottom = []
+var pageThis = null
+
+class Doomm {
+  constructor(text, time, src) {
+    this.text = text;
+    this.time = time;
+    this.src = src
+    this.display = true;
+    this.id = i++;
+    let that = this
+    setTimeout(function () {
+      doommList.splice(doommList.indexOf(that), 1); //动画完成，从列表中移除这项
+      pageThis.setData({
+        doommDataTop: doommList
+      })
+    }, this.time * 1000) //定时器动画完成后执行。
+  }
+}
+
+class DoommBottom {
+  constructor(text, time, src) {
+    this.text = text;
+    this.time = time;
+    this.src = src
+    this.display = true;
+    this.id = iBottom++;
+    let that = this
+    setTimeout(function () {
+      doommListBottom.splice(doommListBottom.indexOf(that), 1); //动画完成，从列表中移除这项
+      pageThis.setData({
+        doommDataBottom: doommListBottom
+      })
+    }, this.time * 1000) //定时器动画完成后执行。
+  }
+}
+
+Page({
   /**
    * 页面的初始数据
    */
@@ -38,6 +80,8 @@ Page({
     likeUserInfo: [], //点赞人信息
     interval: 5000, //点赞翻转自动滑动时间
     swiperCurrent: 0, //当前swiper下标 
+    doommList: [],
+    huayangLogo: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618451480ZWGEID.jpg',
     visitUserData: {
       visitUserList: [],
       visitNum: 0
@@ -55,6 +99,10 @@ Page({
       bottomArr: []
     }, //弹幕列表
     commentsList: [], //动态列表
+    doommDataTop: [], //弹幕一楼数组
+    doommDataBottom: [], //弹幕二楼数组
+    barrageIndex: 0,
+    barrageIndex1: 0,
     isIphoneXRSMax: isIphoneXRSMax(), //是否是x系列以上手机
     showPublishBarrage: false, //发布弹幕弹窗
     didShowContact: false, //显示客服消息弹窗
@@ -68,62 +116,7 @@ Page({
     createBarrageContent: '', //发送弹幕弹窗内容
     noMomentData: false, //是否还有动态数据
     showStudentMomentLike: false, //显示点赞动画
-  },
 
-  // 点赞/取消点赞动态
-  toLike(e) {
-    if (!this.data.userInfo) {
-      this.setData({
-        didShowAuth: true
-      })
-      return
-    }
-    // 处理延时点赞
-    let item = e.currentTarget.dataset.item
-    let {
-      hasLike,
-      likeCount
-    } = item
-    let nowHasLike = ''
-    let nowLikeCount = ''
-    if (hasLike === 1) {
-      nowHasLike = 0
-      nowLikeCount = likeCount - 1
-    } else {
-      nowHasLike = 1
-      nowLikeCount = likeCount + 1
-    }
-    this.updateMomentsLikeStatus({
-      id: item.bubble.id,
-      hasLike: nowHasLike,
-      likeCount: nowLikeCount
-    })
-    this.like({
-      hasLike,
-      id: item.bubble.id,
-    })
-    // 处理顶部点赞
-    if (item.has_like === 0) {
-      this.setData({
-        showStudentMomentLike: true
-      })
-      // 关闭点赞动画
-      setTimeout(() => {
-        this.setData({
-          showStudentMomentLike: false
-        })
-      }, 1500)
-
-      let arr = this.data.likeUserInfo.concat([])
-      arr.splice(this.data.swiperCurrent + 1, 0, {
-        avator: this.data.userInfo.avatar_url,
-        name: this.data.userInfo.nick_name,
-        courseName: item.bubble.title
-      })
-      this.setData({
-        likeUserInfo: arr
-      })
-    }
   },
 
   /**
@@ -132,6 +125,7 @@ Page({
   onLoad: function (options) {
     // 初始化一切数据+mobx
     this.initData()
+    pageThis = this
   },
 
   /**
@@ -158,7 +152,11 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    clearInterval(cycle)
+    ids = 0;
+    this.setData({
+      doommList: []
+    })
   },
 
   /**
@@ -166,6 +164,11 @@ Page({
    */
   onUnload: function () {
     this.storeBindings.destroyStoreBindings()
+    clearInterval(cycle)
+    ids = 0;
+    this.setData({
+      doommList: []
+    })
   },
 
   /**
@@ -316,7 +319,7 @@ Page({
   },
 
   // 初始化一切假数据
-  initData() {
+  async initData() {
     // 初始化本地用户信息
     this.initUserInfo()
     this.initVisitData()
@@ -332,8 +335,13 @@ Page({
   },
 
   // 获取动态列表
-  getMomentList() {
-    this.getCommentsList(this.data.getCommentsPageData).then((data) => {
+  getMomentList(limit) {
+    let pageData = Object.assign({}, this.data.getCommentsPageData)
+    if (limit) {
+      pageData.limit = limit
+      pageData.offset = 0
+    }
+    this.getCommentsList(pageData).then((data) => {
       this.setData({
         noMomentData: data.type
       }, () => {
@@ -356,7 +364,9 @@ Page({
     this.setData({
       didShowAuth: false
     })
-    this.getMomentList()
+    let pageData = Object.assign({}, this.data.getCommentsPageData)
+    let limit = pageData.offset + pageData.limit
+    this.getMomentList(limit)
   },
 
   // 点击进入详情页
@@ -398,6 +408,9 @@ Page({
           bottomArr
         }
       })
+      // 初始化弹幕动画
+      this.barrageCommonFunTop()
+      this.barrageCommonFunBottom()
     })
   },
 
@@ -446,4 +459,97 @@ Page({
     }
 
   },
+
+  // 第一行弹幕函数
+  barrageCommonFunTop() {
+    let arr = this.data.barrageList.topArr
+    let index = this.data.barrageIndex
+    let src = arr[index].user ? arr[index].user.avatar_url : this.data.huayangLogo
+    let text = arr[index].content
+    doommList.push(new Doomm(text, 5, src));
+    let time = 1000 + Math.ceil((text.length - 5) / 5) * 400
+    clearInterval(timer)
+    timer = setInterval(() => {
+      this.barrageCommonFunTop()
+    }, time)
+    this.setData({
+      doommDataTop: doommList,
+      barrageIndex: index > arr.length - 2 ? 0 : index + 1
+    })
+  },
+
+  // 第二行弹幕函数
+  barrageCommonFunBottom() {
+    let arr = this.data.barrageList.bottomArr
+    let index = this.data.barrageIndex1
+    let src = arr[index].user ? arr[index].user.avatar_url : this.data.huayangLogo
+    let text = arr[index].content
+    doommListBottom.push(new DoommBottom(text, 5, src));
+    let time = 1000 + Math.ceil((text.length - 5) / 5) * 400
+    clearInterval(timerBottom)
+    timerBottom = setInterval(() => {
+      this.barrageCommonFunBottom()
+    }, time)
+    this.setData({
+      doommDataBottom: doommListBottom,
+      barrageIndex1: index > arr.length - 2 ? 0 : index + 1
+    })
+  },
+
+  // 点赞/取消点赞动态
+  toLike(e) {
+    if (!this.data.userInfo) {
+      this.setData({
+        didShowAuth: true
+      })
+      return
+    }
+    // 处理延时点赞
+    let item = e.currentTarget.dataset.item
+    let {
+      hasLike,
+      likeCount
+    } = item
+    let nowHasLike = ''
+    let nowLikeCount = ''
+    if (hasLike === 1) {
+      nowHasLike = 0
+      nowLikeCount = likeCount - 1
+    } else {
+      nowHasLike = 1
+      nowLikeCount = likeCount + 1
+    }
+    this.updateMomentsLikeStatus({
+      id: item.bubble.id,
+      hasLike: nowHasLike,
+      likeCount: nowLikeCount
+    })
+    this.like({
+      hasLike,
+      id: item.bubble.id,
+    })
+    // 处理顶部点赞
+    if (item.has_like === 0) {
+      this.setData({
+        showStudentMomentLike: true
+      })
+      // 关闭点赞动画
+      setTimeout(() => {
+        this.setData({
+          showStudentMomentLike: false
+        })
+      }, 1500)
+
+      let arr = this.data.likeUserInfo.concat([])
+      arr.splice(this.data.swiperCurrent + 1, 0, {
+        avator: this.data.userInfo.avatar_url,
+        name: this.data.userInfo.nick_name,
+        courseName: item.bubble.title
+      })
+      this.setData({
+        likeUserInfo: arr
+      })
+    }
+  },
+
 })

@@ -3,7 +3,7 @@
 
 .container {
   padding-bottom: 200rpx;
-  background: #D8D8D8;
+  background: #fff;
   min-height: 100vh;
 }
 
@@ -15,7 +15,7 @@
   width: 100vw;
   height: 248rpx;
   z-index: 20;
-  background: #D8D8D8;
+  background: #fff;
 }
 
 /* 点赞+N人在看 */
@@ -53,8 +53,6 @@
   display: flex;
   align-items: center;
   height: 80rpx;
-  /* transform: translateY(-100%);
-  transition: transform 3s linear; */
 }
 
 .top-module-left image {
@@ -65,12 +63,13 @@
 }
 
 .top-module-left text {
-  font-size: 28rpx;
+  font-size: 14px;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #000000;
-  line-height: 28rpx;
+  line-height: 14px;
   padding-left: 8rpx;
+  height: 14px;
   width: 350rpx;
 }
 
@@ -98,23 +97,22 @@
 
 /* 弹幕 */
 .barrage-scroll-item {
-  align-items: center;
+  position: absolute;
+  white-space: nowrap;
   display: flex;
-  flex-shrink: 0;
-  margin-right: 68rpx;
-  height: 60rpx;
-  position: relative;
+  align-items: center;
+  margin-right: 70rpx;
 }
 
 .barrage-scroll-top {
   margin-bottom: 16rpx;
-  /* transform: translateX(-100px); */
 }
 
 .barrage-scroll-top,
 .barrage-scroll-bottom {
   display: flex;
   width: 100%;
+  align-items: center;
   overflow: hidden;
   flex-wrap: nowrap;
   height: 64rpx;
@@ -148,7 +146,7 @@
 }
 
 .barrage-scroll-module {
-  background: #fff;
+  /* background: #fff; */
   padding: 16rpx 0;
 }
 
@@ -166,7 +164,7 @@
   margin-right: -8rpx;
 }
 
-/* @keyframes first {
+@keyframes first {
   from {
     left: 100%;
   }
@@ -174,8 +172,18 @@
   to {
     left: -100%;
   }
-} */
+}
 
+@keyframes second {
+
+  from {
+    left: 150%;
+  }
+
+  to {
+    left: -200%;
+  }
+}
 
 /* 动态列表 */
 .main-module {

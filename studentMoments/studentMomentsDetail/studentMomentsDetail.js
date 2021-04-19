@@ -30,6 +30,7 @@ Page({
     commonIcon: {
       likeIcon: ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618367647LTWDYU.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618367660dslOOQ.jpg'],
       commentIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618367678kxmCLk.jpg',
+      playIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618535781FCwFCm.jpg',
       shareIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618367691MgBtuD.jpg'
     },
     likeIcon: ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618367647LTWDYU.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618367660dslOOQ.jpg'], //点赞icon
@@ -58,6 +59,7 @@ Page({
     likeLock: true, //点赞锁
     didShowAuth: false, //显示授权
     courseList: '', //精品课程列表
+    inPlayVideo: false, //是否在播放视频
   },
 
   // 取消授权
@@ -73,6 +75,16 @@ Page({
     this.setData({
       didShowAuth: false
     })
+  },
+
+  // 播放视频
+  playVideo() {
+    this.setData({
+      inPlayVideo: true
+    })
+    setTimeout(() => {
+      this.videoContext.play()
+    }, 500)
   },
 
   // 初始化用户信息
@@ -157,7 +169,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.videoContext = wx.createVideoContext('myVideo')
   },
 
   /**

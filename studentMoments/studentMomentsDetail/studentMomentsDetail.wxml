@@ -2,11 +2,11 @@
 <view class="container" wx:if='{{detailData}}'>
   <!-- 发布人 -->
   <view class="title">
-    <image wx:if="{{!detailData.bubble.user}}"
+    <image wx:if="{{!detailData.bubble.mobile}}"
       src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618451480ZWGEID.jpg"></image>
-    <text wx:if="{{!detailData.bubble.user}}">花样百姓</text>
-    <image wx:if="{{detailData.bubble.user}}" src="{{detailData.bubble.user.avatar_url}}"></image>
-    <text wx:if="{{detailData.bubble.user}}">{{detailData.bubble.user.nick_name}}</text>
+    <text wx:if="{{!detailData.bubble.mobile}}">花样百姓</text>
+    <image wx:if="{{detailData.bubble.mobile}}" src="{{detailData.bubble.user.avatar_url}}"></image>
+    <text wx:if="{{detailData.bubble.mobile}}">{{detailData.bubble.user.nick_name}}</text>
   </view>
   <!-- 图片+视频 -->
   <view class="banner">
@@ -26,7 +26,9 @@
       </view>
     </view>
     <view class="banner-video" wx:else>
-      <video src="{{detailData.bubble.video_url}}" object-fit="fill" show-fullscreen-btn="{{false}}"></video>
+      <image src="{{detailData.bubble.video_cover}}" wx:if='{{!inPlayVideo}}' class="video-cover-image"></image>
+      <image class="video-cover-play" src="{{commonIcon.playIcon}}" wx:if='{{!inPlayVideo}}' bindtap="playVideo"></image>
+      <video src="{{detailData.bubble.video_url}}" object-fit="fill" show-fullscreen-btn="{{false}}" id='myVideo'></video>
     </view>
   </view>
   <!-- 主体：以边距分模块 -->

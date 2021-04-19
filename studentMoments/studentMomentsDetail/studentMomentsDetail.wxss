@@ -34,6 +34,9 @@
 .banner-image {
   width: 100%;
   height: 448rpx;
+}
+
+.banner-video {
   position: relative;
 }
 
@@ -41,6 +44,26 @@
   width: 100%;
   height: 420rpx;
   vertical-align: bottom;
+}
+
+.video-cover-image {
+  width: 100%;
+  height: 420rpx;
+  vertical-align: bottom;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
+}
+
+.video-cover-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 96rpx;
+  height: 96rpx;
+  z-index: 11;
 }
 
 .banner-image swiper {

@@ -1,5 +1,5 @@
 <!--pages/studentMoments/studentMoments.wxml-->
-<view class="container">
+<view class="container wx:if='{{studentMoments}}'">
   <!-- 顶部固定区域 -->
   <view class="fixed-top">
     <!-- 点赞+N人在看 -->
@@ -29,18 +29,22 @@
     <view class="barrage-module">
       <view class="barrage-scroll-module">
         <view class="barrage-scroll-top">
-          <view class="barrage-scroll-item" wx:for="{{barrageList.topArr}}" wx:key='index'
-            style="animation: first 9s linear {{ index*3 }}s infinite; ">
-            <image src="{{item.user.avatar_url}}"></image>
-            <view>{{item.content}}</view>
-          </view>
+          <block wx:for="{{doommDataTop}}" wx:key="id">
+            <view wx:if="{{item.display}}" style="animation: first {{item.time}}s linear forwards;"
+              class="barrage-scroll-item">
+              <image src="{{item.src}}"></image>
+              <view>{{item.text}}</view>
+            </view>
+          </block>
         </view>
         <view class="barrage-scroll-bottom">
-          <view class="barrage-scroll-item" wx:for="{{barrageList.topArr}}" wx:key='index'
-            style="animation: first 9s linear {{ index*3 }}s infinite; ">
-            <image src="{{item.user.avatar_url}}"></image>
-            <view>{{item.content}}</view>
-          </view>
+          <block wx:for="{{doommDataBottom}}" wx:key="id">
+            <view wx:if="{{item.display}}" style="animation: first {{item.time}}s linear forwards;"
+              class="barrage-scroll-item">
+              <image src="{{item.src}}"></image>
+              <view>{{item.text}}</view>
+            </view>
+          </block>
         </view>
       </view>
       <view class="barrage-publish-module" bindtap="openBarrage">
@@ -92,7 +96,7 @@
     </view>
   </view>
   <!-- 投稿 -->
-  <view class="contribute-button" bindtap="openContribute">
+  <view class="contribute-button" bindtap="openContribute" style="bottom:{{isIphoneXRSMax?'186rpx':'146rpx'}}">
     <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618368640idsRLA.jpg"></image>
     <text>投稿</text>
   </view>
