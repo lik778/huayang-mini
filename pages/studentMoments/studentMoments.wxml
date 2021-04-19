@@ -82,11 +82,11 @@
             <image src="{{item.hasLike===0?commonIcon.likeIcon[1]:commonIcon.likeIcon[0]}}"></image>
             <text>{{item.likeCount}}</text>
           </view>
-          <view class="item-comment-module" bindtap="toDetail" data-item='{{item}}'>
+          <view class="item-comment-module" bindtap="toDetail" data-item='{{item}}' data-point='true'>
             <image src="{{commonIcon.commentIcon}}"></image>
             <text>{{item.bubble.comment_count}}</text>
           </view>
-          <view class="item-comment-module" bindtap="shareMoment">
+          <view class="item-comment-module" bindtap="shareMoment" data-item='{{item}}'>
             <image src="{{commonIcon.shareIcon}}"></image>
             <text>分享</text>
             <button open-type="share" data-item='{{item}}'></button>

@@ -18,7 +18,7 @@ import {
 import {
   GLOBAL_KEY
 } from "../../lib/config"
-
+import bxPoint from "../../utils/bxPoint"
 Page({
 
   /**
@@ -110,11 +110,19 @@ Page({
       ['commentPageData.offset']: this.data.commentPageData.offset + 5,
       ['commentPageData.limit']: 5
     })
+    // 查看更多评论
+    bxPoint("bbs_detail_comment_more", {
+      message_id: this.data.id
+    })
     this.getCommentMsg(true)
   },
 
   // 点赞
   likeTap() {
+    // 点赞打点-4.19.JJ
+    bxPoint('bbs_detail_like', {
+      message_id: this.data.id
+    })
     // 授权判断
     if (!this.data.userInfo) {
       this.setData({
@@ -175,6 +183,12 @@ Page({
    */
   onShow: function () {
     this.videoContext = wx.createVideoContext('myVideo')
+    this.pagePvPoint()
+  },
+
+  // pv打点-4.19.JJ
+  pagePvPoint() {
+    bxPoint('bbs_detail_visit')
   },
 
   /**
@@ -209,6 +223,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    // 分享打点-4.19.JJ
+    bxPoint("bbs_detail_share", {
+      message_id: this.data.id
+    })
     return {
       title: "快来看看花样大学精彩的校友动态！",
       path: `/studentMoments/studentMomentsDetail/studentMomentsDetail?id=${this.data.id}`,
@@ -248,23 +266,47 @@ Page({
     let index = Number(e.currentTarget.dataset.index)
     if (index === 0) {
       // 线上课程
+      bxPoint("bbs_detail_series_list", {
+        message_id: this.data.id,
+        series_id: item.id
+      })
       wx.navigateTo({
         url: `/subCourse/videoCourse/videoCourse?videoId=${item.id}`,
       })
     } else if (index === 1) {
       // 线下课程
-
+      bxPoint("bbs_detail_series_list", {
+        message_id: this.data.id,
+        series_offline_id: item.id
+      })
+      wx.navigateTo({
+        url: `/subCourse/offlineCourseDetail/offlineCourseDetail?id=${item.id}`,
+      })
     } else if (index === 2) {
       //活动
-
+      bxPoint("bbs_detail_series_list", {
+        message_id: this.data.id,
+        activities_id: item.id
+      })
+      wx.navigateTo({
+        url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(`https://huayang.baixing.com/#/home/detail/${item.id}`)}`,
+      })
     } else if (index === 3) {
       // 游学
+      bxPoint("bbs_detail_series_list", {
+        message_id: this.data.id,
+        travel_series_id: item.id
+      })
       wx.navigateToMiniProgram({
         appId: "wx2ea757d51abc1f47",
         path: '/pages/index/index',
       })
     } else if (index === 4) {
       // 精品课
+      bxPoint("bbs_detail_series_list", {
+        message_id: this.data.id,
+        series_id: item.id
+      })
       wx.navigateTo({
         url: `/subCourse/videoCourse/videoCourse?videoId=${item.kecheng_series.id}`,
       })
@@ -293,6 +335,10 @@ Page({
 
   // 发布评论
   publishComment() {
+    // 发布评论打点-4.19.JJ
+    bxPoint("bbs_detail_comment_publish", {
+      message_id: this.data.id
+    })
     if (this.data.commentInputValue.trim() === '') {
       wx.showToast({
         title: '请输入评论内容',
@@ -365,6 +411,10 @@ Page({
 
   // 评论框焦点获取
   inputNow() {
+    // 评论打点-4.19.JJ
+    bxPoint("bbs_detail_comment_box", {
+      message_id: this.data.id
+    })
     if (!this.data.userInfo) {
       this.setData({
         didShowAuth: true
@@ -381,7 +431,6 @@ Page({
 
   // 评论框焦点离开
   inputLeave() {
-
     this.setData({
       inInputComment: false,
       commentInputValue: ''

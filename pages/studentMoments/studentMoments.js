@@ -16,14 +16,13 @@ import {
   createBarrage,
   getStudentCommentList
 } from "../../api/studentComments/index"
-
 import {
   store
 } from '../../store/index'
 import {
   GLOBAL_KEY
 } from '../../lib/config'
-
+import bxPoint from "../../utils/bxPoint"
 var timer = null
 var timerBottom = null
 var i = 0;
@@ -146,6 +145,9 @@ Page({
         selected: 1
       })
     }
+    // pv打点
+    bxPoint("bbs_visit")
+
     this.videoContext = wx.createVideoContext('my-video')
     if (this.data.clickShare) {
       this.barrageCommonFunTop()
@@ -208,13 +210,29 @@ Page({
 
   // 打开客服消息弹窗
   openContribute() {
+    // 联系客服投稿打点-4.19-JJ
+    bxPoint("bbs_contact_service", {}, false)
     this.setData({
       didShowContact: true
     })
   },
 
+  // 分享打点-4.19-JJ
+  shareMoment(e) {
+    let item = e.currentTarget.dataset.item
+    bxPoint("bbs_share", {
+      message_id: item.bubble.id,
+      message_title: item.bubble.title,
+      message_type: item.bubble.content_type === 1 ? "图片" : "视频",
+      message_time: item.bubble.created_at,
+      message_publisher_id: item.bubble.user_id === 0 ? '' : item.bubble.user_id,
+    }, false)
+  },
+
   // 打开发布弹幕弹窗
   openBarrage() {
+    // 发布弹幕打点-4.19-JJ
+    bxPoint("bbs_screen_comment", {}, false)
     if (!this.data.userInfo) {
       this.setData({
         didShowAuth: true
@@ -363,7 +381,19 @@ Page({
 
   // 点击进入详情页
   toDetail(e) {
+    let item = e.currentTarget.dataset.item
     let id = e.currentTarget.dataset.item.bubble.id
+    let type = e.currentTarget.dataset.point
+    if (type === "true") {
+      //评论打点
+      bxPoint("bbs_comment", {
+        message_id: id,
+        message_title: item.bubble.title,
+        message_type: item.bubble.content_type === 1 ? "图片" : "视频",
+        message_time: item.bubble.created_at,
+        message_publisher_id: item.bubble.user_id === 0 ? '' : item.bubble.user_id,
+      }, false)
+    }
     wx.navigateTo({
       url: `/studentMoments/studentMomentsDetail/studentMomentsDetail?id=${id}`,
     })
@@ -516,14 +546,24 @@ Page({
 
   // 点赞/取消点赞动态
   toLike(e) {
+    let item = e.currentTarget.dataset.item
     if (!this.data.userInfo) {
       this.setData({
         didShowAuth: true
       })
       return
     }
+
+    // 点赞打点
+    bxPoint("bbs_like", {
+      message_id: item.bubble.id,
+      message_title: item.bubble.title,
+      message_type: item.bubble.content_type === 1 ? "图片" : "视频",
+      message_time: item.bubble.created_at,
+      message_publisher_id: item.bubble.user_id === 0 ? '' : item.bubble.user_id,
+    }, false)
+
     // 处理延时点赞
-    let item = e.currentTarget.dataset.item
     let {
       hasLike,
       likeCount
