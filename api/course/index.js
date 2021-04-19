@@ -2,6 +2,15 @@ import request from "../../lib/request"
 import { URL } from "../../lib/config"
 
 
+export function getFreeOnlineCourse(params) {
+	return new Promise((resolve) => {
+		request._get(URL.queryFreeOnlineCourse, params).then(({ data }) => {
+			data = data || []
+			resolve(data)
+		})
+	})
+}
+
 // 获取结构化练习海报背景图
 export function queryPunchCardBg() {
 	return new Promise(resolve => {

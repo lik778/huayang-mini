@@ -1,2 +1,20 @@
-<!--subCourse/freeOnlineCourse/freeOnlineCourse.wxml-->
-<text>subCourse/freeOnlineCourse/freeOnlineCourse.wxml</text>
+<view class="videobox">
+    <view data-item="{{item}}" class="video" wx:for="{{videoList}}" wx:key="index"  bindtap="goToVideoDetail" >
+        <image class="video-image" src="{{item.cover_pic}}"></image>
+        <view class="video-title">{{item.desc}}</view>
+        <view class="video-textbox">
+            <view class="video-infor">
+                <view class="pricebox">
+                    <view class="video-price">
+                        <text>¥</text>{{item.price}}
+                    </view>
+                    <view class="video-vip-price">
+                        <text>¥{{item.vip_only}}</text>
+                        <image class="video-pricetag" src="/assets/priceTag.png" />
+                    </view>
+                </view>
+                <view class="video-buyednum">{{item.visit_count}}人已购</view>
+            </view>
+        </view>
+    </view>
+</view>

@@ -1,66 +1,37 @@
-// subCourse/college-activity/collegeActivity.js
+import {
+    getActivityList
+} from "../../api/course/index";
 Page({
-
-  /**
-   * 页面的初始数据
-   */
-  data: {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
+    data: {
+        pagesControl:{
+            limit:10,
+            offset:0
+        },
+        activityList: []
+    },
+    getActivityList() {
+        getActivityList({
+            colleage_activity:1,
+            limit:this.data.pagesControl.limit,
+            offset:this.data.pagesControl.offset
+        }).then(x=>{
+            let list = x.list;
+            console.log(list);
+            this.setData({
+                activityList:this.data.activityList.concat(list),
+                pagesContorl:{
+                    limit:this.data.pagesControl.limit,
+                    offset:this.data.pagesControl.offset+this.data.pagesControl.limit
+                }
+            })
+        }).catch(err=>{
+            console.log(err);
+        })
+    },
+    onLoad() {
+        this.getActivityList();
+    },
+    onReachBottom(){
+        this.getActivityList();
+    }
 })

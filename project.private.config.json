@@ -378,6 +378,17 @@
           "pathName": "mine/oldInviteNew/oldInviteNew",
           "query": "inviteId=11467959679586304",
           "scene": null
+        },
+        {
+          "name": "大学活动",
+          "pathName": "subCourse/collegeActivity/collegeActivity",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "线上免费课",
+          "pathName": "subCourse/freeOnlineCourse/freeOnlineCourse",
+          "scene": null
         }
       ]
     }
