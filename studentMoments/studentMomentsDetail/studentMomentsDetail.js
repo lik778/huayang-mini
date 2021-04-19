@@ -213,7 +213,8 @@ Page({
   onShareAppMessage: function () {
     return {
       title: "快来看看花样大学精彩的校友动态！",
-      path: `/studentMoments/studentMomentsDetail/studentMomentsDetail?id=${this.data.id}`
+      path: `/studentMoments/studentMomentsDetail/studentMomentsDetail?id=${this.data.id}`,
+      imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618803112KiZxTl.jpg"
     }
   },
 

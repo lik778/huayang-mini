@@ -98,6 +98,7 @@ Page({
       topArr: [],
       bottomArr: []
     }, //弹幕列表
+    clickShare: false,
     commentsList: [], //动态列表
     doommDataTop: [], //弹幕一楼数组
     doommDataBottom: [], //弹幕二楼数组
@@ -146,35 +147,16 @@ Page({
       })
     }
     this.videoContext = wx.createVideoContext('my-video')
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-    this.setData({
-      didShowContact: false
-    })
-  },
-
-  // 清除弹幕倒计时
-  clearBarrageFun() {
-    clearInterval(timer)
-    clearInterval(timerBottom)
-    i = 0
-    iBottom = 0
-    doommList = []
-    doommListBottom = []
+    if (this.data.clickShare) {
+      this.barrageCommonFunTop()
+      this.barrageCommonFunBottom()
+      this.setData({
+        clickShare: false
+      })
+    }
 
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-    this.storeBindings.destroyStoreBindings()
-    this.clearBarrageFun()
-  },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
@@ -191,9 +173,13 @@ Page({
     if (res.from === 'button') {
       src += `?id=${res.target.dataset.item.bubble.id}`
     }
+    this.setData({
+      clickShare: true
+    })
     return {
       title: "快来看看花样大学精彩的校友动态！",
-      path: src
+      path: src,
+      imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618803112KiZxTl.jpg"
     }
   },
 
@@ -290,7 +276,7 @@ Page({
     })
     setTimeout(() => {
       this.initVisitData(randomNum + 1)
-    }, 1000000)
+    }, 5000)
   },
 
   // 动态设置x点赞(每10s刷新一次)
@@ -334,7 +320,6 @@ Page({
       fields: ['studentMoments'],
       actions: ['getCommentsList', 'change', 'like', 'updateMomentsLikeStatus'],
     })
-    // 获取弹幕列表
     this.getBarrage()
     this.getMomentList()
   },
@@ -500,6 +485,29 @@ Page({
       barrageIndex1: index > arr.length - 2 ? 0 : index + 1
     })
   },
+
+  // 生命周期函数--监听页面隐藏
+  onHide: function () {
+    this.clearBarrageFun()
+  },
+
+  // 清除弹幕倒计时
+  clearBarrageFun() {
+    clearInterval(timer)
+    clearInterval(timerBottom)
+    i = 0
+    iBottom = 0
+    this.setData({
+      didShowContact: false
+    })
+  },
+
+  // 生命周期函数--监听页面卸载
+  onUnload: function () {
+    this.storeBindings.destroyStoreBindings()
+    this.clearBarrageFun()
+  },
+
 
   // 点赞/取消点赞动态
   toLike(e) {
