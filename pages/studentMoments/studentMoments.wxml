@@ -64,7 +64,7 @@
         </view>
         <view class="item-main">
           <view class="type-image" wx:if='{{item.bubble.content_type===1}}'>
-            <image bindtap="toDetail" data-item='{{item}}' src="{{item.bubble.pics}}"></image>
+            <image bindtap="toDetail" data-item='{{item}}' src="{{item.bubble.pics[0]}}"></image>
           </view>
           <view class="type-video" wx:else>
             <image src="{{item.bubble.video_cover}}" wx:if='{{playingIndex!==index}}'>

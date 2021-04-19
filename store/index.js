@@ -34,9 +34,9 @@ export const store = observable({
 				list.map(item => {
 					item.hasLike = item.has_like
 					item.likeCount = item.bubble.like_count
+					item.bubble.pics = typeof (item.bubble.pics) === 'object' ? item.bubble.pics : item.bubble.pics ? item.bubble.pics.split(',') : []
 				})
 				this.studentMoments = list.concat([])
-
 				if (data.length < params.limit) {
 					resolve({
 						data: this.studentMoments,
@@ -130,7 +130,6 @@ export const store = observable({
 				item.bubble.comment_count += 1
 			}
 		})
-		console.log(this.studentMoments)
 		this.studentMoments = this.studentMoments.concat([])
 	})
 })

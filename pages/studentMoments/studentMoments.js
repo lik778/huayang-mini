@@ -152,11 +152,20 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    clearInterval(cycle)
-    ids = 0;
     this.setData({
-      doommList: []
+      didShowContact: false
     })
+  },
+
+  // 清除弹幕倒计时
+  clearBarrageFun() {
+    clearInterval(timer)
+    clearInterval(timerBottom)
+    i = 0
+    iBottom = 0
+    doommList = []
+    doommListBottom = []
+
   },
 
   /**
@@ -164,11 +173,7 @@ Page({
    */
   onUnload: function () {
     this.storeBindings.destroyStoreBindings()
-    clearInterval(cycle)
-    ids = 0;
-    this.setData({
-      doommList: []
-    })
+    this.clearBarrageFun()
   },
 
   /**
@@ -529,7 +534,7 @@ Page({
       id: item.bubble.id,
     })
     // 处理顶部点赞
-    if (item.has_like === 0) {
+    if (item.hasLike === 0) {
       this.setData({
         showStudentMomentLike: true
       })

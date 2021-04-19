@@ -34,6 +34,7 @@
 .banner-image {
   width: 100%;
   height: 448rpx;
+  position: relative;
 }
 
 .banner-video {
@@ -69,6 +70,7 @@
 .banner-image swiper {
   width: 100%;
   height: 420rpx;
+
 }
 
 .banner-image swiper-item {

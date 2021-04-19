@@ -62,6 +62,13 @@ Page({
     inPlayVideo: false, //是否在播放视频
   },
 
+  // swiper下标更改
+  changeSwiperCurrent(e) {
+    this.setData({
+      ['swiperData.current']: Number(e.detail.current)
+    })
+  },
+
   // 取消授权
   authCancelEvent() {
     this.setData({
