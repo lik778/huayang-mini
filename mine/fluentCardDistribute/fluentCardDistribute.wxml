@@ -7,7 +7,7 @@
         <canvas canvas-id="fluentCard" style="width:858px;height:1527px;"></canvas>
     </view>
 
-    <view class="poster" style="top: {{statusHeight + 44 + 23}}px">
+    <view class="poster" style="top: calc(50vh - 64rpx - 509rpx + {{statusHeight}}px);">
         <image class="logo" src="{{logo}}" mode="aspectFit" />
         <view class="user">
             <image class="avatar" src="{{avatar}}" mode="aspectFit" />

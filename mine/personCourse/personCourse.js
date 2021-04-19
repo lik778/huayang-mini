@@ -16,6 +16,7 @@ Page({
     recommendLimit: 10,
     recommendOffset: 0,
     noMoreRecommend: false,
+    currentIndex: 0
   },
 
   /**
@@ -71,6 +72,9 @@ Page({
     if (!this.data.noMore && !this.data.noMoreRecommend) {
       this.main()
     }
+  },
+  onTabTap (e) {
+    this.setData({currentIndex: +e.currentTarget.dataset.index})
   },
 
   more() {

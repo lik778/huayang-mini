@@ -160,7 +160,11 @@ Page({
 	saveToLocalAlbum() {
 		bxPoint("changxue_post_save", {}, false)
 
-		// 支付锁
+		wx.showLoading({
+			title: '海报生成中...',
+			mask: true
+		})
+
 		if (this.data.saveLock) return
 		this.setData({saveLock: true})
 		let t = setTimeout(() => {
@@ -168,15 +172,7 @@ Page({
 			clearTimeout(t)
 		}, 500)
 
-		wx.showLoading({
-			title: '海报生成中...',
-			mask: true
-		})
-		this.generateCanvas().then(() => {
-			wx.hideLoading()
-		}).catch(() => {
-			wx.hideLoading()
-		})
+		this.generateCanvas().then()
 	},
 	/**
 	 * 生成Canvas
@@ -203,9 +199,9 @@ Page({
 			await drawImage(ctx, this.data.previewList[i].image, 30 + 59 * i, 216, 50, 60)
 			await drawFont(ctx, this.data.previewList[i].text, '#000000', "400", "PingFangSC", 10, 35 + 59 * i, 284)
 		}
-		await drawFont(ctx, "购买花样大学畅学卡，即享", '#765534', '500', 'PingFangSC', 14, 30, 323)
-		await drawFont(ctx, "3", '#DEA265', '700', 'PingFangSC', 24, 200, 316)
-		await drawFont(ctx, "大权益", '#765534', '500', 'PingFangSC', 14, 215, 323)
+		await drawFont(ctx, "加入花样大学，即享", '#765534', '500', 'PingFangSC', 14, 30, 323)
+		await drawFont(ctx, "3", '#DEA265', '700', 'PingFangSC', 24, 200-40, 316)
+		await drawFont(ctx, "大权益", '#765534', '500', 'PingFangSC', 14, 215-38, 323)
 		for (let i = 0; i < 3; i++) {
 			await drawImage(ctx, this.data.permissionList[i].icon, 28 + 84 * i, 356, 20, 20)
 			await drawFont(ctx, this.data.permissionList[i].text01, '#000000', "400", "PingFangSC", 10, 51 + 84 * i, 354)
@@ -223,6 +219,7 @@ Page({
 		// await drawLine(ctx, 'rgba(0,0,0, 0.5)', 1, 35, 460, 35 + 76, 460)
 		await drawBorderCircle(ctx, this.data.qrcode, 185 + 33, 412 + 33, 36)
 		ctx.draw(false, () => {
+			wx.hideLoading()
 			this._saveCanvasImageToLocal("fluentCard")
 				.then(({tempFilePath, errMsg}) => {
 					if (errMsg === "canvasToTempFilePath:ok") {

@@ -171,6 +171,7 @@ Page({
 
 		// 检查用户类型
 		if (hasUserInfo() && hasAccountInfo()) {
+			let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
 			let {data: fluentCardInfo} = await getFluentCardInfo({user_snow_id: accountInfo.snow_id})
 			this.setData({didFluentCardUser: !!fluentCardInfo})
 		}

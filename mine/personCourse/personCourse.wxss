@@ -1,6 +1,46 @@
 @import "../../assets/css/common.wxss";
 
 .person-course {
+    padding-top: 134rpx;
+}
+
+.fixed-tabs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 134rpx;
+    background: white;
+}
+
+.fixed-tab-item {
+    width: 50vw;
+    text-align: center;
+    font: 500 48rpx/134rpx PingFangSC;
+}
+
+.fixed-tab-item.active {
+    color: #CC0000;
+}
+
+.tab-line {
+    position: absolute;
+    top: 104rpx;
+    left: calc(25vw - 42rpx);
+    width: 84rpx;
+    height: 8rpx;
+    border-radius: 999rpx;
+    background: #CC0000;
+}
+
+.tab-line.active {
+    left: calc(75vw - 42rpx);
+}
+
+.person-course {
     padding-bottom: 210rpx;
 }
 

@@ -1,0 +1,26 @@
+<view class="old-invite-new">
+    <cover-view class="navigation" style="padding-top:{{statusHeight+43}}px;">
+        <naviBar title="畅学卡海报" color="#37383B" titleColor="white" hideIcon="{{true}}"></naviBar>
+    </cover-view>
+
+    <view class="canvas-wrap">
+        <canvas canvas-id="oldInviteNew" style="width:708px;height:1536px;"></canvas>
+    </view>
+
+    <view class="poster" style="top: calc(50vh - 64rpx - 512rpx + {{statusHeight}}px);">
+        <view class="user-info">
+            <image class="avatar-image" src="{{avatar}}" mode="aspectFit"></image>
+            <view class="content">
+                <view class="limit-one-line">我是{{nickname}}</view>
+                <view>和我一起加入花样大学吧!</view>
+            </view>
+        </view>
+
+        <image class="qrcode-wrap" src="{{qrcode}}" mode="aspectFit"></image>
+    </view>
+
+    <view class="btns" style="height: {{108 + bottomNo}}rpx;">
+        <button open-type="share" class="btn" bindtap="shareToFriend">分享给好友</button>
+        <view class="btn extrude" bindtap="saveToLocalAlbum">保存到相册</view>
+    </view>
+</view>

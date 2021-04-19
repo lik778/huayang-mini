@@ -1,29 +1,38 @@
 <view class="person-course">
-    <block wx:if="{{courseList.length === 0}}">
-        <view class="no-data-tips">
-            <image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603951961KBNQXM.jpg"></image>
-            <text>您还没有学习课程</text>
-            <text>快去学习吧！</text>
-        </view>
-        <view wx:if="{{recommendList.length > 0}}" class="layout">课程推荐</view>
-    </block>
-    <view class="video-course-list">
-        <view class="course-item" wx:for="{{courseList.length > 0 ? courseList : recommendList}}" wx:key="index"
-            bindtap="viewCourseDetail" data-item="{{item}}">
-            <block wx:if='{{item.kecheng_series}}'>
-                <image class="course-image" src="{{item.kecheng_series.cover_pic}}"></image>
-                <view class="course-info">
-                    <view class="course-info-top">
-                        <view class="course-info-main-title limit-one-line">{{item.kecheng_series.teacher_desc}}</view>
-                        <view class="course-info-sub-title limit-one-line">{{item.kecheng_series.name}}</view>
-                        <view class="course-info-teacher limit-one-line">{{item.teacher.name}}
-                            {{item.teacher.teacher_desc}}
-                        </view>
-                    </view>
-                    <view class="continue-btn" wx:if="{{courseList.length > 0}}">继续学习</view>
-                </view>
-            </block>
-        </view>
+    <view class="fixed-tabs">
+        <view class="fixed-tab-item {{currentIndex === 0 ? 'active' : ''}}" bindtap="onTabTap" data-index="0">线上课程</view>
+        <view class="fixed-tab-item {{currentIndex === 1 ? 'active' : ''}}" bindtap="onTabTap" data-index="1">线下课程</view>
+        <view class="tab-line {{currentIndex === 0 ? '' : 'active'}}"></view>
     </view>
-    <view class="more-btn" bindtap="more" wx:if="{{recommendList.length > 0}}">更多课程</view>
+    <block wx:if="{{currentIndex === 0}}">
+        <block wx:if="{{courseList.length === 0}}">
+            <view class="no-data-tips">
+                <image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603951961KBNQXM.jpg"></image>
+                <text>您还没有学习课程</text>
+                <text>快去学习吧！</text>
+            </view>
+            <view wx:if="{{recommendList.length > 0}}" class="layout">课程推荐</view>
+        </block>
+        <view class="video-course-list">
+            <view class="course-item" wx:for="{{courseList.length > 0 ? courseList : recommendList}}" wx:key="index"
+                  bindtap="viewCourseDetail" data-item="{{item}}">
+                <block wx:if='{{item.kecheng_series}}'>
+                    <image class="course-image" src="{{item.kecheng_series.cover_pic}}"></image>
+                    <view class="course-info">
+                        <view class="course-info-top">
+                            <view class="course-info-main-title limit-one-line">{{item.kecheng_series.teacher_desc}}</view>
+                            <view class="course-info-sub-title limit-one-line">{{item.kecheng_series.name}}</view>
+                            <view class="course-info-teacher limit-one-line">{{item.teacher.name}}
+                                {{item.teacher.teacher_desc}}
+                            </view>
+                        </view>
+                        <view class="continue-btn" wx:if="{{courseList.length > 0}}">继续学习</view>
+                    </view>
+                </block>
+            </view>
+        </view>
+        <view class="more-btn" bindtap="more" wx:if="{{recommendList.length > 0}}">更多课程</view>
+    </block>
+    <block wx:elif="{{currentIndex === 1}}">
+    </block>
 </view>

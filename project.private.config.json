@@ -372,6 +372,12 @@
           "pathName": "subCourse/offlineCourseDetail/offlineCourseDetail",
           "query": "id=13",
           "scene": null
+        },
+        {
+          "name": "老带新海报",
+          "pathName": "mine/oldInviteNew/oldInviteNew",
+          "query": "inviteId=11467959679586304",
+          "scene": null
         }
       ]
     }
