@@ -170,21 +170,9 @@ Page({
 			this.setData({titleList: arr, keyArr: keyArr})
 			this.changeTab(index)
 
-			// 计算Tabs高度
-			let self = this
-			let t = setTimeout(() => {
-				const query = wx.createSelectorQuery()
-				query.select(".type-list").boundingClientRect()
-				query.exec(function (res) {
-					let top = res[0].top
-					self.setData({tabsOffsetTop: top})
-					if (self.data.didFromDiscovery) {
-						wx.pageScrollTo({scrollTop: top, duration: 400})
-					}
-					clearTimeout(t)
-				})
-			}, 1000)
-
+			if (this.data.didFromDiscovery) {
+				wx.pageScrollTo({scrollTop: this.data.tabsOffsetTop, duration: 400})
+			}
 		})
 	},
 	// 切换tab
@@ -335,15 +323,18 @@ Page({
 		}
 
 		this.getBanner().then(() => {
-			// 首页金刚位进入，页面Tabs固定在顶部
-			let index = getApp().globalData.discoveryToPracticeTabIndex
-			if (index !== undefined) {
-				this.setData({didFromDiscovery: index, currentIndex: index})
-				this.getTabList(index)
-				getApp().globalData.discoveryToPracticeTabIndex = undefined
-			} else {
-				this.getTabList(0)
-			}
+			// 计算Tabs高度
+			let self = this
+			let t = setTimeout(() => {
+				const query = wx.createSelectorQuery()
+				query.select(".type-list").boundingClientRect()
+				query.exec(function (res) {
+					let top = res[0].top
+					console.error(top)
+					self.setData({tabsOffsetTop: top})
+					clearTimeout(t)
+				})
+			}, 1000)
 		})
 
 		// ios规则适配
@@ -370,6 +361,16 @@ Page({
 
 		this.getFluentInfo()
 
+		// 首页金刚位进入，页面Tabs固定在顶部
+		let index = getApp().globalData.discoveryToPracticeTabIndex
+		if (index !== undefined) {
+			this.setData({didFromDiscovery: index, currentIndex: index})
+			this.getTabList(index)
+			getApp().globalData.discoveryToPracticeTabIndex = undefined
+		} else {
+			this.getTabList(0)
+		}
+
 		bxPoint("series_visit", {})
 	},
 
@@ -391,7 +392,6 @@ Page({
 		if (this.data.pageScrollLock) return
 		this.setData({pageScrollLock: true})
 		let t = setTimeout(() => {
-			console.error(scrollTop)
 			this.setData({didShowFixedTabsLayout: scrollTop >= this.data.tabsOffsetTop, pageScrollLock: false})
 			clearTimeout(t)
 		}, 50)
