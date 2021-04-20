@@ -187,32 +187,32 @@ export function getUserGuideLink() {
   })
 }
 
-// 查询畅学卡权益
+// 查询学生卡权益
 export const getFluentLearnInfo = params => {
   return request._get(URL.queryFlunetLearnInfo, params)
 }
 
-// 获取畅学卡热门课程
+// 获取学生卡热门课程
 export const getFluentCardHotkecheng = (parasm) => {
   return request._get(URL.queryFluentCardHotkecheng, parasm)
 }
 
-// 查询畅学卡最新课程
+// 查询学生卡最新课程
 export const getFluentCardNewkecheng = (parasm) => {
   return request._get(URL.queryFluentCardNewkecheng, parasm)
 }
 
-// 畅学卡下单
+// 学生卡下单
 export const payForFluentCard = (parasm) => {
   return request._post(URL.payFluentCard, parasm)
 }
 
-// 查询用户畅学卡信息
+// 查询用户学生卡信息
 export const getFluentCardInfo = (parasm) => {
   return request._get(URL.queryFluentCardInfo, parasm)
 }
 
-// 获取畅学卡分销二维码
+// 获取学生卡分销二维码
 export const getFluentQrCode = (parasm) => {
   return request._get(URL.queryFluentQrCode, parasm)
 }
@@ -222,12 +222,12 @@ export const getDistributeRecordList = (parasm) => {
   return request._get(URL.queryDistributeRecordList, parasm)
 }
 
-// 畅学卡会员兑换视频课程
+// 学生卡会员兑换视频课程
 export const getKechengWithFluentCard = (params) => {
   return request._post(URL.acceptKechengWithFluentCard, params)
 }
 
-// 获取畅学卡引导私域配置信息
+// 获取学生卡引导私域配置信息
 export const getFluentDistributeGuide = () => {
   return request._get(URL.queryFluentDistributeGuide)
 }

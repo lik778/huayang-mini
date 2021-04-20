@@ -242,14 +242,17 @@
 }
 
 /* 引导加入花样学习活动群 */
+.guide-wrap {
+  position: fixed;
+  bottom: calc(env(safe-area-inset-bottom) + 60px + 24rpx);
+  left: 24rpx;
+  right: 24rpx;
+}
+
 .guide {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: fixed;
-  bottom: 72px;
-  left: 24rpx;
-  right: 24rpx;
   height: 120rpx;
   padding: 24rpx 44rpx;
   box-sizing: border-box;
@@ -257,10 +260,12 @@
   font-size: 0;
   background: white;
   box-shadow: 0 0 20px 4px rgba(0, 0, 0, 0.08);
+  transform: translateY(150%);
+  transition: transform 200ms cubic-bezier(.5,.21,.43,.95);
 }
 
-.guide:active {
-  background: #eeeeee;
+.guide.animation {
+  transform: translateY(0);
 }
 
 .guide-pic {
@@ -284,6 +289,7 @@
   border-radius: 999rpx;
   color: white;
   background: #CC0000;
+  animation: guideFlashing 4s ease infinite;
 }
 
 .guide-close-icon {
@@ -622,3 +628,26 @@
   height: 32rpx;
   z-index: 96;
 }
+
+@keyframes guideFlashing {
+  16% {
+    transform: scale(1);
+  }
+
+  20% {
+    transform: scale(1.05);
+  }
+
+  24% {
+    transform: scale(1);
+  }
+
+  28% {
+    transform: scale(1.05);
+  }
+
+  32% {
+    transform: scale(1);
+  }
+}
+

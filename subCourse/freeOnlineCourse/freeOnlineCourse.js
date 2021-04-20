@@ -1,7 +1,4 @@
-
-import {
-    getFreeOnlineCourse
-} from "../../api/course/index";
+import { getFreeOnlineCourse } from "../../api/course/index"
 
 Page({
     data:{
@@ -22,7 +19,7 @@ Page({
         let detail = e.currentTarget.dataset.video_detail;
         console.log(detail);
     },
-    
+
     /**
 	 * 跳转到视频详情页
 	 * @param e
@@ -43,7 +40,6 @@ Page({
             offset:this.data.pagesControl.offset
         };
         getFreeOnlineCourse(params).then(list=>{
-            console.log(list)
             this.setData({
                 videoList:this.data.videoList.concat(list),
                 pagesControl:{

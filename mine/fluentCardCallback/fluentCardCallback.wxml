@@ -1,6 +1,6 @@
 <view class="fluent-card-callback">
     <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1613789372SXaboX.jpg" mode="aspectFit" class="image"></image>
-    <view class="text-01">感谢您购买花样大学畅学卡</view>
+    <view class="text-01">感谢您购买花样大学学生卡</view>
     <view class="text-02">请点击下方按钮，添加指导老师为好友，学习过程中一切问题，随时为您解答。</view>
 
     <view class="footer" bindtap="onBtnTap">点击添加指导老师</view>

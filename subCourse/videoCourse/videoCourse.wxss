@@ -752,7 +752,7 @@
 }
 
 
-/* (原价 || 折扣价) && 畅学卡购买 */
+/* (原价 || 折扣价) && 学生卡购买 */
 .pay-or-fluent {
   display: flex;
   justify-content: space-between;

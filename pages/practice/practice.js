@@ -16,7 +16,7 @@ Page({
 		titleList: [],
 		currentIndex: 0,
 		showMoney: true,
-		isFluentLearnVIP: false, // 是否是畅学卡会员
+		isFluentLearnVIP: false, // 是否是学生卡会员
 		keyArr: [],
 		bottomLock: true,
 		pageSize: {
@@ -31,10 +31,10 @@ Page({
 		structuredList: [], // 结构化课程数据
 		noMoreStructureData: false, // 是否还有更多结构化课程数据
 		fastMarkAry: [
-			{name: "线上免费课", picture: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618484705ndfWCk.jpg"},
-			{name: "大学活动", picture: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618484705gzPcha.jpg"},
-			{name: "线下精品课", picture: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618484705DEbXLn.jpg"},
-			{name: "游学课程", picture: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618484705huEOMU.jpg"},
+			{name: "线上免费课", picture: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618484705ndfWCk.jpg", path: "/subCourse/freeOnlineCourse/freeOnlineCourse"},
+			{name: "大学活动", picture: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618484705gzPcha.jpg", path: "/subCourse/collegeActivity/collegeActivity"},
+			{name: "线下精品课", picture: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618484705DEbXLn.jpg", path: "/subCourse/offlineCourse/offlineCourse"},
+			{name: "游学课程", picture: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618484705huEOMU.jpg", path: "travel"},
 		],
 		tabsOffsetTop: 0, // Tabs距离顶部的数字
 		pageScrollLock: false, // 页面滑动记录锁
@@ -42,11 +42,12 @@ Page({
 		didFromDiscovery: false, // 是否来自首页金刚位
 	},
 	getBanner() {
-		getFindBanner({
-			scene: 20
-		}).then((data) => {
-			data = data || []
-			this.setData({bannerList: data})
+		return new Promise((resolve) => {
+			getFindBanner({scene: 20}).then((data) => {
+				data = data || []
+				this.setData({bannerList: data})
+				resolve()
+			})
 		})
 	},
 	/**
@@ -166,10 +167,7 @@ Page({
 				arr.push(res[i].value)
 				keyArr.push(res[i].key)
 			}
-			this.setData({
-				titleList: arr,
-				keyArr: keyArr
-			})
+			this.setData({titleList: arr, keyArr: keyArr})
 			this.changeTab(index)
 
 			// 计算Tabs高度
@@ -263,11 +261,14 @@ Page({
 		let _this = this
 		wx.getSystemInfo({
 			success: function (res2) {
-				if (res2.platform == 'ios') {
-					_this.setData({
-						showMoney: false
-					})
-				}
+				_this.setData({
+					showMoney: false
+				})
+				// if (res2.platform == 'ios') {
+				// 	_this.setData({
+				// 		showMoney: false
+				// 	})
+				// }
 			}
 		})
 	},
@@ -308,6 +309,17 @@ Page({
 			})
 		}
 	},
+	onHyperTap(e) {
+		let {path} = e.currentTarget.dataset.item
+		if (path === 'travel') {
+			wx.navigateToMiniProgram({
+				appId: "wx2ea757d51abc1f47",
+				path,
+			})
+		} else {
+			wx.navigateTo({url: path})
+		}
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
@@ -322,8 +334,18 @@ Page({
 			getApp().globalData.super_user_id = options.invite_user_id
 		}
 
-		this.getBanner()
-		this.getTabList(index)
+		this.getBanner().then(() => {
+			// 首页金刚位进入，页面Tabs固定在顶部
+			let index = getApp().globalData.discoveryToPracticeTabIndex
+			if (index !== undefined) {
+				this.setData({didFromDiscovery: index, currentIndex: index})
+				this.getTabList(index)
+				getApp().globalData.discoveryToPracticeTabIndex = undefined
+			} else {
+				this.getTabList(0)
+			}
+		})
+
 		// ios规则适配
 		this.checkIos()
 	},
@@ -348,15 +370,6 @@ Page({
 
 		this.getFluentInfo()
 
-		// 首页金刚位进入，页面Tabs固定在顶部
-		let index = getApp().globalData.discoveryToPracticeTabIndex
-		if (index !== undefined) {
-			this.setData({didFromDiscovery: index, currentIndex: index})
-			this.getTabList(index)
-
-			getApp().globalData.discoveryToPracticeTabIndex = undefined
-		}
-
 		bxPoint("series_visit", {})
 	},
 
@@ -378,6 +391,7 @@ Page({
 		if (this.data.pageScrollLock) return
 		this.setData({pageScrollLock: true})
 		let t = setTimeout(() => {
+			console.error(scrollTop)
 			this.setData({didShowFixedTabsLayout: scrollTop >= this.data.tabsOffsetTop, pageScrollLock: false})
 			clearTimeout(t)
 		}, 50)

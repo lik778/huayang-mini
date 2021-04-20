@@ -145,7 +145,7 @@
         {
           "name": "pages/practice/practice",
           "pathName": "pages/practice/practice",
-          "query": "index=3",
+          "query": "",
           "scene": null
         },
         {
@@ -173,30 +173,6 @@
           "name": "pages/activePayCancel/activePayCancel",
           "pathName": "pages/activePayCancel/activePayCancel",
           "query": "",
-          "scene": null
-        },
-        {
-          "name": "个人中心",
-          "pathName": "pages/userCenter/userCenter",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "视频详情页",
-          "pathName": "subCourse/videoCourse/videoCourse",
-          "query": "videoId=55&playIndex=3&showSuccess=true",
-          "scene": null
-        },
-        {
-          "name": "入学申请",
-          "pathName": "subCourse/applyJoinSchool/applyJoinSchool",
-          "query": "campId=40",
-          "scene": null
-        },
-        {
-          "name": "报道页",
-          "pathName": "subCourse/schoolReport/schoolReport",
-          "query": "scene=1%2F1",
           "scene": null
         },
         {
@@ -302,7 +278,7 @@
           "scene": null
         },
         {
-          "name": "畅学卡详情页",
+          "name": "学生卡详情页",
           "pathName": "mine/fluentLearnInfo/fluentLearnInfo",
           "query": "",
           "scene": null
@@ -326,7 +302,7 @@
           "scene": null
         },
         {
-          "name": "畅学卡下单结果页",
+          "name": "学生卡下单结果页",
           "pathName": "mine/fluentCardCallback/fluentCardCallback",
           "query": "",
           "scene": null
@@ -388,6 +364,25 @@
         {
           "name": "线上免费课",
           "pathName": "subCourse/freeOnlineCourse/freeOnlineCourse",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "个人中心",
+          "pathName": "pages/userCenter/userCenter",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "学生卡详情页",
+          "pathName": "mine/fluentLearnInfo/fluentLearnInfo",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "学生卡售前页",
+          "pathName": "mine/joinFluentLearn/joinFluentLearn",
+          "query": "",
           "scene": null
         }
       ]

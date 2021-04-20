@@ -353,19 +353,19 @@
           "scene": null
         },
         {
-          "name": "畅学卡售前页",
+          "name": "学生卡售前页",
           "pathName": "mine/joinFluentLearn/joinFluentLearn",
           "query": "inviteId=123123123123",
           "scene": null
         },
         {
-          "name": "畅学卡详情页",
+          "name": "学生卡详情页",
           "pathName": "mine/fluentLearnInfo/fluentLearnInfo",
           "query": "",
           "scene": null
         },
         {
-          "name": "畅学卡海报页",
+          "name": "学生卡海报页",
           "pathName": "mine/fluentCardDistribute/fluentCardDistribute",
           "query": "inviteId=11467959679586304",
           "scene": null
@@ -389,7 +389,7 @@
           "scene": null
         },
         {
-          "name": "畅学卡下单结果页",
+          "name": "学生卡下单结果页",
           "pathName": "mine/fluentCardCallback/fluentCardCallback",
           "query": "",
           "scene": null

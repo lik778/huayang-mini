@@ -1,5 +1,5 @@
 import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
-import { getFluentCardInfo, getPartnerInfo } from "../../api/mine/index"
+import { getPartnerInfo } from "../../api/mine/index"
 import { GLOBAL_KEY } from "../../lib/config"
 import request from "../../lib/request"
 
@@ -80,10 +80,10 @@ Page({
 
 		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
 
-		// 畅学卡检查
+		// 学生卡检查
 		// let fluentCardInfo = await getFluentCardInfo({user_snow_id: accountInfo.snow_id})
 		// if (!$notNull(fluentCardInfo.data)) {
-		// 	return this.setData({tipMsg: "您还没有花样大学畅学卡", didShowFluentLearnModal: true, backUrl: "/mine/joinFluentLearn/joinFluentLearn"})
+		// 	return this.setData({tipMsg: "您还没有花样大学学生卡", didShowFluentLearnModal: true, backUrl: "/mine/joinFluentLearn/joinFluentLearn"})
 		// }
 
 		// 合伙人检查

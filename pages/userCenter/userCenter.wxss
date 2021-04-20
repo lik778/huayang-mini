@@ -160,9 +160,8 @@
     width: 100vw;
     box-sizing: border-box;
     padding: 0 40rpx;
-    align-items: center;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
@@ -174,22 +173,9 @@
     line-height: 32rpx;
 }
 
-.invite-self-code text {
-    font-size: 48rpx;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
-    color: #EECDAB;
-    line-height: 48rpx;
-}
-
-.invite-self-code-left {
-    display: flex;
-    align-items: center;
-}
-
 .invite-self-code-right {
-    width: 288rpx;
-    height: 72rpx;
+    width: 480rpx;
+    height: 80rpx;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -197,11 +183,11 @@
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 500;
     color: #834B25;
-    background: #EECDAB;
+    background: #CC0000 linear-gradient(90deg, #FBD8B3 0%, #ECCBA9 100%);
     border-radius: 999rpx;
 }
 
-/* 畅学卡 */
+/* 学生卡 */
 .vip-card {
     display: flex;
     flex-direction: column;
@@ -270,10 +256,6 @@
     margin-top: 16rpx;
     font: 400 28rpx/28rpx PingFangSC;
     color: #FFE8D0;
-}
-
-.expireDate.overdue {
-    color: #990000;
 }
 
 .vip-btn {

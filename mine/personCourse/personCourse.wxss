@@ -160,3 +160,39 @@
 .more-btn:active {
     opacity: 0.8;
 }
+
+/* 线下课 */
+.offline-course-list {}
+
+.offline-course-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 52rpx 40rpx;
+    box-sizing: border-box;
+    border-bottom: 2rpx solid #F0F0F0;
+    background: white;
+}
+
+.offline-info {
+    width: 434rpx;
+}
+
+.offline-main-title {
+    width: 100%;
+    margin-bottom: 20rpx;
+    font: bold 36rpx/50rpx PingFangSC;
+}
+
+.offline-sub-title {
+    font: 32rpx/32rpx PingFangSC;
+}
+
+.offline-course-status {
+    font: 500 48rpx/48rpx PingFangSC;
+    color: #EEA156;
+}
+
+.offline-course-status.done {
+    color: rgba(0,0,0, 0.4);
+}
