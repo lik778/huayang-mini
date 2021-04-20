@@ -9,7 +9,8 @@ import {
   isIphoneXRSMax,
   getRandomNumberByRange,
   getNElmentFromArray,
-  getLocalStorage
+  getLocalStorage,
+  createAnimationFun
 } from "../../utils/util"
 import {
   getBarrageList,
@@ -23,47 +24,6 @@ import {
   GLOBAL_KEY
 } from '../../lib/config'
 import bxPoint from "../../utils/bxPoint"
-var timer = null
-var timerBottom = null
-var i = 0;
-var iBottom = 0
-var doommList = []
-var doommListBottom = []
-var pageThis = null
-
-class Doomm {
-  constructor(text, time, src) {
-    this.text = text;
-    this.time = time;
-    this.src = src
-    this.display = true;
-    this.id = i++;
-    let that = this
-    setTimeout(function () {
-      doommList.splice(doommList.indexOf(that), 1); //动画完成，从列表中移除这项
-      pageThis.setData({
-        doommDataTop: doommList
-      })
-    }, this.time * 1000) //定时器动画完成后执行。
-  }
-}
-
-class DoommBottom {
-  constructor(text, time, src) {
-    this.text = text;
-    this.time = time;
-    this.src = src
-    this.display = true;
-    this.id = iBottom++;
-    let that = this
-    setTimeout(function () {
-      doommListBottom.splice(doommListBottom.indexOf(that), 1); //动画完成，从列表中移除这项
-      pageThis.setData({
-        doommDataBottom: doommListBottom
-      })
-    }, this.time * 1000) //定时器动画完成后执行。
-  }
-}
 
 Page({
   /**
@@ -97,12 +57,10 @@ Page({
       topArr: [],
       bottomArr: []
     }, //弹幕列表
-    clickShare: false,
+    reasonHeight: 0,
     commentsList: [], //动态列表
     doommDataTop: [], //弹幕一楼数组
     doommDataBottom: [], //弹幕二楼数组
-    barrageIndex: 0,
-    barrageIndex1: 0,
     isIphoneXRSMax: isIphoneXRSMax(), //是否是x系列以上手机
     showPublishBarrage: false, //发布弹幕弹窗
     didShowContact: false, //显示客服消息弹窗
@@ -126,7 +84,8 @@ Page({
   onLoad: function (options) {
     // 初始化一切数据+mobx
     this.initData()
-    pageThis = this
+
+
   },
 
   /**
@@ -150,15 +109,7 @@ Page({
     this.initUserInfo()
     // pv打点
     bxPoint("bbs_visit")
-
     this.videoContext = wx.createVideoContext('my-video')
-    if (this.data.clickShare) {
-      this.barrageCommonFunTop()
-      this.barrageCommonFunBottom()
-      this.setData({
-        clickShare: false
-      })
-    }
 
   },
 
@@ -178,9 +129,6 @@ Page({
     if (res.from === 'button') {
       src += `?id=${res.target.dataset.item.bubble.id}`
     }
-    this.setData({
-      clickShare: true
-    })
     return {
       title: "快来看看花样大学精彩的校友动态！",
       path: src,
@@ -273,11 +221,28 @@ Page({
   // 动态设置N人在看(每10s刷新一次)
   initVisitData(start) {
     let randomNum = ''
-    if (start) {
-      randomNum = getRandomNumberByRange(start - 10, start + 10)
+    let nowDateStr = new Date().getHours()
+    let num1 = ''
+    let num2 = ''
+    if (0 < nowDateStr && nowDateStr < 6) {
+      num1 = 1
+      num2 = 5
+    } else if (6 < nowDateStr && nowDateStr < 7) {
+      num1 = 20
+      num2 = 50
+    } else if (7 < nowDateStr && nowDateStr < 23) {
+      num1 = 100
+      num2 = 300
     } else {
-      randomNum = getRandomNumberByRange(100, 300)
+      num1 = 20
+      num2 = 50
     }
+    if (start) {
+      randomNum = getRandomNumberByRange(start, start + 10)
+    } else {
+      randomNum = getRandomNumberByRange(num1, num2)
+    }
+
     let userInfo = this.data.userInfo
     let userListData = []
     if (userInfo && start === undefined) {
@@ -338,13 +303,25 @@ Page({
     //mobx初始化
     this.storeBindings = createStoreBindings(this, {
       store,
-      fields: ['studentMoments'],
-      actions: ['getCommentsList', 'change', 'like', 'updateMomentsLikeStatus'],
+      fields: ['studentMoments', 'studentBarrageBottomArr', 'studentBarrageTopArr'],
+      actions: ['getCommentsList', 'getBarrageList', 'change', 'like', 'updateMomentsLikeStatus'],
     })
     // 获取弹幕
     this.getBarrage()
     // 获取动态列表
     this.getMomentList()
+  },
+
+  bindfocusDialog(e) {
+    console.log(e)
+    this.setData({
+      reasonHeight: e.detail.height || 0
+    })
+  },
+  bindblurDialog() {
+    this.setData({
+      reasonHeight: 0
+    })
   },
 
   // 获取动态列表
@@ -357,10 +334,11 @@ Page({
     this.getCommentsList(pageData).then((data) => {
       this.setData({
         noMomentData: data.type
-      }, () => {
+      })
+      setTimeout(() => {
         // 初始化点赞
         this.initLikeMessage()
-      })
+      }, 300)
     })
 
   },
@@ -371,6 +349,22 @@ Page({
       authType: '',
       authData: ''
     })
+  },
+
+  // 控制非视图区域停止视频显示
+  estimateVideoLocation() {
+    for (let i = 0; i < this.data.studentMoments.length; i++) {
+      wx.createIntersectionObserver().relativeToViewport({
+        top: -50,
+        bottom: -50
+      }).observe('.module-' + i, res => {
+        if (res && res.intersectionRatio <= 0) {
+          this.setData({
+            playingIndex: ''
+          })
+        }
+      })
+    }
   },
 
   // 确认授权
@@ -443,33 +437,13 @@ Page({
     })
     setTimeout(() => {
       this.videoContext.play()
-    }, 500)
+      this.estimateVideoLocation()
+    }, 350)
   },
 
   // 获取弹幕列表
   getBarrage() {
-    getBarrageList(this.data.getBarragePageData).then(({
-      data = []
-    }) => {
-      let topArr = []
-      let bottomArr = []
-      data.map(item => {
-        if (topArr.length > bottomArr.length) {
-          bottomArr.push(item)
-        } else {
-          topArr.push(item)
-        }
-      })
-      this.setData({
-        barrageList: {
-          topArr,
-          bottomArr
-        }
-      })
-      // 初始化弹幕动画
-      this.barrageCommonFunTop()
-      this.barrageCommonFunBottom()
-    })
+    this.getBarrageList(this.data.getBarragePageData)
   },
 
   // 更新弹幕评论内容
@@ -557,17 +531,10 @@ Page({
   // 生命周期函数--监听页面隐藏
   onHide: function () {
     this.clearBarrageFun()
-    this.setData({
-      clickShare: true
-    })
   },
 
   // 清除弹幕倒计时
   clearBarrageFun() {
-    clearInterval(timer)
-    clearInterval(timerBottom)
-    i = 0
-    iBottom = 0
     this.setData({
       didShowContact: false
     })
@@ -578,7 +545,6 @@ Page({
     this.storeBindings.destroyStoreBindings()
     this.clearBarrageFun()
   },
-
 
   // 点赞/取消点赞动态
   toLike(e) {

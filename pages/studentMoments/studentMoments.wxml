@@ -29,7 +29,7 @@
     <view class="barrage-module">
       <view class="barrage-scroll-module">
         <view class="barrage-scroll-top">
-          <block wx:for="{{doommDataTop}}" wx:key="id">
+          <block wx:for="{{studentBarrageTopArr}}" wx:key='index'>
             <view wx:if="{{item.display}}" style="animation: first {{item.time}}s linear forwards;"
               class="barrage-scroll-item">
               <image src="{{item.src}}"></image>
@@ -38,8 +38,8 @@
           </block>
         </view>
         <view class="barrage-scroll-bottom">
-          <block wx:for="{{doommDataBottom}}" wx:key="id">
-            <view wx:if="{{item.display}}" style="animation: first {{item.time}}s linear forwards;"
+          <block wx:for="{{studentBarrageBottomArr}}" wx:key='index'>
+            <view wx:if="{{item.display}}" style="animation: second {{item.time}}s linear forwards;"
               class="barrage-scroll-item">
               <image src="{{item.src}}"></image>
               <view>{{item.text}}</view>
@@ -67,13 +67,14 @@
             <image bindtap="toDetail" mode='center' data-item='{{item}}' src="{{item.bubble.pics[0]}}"></image>
           </view>
           <view class="type-video" wx:else>
-            <image src="{{item.bubble.video_cover}}" mode='center' wx:if='{{playingIndex!==index}}'>
+            <image src="{{item.bubble.video_cover}}" mode='center' wx:if='{{playingIndex!==index}}' bindtap="toDetail"
+              data-item='{{item}}'>
             </image>
             <image src="{{commonIcon.playIcon}}" class="video-play-icon" bindtap="playVideo" data-index='{{index}}'
               wx:if='{{playingIndex!==index}}'>
             </image>
             <video src="{{item.bubble.video_url}}" wx:else id="my-video" object-fit="fill"
-              show-fullscreen-btn='{{false}}'></video>
+              class="{{playingIndex===index?'module-'+index:''}}" show-fullscreen-btn='{{false}}'></video>
           </view>
           <view class="item-main-title" bindtap="toDetail" data-item='{{item}}'>{{item.bubble.title}}</view>
         </view>
@@ -96,7 +97,7 @@
     </view>
   </view>
   <!-- 投稿 -->
-  <view class="contribute-button" bindtap="openContribute" style="bottom:{{isIphoneXRSMax?'186rpx':'146rpx'}}">
+  <view class="contribute-button" bindtap="openContribute" style="bottom:{{isIphoneXRSMax?'106px':'73px'}}">
     <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618368640idsRLA.jpg"></image>
     <text>投稿</text>
   </view>
@@ -104,10 +105,11 @@
   <view class="publish-barrage-module" wx:if='{{showPublishBarrage}}'>
     <view class="publish-barrage-module-cover" bindtap="closeBarrage"></view>
     <view class="publish-barrage-module-main {{changeAnimationClass?'sliderUpAnimation':'sliderDownAnimation'}}"
-      style="bottom:{{isIphoneXRSMax?'160rpx':'120rpx'}}">
+      style="bottom:{{reasonHeight===0?isIphoneXRSMax?'80px':'60px': reasonHeight+'px'}}" focus='{{true}}'>
       <view class="publish-barrage-title">发布弹幕</view>
-      <textarea class="publish-barrage-textarea" placeholder="请输入弹幕内容" cursor-spacing='162' maxlength="40"
-        bindinput="updateTextareaText"></textarea>
+      <textarea class="publish-barrage-textarea" placeholder="请输入弹幕内容" cursor-spacing='250rpx' maxlength="40"
+        adjust-position="{{false}}" show-confirm-bar="{{false}}" bindfocus="bindfocusDialog" bindblur="bindblurDialog"
+        focus="{{true}}" bindinput="updateTextareaText"></textarea>
       <view class="publish-barrage-button-line">
         <view class="publish-barrage-cancel" bindtap="closeBarrage">取消</view>
         <view class="publish-barrage-sure" bindtap="createBarrageNow">发布弹幕</view>

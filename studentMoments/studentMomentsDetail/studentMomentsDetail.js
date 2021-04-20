@@ -14,7 +14,8 @@ import {
 } from 'mobx-miniprogram-bindings'
 import {
   getLocalStorage,
-  isIphoneXRSMax
+  isIphoneXRSMax,
+  createLocalCommentItem
 } from "../../utils/util"
 import {
   GLOBAL_KEY
@@ -69,6 +70,19 @@ Page({
   changeSwiperCurrent(e) {
     this.setData({
       ['swiperData.current']: Number(e.detail.current)
+    })
+  },
+
+  bindfocusDialog(e) {
+    console.log(e)
+    this.setData({
+      reasonHeight: e.detail.height || 0
+    })
+  },
+
+  bindblurDialog() {
+    this.setData({
+      reasonHeight: 0
     })
   },
 
@@ -131,7 +145,7 @@ Page({
     })
     setTimeout(() => {
       this.videoContext.play()
-    }, 500)
+    }, 350)
   },
 
   // 初始化用户信息
@@ -306,6 +320,26 @@ Page({
     }).then(({
       data
     }) => {
+      if (data === undefined) {
+        wx.showModal({
+          title: "提示",
+          content: "该动态已删除",
+          confirmText: "查看更多",
+          showCancel: false,
+          success: (res) => {
+            if (res.confirm) {
+              if (this.data.studentMoments.length) {
+                this.deleteStudentMoment(this.data.id)
+              }
+              wx.switchTab({
+                url: '/pages/studentMoments/studentMoments',
+              })
+            }
+          }
+        })
+        return
+      }
+      this.updateMomentList(data)
       data.bubble.pics = data.bubble.content_type === 1 ? data.bubble.pics.split(',') : ''
       data.hasLike = data.has_like
       data.likeCount = data.bubble.like_count
@@ -416,14 +450,18 @@ Page({
       content: this.data.commentInputValue
     }).then(res => {
       if (res.code === 0) {
+        // 生成本地评论
+        let itemData = createLocalCommentItem(this.data.commentInputValue, this.data.id)
+        let list = this.data.commentList.concat([])
+        list.unshift(itemData)
         this.setData({
           inInputComment: false,
           commentInputValue: '',
           ['detailData.bubble.comment_count']: this.data.detailData.bubble.comment_count + 1,
           showPublishComment: false,
-          changeAnimationClass: true
+          changeAnimationClass: true,
+          commentList: list
         })
-        this.getCommentMsg()
         if (this.data.studentMoments.length > 0) {
           this.updateMomentsCommentCount(Number(this.data.id))
         }
@@ -446,7 +484,7 @@ Page({
     this.storeBindings = createStoreBindings(this, {
       store,
       fields: ['studentMomentComments', 'studentMoments', ],
-      actions: ['getMomentComment', 'updateMomentsCommentCount', 'updateMomentsLikeStatus', 'like'],
+      actions: ['getMomentComment', 'updateMomentsCommentCount', 'deleteStudentMoment', 'updateMomentsLikeStatus', 'like', 'updateMomentList'],
     })
 
   },

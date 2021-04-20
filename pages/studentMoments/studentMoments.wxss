@@ -10,9 +10,9 @@
 /* 顶部固定区域 */
 .fixed-top {
   position: fixed;
-  top: 0;
+  top: -4px;
   left: 0;
-  width: 100vw;
+  right: 0;
   height: 248rpx;
   z-index: 20;
   background: #fff;
@@ -123,7 +123,7 @@
   height: 56rpx;
   border-radius: 50%;
   border: 2px solid #fff;
-  z-index: 2;
+  z-index: 21;
 }
 
 .barrage-scroll-item view {
@@ -154,7 +154,7 @@
   position: fixed;
   right: 0;
   top: 116rpx;
-  z-index: 15;
+  z-index: 22;
 }
 
 .barrage-publish-module image {
@@ -181,7 +181,7 @@
   }
 
   to {
-    left: -200%;
+    left: -150%;
   }
 }
 
@@ -253,6 +253,11 @@ video {
   padding-bottom: 24rpx;
 }
 
+.type-video {
+  border-radius: 16rpx 16rpx 6rpx 6rpx !important;
+  overflow: hidden !important;
+}
+
 .item-bottom {
   display: flex;
 }
@@ -317,7 +322,7 @@ video {
   position: fixed;
   right: 30rpx;
   bottom: 146rpx;
-  z-index: 20;
+  z-index: 21;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -357,7 +362,7 @@ video {
 .publish-barrage-module-main {
   position: fixed;
   left: 0;
-  bottom: 120rpx;
+  bottom: 60px;
   z-index: 35;
   border-radius: 20rpx 20rpx 0px 0px;
   width: 100vw;

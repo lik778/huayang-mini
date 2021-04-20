@@ -6,19 +6,23 @@ import {
 	getStudentCommentList,
 	likeMoment,
 	unLikeMoment,
-	getCommentList
+	getCommentList,
+	getBarrageList
 } from "../api/studentComments/index"
 import {
 	GLOBAL_KEY
 } from '../lib/config'
 import {
-	getLocalStorage
+	getLocalStorage,
+	createAnimationFun
 } from '../utils/util'
 
 export const store = observable({
 	// 数据
 	studentMoments: [],
 	studentMomentComments: [],
+	studentBarrageTopArr: [],
+	studentBarrageBottomArr: [],
 
 	// 获取动态列表
 	getCommentsList: action(function (params, params1) {
@@ -30,25 +34,33 @@ export const store = observable({
 			getStudentCommentList(params).then(({
 				data = []
 			}) => {
-				let list = params1 ? this.studentMoments.concat(data) : data
-				list.map(item => {
-					item.hasLike = item.has_like
-					item.likeCount = item.bubble.like_count
-					item.bubble.pics = typeof (item.bubble.pics) === 'object' ? item.bubble.pics : item.bubble.pics ? item.bubble.pics.split(',') : []
-				})
+				let list = data ? params1 ? this.studentMoments.concat(data) : data : this.studentMoments
+				if (data) {
+					list.map(item => {
+						item.hasLike = item.has_like
+						item.likeCount = item.bubble.like_count
+						item.bubble.pics = typeof (item.bubble.pics) === 'object' ? item.bubble.pics : item.bubble.pics ? item.bubble.pics.split(',') : []
+					})
+				}
 				this.studentMoments = list.concat([])
-				if (data.length < params.limit) {
+				if (data == null) {
 					resolve({
 						data: this.studentMoments,
 						type: false
 					})
 				} else {
-					resolve({
-						data: this.studentMoments,
-						type: true
-					})
+					if (data.length < params.limit) {
+						resolve({
+							data: this.studentMoments,
+							type: false
+						})
+					} else {
+						resolve({
+							data: this.studentMoments,
+							type: true
+						})
+					}
 				}
-
 			})
 		})
 	}),
@@ -91,7 +103,6 @@ export const store = observable({
 				obj.bubble.like_count = params.has_like === 0 ? params.bubble.like_count + 1 : params.bubble.like_count - 1
 				resolve(this.studentMoments)
 			}
-
 		})
 	}),
 
@@ -124,12 +135,59 @@ export const store = observable({
 
 	//更新动态评论数
 	updateMomentsCommentCount: action(function (params) {
-		console.log(params)
 		this.studentMoments.map(item => {
 			if (item.bubble.id === params) {
 				item.bubble.comment_count += 1
 			}
 		})
 		this.studentMoments = this.studentMoments.concat([])
-	})
+	}),
+
+	// 删除某条动态
+	deleteStudentMoment: action(function (params) {
+		let deleteIndex = ''
+		this.studentMoments.filter((item, index) => {
+			if (item.bubble.id === Number(params)) {
+				deleteIndex = index
+			}
+		})
+		this.studentMoments.splice(deleteIndex, 1)
+		this.studentMoments = this.studentMoments.concat([])
+	}),
+
+	// 更新动态
+	updateMomentList: action(function (params) {
+		if (this.studentMoments.length) {
+			let itemObj = Object.assign({}, params)
+			this.studentMoments.map((item, index) => {
+				if (item.bubble.id === params.bubble.id) {
+					item.hasLike = itemObj.has_like
+					item.likeCount = itemObj.bubble.like_count
+					item.bubble.comment_count = itemObj.bubble.comment_count
+				}
+			})
+			this.studentMoments = this.studentMoments.concat([])
+		}
+	}),
+
+	// 获取弹幕信息
+	getBarrageList: action(function (params) {
+		getBarrageList(params).then(({
+			data = []
+		}) => {
+			let topArr = []
+			let bottomArr = []
+			data.map(item => {
+				if (topArr.length > bottomArr.length) {
+					bottomArr.push(item)
+				} else {
+					topArr.push(item)
+				}
+			})
+			createAnimationFun({
+				topArr,
+				bottomArr
+			})
+		})
+	}),
 })

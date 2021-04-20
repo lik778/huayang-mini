@@ -1,5 +1,8 @@
 import md5 from 'md5'
 import {
+	store
+} from "../store/index"
+import {
 	GLOBAL_KEY,
 	ROOT_URL,
 	URL,
@@ -1248,3 +1251,52 @@ export const getNElmentFromArray = (arr, n) => {
 	}
 	return returnArr;
 };
+
+// 模拟动态生成本地评论
+export const createLocalCommentItem = (content, id) => {
+	console.log(content)
+	let returnObj = {}
+	let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+	returnObj.content = content
+	returnObj.bubble_id = id
+	returnObj.created_at = getNowDateAll()
+	returnObj.user = {
+		nick_name: userInfo.nick_name,
+		avatar_url: userInfo.avatar_url
+	}
+	return returnObj
+}
+
+// 弹幕方法
+export const createAnimationFun = arr => {
+	let indexTop = 0
+	let indexBottom = 0
+	let topArr = []
+	let bottomArr = []
+	let faceTopArr = arr.topArr
+	let faceBottomArr = arr.bottomArr
+	let huayangLogo = 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618451480ZWGEID.jpg'
+	let timer=setInterval(() => {
+		//第一行弹幕
+		let imgTop = faceTopArr[indexTop].user ? faceTopArr[indexTop].user.avatar_url : huayangLogo
+		let itemTop = new createAnimationElement(5, faceTopArr[indexTop].content, imgTop, indexTop)
+		indexTop = indexTop + 2 >= faceTopArr.length ? 0 : indexTop + 1
+		topArr.push(itemTop)
+		store.studentBarrageTopArr = topArr.slice()
+		//第二行弹幕
+		let imgBottom = faceBottomArr[indexBottom].user ? faceBottomArr[indexBottom].user.avatar_url : huayangLogo
+		let itemBottom = new createAnimationElement(10, faceBottomArr[indexBottom].content, imgBottom, indexBottom)
+		indexBottom = indexBottom + 1 >= faceBottomArr.length ? 0 : indexBottom + 1
+		bottomArr.push(itemBottom)
+		store.studentBarrageBottomArr = bottomArr.slice()
+	}, 3000)
+}
+
+
+function createAnimationElement(time, text, src, index) {
+	this.time = time
+	this.text = text
+	this.src = src
+	this.index = index
+	this.display = true
+}

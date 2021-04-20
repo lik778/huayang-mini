@@ -65,7 +65,8 @@
           <image class="comment-input-icon" wx:else
             src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618451480ZWGEID.jpg"></image>
           <view class="comment-textarea-module" bindtap="showCommentBox">
-            <view class="comment-textarea-module-cover" style="color:{{commentInputValue===''?'#999999':'#000'}}">
+            <view class="comment-textarea-module-cover limit-one-line"
+              style="color:{{commentInputValue===''?'#999999':'#000'}}">
               {{commentInputValue===''?'请写下您的评论':commentInputValue}}</view>
           </view>
         </view>
@@ -186,12 +187,13 @@
   <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
   </authModule>
   <!-- 发布评论 -->
-  <view class="publish-barrage-module" wx:if='{{showPublishComment}}'>
+  <view class="publish-barrage-module" wx:if='{{showPublishComment}}' style="bottom:{{reasonHeight}}px;">
     <view class="publish-barrage-module-cover" bindtap="closeBarrage"></view>
     <view class="publish-barrage-module-main {{changeAnimationClass?'sliderUpAnimation':'sliderDownAnimation'}}"
-      style="bottom:{{isIphoneXRSMax?'20px':0}}">
+      style="bottom:{{reasonHeight+'px'}}" focus='{{true}}'>
       <view class="publish-barrage-title">发布评论</view>
-      <textarea class="publish-barrage-textarea" placeholder="请输入评论内容" cursor-spacing='162' maxlength="200"
+      <textarea class="publish-barrage-textarea" placeholder="请输入评论内容" maxlength="200" focus='{{true}}'
+        adjust-position="{{false}}" show-confirm-bar="{{false}}" bindfocus="bindfocusDialog" bindblur="bindblurDialog"
         value="{{commentInputValue}}" bindinput="updateTextareaText"></textarea>
       <view class="publish-barrage-button-line">
         <view class="publish-barrage-cancel" bindtap="closePublishComment">取消</view>

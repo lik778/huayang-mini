@@ -246,7 +246,11 @@
   margin-right: 20rpx;
 }
 
-.comment-item-right {}
+.comment-item-right {
+  width: calc(100% - 84rpx);
+  line-height: 20rpx;
+  padding-bottom: 16rpx;
+}
 
 .comment-item-right-top {
   font-size: 22rpx;
@@ -272,6 +276,8 @@
   font-weight: 400;
   color: rgba(0, 0, 0, 0.6);
   line-height: 28rpx;
+  word-break: break-word;
+  word-wrap: break-word;
 }
 
 .comment-more {
@@ -312,6 +318,7 @@
   background: #F9F9F9;
   border: 0.5px solid #DDDDDD;
   border-radius: 8rpx;
+
 }
 
 /* 课程 */
@@ -585,7 +592,7 @@
 .publish-barrage-module-main {
   position: fixed;
   left: 0;
-  bottom: 120rpx;
+  bottom: 0;
   z-index: 35;
   border-radius: 20rpx 20rpx 0px 0px;
   width: 100vw;
