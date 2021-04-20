@@ -4,11 +4,12 @@
         <view class="fixed-tab-item {{currentIndex === 1 ? 'active' : ''}}" bindtap="onTabTap" data-index="1">线下课程</view>
         <view class="tab-line {{currentIndex === 0 ? '' : 'active'}}"></view>
     </view>
+    <!-- 线上课程 -->
     <block wx:if="{{currentIndex === 0}}">
         <block wx:if="{{courseList.length === 0}}">
             <view class="no-data-tips">
                 <image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603951961KBNQXM.jpg"></image>
-                <text>您还没有学习课程</text>
+                <text>您还没有线上课程</text>
                 <text>快去学习吧！</text>
             </view>
             <view wx:if="{{recommendList.length > 0}}" class="layout">课程推荐</view>
@@ -33,6 +34,23 @@
         </view>
         <view class="more-btn" bindtap="more" wx:if="{{recommendList.length > 0}}">更多课程</view>
     </block>
+    <!-- 线下课程 -->
     <block wx:elif="{{currentIndex === 1}}">
+        <block wx:if="{{offlineList.length === 0}}">
+            <view class="no-data-tips">
+                <image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603951961KBNQXM.jpg"></image>
+                <text>您还没有线下课程</text>
+                <text>快去学习吧！</text>
+            </view>
+        </block>
+        <view class="offline-course-list" wx:if="{{offlineList.length > 0}}">
+            <view class="offline-course-item" wx:for="{{offlineList}}" wx:key="index" data-item="{{item}}" bindtap="onOfflineCourseTap">
+                <view class="offline-info">
+                    <view class="offline-main-title limit-two-line">{{item.product}}</view>
+                    <view class="offline-sub-title">开班日期：{{item.delivery_at}}</view>
+                </view>
+                <view class="offline-course-status {{item.zh_status ? '' : 'done'}}">{{item.zh_status ? '待学习' : '已学习'}}</view>
+            </view>
+        </view>
     </block>
 </view>

@@ -59,12 +59,11 @@ Page({
     visibleTaskEntrance: false,
     cardBtnText: "授权登录",
     bannerList: [],
-    disHasFluentLearnUserInfo: false, // 是否有畅学卡会员信息
-    isFluentLearnExpired: false, // 畅学卡依然有效
-    fluentCardExpireTime: undefined,
-    cardName: "", // 畅学卡名称
-    cardDesc: "", // 畅学卡描述
-    auditInfo: null, // 畅学卡引导私域配置信息
+    disHasFluentLearnUserInfo: false, // 是否有学生卡会员信息
+    isFluentLearnExpired: false, // 学生卡依然有效
+    cardName: "", // 学生卡名称
+    cardDesc: "", // 学生卡描述
+    auditInfo: null, // 学生卡引导私域配置信息
     didVisibleAuditBtn: false, // 是否展示成为花样合伙人按钮
     partnerInfo: null, // 合伙人信息
     isPartner: false, // 当前用户是否是合伙人
@@ -329,7 +328,7 @@ Page({
     })
   },
   /**
-   * 请求畅学卡信息
+   * 请求学生卡信息
    */
   getFluentInfo() {
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
@@ -339,10 +338,10 @@ Page({
       data
     }) => {
       if ($notNull(data)) {
-        // 畅学卡是否已过期
+        // 学生卡是否已过期
         let isFluentLearnExpired = data.status === FluentLearnUserType.deactive
 
-        // 畅学卡有效的用户引导加私域
+        // 学生卡有效的用户引导加私域
         if (!isFluentLearnExpired) {
           getFluentDistributeGuide().then(({
             data
@@ -359,7 +358,6 @@ Page({
           disHasFluentLearnUserInfo: !!data,
           isFluentLearnExpired,
           didVisibleVIPIcon: accountInfo.tag_list ? accountInfo.tag_list.includes("vip") : false,
-          fluentCardExpireTime: dayjs(data.expire_time).format("YYYY-MM-DD"),
           cardBtnText: isFluentLearnExpired ? "立即加入" : "查看权益"
         })
       } else {
@@ -501,10 +499,18 @@ Page({
       })
     }
 
+    // 04.25之前成为花样学生的用户，点击获取专属海报按钮时跳转老带新海报，反之跳转学生卡海报页
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-    wx.navigateTo({
-      url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id
-    })
+    if ($notNull(this.data.fluentLearnUserInfo)) {
+      let createdAt = dayjs(this.data.fluentLearnUserInfo.created_at)
+      if (createdAt.isBefore(dayjs("2021-04-25"))) {
+        wx.navigateTo({url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id})
+      } else {
+        wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
+      }
+    } else {
+      wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
+    }
   },
   run() {
     // 检查是否展示作业秀入口
@@ -541,7 +547,7 @@ Page({
 
     this.calcUserCreatedTime()
 
-    // 获取畅学卡文案
+    // 获取学生卡文案
     getFluentLearnInfo().then(({
       data
     }) => {
@@ -650,7 +656,7 @@ Page({
     })
 
     if (hasAccountInfo() && hasUserInfo()) {
-      // 每次访问个人中心更新最新的账户数据和畅学卡信息
+      // 每次访问个人中心更新最新的账户数据和学生卡信息
 
       this.getUserSingerInfo().then(() => {
         this.getFluentInfo()

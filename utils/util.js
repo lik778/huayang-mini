@@ -74,7 +74,7 @@ export const payCourse = function ({
 	})
 }
 
-// 购买花样畅学卡
+// 购买花样学生卡
 export const payFluentCard = function ({
 	id,
 	name

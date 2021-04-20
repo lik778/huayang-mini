@@ -18,6 +18,7 @@
     <view class="introduce">
         <view class="name limit-one-line">{{info.name}}</view>
         <view class="title limit-two-line">{{info.title}}</view>
+        <view class="study-time">开班日期（{{info.zh_study_time}}）</view>
         <view class="info">
             <view class="info-wrap">
                 <view class="price-wrap">

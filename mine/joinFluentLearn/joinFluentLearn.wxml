@@ -8,14 +8,20 @@
         <view class="card-desc">{{desc}}</view>
     </view>
 
-    <image class="interest" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612507823pQZhhe.jpg"
+    <image class="interest" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754BErAnd.jpg"
         mode="aspectFit"></image>
     <view class="interest-item" wx:for="{{features}}" wx:key="index">
         <image class="interest-icon" src="{{item.icon}}" mode="aspectFit"></image>
         <view class="interest-detail">
-            <view>{{item.title}}</view>
+            <view class="interest-title">
+                <text wx:for="{{item.titleAry}}" wx:for-index="titleIndex" wx:for-item="titleItem" wx:key="titleIndex">{{titleItem}}</text>
+            </view>
             <view class="interest-text">{{item.desc}}</view>
         </view>
+    </view>
+
+    <view class="equity">
+        <image wx:for="{{equityImages}}" wx:key="index" class="equity-item" src="{{item}}" mode="aspectFill"></image>
     </view>
 
     <view class="course">花样精品课</view>
@@ -71,8 +77,8 @@
     <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent"
         bind:authCompleteEvent="authCompleteEvent"></authModule>
 
-    <!-- 畅学卡弹窗 -->
-    <fluentLearnModal show="{{didShowFluentLearnModal}}" message="您已拥有花样大学畅学卡" confirmText="立即查看"
+    <!-- 学生卡弹窗 -->
+    <fluentLearnModal show="{{didShowFluentLearnModal}}" message="您已拥有花样大学学生卡" confirmText="立即查看"
         bind:confirm="onFluentLearnConfirm" />
 
     <!-- 邀请码购买弹窗 -->

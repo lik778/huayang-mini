@@ -22,6 +22,7 @@ import {
 	updateLiveStatus
 } from "../../api/live/index"
 import dayjs from "dayjs"
+import request from "../../lib/request"
 
 Page({
 
@@ -31,7 +32,7 @@ Page({
 	data: {
 		current: 0,
 		isIosPlatform: false,
-		isFluentLearnVIP: false, // 是否是畅学卡会员
+		isFluentLearnVIP: false, // 是否是学生卡会员
 		showModelBanner: false,
 		didShowAuth: false,
 		isModelLink: true,
@@ -54,7 +55,8 @@ Page({
 		popData: {}, // 弹窗数据
 		didShowContact: false,
 		didFluentCardUser: false, // 是否是花样大学学生
-		didShowGuide: true, // 是否展示入群引导
+		didShowGuide: false, // 是否展示入群引导
+		didExecuteGuideAnimation: false, // 是否执行入群引导动画
 	},
 	async run() {
 		// 请求花样大学首页弹窗任务
@@ -133,7 +135,7 @@ Page({
 		this.setData({offlineList: offlineList.map(n => (({...n, price: n.price / 100, discount_price: n.discount_price / 100, cover: n.detail_pics.split(",")[0]})))})
 
 		// 大学活动
-		let {list: activityList} = await getActivityList({offset: 0, limit: 9999, colleage_activity: 1})
+		let {list: activityList} = await getActivityList({offset: 0, limit: 9999, colleage_activity: 1, platform: 1})
 		this.setData({activityList})
 
 		// 花样游学
@@ -201,6 +203,9 @@ Page({
 			}
 		}
 		return result
+	},
+	onGuideTap() {
+		this.setData({didShowContact: true})
 	},
 	// 打开微信授权
 	openUserAuth() {
@@ -321,9 +326,26 @@ Page({
 		getApp().globalData.discoveryToPracticeTabIndex = e.currentTarget.dataset.item.id - 1
 		wx.switchTab({url: `/pages/practice/practice`})
 	},
+	// 打开入群引导弹窗
+	openGuide() {
+		this.setData({didShowGuide: true})
+		wx.nextTick(() => {this.setData({didExecuteGuideAnimation: true})})
+	},
 	// 关闭入群引导弹窗
 	closeGuide() {
-		this.setData({didShowGuide: false})
+		this.setData({didExecuteGuideAnimation: false})
+		let t = setTimeout(() => {
+			this.setData({didShowGuide: false})
+			clearTimeout(t)
+		}, 300)
+	},
+	// 大学活动点击
+	onCollegeActivityTap(e) {
+		let activityId = e.currentTarget.dataset.item.id
+		if (activityId) {
+			let link = `${request.baseUrl}/#/home/detail/${activityId}`
+			wx.navigateTo({url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}`})
+		}
 	},
 	// 获取授权
 	getAuth() {
@@ -597,6 +619,12 @@ Page({
 				getSchedule(roomIds).then(this.handleLiveStatusCallback)
 			}, 60 * 1000)
 		}
+
+		let t = setTimeout(() => {
+			// 打开入群引导
+			this.openGuide()
+			clearTimeout(t)
+		}, 1000)
 	},
 
 	/**
@@ -617,7 +645,7 @@ Page({
 		// 获取banner数据
 		this.getBanner()
 
-		// 查询畅学卡信息
+		// 查询学生卡信息
 		this.getFluentInfo()
 
 		// 获取推荐数据

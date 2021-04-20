@@ -1,7 +1,9 @@
 @import "../../assets/css/common.wxss";
+
 .offline-course-detail {
     padding-bottom: 126rpx;
 }
+
 /* banner */
 .swiper-box {
     position: relative;
@@ -49,8 +51,14 @@
 }
 
 .title {
-    margin: 20rpx 0 32rpx;
-    font: 32rpx/40rpx PingFangSC;
+    margin: 20rpx 0 20rpx;
+    font: 32rpx/44rpx PingFangSC;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.study-time {
+    margin-bottom: 28rpx;
+    font: 32rpx/32rpx PingFangSC;
 }
 
 .info {
@@ -92,7 +100,7 @@
 
 .no {
     font: 32rpx/32rpx PingFangSC;
-    color: rgba(0,0,0, .6)
+    color: rgba(0, 0, 0, .6);
 }
 
 /* separator */
@@ -140,6 +148,7 @@
     height: 126rpx;
     background: white;
 }
+
 /* 固底按钮-未授权 */
 .no-auth {
     width: 100%;
@@ -206,7 +215,7 @@
 .member-price {
     margin-bottom: 10rpx;
     font-size: 24rpx;
-    color: rgba(255,255,255, .8);
+    color: rgba(255, 255, 255, .8);
 }
 
 /* 学生卡用户购买 */
@@ -257,5 +266,5 @@
 
 .member-price {
     font-size: 24rpx;
-    color: rgba(255,255,255, .8);
+    color: rgba(255, 255, 255, .8);
 }

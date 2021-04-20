@@ -1,4 +1,3 @@
-<!--pages/userCenter/userCenter.wxml-->
 <view class="user-center">
 	<view class="banner {{ isPartner && 'partner' }}">
 		<!-- 背景图 -->
@@ -35,20 +34,13 @@
 
 			</view>
 
-
-
-			<view class="invite-self-code" wx:if='{{partnerInfo.exclusiveCode}}'>
-				<view class="invite-self-code-left">
-					专属邀请码：<text>{{partnerInfo.exclusiveCode}}</text>
-				</view>
-				<view class="invite-self-code-right" bindtap="generatePoster">
-					专属邀请海报
-				</view>
+			<view class="invite-self-code">
+				<view class="invite-self-code-right" bindtap="generatePoster">获取专属邀请海报</view>
 			</view>
 
 		</block>
 	</view>
-	<!-- 畅学卡 -->
+	<!-- 学生卡 -->
 	<view class="vip-card {{ isFluentLearnExpired && 'overdue' }} {{ isPartner && 'partner' }}" bindtap="onFluentCardTap">
 		<view>
 			<view class="card-title {{ isFluentLearnExpired && 'overdue'}}">{{cardName}}</view>
@@ -58,8 +50,7 @@
 			<view class="card-info">
 				<block wx:if="{{disHasFluentLearnUserInfo}}">
 					<text class="card-nick-name {{ isFluentLearnExpired && 'overdue'}}">{{userInfo.nick_name}}</text>
-					<text class="expireDate" wx:if="{{!isFluentLearnExpired}}">有效期至：{{fluentCardExpireTime}}</text>
-					<text class="expireDate overdue" wx:else>已过期</text>
+					<text class="expireDate">学号：{{userInfo.student_num}}</text>
 				</block>
 			</view>
 			<view class="vip-btn {{ isFluentLearnExpired && 'overdue'}}">{{cardBtnText}} ›</view>
@@ -142,7 +133,7 @@
 
 				</view>
 			</view>
-			<view class="function-item" bindtap="toOrder">
+			<view class="function-item" wx:if="{{false}}" bindtap="toOrder">
 				<view class="function-item-left">
 					<image src="/assets/images/common/order.png"></image>
 					<view class="function-item-box">

@@ -65,9 +65,9 @@
     </view>
 
     <!-- 大学活动 -->
-    <view class="college-activity">
+    <view class="college-activity" wx:if="{{activityList.length > 0}}">
         <view class="layer">大学活动</view>
-        <view class="college-activity-item" wx:for="{{activityList}}" wx:key="index" data-item="{{item}}">
+        <view class="college-activity-item" wx:for="{{activityList}}" wx:key="index" data-item="{{item}}" bindtap="onCollegeActivityTap">
             <image class="college-activity-picture" mode="aspectFill" src="{{item.cover_url}}"></image>
             <view class="college-activity-title limit-two-line">{{item.title}}</view>
         </view>
@@ -130,13 +130,15 @@
     </view>
 
     <!-- 引导加入花样学习活动群 -->
-    <view class="guide" wx:if="{{didShowGuide}}">
-        <view>
-            <image class="guide-pic" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618560928medyIv.jpg"></image>
-            <text class="guide-text">立即加入花样学习活动群</text>
+    <view class="guide-wrap" wx:if="{{didShowGuide}}" bindtap="onGuideTap">
+        <view class="guide {{didExecuteGuideAnimation ? 'animation' : ''}}">
+            <view>
+                <image class="guide-pic" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618560928medyIv.jpg"></image>
+                <text class="guide-text">立即加入花样学习活动群</text>
+            </view>
+            <view class="guide-btn">进群</view>
+            <image class="guide-close-icon" catchtap="closeGuide" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618560964nUbRZc.jpg"></image>
         </view>
-        <view class="guide-btn">进群</view>
-        <image class="guide-close-icon" catchtap="closeGuide" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618560964nUbRZc.jpg"></image>
     </view>
 
     <!-- 全局消息弹窗 -->
