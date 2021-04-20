@@ -26,7 +26,7 @@ Page({
 		current: 0,
 		liveNum: 0,
 		isIosPlatform: false,
-		isFluentLearnVIP: false, // 是否是畅学卡会员
+		isFluentLearnVIP: false, // 是否是学生卡会员
 		campList: null,
 		showModelBanner: false,
 		didShowAuth: false,
@@ -706,7 +706,7 @@ Page({
 		// 获取banner数据
 		this.getBanner()
 
-		// 查询畅学卡信息
+		// 查询学生卡信息
 		this.getFluentInfo()
 
 		// 获取推荐数据

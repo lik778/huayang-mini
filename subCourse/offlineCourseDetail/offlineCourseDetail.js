@@ -2,6 +2,7 @@ import { createNewOfflineCourseOrder, getOfflineCourseDetail } from "../../api/c
 import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, payFluentCard } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
 import { getFluentCardInfo, getFluentLearnInfo } from "../../api/mine/index"
+import dayjs from "dayjs"
 
 Page({
 
@@ -17,7 +18,8 @@ Page({
 		isFluentCardUser: false,
 		didShowAuth: false,
 		didShowContact: false,
-		payLock: false
+		payLock: false,
+		weekDays: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"]
 	},
 
 	/**
@@ -88,7 +90,8 @@ Page({
 						details: data.detail_pics.split(","),
 						discount_price: data.discount_price / 100,
 						price: data.price / 100,
-						new_member_price: (data.discount_price + fluentCardData.discount_price) / 100
+						new_member_price: (data.discount_price + fluentCardData.discount_price) / 100,
+						zh_study_time: `${dayjs(data.study_time).format("YYYY-MM-DD")} ${this.data.weekDays[dayjs(data.study_time).day()]}`
 					}
 				})
 			}

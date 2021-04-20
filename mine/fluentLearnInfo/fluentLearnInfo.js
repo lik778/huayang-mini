@@ -14,7 +14,8 @@ Page({
     features: [],
     video: "",
     video_cover: "",
-    newList: []
+    newList: [],
+    equityImages: ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754dxzZTH.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754nyGpJw.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754xhlddI.jpg"], // 权益图片
   },
 
   /**
@@ -97,10 +98,11 @@ Page({
     wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
   },
   /**
-   * 获取畅学卡权益
+   * 获取学生卡权益
    */
   getCardInfo() {
     getFluentLearnInfo().then(({data}) => {
+      data.features = data.features.map(n => ({...n, titleAry: n.title.split('\n')}))
       this.setData({
         name: data.card_name,
         desc: data.description,

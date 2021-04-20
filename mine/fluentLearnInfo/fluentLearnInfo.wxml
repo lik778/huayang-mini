@@ -15,13 +15,19 @@
             loop="{{true}}"
     ></video>
 
-    <image class="interest" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612507823pQZhhe.jpg" mode="aspectFit"></image>
+    <image class="interest" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754BErAnd.jpg" mode="aspectFit"></image>
     <view class="interest-item" wx:for="{{features}}" wx:key="index">
         <image class="interest-icon" src="{{item.icon}}" mode="aspectFit"></image>
         <view class="interest-detail">
-            <view>{{item.title}}</view>
+            <view class="interest-title">
+                <text wx:for="{{item.titleAry}}" wx:for-index="titleIndex" wx:for-item="titleItem" wx:key="titleIndex">{{titleItem}}</text>
+            </view>
             <view class="interest-text">{{item.desc}}</view>
         </view>
+    </view>
+
+    <view class="equity">
+        <image wx:for="{{equityImages}}" wx:key="index" class="equity-item" src="{{item}}" mode="aspectFill"></image>
     </view>
 
     <view class="course">最新好课</view>
