@@ -1,5 +1,8 @@
 <view class="person-course">
-    <view class="fixed-tabs">
+    <view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+        <naviBar title="我的课程" color="#ffffff" backPathBelongTab="{{true}}" didReLaunchTab="{{true}}" backPath="/pages/userCenter/userCenter"></naviBar>
+    </view>
+    <view class="fixed-tabs" style="top:{{statusHeight+44}}px;">
         <view class="fixed-tab-item {{currentIndex === 0 ? 'active' : ''}}" bindtap="onTabTap" data-index="0">线上课程</view>
         <view class="fixed-tab-item {{currentIndex === 1 ? 'active' : ''}}" bindtap="onTabTap" data-index="1">线下课程</view>
         <view class="tab-line {{currentIndex === 0 ? '' : 'active'}}"></view>
