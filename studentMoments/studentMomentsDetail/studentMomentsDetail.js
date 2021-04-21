@@ -165,7 +165,7 @@ Page({
   // 查看更多评论
   visitMoreComment() {
     this.setData({
-      ['commentPageData.offset']: this.data.commentPageData.offset + 5,
+      ['commentPageData.offset']: this.data.commentPageData.offset === 0 ? 3 : this.data.commentPageData.offset + 5,
       ['commentPageData.limit']: 5,
       requestMomentStatus: true
     })
