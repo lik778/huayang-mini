@@ -1,6 +1,4 @@
-import {
-    getFreeOnlineCourse
-} from "../../api/course/index";
+import { getFreeOnlineCourse } from "../../api/course/index"
 
 Page({
     data: {
@@ -16,6 +14,15 @@ Page({
             menus: ['shareAppMessage', 'shareTimeline']
         })
         this.getvideoList();
+    },
+    /**
+     * 用户点击右上角分享
+     */
+    onShareAppMessage: function () {
+        return {
+            title: "一起学习花样大学精品免费课",
+            path: "/subCourse/freeOnlineCourse/freeOnlineCourse"
+        }
     },
     onReachBottom() {
         this.getvideoList();

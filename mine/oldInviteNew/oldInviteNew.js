@@ -1,11 +1,11 @@
 import { drawBorderCircle, drawCircleHeadIcon, drawFont, drawImage } from "../../utils/canvas"
 import {
-	calcStringLen,
-	getLocalStorage,
-	isIphoneXRSMax,
-	queryWxAuth,
-	splitTargetNoString,
-	toast
+  calcStringLen,
+  getLocalStorage,
+  isIphoneXRSMax,
+  queryWxAuth,
+  splitTargetNoString,
+  toast
 } from "../../utils/util"
 import { ErrorLevel, GLOBAL_KEY, WX_AUTH_TYPE } from "../../lib/config"
 import { collectError } from "../../api/auth/index"
@@ -85,7 +85,7 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: '课程全解锁，一卡学全年',
+      title: '一起加入花样大学，让退休生活更精彩！',
       path: `/mine/joinFluentLearn/joinFluentLearn?inviteId=${this.data.distributeId}`
     }
   },
