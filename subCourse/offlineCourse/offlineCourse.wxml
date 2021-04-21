@@ -21,9 +21,9 @@
         </view>
     </block>
 
-    <!-- 全部课程 -->
+    <!-- 全部课堂 -->
     <block wx:if="{{list.length > 0}}">
-        <view class="layer">全部课程</view>
+        <view class="layer">全部课堂</view>
         <view class="offline-course-item" wx:for="{{list}}" wx:key="index" data-item="{{item}}" bindtap="goToOfflineCourseDetail">
             <image class="pic" src="{{item.cover}}" mode="aspectFill"></image>
             <view class="title limit-two-line">{{item.title}}</view>

@@ -1,7 +1,8 @@
 import { getJoinedOfflineCourseList, getVideoCourseList, getVideoPracticeData } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
-import { getNowDateAll } from "../../utils/util"
+import { getLocalStorage, getNowDateAll } from "../../utils/util"
 import dayjs from "dayjs"
+import { GLOBAL_KEY } from "../../lib/config"
 
 Page({
 
@@ -9,6 +10,7 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
+		statusHeight: 0,
 		courseList: [],
 		offlineList: [],
 		limit: 10,
@@ -180,6 +182,7 @@ Page({
 			})
 	},
 	run() {
+		this.setData({statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight})
 		switch (this.data.currentIndex) {
 			case 0: {
 				this.getOnlineList()

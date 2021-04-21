@@ -37,8 +37,8 @@
     <!-- separator -->
     <view class="separator"></view>
 
-    <!-- 课程介绍 -->
-    <view class="layer">课程介绍</view>
+    <!-- 课堂介绍 -->
+    <view class="layer">课堂介绍</view>
     <view class="pictures">
         <image class="picture-item" mode="widthFix" lazy-load="{{true}}" wx:for="{{info.details}}"
                src="{{item}}"></image>

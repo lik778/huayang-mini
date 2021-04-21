@@ -10,7 +10,7 @@
             <view class="info">
                 <image mode="aspectFill" src="{{ item.avatar }}" class="avatar"></image>
                 <text class="nickname limit-one-line">{{ item.nickname }}</text>
-                <view class="tag" wx:if="{{item.isPartner}}">合伙人</view>
+                <!--<view class="tag" wx:if="{{item.isPartner}}">合伙人</view>-->
             </view>
             <text class="date">{{ item.date }}</text>
         </view>

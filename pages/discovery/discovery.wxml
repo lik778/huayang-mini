@@ -44,7 +44,7 @@
 
     <!-- 线下精品课 -->
     <view class="offline-course">
-        <view class="layer">线下乐活课程</view>
+        <view class="layer">线下乐活课堂</view>
         <view class="offline-course-item" wx:for="{{offlineList}}" wx:key="index" data-item="{{item}}" bindtap="goToOfflineCourseDetail">
             <image class="pic" src="{{item.cover}}" mode="aspectFill"></image>
             <view class="title limit-two-line">{{item.title}}</view>
