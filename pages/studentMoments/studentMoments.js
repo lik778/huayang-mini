@@ -244,11 +244,10 @@ Page({
       num2 = 50
     }
     if (start) {
-      randomNum = getRandomNumberByRange(start, start + 10)
+      randomNum = getRandomNumberByRange(start, start + 10) > num2 ? getRandomNumberByRange(num2 / 2, num2 / 2 + 10) : getRandomNumberByRange(start, start + 10)
     } else {
       randomNum = getRandomNumberByRange(num1, num2)
     }
-
     let userInfo = this.data.userInfo
     let userListData = []
     if (userInfo && start === undefined) {
@@ -445,8 +444,6 @@ Page({
       this.estimateVideoLocation()
     }, 350)
   },
-
-
 
   // 更新弹幕评论内容
   updateTextareaText(e) {

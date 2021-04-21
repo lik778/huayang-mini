@@ -200,7 +200,7 @@
         <textarea class="publish-barrage-textarea" placeholder="请输入评论内容" maxlength="200" focus='{{true}}'
           adjust-position="{{false}}" show-confirm-bar="{{false}}" bindfocus="bindfocusDialog" bindblur="bindblurDialog"
           value="{{commentInputValue}}" bindinput="updateTextareaText"></textarea>
-        <text>{{nowBarrageTextNum}}/40</text>
+        <text>{{nowBarrageTextNum}}/200</text>
       </view>
       <view class="publish-barrage-button-line">
         <view class="publish-barrage-cancel" bindtap="closePublishComment">取消</view>
