@@ -20,11 +20,6 @@ Page({
     onReachBottom() {
         this.getvideoList();
     },
-    toCourseDetail(e) {
-        let detail = e.currentTarget.dataset.video_detail;
-        console.log(detail);
-    },
-
     /**
      * 跳转到视频详情页
      * @param e
@@ -34,7 +29,7 @@ Page({
             id,
             name,
             desc
-        } = e.currentTarget.dataset.item;
+        } = e.currentTarget.dataset.item.kechengSeries;
         wx.navigateTo({
             url: `/subCourse/videoCourse/videoCourse?videoId=${id}`,
         })
@@ -45,7 +40,6 @@ Page({
             offset: this.data.pagesControl.offset
         };
         getFreeOnlineCourse(params).then(list => {
-            console.log(list)
             this.setData({
                 videoList: this.data.videoList.concat(list),
                 pagesControl: {

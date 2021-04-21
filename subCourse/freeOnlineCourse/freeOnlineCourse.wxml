@@ -1,5 +1,5 @@
 <view class="coursebox">
-    <view class="course" wx:for="{{videoList}}" data-item="{{item}}" wx:key="index">
+    <view class="course" data-item="{{item}}" bindtap="goToVideoDetail" wx:for="{{videoList}}" data-item="{{item}}" wx:key="index">
         <image mode="aspectFill" class="course-img" src="{{item.kechengSeries.cover_pic}}"></image>
         <view class="course-textbox">
             <view>
