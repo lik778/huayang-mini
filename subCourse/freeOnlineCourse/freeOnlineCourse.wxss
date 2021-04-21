@@ -1,4 +1,83 @@
-.videobox {
+.coursebox {
+    display: flex;
+    padding: 0 30rpx;
+    height: 220rpx;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 20rpx;
+}
+
+.course {
+    display: flex;
+    margin-bottom: 40rpx;
+}
+
+.course-img {
+    width: 166rpx;
+    height: 220rpx;
+    margin-right: 24rpx;
+    background-color: lightgoldenrodyellow;
+    flex: 0 0 166rpx;
+    border-radius: 8rpx;
+}
+
+.course-title {
+    width: 504rpx;
+    font-size: 32rpx;
+    font-weight: 600;
+    margin-bottom: 20rpx;
+    line-height: 32rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.course-discription {
+    width: 504rpx;
+    font-size: 28rpx;
+    margin-bottom: 20rpx;
+    line-height: 34rpx;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    /*! autoprefixer: off */
+    -webkit-box-orient: vertical;
+}
+
+
+.course-textbox{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.course-teachbox {
+    color: #858585;
+    display: flex;
+    font-size: 28rpx;
+}
+
+.teacher-name {
+    margin-right: 10rpx;
+    line-height: 28rpx;
+}
+
+.teacher-position {
+    line-height: 28rpx;
+}
+
+.course-studynum {
+    color: #858585;
+    font-size: 24rpx;
+    line-height: 24rpx;
+}
+
+
+
+
+
+/* .videobox {
     padding: 40rpx 30rpx;
     display: flex;
     flex-direction: column;
@@ -23,9 +102,8 @@
     line-height: 36rpx;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-     -webkit-line-clamp: 2; /*需要显示时文本行数 */
+     -webkit-line-clamp: 2; 
     overflow: hidden;
-
 }
 
 .video-textbox {
@@ -40,7 +118,7 @@
 }
 
 /* .video-vip-price设置为了inline-flex */
-.video-price{
+/* .video-price{
     display: inline-block;
 }
 
@@ -73,4 +151,4 @@
     font-size: 32rpx;
     font-weight: 500;
     color: rgba(0, 0, 0, .6);
-}
+}  */
