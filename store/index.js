@@ -171,23 +171,20 @@ export const store = observable({
 	}),
 
 	// 获取弹幕信息
-	getBarrageList: action(function (params) {
+	getBarrageList: action(function (params, _this) {
 		getBarrageList(params).then(({
 			data = []
 		}) => {
-			let topArr = []
-			let bottomArr = []
-			data.map(item => {
-				if (topArr.length > bottomArr.length) {
-					bottomArr.push(item)
-				} else {
-					topArr.push(item)
-				}
-			})
-			createAnimationFun({
-				topArr,
-				bottomArr
-			})
+			// let topArr = []
+			// let bottomArr = []
+			// data.map(item => {
+			// 	if (topArr.length > bottomArr.length) {
+			// 		bottomArr.push(item)
+			// 	} else {
+			// 		topArr.push(item)
+			// 	}
+			// })
+			createAnimationFun(data, _this)
 		})
 	}),
 })

@@ -164,26 +164,29 @@
   margin-right: -8rpx;
 }
 
+
 @keyframes first {
   from {
     left: 100%;
   }
 
   to {
-    left: -100%;
+    left: -150%;
   }
 }
 
 @keyframes second {
 
   from {
-    left: 150%;
+    left: 100%;
   }
 
   to {
     left: -150%;
   }
 }
+
+
 
 /* 动态列表 */
 .main-module {
@@ -221,6 +224,15 @@
 
 .item-main {
   position: relative;
+}
+
+.type-image,
+.type-video {
+  height: 300rpx;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  border-radius: 16rpx 16rpx 6rpx 6rpx;
 }
 
 
@@ -382,6 +394,7 @@ video {
 .publish-barrage-textarea {
   width: calc(100% - 80rpx);
   padding: 20rpx;
+  padding-bottom: 30rpx;
   box-sizing: border-box;
   margin: 0 auto;
   height: 160rpx;
@@ -424,4 +437,16 @@ video {
   border-radius: 999rpx;
   background: #CC0000;
   margin-left: 30rpx;
+}
+
+.publish-barrage-textarea-module {
+  position: relative;
+}
+
+.publish-barrage-textarea-module text {
+  position: absolute;
+  right: 50rpx;
+  bottom: 2rpx;
+  color: #999;
+  font-size: 12px;
 }

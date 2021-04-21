@@ -82,10 +82,14 @@
             <view class="comment-item-right-bottom">{{item.content}}</view>
           </view>
         </view>
-        <view class="comment-more" wx:if="{{!noCommentData}}">
+        <view class="comment-more" wx:if="{{!noCommentData&&!requestMomentStatus}}">
           <view class="comment-more-line"></view>
           <text bindtap="visitMoreComment">查看更多评论</text>
           <view class="comment-more-line"></view>
+        </view>
+        <view wx:if='{{requestMomentStatus}}' class="loading-module">
+          <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618916737RahpCJ.jpg"></image>
+          <text>加载中</text>
         </view>
       </view>
     </view>
@@ -192,9 +196,12 @@
     <view class="publish-barrage-module-main {{changeAnimationClass?'sliderUpAnimation':'sliderDownAnimation'}}"
       style="bottom:{{reasonHeight+'px'}}" focus='{{true}}'>
       <view class="publish-barrage-title">发布评论</view>
-      <textarea class="publish-barrage-textarea" placeholder="请输入评论内容" maxlength="200" focus='{{true}}'
-        adjust-position="{{false}}" show-confirm-bar="{{false}}" bindfocus="bindfocusDialog" bindblur="bindblurDialog"
-        value="{{commentInputValue}}" bindinput="updateTextareaText"></textarea>
+      <view class="publish-barrage-textarea-module">
+        <textarea class="publish-barrage-textarea" placeholder="请输入评论内容" maxlength="200" focus='{{true}}'
+          adjust-position="{{false}}" show-confirm-bar="{{false}}" bindfocus="bindfocusDialog" bindblur="bindblurDialog"
+          value="{{commentInputValue}}" bindinput="updateTextareaText"></textarea>
+        <text>{{nowBarrageTextNum}}/40</text>
+      </view>
       <view class="publish-barrage-button-line">
         <view class="publish-barrage-cancel" bindtap="closePublishComment">取消</view>
         <view class="publish-barrage-sure" bindtap="createComment">发布评论</view>

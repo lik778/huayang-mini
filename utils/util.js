@@ -1254,7 +1254,6 @@ export const getNElmentFromArray = (arr, n) => {
 
 // 模拟动态生成本地评论
 export const createLocalCommentItem = (content, id) => {
-	console.log(content)
 	let returnObj = {}
 	let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
 	returnObj.content = content
@@ -1268,35 +1267,64 @@ export const createLocalCommentItem = (content, id) => {
 }
 
 // 弹幕方法
-export const createAnimationFun = arr => {
-	let indexTop = 0
-	let indexBottom = 0
+export const createAnimationFun = (arr,
+	_this) => {
+	const huayangLogo = 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618451480ZWGEID.jpg'
+	const ctx = wx.createCanvasContext('myCanvas')
+	const systemInfoWidth = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth
+	ctx.font = 'normal 400 12px PingFangSC-Regular, PingFang SC'
+	const barrageTime = 40
+	let index = 0
 	let topArr = []
 	let bottomArr = []
-	let faceTopArr = arr.topArr
-	let faceBottomArr = arr.bottomArr
-	let huayangLogo = 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618451480ZWGEID.jpg'
-	let timer=setInterval(() => {
-		//第一行弹幕
-		let imgTop = faceTopArr[indexTop].user ? faceTopArr[indexTop].user.avatar_url : huayangLogo
-		let itemTop = new createAnimationElement(5, faceTopArr[indexTop].content, imgTop, indexTop)
-		indexTop = indexTop + 2 >= faceTopArr.length ? 0 : indexTop + 1
-		topArr.push(itemTop)
-		store.studentBarrageTopArr = topArr.slice()
-		//第二行弹幕
-		let imgBottom = faceBottomArr[indexBottom].user ? faceBottomArr[indexBottom].user.avatar_url : huayangLogo
-		let itemBottom = new createAnimationElement(10, faceBottomArr[indexBottom].content, imgBottom, indexBottom)
-		indexBottom = indexBottom + 1 >= faceBottomArr.length ? 0 : indexBottom + 1
-		bottomArr.push(itemBottom)
-		store.studentBarrageBottomArr = bottomArr.slice()
-	}, 3000)
+	let lastTopTime = ''
+	let lastBottomTime = ''
+
+	// style="animation: first {{item.time}}s linear forwards;"
+	setInterval(() => {
+		let nowTime = parseInt(new Date().getTime() / 1000)
+		lastTopTime = lastTopTime ? lastTopTime : nowTime
+		lastBottomTime = lastBottomTime ? lastBottomTime : nowTime + 2
+		if (!arr[index]) {
+			index = 0
+		}
+
+
+
+		if (nowTime > lastTopTime) {
+			let text = arr[index].content
+			let img = arr[index].user ? arr[index].user.avatar_url : huayangLogo
+			let fontWidth = parseInt(ctx.measureText(text).width)
+			let time = parseInt(562 / barrageTime)
+			let timeNext = (fontWidth + 46) / barrageTime - 1
+			let item = new createAnimationElement(time, text, img, _this)
+			// 放下一个第一行弹幕内容
+			topArr.push(item)
+			store.studentBarrageTopArr = topArr.slice()
+			lastTopTime = parseInt(new Date().getTime() / 1000) + timeNext
+			index += 1
+		}
+
+		if (nowTime > lastBottomTime) {
+			let text = arr[index].content
+			let img = arr[index].user ? arr[index].user.avatar_url : huayangLogo
+			let fontWidth = parseInt(ctx.measureText(text).width)
+			let time = parseInt(562 / barrageTime)
+			let timeNext = (fontWidth + 46) / barrageTime - 1
+			let item = new createAnimationElement(time, text, img, _this)
+			// 放下一个第二行弹幕内容
+			bottomArr.push(item)
+			store.studentBarrageBottomArr = bottomArr.slice()
+			lastBottomTime = parseInt(new Date().getTime() / 1000) + timeNext
+			index += 1
+		}
+	}, 1000)
 }
 
 
-function createAnimationElement(time, text, src, index) {
+function createAnimationElement(time, text, src, _this) {
 	this.time = time
 	this.text = text
 	this.src = src
-	this.index = index
 	this.display = true
 }

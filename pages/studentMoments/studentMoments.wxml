@@ -1,5 +1,5 @@
 <!--pages/studentMoments/studentMoments.wxml-->
-<view class="container wx:if='{{studentMoments}}'">
+<view class="container" wx:if='{{studentMoments}}'>
   <!-- 顶部固定区域 -->
   <view class="fixed-top">
     <!-- 点赞+N人在看 -->
@@ -30,8 +30,9 @@
       <view class="barrage-scroll-module">
         <view class="barrage-scroll-top">
           <block wx:for="{{studentBarrageTopArr}}" wx:key='index'>
-            <view wx:if="{{item.display}}" style="animation: first {{item.time}}s linear forwards;"
-              class="barrage-scroll-item">
+            <view wx:if="{{item.display}}" class="barrage-scroll-item"
+              style="animation: first {{item.time}}s linear forwards;" bindanimationend="animateEnd">
+            <!-- <view wx:if="{{item.display}}" class="barrage-scroll-item" bindanimationend="animateEnd" style="{{item.style}}"> -->
               <image src="{{item.src}}"></image>
               <view>{{item.text}}</view>
             </view>
@@ -64,10 +65,10 @@
         </view>
         <view class="item-main">
           <view class="type-image" wx:if='{{item.bubble.content_type===1}}'>
-            <image bindtap="toDetail" mode='center' data-item='{{item}}' src="{{item.bubble.pics[0]}}"></image>
+            <image bindtap="toDetail" mode='widthFix' data-item='{{item}}' src="{{item.bubble.pics[0]}}"></image>
           </view>
           <view class="type-video" wx:else>
-            <image src="{{item.bubble.video_cover}}" mode='center' wx:if='{{playingIndex!==index}}' bindtap="toDetail"
+            <image src="{{item.bubble.video_cover}}" mode='widthFix' wx:if='{{playingIndex!==index}}' bindtap="toDetail"
               data-item='{{item}}'>
             </image>
             <image src="{{commonIcon.playIcon}}" class="video-play-icon" bindtap="playVideo" data-index='{{index}}'
@@ -107,9 +108,12 @@
     <view class="publish-barrage-module-main {{changeAnimationClass?'sliderUpAnimation':'sliderDownAnimation'}}"
       style="bottom:{{reasonHeight===0?isIphoneXRSMax?'80px':'60px': reasonHeight+'px'}}" focus='{{true}}'>
       <view class="publish-barrage-title">发布弹幕</view>
-      <textarea class="publish-barrage-textarea" placeholder="请输入弹幕内容" cursor-spacing='250rpx' maxlength="40"
-        adjust-position="{{false}}" show-confirm-bar="{{false}}" bindfocus="bindfocusDialog" bindblur="bindblurDialog"
-        focus="{{true}}" bindinput="updateTextareaText"></textarea>
+      <view class="publish-barrage-textarea-module">
+        <textarea class="publish-barrage-textarea" placeholder="请输入弹幕内容" cursor-spacing='250rpx' maxlength="40"
+          adjust-position="{{false}}" show-confirm-bar="{{false}}" bindfocus="bindfocusDialog" bindblur="bindblurDialog"
+          focus="{{true}}" bindinput="updateTextareaText"></textarea>
+        <text>{{nowBarrageTextNum}}/40</text>
+      </view>
       <view class="publish-barrage-button-line">
         <view class="publish-barrage-cancel" bindtap="closeBarrage">取消</view>
         <view class="publish-barrage-sure" bindtap="createBarrageNow">发布弹幕</view>

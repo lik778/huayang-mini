@@ -230,7 +230,6 @@
   padding-top: 16rpx;
   vertical-align: bottom;
   transition: height 161ms ease-in;
-
 }
 
 .comment-item {
@@ -319,6 +318,21 @@
   border: 0.5px solid #DDDDDD;
   border-radius: 8rpx;
 
+}
+
+.loading-module {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.4);
+  font-size-adjust: 24rpx;
+}
+
+.loading-module image {
+  width: 64rpx;
+  height: 64rpx;
+  vertical-align: bottom;
+  padding-right: 16rpx;
 }
 
 /* 课程 */
@@ -612,6 +626,7 @@
 .publish-barrage-textarea {
   width: calc(100% - 80rpx);
   padding: 20rpx;
+  padding-bottom: 30rpx;
   box-sizing: border-box;
   margin: 0 auto;
   height: 160rpx;
@@ -654,4 +669,16 @@
   border-radius: 999rpx;
   background: #CC0000;
   margin-left: 30rpx;
+}
+
+.publish-barrage-textarea-module {
+  position: relative;
+}
+
+.publish-barrage-textarea-module text {
+  position: absolute;
+  right: 50rpx;
+  bottom: 2rpx;
+  color: #999;
+  font-size: 12px;
 }

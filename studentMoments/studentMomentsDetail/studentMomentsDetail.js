@@ -55,6 +55,8 @@ Page({
     userId: '',
     commentInputValue: '', //评论输入框内容
     userInfo: '',
+    nowBarrageTextNum: 0,
+    requestMomentStatus: false,
     isIphoneXRSMax: isIphoneXRSMax(),
     showStudentMomentLike: false, //显示点赞动画
     likeLock: true, //点赞锁
@@ -164,7 +166,8 @@ Page({
   visitMoreComment() {
     this.setData({
       ['commentPageData.offset']: this.data.commentPageData.offset + 5,
-      ['commentPageData.limit']: 5
+      ['commentPageData.limit']: 5,
+      requestMomentStatus: true
     })
     // 查看更多评论
     bxPoint("bbs_detail_comment_more", {
@@ -427,7 +430,8 @@ Page({
   updateTextareaText(e) {
     let value = e.detail.value
     this.setData({
-      commentInputValue: value
+      commentInputValue: value,
+      nowBarrageTextNum: value.length
     })
   },
 
@@ -506,6 +510,7 @@ Page({
       }
       this.setData({
         commentList: res.data,
+        requestMomentStatus: false
       })
     })
   },

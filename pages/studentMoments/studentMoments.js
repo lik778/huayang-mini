@@ -40,6 +40,7 @@ Page({
     interval: 5000, //点赞翻转自动滑动时间
     swiperCurrent: 0, //当前swiper下标 
     doommList: [],
+    nowBarrageTextNum: 0,
     huayangLogo: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618451480ZWGEID.jpg',
     visitUserData: {
       visitUserList: [],
@@ -194,7 +195,8 @@ Page({
     this.setData({
       changeAnimationClass: true,
       showPublishBarrage: true,
-      createBarrageContent: ''
+      createBarrageContent: '',
+      nowBarrageTextNum: 0
     })
   },
 
@@ -266,6 +268,11 @@ Page({
     }, 5000)
   },
 
+  // 单条弹幕运行完成
+  animateEnd(e) {
+    // console.log(e)
+  },
+
   // 动态设置x点赞(每10s刷新一次)
   initLikeMessage() {
     let arr = getNElmentFromArray(userList, 40)
@@ -313,7 +320,6 @@ Page({
   },
 
   bindfocusDialog(e) {
-    console.log(e)
     this.setData({
       reasonHeight: e.detail.height || 0
     })
@@ -443,14 +449,15 @@ Page({
 
   // 获取弹幕列表
   getBarrage() {
-    this.getBarrageList(this.data.getBarragePageData)
+    this.getBarrageList(this.data.getBarragePageData, this)
   },
 
   // 更新弹幕评论内容
   updateTextareaText(e) {
     let value = e.detail.value
     this.setData({
-      createBarrageContent: value
+      createBarrageContent: value,
+      nowBarrageTextNum: value.length
     })
   },
 
@@ -474,7 +481,8 @@ Page({
         if (res.code === 0) {
           this.closeBarrage()
           this.setData({
-            createBarrageContent: ''
+            createBarrageContent: '',
+            nowBarrageTextNum: 0
           })
           wx.showToast({
             title: '发布成功',
