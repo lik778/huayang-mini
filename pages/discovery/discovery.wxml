@@ -179,6 +179,6 @@
     </authModule>
 
     <!-- 客服弹窗 -->
-    <contact show="{{didShowContact}}" isRootPage="{{true}}" sessionFrom="distribute"
+    <contact show="{{didShowContact}}" isRootPage="{{true}}" sessionFrom="sf_study_guide"
              bind:closeContactModal="onCloseContactModal" />
 </view>

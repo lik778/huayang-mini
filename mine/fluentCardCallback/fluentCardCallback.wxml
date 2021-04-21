@@ -5,5 +5,5 @@
 
     <view class="footer" bindtap="onBtnTap">点击添加指导老师</view>
 
-    <contact show="{{didShowContact}}" sessionFrom="distribute" bind:closeContactModal="onCloseContactModal"/>
+    <contact show="{{didShowContact}}" sessionFrom="sf_study_guide" bind:closeContactModal="onCloseContactModal"/>
 </view>

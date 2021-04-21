@@ -181,7 +181,7 @@
 	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
 	</authModule>
 	<!-- 客服弹窗 -->
-	<contact show="{{didShowContact}}" isRootPage="{{true}}" sessionFrom="distribute"
+	<contact show="{{didShowContact}}" isRootPage="{{true}}" sessionFrom="sf_study_guide"
 		bind:closeContactModal="onCloseContactModal" />
 	<!-- 余额提示弹窗 -->
 	<view class="{{changeMoneyNoticeClass?'money-notice':'money-notice money-notice-hide'}} " wx:if='{{showMoneyNotice}}'

@@ -340,6 +340,7 @@ Page({
 			this.setData({didShowGuide: false})
 			clearTimeout(t)
 		}, 300)
+		setLocalStorage(GLOBAL_KEY.discoveryGuideExpiredAt, dayjs(`${dayjs().year()}-${dayjs().month() + 1}-${dayjs().date()} 23:59:59`).format("YYYY-MM-DD HH:mm:ss"))
 	},
 	// 大学活动点击
 	onCollegeActivityTap(e) {
@@ -622,11 +623,14 @@ Page({
 			}, 60 * 1000)
 		}
 
-		let t = setTimeout(() => {
-			// 打开入群引导
-			this.openGuide()
-			clearTimeout(t)
-		}, 1000)
+		let guideExpiredAt = getLocalStorage(GLOBAL_KEY.discoveryGuideExpiredAt)
+		if (!guideExpiredAt || dayjs(guideExpiredAt).isBefore(dayjs())) {
+			let t = setTimeout(() => {
+				// 打开入群引导
+				this.openGuide()
+				clearTimeout(t)
+			}, 1000)
+		}
 	},
 
 	/**

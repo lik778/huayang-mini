@@ -82,5 +82,5 @@
     </authModule>
 
     <!-- 客服弹窗 -->
-    <contact show="{{didShowContact}}" sessionFrom="distribute" bind:closeContactModal="onCloseContactModal" />
+    <contact show="{{didShowContact}}" sessionFrom="sf_kecheng_offline" bind:closeContactModal="onCloseContactModal" />
 </view>

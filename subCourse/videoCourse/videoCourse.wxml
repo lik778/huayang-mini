@@ -303,5 +303,5 @@
   </view>
 
   <!-- 联系客服 -->
-  <contact show='{{showContact}}' sessionFrom="distribute" bind:closeContactModal="onCloseContactModal"></contact>
+  <contact show='{{showContact}}' sessionFrom="sf_study_guide" bind:closeContactModal="onCloseContactModal"></contact>
 </view>

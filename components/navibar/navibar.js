@@ -1,10 +1,6 @@
 // components/navibar.js
-import {
-  getLocalStorage
-} from "../../utils/util"
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { getLocalStorage } from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
 
 Component({
   /**
@@ -37,6 +33,10 @@ Component({
     backPathBelongTab: {
       type: Boolean,
       value: false
+    },
+    didReLaunchTab: {
+      type: Boolean,
+      value: false
     }
   },
 
@@ -58,9 +58,15 @@ Component({
         this.backIndex()
       } else if (this.data.backPath) {
         if (this.data.backPathBelongTab) {
-          wx.switchTab({
-            url: this.data.backPath,
-          })
+          if (this.data.didReLaunchTab) {
+            wx.reLaunch({
+              url: this.data.backPath,
+            })
+          } else {
+            wx.switchTab({
+              url: this.data.backPath,
+            })
+          }
         } else {
           wx.navigateBack({
             delta: 1
