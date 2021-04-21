@@ -144,14 +144,12 @@ Page({
 		if (this.data.orderId) {
 			payCourse({id: this.data.orderId, name: "报名小程序付费活动"}).then((res) => {
 				if (res.errMsg === "requestPayment:ok") {
-					if (this.data.payData.successUrl) {
-						wx.redirectTo({
-							url: this.data.payData.successUrl,
-							fail() {
-								wx.switchTab({url: "/pages/discovery/discovery"})
-							}
-						})
-					}
+					wx.redirectTo({
+						url: this.data.payData.successUrl || "/mine/personActivity/personActivity",
+						fail() {
+							wx.switchTab({url: "/pages/discovery/discovery"})
+						}
+					})
 				}
 			}).catch(() => {
 				wx.redirectTo({url: "/pages/activePayCancel/activePayCancel?successUrl=" + encodeURIComponent(this.data.payData.successUrl) + "&orderId=" + this.data.orderId})

@@ -1,4 +1,4 @@
-import { getOfflineCourseList } from "../../api/course/index"
+import { getOfflineCourseList, getRecommendOfflineCourse } from "../../api/course/index"
 import { $notNull } from "../../utils/util"
 
 Page({
@@ -26,6 +26,7 @@ Page({
 	 */
 	onReady: function () {
 		this.run()
+		this.getRecommend()
 	},
 
 	/**
@@ -82,13 +83,19 @@ Page({
 			params = {offset: 0, limit: this.data.limit}
 		}
 		getOfflineCourseList(params).then(({data}) => {
-			let {all, recommendation} = data
-			all = all || []
-			all = all.map(n => ({...n, price: n.price / 100, discount_price: n.discount_price / 100, cover: n.detail_pics.split(",")[0]}))
-			if (all.length < this.data.limit) {
+			data = data || []
+			data = data.map(n => ({...n, price: n.price / 100, discount_price: n.discount_price / 100, cover: n.detail_pics.split(",")[0]}))
+			if (data.length < this.data.limit) {
 				this.setData({hasMore: false})
 			}
-			this.setData({list: [...this.data.list, ...all], offset: this.data.offset + all.length})
+			this.setData({list: [...this.data.list, ...data], offset: this.data.offset + data.length})
+
+		})
+	},
+	getRecommend() {
+		getRecommendOfflineCourse().then(({data}) => {
+			data = data || []
+			let recommendation = data[0]
 			if ($notNull(recommendation)) {
 				this.setData({
 					recommendCourse: {

@@ -1,4 +1,6 @@
 {
-  "navigationBarTitleText":"我的活动",
-  "usingComponents": {}
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "naviBar": "../../components/navibar/navibar"
+  }
 }

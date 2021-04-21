@@ -133,7 +133,7 @@ Page({
 			payFluentCard({id: data.id, name: "线下精品课购买"})
 				.then(() => {
 					this.setData({payLock: false})
-					wx.navigateTo({url: '/mine/personCourse/personCourse'})
+					wx.navigateTo({url: '/mine/personCourse/personCourse?currentIndex=1'})
 				})
 				.catch((err) => {
 					if (err.errMsg !== "requestPayment:fail cancel") {}
@@ -156,10 +156,11 @@ Page({
 		this.getUserInformation()
 		this.setData({didShowAuth: false})
 	},
+	openContactModal() {
+		this.setData({didShowContact: true})
+	},
 	onCloseContactModal() {
-		this.setData({
-			didShowContact: false
-		})
+		this.setData({didShowContact: false})
 	},
 	// swiper切换
 	changeSwiperIndex(e) {
