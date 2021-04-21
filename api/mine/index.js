@@ -246,3 +246,8 @@ export const getDistributeFirstList = (params) => {
 export const getDistributeSecondList = (params) => {
   return request._get(URL.queryDistributeSecondList, params)
 }
+
+// 通过用户ID，查询student信息
+export function getStudentInfoByUserId(params) {
+  return request._get(URL.queryStudentInfoByUserId, params)
+}

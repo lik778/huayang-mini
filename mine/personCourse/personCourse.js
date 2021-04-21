@@ -129,7 +129,7 @@ Page({
 				if (data.length !== this.data.limit) {
 					this.setData({noMore: true})
 				}
-				data = data.map(n => ({...n, zh_status: n.delivery_at ? (dayjs(n.delivery_at).isAfter(dayjs()) ? 0 : 1) : 0}))
+				data = data.map(n => ({...n, zh_status: n.delivery_at ? (dayjs(n.delivery_at).isAfter(dayjs()) ? 1 : 0) : 0}))
 				let oldOffset = this.data.offlineList.length
 				this.setData({offlineList: [...this.data.offlineList, ...data], offset: oldOffset + data.length})
 			})

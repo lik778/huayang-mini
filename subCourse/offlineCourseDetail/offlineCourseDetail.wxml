@@ -45,7 +45,7 @@
     </view>
 
     <!-- 固定按钮 -->
-    <view class="footer" wx:if="{{didShowFooterBtn}}">
+    <view class="footer {{isIphoneX ? 'isIphoneX' : ''}}" wx:if="{{didShowFooterBtn}}">
         <!-- 未授权 -->
         <view class="no-auth" wx:if="{{btnType === 'no-auth'}}" bindtap="onAuthTap">授权登录</view>
 
