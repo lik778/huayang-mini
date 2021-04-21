@@ -447,7 +447,7 @@ Page({
   // 实时更改评论输入框内容
   updateTextareaText(e) {
     let value = e.detail.value
-    value = value.substring(0, 40);
+    value = value.substring(0, 200);
     this.setData({
       commentInputValue: value,
       nowBarrageTextNum: value.length
