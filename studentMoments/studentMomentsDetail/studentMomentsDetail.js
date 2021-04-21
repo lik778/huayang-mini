@@ -468,7 +468,10 @@ Page({
     }
     if (this.data.publishCommentLock) {
       this.setData({
-        publishCommentLock: false
+        publishCommentLock: false,
+        inInputComment: false,
+        showPublishComment: false,
+        changeAnimationClass: true,
       })
       publishComment({
         bubble_id: this.data.id,
@@ -481,11 +484,9 @@ Page({
           let list = this.data.commentList.concat([])
           list.unshift(itemData)
           this.setData({
-            inInputComment: false,
             commentInputValue: '',
             ['detailData.bubble.comment_count']: this.data.detailData.bubble.comment_count + 1,
-            showPublishComment: false,
-            changeAnimationClass: true,
+
             commentList: list
           })
           if (this.data.studentMoments.length > 0) {

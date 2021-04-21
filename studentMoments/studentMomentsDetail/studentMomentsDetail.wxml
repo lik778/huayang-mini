@@ -127,8 +127,8 @@
           <view class="offline-course-bottom">
             <view class="offline-course-bottom-left">
               <text class="offline-course-price-sign">¥</text>
-              <text class="offline-course-old-price">{{detailData.kecheng_offline.discount_price/100}}</text>
-              <text class="offline-course-new-price">¥{{detailData.kecheng_offline.price/100}}</text>
+              <text class="offline-course-old-price">{{detailData.kecheng_offline.price/100}}</text>
+              <text class="offline-course-new-price">¥{{detailData.kecheng_offline.discount_price/100}}</text>
               <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618540316zdHech.jpg"></image>
             </view>
             <view class="offline-course-bottom-right">

@@ -274,7 +274,7 @@
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: rgba(0, 0, 0, 0.6);
-  line-height: 28rpx;
+  line-height: 40rpx;
   word-break: break-word;
   word-wrap: break-word;
 }
@@ -288,7 +288,7 @@
 
 .comment-more-line {
   width: 82rpx;
-  height: 4rpx;
+  height: 0.5px;
   background: #DCDCDC;
 }
 
@@ -325,14 +325,13 @@
   justify-content: center;
   align-items: center;
   color: rgba(0, 0, 0, 0.4);
-  font-size-adjust: 24rpx;
+  font-size: 28rpx;
 }
 
 .loading-module image {
   width: 64rpx;
   height: 64rpx;
   vertical-align: bottom;
-  padding-right: 16rpx;
 }
 
 /* 课程 */
@@ -523,6 +522,7 @@
   color: #000000;
   line-height: 50rpx;
   max-height: 100rpx;
+  padding: 20rpx 0;
 }
 
 .travel-item-bottom {

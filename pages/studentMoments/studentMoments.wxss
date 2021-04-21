@@ -156,24 +156,27 @@
 .barrage-module {
   height: 168rpx;
   /* width: 100%; */
+  position: relative;
 }
 
 .barrage-scroll-module {
   /* background: #fff; */
   padding: 16rpx 0;
   opacity: 0;
+
 }
 
 .barrage-publish-module {
-  position: fixed;
+  position: absolute;
   right: 0;
-  top: 116rpx;
+  top: 50%;
   z-index: 22;
+  transform: translateY(-50%);
 }
 
 .barrage-publish-module image {
-  width: 100rpx;
-  height: 100rpx;
+  width: 112rpx;
+  height: 104rpx;
   vertical-align: bottom;
   margin-right: -8rpx;
 }
