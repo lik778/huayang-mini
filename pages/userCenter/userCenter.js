@@ -2,21 +2,20 @@ import { FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
 import { getFindBanner, getPhoneNumber } from "../../api/course/index"
 import {
-	getFluentCardInfo,
-	getFluentDistributeGuide,
-	getFluentLearnInfo,
-	getPartnerInfo,
-	getUserGuideLink,
-	getUserInfo,
-	getUserOwnerClasses
+  getFluentCardInfo,
+  getFluentDistributeGuide,
+  getFluentLearnInfo,
+  getPartnerInfo,
+  getUserInfo,
+  getUserOwnerClasses
 } from "../../api/mine/index"
 import {
-	$notNull,
-	getLocalStorage,
-	hasAccountInfo,
-	hasUserInfo,
-	setLocalStorage,
-	splitTargetNoString
+  $notNull,
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  setLocalStorage,
+  splitTargetNoString
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 import { getTaskEntranceStatus } from "../../api/task/index"
@@ -213,17 +212,7 @@ Page({
   },
   // 加私域
   joinPrivateDomain() {
-    getUserGuideLink().then((link) => {
-      wx.navigateTo({
-        url: `/mine/normal-web-view/normal-web-view?link=${link}`,
-        fail() {
-          wx.switchTab({
-            url: "pages/userCenter/userCenter"
-          })
-        }
-      })
-    })
-
+    this.setData({didShowContact: true})
     bxPoint("mine_sign_in_private_group", {}, false)
   },
   // 计算用户帐号创建日期

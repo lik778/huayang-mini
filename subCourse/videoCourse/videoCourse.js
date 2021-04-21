@@ -1,25 +1,25 @@
 import { ErrorLevel, FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import {
-	checkJoinVideoCourse,
-	checkNeedSpecialManage,
-	createFissionTask,
-	getIosCustomerLink,
-	getVideoArticleLink,
-	getVideoCourseDetail,
-	inviteFriend,
-	joinVideoCourse,
-	recordStudy
+  checkJoinVideoCourse,
+  checkNeedSpecialManage,
+  createFissionTask,
+  getIosCustomerLink,
+  getVideoArticleLink,
+  getVideoCourseDetail,
+  inviteFriend,
+  joinVideoCourse,
+  recordStudy
 } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
 import {
-	$notNull,
-	convertToChinaNum,
-	getLocalStorage,
-	hasAccountInfo,
-	hasUserInfo,
-	isIphoneXRSMax,
-	payCourse,
-	secondToMinute
+  $notNull,
+  convertToChinaNum,
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  isIphoneXRSMax,
+  payCourse,
+  secondToMinute
 } from "../../utils/util"
 import { collectError } from "../../api/auth/index"
 import { getFluentCardInfo, getKechengWithFluentCard } from "../../api/mine/index"
@@ -709,10 +709,13 @@ Page({
     if (this.data.from_co_channel) {
       paramsData.co_channel_tag = 'co_lndx'
     }
+    this.setData({showContact: true})
+
     bxPoint("series_consult_chat_click", paramsData, false)
-    wx.navigateTo({
-      url: `/pages/webViewCommon/webViewCommon?link=${link}`,
-    })
+
+    // wx.navigateTo({
+    //   url: `/pages/webViewCommon/webViewCommon?link=${link}`,
+    // })
   },
 
   // 分享好友拼团

@@ -1,6 +1,6 @@
 <view class="person-bootcamp">
     <view class="navigation" style="padding-top:{{statusHeight+44}}px;">
-        <naviBar title="我的活动" color="#ffffff" backPathBelongTab="{{true}}" backPath="/pages/userCenter/userCenter"></naviBar>
+        <naviBar title="我的活动" color="#ffffff" backPathBelongTab="{{true}}" didReLaunchTab="{{true}}" backPath="/pages/userCenter/userCenter"></naviBar>
     </view>
     <block wx:if="{{activityList.length === 0}}">
         <view class="no-data-tips">
