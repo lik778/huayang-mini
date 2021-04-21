@@ -449,6 +449,7 @@ Page({
   // 更新弹幕评论内容
   updateTextareaText(e) {
     let value = e.detail.value
+    value = value.substring(0, 40);
     this.setData({
       createBarrageContent: value,
       nowBarrageTextNum: value.length
