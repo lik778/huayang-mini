@@ -358,6 +358,23 @@ Page({
       this.setData({
         detailData: data
       })
+    }).catch(() => {
+      wx.showModal({
+        title: "提示",
+        content: "该动态已删除",
+        confirmText: "查看更多",
+        showCancel: false,
+        success: (res) => {
+          if (res.confirm) {
+            if (this.data.studentMoments.length) {
+              this.deleteStudentMoment(this.data.id)
+            }
+            wx.switchTab({
+              url: '/pages/studentMoments/studentMoments',
+            })
+          }
+        }
+      })
     })
   },
 
