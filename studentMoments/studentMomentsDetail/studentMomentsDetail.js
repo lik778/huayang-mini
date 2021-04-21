@@ -60,6 +60,7 @@ Page({
     isIphoneXRSMax: isIphoneXRSMax(),
     showStudentMomentLike: false, //显示点赞动画
     likeLock: true, //点赞锁
+    publishCommentLock: true, //发布评论锁
     didShowAuth: false, //显示授权
     courseList: '', //精品课程列表
     inPlayVideo: false, //是否在播放视频
@@ -465,33 +466,50 @@ Page({
       })
       return
     }
-    publishComment({
-      bubble_id: this.data.id,
-      user_id: this.data.userId,
-      content: this.data.commentInputValue
-    }).then(res => {
-      if (res.code === 0) {
-        // 生成本地评论
-        let itemData = createLocalCommentItem(this.data.commentInputValue, this.data.id)
-        let list = this.data.commentList.concat([])
-        list.unshift(itemData)
-        this.setData({
-          inInputComment: false,
-          commentInputValue: '',
-          ['detailData.bubble.comment_count']: this.data.detailData.bubble.comment_count + 1,
-          showPublishComment: false,
-          changeAnimationClass: true,
-          commentList: list
-        })
-        if (this.data.studentMoments.length > 0) {
-          this.updateMomentsCommentCount(Number(this.data.id))
+    if (this.data.publishCommentLock) {
+      this.setData({
+        publishCommentLock: false
+      })
+      publishComment({
+        bubble_id: this.data.id,
+        user_id: this.data.userId,
+        content: this.data.commentInputValue
+      }).then(res => {
+        if (res.code === 0) {
+          // 生成本地评论
+          let itemData = createLocalCommentItem(this.data.commentInputValue, this.data.id)
+          let list = this.data.commentList.concat([])
+          list.unshift(itemData)
+          this.setData({
+            inInputComment: false,
+            commentInputValue: '',
+            ['detailData.bubble.comment_count']: this.data.detailData.bubble.comment_count + 1,
+            showPublishComment: false,
+            changeAnimationClass: true,
+            commentList: list
+          })
+          if (this.data.studentMoments.length > 0) {
+            this.updateMomentsCommentCount(Number(this.data.id))
+          }
+          wx.showToast({
+            title: '评论成功',
+            icon: 'success'
+          })
+          this.setData({
+            publishCommentLock: true
+          })
+        } else {
+          this.setData({
+            publishCommentLock: true
+          })
         }
-        wx.showToast({
-          title: '评论成功',
-          icon: 'success'
+      }).catch(() => {
+        this.setData({
+          publishCommentLock: true
         })
-      }
-    })
+      })
+    }
+
   },
 
   initData(e) {

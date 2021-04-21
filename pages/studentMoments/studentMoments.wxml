@@ -1,5 +1,6 @@
 <!--pages/studentMoments/studentMoments.wxml-->
 <view class="container" wx:if='{{studentMoments}}'>
+  <cover-view class="fixed-type-list-shadow"></cover-view>
   <!-- 顶部固定区域 -->
   <view class="fixed-top">
     <!-- 点赞+N人在看 -->
@@ -72,8 +73,9 @@
             <image src="{{commonIcon.playIcon}}" class="video-play-icon" bindtap="playVideo" data-index='{{index}}'
               wx:if='{{playingIndex!==index}}'>
             </image>
-            <video src="{{item.bubble.video_url}}" wx:else id="my-video" object-fit="fill"
-              class="{{playingIndex===index?'module-'+index:''}}" show-fullscreen-btn='{{false}}'></video>
+            <video src="{{item.bubble.video_url}}" wx:else id="my-video" object-fit="fill" controls="{{false}}" loop
+              enable-progress-gesture="{{false}}" class="{{playingIndex===index?'module-'+index:''}}"
+              show-fullscreen-btn='{{false}}'></video>
           </view>
           <view class="item-main-title" bindtap="toDetail" data-item='{{item}}'>{{item.bubble.title}}</view>
         </view>
@@ -103,7 +105,9 @@
   <!-- 发布弹幕 -->
   <view class="publish-barrage-module" wx:if='{{showPublishBarrage}}'>
     <view class="publish-barrage-module-cover" bindtap="closeBarrage"></view>
-    <view class="publish-barrage-module-main {{changeAnimationClass?'sliderUpAnimation':'sliderDownAnimation'}}"
+    <!-- <view class="publish-barrage-module-main {{changeAnimationClass?'sliderUpAnimation':'sliderDownAnimation'}}"
+      style="bottom:{{reasonHeight===0?isIphoneXRSMax?'80px':'60px': reasonHeight+'px'}}" focus='{{true}}'> -->
+    <view class="publish-barrage-module-main"
       style="bottom:{{reasonHeight===0?isIphoneXRSMax?'80px':'60px': reasonHeight+'px'}}" focus='{{true}}'>
       <view class="publish-barrage-title">发布弹幕</view>
       <view class="publish-barrage-textarea-module">

@@ -346,6 +346,7 @@ Page({
     })
 
   },
+
   // 取消授权
   authCancelEvent() {
     this.setData({
@@ -473,23 +474,27 @@ Page({
       }).then(res => {
         if (res.code === 0) {
           this.closeBarrage()
-          this.updateBarrageAnimate(this.data.createBarrageContent)
-          this.setData({
-            createBarrageContent: '',
-            nowBarrageTextNum: 0
-          })
           wx.showToast({
             title: '发布成功',
             icon: 'success',
             mask: true
           })
+          this.updateBarrageAnimate(this.data.createBarrageContent)
+          this.setData({
+            createBarrageContent: '',
+            nowBarrageTextNum: 0,
+            createBarrageLock: true
+          })
+        } else {
+          this.setData({
+            createBarrageLock: true
+          })
         }
-      })
-      setTimeout(() => {
+      }).catch(() => {
         this.setData({
           createBarrageLock: true
         })
-      }, 1500)
+      })
     }
 
   },
@@ -497,6 +502,9 @@ Page({
   // 生命周期函数--监听页面隐藏
   onHide: function () {
     this.clearBarrageFun()
+    this.setData({
+      swiperCurrent: 0
+    })
   },
 
   // 清除弹幕倒计时
@@ -595,8 +603,9 @@ Page({
       for (let i = 0; i < res.length; i++) {
         let item = res[i]
         let textWidth = parseInt(ctx.measureText(item.content).width)
+        let image = getNElmentFromArray(userList, 1)[0].headImage
         item.text = item.content
-        item.src = item.user ? item.user.avatar_url : huayangLogo
+        item.src = item.user ? item.user.avatar_url : image
         if (topWidth < bottomWidth) {
           topAllElementWidth = topAllElementWidth + textWidth + 105
           topArr.push(item)
@@ -617,7 +626,7 @@ Page({
           topWidth,
           bottomWidth,
           allElementWidth,
-          speed: 100
+          speed: 40
         }
       })
       setTimeout(() => {
@@ -665,15 +674,17 @@ Page({
       let findIndex = list.findIndex((item, index) => {
         if (item.position > translateWidth) {
           return index
-        } else {
-          return list.length - 1
         }
       })
       let index = findIndex === -1 ? list.length - 1 : findIndex
+
       obj.position = list[index - 1].position + textWidth
+
       obj.text = text
       obj.src = src
+
       list.splice(index, 0, obj)
+
       if (findIndex !== -1) {
         for (let i = index; i < list.length; i++) {
           list[i].position = list[i].position + textWidth + 105

@@ -10,12 +10,21 @@
 /* 顶部固定区域 */
 .fixed-top {
   position: fixed;
-  top: -4px;
+  top: 0px;
   left: 0;
   right: 0;
   height: 248rpx;
   z-index: 20;
   background: #fff;
+}
+
+.fixed-type-list-shadow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6rpx;
+  background: white;
 }
 
 /* 点赞+N人在看 */
