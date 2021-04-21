@@ -1,6 +1,6 @@
 <view class="list">
     <!-- 活动banner -->
-    <view class="promotion" wx:if="{{bannerList.length!==0}}">
+    <view wx:if="{{bannerList.length!==0}}">
         <!-- banner 滚动区域 -->
         <view class="swiper-box" id="swiper-box">
             <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}"

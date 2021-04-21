@@ -31,9 +31,21 @@ Page({
 		structuredList: [], // 结构化课程数据
 		noMoreStructureData: false, // 是否还有更多结构化课程数据
 		fastMarkAry: [
-			{name: "线上免费课", picture: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618484705ndfWCk.jpg", path: "/subCourse/freeOnlineCourse/freeOnlineCourse"},
-			{name: "大学活动", picture: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618484705gzPcha.jpg", path: "/subCourse/collegeActivity/collegeActivity"},
-			{name: "线下精品课", picture: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618484705DEbXLn.jpg", path: "/subCourse/offlineCourse/offlineCourse"},
+			{
+				name: "线上免费课",
+				picture: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618484705ndfWCk.jpg",
+				path: "/subCourse/freeOnlineCourse/freeOnlineCourse"
+			},
+			{
+				name: "大学活动",
+				picture: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618484705gzPcha.jpg",
+				path: "/subCourse/collegeActivity/collegeActivity"
+			},
+			{
+				name: "线下乐活课堂",
+				picture: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618484705DEbXLn.jpg",
+				path: "/subCourse/offlineCourse/offlineCourse"
+			},
 			{name: "游学课程", picture: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618484705huEOMU.jpg", path: "travel"},
 		],
 		tabsOffsetTop: 0, // Tabs距离顶部的数字
@@ -46,7 +58,7 @@ Page({
 			getFindBanner({scene: 20}).then((data) => {
 				data = data || []
 				this.setData({bannerList: data})
-				resolve()
+				resolve(data)
 			})
 		})
 	},
@@ -170,7 +182,6 @@ Page({
 			this.setData({titleList: arr, keyArr: keyArr})
 			this.changeTab(index)
 			if (this.data.didFromDiscovery && this.data.tabsOffsetTop !== 0) {
-				console.error(1)
 				this.setData({didFromDiscovery: false})
 				getApp().globalData.discoveryToPracticeTabIndex = undefined
 				wx.pageScrollTo({scrollTop: this.data.tabsOffsetTop, duration: 400})
@@ -186,6 +197,9 @@ Page({
 			} else {
 				index = e
 			}
+			// 学校课程页内部切换tab，不重新请求数据
+			if (!this.data.didFromDiscovery && (+index === +this.data.currentIndex)) return
+
 			this.setData({currentIndex: index})
 		} else {
 			index = 0
@@ -216,25 +230,29 @@ Page({
 		switch (index) {
 			case 0: {
 				bxPoint("series_all_tab", {}, false)
-				break;
+				break
 			}
 			case 1: {
 				bxPoint("series_mote_tab", {}, false)
-				break;
+				break
 			}
 			case 2: {
 				bxPoint("series_shishang_tab", {}, false)
-				break;
+				break
 			}
 			case 3: {
 				bxPoint("series_shengyue_tab", {}, false)
-				break;
+				break
 			}
 		}
 	},
 	// 获取模特结构化动作列表
 	getModelStructureList() {
-		getModelDataList({kecheng_type: 3, offset: this.data.structuredPageSize.offset, limit: this.data.structuredPageSize.limit})
+		getModelDataList({
+			kecheng_type: 3,
+			offset: this.data.structuredPageSize.offset,
+			limit: this.data.structuredPageSize.limit
+		})
 			.then(({data: list}) => {
 				if (list.length < this.data.structuredPageSize.limit) this.setData({noMoreStructureData: true})
 				this.setData({
@@ -324,26 +342,16 @@ Page({
 			getApp().globalData.super_user_id = options.invite_user_id
 		}
 
-		this.getBanner().then(() => {
+		this.getBanner().then((list) => {
+			let top = 232
+			if (list.length > 0) top += 139
 			// 计算Tabs高度
-			let self = this
-			let t = setTimeout(() => {
-				const query = wx.createSelectorQuery()
-				query.select(".type-list").boundingClientRect()
-				query.exec(function (res) {
-					let top = res[0].top
-					self.setData({tabsOffsetTop: top})
-
-					if (self.data.didFromDiscovery) {
-						console.error(2)
-						self.setData({didFromDiscovery: false})
-						getApp().globalData.discoveryToPracticeTabIndex = undefined
-						wx.pageScrollTo({scrollTop: top, duration: 400})
-					}
-
-					clearTimeout(t)
-				})
-			}, 1000)
+			this.setData({tabsOffsetTop: top})
+			if (this.data.didFromDiscovery) {
+				this.setData({didFromDiscovery: false})
+				getApp().globalData.discoveryToPracticeTabIndex = undefined
+				wx.pageScrollTo({scrollTop: top, duration: 400})
+			}
 		})
 
 		// ios规则适配

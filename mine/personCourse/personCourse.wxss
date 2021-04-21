@@ -6,13 +6,13 @@
 
 .fixed-tabs {
     position: fixed;
-    top: 0;
     left: 0;
     right: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 134rpx;
+    box-shadow: 1px 0 10px #eee;
     background: white;
 }
 
@@ -28,7 +28,7 @@
 
 .tab-line {
     position: absolute;
-    top: 104rpx;
+    top: 110rpx;
     left: calc(25vw - 42rpx);
     width: 84rpx;
     height: 8rpx;
