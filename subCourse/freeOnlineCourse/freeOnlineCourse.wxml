@@ -1,20 +1,16 @@
-<view class="videobox">
-    <view data-item="{{item}}" class="video" wx:for="{{videoList}}" wx:key="index"  bindtap="goToVideoDetail" >
-        <image class="video-image" src="{{item.cover_pic}}"></image>
-        <view class="video-title">{{item.desc}}</view>
-        <view class="video-textbox">
-            <view class="video-infor">
-                <view class="pricebox">
-                    <view class="video-price">
-                        <text>¥</text>{{item.price}}
-                    </view>
-                    <view class="video-vip-price">
-                        <text>¥{{item.vip_only}}</text>
-                        <image class="video-pricetag" src="/assets/priceTag.png" />
-                    </view>
+<view class="coursebox">
+    <view class="course" wx:for="{{videoList}}" data-item="{{item}}" wx:key="index">
+        <image mode="aspectFill" class="course-img" src="{{item.kechengSeries.cover_pic}}"></image>
+        <view class="course-textbox">
+            <view>
+                <view class="course-title">{{item.kechengSeries.teacher_desc}}</view>
+                <view class="course-discription">{{item.kechengSeries.name}}恢复健康大黄蜂科技大厦付款就打还是分开发的哈尽快发货快递骄傲和附件请款单</view>
+                <view class="course-teachbox">
+                    <text class="teacher-name">{{item.teacher.name}}</text>
+                    <text class="teacher-position">{{item.teacher.teacher_desc}}</text>
                 </view>
-                <view class="video-buyednum">{{item.visit_count}}人已购</view>
             </view>
+            <view class="course-studynum">共{{item.kechengSeries.visit_count}}人学习</view>
         </view>
     </view>
 </view>
