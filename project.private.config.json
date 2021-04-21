@@ -386,9 +386,9 @@
           "scene": null
         },
         {
-          "name": "个人活动",
-          "pathName": "mine/personActivity/personActivity",
-          "query": "",
+          "name": "个人课程页",
+          "pathName": "mine/personCourse/personCourse",
+          "query": "index=1",
           "scene": null
         }
       ]
