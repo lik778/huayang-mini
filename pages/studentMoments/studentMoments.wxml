@@ -57,9 +57,9 @@
     <view class="list">
       <view class="item" wx:for='{{studentMoments}}' wx:key='index'>
         <view class="item-title" bindtap="toDetail" data-item='{{item}}'>
-          <image src="{{item.bubble.user.avatar_url}}" wx:if='{{item.bubble.mobile}}'></image>
+          <image src="{{item.bubble.user.avatar_url}}" wx:if='{{item.bubble.mobile&&item.bubble.user}}'></image>
           <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618451480ZWGEID.jpg" wx:else></image>
-          <text wx:if='{{item.bubble.mobile}}'>{{item.bubble.user.nick_name}}</text>
+          <text wx:if='{{item.bubble.mobile&&item.bubble.user}}'>{{item.bubble.user.nick_name}}</text>
           <text wx:else>花样百姓</text>
         </view>
         <view class="item-main">
