@@ -325,6 +325,9 @@ Page({
 						// this.setData({
 						// 	showCodeBox: false
 						// })
+
+						// TODO 购买学生卡成功，判断用户是否填写收货地址信息
+
 						wx.navigateTo({
 							url: "/mine/fluentCardCallback/fluentCardCallback"
 						})

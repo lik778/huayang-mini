@@ -1,5 +1,5 @@
 import { createNewOfflineCourseOrder, getOfflineCourseDetail } from "../../api/course/index"
-import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, payFluentCard } from "../../utils/util"
+import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, isIphoneXRSMax, payFluentCard } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
 import { getFluentCardInfo, getFluentLearnInfo } from "../../api/mine/index"
 import dayjs from "dayjs"
@@ -19,6 +19,7 @@ Page({
 		didShowAuth: false,
 		didShowContact: false,
 		payLock: false,
+		isIphoneX: false,
 		weekDays: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"]
 	},
 
@@ -34,6 +35,7 @@ Page({
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
+		this.setData({isIphoneX: isIphoneXRSMax()})
 		this.run()
 	},
 

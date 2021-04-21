@@ -12,14 +12,15 @@
 
 /* banner */
 .swiper-box {
-  height: 278rpx;
+  height: 139px;
   position: relative;
 }
 
 .swiper-item-box {
   width: 100%;
-  height: 250rpx;
+  height: 125px;
 }
+
 
 .swiper-item-box image {
   width: 100%;
@@ -89,6 +90,7 @@
 /* 花样大学介绍 */
 .hy-intro {
   padding: 0 30rpx 80rpx;
+  font-size: 0;
 }
 
 .layer {
@@ -118,6 +120,11 @@
 /* 线下课卡片样式 */
 .offline-course-item {
   margin-bottom: 40rpx;
+  font-size: 0;
+}
+
+.offline-course-item:last-child {
+  margin: 0;
 }
 
 .pic {
@@ -127,7 +134,7 @@
 }
 
 .title {
-  margin: 20rpx 0 16rpx;
+  margin: 16rpx 0;
   font: 500 36rpx/50rpx PingFangSC;
 }
 
@@ -183,12 +190,13 @@
 
 .college-activity-item {
   margin-bottom: 40rpx;
+  font-size: 0;
 }
 
 .college-activity-picture {
   width: 100%;
   height: 344rpx;
-  margin-bottom: 30rpx;
+  margin-bottom: 16rpx;
   border-radius: 16rpx 16rpx 6rpx 6rpx;
 }
 

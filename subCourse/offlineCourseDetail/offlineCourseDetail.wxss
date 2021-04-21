@@ -149,6 +149,11 @@
     background: white;
 }
 
+.footer.isIphoneX {
+    height: 142rpx;
+    padding: 0 20rpx 16rpx;
+}
+
 /* 固底按钮-未授权 */
 .no-auth {
     width: 100%;

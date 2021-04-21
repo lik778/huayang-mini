@@ -17,8 +17,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-    statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
-    bg: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618799340LotLdi.jpg",
+    statusHeight: 0,
+    postWidth: 0,
+    postHeight: 0,
+    contentWidthRatio: 1,
+    bg: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618996645WaXiUk.jpg",
     avatar: "",
     nickname: "",
     qrcode: "",
@@ -44,6 +47,19 @@ Page({
     if (isIphoneX) {
       this.setData({bottomNo: 60})
     }
+
+    let {statusBarHeight, screenHeight, screenWidth} = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
+    let postHeight = screenHeight * (511/667)
+    let postWidth = postHeight * (236/511)
+    this.setData({
+      statusHeight: statusBarHeight,
+      postHeight,
+      postWidth,
+      postLeft: (screenWidth - postWidth) / 2,
+      contentWidth: screenWidth*(156/375),
+      yRatio: postHeight/511,
+      xRatio: postWidth/236,
+    })
   },
 
   /**
@@ -129,15 +145,13 @@ Page({
     let ctx = wx.createCanvasContext('oldInviteNew')
     ctx.scale(3, 3)
     // bg
-    await drawImage(ctx, this.data.bg, 0, 0, 236, 512)
+    await drawImage(ctx, this.data.bg, 0, 0, 236, 511)
     // 用户信息
-    await drawCircleHeadIcon(ctx, this.data.avatar,44, 83, 18)
-    await drawFont(ctx, calcStringLen(this.data.nickname) > 16 ? `我是${splitTargetNoString(this.data.nickname, 16)}..` : `我是${this.data.nickname}`, '#ffffff', "400", "PingFangSC", 12, 74, 68)
-    await drawFont(ctx, "和我一起加入花样大学吧!", '#ffffff', "400", "PingFangSC", 12, 74, 85)
-    await drawFont(ctx, "“", '#C13525', "400", "PingFangSC", 40, 70, 50)
-    await drawFont(ctx, "”", '#C13525', "400", "PingFangSC", 40, 187, 100)
+    await drawCircleHeadIcon(ctx, this.data.avatar,44, 85, 20 )
+    await drawFont(ctx, calcStringLen(this.data.nickname) > 16 ? `我是${splitTargetNoString(this.data.nickname, 16)}..` : `我是${this.data.nickname}`, '#ffffff', "400", "PingFangSC", 12, 70, 69)
+    await drawFont(ctx, "和我一起加入花样大学吧!", '#ffffff', "400", "PingFangSC", 12, 70, 86)
     // 二维码
-    await drawBorderCircle(ctx, this.data.qrcode, 23 + 30, 427 + 30, 30)
+    await drawBorderCircle(ctx, this.data.qrcode, 23 + 30, 428 + 30, 30)
 
     ctx.draw(false, () => {
       wx.hideLoading()
@@ -190,8 +204,8 @@ Page({
         wx.canvasToTempFilePath({
           x,
           y,
-          width: 858,
-          height: 1527,
+          width: 708,
+          height: 1533,
           canvasId,
           fileType,
           success(result) {

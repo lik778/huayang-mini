@@ -12,62 +12,28 @@
 
 .poster {
     position: absolute;
-    left: 139rpx;
-    width: 472rpx;
-    height: 1024rpx;
-    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618799340LotLdi.jpg") no-repeat center;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618996645WaXiUk.jpg") no-repeat center;
     background-size: contain;
 }
 
 .user-info {
-    position: absolute;
-    top: 130rpx;
-    left: 56rpx;
-    right: 36rpx;
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
 .avatar-image {
-    width: 72rpx;
-    height: 72rpx;
-    margin-right: 20rpx;
-    border-radius: 999rpx;
+    position: absolute;
+    border-radius: 999px;
 }
 
 .content {
-    position: relative;
-    font: 24rpx/34rpx PingFangSC;
-    color: white;
-}
-
-.content::before, .content::after {
-    content: "“";
     position: absolute;
-    top: -50rpx;
-    left: -8rpx;
-    color: #C13525;
-    font: 80rpx/112rpx PingFangSC;
-}
-
-.content::after {
-    content: "”";
-    left: 226rpx;
-    top: 60rpx;
-}
-
-.content > view {
-    width: 288rpx;
+    color: white;
 }
 
 .qrcode-wrap {
     position: absolute;
-    bottom: 50rpx;
-    left: 46rpx;
-    width: 120rpx;
-    height: 120rpx;
-    border: 6rpx solid white;
+    border: 3px solid white;
     box-sizing: border-box;
     border-radius: 999rpx;
     background: white;
