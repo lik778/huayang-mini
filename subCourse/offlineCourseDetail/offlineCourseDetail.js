@@ -75,7 +75,10 @@ Page({
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
-
+		return {
+			title: `推荐花样线下乐活课堂：${this.data.info.name}`,
+			path: `/subCourse/offlineCourseDetail/offlineCourseDetail?id=${this.data.productId}`
+		}
 	},
 	async run() {
 		// 获取线下课详情

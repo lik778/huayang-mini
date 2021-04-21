@@ -38,6 +38,15 @@ Page({
     onLoad() {
         this.getActivityList();
     },
+    /**
+     * 用户点击右上角分享
+     */
+    onShareAppMessage: function () {
+        return {
+            title: "花样大学校友活动招募中",
+            path: "/subCourse/collegeActivity/collegeActivity"
+        }
+    },
     onReachBottom(){
         this.getActivityList();
     }
