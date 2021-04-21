@@ -503,7 +503,8 @@ Page({
   onHide: function () {
     this.clearBarrageFun()
     this.setData({
-      swiperCurrent: 0
+      swiperCurrent: 0,
+      likeUserInfo: this.data.likeUserInfo.slice()
     })
   },
 
