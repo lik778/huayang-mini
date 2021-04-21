@@ -1,6 +1,7 @@
 import { getJoinedOfflineCourseList, getVideoCourseList, getVideoPracticeData } from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint"
 import { getNowDateAll } from "../../utils/util"
+import dayjs from "dayjs"
 
 Page({
 
@@ -126,7 +127,7 @@ Page({
 				if (data.length !== this.data.limit) {
 					this.setData({noMore: true})
 				}
-				data = data.map(n => ({...n, zh_status: n.delivery_at ? (dayjs(n.delivery_at).isAfter(day()) ? 0 : 1) : 0}))
+				data = data.map(n => ({...n, zh_status: n.delivery_at ? (dayjs(n.delivery_at).isAfter(dayjs()) ? 0 : 1) : 0}))
 				let oldOffset = this.data.offlineList.length
 				this.setData({offlineList: [...this.data.offlineList, ...data], offset: oldOffset + data.length})
 			})
