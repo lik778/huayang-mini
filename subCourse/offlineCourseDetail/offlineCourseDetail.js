@@ -133,7 +133,7 @@ Page({
 			payFluentCard({id: data.id, name: "线下精品课购买"})
 				.then(() => {
 					this.setData({payLock: false})
-					wx.navigateTo({url: '/mine/personCourse/personCourse?index=1'})
+					wx.redirectTo({url: '/mine/personCourse/personCourse?index=1'})
 				})
 				.catch((err) => {
 					if (err.errMsg !== "requestPayment:fail cancel") {}
