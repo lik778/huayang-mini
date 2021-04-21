@@ -29,19 +29,17 @@
     <view class="barrage-module">
       <view class="barrage-scroll-module">
         <view class="barrage-scroll-top">
-          <block wx:for="{{studentBarrageTopArr}}" wx:key='index'>
-            <view wx:if="{{item.display}}" class="barrage-scroll-item"
-              style="animation: first {{item.time}}s linear forwards;" bindanimationend="animateEnd">
-            <!-- <view wx:if="{{item.display}}" class="barrage-scroll-item" bindanimationend="animateEnd" style="{{item.style}}"> -->
+          <block wx:for="{{barrageList.topArr}}" wx:key='index'>
+            <view class="barrage-scroll-item">
+              <!-- <view wx:if="{{item.display}}" class="barrage-scroll-item" bindanimationend="animateEnd" style="{{item.style}}"> -->
               <image src="{{item.src}}"></image>
               <view>{{item.text}}</view>
             </view>
           </block>
         </view>
         <view class="barrage-scroll-bottom">
-          <block wx:for="{{studentBarrageBottomArr}}" wx:key='index'>
-            <view wx:if="{{item.display}}" style="animation: second {{item.time}}s linear forwards;"
-              class="barrage-scroll-item">
+          <block wx:for="{{barrageList.bottomArr}}" wx:key='index'>
+            <view class="barrage-scroll-item">
               <image src="{{item.src}}"></image>
               <view>{{item.text}}</view>
             </view>

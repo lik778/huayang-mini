@@ -97,11 +97,11 @@
 
 /* 弹幕 */
 .barrage-scroll-item {
-  position: absolute;
+  /* position: absolute; */
   white-space: nowrap;
   display: flex;
   align-items: center;
-  margin-right: 70rpx;
+  margin-right: 60px;
 }
 
 .barrage-scroll-top {
@@ -111,11 +111,15 @@
 .barrage-scroll-top,
 .barrage-scroll-bottom {
   display: flex;
-  width: 100%;
+  /* width: 100%; */
   align-items: center;
-  overflow: hidden;
+  /* overflow: hidden; */
   flex-wrap: nowrap;
   height: 64rpx;
+}
+
+.barrage-scroll-bottom {
+  margin-left: 100px;
 }
 
 .barrage-scroll-item image {
@@ -142,12 +146,13 @@
 
 .barrage-module {
   height: 168rpx;
-  width: 100%;
+  /* width: 100%; */
 }
 
 .barrage-scroll-module {
   /* background: #fff; */
   padding: 16rpx 0;
+  opacity: 0;
 }
 
 .barrage-publish-module {

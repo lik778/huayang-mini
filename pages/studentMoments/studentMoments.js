@@ -56,7 +56,11 @@ Page({
     }, //动态分页参数
     barrageList: {
       topArr: [],
-      bottomArr: []
+      bottomArr: [],
+      topWidth: 0,
+      bottomWidth: 0,
+      allElementWidth: 0,
+      speed: 40
     }, //弹幕列表
     reasonHeight: 0,
     commentsList: [], //动态列表
@@ -268,11 +272,6 @@ Page({
     }, 5000)
   },
 
-  // 单条弹幕运行完成
-  animateEnd(e) {
-    // console.log(e)
-  },
-
   // 动态设置x点赞(每10s刷新一次)
   initLikeMessage() {
     let arr = getNElmentFromArray(userList, 40)
@@ -305,7 +304,6 @@ Page({
 
   // 初始化一切假数据
   async initData() {
-
     this.initVisitData()
     //mobx初始化
     this.storeBindings = createStoreBindings(this, {
@@ -324,6 +322,7 @@ Page({
       reasonHeight: e.detail.height || 0
     })
   },
+
   bindblurDialog() {
     this.setData({
       reasonHeight: 0
@@ -447,10 +446,7 @@ Page({
     }, 350)
   },
 
-  // 获取弹幕列表
-  getBarrage() {
-    this.getBarrageList(this.data.getBarragePageData, this)
-  },
+
 
   // 更新弹幕评论内容
   updateTextareaText(e) {
@@ -480,6 +476,7 @@ Page({
       }).then(res => {
         if (res.code === 0) {
           this.closeBarrage()
+          this.updateBarrageAnimate(this.data.createBarrageContent)
           this.setData({
             createBarrageContent: '',
             nowBarrageTextNum: 0
@@ -498,42 +495,6 @@ Page({
       }, 1500)
     }
 
-  },
-
-  // 第一行弹幕函数
-  barrageCommonFunTop() {
-    let arr = this.data.barrageList.topArr
-    let index = this.data.barrageIndex
-    let src = arr[index].user ? arr[index].user.avatar_url : this.data.huayangLogo
-    let text = arr[index].content
-    doommList.push(new Doomm(text, 5, src));
-    let time = 1000 + Math.ceil((text.length - 5) / 5) * 400
-    clearInterval(timer)
-    timer = setInterval(() => {
-      this.barrageCommonFunTop()
-    }, time)
-    this.setData({
-      doommDataTop: doommList,
-      barrageIndex: index > arr.length - 2 ? 0 : index + 1
-    })
-  },
-
-  // 第二行弹幕函数
-  barrageCommonFunBottom() {
-    let arr = this.data.barrageList.bottomArr
-    let index = this.data.barrageIndex1
-    let src = arr[index].user ? arr[index].user.avatar_url : this.data.huayangLogo
-    let text = arr[index].content
-    doommListBottom.push(new DoommBottom(text, 5, src));
-    let time = 1000 + Math.ceil((text.length - 5) / 5) * 400
-    clearInterval(timerBottom)
-    timerBottom = setInterval(() => {
-      this.barrageCommonFunBottom()
-    }, time)
-    this.setData({
-      doommDataBottom: doommListBottom,
-      barrageIndex1: index > arr.length - 2 ? 0 : index + 1
-    })
   },
 
   // 生命周期函数--监听页面隐藏
@@ -609,7 +570,6 @@ Page({
           showStudentMomentLike: false
         })
       }, 1500)
-
       let arr = this.data.likeUserInfo.concat([])
       arr.splice(this.data.swiperCurrent + 1, 0, {
         avator: this.data.userInfo.avatar_url,
@@ -620,6 +580,135 @@ Page({
         likeUserInfo: arr
       })
     }
+  },
+
+  // 获取弹幕列表
+  getBarrage() {
+    this.getBarrageList(this.data.getBarragePageData, this).then(res => {
+      const huayangLogo = 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618451480ZWGEID.jpg'
+      const ctx = wx.createCanvasContext('myCanvas')
+      ctx.font = 'normal 400 12px PingFangSC-Regular, PingFang SC'
+      let topWidth = 0
+      let bottomWidth = 0
+      let topArr = []
+      let bottomArr = []
+      let topAllElementWidth = 0
+      let bottomAllElementWidth = 0
+      let allElementWidth = 0
+      for (let i = 0; i < res.length; i++) {
+        let item = res[i]
+        let textWidth = parseInt(ctx.measureText(item.content).width)
+        item.text = item.content
+        item.src = item.user ? item.user.avatar_url : huayangLogo
+        if (topWidth < bottomWidth) {
+          topAllElementWidth = topAllElementWidth + textWidth + 105
+          topArr.push(item)
+          topWidth = topWidth + textWidth + 105
+          item.position = topWidth
+        } else {
+          bottomAllElementWidth = bottomAllElementWidth + textWidth + 105
+          bottomArr.push(item)
+          bottomWidth = bottomWidth + textWidth + 105
+          item.position = bottomWidth
+        }
+      }
+      allElementWidth = topAllElementWidth > bottomAllElementWidth ? topAllElementWidth : bottomAllElementWidth + 100
+      this.setData({
+        barrageList: {
+          topArr,
+          bottomArr,
+          topWidth,
+          bottomWidth,
+          allElementWidth,
+          speed: 100
+        }
+      })
+      setTimeout(() => {
+        this.changeTranslate()
+      }, 30)
+    })
+  },
+
+  // 本人发弹幕时处理弹幕函数
+  updateBarrageAnimate(text) {
+    let speed = this.data.barrageList.speed
+    let startTime = this.data.barrageList.animateStartTime
+    let nowTime = parseInt(new Date().getTime() / 1000)
+    const systemInfoWidth = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth
+    let translateWidth = (nowTime - startTime) * speed + systemInfoWidth
+    let src = this.data.userInfo.avatar_url
+    const ctx = wx.createCanvasContext('myCanvas')
+    let textWidth = parseInt(ctx.measureText(text).width)
+    let obj = {}
+    ctx.font = 'normal 400 12px PingFangSC-Regular, PingFang SC'
+    if (this.data.barrageList.topWidth < this.data.barrageList.bottomWidth) {
+      let list = this.data.barrageList.topArr.concat([])
+      let findIndex = list.findIndex((item, index) => {
+        if (item.position > translateWidth) {
+          return index
+        }
+      })
+      let index = findIndex === -1 ? list.length - 1 : findIndex
+      obj.position = list[index - 1].position + textWidth
+      obj.text = text
+      obj.src = src
+      list.splice(index, 0, obj)
+      if (findIndex !== -1) {
+        for (let i = index; i < list.length; i++) {
+          list[i].position = list[i].position + textWidth + 105
+        }
+      }
+      this.setData({
+        ['barrageList.topArr']: list,
+        ['barrageList.allElementWidth']: this.data.barrageList.allElementWidth + textWidth + 105,
+        ['barrageList.topWidth']: this.data.barrageList.topWidth + textWidth + 105
+      })
+    } else {
+      let list = this.data.barrageList.bottomArr.concat([])
+      let findIndex = list.findIndex((item, index) => {
+        if (item.position > translateWidth) {
+          return index
+        } else {
+          return list.length - 1
+        }
+      })
+      let index = findIndex === -1 ? list.length - 1 : findIndex
+      obj.position = list[index - 1].position + textWidth
+      obj.text = text
+      obj.src = src
+      list.splice(index, 0, obj)
+      if (findIndex !== -1) {
+        for (let i = index; i < list.length; i++) {
+          list[i].position = list[i].position + textWidth + 105
+        }
+      }
+
+      this.setData({
+        ['barrageList.bottomArr']: list,
+        ['barrageList.allElementWidth']: this.data.barrageList.allElementWidth + textWidth + 105,
+        ['barrageList.bottomWidth']: this.data.barrageList.bottomWidth + textWidth + 105
+      })
+    }
+  },
+
+  // 递归控制动画结束
+  changeTranslate() {
+    let speed = this.data.barrageList.speed
+    let allElementWidth = this.data.barrageList.allElementWidth
+    this.setData({
+      ['barrageList.animateStartTime']: parseInt(new Date().getTime() / 1000)
+    })
+    this.animate('.barrage-scroll-module', [{
+        translateX: "100%",
+        opacity: 1
+      },
+      {
+        translateX: -allElementWidth,
+        opacity: 1
+      }
+    ], allElementWidth / speed * 1000, () => {
+      this.changeTranslate()
+    })
   },
 
 })
