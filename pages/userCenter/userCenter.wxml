@@ -18,14 +18,14 @@
 						<text class="name-text">花样注册会员</text>
 					</view>
 				</view>
-				<text class="lifetime" wx:if="{{isPartner}}">花样{{ partnerInfo.level }}</text>
-				<text class="lifetime" wx:elif="{{existNo}}">您已在花样第{{existNo}}天</text>
+				<!--<text class="lifetime" wx:if="{{isPartner}}">花样{{ partnerInfo.level }}</text>-->
+				<text class="lifetime" wx:if="{{existNo}}">您已在花样第{{existNo}}天</text>
 			</view>
 		</view>
 
 		<block wx:if="{{isPartner}}">
 			<view class="first-distribute">
-				<text>直接推荐学员<text>{{ partnerInfo.firstNo }} 人</text></text>
+				<text>我推荐的同学<text>{{ partnerInfo.firstNo }} 人</text></text>
 				<view class="distribute-content" bindtap="goToDistributeListPage" data-index="1">
 					<image class="distribute-avatar" mode="aspectFill" src="{{item}}" wx:for="{{ partnerInfo.firstUserAvatars }}">
 					</image>

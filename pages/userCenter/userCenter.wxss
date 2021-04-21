@@ -90,12 +90,8 @@
 
 .message .lifetime {
     margin-top: 24rpx;
-    color: #EECDAB;
-    font-size: 36rpx;
-    font-family: PingFangSC-Light, PingFang SC;
-    font-weight: 300;
-    color: #EECDAB;
-    line-height: 36rpx;
+    font: 36rpx/36rpx PingFangSC;
+    color: white;
 }
 
 .first-distribute {

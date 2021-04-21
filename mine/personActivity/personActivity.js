@@ -9,6 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    statusHeight: 0,
     activityList: [],
     limit: 10,
     offset: 0,
@@ -85,6 +86,8 @@ Page({
     }
   },
   main() {
+    this.setData({statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight})
+
     getActivityInMine({
       user_id: getLocalStorage(GLOBAL_KEY.userId),
       status: 1,

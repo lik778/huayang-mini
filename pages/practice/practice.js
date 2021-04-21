@@ -169,8 +169,10 @@ Page({
 			}
 			this.setData({titleList: arr, keyArr: keyArr})
 			this.changeTab(index)
-
-			if (this.data.didFromDiscovery) {
+			if (this.data.didFromDiscovery && this.data.tabsOffsetTop !== 0) {
+				console.error(1)
+				this.setData({didFromDiscovery: false})
+				getApp().globalData.discoveryToPracticeTabIndex = undefined
 				wx.pageScrollTo({scrollTop: this.data.tabsOffsetTop, duration: 400})
 			}
 		})
@@ -184,13 +186,33 @@ Page({
 			} else {
 				index = e
 			}
-			this.setData({
-				currentIndex: index
-			})
+			this.setData({currentIndex: index})
 		} else {
 			index = 0
 		}
 
+		this.setData({
+			videoList: [],
+			structuredList: [],
+			pageSize: {offset: 0, limit: 10},
+			structuredPageSize: {offset: 0, limit: 10}
+		})
+
+		// 设置页面位置
+		if (this.data.didShowFixedTabsLayout) {
+			wx.pageScrollTo({
+				duration: 200,
+				scrollTop: this.data.tabsOffsetTop
+			})
+		}
+
+		if (index === 3) {
+			// 模特训练，底部填充结构化课程（含分页功能）
+			this.getModelStructureList()
+		}
+		this.getVideoList(index)
+
+		// 打点
 		switch (index) {
 			case 0: {
 				bxPoint("series_all_tab", {}, false)
@@ -209,26 +231,6 @@ Page({
 				break;
 			}
 		}
-
-		this.setData({
-			pageSize: {
-				offset: 0,
-				limit: 10
-			}
-		})
-		// 设置页面位置
-		if (this.data.didShowFixedTabsLayout) {
-			wx.pageScrollTo({
-				duration: 200,
-				scrollTop: this.data.tabsOffsetTop
-			})
-		}
-
-		if (index === 3) {
-			// 模特训练，底部填充结构化课程（含分页功能）
-			this.getModelStructureList()
-		}
-		this.getVideoList(index)
 	},
 	// 获取模特结构化动作列表
 	getModelStructureList() {
@@ -330,8 +332,15 @@ Page({
 				query.select(".type-list").boundingClientRect()
 				query.exec(function (res) {
 					let top = res[0].top
-					console.error(top)
 					self.setData({tabsOffsetTop: top})
+
+					if (self.data.didFromDiscovery) {
+						console.error(2)
+						self.setData({didFromDiscovery: false})
+						getApp().globalData.discoveryToPracticeTabIndex = undefined
+						wx.pageScrollTo({scrollTop: top, duration: 400})
+					}
+
 					clearTimeout(t)
 				})
 			}, 1000)
@@ -345,7 +354,9 @@ Page({
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
-
+		if (getApp().globalData.discoveryToPracticeTabIndex === undefined) {
+			this.getTabList(0)
+		}
 	},
 
 	/**
@@ -364,11 +375,8 @@ Page({
 		// 首页金刚位进入，页面Tabs固定在顶部
 		let index = getApp().globalData.discoveryToPracticeTabIndex
 		if (index !== undefined) {
-			this.setData({didFromDiscovery: index, currentIndex: index})
+			this.setData({didFromDiscovery: true, currentIndex: index})
 			this.getTabList(index)
-			getApp().globalData.discoveryToPracticeTabIndex = undefined
-		} else {
-			this.getTabList(0)
 		}
 
 		bxPoint("series_visit", {})

@@ -733,6 +733,11 @@ export function getOfflineCourseList(params) {
 	return request._get(URL.queryOfflineCourseList, params)
 }
 
+// 获取推荐线下课程
+export function getRecommendOfflineCourse(params) {
+	return request._get(URL.queryRecommendOfflineCourse, params)
+}
+
 // 获取线下精品课（包含人气课，和全部课）
 export function getOfflineCourseDetail(params) {
 	return request._get(URL.queryOfflineCourseDetail, params)

@@ -324,7 +324,9 @@ Page({
 	// 点击金刚位
 	onKingKongTap(e) {
 		getApp().globalData.discoveryToPracticeTabIndex = e.currentTarget.dataset.item.id - 1
-		wx.switchTab({url: `/pages/practice/practice`})
+		wx.nextTick(() => {
+			wx.switchTab({url: `/pages/practice/practice`})
+		})
 	},
 	// 打开入群引导弹窗
 	openGuide() {

@@ -103,6 +103,15 @@
     z-index: 30;
 }
 
+.fixed-type-list-shadow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6rpx;
+    background: white;
+}
+
 .main-title-item {
     font: 500 36rpx/60rpx PingFangSC;
     color: rgba(0, 0, 0, 1);
@@ -135,7 +144,7 @@
     margin: 0 auto;
     padding: 20rpx 0 50rpx;
     width: calc(100% - 60rpx);
-    min-height: 900rpx;
+    min-height: calc(100vh - 50rpx);
 }
 
 .list-none {

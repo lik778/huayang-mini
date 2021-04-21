@@ -34,12 +34,15 @@
     </view>
 
     <!-- 固定学员Tabs -->
-    <view class="fixed-type-list" wx:if="{{didShowFixedTabsLayout}}">
-        <view class="{{currentIndex===index?'main-title-item active':'main-title-item'}}" wx:for="{{titleList}}"
-              wx:key="index" bindtap="changeTab" data-index="{{index}}">
-            {{item}}
+    <block wx:if="{{didShowFixedTabsLayout}}">
+        <cover-view class="fixed-type-list-shadow"></cover-view>
+        <view class="fixed-type-list">
+            <view class="{{currentIndex===index?'main-title-item active':'main-title-item'}}" wx:for="{{titleList}}"
+                  wx:key="index" bindtap="changeTab" data-index="{{index}}">
+                {{item}}
+            </view>
         </view>
-    </view>
+    </block>
 
     <view class="list-main" wx:if="{{currentIndex === 3 || videoList.length>0}}">
         <view class="course-item" wx:for="{{videoList}}" wx:key="index" bindtap="toVideoCourseDetail" data-item="{{item}}">

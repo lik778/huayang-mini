@@ -501,16 +501,17 @@ Page({
 
     // 04.25之前成为花样学生的用户，点击获取专属海报按钮时跳转老带新海报，反之跳转学生卡海报页
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-    if ($notNull(this.data.fluentLearnUserInfo)) {
-      let createdAt = dayjs(this.data.fluentLearnUserInfo.created_at)
-      if (createdAt.isBefore(dayjs("2021-04-25"))) {
-        wx.navigateTo({url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id})
-      } else {
-        wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
-      }
-    } else {
-      wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
-    }
+    wx.navigateTo({url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id})
+    // if ($notNull(this.data.fluentLearnUserInfo)) {
+    //   let createdAt = dayjs(this.data.fluentLearnUserInfo.created_at)
+    //   if (createdAt.isBefore(dayjs("2021-04-25"))) {
+    //     wx.navigateTo({url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id})
+    //   } else {
+    //     wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
+    //   }
+    // } else {
+    //   wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
+    // }
   },
   run() {
     // 检查是否展示作业秀入口

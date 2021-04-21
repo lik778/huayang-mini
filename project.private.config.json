@@ -384,6 +384,12 @@
           "pathName": "mine/joinFluentLearn/joinFluentLearn",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "个人活动",
+          "pathName": "mine/personActivity/personActivity",
+          "query": "",
+          "scene": null
         }
       ]
     }

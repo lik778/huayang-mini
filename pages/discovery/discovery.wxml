@@ -27,7 +27,7 @@
     </view>
 
     <!-- 花样大学介绍 -->
-    <view class="hy-intro" wx:if="{{didFluentCardUser}}" bindtap="goToJoinFluentCardPage">
+    <view class="hy-intro" wx:if="{{!didFluentCardUser}}" bindtap="goToJoinFluentCardPage">
         <view class="layer">
             <text>花样大学介绍</text>
             <view class="hy-intro-btn">加入花样大学 ›</view>
@@ -44,7 +44,7 @@
 
     <!-- 线下精品课 -->
     <view class="offline-course">
-        <view class="layer">线下课程</view>
+        <view class="layer">线下乐活课程</view>
         <view class="offline-course-item" wx:for="{{offlineList}}" wx:key="index" data-item="{{item}}" bindtap="goToOfflineCourseDetail">
             <image class="pic" src="{{item.cover}}" mode="aspectFill"></image>
             <view class="title limit-two-line">{{item.title}}</view>
@@ -62,6 +62,27 @@
                 <view class="no">xxx人已购</view>
             </view>
         </view>
+    </view>
+
+    <!-- 花样游学 -->
+    <view class="travel" wx:if="{{travelList.length > 0}}">
+        <view class="travel-layout">花样游学</view>
+        <view class="travel-item" wx:for="{{travelList}}" wx:key="index" bindtap="onTravelTap" data-item="{{item}}">
+            <swiper class="travel-cover" circular autoplay interval="{{3500 + index * 300}}" duration="{{500}}">
+                <swiper-item wx:for="{{item.covers}}" wx:for-item="coverItem" wx:key="index" data-item="{{coverItem}}">
+                    <image class="travel-cover" src="{{coverItem}}" mode="aspectFill"></image>
+                </swiper-item>
+            </swiper>
+            <view class="travel-title limit-two-line">{{item.title}}</view>
+            <view class="travel-info">
+                <view class="travel-price">¥<text class="price-01">{{item.discount_price / 100}}</text><text
+                        wx:if="{{item.price}}" class="price-02">¥{{item.price / 100}}</text>
+                </view>
+                <view class="travel-visit-no">{{item.visit_count}}人看过</view>
+            </view>
+        </view>
+
+        <view class="more-travel" bindtap="onMoreTravelLineTap">查看更多游学路线 ›</view>
     </view>
 
     <!-- 大学活动 -->
@@ -89,27 +110,6 @@
 
     <!-- 精品课程 -->
     <bestCourseLayout wx:if="{{courseList.length > 0}}" courseList="{{courseList}}"/>
-
-    <!-- 花样游学 -->
-    <view class="travel" wx:if="{{travelList.length > 0}}">
-        <view class="travel-layout">花样游学</view>
-        <view class="travel-item" wx:for="{{travelList}}" wx:key="index" bindtap="onTravelTap" data-item="{{item}}">
-            <swiper class="travel-cover" circular autoplay interval="{{3500 + index * 300}}" duration="{{500}}">
-                <swiper-item wx:for="{{item.covers}}" wx:for-item="coverItem" wx:key="index" data-item="{{coverItem}}">
-                    <image class="travel-cover" src="{{coverItem}}" mode="aspectFill"></image>
-                </swiper-item>
-            </swiper>
-            <view class="travel-title limit-two-line">{{item.title}}</view>
-            <view class="travel-info">
-                <view class="travel-price">¥<text class="price-01">{{item.discount_price / 100}}</text><text
-                        wx:if="{{item.price}}" class="price-02">¥{{item.price / 100}}</text>
-                </view>
-                <view class="travel-visit-no">{{item.visit_count}}人看过</view>
-            </view>
-        </view>
-
-        <view class="more-travel" bindtap="onMoreTravelLineTap">查看更多游学路线 ›</view>
-    </view>
 
     <!-- 分隔 -->
     <view class="separate-line"></view>
