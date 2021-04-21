@@ -34,7 +34,7 @@
             <view class="barrage-scroll-item">
               <!-- <view wx:if="{{item.display}}" class="barrage-scroll-item" bindanimationend="animateEnd" style="{{item.style}}"> -->
               <image src="{{item.src}}"></image>
-              <view>{{item.text}}</view>
+              <view style="background:{{item.bg}}">{{item.text}}</view>
             </view>
           </block>
         </view>

@@ -604,8 +604,10 @@ Page({
         let item = res[i]
         let textWidth = parseInt(ctx.measureText(item.content).width)
         let image = getNElmentFromArray(userList, 1)[0].headImage
+        let bg = getNElmentFromArray(['#FFE0E0', '#DFECFF', '#D7ECDB', '#FFEED6'], 1)[0]
         item.text = item.content
         item.src = item.user ? item.user.avatar_url : image
+        item.bg = bg
         if (topWidth < bottomWidth) {
           topAllElementWidth = topAllElementWidth + textWidth + 105
           topArr.push(item)
