@@ -50,7 +50,7 @@
 			<view class="card-info">
 				<block wx:if="{{disHasFluentLearnUserInfo}}">
 					<text class="card-nick-name {{ isFluentLearnExpired && 'overdue'}}">{{userInfo.nick_name}}</text>
-					<text class="expireDate">学号：{{userInfo.student_num}}</text>
+					<text class="expireDate">学号：{{fluentLearnUserInfo.num}}</text>
 				</block>
 			</view>
 			<view class="vip-btn {{ isFluentLearnExpired && 'overdue'}}">{{cardBtnText}} ›</view>

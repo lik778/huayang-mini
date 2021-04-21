@@ -59,7 +59,7 @@
                                mode="aspectFit"></image>
                     </view>
                 </view>
-                <view class="no">xxx人已购</view>
+                <view class="no">{{item.buy_count}}人已购</view>
             </view>
         </view>
     </view>

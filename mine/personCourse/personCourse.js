@@ -26,7 +26,7 @@ Page({
 	onLoad: function (options) {
 		let {index = 0} = options
 
-		this.setData({currentIndex: index})
+		this.setData({currentIndex: +index})
 
 		this.run()
 		// 页面pv打点
@@ -179,7 +179,7 @@ Page({
 			})
 	},
 	run() {
-		switch (+this.data.currentIndex) {
+		switch (this.data.currentIndex) {
 			case 0: {
 				this.getOnlineList()
 				break
