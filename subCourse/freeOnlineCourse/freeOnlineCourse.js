@@ -51,5 +51,4 @@ Page({
             console.log(err);
         })
     },
-
 })

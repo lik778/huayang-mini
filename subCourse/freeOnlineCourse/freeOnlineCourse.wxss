@@ -21,36 +21,37 @@
     border-radius: 8rpx;
 }
 
+.course-textbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .course-title {
     width: 504rpx;
-    font-size: 32rpx;
-    font-weight: 600;
-    margin-bottom: 20rpx;
-    line-height: 32rpx;
+    font-size: 36rpx;
+    font-weight: 500;
+    line-height: 36rpx;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    margin-bottom: 20rpx;
 }
 
 .course-discription {
     width: 504rpx;
-    font-size: 28rpx;
-    margin-bottom: 20rpx;
-    line-height: 34rpx;
+    font-size: 32rpx;
+    line-height: 36rpx;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     overflow: hidden;
     /*! autoprefixer: off */
     -webkit-box-orient: vertical;
+    margin-bottom: 20rpx;
 }
 
 
-.course-textbox{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
 
 .course-teachbox {
     color: #858585;
@@ -72,83 +73,3 @@
     font-size: 24rpx;
     line-height: 24rpx;
 }
-
-
-
-
-
-/* .videobox {
-    padding: 40rpx 30rpx;
-    display: flex;
-    flex-direction: column;
-}
-
-.video {
-    margin-bottom: 38rpx;
-}
-
-.video-image {
-    height: 344rpx;
-    width: 690rpx;
-    border-radius: 16rpx 16rpx 6rpx 6rpx;
-    margin-bottom: 20rpx;
-}
-
-.video-title {
-    font-size: 36rpx;
-    font-weight: 700;
-    margin-bottom: 20rpx;
-    letter-spacing: 1rpx;
-    line-height: 36rpx;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-     -webkit-line-clamp: 2; 
-    overflow: hidden;
-}
-
-.video-textbox {
-    display: flex;
-    justify-content: space-between;
-}
-
-.video-pricetag {
-    width: 94rpx;
-    height: 36rpx;
-    margin-left: 4rpx;
-}
-
-/* .video-vip-price设置为了inline-flex */
-/* .video-price{
-    display: inline-block;
-}
-
-.video-price {
-    font-size: 48rpx;
-    color: #CC0000;
-}
-
-.video-price>text {
-    font-size: 32rpx;
-}
-
-.video-vip-price {
-    display: inline-flex;
-    align-items: center;
-    color: #996633;
-    margin-left: 20rpx;
-}
-
-.video-infor {
-    display: flex;
-    width: 100%;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-    line-height: 48rpx;
-}
-
-.video-buyednum {
-    font-size: 32rpx;
-    font-weight: 500;
-    color: rgba(0, 0, 0, .6);
-}  */

@@ -2,9 +2,11 @@
     <view class="course" data-item="{{item}}" bindtap="goToVideoDetail" wx:for="{{videoList}}" data-item="{{item}}" wx:key="index">
         <image mode="aspectFill" class="course-img" src="{{item.kechengSeries.cover_pic}}"></image>
         <view class="course-textbox">
-            <view>
-                <view class="course-title">{{item.kechengSeries.teacher_desc}}</view>
-                <view class="course-discription">{{item.kechengSeries.name}}恢复健康大黄蜂科技大厦付款就打还是分开发的哈尽快发货快递骄傲和附件请款单</view>
+            <view class="otherbox">
+                <view class="course-title" wx:if="{{item.kechengSeries.teacher_desc}}">
+                    {{item.kechengSeries.teacher_desc}}
+                </view>
+                <view  wx:if="{{item.kechengSeries.name}}" class="course-discription">{{item.kechengSeries.name}}</view>
                 <view class="course-teachbox">
                     <text class="teacher-name">{{item.teacher.name}}</text>
                     <text class="teacher-position">{{item.teacher.teacher_desc}}</text>
