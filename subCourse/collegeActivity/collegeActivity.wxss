@@ -13,7 +13,7 @@
     width: inherit;
     height: 344rpx;
     background-color: lightpink;
-    margin-bottom: 20rpx;
+    margin-bottom: 16rpx;
 }
 .activity-title {
     font-size: 36rpx;
