@@ -23,6 +23,7 @@ export const store = observable({
 	studentMomentComments: [],
 	studentBarrageTopArr: [],
 	studentBarrageBottomArr: [],
+	studentBarrageArr: [],
 
 	// 获取动态列表
 	getCommentsList: action(function (params, params1) {
@@ -172,19 +173,23 @@ export const store = observable({
 
 	// 获取弹幕信息
 	getBarrageList: action(function (params, _this) {
-		getBarrageList(params).then(({
-			data = []
-		}) => {
-			// let topArr = []
-			// let bottomArr = []
-			// data.map(item => {
-			// 	if (topArr.length > bottomArr.length) {
-			// 		bottomArr.push(item)
-			// 	} else {
-			// 		topArr.push(item)
-			// 	}
-			// })
-			createAnimationFun(data, _this)
+		return new Promise(resolve => {
+			getBarrageList(params).then(({
+				data = []
+			}) => {
+				// let topArr = []
+				// let bottomArr = []
+				// data.map(item => {
+				// 	if (topArr.length > bottomArr.length) {
+				// 		bottomArr.push(item)
+				// 	} else {
+				// 		topArr.push(item)
+				// 	}
+				// })
+				// createAnimationFun(data, _this)
+				this.studentBarrageArr = data.slice()
+				resolve(data)
+			})
 		})
 	}),
 })
