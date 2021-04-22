@@ -46,7 +46,7 @@
                 bind:openUserAuth="openUserAuth"/>
 
     <!-- 线下乐活课堂 -->
-    <view class="offline-course">
+    <view class="offline-course" wx:if="{{offlineList.length > 0}}">
         <view class="layer">线下乐活课堂</view>
         <view class="offline-course-item" wx:for="{{offlineList}}" wx:key="index" data-item="{{item}}" bindtap="goToOfflineCourseDetail">
             <image class="pic" src="{{item.cover}}" mode="aspectFill"></image>
@@ -110,7 +110,6 @@
             <view class="about-recommend-course">查看 ›</view>
         </view>
     </view>
-
     <!-- 精品课程 -->
     <bestCourseLayout wx:if="{{courseList.length > 0}}" courseList="{{courseList}}"/>
 

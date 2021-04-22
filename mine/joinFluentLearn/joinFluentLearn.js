@@ -1,4 +1,10 @@
-import { getFluentCardInfo, getFluentLearnInfo, getPartnerInfo, payForFluentCard } from "../../api/mine/index"
+import {
+	checkUserHasAddress,
+	getFluentCardInfo,
+	getFluentLearnInfo,
+	getPartnerInfo,
+	payForFluentCard
+} from "../../api/mine/index"
 
 import {
 	$notNull,
@@ -16,6 +22,7 @@ import dayjs from "dayjs"
 import { collectError } from "../../api/auth/index"
 import bxPoint from "../../utils/bxPoint"
 import { queryQualityVideoList } from "../../api/live/index"
+import baseUrl from "../../lib/request"
 
 Page({
 
@@ -42,6 +49,7 @@ Page({
 		discountPrice: '',
 		inviteId: '',
 		isIphoneXRSMax: false,
+		showClubVipAlert: false,
 		equityImages: ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754dxzZTH.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754nyGpJw.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754xhlddI.jpg"], // 权益图片
 	},
 
@@ -91,7 +99,9 @@ Page({
 	 * 生命周期函数--监听页面隐藏
 	 */
 	onHide: function () {
-
+		if (this.data.showClubVipAlert) {
+			this.setData({showClubVipAlert: false})
+		}
 	},
 
 	/**
@@ -127,6 +137,9 @@ Page({
 			title: "课程全解锁，一卡学全年",
 			path: `/mine/joinFluentLearn/joinFluentLearn${accountInfo.snow_id ? '?inviteId=' + accountInfo.snow_id : ''}`
 		}
+	},
+	closeClubVipAlert() {
+		wx.navigateTo({url: "/mine/fluentCardCallback/fluentCardCallback"})
 	},
 	/**
 	 * 学生卡专属弹窗回调事件
@@ -315,17 +328,17 @@ Page({
 						name: "购买学生卡"
 					})
 					.then(() => {
+						// 购买学生卡成功，判断用户是否填写收货地址信息
+						this.checkHasFillAddress().then(() => {
+							wx.navigateTo({url: "/mine/fluentCardCallback/fluentCardCallback"})
+						}).catch()
+
+
 						// 关闭邀请码购买弹窗
 						this.closeCodeBox()
 						// this.setData({
 						// 	showCodeBox: false
 						// })
-
-						// TODO 购买学生卡成功，判断用户是否填写收货地址信息
-
-						wx.navigateTo({
-							url: "/mine/fluentCardCallback/fluentCardCallback"
-						})
 					})
 					.catch((err) => {
 						if (err.errMsg !== "requestPayment:fail cancel") {
@@ -340,6 +353,26 @@ Page({
 			} else {
 				toast(message)
 			}
+		})
+	},
+	// 检查是否填写收获地址表单
+	checkHasFillAddress() {
+		let user_id = getLocalStorage(GLOBAL_KEY.userId)
+		return new Promise((resolve, reject) => {
+			checkUserHasAddress({user_id}).then(res => {
+				if (res.code === 0) {
+					let data = res.data.hasAddr
+					if (data) {
+						resolve()
+					} else {
+						this.setData({
+							showClubVipAlert: true,
+							showClubVipAlertLink: encodeURIComponent(`${baseUrl.baseUrl}/#/home/huayangClubForm?id=${user_id}&from=daxue&type=2`)
+						})
+						reject()
+					}
+				}
+			})
 		})
 	},
 	/**

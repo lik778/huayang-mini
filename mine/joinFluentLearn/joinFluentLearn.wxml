@@ -89,4 +89,7 @@
 
     <!-- 联系客服 -->
     <contact show='{{showContact}}' sessionFrom="sf_study_guide" bind:closeContactModal="onCloseContactModal"></contact>
+
+    <!-- 加入俱乐部会员弹窗 -->
+    <clubVipAlert show="{{showClubVipAlert}}" bind:closeClubVipAlert='closeClubVipAlert' link="{{showClubVipAlertLink}}"></clubVipAlert>
 </view>
