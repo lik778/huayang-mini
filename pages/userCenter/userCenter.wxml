@@ -12,7 +12,8 @@
 			<text wx:if="{{nodata}}" bindtap="getAuth">点击登录</text>
 			<view wx:else class="user-info">
 				<view class="nick-name">
-					<view class="name limit-one-line" style="max-width: {{didVisibleVIPIcon ? '320rpx' : '500rpx'}};">{{userInfo.nick_name||userInfo.nickname}}</view>
+					<view class="name limit-one-line" style="max-width: {{didVisibleVIPIcon ? '320rpx' : '500rpx'}};">
+						{{userInfo.nick_name||userInfo.nickname}}</view>
 					<view wx:if="{{didVisibleVIPIcon}}">
 						<image class="vip-tag" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617084326OPjkYJ.jpg"></image>
 						<text class="name-text">花样注册会员</text>
@@ -190,5 +191,6 @@
 		</view>
 	</view>
 	<!-- 加入俱乐部会员弹窗 -->
-	<clubVipAlert show="{{showClubVipAlert}}" bind:closeClubVipAlert='closeClubVipAlert' link="{{showClubVipAlertLink}}"></clubVipAlert>
+	<clubVipAlert type="{{showClubVipAlertType}}" show="{{showClubVipAlert}}" bind:closeClubVipAlert='closeClubVipAlert'
+		catchtouchmove="ture" link="{{showClubVipAlertLink}}"></clubVipAlert>
 </view>
