@@ -7,7 +7,7 @@
     <view class='top-module'>
       <view class="top-module-left">
         <swiper autoplay interval='{{interval}}' circular vertical='{{true}}' current="{{swiperCurrent}}"
-          bindchange="changeSwiperCurrent">
+        bindanimationfinish="changeSwiperCurrent">
           <block wx:for="{{likeUserInfo}}" wx:key='index'>
             <swiper-item>
               <view>
