@@ -644,7 +644,7 @@ Page({
           let data = res.data.hasAddr
           if (!data) {
             let rootUrl = baseUrl.baseUrl
-            let type = this.data.disHasFluentLearnUserInfo ? 2 : 1
+            let type = 2
             let link = encodeURIComponent(`${rootUrl}/#/home/huayangClubForm?id=${userId}&from=traincamp&type=${type}&campId=${this.data.campId}`)
             wx.navigateTo({
               url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
