@@ -174,9 +174,9 @@
 .barrage-publish-module {
   position: absolute;
   right: 0;
-  top: 50%;
+  top: 12rpx;
   z-index: 22;
-  transform: translateY(-50%);
+  /* transform: translateY(-50%); */
 }
 
 .barrage-publish-module image {

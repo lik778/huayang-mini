@@ -418,7 +418,7 @@ Page({
       })
       wx.navigateToMiniProgram({
         appId: "wx2ea757d51abc1f47",
-        path: '/pages/index/index',
+        path: `/pages/travelDetail/travelDetail?productId=${item.id}`,
       })
     } else if (index === 4) {
       // 精品课
