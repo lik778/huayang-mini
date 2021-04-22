@@ -158,7 +158,7 @@ Page({
 
 		// 线下乐活课程
 		let {data: offlineList} = await getOfflineCourseAllData()
-		this.setData({offlineList: offlineList.map(n => (({...n, price: n.price / 100, discount_price: n.discount_price / 100, cover: n.detail_pics.split(",")[0]})))})
+		this.setData({offlineList: offlineList.map(n => (({...n, price: n.price / 100, discount_price: n.discount_price / 100, cover: n.cover_pic.split(",")[0]})))})
 
 		// 花样游学
 		let travelList = await queryTravelList()

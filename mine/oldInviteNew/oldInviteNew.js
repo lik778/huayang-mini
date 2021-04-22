@@ -10,6 +10,7 @@ import {
 import { ErrorLevel, GLOBAL_KEY, WX_AUTH_TYPE } from "../../lib/config"
 import { collectError } from "../../api/auth/index"
 import { getFluentQrCode } from "../../api/mine/index"
+import bxPoint from "../../utils/bxPoint"
 
 Page({
 
@@ -109,6 +110,7 @@ Page({
    * 分享给好友
    */
   shareToFriend() {
+    bxPoint("changxue_post_share", {}, false)
   },
   run() {
     let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo))
@@ -154,12 +156,12 @@ Page({
     await drawBorderCircle(ctx, this.data.qrcode, 23 + 30, 428 + 30, 30)
 
     ctx.draw(false, () => {
-      wx.hideLoading()
       this._saveCanvasImageToLocal("oldInviteNew")
         .then(({tempFilePath, errMsg}) => {
           if (errMsg === "canvasToTempFilePath:ok") {
             queryWxAuth(WX_AUTH_TYPE.writePhotosAlbum)
               .then(() => {
+                wx.hideLoading()
                 wx.saveImageToPhotosAlbum({
                   filePath: tempFilePath,
                   success(res) {
@@ -177,6 +179,7 @@ Page({
                 })
               })
               .catch(() => {
+                wx.hideLoading()
                 wx.showModal({
                   title: '相册授权',
                   content: '保存失败，未获得您的授权，请前往设置授权',
@@ -189,9 +192,12 @@ Page({
                   }
                 })
               })
+          } else {
+            wx.hideLoading()
           }
         })
         .catch((err) => {
+          wx.hideLoading()
           console.error(err)
         })
     })
