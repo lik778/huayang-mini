@@ -29,14 +29,14 @@
     "pages/webViewCommon/webViewCommon",
     "pages/activePlatform/activePlatform",
     "pages/activePay/activePay",
-    "pages/activePayCancel/activePayCancel"
+    "pages/activePayCancel/activePayCancel",
+    "pages/studentMoments/studentMoments"
   ],
   "requiredBackgroundModes": [
     "audio",
     "location"
   ],
-  "subpackages": [
-    {
+  "subpackages": [{
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -76,6 +76,12 @@
         "review/review",
         "videoPage/videoPage",
         "attempt/attempt"
+      ]
+    },
+    {
+      "root": "studentMoments",
+      "pages": [
+        "studentMomentsDetail/studentMomentsDetail"
       ]
     },
     {
@@ -136,9 +142,11 @@
   },
   "tabBar": {
     "custom": true,
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/discovery/discovery"
+      },
+      {
+        "pagePath": "pages/studentMoments/studentMoments"
       },
       {
         "pagePath": "pages/practice/practice"

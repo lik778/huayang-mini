@@ -5,12 +5,18 @@ Component({
     selected: 0,
     color: "#666666",
     selectedColor: "#CC0000",
-    list: [
-      {
+    list: [{
         "pagePath": "/pages/discovery/discovery",
         "selectedIconPath": "../assets/images/common/homeActive.png",
         "iconPath": "../assets/images/common/home.png",
         "text": "首页",
+        isDIY: false
+      },
+      {
+        "pagePath": "/pages/studentMoments/studentMoments",
+        "selectedIconPath": "../assets/images/common/student-moments-active.png",
+        "iconPath": "../assets/images/common/student-moments.png",
+        "text": "校友动态",
         isDIY: false
       },
       {
@@ -48,7 +54,7 @@ Component({
       } else if (this.data.selected === 1 && url === '/pages/userCenter/userCenter') {
         // jj-2021-04-19
         bxPoint("bbs_mine", {}, false)
-      } else if (this.data.selected === 2 && url === '/') {
+      } else if (this.data.selected === 2 && url === '/pages/discovery/discovery') {
         bxPoint("series_homepage_visit", {}, false)
       } else if (this.data.selected === 2 && url === '/pages/userCenter/userCenter') {
         bxPoint("series_mine_visit", {}, false)

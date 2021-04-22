@@ -1,9 +1,24 @@
 import md5 from 'md5'
-import { GLOBAL_KEY, ROOT_URL, URL, WeChatLiveStatus } from '../lib/config'
-import { createOrder } from "../api/mine/payVip"
-import { getWatchLiveAuth, statisticsWatchNo } from "../api/live/course"
+import {
+	store
+} from "../store/index"
+import {
+	GLOBAL_KEY,
+	ROOT_URL,
+	URL,
+	WeChatLiveStatus
+} from '../lib/config'
+import {
+	createOrder
+} from "../api/mine/payVip"
+import {
+	getWatchLiveAuth,
+	statisticsWatchNo
+} from "../api/live/course"
 import request from "../lib/request"
-import { getUserInfo } from "../api/mine/index"
+import {
+	getUserInfo
+} from "../api/mine/index"
 import dayjs from "dayjs"
 
 const livePlayer = requirePlugin('live-player-plugin')
@@ -1205,11 +1220,48 @@ export const formatDate = (format, timestamp) => {
 /**
  * 设置微信头像信息过期时间
  */
-export function setWxUserInfoExpiredTime () {
+export function setWxUserInfoExpiredTime() {
 	let expireTime = getLocalStorage(GLOBAL_KEY.userInfoExpireTime)
 	if (expireTime) {
 		return false
 	} else {
 		setLocalStorage(GLOBAL_KEY.userInfoExpireTime, dayjs().add(15, 'day').format("YYYY-MM-DD HH:mm:ss"))
 	}
+}
+
+/**
+ * 随机设置区间整数
+ */
+export const getRandomNumberByRange = (start, end) => {
+	return Math.floor(Math.random() * (end - start) + start)
+}
+
+/**
+ * 从数组里取n个值且不重复
+ */
+export const getNElmentFromArray = (arr, n) => {
+	let returnArr = [];
+	let i = 0;
+	while (i < n) {
+		let addArr = Math.floor(Math.random() * arr.length);
+		if (returnArr.indexOf(arr[addArr]) === -1) {
+			returnArr.push(arr[addArr]);
+			i++;
+		}
+	}
+	return returnArr;
+};
+
+// 模拟动态生成本地评论
+export const createLocalCommentItem = (content, id) => {
+	let returnObj = {}
+	let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+	returnObj.content = content
+	returnObj.bubble_id = id
+	returnObj.created_at = getNowDateAll()
+	returnObj.user = {
+		nick_name: userInfo.nick_name,
+		avatar_url: userInfo.avatar_url
+	}
+	return returnObj
 }
