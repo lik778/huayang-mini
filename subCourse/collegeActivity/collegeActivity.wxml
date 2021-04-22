@@ -1,0 +1,8 @@
+<view class="activitybox">
+    <view class="activity" wx:key="index" wx:for="{{activityList}}" bindtap="onActivityTap" data-item="{{item}}">
+        <image class="activity-img" src="{{item.cover_url}}" />
+        <view class="activity-title">
+            {{item.title}}
+        </view>
+    </view>
+</view>

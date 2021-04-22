@@ -1,4 +1,3 @@
-<!--pages/userCenter/userCenter.wxml-->
 <view class="user-center">
 	<view class="banner {{ isPartner && 'partner' }}">
 		<!-- 背景图 -->
@@ -13,20 +12,21 @@
 			<text wx:if="{{nodata}}" bindtap="getAuth">点击登录</text>
 			<view wx:else class="user-info">
 				<view class="nick-name">
-					<view class="name limit-one-line" style="max-width: {{didVisibleVIPIcon ? '320rpx' : '500rpx'}};">{{userInfo.nick_name||userInfo.nickname}}</view>
+					<view class="name limit-one-line" style="max-width: {{didVisibleVIPIcon ? '320rpx' : '500rpx'}};">
+						{{userInfo.nick_name||userInfo.nickname}}</view>
 					<view wx:if="{{didVisibleVIPIcon}}">
 						<image class="vip-tag" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617084326OPjkYJ.jpg"></image>
 						<text class="name-text">花样注册会员</text>
 					</view>
 				</view>
-				<text class="lifetime" wx:if="{{isPartner}}">花样{{ partnerInfo.level }}</text>
-				<text class="lifetime" wx:elif="{{existNo}}">您已在花样第{{existNo}}天</text>
+				<!--<text class="lifetime" wx:if="{{isPartner}}">花样{{ partnerInfo.level }}</text>-->
+				<text class="lifetime" wx:if="{{existNo}}">您已在花样第{{existNo}}天</text>
 			</view>
 		</view>
 
 		<block wx:if="{{isPartner}}">
 			<view class="first-distribute">
-				<text>直接推荐学员<text>{{ partnerInfo.firstNo }} 人</text></text>
+				<text>我推荐的同学<text>{{ partnerInfo.firstNo }} 人</text></text>
 				<view class="distribute-content" bindtap="goToDistributeListPage" data-index="1">
 					<image class="distribute-avatar" mode="aspectFill" src="{{item}}" wx:for="{{ partnerInfo.firstUserAvatars }}">
 					</image>
@@ -35,20 +35,13 @@
 
 			</view>
 
-
-
-			<view class="invite-self-code" wx:if='{{partnerInfo.exclusiveCode}}'>
-				<view class="invite-self-code-left">
-					专属邀请码：<text>{{partnerInfo.exclusiveCode}}</text>
-				</view>
-				<view class="invite-self-code-right" bindtap="generatePoster">
-					专属邀请海报
-				</view>
+			<view class="invite-self-code">
+				<view class="invite-self-code-right" bindtap="generatePoster">邀请好友加入花样大学</view>
 			</view>
 
 		</block>
 	</view>
-	<!-- 畅学卡 -->
+	<!-- 学生卡 -->
 	<view class="vip-card {{ isFluentLearnExpired && 'overdue' }} {{ isPartner && 'partner' }}" bindtap="onFluentCardTap">
 		<view>
 			<view class="card-title {{ isFluentLearnExpired && 'overdue'}}">{{cardName}}</view>
@@ -58,8 +51,7 @@
 			<view class="card-info">
 				<block wx:if="{{disHasFluentLearnUserInfo}}">
 					<text class="card-nick-name {{ isFluentLearnExpired && 'overdue'}}">{{userInfo.nick_name}}</text>
-					<text class="expireDate" wx:if="{{!isFluentLearnExpired}}">有效期至：{{fluentCardExpireTime}}</text>
-					<text class="expireDate overdue" wx:else>已过期</text>
+					<text class="expireDate">学号：{{fluentLearnUserInfo.num}}</text>
 				</block>
 			</view>
 			<view class="vip-btn {{ isFluentLearnExpired && 'overdue'}}">{{cardBtnText}} ›</view>
@@ -142,7 +134,7 @@
 
 				</view>
 			</view>
-			<view class="function-item" bindtap="toOrder">
+			<view class="function-item" wx:if="{{false}}" bindtap="toOrder">
 				<view class="function-item-left">
 					<image src="/assets/images/common/order.png"></image>
 					<view class="function-item-box">
@@ -190,7 +182,7 @@
 	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
 	</authModule>
 	<!-- 客服弹窗 -->
-	<contact show="{{didShowContact}}" isRootPage="{{true}}" sessionFrom="distribute"
+	<contact show="{{didShowContact}}" isRootPage="{{true}}" sessionFrom="sf_study_guide"
 		bind:closeContactModal="onCloseContactModal" />
 	<!-- 余额提示弹窗 -->
 	<view class="{{changeMoneyNoticeClass?'money-notice':'money-notice money-notice-hide'}} " wx:if='{{showMoneyNotice}}'
@@ -199,5 +191,6 @@
 		</view>
 	</view>
 	<!-- 加入俱乐部会员弹窗 -->
-	<clubVipAlert show="{{showClubVipAlert}}" bind:closeClubVipAlert='closeClubVipAlert'></clubVipAlert>
+	<clubVipAlert type="{{showClubVipAlertType}}" show="{{showClubVipAlert}}" bind:closeClubVipAlert='closeClubVipAlert'
+		catchtouchmove="ture" link="{{showClubVipAlertLink}}"></clubVipAlert>
 </view>

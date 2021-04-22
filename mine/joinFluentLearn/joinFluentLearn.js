@@ -1,5 +1,5 @@
 import {
-	getFluentCardHotkecheng,
+	checkUserHasAddress,
 	getFluentCardInfo,
 	getFluentLearnInfo,
 	getPartnerInfo,
@@ -11,11 +11,11 @@ import {
 	getLocalStorage,
 	hasAccountInfo,
 	hasUserInfo,
+	isIphoneXRSMax,
 	payFluentCard,
 	removeLocalStorage,
 	setLocalStorage,
-	toast,
-	isIphoneXRSMax
+	toast
 } from "../../utils/util"
 import {
 	ErrorLevel,
@@ -27,6 +27,10 @@ import {
 	collectError
 } from "../../api/auth/index"
 import bxPoint from "../../utils/bxPoint"
+import {
+	queryQualityVideoList
+} from "../../api/live/index"
+import baseUrl from "../../lib/request"
 
 Page({
 
@@ -52,7 +56,8 @@ Page({
 		price: '',
 		discountPrice: '',
 		inviteId: '',
-		isIphoneXRSMax: false
+		isIphoneXRSMax: false,
+		equityImages: ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754dxzZTH.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754nyGpJw.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754xhlddI.jpg"], // 权益图片
 	},
 
 	/**
@@ -100,9 +105,7 @@ Page({
 	/**
 	 * 生命周期函数--监听页面隐藏
 	 */
-	onHide: function () {
-
-	},
+	onHide: function () {},
 
 	/**
 	 * 生命周期函数--监听页面卸载
@@ -138,8 +141,13 @@ Page({
 			path: `/mine/joinFluentLearn/joinFluentLearn${accountInfo.snow_id ? '?inviteId=' + accountInfo.snow_id : ''}`
 		}
 	},
+	closeClubVipAlert() {
+		wx.navigateTo({
+			url: "/mine/fluentCardCallback/fluentCardCallback"
+		})
+	},
 	/**
-	 * 畅学卡专属弹窗回调事件
+	 * 学生卡专属弹窗回调事件
 	 */
 	onFluentLearnConfirm() {
 		this.setData({
@@ -202,8 +210,9 @@ Page({
 
 		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
 		wx.navigateTo({
-			url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id
+			url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id
 		})
+		// wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
 	},
 	/**
 	 * 授权失败
@@ -224,7 +233,7 @@ Page({
 		})
 	},
 	/**
-	 * 检查用户畅学卡状态
+	 * 检查用户学生卡状态
 	 */
 	checkUserFluentLearnStatus() {
 		if (!hasUserInfo() || !hasAccountInfo()) return
@@ -242,7 +251,7 @@ Page({
 		})
 	},
 	/**
-	 * 购买畅学卡
+	 * 购买学生卡
 	 * @returns {Promise<void>}
 	 */
 	async buy() {
@@ -269,7 +278,7 @@ Page({
 		} = await getFluentCardInfo({
 			user_snow_id: accountInfo.snow_id
 		})
-		// 检查用户畅学卡是否有效，有效直接返回"用户中心" （true => 已过期， false =>  未过期）
+		// 检查用户学生卡是否有效，有效直接返回"用户中心" （true => 已过期， false =>  未过期）
 		let didUserFluentLearnCardExpired = $notNull(data) ? data.status === FluentLearnUserType.deactive : true
 		if (!didUserFluentLearnCardExpired) {
 			return wx.switchTab({
@@ -323,17 +332,22 @@ Page({
 			if (code === 0) {
 				payFluentCard({
 						id: data.id,
-						name: "购买畅学卡"
+						name: "购买学生卡"
 					})
 					.then(() => {
+						// 购买学生卡成功，判断用户是否填写收货地址信息
+						this.checkHasFillAddress().then(() => {
+							wx.navigateTo({
+								url: "/mine/fluentCardCallback/fluentCardCallback"
+							})
+						}).catch()
+
+
 						// 关闭邀请码购买弹窗
 						this.closeCodeBox()
 						// this.setData({
 						// 	showCodeBox: false
 						// })
-						wx.navigateTo({
-							url: "/mine/fluentCardCallback/fluentCardCallback"
-						})
 					})
 					.catch((err) => {
 						if (err.errMsg !== "requestPayment:fail cancel") {
@@ -350,13 +364,40 @@ Page({
 			}
 		})
 	},
+	// 检查是否填写收获地址表单
+	checkHasFillAddress() {
+		let user_id = getLocalStorage(GLOBAL_KEY.userId)
+		return new Promise((resolve, reject) => {
+			checkUserHasAddress({
+				user_id
+			}).then(res => {
+				if (res.code === 0) {
+					let data = res.data.hasAddr
+					if (data) {
+						resolve()
+					} else {
+						removeLocalStorage("hy_daxue_show_club_vip_alert_sign")
+						let link = encodeURIComponent(`${baseUrl.baseUrl}/#/home/huayangClubForm?id=${user_id}&from=daxue&type=2`)
+						wx.navigateTo({
+							url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`
+						})
+						reject()
+					}
+				}
+			})
+		})
+	},
 	/**
-	 * 获取畅学卡权益
+	 * 获取学生卡权益
 	 */
 	getCardInfo() {
 		getFluentLearnInfo().then(({
 			data
 		}) => {
+			data.features = data.features.map(n => ({
+				...n,
+				titleAry: n.title.split('\n')
+			}))
 			this.setData({
 				name: data.card_name,
 				desc: data.description,
@@ -372,11 +413,9 @@ Page({
 	 * 获取热门课程
 	 */
 	getHotkecheng() {
-		getFluentCardHotkecheng({
-			limit: 5
-		}).then(({
-			data
-		}) => {
+		queryQualityVideoList({
+			limit: 10
+		}).then((data) => {
 			data = data || []
 			let list = data.map(item => ({
 				id: item.kecheng_series.id,
@@ -459,7 +498,7 @@ Page({
 			inviteCode: e.detail.value
 		})
 	},
-	// 初始化id值 
+	// 初始化id值
 	initSuperId() {
 		let superiorId = this.data.inviteId
 		if (!superiorId) return

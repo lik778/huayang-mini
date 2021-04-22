@@ -3,6 +3,7 @@
   "usingComponents": {
     "authModule": "../../components/auth/auth",
     "liveLayout": "../../components/liveLayout/liveLayout",
-    "bestCourseLayout": "../../components/bestCourseLayout/bestCourseLayout"
+    "bestCourseLayout": "../../components/bestCourseLayout/bestCourseLayout",
+    "contact": "../../components/contact/contact"
   }
 }

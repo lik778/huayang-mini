@@ -4,12 +4,16 @@
     <view class='bg-cover' bindtap="close"></view>
     <view class='alert-box {{showCloseAnimation?"fadeInAnimation":"fadeOutAnimation"}}'>
       <view class="alert-module">
-        <view class="top-icon">
-          <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617006649CazOVv.jpg"></image>
+        <view class="top-icon" style="top:{{type===1?'-53px':'-66px'}}">
+          <image wx:if='{{type===1}}' src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619062162GCFAfs.jpg" style="width:90px;height:95px">
+          </image>
+          <image wx:if='{{type===2}}' src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619060252TDePDA.jpg"
+            style="width:93px;height:108px">
+          </image>
         </view>
         <view class="alert-title">
-          <view>恭喜您加入花样百姓</view>
-          <view>跟着花样一起学、一起游</view>
+          <view>{{type===1?'恭喜您加入花样百姓':'恭喜您成为花样大学学生'}}</view>
+          <view>{{type===1?'跟着花样一起学、一起游':'让退休生活更加精彩！'}}</view>
         </view>
         <view class="alert-button" bindtap="join">立即加入</view>
       </view>

@@ -10,7 +10,7 @@
             <view class="info">
                 <image mode="aspectFill" src="{{ item.avatar }}" class="avatar"></image>
                 <text class="nickname limit-one-line">{{ item.nickname }}</text>
-                <view class="tag" wx:if="{{item.isPartner}}">合伙人</view>
+                <!--<view class="tag" wx:if="{{item.isPartner}}">合伙人</view>-->
             </view>
             <text class="date">{{ item.date }}</text>
         </view>
@@ -21,5 +21,5 @@
         </view>
     </view>
 
-    <view class="footer" wx:if="{{didEmpty}}" bindtap="goToFluentCardDistribute">获取专属邀请海报</view>
+    <view class="footer" wx:if="{{didEmpty}}" bindtap="goToFluentCardDistribute">邀请好友加入花样大学</view>
 </view>

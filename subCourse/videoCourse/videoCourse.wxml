@@ -160,7 +160,7 @@
 
   <!-- 购买按钮 -->
   <view class="pay-button" wx:if='{{!noPayForCourse}}' style="padding-bottom:{{isIphoneXRSMax?'20px':''}}">
-    <!-- 原价 && 畅学卡购买 -->
+    <!-- 原价 && 学生卡购买 -->
     <view class="pay-or-fluent" wx:if='{{buttonType===6}}'>
       <view class="pay-or-fluent-one-left" bindtap="pay">
         <text class="pay-or-fluent-one-left-txt01" wx:if="{{isIos}}">立即加入</text>
@@ -168,10 +168,10 @@
       </view>
       <view class="pay-or-fluent-one-right subject-bg-color" bindtap="goToJoinFluentLearn">
         <text class="pay-or-fluent-one-right-txt01">所有课程免费看</text>
-        <text class="pay-or-fluent-one-right-txt02">畅学卡 599元/年</text>
+        <text class="pay-or-fluent-one-right-txt02">学生卡 365元</text>
       </view>
     </view>
-    <!-- 折扣价 && 畅学卡购买 -->
+    <!-- 折扣价 && 学生卡购买 -->
     <view class="pay-or-fluent" wx:if='{{buttonType===5}}'>
       <view class="pay-or-fluent-one-left" bindtap="pay">
         <text class="pay-or-fluent-one-left-txt01" wx:if="{{isIos}}">立即加入</text>
@@ -182,7 +182,7 @@
       </view>
       <view class="pay-or-fluent-one-right subject-bg-color" bindtap="goToJoinFluentLearn">
         <text class="pay-or-fluent-one-right-txt01">所有课程免费看</text>
-        <text class="pay-or-fluent-one-right-txt02">畅学卡 599元/年</text>
+        <text class="pay-or-fluent-one-right-txt02">学生卡 365元</text>
       </view>
     </view>
 
@@ -216,7 +216,7 @@
       </view>
       <view class="pay-or-fluent-one-right subject-bg-color" bindtap="goToJoinFluentLearn">
         <text class="pay-or-fluent-one-right-txt01">所有课程免费看</text>
-        <text class="pay-or-fluent-one-right-txt02">畅学卡 599元/年</text>
+        <text class="pay-or-fluent-one-right-txt02">学生卡 365元</text>
       </view>
     </view>
     <!-- 未登录 -->
@@ -303,5 +303,5 @@
   </view>
 
   <!-- 联系客服 -->
-  <contact show='{{showContact}}' sessionFrom="distribute" bind:closeContactModal="onCloseContactModal"></contact>
+  <contact show='{{showContact}}' sessionFrom="sf_study_guide" bind:closeContactModal="onCloseContactModal"></contact>
 </view>

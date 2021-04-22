@@ -1,0 +1,75 @@
+.coursebox {
+    display: flex;
+    padding: 0 30rpx;
+    height: 220rpx;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 20rpx;
+}
+
+.course {
+    display: flex;
+    margin-bottom: 40rpx;
+}
+
+.course-img {
+    width: 166rpx;
+    height: 220rpx;
+    margin-right: 24rpx;
+    background-color: lightgoldenrodyellow;
+    flex: 0 0 166rpx;
+    border-radius: 8rpx;
+}
+
+.course-textbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.course-title {
+    width: 504rpx;
+    font-size: 36rpx;
+    font-weight: 500;
+    line-height: 36rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 20rpx;
+}
+
+.course-discription {
+    width: 504rpx;
+    font-size: 32rpx;
+    line-height: 36rpx;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    /*! autoprefixer: off */
+    -webkit-box-orient: vertical;
+    margin-bottom: 20rpx;
+}
+
+
+
+.course-teachbox {
+    color: #858585;
+    display: flex;
+    font-size: 28rpx;
+}
+
+.teacher-name {
+    margin-right: 10rpx;
+    line-height: 28rpx;
+}
+
+.teacher-position {
+    line-height: 28rpx;
+}
+
+.course-studynum {
+    color: #858585;
+    font-size: 24rpx;
+    line-height: 24rpx;
+}

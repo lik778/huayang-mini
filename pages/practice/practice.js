@@ -1,8 +1,9 @@
-import { getVideoTypeList, queryVideoCourseListByBuyTag } from "../../api/course/index"
+import { getFindBanner, getModelDataList, getVideoTypeList, queryVideoCourseListByBuyTag } from "../../api/course/index"
 import { FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
 import { getFluentCardInfo } from "../../api/mine/index"
 import bxPoint from "../../utils/bxPoint"
+import { getYouZanAppId } from "../../api/mall/index"
 
 Page({
 
@@ -10,17 +11,56 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
+		current: 0,
+		bannerList: [],
 		titleList: [],
 		currentIndex: 0,
 		showMoney: true,
-		isFluentLearnVIP: false, // 是否是畅学卡会员
+		isFluentLearnVIP: false, // 是否是学生卡会员
 		keyArr: [],
 		bottomLock: true,
 		pageSize: {
 			limit: 10,
 			offset: 0
 		},
-		videoList: []
+		videoList: [],
+		structuredPageSize: {
+			limit: 10,
+			offset: 0
+		}, // 结构化课程分页器
+		structuredList: [], // 结构化课程数据
+		noMoreStructureData: false, // 是否还有更多结构化课程数据
+		fastMarkAry: [
+			{
+				name: "线上免费课",
+				picture: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618484705ndfWCk.jpg",
+				path: "/subCourse/freeOnlineCourse/freeOnlineCourse"
+			},
+			{
+				name: "校友活动",
+				picture: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618484705gzPcha.jpg",
+				path: "/subCourse/collegeActivity/collegeActivity"
+			},
+			{
+				name: "线下乐活课堂",
+				picture: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618484705DEbXLn.jpg",
+				path: "/subCourse/offlineCourse/offlineCourse"
+			},
+			{name: "游学课程", picture: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618484705huEOMU.jpg", path: "travel"},
+		],
+		tabsOffsetTop: 0, // Tabs距离顶部的数字
+		pageScrollLock: false, // 页面滑动记录锁
+		didShowFixedTabsLayout: false, // 是否需要固定Tabs到顶部
+		didFromDiscovery: false, // 是否来自首页金刚位
+	},
+	getBanner() {
+		return new Promise((resolve) => {
+			getFindBanner({scene: 20}).then((data) => {
+				data = data || []
+				this.setData({bannerList: data})
+				resolve(data)
+			})
+		})
 	},
 	/**
 	 * 请求畅销卡信息
@@ -50,24 +90,33 @@ Page({
 			}
 		})
 	},
+	onStructureItemTap(e) {
+		wx.navigateTo({url: "/subCourse/practiceDetail/practiceDetail?courseId=" + e.currentTarget.dataset.id})
+	},
 	// 获取课程列表
 	getVideoList(index, refresh = true) {
 		let category = ''
 		if (index === 0) {
 			category = ''
 		} else {
-			category = this.data.keyArr[index - 1]
+			category = this.data.keyArr[index]
 		}
 		let params = {
 			offset: this.data.pageSize.offset,
 			limit: this.data.pageSize.limit,
-			category: category
+			category
 		}
+
+		// 模特训练(index=3)，加载所有数据
+		if (index === 3) {
+			params.offset = 0
+			params.limit = 9999
+		}
+
 		if (getLocalStorage(GLOBAL_KEY.userId)) {
 			params.user_id = getLocalStorage(GLOBAL_KEY.userId)
 		}
 		queryVideoCourseListByBuyTag(params).then(list => {
-			// if (getLocalStorage(GLOBAL_KEY.userId)) {
 			list = list.map(_ => {
 				return {
 					..._.kecheng_series,
@@ -76,7 +125,6 @@ Page({
 					buy_tag: _.buy_tag
 				}
 			})
-			// }
 			let bottomLock = true
 			if (list.length < 10) {
 				bottomLock = false
@@ -111,7 +159,7 @@ Page({
 
 				return res
 			})
-			if (refresh) {
+			if (refresh || index === 3) {
 				handledList = [...handledList]
 			} else {
 				handledList = this.data.videoList.concat(handledList)
@@ -131,12 +179,13 @@ Page({
 				arr.push(res[i].value)
 				keyArr.push(res[i].key)
 			}
-			arr.unshift("全部课程")
-			this.setData({
-				titleList: arr,
-				keyArr: keyArr
-			})
+			this.setData({titleList: arr, keyArr: keyArr})
 			this.changeTab(index)
+			if (this.data.didFromDiscovery && this.data.tabsOffsetTop !== 0) {
+				this.setData({didFromDiscovery: false})
+				getApp().globalData.discoveryToPracticeTabIndex = undefined
+				wx.pageScrollTo({selector: "#practice-page", scrollTop: this.data.tabsOffsetTop, duration: 400})
+			}
 		})
 	},
 	// 切换tab
@@ -148,56 +197,127 @@ Page({
 			} else {
 				index = e
 			}
-			this.setData({
-				currentIndex: index
-			})
+			// 学校课程页内部切换tab，不重新请求数据
+			if (!this.data.didFromDiscovery && (+index === +this.data.currentIndex)) return
+
+			this.setData({currentIndex: index})
 		} else {
 			index = 0
 		}
 
-		switch (index) {
-			case 0: {
-				bxPoint("series_all_tab", {}, false)
-				break;
-			}
-			case 1: {
-				bxPoint("series_mote_tab", {}, false)
-				break;
-			}
-			case 2: {
-				bxPoint("series_shishang_tab", {}, false)
-				break;
-			}
-			case 3: {
-				bxPoint("series_shengyue_tab", {}, false)
-				break;
-			}
+		this.setData({
+			videoList: [],
+			structuredList: [],
+			pageSize: {offset: 0, limit: 10},
+			structuredPageSize: {offset: 0, limit: 10}
+		})
+
+		// 设置页面位置
+		if (this.data.didShowFixedTabsLayout) {
+			wx.pageScrollTo({
+				selector: "#practice-page",
+				duration: 200,
+				scrollTop: this.data.tabsOffsetTop
+			})
 		}
 
-		this.setData({
-			pageSize: {
-				offset: 0,
-				limit: 10
-			}
-		})
-		wx.pageScrollTo({
-			duration: 100,
-			scrollTop: 0
-		})
+		if (index === 3) {
+			// 模特训练，底部填充结构化课程（含分页功能）
+			this.getModelStructureList()
+		}
 		this.getVideoList(index)
+
+		// 打点
+		bxPoint("series_tab_button", {tab_tag: this.data.titleList[index]}, false)
+	},
+	// 获取模特结构化动作列表
+	getModelStructureList() {
+		getModelDataList({
+			kecheng_type: 3,
+			offset: this.data.structuredPageSize.offset,
+			limit: this.data.structuredPageSize.limit
+		})
+			.then(({data: list}) => {
+				if (list.length < this.data.structuredPageSize.limit) this.setData({noMoreStructureData: true})
+				this.setData({
+					structuredList: [...this.data.structuredList, ...list],
+					structuredPageSize: {
+						offset: this.data.structuredPageSize.offset + list.length,
+						limit: this.data.structuredPageSize.limit
+					}
+				})
+			})
 	},
 	// 检查ios环境
 	checkIos() {
 		let _this = this
 		wx.getSystemInfo({
 			success: function (res2) {
-				if (res2.platform == 'ios') {
-					_this.setData({
-						showMoney: false
-					})
-				}
+				_this.setData({
+					showMoney: false
+				})
+				// if (res2.platform == 'ios') {
+				// 	_this.setData({
+				// 		showMoney: false
+				// 	})
+				// }
 			}
 		})
+	},
+	// swiper切换
+	changeSwiperIndex(e) {
+		this.setData({
+			current: e.detail.current
+		})
+	},
+	// 处理轮播点击事件
+	joinCampFromBanner(e) {
+		let {link, link_type, id} = e.currentTarget.dataset.item
+		bxPoint("series_banner", {bannerId: id, position: "practice"}, false)
+		if (e.currentTarget.dataset.item.need_auth === 1) {
+			if (!hasUserInfo() || !hasAccountInfo()) {
+				this.setData({didShowAuth: true})
+				return
+			}
+		}
+		if (link_type === 'youzan') {
+			getYouZanAppId().then(appId => {
+				wx.navigateToMiniProgram({appId, path: link})
+			})
+		} else {
+			wx.navigateTo({url: link})
+		}
+	},
+	onHyperTap(e) {
+		let {path} = e.currentTarget.dataset.item
+
+		switch (path) {
+			case "/subCourse/freeOnlineCourse/freeOnlineCourse": {
+				bxPoint("series_online_free", {}, false)
+				break
+			}
+			case "/subCourse/collegeActivity/collegeActivity": {
+				bxPoint("series_activities", {}, false)
+				break
+			}
+			case "/subCourse/offlineCourse/offlineCourse": {
+				bxPoint("series_offline_jinpin", {}, false)
+				break
+			}
+			case "travel": {
+				bxPoint("series_travel", {}, false)
+				break
+			}
+		}
+
+		if (path === 'travel') {
+			wx.navigateToMiniProgram({
+				appId: "wx2ea757d51abc1f47",
+				path,
+			})
+		} else {
+			wx.navigateTo({url: path})
+		}
 	},
 	/**
 	 * 生命周期函数--监听页面加载
@@ -209,12 +329,22 @@ Page({
 				currentIndex: index
 			})
 		}
-
 		if (options.invite_user_id) {
 			getApp().globalData.super_user_id = options.invite_user_id
 		}
 
-		this.getTabList(index)
+		this.getBanner().then((list) => {
+			let top = 232
+			if (list.length > 0) top += 139
+			// 计算Tabs高度
+			this.setData({tabsOffsetTop: top})
+			if (this.data.didFromDiscovery) {
+				this.setData({didFromDiscovery: false})
+				getApp().globalData.discoveryToPracticeTabIndex = undefined
+				wx.pageScrollTo({selector: "#practice-page", scrollTop: top, duration: 400})
+			}
+		})
+
 		// ios规则适配
 		this.checkIos()
 	},
@@ -223,7 +353,9 @@ Page({
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
-
+		if (getApp().globalData.discoveryToPracticeTabIndex === undefined) {
+			this.getTabList(0)
+		}
 	},
 
 	/**
@@ -233,11 +365,18 @@ Page({
 		if (typeof this.getTabBar === 'function' &&
 			this.getTabBar()) {
 			this.getTabBar().setData({
-				selected: 1
+				selected: 2
 			})
 		}
 
 		this.getFluentInfo()
+
+		// 首页金刚位进入，页面Tabs固定在顶部
+		let index = getApp().globalData.discoveryToPracticeTabIndex
+		if (index !== undefined) {
+			this.setData({didFromDiscovery: true, currentIndex: index})
+			this.getTabList(index)
+		}
 
 		bxPoint("series_visit", {})
 	},
@@ -254,6 +393,15 @@ Page({
 	 */
 	onUnload: function () {
 
+	},
+
+	onPageScroll({scrollTop}) {
+		if (this.data.pageScrollLock) return
+		this.setData({pageScrollLock: true})
+		let t = setTimeout(() => {
+			this.setData({didShowFixedTabsLayout: scrollTop >= this.data.tabsOffsetTop, pageScrollLock: false})
+			clearTimeout(t)
+		}, 50)
 	},
 
 	/**
@@ -276,6 +424,11 @@ Page({
 			})
 			this.getVideoList(this.data.currentIndex, false)
 		}
+
+		if (this.data.currentIndex === 3 && this.data.noMoreStructureData) {
+			// 模特训练，底部填充结构化课程（含分页功能）
+			this.getModelStructureList()
+		}
 	},
 
 	/**
@@ -283,7 +436,7 @@ Page({
 	 */
 	onShareAppMessage: function () {
 		return {
-			title: "我在花样百姓，和我一起学习、游玩吧，开心每一天！",
+			title: "花样大学精品课程，让退休生活更精彩！",
 			path: `/pages/practice/practice?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
 		}
 	}

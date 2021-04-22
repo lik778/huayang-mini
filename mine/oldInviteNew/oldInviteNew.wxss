@@ -1,0 +1,67 @@
+@import "../../assets/css/common.wxss";
+.old-invite-new {
+    position: relative;
+    height: 100vh;
+    background: #37383B;
+}
+
+.canvas-wrap {
+    position: fixed;
+    left: 1000px;
+}
+
+.poster {
+    position: absolute;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618996645WaXiUk.jpg") no-repeat center;
+    background-size: contain;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.avatar-image {
+    position: absolute;
+    border-radius: 999px;
+}
+
+.content {
+    position: absolute;
+    color: white;
+}
+
+.qrcode-wrap {
+    position: absolute;
+    border: 3px solid white;
+    box-sizing: border-box;
+    border-radius: 999rpx;
+    background: white;
+}
+
+.btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 108rpx;
+    padding: 0 30rpx;
+}
+
+.btn {
+    height: 96rpx;
+    width: 330rpx;
+    border-radius: 999rpx;
+    font: 500 32rpx/96rpx PingFangSC;
+    text-align: center;
+    color: #CC0000;
+    background: white;
+}
+
+.extrude {
+    background: #CC0000;
+    color: white;
+}

@@ -1,22 +1,23 @@
 import { FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
+import baseUrl from "../../lib/request"
 import dayjs from "dayjs"
 import { getFindBanner, getPhoneNumber } from "../../api/course/index"
 import {
-	getFluentCardInfo,
-	getFluentDistributeGuide,
-	getFluentLearnInfo,
-	getPartnerInfo,
-	getUserGuideLink,
-	getUserInfo,
-	getUserOwnerClasses
+  checkUserHasAddress,
+  getFluentCardInfo,
+  getFluentDistributeGuide,
+  getFluentLearnInfo,
+  getPartnerInfo,
+  getUserInfo,
+  getUserOwnerClasses
 } from "../../api/mine/index"
 import {
-	$notNull,
-	getLocalStorage,
-	hasAccountInfo,
-	hasUserInfo,
-	setLocalStorage,
-	splitTargetNoString
+  $notNull,
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  setLocalStorage,
+  splitTargetNoString
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 import { getTaskEntranceStatus } from "../../api/task/index"
@@ -59,12 +60,11 @@ Page({
     visibleTaskEntrance: false,
     cardBtnText: "授权登录",
     bannerList: [],
-    disHasFluentLearnUserInfo: false, // 是否有畅学卡会员信息
-    isFluentLearnExpired: false, // 畅学卡依然有效
-    fluentCardExpireTime: undefined,
-    cardName: "", // 畅学卡名称
-    cardDesc: "", // 畅学卡描述
-    auditInfo: null, // 畅学卡引导私域配置信息
+    disHasFluentLearnUserInfo: false, // 是否有学生卡会员信息
+    isFluentLearnExpired: false, // 学生卡依然有效
+    cardName: "", // 学生卡名称
+    cardDesc: "", // 学生卡描述
+    auditInfo: null, // 学生卡引导私域配置信息
     didVisibleAuditBtn: false, // 是否展示成为花样合伙人按钮
     partnerInfo: null, // 合伙人信息
     isPartner: false, // 当前用户是否是合伙人
@@ -72,12 +72,14 @@ Page({
     showMoneyNotice: false,
     showMoneyNoticeTop: '',
     changeMoneyNoticeClass: true,
-    showClubVipAlert: false
+    showClubVipAlert: false,
+    showClubVipAlertType: ''
   },
   // 关闭加入花样俱乐部弹窗
   closeClubVipAlert() {
     this.setData({
-      showClubVipAlert: false
+      showClubVipAlert: false,
+      showClubVipAlertType: ''
     })
   },
 
@@ -214,17 +216,9 @@ Page({
   },
   // 加私域
   joinPrivateDomain() {
-    getUserGuideLink().then((link) => {
-      wx.navigateTo({
-        url: `/mine/normal-web-view/normal-web-view?link=${link}`,
-        fail() {
-          wx.switchTab({
-            url: "pages/userCenter/userCenter"
-          })
-        }
-      })
+    this.setData({
+      didShowContact: true
     })
-
     bxPoint("mine_sign_in_private_group", {}, false)
   },
   // 计算用户帐号创建日期
@@ -275,28 +269,30 @@ Page({
   // 获取用户信息
   getUserSingerInfo() {
     if (!hasUserInfo() || !hasAccountInfo()) return Promise.reject()
-		return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       getUserInfo('scene=zhide').then(res => {
         res.amount = Number((res.amount / 100).toFixed(2))
         setLocalStorage(GLOBAL_KEY.accountInfo, res)
         res.nick_name = this.handleNickname(res.nick_name)
         // 判断是否成为俱乐部会员，未成为则跳转填写信息
-        if (!$notNull(res.student)) {
-          let hasShowClubVipAlertSign = getLocalStorage('hy_daxue_show_club_vip_alert_sign')
-          let threeDayTime = 259200 //s
-          let threeDayLaterTimeStr = parseInt(new Date().getTime() / 1000) + threeDayTime
-          if (!hasShowClubVipAlertSign) {
-            setTimeout(() => {
-              this.setData({
-                showClubVipAlert: true
-              })
-              setLocalStorage("hy_daxue_show_club_vip_alert_sign", threeDayLaterTimeStr)
-            },1000)
-          }
-        }
+        // if (!$notNull(res.student)) {
+        //   let hasShowClubVipAlertSign = getLocalStorage('hy_daxue_show_club_vip_alert_sign')
+        //   let threeDayTime = 259200 //s
+        //   let threeDayLaterTimeStr = parseInt(new Date().getTime() / 1000) + threeDayTime
+        //   if (!hasShowClubVipAlertSign) {
+        //     setTimeout(() => {
+        //       this.setData({
+        //         showClubVipAlert: true,
+        //         showClubVipAlertType: 1
+        //       })
+        //       setLocalStorage("hy_daxue_show_club_vip_alert_sign", threeDayLaterTimeStr)
+        //     }, 1000)
+        //   }
+        // }
         this.setData({
           userInfo: res
         })
+
         resolve()
       }).catch((err) => {
         if (err === -2) {
@@ -319,6 +315,7 @@ Page({
       })
     })
   },
+
   getBanner() {
     getFindBanner({
       scene: 18
@@ -328,8 +325,40 @@ Page({
       })
     })
   },
+
+
+  // 检查是否填写收获地址表单
+  checkHasFillAddress() {
+    checkUserHasAddress({
+      user_id: this.data.userInfo.id
+    }).then(res => {
+      if (res.code === 0) {
+        let data = res.data.hasAddr
+        if (!data) {
+          let hasShowClubVipAlertSign = getLocalStorage('hy_daxue_show_club_vip_alert_sign')
+          let threeDayTime = this.data.disHasFluentLearnUserInfo ? 86400 : 259200 //买了学生卡1天1显示没买3天一显示
+          let threeDayLaterTimeStr = parseInt(new Date().getTime() / 1000) + threeDayTime
+          let rootUrl = baseUrl.baseUrl
+          let userId = this.data.userInfo.id
+          console.log(this.data.disHasFluentLearnUserInfo)
+          let type = this.data.disHasFluentLearnUserInfo ? 2 : 1
+          if (!hasShowClubVipAlertSign) {
+            setTimeout(() => {
+              this.setData({
+                showClubVipAlert: true,
+                showClubVipAlertType: type,
+                showClubVipAlertLink: encodeURIComponent(`${rootUrl}/#/home/huayangClubForm?id=${userId}&from=daxue&type=${type}`)
+              })
+              setLocalStorage("hy_daxue_show_club_vip_alert_sign", threeDayLaterTimeStr)
+            }, 1000)
+          }
+        }
+      }
+    })
+  },
+
   /**
-   * 请求畅学卡信息
+   * 请求学生卡信息
    */
   getFluentInfo() {
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
@@ -339,10 +368,10 @@ Page({
       data
     }) => {
       if ($notNull(data)) {
-        // 畅学卡是否已过期
+        // 学生卡是否已过期
         let isFluentLearnExpired = data.status === FluentLearnUserType.deactive
 
-        // 畅学卡有效的用户引导加私域
+        // 学生卡有效的用户引导加私域
         if (!isFluentLearnExpired) {
           getFluentDistributeGuide().then(({
             data
@@ -359,9 +388,9 @@ Page({
           disHasFluentLearnUserInfo: !!data,
           isFluentLearnExpired,
           didVisibleVIPIcon: accountInfo.tag_list ? accountInfo.tag_list.includes("vip") : false,
-          fluentCardExpireTime: dayjs(data.expire_time).format("YYYY-MM-DD"),
           cardBtnText: isFluentLearnExpired ? "立即加入" : "查看权益"
         })
+
       } else {
         this.setData({
           cardBtnText: "立即加入"
@@ -380,6 +409,7 @@ Page({
   // 用户授权取消
   authCancelEvent() {
     this.run()
+
     this.setData({
       didShowAuth: false
     })
@@ -387,8 +417,29 @@ Page({
   // 用户确认授权
   authCompleteEvent() {
     this.reloadUserCenter()
-    this.setData({didShowAuth: false})
+    this.init()
+    this.setData({
+      didShowAuth: false
+    })
   },
+
+  // 处理
+  init() {
+    this.setData({
+      userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+    })
+    getFluentCardInfo({
+      user_snow_id: this.data.userInfo.snow_id
+    }).then(({
+      data
+    }) => {
+      this.setData({
+        disHasFluentLearnUserInfo: !!data
+      })
+      this.checkHasFillAddress()
+    })
+  },
+
   reloadUserCenter() {
     this.run()
     this.queryContentInfo()
@@ -447,7 +498,7 @@ Page({
   },
   // 公用方法
   kingOfTheWorld() {
-    this.getUserSingerInfo().then()
+    this.getUserSingerInfo()
   },
   // 联系客服
   callPhone(e) {
@@ -501,10 +552,21 @@ Page({
       })
     }
 
+    // 04.25之前成为花样学生的用户，点击获取专属海报按钮时跳转老带新海报，反之跳转学生卡海报页
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
     wx.navigateTo({
-      url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id
+      url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id
     })
+    // if ($notNull(this.data.fluentLearnUserInfo)) {
+    //   let createdAt = dayjs(this.data.fluentLearnUserInfo.created_at)
+    //   if (createdAt.isBefore(dayjs("2021-04-25"))) {
+    //     wx.navigateTo({url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id})
+    //   } else {
+    //     wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
+    //   }
+    // } else {
+    //   wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
+    // }
   },
   run() {
     // 检查是否展示作业秀入口
@@ -541,7 +603,7 @@ Page({
 
     this.calcUserCreatedTime()
 
-    // 获取畅学卡文案
+    // 获取学生卡文案
     getFluentLearnInfo().then(({
       data
     }) => {
@@ -637,7 +699,7 @@ Page({
   onShow: function () {
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({
-        selected: 2
+        selected: 3
       })
     }
     this.calcUserCreatedTime()
@@ -650,8 +712,8 @@ Page({
     })
 
     if (hasAccountInfo() && hasUserInfo()) {
-      // 每次访问个人中心更新最新的账户数据和畅学卡信息
-
+      // 每次访问个人中心更新最新的账户数据和学生卡信息
+      this.init()
       this.getUserSingerInfo().then(() => {
         this.getFluentInfo()
       })

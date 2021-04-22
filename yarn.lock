@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@vant/area-data@^1.0.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@vant/area-data/-/area-data-1.1.0.tgz#be48d1c4f8bfe19429625fbf9ed40ab638f4c7f1"
+  integrity sha512-+TNxiOiNxcEmGnDLCcz5TrjzRd125eEsr1PCOZ9uqN3Y9fMXOsl6/oIvLJoLJRSCb/4GIjbIOAavJ+sVrlRslg==
+
 "@vant/weapp@^1.1.0":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@vant/weapp/-/weapp-1.3.0.tgz#626ba373618d0a93d943c6d0dbad3fbf5a15b1d5"
@@ -22,16 +27,6 @@ dayjs@^1.8.31:
   resolved "http://nexus.baixing.cn/repository/npm-all/dayjs/-/dayjs-1.8.31.tgz#0cd1114c2539dd5ad9428be0c38df6d4bb40b9d3"
   integrity sha512-mPh1mslned+5PuIuiUfbw4CikHk6AEAf2Baxih+wP5fssv+wmlVhvgZ7mq+BhLt7Sr/Hc8leWDiwe6YnrpNt3g==
 
-eventemitter3@^4.0.0:
-  version "4.0.4"
-  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.4.tgz#b5463ace635a083d018bdc7c917b4c5f10a85384"
-  integrity sha512-rlaVLnVxtxvoyLsQQFBx53YmXHDxRIzzTLbdfxqi4yocpSjAxXwkU0cScM5JgSKMqEhrZpnvQ2D9gjylR0AimQ==
-
-fast-deep-equal@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
-  integrity sha1-ewUhjd+WZ79/Nwv3/bLLFf3Qqkk=
-
 is-buffer@~1.1.1:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/is-buffer/-/is-buffer-1.1.6.tgz#efaa2ea9daa0d7ab2ea13a97b2b8ad51fefbe8be"
@@ -46,23 +41,10 @@ md5@^2.2.1:
     crypt "~0.0.1"
     is-buffer "~1.1.1"
 
-miniprogram-computed@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/miniprogram-computed/-/miniprogram-computed-2.1.1.tgz#c393e967a8f6e5ee26a4205f69ae3eb9a23b7b07"
-  integrity sha512-qf40nbcY8/vOqkKnAepKQY+mJn85sn7gsj8+RZI5hSmLYm0MicM25aQFjwrvjDAqASrfM1dSU9HMMyeFsh0XXQ==
-  dependencies:
-    fast-deep-equal "^2.0.1"
-    rfdc "^1.1.4"
-
-miniprogram-recycle-view@^0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/miniprogram-recycle-view/-/miniprogram-recycle-view-0.1.5.tgz#854c2fe0df63c2165f739c8e0446aa35aa6c7d78"
-  integrity sha512-Pfm/u+jfg+b5zDhjXqm7QbR9IuViqX8JyzcHDgr6Zw9wSK0wmbXNzscA1WoSnGP5Z2nG2TIqtiNXvEbvsyrxXA==
-
-mobx-miniprogram-bindings@^1.2.0:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/mobx-miniprogram-bindings/-/mobx-miniprogram-bindings-1.2.1.tgz#996c0563ba742eb5835d972bd3ef45a99af84811"
-  integrity sha512-OleJ0IIc4g8rC7ul0wtn+imapVQvWo/1UxZyvdMrfwcenmHBjY4Bddr90RoIwkM+Ul7nOxsYdsmOsB/mZ0PJmA==
+mobx-miniprogram-bindings@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/mobx-miniprogram-bindings/-/mobx-miniprogram-bindings-2.0.0.tgz#e261d6d996727f7d61b9e5c79d8f3353c3b2847e"
+  integrity sha512-e8GmulXrBpywTi1jp9wmTgY0aFbUoVvseluz7kIHEktOBxDw3CjKD6z+/ieaojNLfsmaIQRoB5hfzQ4LXq/vOw==
 
 mobx-miniprogram@^4.13.2:
   version "4.13.2"
@@ -73,22 +55,3 @@ qs@^6.9.3:
   version "6.9.4"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.4.tgz#9090b290d1f91728d3c22e54843ca44aea5ab687"
   integrity sha512-A1kFqHekCTM7cz0udomYUoYNWjBebHm/5wzU/XqrBRBNWectVH0QIiN+NEcZ0Dte5hvzHwbr8+XQmguPhJ6WdQ==
-
-rfdc@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/rfdc/-/rfdc-1.1.4.tgz#ba72cc1367a0ccd9cf81a870b3b58bd3ad07f8c2"
-  integrity sha512-5C9HXdzK8EAqN7JDif30jqsBzavB7wLpaubisuQIGHWf2gUXSpzy6ArX/+Da8RjFpagWsCn+pIgxTMAmKw9Zug==
-
-widget-ui@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/widget-ui/-/widget-ui-1.0.2.tgz#d65a560b91739fbd0ea7c2f5f2d28fe4c0132470"
-  integrity sha512-gDXosr5mflJdMA1weU1A47aTsTFfMJhfA4EKgO5XFebY3eVklf80KD4GODfrjo8J2WQ+9YjL1Rd9UUmKIzhShw==
-  dependencies:
-    eventemitter3 "^4.0.0"
-
-wxml-to-canvas@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/wxml-to-canvas/-/wxml-to-canvas-1.1.1.tgz#64771473fb1e251bdad94f8c6ffa7dd64290e7ca"
-  integrity sha512-3mDjHzujY/UgdCOXij/MnmwJYerVjwkyQHMBFBE8zh89DK7h7UTzoydWFqEBjIC0rfZM+AXl5kDh9hUcsNpSmg==
-  dependencies:
-    widget-ui "^1.0.2"

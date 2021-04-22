@@ -4,7 +4,7 @@
     <view class="recommend-layout">
         <text class="title">精品课程</text>
         <view class="sub-title" bindtap="goToJoinFluentLearn">
-            <view class="recommend-tag">畅学卡</view>
+            <view class="recommend-tag">学生卡</view>
             <text>一键解锁所有课程 ›</text>
         </view>
     </view>

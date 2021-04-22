@@ -1,21 +1,27 @@
 <view class="join-video-member">
-    <video class="preview-video" src="{{video}}" controls="{{false}}" custom-cache="{{false}}" object-fit="cover"
+    <video wx:if="{{video}}" class="preview-video" src="{{video}}" controls="{{false}}" custom-cache="{{false}}" object-fit="cover"
         enable-play-gesture="{{false}}" enable-progress-gesture="{{false}}" play-btn-position="top"
-        show-center-play-btn="{{false}}" show-play-btn="{{false}}" autoplay="{{true}}" poster="{{video_cover}}"
-        loop="{{true}}"></video>
+        show-center-play-btn="{{true}}" show-play-btn="{{true}}" autoplay="{{false}}" poster="{{video_cover}}"
+        loop="{{false}}"></video>
     <view class="member-card">
         <view class="card-title">{{name}}</view>
         <view class="card-desc">{{desc}}</view>
     </view>
 
-    <image class="interest" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612507823pQZhhe.jpg"
+    <image class="interest" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754BErAnd.jpg"
         mode="aspectFit"></image>
     <view class="interest-item" wx:for="{{features}}" wx:key="index">
         <image class="interest-icon" src="{{item.icon}}" mode="aspectFit"></image>
         <view class="interest-detail">
-            <view>{{item.title}}</view>
+            <view class="interest-title">
+                <text wx:for="{{item.titleAry}}" wx:for-index="titleIndex" wx:for-item="titleItem" wx:key="titleIndex">{{titleItem}}</text>
+            </view>
             <view class="interest-text">{{item.desc}}</view>
         </view>
+    </view>
+
+    <view class="equity">
+        <image wx:for="{{equityImages}}" wx:key="index" class="equity-item" src="{{item}}" mode="aspectFill"></image>
     </view>
 
     <view class="course">花样精品课</view>
@@ -32,13 +38,6 @@
     </view>
 
     <view class="share-btn" bindtap="onShareBtnTap"></view>
-
-    <!-- <view class="footer">
-        <view class="footer-wrap" bindtap="buy">
-            <view>立即购买 188元/年</view>
-            <view class="line-price">原价 365元/年</view>
-        </view>
-    </view> -->
 
     <!-- 新版购买按钮 -->
     <view class="button-module" style="padding-bottom:{{isIphoneXRSMax?'20px':''}}">
@@ -60,7 +59,7 @@
             <!--</view>-->
             <!-- 原价 -->
             <view class="button-module-type-two" bindtap="buy">
-                <text>立即购买 {{discountPrice}}元/年</text>
+                <text>立即购买 {{discountPrice}}元</text>
                 <!--<text>原价 {{price}}元/年</text>-->
             </view>
         </view>
@@ -71,8 +70,8 @@
     <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent"
         bind:authCompleteEvent="authCompleteEvent"></authModule>
 
-    <!-- 畅学卡弹窗 -->
-    <fluentLearnModal show="{{didShowFluentLearnModal}}" message="您已拥有花样大学畅学卡" confirmText="立即查看"
+    <!-- 学生卡弹窗 -->
+    <fluentLearnModal show="{{didShowFluentLearnModal}}" message="您已拥有花样大学学生卡" confirmText="立即查看"
         bind:confirm="onFluentLearnConfirm" />
 
     <!-- 邀请码购买弹窗 -->
@@ -80,7 +79,7 @@
         <view class="{{showCodeBoxAnimate?'bg-code-box-close invite-code-bg':'invite-code-bg'}}" bindtap="closeCodeBox">
         </view>
         <view class="{{showCodeBoxAnimate?'close-code-box invite-code-box':'invite-code-box'}}">
-            <view class="invite-code-text">请填写邀请码，即可享365元/年优惠</view>
+            <view class="invite-code-text">请填写邀请码，即可享365元优惠</view>
             <input type="text" placeholder="邀请码" bindinput="inputInviteCode" cursor-spacing='170' />
             <view type="primary" bindtap="inviteCodeBuy" class="invite-code-buy-button">去支付</view>
             <view type="default" bindtap="contactService" class="invite-code-module-get">获取邀请码</view>
@@ -89,5 +88,5 @@
 
 
     <!-- 联系客服 -->
-    <contact show='{{showContact}}' sessionFrom="distribute" bind:closeContactModal="onCloseContactModal"></contact>
+    <contact show='{{showContact}}' sessionFrom="sf_study_guide" bind:closeContactModal="onCloseContactModal"></contact>
 </view>

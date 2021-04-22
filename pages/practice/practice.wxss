@@ -3,25 +3,120 @@
     padding-bottom: 160rpx;
 }
 
-.tabs-fixed-line {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 1px;
-    background: white;
+/* banner */
+.swiper-box {
+    height: 139px;
+    position: relative;
 }
 
-.type-list {
+.swiper-item-box {
+    width: 100%;
+    height: 125px;
+}
+
+.swiper-item-box image {
+    width: 100%;
+    height: 100%;
+    /* border-radius: 8rpx; */
+}
+
+.swiper-dot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+}
+
+.swiper-dot-item {
+    width: 22rpx;
+    height: 8rpx;
+    border-radius: 4rpx;
+    background: rgba(216, 216, 216, 1);
+    margin-right: 8rpx;
+}
+
+.swiper-dot-item-active {
+    background: #3A3C48;
+}
+
+/* 分类课程快速入口 */
+.hyper-channel {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+    height: 232px;
+    box-sizing: border-box;
+}
+
+.hyper-item {
+    overflow: hidden;
+    position: relative;
+    width: 320rpx;
+    height: 80px;
+    border-radius: 8rpx;
+}
+
+.hyper-item:active {
+    opacity: 0.8;
+}
+
+.hyper-item:first-child {
+    margin: 0 24rpx 24rpx 0;
+}
+
+.hyper-item:nth-child(2) {
+    margin-bottom: 24rpx;
+}
+
+.hyper-item:nth-child(3) {
+    margin-right: 24rpx;
+}
+
+.hyper-image {
+    width: 320rpx;
+    height: 80px;
+}
+
+.hyper-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px;
+    font: bold 28rpx/28rpx PingFangSC;
+    background: rgba(0,0,0, .4);
+    color: white;
+}
+
+/* 学院选项卡 */
+.type-list,.fixed-type-list {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 20rpx 30rpx 20rpx;
+    background: #fff;
+}
+
+.fixed-type-list {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 10;
-    padding: 26rpx 30rpx 20rpx;
-    background: #fff;
+    z-index: 30;
+}
+
+.fixed-type-list-shadow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6rpx;
+    background: white;
 }
 
 .main-title-item {
@@ -54,8 +149,9 @@
 /* 视频课程列表 */
 .list-main {
     margin: 0 auto;
-    padding: 130rpx 0 50rpx;
+    padding: 20rpx 0 50rpx;
     width: calc(100% - 60rpx);
+    min-height: calc(100vh - 232rpx);
 }
 
 .list-none {
@@ -218,4 +314,61 @@
     margin-right: 20rpx;
     font: 32rpx/32rpx PingFangSC;
     color: #CC0000;
+}
+
+
+/* 结构化课程 */
+.structure-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    height: 200rpx;
+    border-radius: 8rpx;
+    margin-bottom: 30rpx;
+    box-sizing: border-box;
+    padding: 30rpx 20rpx 30rpx 30rpx;
+    font-size: 0;
+    color: white;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.structure-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.structure-title {
+    white-space: nowrap;
+    font: 500 44rpx/60rpx PingFangSC;
+}
+
+.structure-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font: 32rpx/44rpx PingFangSC;
+    color: white;
+}
+
+.structure-desc {
+    max-width: 400rpx;
+}
+
+.structure-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200rpx;
+    height: 64rpx;
+    border-radius: 999rpx;
+    border: 3rpx solid white;
+    box-sizing: border-box;
 }

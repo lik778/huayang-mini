@@ -1,5 +1,7 @@
 import request from "../../lib/request"
-import { URL } from "../../lib/config"
+import {
+  URL
+} from "../../lib/config"
 // 获取用户信息
 export const getUserInfo = (params) => {
   return new Promise((resolve, reject) => {
@@ -70,7 +72,7 @@ export const getUniversityCode = (params) => {
 // 获取我的订单列表
 export const getMineOrder = (params) => {
   return new Promise(resolve => {
-    request._get(URL.getMineOrder , params).then(res => {
+    request._get(URL.getMineOrder, params).then(res => {
       if (res.code === 0) {
         resolve(res)
       }
@@ -102,7 +104,7 @@ export const getVipShow = () => {
 // 打点进入会员页路径
 export const pointjoinVipFrom = (params) => {
   return new Promise(resolve => {
-    request._post(URL.pointjoinVipFrom,params).then(res => {
+    request._post(URL.pointjoinVipFrom, params).then(res => {
       if (res.code === 0) {
         resolve(res)
       }
@@ -113,7 +115,7 @@ export const pointjoinVipFrom = (params) => {
 // 获取邀请有礼海报有效期
 export const getActivityTime = (params) => {
   return new Promise(resolve => {
-    request._get(URL.getActivityTime+"?"+params).then(res => {
+    request._get(URL.getActivityTime + "?" + params).then(res => {
       if (res.code === 0) {
         resolve(res)
       }
@@ -125,14 +127,14 @@ export const getActivityTime = (params) => {
 
 // 提现
 export const withDrawFun = (params) => {
-  return new Promise((resolve,reject) => {
-    request._post(URL.withDraw,params).then(res => {
+  return new Promise((resolve, reject) => {
+    request._post(URL.withDraw, params).then(res => {
       if (res.code === 0) {
         resolve(res)
-      }else{
+      } else {
         reject(res)
       }
-    }).catch(err=>{
+    }).catch(err => {
       reject(err)
     })
   })
@@ -141,7 +143,9 @@ export const withDrawFun = (params) => {
 // 在我的模块，获取推荐训练营列表
 export function getRecommendBootcampInMine(params) {
   return new Promise((resolve, reject) => {
-    request._get(URL.queryRecommendBootcampInMine, params).then(({data}) => {
+    request._get(URL.queryRecommendBootcampInMine, params).then(({
+      data
+    }) => {
       data = data || []
       resolve(data)
     })
@@ -151,7 +155,9 @@ export function getRecommendBootcampInMine(params) {
 // 在我的模块，获取活动列表
 export function getActivityInMine(params) {
   return new Promise((resolve, reject) => {
-    request._get(URL.queryActivityInMine, params).then(({data}) => {
+    request._get(URL.queryActivityInMine, params).then(({
+      data
+    }) => {
       data = data || []
       resolve(data)
     })
@@ -161,7 +167,9 @@ export function getActivityInMine(params) {
 // 获取活动详情
 export function getActivityDetail(params) {
   return new Promise((resolve) => {
-    request._get(URL.queryActivityDetail, params).then(({data}) => {
+    request._get(URL.queryActivityDetail, params).then(({
+      data
+    }) => {
       resolve(data)
     })
   })
@@ -170,7 +178,9 @@ export function getActivityDetail(params) {
 // 获取用户主题营、课程、活动数量
 export function getUserOwnerClasses(params) {
   return new Promise((resolve) => {
-    request._get(URL.queryUserOwnerClasses, params).then(({data}) => {
+    request._get(URL.queryUserOwnerClasses, params).then(({
+      data
+    }) => {
       data = data || {}
       resolve(data)
     })
@@ -180,39 +190,41 @@ export function getUserOwnerClasses(params) {
 // 获取用户中心引导私域链接
 export function getUserGuideLink() {
   return new Promise((resolve) => {
-    request._get(URL.queryUserGuideLink).then(({data}) => {
+    request._get(URL.queryUserGuideLink).then(({
+      data
+    }) => {
       data = data || []
       resolve(data)
     })
   })
 }
 
-// 查询畅学卡权益
+// 查询学生卡权益
 export const getFluentLearnInfo = params => {
   return request._get(URL.queryFlunetLearnInfo, params)
 }
 
-// 获取畅学卡热门课程
+// 获取学生卡热门课程
 export const getFluentCardHotkecheng = (parasm) => {
   return request._get(URL.queryFluentCardHotkecheng, parasm)
 }
 
-// 查询畅学卡最新课程
+// 查询学生卡最新课程
 export const getFluentCardNewkecheng = (parasm) => {
   return request._get(URL.queryFluentCardNewkecheng, parasm)
 }
 
-// 畅学卡下单
+// 学生卡下单
 export const payForFluentCard = (parasm) => {
   return request._post(URL.payFluentCard, parasm)
 }
 
-// 查询用户畅学卡信息
+// 查询用户学生卡信息
 export const getFluentCardInfo = (parasm) => {
   return request._get(URL.queryFluentCardInfo, parasm)
 }
 
-// 获取畅学卡分销二维码
+// 获取学生卡分销二维码
 export const getFluentQrCode = (parasm) => {
   return request._get(URL.queryFluentQrCode, parasm)
 }
@@ -222,12 +234,12 @@ export const getDistributeRecordList = (parasm) => {
   return request._get(URL.queryDistributeRecordList, parasm)
 }
 
-// 畅学卡会员兑换视频课程
+// 学生卡会员兑换视频课程
 export const getKechengWithFluentCard = (params) => {
   return request._post(URL.acceptKechengWithFluentCard, params)
 }
 
-// 获取畅学卡引导私域配置信息
+// 获取学生卡引导私域配置信息
 export const getFluentDistributeGuide = () => {
   return request._get(URL.queryFluentDistributeGuide)
 }
@@ -245,4 +257,15 @@ export const getDistributeFirstList = (params) => {
 // 获取间接合伙人
 export const getDistributeSecondList = (params) => {
   return request._get(URL.queryDistributeSecondList, params)
+}
+
+// 通过用户ID，查询student信息
+export function getStudentInfoByUserId(params) {
+  return request._get(URL.queryStudentInfoByUserId, params)
+}
+
+
+// //判断用户是否已经填写地址
+export const checkUserHasAddress = (params) => {
+  return request._get(URL.checkUserHasAddress, params)
 }

@@ -1,3 +1,5 @@
+@import "../../assets/css/common.wxss";
+
 .liveLayout {
     background: white;
 }
@@ -126,7 +128,7 @@
     align-items: center;
     width: 690rpx;
     height: 88rpx;
-    margin: 0 auto 100rpx;
+    margin: 0 auto 80rpx;
     border-radius: 999rpx;
     border: 1rpx solid black;
     font: 500 36rpx/36rpx PingFangSC;

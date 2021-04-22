@@ -1,0 +1,6 @@
+<!--components/studentMomentLike/studentMomentLike.wxml-->
+<view class="student-moment-like-module" wx:if='{{showStudentMomentLike}}'>
+  <view class="main">
+    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618555832RVzGEg.jpg"></image>
+  </view>
+</view>

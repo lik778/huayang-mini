@@ -1,0 +1,18 @@
+<view class="coursebox">
+    <view class="course" data-item="{{item}}" bindtap="goToVideoDetail" wx:for="{{videoList}}" data-item="{{item}}" wx:key="index">
+        <image mode="aspectFill" class="course-img" src="{{item.kechengSeries.cover_pic}}"></image>
+        <view class="course-textbox">
+            <view class="otherbox">
+                <view class="course-title" wx:if="{{item.kechengSeries.teacher_desc}}">
+                    {{item.kechengSeries.teacher_desc}}
+                </view>
+                <view  wx:if="{{item.kechengSeries.name}}" class="course-discription">{{item.kechengSeries.name}}</view>
+                <view class="course-teachbox">
+                    <text class="teacher-name">{{item.teacher.name}}</text>
+                    <text class="teacher-position">{{item.teacher.teacher_desc}}</text>
+                </view>
+            </view>
+            <view class="course-studynum">共{{item.kechengSeries.visit_count}}人学习</view>
+        </view>
+    </view>
+</view>

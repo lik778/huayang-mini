@@ -1,0 +1,85 @@
+@import "../../assets/css/common.wxss";
+
+.offline-course {
+    padding: 0 30rpx 80rpx;
+}
+.layer {
+    position: relative;
+    padding: 40rpx 0;
+    font: 500 52rpx/52rpx PingFangSC;
+}
+
+.layer.hot::after {
+    content: '热';
+    position: absolute;
+    left: 228rpx;
+    width: 36rpx;
+    height: 30rpx;
+    border-radius: 8rpx 2rpx;
+    text-align: center;
+    font: 20rpx/30rpx PingFangSC;
+    background: #CC0000;
+    color: white;
+}
+
+/* 线下课卡片样式 */
+.offline-course-item {
+    margin-bottom: 40rpx;
+    font-size: 0;
+}
+
+.pic {
+    width: 100%;
+    height: 344rpx;
+    border-radius: 16rpx 16rpx 6rpx 6rpx;
+}
+
+.title {
+    margin: 16rpx 0;
+    font: 500 36rpx/50rpx PingFangSC;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-wrap {
+    display: flex;
+    align-items: center;
+}
+
+.price-wrap {
+    margin-right: 20rpx;
+    font: 32rpx/48rpx PingFangSC;
+    color: #CC0000;
+}
+
+.price-wrap > .price {
+    font-size: 48rpx;
+}
+
+.discount-price-wrap {
+    font-size: 0;
+    color: #996633;
+}
+
+.discount-price {
+    line-height: 32rpx;
+    vertical-align: middle;
+    font: 32rpx/32rpx PingFangSC;
+}
+
+.discount-price-wrap > .tag {
+    width: 94rpx;
+    height: 36rpx;
+    margin-left: 4rpx;
+    vertical-align: middle;
+}
+
+.no {
+    font: 32rpx/32rpx PingFangSC;
+    color: rgba(0,0,0, .6)
+}
+

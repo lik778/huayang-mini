@@ -39,6 +39,7 @@
     height: 220rpx;
 }
 .activity-title {
+    width: 446rpx;
     font: 600 32rpx/44rpx PingFangSC;
 }
 .activity-info .info > view {

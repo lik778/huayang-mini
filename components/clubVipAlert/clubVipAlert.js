@@ -14,6 +14,13 @@ Component({
     show: {
       type: Boolean,
       value: false
+    },
+    type: {
+      type: Number,
+      value: 1, //1为会员注册,2为购买学生卡
+    },
+    link: {
+      type: String,
     }
   },
 
@@ -32,7 +39,8 @@ Component({
     join() {
       let rootUrl = baseUrl.baseUrl
       let userId = getLocalStorage(GLOBAL_KEY.userId)
-      let link = encodeURIComponent(`${rootUrl}/#/home/huayangClubForm?id=${userId}&from=daxue`)
+      // let link = encodeURIComponent(`${rootUrl}/#/home/huayangClubForm?id=${userId}&from=daxue`)
+      let link = this.data.link
       this.triggerEvent("closeClubVipAlert")
       wx.navigateTo({
         url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,

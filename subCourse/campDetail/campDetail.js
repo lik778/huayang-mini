@@ -1,4 +1,5 @@
 // subCourse/trainingCampDetail/trainingCampDetail.js
+import baseUrl from "../../lib/request"
 import {
   checkNeedToFillInfo,
   dailyStudyCheck,
@@ -14,7 +15,10 @@ import {
   queryPunchCardQrCode,
   studyLogCreate
 } from "../../api/course/index"
-import { getProductInfo, getYouZanAppId } from "../../api/mall/index"
+import {
+  getProductInfo,
+  getYouZanAppId
+} from "../../api/mall/index"
 import {
   computeDate,
   dateAddDays,
@@ -25,7 +29,12 @@ import {
   simpleDurationSimple
 } from "../../utils/util"
 import bxPoint from '../../utils/bxPoint'
-import { GLOBAL_KEY } from "../../lib/config"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
+import {
+  getFluentCardInfo
+} from "../../api/mine/index"
 import dayjs from "dayjs"
 
 Page({
@@ -629,16 +638,31 @@ Page({
 
   // 检查是否需要填写信息
   checkNeedFillInfo() {
-    let userId = getLocalStorage(GLOBAL_KEY.userId)
+    let userId = this.data.userInfo.id
     return new Promise(resolve => {
       checkNeedToFillInfo({
         user_id: userId
       }).then(res => {
-        if (res.data) {
-          wx.navigateTo({
-            url: `/subCourse/applyJoinSchool/applyJoinSchool?campId=${this.data.campId}`,
-          })
-        }
+        getFluentCardInfo({
+          user_snow_id: this.data.userInfo.snow_id
+        }).then(({
+          data
+        }) => {
+          let isStudent = !!data
+          if (res.code === 0) {
+            let data = res.data.hasAddr
+            if (!data) {
+              let rootUrl = baseUrl.baseUrl
+              let type = 2
+              let link = encodeURIComponent(`${rootUrl}/#/home/huayangClubForm?id=${userId}&from=traincamp&type=${type}&campId=${this.data.campId}&special=${isStudent?true:''}`)
+              wx.navigateTo({
+                url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
+              })
+            }
+          }
+        })
+
+
       })
     })
 
@@ -883,7 +907,7 @@ Page({
     if (this.data.promoteUid !== '') {
       shareLink += `&promote_uid=${this.data.promoteUid}`
     } else {
-      if (this.data.userInfo !== '' &&this.data.userInfo.kecheng_user.is_promoter&& this.data.userInfo.kecheng_user.is_promoter === 1) {
+      if (this.data.userInfo !== '' && this.data.userInfo.kecheng_user.is_promoter && this.data.userInfo.kecheng_user.is_promoter === 1) {
         shareLink += `&promote_uid=${this.data.userInfo.id}`
       }
     }

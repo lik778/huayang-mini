@@ -1,4 +1,4 @@
-/* 畅学卡详情页 */
+/* 学生卡详情页 */
 @import "../../assets/css/common.wxss";
 
 .fluent-learn-info {
@@ -12,15 +12,15 @@
 
 /* 权益 */
 .interest {
-    margin: 40rpx 30rpx 48rpx;
-    width: 470rpx;
-    height: 80rpx;
+    margin: 60rpx 30rpx 40rpx;
+    width: 520rpx;
+    height: 88rpx;
 }
 
 .interest-item {
     display: flex;
     justify-content: space-between;
-    margin: 0 30rpx 60rpx;
+    margin: 0 54rpx 60rpx 30rpx;
 }
 
 .interest-icon {
@@ -29,13 +29,33 @@
 }
 
 .interest-detail {
-    width: 574rpx;
-    font: 500 36rpx/36rpx PingFangSC;
+    width: 540rpx;
+    font: 500 40rpx/56rpx PingFangSC;
+}
+
+.interest-title {
+    display: flex;
+    flex-direction: column;
 }
 
 .interest-text {
-    margin-top: 20rpx;
-    font: 32rpx/48rpx PingFangSC;
+    width: 100%;
+    margin-top: 12rpx;
+    font: 28rpx/40rpx PingFangSC;
+    text-align: justify;
+    color: #000000;
+}
+
+.equity {
+    margin: 0 55rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.equity-item {
+    width: 200rpx;
+    height: 240rpx;
 }
 
 /* 精品课 */

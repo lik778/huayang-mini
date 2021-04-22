@@ -1,0 +1,26 @@
+<view class="old-invite-new">
+    <cover-view class="navigation" style="padding-top:{{statusHeight+43}}px;">
+        <naviBar title="邀请海报" color="#37383B" titleColor="white" hideIcon="{{true}}"></naviBar>
+    </cover-view>
+
+    <view class="canvas-wrap">
+        <canvas canvas-id="oldInviteNew" style="width:708px;height:1533px;"></canvas>
+    </view>
+
+    <view class="poster" style="width:{{postWidth}}px;height:{{postHeight}}px;left:{{postLeft}}px;top:calc(50vh - 64rpx - {{postHeight / 2}}px + {{statusHeight}}px);">
+        <view class="user-info">
+            <image class="avatar-image" src="{{avatar}}" style="top:{{65*yRatio}}px;left:{{24*xRatio}}px;height:{{40*xRatio}}px;width:{{40*xRatio}}px;" mode="aspectFit"></image>
+            <view class="content" style="top:{{69*yRatio}}px;left:{{70*xRatio}}px;font:{{12*xRatio}}px/{{17*xRatio}}px PingFangSC;">
+                <view class="limit-one-line" style="width:{{156*xRatio}}px;">我是{{nickname}}</view>
+                <view>和我一起加入花样大学吧!</view>
+            </view>
+        </view>
+
+        <image class="qrcode-wrap" style="bottom:{{23*xRatio}}px;left:{{23*xRatio}}px;width:{{60*xRatio}}px;height:{{60*xRatio}}px;" src="{{qrcode}}" mode="aspectFit"></image>
+    </view>
+
+    <view class="btns" style="height: {{108 + bottomNo}}rpx;">
+        <button open-type="share" class="btn" bindtap="shareToFriend">分享给好友</button>
+        <view class="btn extrude" bindtap="saveToLocalAlbum">保存到相册</view>
+    </view>
+</view>

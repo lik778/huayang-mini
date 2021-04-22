@@ -83,7 +83,7 @@ Page({
     showContact: false,
     trialData: null, // 观看有效期对象
     trialDiffDays: 0, // 剩余观看有效期时长
-    isFluentCardVip: false, // 是否是畅学卡会员
+    isFluentCardVip: false, // 是否是学生卡会员
   },
 
 
@@ -159,7 +159,7 @@ Page({
     this.checkHasJoined()
   },
   /**
-   * 跳转到加入畅学卡页面
+   * 跳转到加入学生卡页面
    */
   goToJoinFluentLearn() {
     bxPoint("series_changxue", {
@@ -170,7 +170,7 @@ Page({
     })
   },
   /**
-   * 畅学卡会员，兑换课程
+   * 学生卡会员，兑换课程
    * @param
    * */
   exchangeKechengWithFluentCard(kechengId) {
@@ -292,7 +292,7 @@ Page({
               studiedIndex: ''
             })
 
-            // 畅学卡用户未领取过当前课程，自动领取
+            // 学生卡用户未领取过当前课程，自动领取
             this.exchangeKechengWithFluentCard(this.data.videoCourseId).then(() => {
               checkJoinVideoCourse({
                 kecheng_series_id: this.data.videoCourseId
@@ -709,10 +709,13 @@ Page({
     if (this.data.from_co_channel) {
       paramsData.co_channel_tag = 'co_lndx'
     }
+    this.setData({showContact: true})
+
     bxPoint("series_consult_chat_click", paramsData, false)
-    wx.navigateTo({
-      url: `/pages/webViewCommon/webViewCommon?link=${link}`,
-    })
+
+    // wx.navigateTo({
+    //   url: `/pages/webViewCommon/webViewCommon?link=${link}`,
+    // })
   },
 
   // 分享好友拼团
@@ -1115,7 +1118,7 @@ Page({
     this.videoContext = wx.createVideoContext('videoPlayer')
     // 获取视频课程引流文章地址
     this.getArticleLink()
-    // 查询用户畅学卡信息
+    // 查询用户学生卡信息
     if (hasUserInfo() && hasAccountInfo()) {
       this.getUserFluentInfo()
     }

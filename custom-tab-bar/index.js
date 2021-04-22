@@ -5,8 +5,7 @@ Component({
     selected: 0,
     color: "#666666",
     selectedColor: "#CC0000",
-    list: [
-      {
+    list: [{
         "pagePath": "/pages/discovery/discovery",
         "selectedIconPath": "../assets/images/common/homeActive.png",
         "iconPath": "../assets/images/common/home.png",
@@ -14,10 +13,17 @@ Component({
         isDIY: false
       },
       {
+        "pagePath": "/pages/studentMoments/studentMoments",
+        "selectedIconPath": "../assets/images/common/student-moments-active.png",
+        "iconPath": "../assets/images/common/student-moments.png",
+        "text": "校友动态",
+        isDIY: false
+      },
+      {
         "pagePath": "/pages/practice/practice",
         "selectedIconPath": "../assets/images/common/practiceActive.png",
         "iconPath": "../assets/images/common/practice.png",
-        "text": "课程",
+        "text": "学校课程",
         isDIY: false
       },
       {
@@ -36,17 +42,26 @@ Component({
       const url = data.path
 
       if (this.data.selected === 0 && url === '/pages/practice/practice') {
-        bxPoint("homepage_series_visit", {}, false)
+        bxPoint("homepage_series", {}, false)
       } else if (this.data.selected === 0 && url === '/pages/userCenter/userCenter') {
-        bxPoint("homepage_mine_visit", {}, false)
+        bxPoint("homepage_bbs", {}, false)
       } else if (this.data.selected === 1 && url === '/pages/discovery/discovery') {
-        bxPoint("series_homepage_visit", {}, false)
+        // jj-2021-04-19
+        bxPoint("bbs_homepage", {}, false)
+      } else if (this.data.selected === 1 && url === '/pages/practice/practice') {
+        // jj-2021-04-19
+        bxPoint("bbs_series", {}, false)
       } else if (this.data.selected === 1 && url === '/pages/userCenter/userCenter') {
+        // jj-2021-04-19
+        bxPoint("bbs_mine", {}, false)
+      } else if (this.data.selected === 2 && url === '/pages/studentMoments/studentMoments') {
+        bxPoint("series_bbs", {}, false)
+      } else if (this.data.selected === 2 && url === '/pages/userCenter/userCenter') {
         bxPoint("series_mine_visit", {}, false)
-      } else if (this.data.selected === 2 && url === '/pages/discovery/discovery') {
+      } else if (this.data.selected === 3 && url === '/pages/discovery/discovery') {
         // jj-2021-03-12梨花
         bxPoint("applets_mine_homepage", {}, false)
-      } else if (this.data.selected === 2 && url === '/pages/practice/practice') {
+      } else if (this.data.selected === 3 && url === '/pages/practice/practice') {
         // jj-2021-03-12梨花
         bxPoint("applets_mine_series", {}, false)
       }

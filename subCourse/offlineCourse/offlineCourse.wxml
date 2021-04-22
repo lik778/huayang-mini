@@ -1,0 +1,45 @@
+<view class="offline-course">
+    <!-- 人气推荐 -->
+    <block wx:if="{{recommendCourse}}">
+        <view class="layer hot">人气推荐</view>
+        <view class="offline-coourse-item" bindtap="goToOfflineCourseDetailByRecommend" data-item="{{recommendCourse}}">
+            <image class="pic" src="{{recommendCourse.cover}}" mode="aspectFill"></image>
+            <view class="title limit-two-line">{{recommendCourse.title}}</view>
+            <view class="info">
+                <view class="info-wrap">
+                    <view class="price-wrap">
+                        <text>¥</text><text class="price">{{recommendCourse.price}}</text>
+                    </view>
+                    <view class="discount-price-wrap">
+                        <text class="discount-price">¥{{recommendCourse.discount_price}}</text>
+                        <image class="tag" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618455791dTGykq.jpg"
+                               mode="aspectFit"></image>
+                    </view>
+                </view>
+                <view class="no">{{recommendCourse.buy_count}}人已购</view>
+            </view>
+        </view>
+    </block>
+
+    <!-- 全部课堂 -->
+    <block wx:if="{{list.length > 0}}">
+        <view class="layer">全部课堂</view>
+        <view class="offline-course-item" wx:for="{{list}}" wx:key="index" data-item="{{item}}" bindtap="goToOfflineCourseDetail">
+            <image class="pic" src="{{item.cover}}" mode="aspectFill"></image>
+            <view class="title limit-two-line">{{item.title}}</view>
+            <view class="info">
+                <view class="info-wrap">
+                    <view class="price-wrap">
+                        <text>¥</text><text class="price">{{item.price}}</text>
+                    </view>
+                    <view class="discount-price-wrap">
+                        <text class="discount-price">¥{{item.discount_price}}</text>
+                        <image class="tag" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618455791dTGykq.jpg"
+                               mode="aspectFit"></image>
+                    </view>
+                </view>
+                <view class="no">{{item.buy_count}}人已购</view>
+            </view>
+        </view>
+    </block>
+</view>
