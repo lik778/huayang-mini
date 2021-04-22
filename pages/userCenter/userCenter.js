@@ -303,7 +303,7 @@ Page({
         this.setData({
           userInfo: res
         })
-        this.checkHasFillAddress()
+
         resolve()
       }).catch((err) => {
         if (err === -2) {
@@ -362,7 +362,7 @@ Page({
               setLocalStorage("hy_daxue_show_club_vip_alert_sign", threeDayLaterTimeStr)
             }, 1000)
           }
-        }else{
+        } else {
           removeLocalStorage("hy_daxue_show_club_vip_alert_sign")
         }
       }
@@ -490,7 +490,9 @@ Page({
   },
   // 公用方法
   kingOfTheWorld() {
-    this.getUserSingerInfo().then()
+    this.getUserSingerInfo().then(() => {
+      this.checkHasFillAddress()
+    })
   },
   // 联系客服
   callPhone(e) {
