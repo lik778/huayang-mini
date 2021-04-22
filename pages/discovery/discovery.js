@@ -716,10 +716,13 @@ Page({
 			}, 60 * 1000)
 		}
 
+		// 04-22晚上9点前不显示入群引导
+		if (dayjs().isBefore(dayjs("2021-04-22 21:00:00"))) return
+
+		// 入群引导
 		let guideExpiredAt = getLocalStorage(GLOBAL_KEY.discoveryGuideExpiredAt)
 		if (!guideExpiredAt || dayjs(guideExpiredAt).isBefore(dayjs())) {
 			let t = setTimeout(() => {
-				// 打开入群引导
 				this.openGuide()
 				clearTimeout(t)
 			}, 1000)

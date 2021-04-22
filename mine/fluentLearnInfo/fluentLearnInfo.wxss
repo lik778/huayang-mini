@@ -39,8 +39,11 @@
 }
 
 .interest-text {
-    margin-top: 20rpx;
-    font: 28rpx/48rpx PingFangSC;
+    width: 100%;
+    margin-top: 12rpx;
+    font: 28rpx/40rpx PingFangSC;
+    text-align: justify;
+    color: #000000;
 }
 
 .equity {

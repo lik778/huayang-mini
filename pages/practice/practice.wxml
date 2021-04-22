@@ -20,7 +20,7 @@
     <!-- 分类课程快速入口 -->
     <view class="hyper-channel">
         <view class="hyper-item" wx:for="{{fastMarkAry}}" wx:key="index" bindtap="onHyperTap" data-item="{{item}}">
-            <image class="hyper-image" src="{{item.picture}}"></image>
+            <image class="hyper-image" src="{{item.picture}}" mode="aspectFill"></image>
             <view class="hyper-text">{{item.name}}</view>
         </view>
     </view>
