@@ -33,6 +33,7 @@
         {
           "name": "学生卡详情页",
           "pathName": "mine/fluentLearnInfo/fluentLearnInfo",
+          "query": "",
           "scene": null
         }
       ]

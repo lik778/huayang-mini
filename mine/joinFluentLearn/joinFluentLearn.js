@@ -49,7 +49,6 @@ Page({
 		discountPrice: '',
 		inviteId: '',
 		isIphoneXRSMax: false,
-		showClubVipAlert: false,
 		equityImages: ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754dxzZTH.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754nyGpJw.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754xhlddI.jpg"], // 权益图片
 	},
 
@@ -99,9 +98,6 @@ Page({
 	 * 生命周期函数--监听页面隐藏
 	 */
 	onHide: function () {
-		if (this.data.showClubVipAlert) {
-			this.setData({showClubVipAlert: false})
-		}
 	},
 
 	/**
@@ -365,10 +361,8 @@ Page({
 					if (data) {
 						resolve()
 					} else {
-						this.setData({
-							showClubVipAlert: true,
-							showClubVipAlertLink: encodeURIComponent(`${baseUrl.baseUrl}/#/home/huayangClubForm?id=${user_id}&from=daxue&type=2`)
-						})
+						let link = encodeURIComponent(`${baseUrl.baseUrl}/#/home/huayangClubForm?id=${user_id}&from=daxue&type=2`)
+						wx.navigateTo({url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`})
 						reject()
 					}
 				}
