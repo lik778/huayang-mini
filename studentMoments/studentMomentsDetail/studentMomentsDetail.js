@@ -28,11 +28,11 @@ Page({
    */
   data: {
     commonIcon: {
-      likeIcon: ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618367647LTWDYU.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618367660dslOOQ.jpg'],
-      commentIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618367678kxmCLk.jpg',
+      likeIcon: ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619081085PVPpNp.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619081056zZxwVz.jpg'],
+      commentIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619081102RGkhiY.jpg',
       playIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618535781FCwFCm.jpg',
-      shareIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618367691MgBtuD.jpg'
-    },
+      shareIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619081117EJyhKf.jpg'
+    }, //点赞+评论+分享icon
     likeIcon: ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618367647LTWDYU.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618367660dslOOQ.jpg'], //点赞icon
     swiperData: {
       autoplay: true,

@@ -13,7 +13,7 @@
   top: 0px;
   left: 0;
   right: 0;
-  height: 248rpx;
+  height: 264rpx;
   z-index: 20;
   background: #fff;
   box-shadow: 1px 0 10px #eee;
@@ -156,14 +156,15 @@
 }
 
 .barrage-module {
-  height: 168rpx;
+  /* height: 168rpx; */
+  height: 184rpx;
   /* width: 100%; */
   position: relative;
 }
 
 .barrage-scroll-module {
   /* background: #fff; */
-  padding: 16rpx 0;
+  padding: 28rpx 0;
   opacity: 0;
 
 }
@@ -211,7 +212,7 @@
 .main-module {
   padding: 0 30rpx;
   margin-top: 60rpx;
-  padding-top: 248rpx;
+  padding-top: 264rpx;
 }
 
 .item {
@@ -309,7 +310,7 @@ video {
   font-size: 28rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
-  color: #000000;
+  color: rgba(0, 0, 0, 0.5);
   line-height: 24rpx;
   padding-left: 10rpx;
 }
@@ -343,7 +344,7 @@ video {
   font-size: 28rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
-  color: #000000;
+  color: rgba(0, 0, 0, 0.5);
   line-height: 24rpx;
   padding-left: 10rpx;
 }

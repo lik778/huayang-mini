@@ -31,13 +31,13 @@ Page({
    */
   data: {
     commonIcon: {
-      likeIcon: ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618367647LTWDYU.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618367660dslOOQ.jpg'],
-      commentIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618367678kxmCLk.jpg',
+      likeIcon: ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619081085PVPpNp.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619081056zZxwVz.jpg'],
+      commentIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619081102RGkhiY.jpg',
       playIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618535781FCwFCm.jpg',
-      shareIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618367691MgBtuD.jpg'
+      shareIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619081117EJyhKf.jpg'
     }, //点赞+评论+分享icon
     likeUserInfo: [], //点赞人信息
-    interval: 5000, //点赞翻转自动滑动时间
+    interval: 10000, //点赞翻转自动滑动时间
     swiperCurrent: 0, //当前swiper下标 
     doommList: [],
     nowBarrageTextNum: 0,
@@ -89,8 +89,6 @@ Page({
   onLoad: function (options) {
     // 初始化一切数据+mobx
     this.initData()
-
-
   },
 
   /**

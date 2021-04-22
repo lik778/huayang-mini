@@ -32,6 +32,9 @@ import bxPoint from '../../utils/bxPoint'
 import {
   GLOBAL_KEY
 } from "../../lib/config"
+import {
+  getFluentCardInfo
+} from "../../api/mine/index"
 import dayjs from "dayjs"
 
 Page({
@@ -640,17 +643,26 @@ Page({
       checkNeedToFillInfo({
         user_id: userId
       }).then(res => {
-        if (res.code === 0) {
-          let data = res.data.hasAddr
-          if (!data) {
-            let rootUrl = baseUrl.baseUrl
-            let type = 2
-            let link = encodeURIComponent(`${rootUrl}/#/home/huayangClubForm?id=${userId}&from=traincamp&type=${type}&campId=${this.data.campId}`)
-            wx.navigateTo({
-              url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
-            })
+        getFluentCardInfo({
+          user_snow_id: this.data.userInfo.snow_id
+        }).then(({
+          data
+        }) => {
+          let isStudent = !!data
+          if (res.code === 0) {
+            let data = res.data.hasAddr
+            if (!data) {
+              let rootUrl = baseUrl.baseUrl
+              let type = 2
+              let link = encodeURIComponent(`${rootUrl}/#/home/huayangClubForm?id=${userId}&from=traincamp&type=${type}&campId=${this.data.campId}&special=${isStudent?true:''}`)
+              wx.navigateTo({
+                url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
+              })
+            }
           }
-        }
+        })
+
+
       })
     })
 
