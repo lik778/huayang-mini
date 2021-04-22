@@ -1,12 +1,20 @@
-import { FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
+import {
+  FluentLearnUserType,
+  GLOBAL_KEY
+} from "../../lib/config"
+import baseUrl from "../../lib/request"
 import dayjs from "dayjs"
-import { getFindBanner, getPhoneNumber } from "../../api/course/index"
+import {
+  getFindBanner,
+  getPhoneNumber
+} from "../../api/course/index"
 import {
   getFluentCardInfo,
   getFluentDistributeGuide,
   getFluentLearnInfo,
   getPartnerInfo,
   getUserInfo,
+  checkUserHasAddress,
   getUserOwnerClasses
 } from "../../api/mine/index"
 import {
@@ -18,8 +26,12 @@ import {
   splitTargetNoString
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
-import { getTaskEntranceStatus } from "../../api/task/index"
-import { getYouZanAppId } from "../../api/mall/index"
+import {
+  getTaskEntranceStatus
+} from "../../api/task/index"
+import {
+  getYouZanAppId
+} from "../../api/mall/index"
 
 const Level = [{
     label: "准合伙人",
@@ -70,12 +82,14 @@ Page({
     showMoneyNotice: false,
     showMoneyNoticeTop: '',
     changeMoneyNoticeClass: true,
-    showClubVipAlert: false
+    showClubVipAlert: false,
+    showClubVipAlertType: ''
   },
   // 关闭加入花样俱乐部弹窗
   closeClubVipAlert() {
     this.setData({
-      showClubVipAlert: false
+      showClubVipAlert: false,
+      showClubVipAlertType: ''
     })
   },
 
@@ -212,7 +226,9 @@ Page({
   },
   // 加私域
   joinPrivateDomain() {
-    this.setData({didShowContact: true})
+    this.setData({
+      didShowContact: true
+    })
     bxPoint("mine_sign_in_private_group", {}, false)
   },
   // 计算用户帐号创建日期
@@ -263,28 +279,30 @@ Page({
   // 获取用户信息
   getUserSingerInfo() {
     if (!hasUserInfo() || !hasAccountInfo()) return Promise.reject()
-		return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       getUserInfo('scene=zhide').then(res => {
         res.amount = Number((res.amount / 100).toFixed(2))
         setLocalStorage(GLOBAL_KEY.accountInfo, res)
         res.nick_name = this.handleNickname(res.nick_name)
         // 判断是否成为俱乐部会员，未成为则跳转填写信息
-        if (!$notNull(res.student)) {
-          let hasShowClubVipAlertSign = getLocalStorage('hy_daxue_show_club_vip_alert_sign')
-          let threeDayTime = 259200 //s
-          let threeDayLaterTimeStr = parseInt(new Date().getTime() / 1000) + threeDayTime
-          if (!hasShowClubVipAlertSign) {
-            setTimeout(() => {
-              this.setData({
-                showClubVipAlert: true
-              })
-              setLocalStorage("hy_daxue_show_club_vip_alert_sign", threeDayLaterTimeStr)
-            },1000)
-          }
-        }
+        // if (!$notNull(res.student)) {
+        //   let hasShowClubVipAlertSign = getLocalStorage('hy_daxue_show_club_vip_alert_sign')
+        //   let threeDayTime = 259200 //s
+        //   let threeDayLaterTimeStr = parseInt(new Date().getTime() / 1000) + threeDayTime
+        //   if (!hasShowClubVipAlertSign) {
+        //     setTimeout(() => {
+        //       this.setData({
+        //         showClubVipAlert: true,
+        //         showClubVipAlertType: 1
+        //       })
+        //       setLocalStorage("hy_daxue_show_club_vip_alert_sign", threeDayLaterTimeStr)
+        //     }, 1000)
+        //   }
+        // }
         this.setData({
           userInfo: res
         })
+        this.checkHasFillAddress()
         resolve()
       }).catch((err) => {
         if (err === -2) {
@@ -307,6 +325,7 @@ Page({
       })
     })
   },
+
   getBanner() {
     getFindBanner({
       scene: 18
@@ -316,6 +335,37 @@ Page({
       })
     })
   },
+
+
+  // 检查是否填写收获地址表单
+  checkHasFillAddress() {
+    checkUserHasAddress({
+      user_id: this.data.userInfo.id
+    }).then(res => {
+      if (res.code === 0) {
+        let data = res.data.hasAddr
+        if (!data) {
+          let hasShowClubVipAlertSign = getLocalStorage('hy_daxue_show_club_vip_alert_sign')
+          let threeDayTime = 259200 //s
+          let threeDayLaterTimeStr = parseInt(new Date().getTime() / 1000) + threeDayTime
+          let rootUrl = baseUrl.baseUrl
+          let userId = this.data.userInfo.id
+          let type = this.data.disHasFluentLearnUserInfo ? 2 : 1
+          if (!hasShowClubVipAlertSign) {
+            setTimeout(() => {
+              this.setData({
+                showClubVipAlert: true,
+                showClubVipAlertType: type,
+                showClubVipAlertLink: encodeURIComponent(`${rootUrl}/#/home/huayangClubForm?id=${userId}&from=daxue&type=${type}`)
+              })
+              setLocalStorage("hy_daxue_show_club_vip_alert_sign", threeDayLaterTimeStr)
+            }, 1000)
+          }
+        }
+      }
+    })
+  },
+
   /**
    * 请求学生卡信息
    */
@@ -374,8 +424,11 @@ Page({
   // 用户确认授权
   authCompleteEvent() {
     this.reloadUserCenter()
-    this.setData({didShowAuth: false})
+    this.setData({
+      didShowAuth: false
+    })
   },
+
   reloadUserCenter() {
     this.run()
     this.queryContentInfo()
@@ -490,7 +543,9 @@ Page({
 
     // 04.25之前成为花样学生的用户，点击获取专属海报按钮时跳转老带新海报，反之跳转学生卡海报页
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-    wx.navigateTo({url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id})
+    wx.navigateTo({
+      url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id
+    })
     // if ($notNull(this.data.fluentLearnUserInfo)) {
     //   let createdAt = dayjs(this.data.fluentLearnUserInfo.created_at)
     //   if (createdAt.isBefore(dayjs("2021-04-25"))) {
