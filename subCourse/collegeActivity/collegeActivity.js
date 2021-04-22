@@ -7,9 +7,11 @@ Page({
             limit:10,
             offset:0
         },
+        hasMore: true,
         activityList: []
     },
     getActivityList() {
+        if (!this.data.hasMore) return
         getActivityList({
             status: 1,
             colleage_activity:1,
@@ -18,6 +20,9 @@ Page({
             offset:this.data.pagesControl.offset
         }).then(x=>{
             let list = x.list;
+            if (list.length < this.data.pagesControl.limit) {
+                this.setData({hasMore: false})
+            }
             this.setData({
                 activityList:this.data.activityList.concat(list),
                 pagesContorl:{
