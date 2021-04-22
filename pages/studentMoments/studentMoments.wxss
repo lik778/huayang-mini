@@ -117,6 +117,7 @@
 
 .barrage-scroll-top {
   margin-bottom: 16rpx;
+  margin-top: 28rpx;
 }
 
 .barrage-scroll-top,
@@ -126,7 +127,7 @@
   align-items: center;
   /* overflow: hidden; */
   flex-wrap: nowrap;
-  height: 64rpx;
+  height: 56rpx;
 }
 
 .barrage-scroll-bottom {
@@ -164,7 +165,8 @@
 
 .barrage-scroll-module {
   /* background: #fff; */
-  padding: 28rpx 0;
+  /* padding: 28rpx 0; */
+  height: 100%;
   opacity: 0;
 
 }
