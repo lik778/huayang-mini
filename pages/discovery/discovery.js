@@ -11,7 +11,7 @@ import { getActivityList, getFindBanner, getOfflineCourseAllData, getVideoTypeLi
 import { FluentLearnUserType, GLOBAL_KEY, WeChatLiveStatus } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import { getYouZanAppId } from "../../api/mall/index"
-import { getFluentCardInfo } from "../../api/mine/index"
+import { getFluentCardInfo, getFluentLearnInfo } from "../../api/mine/index"
 import {
 	addTravelVisitNumber,
 	getDiscoveryRemindData,
@@ -57,6 +57,9 @@ Page({
 		didFluentCardUser: false, // 是否是花样大学学生
 		didShowGuide: false, // 是否展示入群引导
 		didExecuteGuideAnimation: false, // 是否执行入群引导动画
+		collegeVideoUrl: undefined, // 大学宣传视频地址
+		collegeVideoPost: "", // 大学宣传视频封面图
+		isCollegeVideoPlaying: false, // 大学宣传视频是否正在播放
 	},
 	async run() {
 		// 请求花样大学首页弹窗任务
@@ -171,6 +174,16 @@ Page({
 		let courseList = await queryQualityVideoList(params)
 		this.setData({courseList})
 
+		// 获取畅学卡权益信息
+		let {data: {video: collegeVideoUrl, video_cover: collegeVideoPost}} = await getFluentLearnInfo()
+		this.setData({
+			collegeVideoUrl: collegeVideoUrl ? collegeVideoUrl : undefined,
+			collegeVideoPost
+		})
+		if (collegeVideoUrl) {
+			this.initCollegeIntroVideoListener()
+		}
+
 		// 检查用户类型
 		if (hasUserInfo() && hasAccountInfo()) {
 			let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
@@ -251,9 +264,10 @@ Page({
 			this.setData({liveList: [...originLiveList]})
 		}
 	},
+	// 初始化今日推荐视频，进入离开可视区域监听事件
 	initVideoListener() {
-		let ob = wx.createIntersectionObserver()
-		ob.relativeToViewport({
+		let previewOB = wx.createIntersectionObserver()
+		previewOB.relativeToViewport({
 			top: -50,
 			bottom: -50
 		})
@@ -268,6 +282,33 @@ Page({
 					videoInstance.pause()
 				}
 			})
+	},
+	// 初始化大学宣传视频，进入离开可视区域监听事件
+	initCollegeIntroVideoListener() {
+		let collegeOB = wx.createIntersectionObserver()
+		collegeOB.relativeToViewport({
+			top: 0,
+			bottom: 0
+		})
+			.observe('.hy-video', res => {
+				if (res && res.intersectionRatio > 0) {
+					// 进入可视区域
+				} else {
+					// 离开可视区域
+					this.onPauseCollegeVideo()
+				}
+			})
+	},
+	// 播放花样大学介绍视频
+	onPlayCollegeVideo() {
+		let videoInstance = wx.createVideoContext("hy-video-content")
+		videoInstance.play()
+		this.setData({isCollegeVideoPlaying: true})
+	},
+	onPauseCollegeVideo() {
+		let videoInstance = wx.createVideoContext("hy-video-content")
+		videoInstance.pause()
+		this.setData({isCollegeVideoPlaying: false})
 	},
 	// 请求畅销卡信息
 	getFluentInfo() {
@@ -601,6 +642,12 @@ Page({
 		}
 	},
 	goToJoinFluentCardPage() {
+		if (this.data.isCollegeVideoPlaying) {
+			let t = setTimeout(() => {
+				this.onPauseCollegeVideo()
+				clearTimeout(t)
+			}, 200)
+		}
 		wx.navigateTo({
 			url: "/mine/joinFluentLearn/joinFluentLearn",
 			complete() {

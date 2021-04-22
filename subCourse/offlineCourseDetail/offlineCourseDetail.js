@@ -3,6 +3,7 @@ import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, isIphoneXRSMax,
 import { GLOBAL_KEY } from "../../lib/config"
 import { getFluentCardInfo, getFluentLearnInfo } from "../../api/mine/index"
 import dayjs from "dayjs"
+import bxPoint from "../../utils/bxPoint"
 
 Page({
 
@@ -99,6 +100,14 @@ Page({
 						zh_study_time: `${dayjs(data.study_time).format("YYYY-MM-DD")} ${this.data.weekDays[dayjs(data.study_time).day()]}`
 					}
 				})
+
+				bxPoint("offline_series_detail_visit", {
+					series_offline_id: data.id,
+					series_offline_name: data.name,
+					series_offline_subname: data.title,
+					series_offline_ori_price: data.price,
+					series_offline_dis_price: data.discount_price
+				})
 			}
 		}
 
@@ -126,6 +135,7 @@ Page({
 	},
 	// 创建订单
 	createOrder(e) {
+		bxPoint("offline_series_buy", {series_offline_id: this.data.info.id}, false)
 		if (this.data.payLock) return
 		let order_type = e.currentTarget.dataset.key
 		this.setData({payLock: true})
@@ -163,6 +173,7 @@ Page({
 	},
 	openContactModal() {
 		this.setData({didShowContact: true})
+		bxPoint("offline_series_contact_service", {series_offline_id: this.data.info.id}, false)
 	},
 	onCloseContactModal() {
 		this.setData({didShowContact: false})

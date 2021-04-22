@@ -27,15 +27,18 @@
     </view>
 
     <!-- 花样大学介绍 -->
-    <view class="hy-intro" wx:if="{{!didFluentCardUser}}" bindtap="goToJoinFluentCardPage">
-        <view class="layer">
+    <view class="hy-intro" wx:if="{{!didFluentCardUser && collegeVideoUrl}}">
+        <view class="layer" bindtap="goToJoinFluentCardPage">
             <text>花样大学介绍</text>
             <view class="hy-intro-btn">加入花样大学 ›</view>
         </view>
-        <video id="hy-video-content" class="hy-video" src="" controls="{{false}}"
-               custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}"
-               enable-progress-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}"
-               show-play-btn="{{false}}" autoplay="{{false}}" loop="{{true}}"></video>
+        <view class="hy-intro-video-wrap">
+            <video id="hy-video-content" bindtap="goToJoinFluentCardPage" class="hy-video" src="{{collegeVideoUrl}}" poster="{{collegeVideoPost}}" controls="{{false}}"
+                   custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}"
+                   enable-progress-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}"
+                   show-play-btn="{{false}}" autoplay="{{false}}" loop="{{true}}"></video>
+            <image catchtap="onPlayCollegeVideo" wx:if="{{!isCollegeVideoPlaying}}" class="pause-icon" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619061373BeZzQx.jpg"></image>
+        </view>
     </view>
 
     <!-- 直播 -->
@@ -85,9 +88,9 @@
         <view class="more-travel" bindtap="onMoreTravelLineTap">查看更多游学路线 ›</view>
     </view>
 
-    <!-- 大学活动 -->
+    <!-- 校友活动 -->
     <view class="college-activity" wx:if="{{activityList.length > 0}}">
-        <view class="layer">大学活动</view>
+        <view class="layer">校友活动</view>
         <view class="college-activity-item" wx:for="{{activityList}}" wx:key="index" data-item="{{item}}" bindtap="onCollegeActivityTap">
             <image class="college-activity-picture" mode="aspectFill" src="{{item.cover_url}}"></image>
             <view class="college-activity-title limit-two-line">{{item.title}}</view>
@@ -134,7 +137,7 @@
         <view class="guide {{didExecuteGuideAnimation ? 'animation' : ''}}">
             <view>
                 <image class="guide-pic" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618560928medyIv.jpg"></image>
-                <text class="guide-text">立即加入花样学习活动群</text>
+                <text class="guide-text">立即加入「花样学习活动群」</text>
             </view>
             <view class="guide-btn">进群</view>
             <image class="guide-close-icon" catchtap="closeGuide" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618560964nUbRZc.jpg"></image>

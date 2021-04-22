@@ -37,7 +37,7 @@ Page({
 				path: "/subCourse/freeOnlineCourse/freeOnlineCourse"
 			},
 			{
-				name: "大学活动",
+				name: "校友活动",
 				picture: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618484705gzPcha.jpg",
 				path: "/subCourse/collegeActivity/collegeActivity"
 			},
@@ -228,24 +228,7 @@ Page({
 		this.getVideoList(index)
 
 		// 打点
-		switch (index) {
-			case 0: {
-				bxPoint("series_all_tab", {}, false)
-				break
-			}
-			case 1: {
-				bxPoint("series_mote_tab", {}, false)
-				break
-			}
-			case 2: {
-				bxPoint("series_shishang_tab", {}, false)
-				break
-			}
-			case 3: {
-				bxPoint("series_shengyue_tab", {}, false)
-				break
-			}
-		}
+		bxPoint("series_tab_button", {tab_tag: this.data.titleList[index]}, false)
 	},
 	// 获取模特结构化动作列表
 	getModelStructureList() {
@@ -289,37 +272,44 @@ Page({
 	},
 	// 处理轮播点击事件
 	joinCampFromBanner(e) {
+		let {link, link_type, id} = e.currentTarget.dataset.item
+		bxPoint("series_banner", {bannerId: id, position: "practice"}, false)
 		if (e.currentTarget.dataset.item.need_auth === 1) {
 			if (!hasUserInfo() || !hasAccountInfo()) {
-				let link = e.currentTarget.dataset.item.link
-				this.setData({
-					didShowAuth: true,
-					modelBannerLink: link,
-					isModelLink: false
-				})
+				this.setData({didShowAuth: true})
 				return
 			}
 		}
-		let {
-			link,
-			link_type,
-			id
-		} = e.currentTarget.dataset.item
 		if (link_type === 'youzan') {
 			getYouZanAppId().then(appId => {
-				wx.navigateToMiniProgram({
-					appId,
-					path: link,
-				})
+				wx.navigateToMiniProgram({appId, path: link})
 			})
 		} else {
-			wx.navigateTo({
-				url: link
-			})
+			wx.navigateTo({url: link})
 		}
 	},
 	onHyperTap(e) {
 		let {path} = e.currentTarget.dataset.item
+
+		switch (path) {
+			case "/subCourse/freeOnlineCourse/freeOnlineCourse": {
+				bxPoint("series_online_free", {}, false)
+				break
+			}
+			case "/subCourse/collegeActivity/collegeActivity": {
+				bxPoint("series_activities", {}, false)
+				break
+			}
+			case "/subCourse/offlineCourse/offlineCourse": {
+				bxPoint("series_offline_jinpin", {}, false)
+				break
+			}
+			case "travel": {
+				bxPoint("series_travel", {}, false)
+				break
+			}
+		}
+
 		if (path === 'travel') {
 			wx.navigateToMiniProgram({
 				appId: "wx2ea757d51abc1f47",

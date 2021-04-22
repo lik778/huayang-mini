@@ -35,7 +35,7 @@
 			</view>
 
 			<view class="invite-self-code">
-				<view class="invite-self-code-right" bindtap="generatePoster">获取专属邀请海报</view>
+				<view class="invite-self-code-right" bindtap="generatePoster">邀请好友加入花样大学</view>
 			</view>
 
 		</block>

@@ -23,6 +23,17 @@
           "pathName": "studentMoments/studentMomentsDetail/studentMomentsDetail",
           "query": "id=1",
           "scene": null
+        },
+        {
+          "name": "学生卡售前页",
+          "pathName": "mine/joinFluentLearn/joinFluentLearn",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "学生卡详情页",
+          "pathName": "mine/fluentLearnInfo/fluentLearnInfo",
+          "scene": null
         }
       ]
     }

@@ -214,7 +214,7 @@ Page({
 		await drawFont(ctx, this.data.discount_price, '#CC0000', "400", "PingFangSC", 24, 35 + text01Width, 419 + 12)
 		ctx.font = '24px PingFang SC'
 		let text02Width = measureTextWidth(ctx, "365")
-		await drawFont(ctx, "元/年", '#000000', "400", "PingFangSC", 14, 35 + text01Width + text02Width, 419 + 8 + 12)
+		await drawFont(ctx, "元", '#000000', "400", "PingFangSC", 14, 35 + text01Width + text02Width, 419 + 8 + 12)
 		// await drawFont(ctx, `原价${this.data.price}元/年`, 'rgba(0,0,0, 0.5)', "400", "PingFangSC", 12, 35, 452)
 		// await drawLine(ctx, 'rgba(0,0,0, 0.5)', 1, 35, 460, 35 + 76, 460)
 		await drawBorderCircle(ctx, this.data.qrcode, 185 + 33, 412 + 33, 36)

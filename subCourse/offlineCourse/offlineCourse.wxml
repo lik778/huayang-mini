@@ -2,7 +2,7 @@
     <!-- 人气推荐 -->
     <block wx:if="{{recommendCourse}}">
         <view class="layer hot">人气推荐</view>
-        <view class="offline-course-item" bindtap="goToOfflineCourseDetail" data-item="{{recommendCourse}}">
+        <view class="offline-coourse-item" bindtap="goToOfflineCourseDetailByRecommend" data-item="{{recommendCourse}}">
             <image class="pic" src="{{recommendCourse.cover}}" mode="aspectFill"></image>
             <view class="title limit-two-line">{{recommendCourse.title}}</view>
             <view class="info">

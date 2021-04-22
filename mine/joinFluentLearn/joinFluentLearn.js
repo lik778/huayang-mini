@@ -1,10 +1,4 @@
-import {
-	getFluentCardHotkecheng,
-	getFluentCardInfo,
-	getFluentLearnInfo,
-	getPartnerInfo,
-	payForFluentCard
-} from "../../api/mine/index"
+import { getFluentCardInfo, getFluentLearnInfo, getPartnerInfo, payForFluentCard } from "../../api/mine/index"
 
 import {
 	$notNull,
@@ -21,6 +15,7 @@ import { ErrorLevel, FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
 import { collectError } from "../../api/auth/index"
 import bxPoint from "../../utils/bxPoint"
+import { queryQualityVideoList } from "../../api/live/index"
 
 Page({
 
@@ -370,11 +365,7 @@ Page({
 	 * 获取热门课程
 	 */
 	getHotkecheng() {
-		getFluentCardHotkecheng({
-			limit: 5
-		}).then(({
-			data
-		}) => {
+		queryQualityVideoList({limit: 10}).then((data) => {
 			data = data || []
 			let list = data.map(item => ({
 				id: item.kecheng_series.id,

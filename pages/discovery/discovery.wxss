@@ -106,10 +106,24 @@
   color: #CC0000;
 }
 
+.hy-intro-video-wrap {
+  position: relative;
+  font-size: 0;
+}
+
 .hy-video {
   width: 100%;
   height: 344rpx;
   border-radius: 16rpx;
+}
+
+.pause-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 112rpx;
+  height: 112rpx;
 }
 
 /* 线下精品课 */
