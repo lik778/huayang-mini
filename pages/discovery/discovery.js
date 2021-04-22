@@ -192,7 +192,7 @@ Page({
 		if (this.data.didLoadSecondMain) return
 		this.setData({didLoadSecondMain: true})
 		// 校友活动
-		let {list: activityList} = await getActivityList({offset: 0, limit: 9999, colleage_activity: 1, platform: 1})
+		let {list: activityList} = await getActivityList({status: 1, offset: 0, limit: 9999, colleage_activity: 1, platform: 1})
 		this.setData({activityList})
 
 		// 今日推荐
