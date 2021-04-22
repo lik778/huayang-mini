@@ -190,5 +190,5 @@
 		</view>
 	</view>
 	<!-- 加入俱乐部会员弹窗 -->
-	<clubVipAlert type='{{showClubVipAlertType}}' show="{{showClubVipAlert}}" bind:closeClubVipAlert='closeClubVipAlert' link="{{showClubVipAlertLink}}"></clubVipAlert>
+	<clubVipAlert show="{{showClubVipAlert}}" bind:closeClubVipAlert='closeClubVipAlert' link="{{showClubVipAlertLink}}"></clubVipAlert>
 </view>

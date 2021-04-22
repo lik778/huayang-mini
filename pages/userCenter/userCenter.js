@@ -346,7 +346,7 @@ Page({
         let data = res.data.hasAddr
         if (!data) {
           let hasShowClubVipAlertSign = getLocalStorage('hy_daxue_show_club_vip_alert_sign')
-          let threeDayTime = 259200 //s
+          let threeDayTime = this.data.disHasFluentLearnUserInfo ? 86400 : 259200 //买了学生卡1天1显示没买3天一显示
           let threeDayLaterTimeStr = parseInt(new Date().getTime() / 1000) + threeDayTime
           let rootUrl = baseUrl.baseUrl
           let userId = this.data.userInfo.id
