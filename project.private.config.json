@@ -13,18 +13,6 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/studentMoments/studentMoments",
-          "pathName": "pages/studentMoments/studentMoments",
-          "query": "id=1",
-          "scene": null
-        },
-        {
-          "name": "studentMoments/studentMomentsDetail/studentMomentsDetail",
-          "pathName": "studentMoments/studentMomentsDetail/studentMomentsDetail",
-          "query": "id=1",
-          "scene": null
-        },
-        {
           "name": "学生卡售前页",
           "pathName": "mine/joinFluentLearn/joinFluentLearn",
           "query": "",
@@ -33,6 +21,12 @@
         {
           "name": "学生卡详情页",
           "pathName": "mine/fluentLearnInfo/fluentLearnInfo",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "学校课程TAB",
+          "pathName": "pages/practice/practice",
           "query": "",
           "scene": null
         }

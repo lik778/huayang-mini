@@ -61,19 +61,11 @@
 }
 
 .interest-text {
-    margin-top: 20rpx;
-    font: 28rpx/48rpx PingFangSC;
-}
-
-.interest-text {
     width: 100%;
-    margin-top: 20rpx;
-    /* font: 28rpx/40rpx PingFangSC; */
-    font-size: 32rpx;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
+    margin-top: 12rpx;
+    font: 28rpx/40rpx PingFangSC;
+    text-align: justify;
     color: #000000;
-    line-height: 48rpx;
 }
 
 .equity {
