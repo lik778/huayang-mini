@@ -340,6 +340,7 @@ Page({
 
   // 检查是否填写收获地址表单
   checkHasFillAddress() {
+    console.log(1)
     checkUserHasAddress({
       user_id: this.data.userInfo.id
     }).then(res => {
@@ -351,6 +352,7 @@ Page({
           let threeDayLaterTimeStr = parseInt(new Date().getTime() / 1000) + threeDayTime
           let rootUrl = baseUrl.baseUrl
           let userId = this.data.userInfo.id
+          console.log(this.data.disHasFluentLearnUserInfo)
           let type = this.data.disHasFluentLearnUserInfo ? 2 : 1
           if (!hasShowClubVipAlertSign) {
             setTimeout(() => {
@@ -362,8 +364,6 @@ Page({
               setLocalStorage("hy_daxue_show_club_vip_alert_sign", threeDayLaterTimeStr)
             }, 1000)
           }
-        } else {
-          removeLocalStorage("hy_daxue_show_club_vip_alert_sign")
         }
       }
     })
@@ -402,6 +402,7 @@ Page({
           didVisibleVIPIcon: accountInfo.tag_list ? accountInfo.tag_list.includes("vip") : false,
           cardBtnText: isFluentLearnExpired ? "立即加入" : "查看权益"
         })
+
       } else {
         this.setData({
           cardBtnText: "立即加入"
@@ -420,6 +421,7 @@ Page({
   // 用户授权取消
   authCancelEvent() {
     this.run()
+
     this.setData({
       didShowAuth: false
     })
@@ -427,8 +429,26 @@ Page({
   // 用户确认授权
   authCompleteEvent() {
     this.reloadUserCenter()
+    this.init()
     this.setData({
       didShowAuth: false
+    })
+  },
+
+  // 处理
+  init() {
+    this.setData({
+      userInfo: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+    })
+    getFluentCardInfo({
+      user_snow_id: this.data.userInfo.snow_id
+    }).then(({
+      data
+    }) => {
+      this.setData({
+        disHasFluentLearnUserInfo: !!data
+      })
+      this.checkHasFillAddress()
     })
   },
 
@@ -490,9 +510,7 @@ Page({
   },
   // 公用方法
   kingOfTheWorld() {
-    this.getUserSingerInfo().then(() => {
-      this.checkHasFillAddress()
-    })
+    this.getUserSingerInfo()
   },
   // 联系客服
   callPhone(e) {
@@ -707,7 +725,7 @@ Page({
 
     if (hasAccountInfo() && hasUserInfo()) {
       // 每次访问个人中心更新最新的账户数据和学生卡信息
-
+      this.init()
       this.getUserSingerInfo().then(() => {
         this.getFluentInfo()
       })
