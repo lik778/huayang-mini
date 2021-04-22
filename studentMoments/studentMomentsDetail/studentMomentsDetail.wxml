@@ -101,19 +101,23 @@
       <!-- 也参加该课程 -->
       <view class="course-list" wx:if='{{detailData.bubble.relate_type>0}}'>
         <!-- 线上课程 -->
-        <view class="online-course-item" bindtap="toCourseDetail" data-item='{{detailData.kecheng_series}}'
-          data-index='0' wx:if="{{detailData.bubble.relate_type===1}}">
+        <view class="online-course-item" bindtap="toCourseDetail"
+          data-item='{{detailData.kecheng_series.kecheng_series}}' data-index='0'
+          wx:if="{{detailData.bubble.relate_type===1}}">
           <view class="online-course-logo">
-            <image src="{{detailData.kecheng_series.cover_pic}}"></image>
+            <image src="{{detailData.kecheng_series.kecheng_series.cover_pic}}"></image>
           </view>
           <view class="online-course-right">
             <view class="online-course-right-top">
-              <view class="online-course-main-name limit-one-line">{{detailData.kecheng_series.teacher_desc}}</view>
-              <view class="online-course-sub-name limit-one-line">{{detailData.kecheng_series.name}}</view>
-              <view class="online-course-teacher-name limit-one-line">方圆老师 资深时尚老师</view>
+              <view class="online-course-main-name limit-one-line">
+                {{detailData.kecheng_series.kecheng_series.teacher_desc}}</view>
+              <view class="online-course-sub-name limit-one-line">{{detailData.kecheng_series.kecheng_series.name}}
+              </view>
+              <view class="online-course-teacher-name limit-one-line">{{detailData.kecheng_series.teacher.name}}老师
+                {{detailData.kecheng_series.teacher.teacher_desc}}</view>
             </view>
             <view class="online-course-right-bottom">
-              共{{detailData.kecheng_series.visit_count}}人学习
+              共{{detailData.kecheng_series.kecheng_series.visit_count}}人学习
             </view>
           </view>
         </view>
@@ -153,9 +157,16 @@
           <view class="travel-item-title limit-two-line">{{detailData.travel_product.name}}</view>
           <view class="travel-item-bottom">
             <view class="travel-item-bottom-left">
-              <text class="travel-item-price-sign">¥</text>
-              <text class="travel-item-old-price">{{detailData.travel_product.discount_price/100}}</text>
-              <text class="travel-item-new-price">¥{{detailData.travel_product.price/100}}</text>
+              <block wx:if="{{detailData.travel_product.discount_price!==-1}}">
+                <text class="travel-item-price-sign">¥</text>
+                <text class="travel-item-old-price">{{detailData.travel_product.discount_price/100}}</text>
+              </block>
+              <block wx:if="{{detailData.travel_product.discount_price===0}}">
+                <text class="travel-item-price-sign">免费</text>
+              </block>
+              <text wx:if="{{detailData.travel_product.discount_price>=0}}"
+                class="travel-item-new-price">¥{{detailData.travel_product.price/100}}</text>
+              <text wx:if="{{detailData.travel_product.discount_price===-1}}" class="travel-item-old-price">¥{{detailData.travel_product.price/100}}</text>
             </view>
             <view class="travel-item-bottom-right">
               {{detailData.travel_product.buy_count}}人已购

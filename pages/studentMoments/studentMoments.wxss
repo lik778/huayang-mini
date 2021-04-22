@@ -282,7 +282,7 @@ video {
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
   color: #000000;
-  line-height: 32rpx;
+  line-height: 40rpx;
   padding-top: 20rpx;
   padding-bottom: 24rpx;
 }

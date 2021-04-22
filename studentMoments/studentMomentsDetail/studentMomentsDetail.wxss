@@ -382,6 +382,10 @@
   height: 36rpx;
 }
 
+.online-course-right-top>view {
+  max-width: 500rpx;
+}
+
 .online-course-sub-name {
   font-size: 32rpx;
   font-family: PingFangSC-Regular, PingFang SC;
@@ -390,6 +394,7 @@
   line-height: 32rpx;
   height: 32rpx;
   padding: 28rpx 0 20rpx 0;
+  width: 500rpx;
 }
 
 .online-course-teacher-name {
@@ -522,7 +527,7 @@
   color: #000000;
   line-height: 50rpx;
   max-height: 100rpx;
-  padding: 20rpx 0;
+  margin: 20rpx 0;
 }
 
 .travel-item-bottom {
