@@ -96,13 +96,13 @@
 .layer {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   margin-bottom: 40rpx;
   font: 500 52rpx/52rpx PingFangSC;
 }
 
 .hy-intro-btn {
-  font: bold 28rpx/28rpx PingFangSC;
+  font: 500 28rpx/28rpx PingFangSC;
   color: #CC0000;
 }
 

@@ -206,6 +206,7 @@ Page({
 	},
 	onGuideTap() {
 		this.setData({didShowContact: true})
+		bxPoint("homepage_activities_group_join", {}, false)
 	},
 	// 打开微信授权
 	openUserAuth() {
@@ -278,8 +279,18 @@ Page({
 	},
 	// 跳转到线下精品课详情页
 	goToOfflineCourseDetail(e) {
-		let {id} = e.currentTarget.dataset.item
-		wx.navigateTo({url: `/subCourse/offlineCourseDetail/offlineCourseDetail?id=${id}`})
+		let {id, title, price, discount_price} = e.currentTarget.dataset.item
+		wx.navigateTo({
+			url: `/subCourse/offlineCourseDetail/offlineCourseDetail?id=${id}`,
+			complete() {
+				bxPoint("homepage_offline_series", {
+					series_offline_id: id,
+					series_offline_name: title,
+					series_offline_ori_price: price,
+					series_offline_dis_price: discount_price,
+				}, false)
+			}
+		})
 	},
 	onTravelTap(e) {
 		let item = e.currentTarget.dataset.item
@@ -323,9 +334,15 @@ Page({
 	},
 	// 点击金刚位
 	onKingKongTap(e) {
-		getApp().globalData.discoveryToPracticeTabIndex = e.currentTarget.dataset.item.id - 1
+		let {id, value} =  e.currentTarget.dataset.item
+		getApp().globalData.discoveryToPracticeTabIndex = id - 1
 		wx.nextTick(() => {
-			wx.switchTab({url: `/pages/practice/practice`})
+			wx.switchTab({
+				url: `/pages/practice/practice`,
+				complete() {
+					bxPoint("homepage_tab_button", {tab_tag: value}, false)
+				}
+			})
 		})
 	},
 	// 打开入群引导弹窗
@@ -341,13 +358,24 @@ Page({
 			clearTimeout(t)
 		}, 300)
 		setLocalStorage(GLOBAL_KEY.discoveryGuideExpiredAt, dayjs(`${dayjs().year()}-${dayjs().month() + 1}-${dayjs().date()} 23:59:59`).format("YYYY-MM-DD HH:mm:ss"))
+		bxPoint("homepage_activities_group_join_close", {}, false)
 	},
 	// 大学活动点击
 	onCollegeActivityTap(e) {
-		let activityId = e.currentTarget.dataset.item.id
+		let {id: activityId, title, start_time, end_time} = e.currentTarget.dataset.item
 		if (activityId) {
 			let link = `${request.baseUrl}/#/home/detail/${activityId}`
-			wx.navigateTo({url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}`})
+			wx.navigateTo({
+				url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}`,
+				complete() {
+					bxPoint("homepage_activities", {
+						activities_id: activityId,
+						activities_name: title,
+						activities_start_time: start_time,
+						activities_end_time: end_time
+					}, false)
+				}
+			})
 		}
 	},
 	// 获取授权
@@ -573,7 +601,12 @@ Page({
 		}
 	},
 	goToJoinFluentCardPage() {
-		wx.navigateTo({url: "/mine/joinFluentLearn/joinFluentLearn"})
+		wx.navigateTo({
+			url: "/mine/joinFluentLearn/joinFluentLearn",
+			complete() {
+				bxPoint("homepage_join_huayang", {}, false)
+			}
+		})
 	},
 	// 关闭联系客服
 	onCloseContactModal() {
@@ -585,7 +618,7 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=225`})
+		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=226`})
 
 		let {scene, invite_user_id = "", source} = options
 		// 通过小程序码进入 scene=${source}

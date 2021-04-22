@@ -184,7 +184,7 @@ Page({
 			if (this.data.didFromDiscovery && this.data.tabsOffsetTop !== 0) {
 				this.setData({didFromDiscovery: false})
 				getApp().globalData.discoveryToPracticeTabIndex = undefined
-				wx.pageScrollTo({scrollTop: this.data.tabsOffsetTop, duration: 400})
+				wx.pageScrollTo({selector: "#practice-page", scrollTop: this.data.tabsOffsetTop, duration: 400})
 			}
 		})
 	},
@@ -215,6 +215,7 @@ Page({
 		// 设置页面位置
 		if (this.data.didShowFixedTabsLayout) {
 			wx.pageScrollTo({
+				selector: "#practice-page",
 				duration: 200,
 				scrollTop: this.data.tabsOffsetTop
 			})
@@ -350,7 +351,7 @@ Page({
 			if (this.data.didFromDiscovery) {
 				this.setData({didFromDiscovery: false})
 				getApp().globalData.discoveryToPracticeTabIndex = undefined
-				wx.pageScrollTo({scrollTop: top, duration: 400})
+				wx.pageScrollTo({selector: "#practice-page", scrollTop: top, duration: 400})
 			}
 		})
 
