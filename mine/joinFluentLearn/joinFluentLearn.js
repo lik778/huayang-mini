@@ -17,11 +17,19 @@ import {
 	setLocalStorage,
 	toast
 } from "../../utils/util"
-import { ErrorLevel, FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
+import {
+	ErrorLevel,
+	FluentLearnUserType,
+	GLOBAL_KEY
+} from "../../lib/config"
 import dayjs from "dayjs"
-import { collectError } from "../../api/auth/index"
+import {
+	collectError
+} from "../../api/auth/index"
 import bxPoint from "../../utils/bxPoint"
-import { queryQualityVideoList } from "../../api/live/index"
+import {
+	queryQualityVideoList
+} from "../../api/live/index"
 import baseUrl from "../../lib/request"
 
 Page({
@@ -97,8 +105,7 @@ Page({
 	/**
 	 * 生命周期函数--监听页面隐藏
 	 */
-	onHide: function () {
-	},
+	onHide: function () {},
 
 	/**
 	 * 生命周期函数--监听页面卸载
@@ -135,7 +142,9 @@ Page({
 		}
 	},
 	closeClubVipAlert() {
-		wx.navigateTo({url: "/mine/fluentCardCallback/fluentCardCallback"})
+		wx.navigateTo({
+			url: "/mine/fluentCardCallback/fluentCardCallback"
+		})
 	},
 	/**
 	 * 学生卡专属弹窗回调事件
@@ -200,7 +209,9 @@ Page({
 		}
 
 		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-		wx.navigateTo({url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id})
+		wx.navigateTo({
+			url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id
+		})
 		// wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
 	},
 	/**
@@ -326,7 +337,9 @@ Page({
 					.then(() => {
 						// 购买学生卡成功，判断用户是否填写收货地址信息
 						this.checkHasFillAddress().then(() => {
-							wx.navigateTo({url: "/mine/fluentCardCallback/fluentCardCallback"})
+							wx.navigateTo({
+								url: "/mine/fluentCardCallback/fluentCardCallback"
+							})
 						}).catch()
 
 
@@ -355,14 +368,19 @@ Page({
 	checkHasFillAddress() {
 		let user_id = getLocalStorage(GLOBAL_KEY.userId)
 		return new Promise((resolve, reject) => {
-			checkUserHasAddress({user_id}).then(res => {
+			checkUserHasAddress({
+				user_id
+			}).then(res => {
 				if (res.code === 0) {
 					let data = res.data.hasAddr
 					if (data) {
 						resolve()
 					} else {
+						removeLocalStorage("hy_daxue_show_club_vip_alert_sign")
 						let link = encodeURIComponent(`${baseUrl.baseUrl}/#/home/huayangClubForm?id=${user_id}&from=daxue&type=2`)
-						wx.navigateTo({url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`})
+						wx.navigateTo({
+							url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`
+						})
 						reject()
 					}
 				}
@@ -376,7 +394,10 @@ Page({
 		getFluentLearnInfo().then(({
 			data
 		}) => {
-			data.features = data.features.map(n => ({...n, titleAry: n.title.split('\n')}))
+			data.features = data.features.map(n => ({
+				...n,
+				titleAry: n.title.split('\n')
+			}))
 			this.setData({
 				name: data.card_name,
 				desc: data.description,
@@ -392,7 +413,9 @@ Page({
 	 * 获取热门课程
 	 */
 	getHotkecheng() {
-		queryQualityVideoList({limit: 10}).then((data) => {
+		queryQualityVideoList({
+			limit: 10
+		}).then((data) => {
 			data = data || []
 			let list = data.map(item => ({
 				id: item.kecheng_series.id,

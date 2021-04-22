@@ -22,6 +22,7 @@ import {
   getLocalStorage,
   hasAccountInfo,
   hasUserInfo,
+  removeLocalStorage,
   setLocalStorage,
   splitTargetNoString
 } from "../../utils/util"
@@ -361,6 +362,8 @@ Page({
               setLocalStorage("hy_daxue_show_club_vip_alert_sign", threeDayLaterTimeStr)
             }, 1000)
           }
+        }else{
+          removeLocalStorage("hy_daxue_show_club_vip_alert_sign")
         }
       }
     })
