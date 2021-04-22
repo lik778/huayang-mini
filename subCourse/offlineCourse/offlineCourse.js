@@ -85,7 +85,7 @@ Page({
 		}
 		getOfflineCourseList(params).then(({data}) => {
 			data = data || []
-			data = data.map(n => ({...n, price: n.price / 100, discount_price: n.discount_price / 100, cover: n.detail_pics.split(",")[0]}))
+			data = data.map(n => ({...n, price: n.price / 100, discount_price: n.discount_price / 100, cover: n.cover_pic.split(",")[0]}))
 			if (data.length < this.data.limit) {
 				this.setData({hasMore: false})
 			}
@@ -103,7 +103,7 @@ Page({
 						...recommendation,
 						price: recommendation.price / 100,
 						discount_price: recommendation.discount_price / 100,
-						cover: recommendation.detail_pics.split(",")[0]
+						cover: recommendation.cover_pic.split(",")[0]
 					}
 				})
 			}

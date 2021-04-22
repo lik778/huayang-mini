@@ -29,6 +29,12 @@
           "pathName": "pages/practice/practice",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "周年庆海报",
+          "pathName": "mine/oldInviteNew/oldInviteNew",
+          "query": "inviteId=11522901446496256",
+          "scene": null
         }
       ]
     }
