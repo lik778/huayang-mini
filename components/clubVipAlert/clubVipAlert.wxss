@@ -67,7 +67,7 @@
   width: 464rpx;
   height: 88rpx;
   border-radius: 999rpx;
-  background: #FF4444;
+  background: #CC0000;
   text-align: center;
   font-size: 36rpx;
   font-family: PingFangSC-Semibold, PingFang SC;

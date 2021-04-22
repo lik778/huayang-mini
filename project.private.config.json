@@ -23,6 +23,18 @@
           "pathName": "studentMoments/studentMomentsDetail/studentMomentsDetail",
           "query": "id=1",
           "scene": null
+        },
+        {
+          "name": "pages/userCenter/userCenter",
+          "pathName": "pages/userCenter/userCenter",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "subCourse/campDetail/campDetail",
+          "pathName": "subCourse/campDetail/campDetail",
+          "query": "id=44",
+          "scene": null
         }
       ]
     }
