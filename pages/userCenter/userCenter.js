@@ -1,20 +1,14 @@
-import {
-  FluentLearnUserType,
-  GLOBAL_KEY
-} from "../../lib/config"
+import { FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import baseUrl from "../../lib/request"
 import dayjs from "dayjs"
+import { getFindBanner, getPhoneNumber } from "../../api/course/index"
 import {
-  getFindBanner,
-  getPhoneNumber
-} from "../../api/course/index"
-import {
+  checkUserHasAddress,
   getFluentCardInfo,
   getFluentDistributeGuide,
   getFluentLearnInfo,
   getPartnerInfo,
   getUserInfo,
-  checkUserHasAddress,
   getUserOwnerClasses
 } from "../../api/mine/index"
 import {
@@ -22,17 +16,12 @@ import {
   getLocalStorage,
   hasAccountInfo,
   hasUserInfo,
-  removeLocalStorage,
   setLocalStorage,
   splitTargetNoString
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
-import {
-  getTaskEntranceStatus
-} from "../../api/task/index"
-import {
-  getYouZanAppId
-} from "../../api/mall/index"
+import { getTaskEntranceStatus } from "../../api/task/index"
+import { getYouZanAppId } from "../../api/mall/index"
 
 const Level = [{
     label: "准合伙人",
@@ -340,7 +329,6 @@ Page({
 
   // 检查是否填写收获地址表单
   checkHasFillAddress() {
-    console.log(1)
     checkUserHasAddress({
       user_id: this.data.userInfo.id
     }).then(res => {
