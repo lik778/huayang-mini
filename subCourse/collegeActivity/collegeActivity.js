@@ -11,6 +11,7 @@ Page({
     },
     getActivityList() {
         getActivityList({
+            status: 1,
             colleage_activity:1,
             platform: 1,
             limit:this.data.pagesControl.limit,

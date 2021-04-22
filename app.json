@@ -25,7 +25,6 @@
     "pages/privacy/privacy",
     "pages/service/service",
     "pages/coopen/coopen",
-    "components/levelAlert/levelAlert",
     "pages/webViewCommon/webViewCommon",
     "pages/activePlatform/activePlatform",
     "pages/activePay/activePay",

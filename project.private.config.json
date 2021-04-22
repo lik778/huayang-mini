@@ -25,15 +25,14 @@
           "scene": null
         },
         {
-          "name": "pages/userCenter/userCenter",
-          "pathName": "pages/userCenter/userCenter",
+          "name": "学生卡售前页",
+          "pathName": "mine/joinFluentLearn/joinFluentLearn",
           "query": "",
           "scene": null
         },
         {
-          "name": "subCourse/campDetail/campDetail",
-          "pathName": "subCourse/campDetail/campDetail",
-          "query": "id=44",
+          "name": "学生卡详情页",
+          "pathName": "mine/fluentLearnInfo/fluentLearnInfo",
           "scene": null
         }
       ]

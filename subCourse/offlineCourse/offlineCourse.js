@@ -1,5 +1,6 @@
 import { getOfflineCourseList, getRecommendOfflineCourse } from "../../api/course/index"
 import { $notNull } from "../../utils/util"
+import bxPoint from "../../utils/bxPoint"
 
 Page({
 
@@ -33,7 +34,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-
+		bxPoint("offline_series_visit")
 	},
 
 	/**
@@ -110,7 +111,34 @@ Page({
 	},
 	// 跳转到线下精品课详情页
 	goToOfflineCourseDetail(e) {
-		let {id} = e.currentTarget.dataset.item
-		wx.navigateTo({url: `/subCourse/offlineCourseDetail/offlineCourseDetail?id=${id}`})
+		let {id, name, title, price, discount_price} = e.currentTarget.dataset.item
+		wx.navigateTo({
+			url: `/subCourse/offlineCourseDetail/offlineCourseDetail?id=${id}`,
+			complete() {
+				bxPoint("offline_series_all", {
+					series_offline_id: id,
+					series_offline_name: name,
+					series_offline_subname: title,
+					series_offline_ori_price: price,
+					series_offline_dis_price: discount_price
+				}, false)
+			}
+		})
+	},
+	// 点击推荐线下课
+	goToOfflineCourseDetailByRecommend(e) {
+		let {id, name, title, price, discount_price} = e.currentTarget.dataset.item
+		wx.navigateTo({
+			url: `/subCourse/offlineCourseDetail/offlineCourseDetail?id=${id}`,
+			complete() {
+				bxPoint("offline_series_recommend", {
+					series_offline_id: id,
+					series_offline_name: name,
+					series_offline_subname: title,
+					series_offline_ori_price: price,
+					series_offline_dis_price: discount_price
+				}, false)
+			}
+		})
 	}
 })

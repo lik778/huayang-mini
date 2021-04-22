@@ -2,17 +2,18 @@
     <video
             class="preview-video"
             src="{{video}}"
+            wx:if="{{video}}"
             controls="{{false}}"
             custom-cache="{{false}}"
             object-fit="cover"
             enable-play-gesture="{{false}}"
             enable-progress-gesture="{{false}}"
             play-btn-position="top"
-            show-center-play-btn="{{false}}"
-            show-play-btn="{{false}}"
+            show-center-play-btn="{{true}}"
+            show-play-btn="{{true}}"
             autoplay="{{true}}"
             poster="{{video_cover}}"
-            loop="{{true}}"
+            loop="{{false}}"
     ></video>
 
     <image class="interest" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754BErAnd.jpg" mode="aspectFit"></image>

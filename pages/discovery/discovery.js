@@ -8,10 +8,10 @@ import {
 	setLocalStorage,
 } from "../../utils/util"
 import { getActivityList, getFindBanner, getOfflineCourseAllData, getVideoTypeList, } from "../../api/course/index"
-import { FluentLearnUserType, GLOBAL_KEY, WeChatLiveStatus } from "../../lib/config"
+import { GLOBAL_KEY, WeChatLiveStatus } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import { getYouZanAppId } from "../../api/mall/index"
-import { getFluentCardInfo } from "../../api/mine/index"
+import { getFluentCardInfo, getFluentLearnInfo } from "../../api/mine/index"
 import {
 	addTravelVisitNumber,
 	getDiscoveryRemindData,
@@ -32,7 +32,6 @@ Page({
 	data: {
 		current: 0,
 		isIosPlatform: false,
-		isFluentLearnVIP: false, // 是否是学生卡会员
 		showModelBanner: false,
 		didShowAuth: false,
 		isModelLink: true,
@@ -57,6 +56,10 @@ Page({
 		didFluentCardUser: false, // 是否是花样大学学生
 		didShowGuide: false, // 是否展示入群引导
 		didExecuteGuideAnimation: false, // 是否执行入群引导动画
+		collegeVideoUrl: undefined, // 大学宣传视频地址
+		collegeVideoPost: "", // 大学宣传视频封面图
+		isCollegeVideoPlaying: false, // 大学宣传视频是否正在播放
+		didLoadSecondMain: false, // 是否完成第二部分数据内容加载
 	},
 	async run() {
 		// 请求花样大学首页弹窗任务
@@ -102,7 +105,34 @@ Page({
 				}, 1000)
 			}
 		})
-		// 推荐直播间
+
+		// 获取banner数据
+		let bannerList = await this.getBanner()
+		bannerList = bannerList.filter(b => b.pic_url && b.link)
+		this.setData({bannerList})
+
+		// 金刚位
+		let kingKongs = await getVideoTypeList()
+		this.setData({kingKongs})
+
+		// 获取学生卡权益信息
+		let {data: {video: collegeVideoUrl, video_cover: collegeVideoPost}} = await getFluentLearnInfo()
+		this.setData({
+			collegeVideoUrl: collegeVideoUrl ? collegeVideoUrl : undefined,
+			collegeVideoPost
+		})
+		if (collegeVideoUrl) {
+			this.initCollegeIntroVideoListener()
+		}
+
+		// 检查用户身份
+		if (hasUserInfo() && hasAccountInfo()) {
+			let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+			let {data: fluentCardInfo} = await getFluentCardInfo({user_snow_id: accountInfo.snow_id})
+			this.setData({didFluentCardUser: !!fluentCardInfo})
+		}
+
+		// 直播
 		let list = await getRecommendLiveList()
 		list = list.map(item => {
 			item.liveStatus = this.calcStartTime(item.start_time)
@@ -126,17 +156,9 @@ Page({
 		const roomIds = list.filter(_ => _.roomId).map(t => t.roomId)
 		getSchedule(roomIds).then(this.handleLiveStatusCallback)
 
-		// 金刚位
-		let kingKongs = await getVideoTypeList()
-		this.setData({kingKongs})
-
-		// 线下精品课
+		// 线下乐活课程
 		let {data: offlineList} = await getOfflineCourseAllData()
 		this.setData({offlineList: offlineList.map(n => (({...n, price: n.price / 100, discount_price: n.discount_price / 100, cover: n.detail_pics.split(",")[0]})))})
-
-		// 大学活动
-		let {list: activityList} = await getActivityList({offset: 0, limit: 9999, colleage_activity: 1, platform: 1})
-		this.setData({activityList})
 
 		// 花样游学
 		let travelList = await queryTravelList()
@@ -149,6 +171,29 @@ Page({
 			return t
 		})
 		this.setData({travelList})
+
+		this.travelLayoutListener()
+	},
+	// 监听游学板块是否进入可视区域
+	travelLayoutListener() {
+		let travelOB = wx.createIntersectionObserver()
+		travelOB.relativeToViewport({
+			top: -50,
+			bottom: -50
+		})
+			.observe('.travel', res => {
+				if (res && res.intersectionRatio > 0) {
+					// 进入可视区域
+					this.runSecondMain()
+				}
+			})
+	},
+	async runSecondMain() {
+		if (this.data.didLoadSecondMain) return
+		this.setData({didLoadSecondMain: true})
+		// 校友活动
+		let {list: activityList} = await getActivityList({offset: 0, limit: 9999, colleage_activity: 1, platform: 1})
+		this.setData({activityList})
 
 		// 今日推荐
 		let recommendCourse = await queryTodayRecommendCourse()
@@ -171,12 +216,8 @@ Page({
 		let courseList = await queryQualityVideoList(params)
 		this.setData({courseList})
 
-		// 检查用户类型
-		if (hasUserInfo() && hasAccountInfo()) {
-			let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-			let {data: fluentCardInfo} = await getFluentCardInfo({user_snow_id: accountInfo.snow_id})
-			this.setData({didFluentCardUser: !!fluentCardInfo})
-		}
+		// 模特大赛
+		this.initModelBanner()
 	},
 	// 计算开播时间
 	calcStartTime(datetime) {
@@ -206,6 +247,7 @@ Page({
 	},
 	onGuideTap() {
 		this.setData({didShowContact: true})
+		bxPoint("homepage_activities_group_join", {}, false)
 	},
 	// 打开微信授权
 	openUserAuth() {
@@ -250,9 +292,10 @@ Page({
 			this.setData({liveList: [...originLiveList]})
 		}
 	},
+	// 初始化今日推荐视频，进入离开可视区域监听事件
 	initVideoListener() {
-		let ob = wx.createIntersectionObserver()
-		ob.relativeToViewport({
+		let previewOB = wx.createIntersectionObserver()
+		previewOB.relativeToViewport({
 			top: -50,
 			bottom: -50
 		})
@@ -268,18 +311,47 @@ Page({
 				}
 			})
 	},
-	// 请求畅销卡信息
-	getFluentInfo() {
-		if (!hasUserInfo() || !hasAccountInfo()) return
-		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-		getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data}) => {
-			this.setData({isFluentLearnVIP: $notNull(data) && data.status === FluentLearnUserType.active})
+	// 初始化大学宣传视频，进入离开可视区域监听事件
+	initCollegeIntroVideoListener() {
+		let collegeOB = wx.createIntersectionObserver()
+		collegeOB.relativeToViewport({
+			top: 0,
+			bottom: 0
 		})
+			.observe('.hy-video', res => {
+				if (res && res.intersectionRatio > 0) {
+					// 进入可视区域
+				} else {
+					// 离开可视区域
+					this.onPauseCollegeVideo()
+				}
+			})
+	},
+	// 播放花样大学介绍视频
+	onPlayCollegeVideo() {
+		let videoInstance = wx.createVideoContext("hy-video-content")
+		videoInstance.play()
+		this.setData({isCollegeVideoPlaying: true})
+	},
+	onPauseCollegeVideo() {
+		let videoInstance = wx.createVideoContext("hy-video-content")
+		videoInstance.pause()
+		this.setData({isCollegeVideoPlaying: false})
 	},
 	// 跳转到线下精品课详情页
 	goToOfflineCourseDetail(e) {
-		let {id} = e.currentTarget.dataset.item
-		wx.navigateTo({url: `/subCourse/offlineCourseDetail/offlineCourseDetail?id=${id}`})
+		let {id, title, price, discount_price} = e.currentTarget.dataset.item
+		wx.navigateTo({
+			url: `/subCourse/offlineCourseDetail/offlineCourseDetail?id=${id}`,
+			complete() {
+				bxPoint("homepage_offline_series", {
+					series_offline_id: id,
+					series_offline_name: title,
+					series_offline_ori_price: price,
+					series_offline_dis_price: discount_price,
+				}, false)
+			}
+		})
 	},
 	onTravelTap(e) {
 		let item = e.currentTarget.dataset.item
@@ -323,9 +395,15 @@ Page({
 	},
 	// 点击金刚位
 	onKingKongTap(e) {
-		getApp().globalData.discoveryToPracticeTabIndex = e.currentTarget.dataset.item.id - 1
+		let {id, value} =  e.currentTarget.dataset.item
+		getApp().globalData.discoveryToPracticeTabIndex = id - 1
 		wx.nextTick(() => {
-			wx.switchTab({url: `/pages/practice/practice`})
+			wx.switchTab({
+				url: `/pages/practice/practice`,
+				complete() {
+					bxPoint("homepage_tab_button", {tab_tag: value}, false)
+				}
+			})
 		})
 	},
 	// 打开入群引导弹窗
@@ -341,13 +419,24 @@ Page({
 			clearTimeout(t)
 		}, 300)
 		setLocalStorage(GLOBAL_KEY.discoveryGuideExpiredAt, dayjs(`${dayjs().year()}-${dayjs().month() + 1}-${dayjs().date()} 23:59:59`).format("YYYY-MM-DD HH:mm:ss"))
+		bxPoint("homepage_activities_group_join_close", {}, false)
 	},
 	// 大学活动点击
 	onCollegeActivityTap(e) {
-		let activityId = e.currentTarget.dataset.item.id
+		let {id: activityId, title, start_time, end_time} = e.currentTarget.dataset.item
 		if (activityId) {
 			let link = `${request.baseUrl}/#/home/detail/${activityId}`
-			wx.navigateTo({url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}`})
+			wx.navigateTo({
+				url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}`,
+				complete() {
+					bxPoint("homepage_activities", {
+						activities_id: activityId,
+						activities_name: title,
+						activities_start_time: start_time,
+						activities_end_time: end_time
+					}, false)
+				}
+			})
 		}
 	},
 	// 获取授权
@@ -469,15 +558,8 @@ Page({
 	},
 	// 获取banner列表
 	getBanner() {
-		getFindBanner({
+		return getFindBanner({
 			scene: 8
-		}).then(bannerList => {
-
-			bannerList = bannerList.filter(b => b.pic_url && b.link)
-
-			this.setData({
-				bannerList
-			})
 		})
 	},
 	// 检查用户是否引导
@@ -573,7 +655,18 @@ Page({
 		}
 	},
 	goToJoinFluentCardPage() {
-		wx.navigateTo({url: "/mine/joinFluentLearn/joinFluentLearn"})
+		if (this.data.isCollegeVideoPlaying) {
+			let t = setTimeout(() => {
+				this.onPauseCollegeVideo()
+				clearTimeout(t)
+			}, 200)
+		}
+		wx.navigateTo({
+			url: "/mine/joinFluentLearn/joinFluentLearn",
+			complete() {
+				bxPoint("homepage_join_huayang", {}, false)
+			}
+		})
 	},
 	// 关闭联系客服
 	onCloseContactModal() {
@@ -585,7 +678,7 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=225`})
+		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=226`})
 
 		let {scene, invite_user_id = "", source} = options
 		// 通过小程序码进入 scene=${source}
@@ -645,14 +738,6 @@ Page({
 		}
 
 		this.run()
-
-		this.initModelBanner()
-
-		// 获取banner数据
-		this.getBanner()
-
-		// 查询学生卡信息
-		this.getFluentInfo()
 
 		// 获取推荐数据
 		let params = {

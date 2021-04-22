@@ -42,9 +42,9 @@ Component({
       const url = data.path
 
       if (this.data.selected === 0 && url === '/pages/practice/practice') {
-        bxPoint("homepage_series_visit", {}, false)
+        bxPoint("homepage_series", {}, false)
       } else if (this.data.selected === 0 && url === '/pages/userCenter/userCenter') {
-        bxPoint("homepage_mine_visit", {}, false)
+        bxPoint("homepage_bbs", {}, false)
       } else if (this.data.selected === 1 && url === '/pages/discovery/discovery') {
         // jj-2021-04-19
         bxPoint("bbs_homepage", {}, false)
@@ -54,8 +54,8 @@ Component({
       } else if (this.data.selected === 1 && url === '/pages/userCenter/userCenter') {
         // jj-2021-04-19
         bxPoint("bbs_mine", {}, false)
-      } else if (this.data.selected === 2 && url === '/pages/discovery/discovery') {
-        bxPoint("series_homepage_visit", {}, false)
+      } else if (this.data.selected === 2 && url === '/pages/studentMoments/studentMoments') {
+        bxPoint("series_bbs", {}, false)
       } else if (this.data.selected === 2 && url === '/pages/userCenter/userCenter') {
         bxPoint("series_mine_visit", {}, false)
       } else if (this.data.selected === 3 && url === '/pages/discovery/discovery') {

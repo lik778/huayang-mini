@@ -2,6 +2,7 @@
   "usingComponents": {
     "authModule": "../../components/auth/auth",
     "fluentLearnModal": "../../components/fluentLearnModal/fluentLearnModal",
-    "contact":"../../components/contact/contact"
+    "contact":"../../components/contact/contact",
+    "clubVipAlert": "../../components/clubVipAlert/clubVipAlert"
   }
 }

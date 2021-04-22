@@ -1,4 +1,4 @@
-<view class="list">
+<view class="list" id="practice-page">
     <!-- 活动banner -->
     <view wx:if="{{bannerList.length!==0}}">
         <!-- banner 滚动区域 -->
