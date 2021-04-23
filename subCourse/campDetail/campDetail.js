@@ -653,7 +653,7 @@ Page({
             if (!data) {
               let rootUrl = baseUrl.baseUrl
               let type = isStudent ? 2 : 1
-              let link = encodeURIComponent(`${rootUrl}/#/home/huayangClubForm?id=${userId}&from=traincamp&type=${type}&campId=${this.data.campId}&special=${isStudent?true:''}&isStudent=${isStudent?true:false}`)
+              let link = encodeURIComponent(`${rootUrl}/#/home/huayangClubForm?id=${userId}&from=traincamp&type=${type}&campId=${this.data.campId}&special=${isStudent?true:''}`)
               wx.navigateTo({
                 url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
               })
