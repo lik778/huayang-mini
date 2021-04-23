@@ -4,6 +4,7 @@
     "authModule": "../../components/auth/auth",
     "liveLayout": "../../components/liveLayout/liveLayout",
     "bestCourseLayout": "../../components/bestCourseLayout/bestCourseLayout",
-    "contact": "../../components/contact/contact"
+    "contact": "../../components/contact/contact",
+    "fluentLearnModal": "../../components/fluentLearnModal/fluentLearnModal"
   }
 }
