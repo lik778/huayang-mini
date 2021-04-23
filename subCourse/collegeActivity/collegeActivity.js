@@ -20,13 +20,7 @@ Page({
 		this.setData({
 			didShowAuth: false,
 		})
-		// 检查用户身份
-		if (hasUserInfo() && hasAccountInfo()) {
-			let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-			getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data: fluentCardInfo}) => {
-				this.setData({didFluentCardUser: !!fluentCardInfo})
-			})
-		}
+		this.checkUserKind()
 	},
 	authCancelEvent() {
 		this.setData({
@@ -36,6 +30,9 @@ Page({
 	// 非花样学生卡用户访问校友活动需要引导购买学生卡
 	onFluentLearnTap() {
 		wx.navigateTo({url: "/mine/joinFluentLearn/joinFluentLearn"})
+	},
+	onFluentLearnCloseTap() {
+		this.setData({didShowFluentLearnModal: false})
 	},
 	getActivityList() {
 		if (!this.data.hasMore) return
@@ -77,8 +74,20 @@ Page({
 
 		}
 	},
+	checkUserKind() {
+		// 检查用户身份
+		if (hasUserInfo() && hasAccountInfo()) {
+			let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+			getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data: fluentCardInfo}) => {
+				this.setData({didFluentCardUser: !!fluentCardInfo})
+			})
+		}
+	},
 	onLoad() {
 		this.getActivityList()
+	},
+	onReady() {
+		this.checkUserKind()
 	},
 	onHide() {
 		if (this.data.didShowFluentLearnModal) {

@@ -713,6 +713,9 @@ Page({
 	onFluentLearnTap() {
 		wx.navigateTo({url: "/mine/joinFluentLearn/joinFluentLearn"})
 	},
+	onFluentLearnCloseTap() {
+		this.setData({didShowFluentLearnModal: false})
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
