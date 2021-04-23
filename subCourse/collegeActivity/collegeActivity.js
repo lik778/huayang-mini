@@ -86,7 +86,7 @@ Page({
 	onLoad() {
 		this.getActivityList()
 	},
-	onReady() {
+	onShow() {
 		this.checkUserKind()
 	},
 	onHide() {
