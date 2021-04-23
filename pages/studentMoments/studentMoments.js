@@ -111,9 +111,8 @@ Page({
     // 初始化本地用户信息
     this.initUserInfo()
     // pv打点
-    bxPoint("bbs_visit")
+    bxPoint("bbs_visit", {})
     this.videoContext = wx.createVideoContext('my-video')
-
   },
 
 
