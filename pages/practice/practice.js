@@ -96,11 +96,7 @@ Page({
 	// 获取课程列表
 	getVideoList(index, refresh = true) {
 		let category = ''
-		if (index === 0) {
-			category = ''
-		} else {
-			category = this.data.keyArr[index]
-		}
+		category = this.data.keyArr[index]
 		let params = {
 			offset: this.data.pageSize.offset,
 			limit: this.data.pageSize.limit,
@@ -313,7 +309,7 @@ Page({
 		if (path === 'travel') {
 			wx.navigateToMiniProgram({
 				appId: "wx2ea757d51abc1f47",
-				path,
+				path: "pages/index/index",
 			})
 		} else {
 			wx.navigateTo({url: path})

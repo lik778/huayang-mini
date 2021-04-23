@@ -60,6 +60,8 @@ Page({
 		collegeVideoPost: "", // 大学宣传视频封面图
 		isCollegeVideoPlaying: false, // 大学宣传视频是否正在播放
 		didLoadSecondMain: false, // 是否完成第二部分数据内容加载
+		didShowFluentLearnModal: false, // 学生卡引导弹窗
+		_rejectModelCompetitionReload: false, // 授权成功是否跳过模特大赛相关函数
 	},
 	async run() {
 		// 请求花样大学首页弹窗任务
@@ -158,7 +160,14 @@ Page({
 
 		// 线下乐活课程
 		let {data: offlineList} = await getOfflineCourseAllData()
-		this.setData({offlineList: offlineList.map(n => (({...n, price: n.price / 100, discount_price: n.discount_price / 100, cover: n.cover_pic.split(",")[0]})))})
+		this.setData({
+			offlineList: offlineList.map(n => (({
+				...n,
+				price: n.price / 100,
+				discount_price: n.discount_price / 100,
+				cover: n.cover_pic.split(",")[0]
+			})))
+		})
 
 		// 花样游学
 		let travelList = await queryTravelList()
@@ -192,7 +201,14 @@ Page({
 		if (this.data.didLoadSecondMain) return
 		this.setData({didLoadSecondMain: true})
 		// 校友活动
-		let {list: activityList} = await getActivityList({status: 1, offset: 0, limit: 9999, colleage_activity: 1, platform: 1, sort: "rank"})
+		let {list: activityList} = await getActivityList({
+			status: 1,
+			offset: 0,
+			limit: 9999,
+			colleage_activity: 1,
+			platform: 1,
+			sort: "rank"
+		})
 		this.setData({activityList})
 
 		// 今日推荐
@@ -395,7 +411,7 @@ Page({
 	},
 	// 点击金刚位
 	onKingKongTap(e) {
-		let {id, value} =  e.currentTarget.dataset.item
+		let {id, value} = e.currentTarget.dataset.item
 		getApp().globalData.discoveryToPracticeTabIndex = id - 1
 		wx.nextTick(() => {
 			wx.switchTab({
@@ -409,7 +425,9 @@ Page({
 	// 打开入群引导弹窗
 	openGuide() {
 		this.setData({didShowGuide: true})
-		wx.nextTick(() => {this.setData({didExecuteGuideAnimation: true})})
+		wx.nextTick(() => {
+			this.setData({didExecuteGuideAnimation: true})
+		})
 	},
 	// 关闭入群引导弹窗
 	closeGuide() {
@@ -423,20 +441,25 @@ Page({
 	},
 	// 大学活动点击
 	onCollegeActivityTap(e) {
+		if (!hasUserInfo() || !hasAccountInfo()) {
+			return this.setData({_rejectModelCompetitionReload: true, didShowAuth: true})
+		}
 		let {id: activityId, title, start_time, end_time} = e.currentTarget.dataset.item
+		bxPoint("homepage_activities", {
+			activities_id: activityId,
+			activities_name: title,
+			activities_start_time: start_time,
+			activities_end_time: end_time
+		}, false)
 		if (activityId) {
-			let link = `${request.baseUrl}/#/home/detail/${activityId}`
-			wx.navigateTo({
-				url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}`,
-				complete() {
-					bxPoint("homepage_activities", {
-						activities_id: activityId,
-						activities_name: title,
-						activities_start_time: start_time,
-						activities_end_time: end_time
-					}, false)
-				}
-			})
+			if (this.data.didFluentCardUser) {
+				let link = `${request.baseUrl}/#/home/detail/${activityId}`
+				wx.navigateTo({
+					url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}`
+				})
+			} else {
+				this.setData({didShowFluentLearnModal: true})
+			}
 		}
 	},
 	// 获取授权
@@ -456,7 +479,17 @@ Page({
 		this.setData({
 			didShowAuth: false,
 		})
-		this.initToCompetitionFun()
+		if (!this.data._rejectModelCompetitionReload) {
+			this.initToCompetitionFun()
+			this.setData({_rejectModelCompetitionReload: false})
+		}
+		// 检查用户身份
+		if (hasUserInfo() && hasAccountInfo()) {
+			let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+			getFluentCardInfo({user_snow_id: accountInfo.snow_id}).then(({data: fluentCardInfo}) => {
+				this.setData({didFluentCardUser: !!fluentCardInfo})
+			})
+		}
 	},
 	// swiper切换
 	changeSwiperIndex(e) {
@@ -630,7 +663,9 @@ Page({
 	},
 	openInformationPop() {
 		this.setData({didShowInformation: true})
-		wx.nextTick(() => {this.setData({showInformationPopAnime: true})})
+		wx.nextTick(() => {
+			this.setData({showInformationPopAnime: true})
+		})
 		bxPoint("new_series_visit", {
 			series_id: this.data.popData.id,
 			kecheng_name: this.data.popData.name
@@ -673,6 +708,10 @@ Page({
 		this.setData({
 			didShowContact: false
 		})
+	},
+	// 非花样学生卡用户访问校友活动需要引导购买学生卡
+	onFluentLearnTap() {
+		wx.navigateTo({url: "/mine/joinFluentLearn/joinFluentLearn"})
 	},
 	/**
 	 * 生命周期函数--监听页面加载
@@ -761,6 +800,10 @@ Page({
 	onHide: function () {
 		if (this.data.didShowInformation) {
 			this.closeInformationPop()
+		}
+
+		if (this.data.didShowFluentLearnModal) {
+			this.setData({didShowFluentLearnModal: false})
 		}
 	},
 
