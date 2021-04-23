@@ -192,7 +192,7 @@ Page({
 		if (this.data.didLoadSecondMain) return
 		this.setData({didLoadSecondMain: true})
 		// 校友活动
-		let {list: activityList} = await getActivityList({status: 1, offset: 0, limit: 9999, colleage_activity: 1, platform: 1})
+		let {list: activityList} = await getActivityList({status: 1, offset: 0, limit: 9999, colleage_activity: 1, platform: 1, sort: "rank"})
 		this.setData({activityList})
 
 		// 今日推荐
@@ -678,7 +678,7 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=226`})
+		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=227`})
 
 		let {scene, invite_user_id = "", source} = options
 		// 通过小程序码进入 scene=${source}
