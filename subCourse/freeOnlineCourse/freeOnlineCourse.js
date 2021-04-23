@@ -6,6 +6,7 @@ Page({
             limit: 10,
             offset: 0
         },
+        hasMore: true,
         videoList: []
     },
     onLoad() {
@@ -42,11 +43,15 @@ Page({
         })
     },
     getvideoList() {
+        if (!this.data.hasMore) return
         let params = {
             limit: this.data.pagesControl.limit,
             offset: this.data.pagesControl.offset
         };
         getFreeOnlineCourse(params).then(list => {
+            if (list.length < this.data.pagesControl.limit) {
+                this.setData({hasMore: false})
+            }
             this.setData({
                 videoList: this.data.videoList.concat(list),
                 pagesControl: {
