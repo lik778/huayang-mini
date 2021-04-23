@@ -13,6 +13,7 @@ Page({
     getActivityList() {
         if (!this.data.hasMore) return
         getActivityList({
+            sort: "rank",
             status: 1,
             colleage_activity:1,
             platform: 1,
