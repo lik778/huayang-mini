@@ -421,7 +421,7 @@ Page({
 			this.getVideoList(this.data.currentIndex, false)
 		}
 
-		if (this.data.currentIndex === 3 && this.data.noMoreStructureData) {
+		if (this.data.currentIndex === 3 && !this.data.noMoreStructureData) {
 			// 模特训练，底部填充结构化课程（含分页功能）
 			this.getModelStructureList()
 		}
