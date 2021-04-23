@@ -641,7 +641,8 @@ Page({
     let userId = this.data.userInfo.id
     return new Promise(resolve => {
       checkNeedToFillInfo({
-        user_id: userId
+        user_id: userId,
+        traincamp_id: this.data.campId,
       }).then(res => {
         getFluentCardInfo({
           user_snow_id: this.data.userInfo.snow_id
