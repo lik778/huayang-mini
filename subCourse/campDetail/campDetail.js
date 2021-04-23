@@ -646,15 +646,13 @@ Page({
       }).then(res => {
         getFluentCardInfo({
           user_snow_id: this.data.userInfo.snow_id
-        }).then(({
-          data
-        }) => {
-          let isStudent = !!data
+        }).then((result) => {
+          let isStudent = !!result.data
           if (res.code === 0) {
             let data = res.data.hasAddr
             if (!data) {
               let rootUrl = baseUrl.baseUrl
-              let type = 2
+              let type = isStudent ? 2 : 1
               let link = encodeURIComponent(`${rootUrl}/#/home/huayangClubForm?id=${userId}&from=traincamp&type=${type}&campId=${this.data.campId}&special=${isStudent?true:''}`)
               wx.navigateTo({
                 url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
