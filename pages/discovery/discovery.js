@@ -759,7 +759,7 @@ Page({
 		}
 
 		// 04-22晚上9点前不显示入群引导
-		if (dayjs().isBefore(dayjs("2021-04-24 08:00:00"))) return
+		if (dayjs().isBefore(dayjs("2021-04-24 16:00:00"))) return
 
 		// 入群引导
 		let guideExpiredAt = getLocalStorage(GLOBAL_KEY.discoveryGuideExpiredAt)
