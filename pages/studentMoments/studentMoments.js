@@ -129,7 +129,11 @@ Page({
   onShareAppMessage: function (res) {
     let src = `/studentMoments/studentMomentsDetail/studentMomentsDetail`
     if (res.from === 'button') {
+      // 点击分享按钮
       src += `?id=${res.target.dataset.item.bubble.id}`
+    } else {
+      // 胶囊分享按钮
+      src = '/pages/studentMoments/studentMoments'
     }
     return {
       title: "快来看看花样大学精彩的校友动态！",
