@@ -291,7 +291,7 @@ Page({
         visitNum: randomNum
       }
     })
-    setInterval(() => {
+    setTimeout(() => {
       this.initVisitData(randomNum + 1)
     }, 5000)
   },
