@@ -113,7 +113,8 @@ Page({
     }
 
     // 04-25晚上16点前不显示入群引导
-    if (dayjs().isBefore(dayjs("2021-04-25 16:00:00"))) {
+    const time = getApp().globalData.showContactEnterTime
+    if (dayjs().isBefore(dayjs(time))) {
       this.setData({
         didShowContribute: false
       })

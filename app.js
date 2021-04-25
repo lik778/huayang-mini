@@ -147,5 +147,6 @@ App({
 		needInitialPageName: "", // 需要重新加载的页面  [ 综合作业广场｜主题作业广场 ]
 		didShowedTaskTip: false, // 是否已经展示过作业提示
 		discoveryToPracticeTabIndex: undefined, // 首页金刚位跳转
+		showContactEnterTime:"2021-04-25 16:00:00"
 	}
 })
