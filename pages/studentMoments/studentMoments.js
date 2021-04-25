@@ -26,7 +26,7 @@ import {
   GLOBAL_KEY
 } from '../../lib/config'
 import bxPoint from "../../utils/bxPoint"
-
+import dayjs from "dayjs"
 Page({
   /**
    * 页面的初始数据
@@ -83,6 +83,7 @@ Page({
     showStudentMomentLike: false, //显示点赞动画
     authType: '', //0是点赞授权，1是评论授权，控制授完权的自动请求数据操作,2是发布弹幕
     authData: "", //点赞函导致授权的类型
+    didShowContribute: true
   },
 
   /**
@@ -110,6 +111,15 @@ Page({
         selected: 1
       })
     }
+
+    // 04-25晚上16点前不显示入群引导
+    const time = getApp().globalData.showContactEnterTime
+    if (dayjs().isBefore(dayjs(time))) {
+      this.setData({
+        didShowContribute: false
+      })
+    }
+
     if (!getLocalStorage(GLOBAL_KEY.accountInfo)) {
       setLocalStorage("hy_refresh_student_moments_list_expire", true)
     } else {
