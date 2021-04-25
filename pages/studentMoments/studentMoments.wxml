@@ -98,7 +98,7 @@
     </view>
   </view>
   <!-- 投稿 -->
-  <view class="contribute-button" bindtap="openContribute" style="bottom:{{isIphoneXRSMax?'106px':'73px'}}">
+  <view class="contribute-button" wx:if="{{didShowContribute}}" bindtap="openContribute" style="bottom:{{isIphoneXRSMax?'106px':'73px'}}">
     <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618368640idsRLA.jpg"></image>
     <text>投稿</text>
   </view>
