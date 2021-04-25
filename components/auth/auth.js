@@ -166,7 +166,7 @@ Component({
       const pages = getCurrentPages();
       const currentPage = pages[pages.length - 1];
       const url = `/${currentPage.route}`;
-      if (getLocalStorage('hy_refresh_student_moments_list_expire') === true && url !== 'auth.js? [sm]:170 /pages/studentMoments/studentMoments') {
+      if (getLocalStorage('hy_refresh_student_moments_list_expire') === true && url !== '/pages/studentMoments/studentMoments') {
         let expireTime = parseInt(new Date().getTime() / 1000) + 43200 //12小时
         setLocalStorage("hy_refresh_student_moments_list_expire", expireTime)
       }
