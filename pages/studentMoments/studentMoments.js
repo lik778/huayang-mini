@@ -10,7 +10,9 @@ import {
   getRandomNumberByRange,
   getNElmentFromArray,
   getLocalStorage,
-  createAnimationFun
+  createAnimationFun,
+  setLocalStorage,
+  removeLocalStorage
 } from "../../utils/util"
 import {
   getBarrageList,
@@ -108,6 +110,27 @@ Page({
         selected: 1
       })
     }
+    if (!getLocalStorage(GLOBAL_KEY.accountInfo)) {
+      setLocalStorage("hy_refresh_student_moments_list_expire", true)
+    } else {
+      let expire = getLocalStorage("hy_refresh_student_moments_list_expire")
+      let now = parseInt(new Date().getTime() / 1000)
+      if (now <= expire) {
+        wx.pageScrollTo({
+          duration: 0,
+          scrollTop: 0
+        })
+        this.setData({
+          getCommentsPageData: {
+            offset: 0,
+            limit: 10
+          }
+        })
+        this.getMomentList()
+        removeLocalStorage('hy_refresh_student_moments_list_expire')
+      }
+    }
+
     // 初始化本地用户信息
     this.initUserInfo()
     // pv打点
@@ -249,7 +272,8 @@ Page({
     } else {
       randomNum = getRandomNumberByRange(num1, num2)
     }
-    let userInfo = this.data.userInfo
+    let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo)
+    userInfo = userInfo ? JSON.parse(userInfo) : ''
     let userListData = []
     if (userInfo && start === undefined) {
       getNElmentFromArray(userList, 2).map(item => {
