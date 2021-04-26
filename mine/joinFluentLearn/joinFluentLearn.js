@@ -17,19 +17,11 @@ import {
 	setLocalStorage,
 	toast
 } from "../../utils/util"
-import {
-	ErrorLevel,
-	FluentLearnUserType,
-	GLOBAL_KEY
-} from "../../lib/config"
+import { ErrorLevel, FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
-import {
-	collectError
-} from "../../api/auth/index"
+import { collectError } from "../../api/auth/index"
 import bxPoint from "../../utils/bxPoint"
-import {
-	queryQualityVideoList
-} from "../../api/live/index"
+import { queryQualityVideoList } from "../../api/live/index"
 import baseUrl from "../../lib/request"
 
 Page({
@@ -57,6 +49,8 @@ Page({
 		discountPrice: '',
 		inviteId: '',
 		isIphoneXRSMax: false,
+		previewVideo: null,
+		isCollegeVideoPlaying: false,
 		equityImages: ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754dxzZTH.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754nyGpJw.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754xhlddI.jpg"], // 权益图片
 	},
 
@@ -90,7 +84,9 @@ Page({
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
-	onReady: function () {},
+	onReady: function () {
+		this.data.previewVideo = wx.createVideoContext("hy-video-join-fluent-learn-content", this)
+	},
 
 	/**
 	 * 生命周期函数--监听页面显示
@@ -140,6 +136,22 @@ Page({
 			title: "课程全解锁，一卡学全年",
 			path: `/mine/joinFluentLearn/joinFluentLearn${accountInfo.snow_id ? '?inviteId=' + accountInfo.snow_id : ''}`
 		}
+	},
+	// 初始化大学宣传视频，进入离开可视区域监听事件
+	initCollegeIntroVideoListener() {
+		let collegeOB = wx.createIntersectionObserver()
+		collegeOB.relativeToViewport({
+			top: 0,
+			bottom: 0
+		})
+			.observe('#hy-video-join-fluent-learn-content', res => {
+				if (res && res.intersectionRatio > 0) {
+					// 进入可视区域
+				} else {
+					// 离开可视区域
+					this.onPauseCollegeVideo()
+				}
+			})
 	},
 	closeClubVipAlert() {
 		wx.navigateTo({
@@ -407,7 +419,20 @@ Page({
 				price: data.price / 100,
 				discountPrice: data.discount_price / 100
 			})
+
+			if (this.data.video) {
+				this.initCollegeIntroVideoListener()
+			}
 		})
+	},
+	// 播放花样大学介绍视频
+	onPlayCollegeVideo() {
+		this.data.previewVideo.play()
+		this.setData({isCollegeVideoPlaying: true})
+	},
+	onPauseCollegeVideo() {
+		this.data.previewVideo.pause()
+		this.setData({isCollegeVideoPlaying: false})
 	},
 	/**
 	 * 获取热门课程

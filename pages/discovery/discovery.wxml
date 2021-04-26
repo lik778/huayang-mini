@@ -33,11 +33,13 @@
             <view class="hy-intro-btn">加入花样大学 ›</view>
         </view>
         <view class="hy-intro-video-wrap">
-            <video id="hy-video-content" bindtap="goToJoinFluentCardPage" class="hy-video" src="{{collegeVideoUrl}}" poster="{{collegeVideoPost}}" controls="{{false}}"
+            <video id="hy-video-content" bindtap="onPauseCollegeVideo" class="hy-video" src="{{collegeVideoUrl}}" poster="{{collegeVideoPost}}" controls="{{false}}"
                    custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}"
                    enable-progress-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}"
                    show-play-btn="{{false}}" autoplay="{{false}}" loop="{{true}}"></video>
-            <image catchtap="onPlayCollegeVideo" wx:if="{{!isCollegeVideoPlaying}}" class="pause-icon" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619061373BeZzQx.jpg"></image>
+            <view class="hy-video-content-mask" wx:if="{{!isCollegeVideoPlaying}}" catchtap="goToJoinFluentCardPage">
+                <image catchtap="onPlayCollegeVideo" class="pause-icon" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619061373BeZzQx.jpg"></image>
+            </view>
         </view>
     </view>
 

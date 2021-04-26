@@ -1,20 +1,13 @@
 <view class="fluent-learn-info">
-    <video
-            class="preview-video"
-            src="{{video}}"
-            wx:if="{{video}}"
-            controls="{{false}}"
-            custom-cache="{{false}}"
-            object-fit="cover"
-            enable-play-gesture="{{false}}"
-            enable-progress-gesture="{{false}}"
-            play-btn-position="top"
-            show-center-play-btn="{{true}}"
-            show-play-btn="{{true}}"
-            autoplay="{{true}}"
-            poster="{{video_cover}}"
-            loop="{{false}}"
-    ></video>
+    <view wx:if="{{video}}" class="hy-intro-video-wrap">
+        <video id="hy-video-fluent-card-info-content" bindtap="onPauseCollegeVideo" class="hy-video" src="{{video}}" poster="{{video_cover}}" controls="{{false}}"
+               custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}"
+               enable-progress-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}"
+               show-play-btn="{{false}}" autoplay="{{false}}" loop="{{true}}"></video>
+        <view class="hy-video-content-mask" wx:if="{{!isCollegeVideoPlaying}}" catchtap="onPlayCollegeVideo">
+            <image class="pause-icon" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619061373BeZzQx.jpg"></image>
+        </view>
+    </view>
 
     <image class="interest" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754BErAnd.jpg" mode="aspectFit"></image>
     <view class="interest-item" wx:for="{{features}}" wx:key="index">
