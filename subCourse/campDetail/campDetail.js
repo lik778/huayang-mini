@@ -463,6 +463,7 @@ Page({
     }).then(async res => {
       let list = res.content ? JSON.parse(res.content) : []
       let videoInitSrc = ''
+      let videoCoverInitSrc = ''
       let index = ''
       if (dayNum !== 0) {
         dailyStudyCheck({
@@ -504,10 +505,11 @@ Page({
                 })
                 videoInitSrc = videoInitSrc ? videoInitSrc : videoPlayerSrc[0].url
                 index = index === '' ? i : index
+                videoCoverInitSrc = videoCoverInitSrc ? videoCoverInitSrc : courseData.series_detail.video_pic
                 resolve({
                   index,
                   videoInitSrc,
-                  cover_pic: courseData.series_detail.video_pic
+                  cover_pic: videoCoverInitSrc
                 })
               })
             })
