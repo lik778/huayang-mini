@@ -13,7 +13,8 @@ import {
   getHasJoinCamp,
   getWxRoomData,
   queryPunchCardQrCode,
-  studyLogCreate
+  studyLogCreate,
+  getVideoCourseDetail
 } from "../../api/course/index"
 import {
   getProductInfo,
@@ -227,78 +228,17 @@ Page({
           })
         }
       }
-
-      getCourseData({
-        kecheng_id: item.kecheng_id,
-      }).then((res) => {
-        if (res.id) {
-          if (res.kecheng_type === 0) {
-
-            // 直播
-            bxPoint('traincamp_every_day', {
-              videoSrc: this.data.videoData.src.split(VideoSrcHost)[1],
-              is_course: true,
-              lesson_num: `第${this.data.videoData.index+1}节课`,
-              traincamp_id: this.data.campId
-            }, false)
-
-            getWxRoomData({
-              zhibo_room_id: res.room_id
-            }).then(res => {
-              wx.navigateTo({
-                url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${res.zhibo_room.num}`,
-              })
-            })
-          } else if (res.kecheng_type === 1) {
-            // 回看
-
-
-            bxPoint('traincamp_every_day', {
-              videoSrc: this.data.videoData.src.split(VideoSrcHost)[1],
-              lesson_num: `第${this.data.videoData.index+1}节课`,
-              is_course: true,
-              traincamp_id: this.data.campId
-            }, false)
-            getWxRoomData({
-              zhibo_room_id: res.room_id
-            }).then(res => {
-              wx.navigateTo({
-                url: `/pages/webViewCommon/webViewCommon?link=${res.zhibo_room.link}`,
-              })
-            })
-          } else if (res.kecheng_type === 2) {
-            // 小额通
-
-            bxPoint('traincamp_every_day', {
-              lesson_num: `第${this.data.videoData.index+1}节课`,
-              is_course: false,
-              traincamp_id: this.data.campId
-            }, false)
-            wx.navigateTo({
-              url: `/pages/webViewCommon/webViewCommon?link=${res.xiaoetong_url}`,
-            })
-          } else {
-            // 结构化
-            bxPoint('traincamp_every_day', {
-              videoSrc: this.data.videoData.src.split(VideoSrcHost)[1],
-              lesson_num: `第${this.data.videoData.index+1}节课`,
-              is_course: true,
-              traincamp_id: this.data.campId
-            }, false)
-            wx.navigateTo({
-              url: `/subCourse/practiceDetail/practiceDetail?courseId=${res.id}&parentBootCampId=${this.data.campId}&lessonDate=${dayjs(this.data.showDate).valueOf()}&formCampDetail=payUser`,
-            })
-          }
-        } else {
-          wx.showToast({
-            title: '课程不存在',
-            icon: 'none',
-            duration: 3000,
-          })
+      this.setData({
+        videoData: {
+          src: item.src,
+          pic: item.pic,
+          index: index
         }
       })
+      wx.nextTick(() => {
+        this.playVideo()
+      })
     } else if (item.type === 'product') {
-
       // 商品
       bxPoint('traincamp_every_day', {
         lesson_num: `第${this.data.videoData.index+1}节课`,
@@ -369,7 +309,7 @@ Page({
       start_date: this.data.joinDate,
       date: this.data.showDate
     }
-    if (this.data.createPoint) {
+    if (this.data.createPoint && this.data.hasStartCampType !== 1) {
       this.setData({
         createPoint: false
       })
@@ -520,8 +460,11 @@ Page({
     getCurentDayData({
       day_num: dayNum,
       traincamp_id: this.data.campId
-    }).then(res => {
+    }).then(async res => {
       let list = res.content ? JSON.parse(res.content) : []
+      let videoInitSrc = ''
+      let videoCoverInitSrc = ''
+      let index = ''
       if (dayNum !== 0) {
         dailyStudyCheck({
           user_id: this.data.userInfo.id,
@@ -547,14 +490,37 @@ Page({
       if (list.length > 0) {
         for (let i = 0; i < list.length; i++) {
           if (list[i].type === "kecheng") {
-            getCourseData({
-              kecheng_id: list[i].kecheng_id
-            }).then(res => {
-              list[i].duration = simpleDurationSimple(res.duration)
-              this.setData({
-                courseList: list,
-                canShowPage: true
+            let src = await new Promise(resolve => {
+              getVideoCourseDetail({
+                series_id: list[i].kecheng_id
+              }).then(courseData => {
+                let courseDetailList = JSON.parse(courseData.series_detail.video_detail)
+                let videoPlayerSrc = courseDetailList.filter((item, index) => {
+                  if (item.title === list[i].name) {
+                    list[i].src = item.url
+                    list[i].pic = courseData.series_detail.video_pic
+                    list[i].index = index
+                    return item
+                  }
+                })
+                videoInitSrc = videoInitSrc ? videoInitSrc : videoPlayerSrc[0].url
+                index = index === '' ? i : index
+                videoCoverInitSrc = videoCoverInitSrc ? videoCoverInitSrc : courseData.series_detail.video_pic
+                resolve({
+                  index,
+                  videoInitSrc,
+                  cover_pic: videoCoverInitSrc
+                })
               })
+            })
+            this.setData({
+              videoData: {
+                src: src.videoInitSrc,
+                pic: src.cover_pic,
+                index: src.index
+              },
+              courseList: list,
+              canShowPage: true
             })
           } else if (list[i].type === "video" && this.data.videoData.src === '') {
             this.setData({
