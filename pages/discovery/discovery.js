@@ -760,7 +760,8 @@ Page({
 		this.data.previewVideo = wx.createVideoContext("hy-video-content", this)
 
 		// 04-22晚上9点前不显示入群引导
-		if (dayjs().isBefore(dayjs("2021-04-22 21:00:00"))) return
+	  const time = getApp().globalData.showContactEnterTime
+		if (dayjs().isBefore(dayjs(time))) return
 
 		// 入群引导
 		let guideExpiredAt = getLocalStorage(GLOBAL_KEY.discoveryGuideExpiredAt)

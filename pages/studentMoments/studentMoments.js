@@ -10,7 +10,9 @@ import {
   getRandomNumberByRange,
   getNElmentFromArray,
   getLocalStorage,
-  createAnimationFun
+  createAnimationFun,
+  setLocalStorage,
+  removeLocalStorage
 } from "../../utils/util"
 import {
   getBarrageList,
@@ -24,7 +26,7 @@ import {
   GLOBAL_KEY
 } from '../../lib/config'
 import bxPoint from "../../utils/bxPoint"
-
+import dayjs from "dayjs"
 Page({
   /**
    * 页面的初始数据
@@ -81,6 +83,7 @@ Page({
     showStudentMomentLike: false, //显示点赞动画
     authType: '', //0是点赞授权，1是评论授权，控制授完权的自动请求数据操作,2是发布弹幕
     authData: "", //点赞函导致授权的类型
+    didShowContribute: true
   },
 
   /**
@@ -108,6 +111,36 @@ Page({
         selected: 1
       })
     }
+
+    // 04-25晚上16点前不显示入群引导
+    const time = getApp().globalData.showContactEnterTime
+    if (dayjs().isBefore(dayjs(time))) {
+      this.setData({
+        didShowContribute: false
+      })
+    }
+
+    if (!getLocalStorage(GLOBAL_KEY.accountInfo)) {
+      setLocalStorage("hy_refresh_student_moments_list_expire", true)
+    } else {
+      let expire = getLocalStorage("hy_refresh_student_moments_list_expire")
+      let now = parseInt(new Date().getTime() / 1000)
+      if (now <= expire) {
+        wx.pageScrollTo({
+          duration: 0,
+          scrollTop: 0
+        })
+        this.setData({
+          getCommentsPageData: {
+            offset: 0,
+            limit: 10
+          }
+        })
+        this.getMomentList()
+        removeLocalStorage('hy_refresh_student_moments_list_expire')
+      }
+    }
+
     // 初始化本地用户信息
     this.initUserInfo()
     // pv打点
@@ -129,7 +162,11 @@ Page({
   onShareAppMessage: function (res) {
     let src = `/studentMoments/studentMomentsDetail/studentMomentsDetail`
     if (res.from === 'button') {
+      // 点击分享按钮
       src += `?id=${res.target.dataset.item.bubble.id}`
+    } else {
+      // 胶囊分享按钮
+      src = '/pages/studentMoments/studentMoments'
     }
     return {
       title: "快来看看花样大学精彩的校友动态！",
@@ -245,7 +282,8 @@ Page({
     } else {
       randomNum = getRandomNumberByRange(num1, num2)
     }
-    let userInfo = this.data.userInfo
+    let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo)
+    userInfo = userInfo ? JSON.parse(userInfo) : ''
     let userListData = []
     if (userInfo && start === undefined) {
       getNElmentFromArray(userList, 2).map(item => {

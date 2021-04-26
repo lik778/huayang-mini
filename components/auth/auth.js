@@ -1,7 +1,21 @@
-import { wxLoginPromise } from "../../utils/auth"
-import { bindUserInfo, bindWxPhoneNumber, getWxInfo } from "../../api/auth/index"
-import { APP_LET_ID, GLOBAL_KEY } from "../../lib/config"
-import { $notNull, getLocalStorage, setLocalStorage, setWxUserInfoExpiredTime } from "../../utils/util"
+import {
+  wxLoginPromise
+} from "../../utils/auth"
+import {
+  bindUserInfo,
+  bindWxPhoneNumber,
+  getWxInfo
+} from "../../api/auth/index"
+import {
+  APP_LET_ID,
+  GLOBAL_KEY
+} from "../../lib/config"
+import {
+  $notNull,
+  getLocalStorage,
+  setLocalStorage,
+  setWxUserInfoExpiredTime
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Component({
@@ -72,14 +86,20 @@ Component({
 
               setWxUserInfoExpiredTime()
 
-              bxPoint("applets_auth_status", {auth_type: "weixin", auth_result: "success"}, false)
+              bxPoint("applets_auth_status", {
+                auth_type: "weixin",
+                auth_result: "success"
+              }, false)
               this.checkLogin()
             })
         },
         fail: () => {
           // 用户取消微信授权
           this.cancel()
-          bxPoint("applets_auth_status", {auth_type: "weixin", auth_result: "fail"}, false)
+          bxPoint("applets_auth_status", {
+            auth_type: "weixin",
+            auth_result: "fail"
+          }, false)
         }
       })
     },
@@ -114,11 +134,17 @@ Component({
 
         setWxUserInfoExpiredTime()
 
-        bxPoint("applets_auth_status", {auth_type: "phone", auth_result: "success"}, false)
+        bxPoint("applets_auth_status", {
+          auth_type: "phone",
+          auth_result: "success"
+        }, false)
       } else {
         // 用户拒绝手机号授权
         this.cancel()
-        bxPoint("applets_auth_status", {auth_type: "phone", auth_result: "fail"}, false)
+        bxPoint("applets_auth_status", {
+          auth_type: "phone",
+          auth_result: "fail"
+        }, false)
       }
     },
     jumpToPrivacy() {
@@ -137,20 +163,34 @@ Component({
     },
     // 用户完成所有授权
     complete() {
+      const pages = getCurrentPages();
+      const currentPage = pages[pages.length - 1];
+      const url = `/${currentPage.route}`;
+      if (getLocalStorage('hy_refresh_student_moments_list_expire') === true && url !== '/pages/studentMoments/studentMoments') {
+        let expireTime = parseInt(new Date().getTime() / 1000) + 43200 //12小时
+        setLocalStorage("hy_refresh_student_moments_list_expire", expireTime)
+      }
       this.triggerEvent('authCompleteEvent')
     },
     checkLogin() {
       wxLoginPromise()
         .then(async (code) => {
-          let originUserInfo = await getWxInfo({code, app_id: APP_LET_ID.tx})
+          let originUserInfo = await getWxInfo({
+            code,
+            app_id: APP_LET_ID.tx
+          })
           if ($notNull(originUserInfo) && originUserInfo.nickname) {
             // 缓存openId、userInfo
             setLocalStorage(GLOBAL_KEY.openId, originUserInfo.openid)
             setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
             // 用户已完成微信授权，引导用户手机号授权
-            this.setData({didGetPhoneNumber: true})
+            this.setData({
+              didGetPhoneNumber: true
+            })
           } else {
-            this.setData({didGetPhoneNumber: false})
+            this.setData({
+              didGetPhoneNumber: false
+            })
           }
         })
         .catch((error) => {
