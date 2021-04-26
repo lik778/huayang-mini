@@ -507,7 +507,7 @@ Page({
                 resolve({
                   index,
                   videoInitSrc,
-                  cover_pic: courseData.series_detail.cover_pic
+                  cover_pic: courseData.series_detail.video_pic
                 })
               })
             })
