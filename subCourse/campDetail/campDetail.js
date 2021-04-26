@@ -309,7 +309,7 @@ Page({
       start_date: this.data.joinDate,
       date: this.data.showDate
     }
-    if (this.data.createPoint) {
+    if (this.data.createPoint && this.data.hasStartCampType !== 1) {
       this.setData({
         createPoint: false
       })
