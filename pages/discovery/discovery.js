@@ -47,6 +47,7 @@ Page({
 		courseList: [],
 		todayRecommendCourse: {},
 		previewVideoLink: "",
+		previewVideo: null,
 		weekdays: ['日', '一', '二', '三', '四', '五', '六'],
 		liveStatusIntervalTimer: null,
 		didShowInformation: false,
@@ -334,7 +335,7 @@ Page({
 			top: 0,
 			bottom: 0
 		})
-			.observe('.hy-video', res => {
+			.observe('#hy-video-content', res => {
 				if (res && res.intersectionRatio > 0) {
 					// 进入可视区域
 				} else {
@@ -345,13 +346,11 @@ Page({
 	},
 	// 播放花样大学介绍视频
 	onPlayCollegeVideo() {
-		let videoInstance = wx.createVideoContext("hy-video-content")
-		videoInstance.play()
+		this.data.previewVideo.play()
 		this.setData({isCollegeVideoPlaying: true})
 	},
 	onPauseCollegeVideo() {
-		let videoInstance = wx.createVideoContext("hy-video-content")
-		videoInstance.pause()
+		this.data.previewVideo.pause()
 		this.setData({isCollegeVideoPlaying: false})
 	},
 	// 跳转到线下精品课详情页
@@ -691,16 +690,16 @@ Page({
 	},
 	goToJoinFluentCardPage() {
 		if (this.data.isCollegeVideoPlaying) {
-			let t = setTimeout(() => {
-				this.onPauseCollegeVideo()
-				clearTimeout(t)
-			}, 200)
+			this.onPauseCollegeVideo()
 		}
-		wx.navigateTo({
-			url: "/mine/joinFluentLearn/joinFluentLearn",
-			complete() {
-				bxPoint("homepage_join_huayang", {}, false)
-			}
+
+		wx.nextTick(() => {
+			wx.navigateTo({
+				url: "/mine/joinFluentLearn/joinFluentLearn",
+				complete() {
+					bxPoint("homepage_join_huayang", {}, false)
+				}
+			})
 		})
 	},
 	// 关闭联系客服
@@ -757,6 +756,8 @@ Page({
 				getSchedule(roomIds).then(this.handleLiveStatusCallback)
 			}, 60 * 1000)
 		}
+
+		this.data.previewVideo = wx.createVideoContext("hy-video-content", this)
 
 		// 04-22晚上9点前不显示入群引导
 		if (dayjs().isBefore(dayjs("2021-04-22 21:00:00"))) return
