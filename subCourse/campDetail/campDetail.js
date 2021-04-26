@@ -497,7 +497,7 @@ Page({
                 let videoPlayerSrc = courseDetailList.filter((item, index) => {
                   if (item.title === list[i].name) {
                     list[i].src = item.url
-                    list[i].pic = courseData.series_detail.cover_pic
+                    list[i].pic = courseData.series_detail.video_pic
                     list[i].index = index
                     return item
                   }
