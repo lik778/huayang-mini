@@ -22,7 +22,7 @@ Page({
     postWidth: 0,
     postHeight: 0,
     contentWidthRatio: 1,
-    bg: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618996645WaXiUk.jpg",
+    bg: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619680656RHJkPN.jpg",
     avatar: "",
     nickname: "",
     qrcode: "",
