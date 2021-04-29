@@ -45,6 +45,7 @@ Page({
 		liveList: [],
 		travelList: [],
 		courseList: [],
+		competitionBannerList: [],
 		todayRecommendCourse: {},
 		previewVideoLink: "",
 		previewVideo: null,
@@ -348,10 +349,12 @@ Page({
 	onPlayCollegeVideo() {
 		this.data.previewVideo.play()
 		this.setData({isCollegeVideoPlaying: true})
+		bxPoint("homepage_introduction_start", {}, false)
 	},
 	onPauseCollegeVideo() {
 		this.data.previewVideo.pause()
 		this.setData({isCollegeVideoPlaying: false})
+		bxPoint("homepage_introduction_end", {}, false)
 	},
 	// 跳转到线下精品课详情页
 	goToOfflineCourseDetail(e) {
@@ -527,17 +530,19 @@ Page({
 	},
 	// 跳转到模特大赛
 	toModelCompetition(e) {
+		let { link, title } = e.currentTarget.dataset.item
+		bxPoint("homepage_show", {show_name: title, show_link: link}, false)
 		if (hasUserInfo() && hasAccountInfo()) {
 			this.setData({
 				isModelLink: true,
-				modelBannerLink: e.currentTarget.dataset.item.link
+				modelBannerLink: link
 			})
 			this.initToCompetitionFun()
 		} else {
 			this.setData({
 				didShowAuth: true,
 				isModelLink: true,
-				modelBannerLink: e.currentTarget.dataset.item.link
+				modelBannerLink: link
 			})
 		}
 	},
@@ -702,6 +707,21 @@ Page({
 			})
 		})
 	},
+	// 通过宣传视频进入学生卡权益页
+	goToJoinFluentCardPageByIntroVideo() {
+		if (this.data.isCollegeVideoPlaying) {
+			this.onPauseCollegeVideo()
+		}
+
+		wx.nextTick(() => {
+			wx.navigateTo({
+				url: "/mine/joinFluentLearn/joinFluentLearn",
+				complete() {
+					bxPoint("homepage_introduction_link", {}, false)
+				}
+			})
+		})
+	},
 	// 关闭联系客服
 	onCloseContactModal() {
 		this.setData({
@@ -719,7 +739,7 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=227`})
+		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=231`})
 
 		let {scene, invite_user_id = "", source} = options
 		// 通过小程序码进入 scene=${source}

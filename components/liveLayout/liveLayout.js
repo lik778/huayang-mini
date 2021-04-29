@@ -37,10 +37,7 @@ Component({
 
       if (!hasUserInfo()) return this.triggerEvent("openUserAuth")
       let {
-        zhiboRoomId,
-        roomId,
-        link,
-        status,
+        zhiboRoomId, roomId, link, status, title, desc, roomType, startTime, endTime
       } = e.currentTarget.dataset.item
 
       statisticsWatchNo({
@@ -58,14 +55,13 @@ Component({
           })
         }
       })
-
       bxPoint("homepage_live_click", {
-        live_id: e.roomId,
-        live_title: e.title,
-        live_desc: e.desc,
-        live_room_type: e.roomType,
-        live_start_time: e.startTime,
-        live_end_time: e.endTime,
+        live_id: roomId,
+        live_title: title,
+        live_desc: desc,
+        live_room_type: roomType,
+        live_start_time: startTime,
+        live_end_time: endTime,
       }, false)
     }
   }
