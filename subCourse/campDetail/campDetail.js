@@ -7,36 +7,18 @@ import {
   getCampDetail,
   getClassLogo,
   getClassStudentData,
-  getCourseData,
   getCurentDayData,
   getFindBanner,
   getHasJoinCamp,
-  getWxRoomData,
+  getVideoCourseDetail,
   queryPunchCardQrCode,
-  studyLogCreate,
-  getVideoCourseDetail
+  studyLogCreate
 } from "../../api/course/index"
-import {
-  getProductInfo,
-  getYouZanAppId
-} from "../../api/mall/index"
-import {
-  computeDate,
-  dateAddDays,
-  getLocalStorage,
-  getNowDate,
-  getNowDateAll,
-  setLocalStorage,
-  simpleDurationSimple
-} from "../../utils/util"
+import { getProductInfo, getYouZanAppId } from "../../api/mall/index"
+import { computeDate, dateAddDays, getLocalStorage, getNowDate, getNowDateAll, setLocalStorage } from "../../utils/util"
 import bxPoint from '../../utils/bxPoint'
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  getFluentCardInfo
-} from "../../api/mine/index"
-import dayjs from "dayjs"
+import { GLOBAL_KEY } from "../../lib/config"
+import { getFluentCardInfo } from "../../api/mine/index"
 
 Page({
 
@@ -242,6 +224,8 @@ Page({
       // 商品
       bxPoint('traincamp_every_day', {
         lesson_num: `第${this.data.videoData.index+1}节课`,
+        day_num: this.data.dayNum,
+        kecheng_title: this.data.campData.name,
         is_course: false,
         traincamp_id: this.data.campId
       }, false)
@@ -261,6 +245,8 @@ Page({
         is_course: false,
         traincamp_id: this.data.campId,
         lesson_num: `第${this.data.videoData.index+1}节课`,
+        day_num: this.data.dayNum,
+        kecheng_title: this.data.campData.name,
       }, false)
       let link = encodeURIComponent(item.url)
       wx.navigateTo({
@@ -333,6 +319,8 @@ Page({
       traincamp_id: this.data.campId,
       is_course: true,
       lesson_num: `第${this.data.videoData.index+1}节课`,
+      day_num: this.data.dayNum,
+      kecheng_title: this.data.campData.name,
     }, false)
     this.videoContext.play()
     this.videoContext.requestFullScreen()
@@ -690,6 +678,7 @@ Page({
       lesson_num: `第${this.data.playIndex + 1}节课`,
       lesson_date: this.data.showDate,
       kecheng_title: `${this.data.courseList[this.data.playIndex].name}`,
+      day_num: this.data.dayNum,
       time_snippet: timeList.length === 0 ? listData : timeList, //事件片段
       total_duration: time, //视频总时间
       total_visit_duration: arr.length, // 总观看时间

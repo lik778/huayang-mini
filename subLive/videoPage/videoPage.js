@@ -1,11 +1,6 @@
-import {
-	getLocalStorage
-} from "../../utils/util"
-import {
-	GLOBAL_KEY
-} from "../../lib/config"
+import { getLocalStorage } from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
-import dayjs from "dayjs"
 
 Page({
 

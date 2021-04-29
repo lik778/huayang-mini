@@ -37,7 +37,7 @@
                    custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}"
                    enable-progress-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}"
                    show-play-btn="{{false}}" autoplay="{{false}}" loop="{{true}}"></video>
-            <view class="hy-video-content-mask" wx:if="{{!isCollegeVideoPlaying}}" catchtap="goToJoinFluentCardPage">
+            <view class="hy-video-content-mask" wx:if="{{!isCollegeVideoPlaying}}" catchtap="goToJoinFluentCardPageByIntroVideo">
                 <image catchtap="onPlayCollegeVideo" class="pause-icon" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619061373BeZzQx.jpg"></image>
             </view>
         </view>
