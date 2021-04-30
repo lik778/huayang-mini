@@ -1,3 +1,7 @@
 {
-    "navigationBarTitleText": "校友活动"
+    "navigationBarTitleText": "校友活动",
+    "usingComponents": {
+        "fluentLearnModal": "../../components/fluentLearnModal/fluentLearnModal",
+        "authModule": "../../components/auth/auth"
+    }
 }

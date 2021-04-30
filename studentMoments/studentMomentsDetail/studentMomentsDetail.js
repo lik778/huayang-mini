@@ -94,7 +94,7 @@ Page({
     // 评论打点-4.19.JJ
     bxPoint("bbs_detail_comment_box", {
       message_id: this.data.id
-    })
+    },false)
     if (!this.data.userInfo) {
       this.setData({
         didShowAuth: true,
@@ -173,7 +173,7 @@ Page({
     // 查看更多评论
     bxPoint("bbs_detail_comment_more", {
       message_id: this.data.id
-    })
+    },false)
     this.getCommentMsg(true)
   },
 
@@ -190,7 +190,7 @@ Page({
     // 点赞打点-4.19.JJ
     bxPoint('bbs_detail_like', {
       message_id: this.data.id
-    })
+    },false)
     // 处理延时点赞
     let item = this.data.detailData
     let {
@@ -260,7 +260,9 @@ Page({
 
   // pv打点-4.19.JJ
   pagePvPoint() {
-    bxPoint('bbs_detail_visit')
+    bxPoint('bbs_detail_visit', {
+      message_id: this.data.id
+    })
   },
 
   /**
@@ -298,7 +300,7 @@ Page({
     // 分享打点-4.19.JJ
     bxPoint("bbs_detail_share", {
       message_id: this.data.id
-    })
+    },false)
     return {
       title: "快来看看花样大学精彩的校友动态！",
       path: `/studentMoments/studentMomentsDetail/studentMomentsDetail?id=${this.data.id}`,
@@ -388,7 +390,7 @@ Page({
       bxPoint("bbs_detail_series_list", {
         message_id: this.data.id,
         series_id: item.id
-      })
+      }, false)
       wx.navigateTo({
         url: `/subCourse/videoCourse/videoCourse?videoId=${item.id}`,
       })
@@ -397,7 +399,7 @@ Page({
       bxPoint("bbs_detail_series_list", {
         message_id: this.data.id,
         series_offline_id: item.id
-      })
+      }, false)
       wx.navigateTo({
         url: `/subCourse/offlineCourseDetail/offlineCourseDetail?id=${item.id}`,
       })
@@ -406,7 +408,7 @@ Page({
       bxPoint("bbs_detail_series_list", {
         message_id: this.data.id,
         activities_id: item.id
-      })
+      }, false)
       wx.navigateTo({
         url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(`https://huayang.baixing.com/#/home/detail/${item.id}`)}`,
       })
@@ -415,7 +417,7 @@ Page({
       bxPoint("bbs_detail_series_list", {
         message_id: this.data.id,
         travel_series_id: item.id
-      })
+      }, false)
       wx.navigateToMiniProgram({
         appId: "wx2ea757d51abc1f47",
         path: `/pages/travelDetail/travelDetail?productId=${item.id}`,
@@ -424,8 +426,8 @@ Page({
       // 精品课
       bxPoint("bbs_detail_series_list", {
         message_id: this.data.id,
-        series_id: item.id
-      })
+        series_id: item.kecheng_series.id
+      }, false)
       wx.navigateTo({
         url: `/subCourse/videoCourse/videoCourse?videoId=${item.kecheng_series.id}`,
       })
@@ -459,7 +461,7 @@ Page({
     // 发布评论打点-4.19.JJ
     bxPoint("bbs_detail_comment_publish", {
       message_id: this.data.id
-    })
+    },false)
     if (this.data.commentInputValue.trim() === '') {
       wx.showToast({
         title: '请输入评论内容',

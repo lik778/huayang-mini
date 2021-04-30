@@ -38,6 +38,9 @@ Component({
   methods: {
     confirm() {
       this.triggerEvent("confirm")
+    },
+    close() {
+      this.triggerEvent("close")
     }
   }
 })

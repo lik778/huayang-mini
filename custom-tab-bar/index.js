@@ -44,7 +44,7 @@ Component({
       if (this.data.selected === 0 && url === '/pages/practice/practice') {
         bxPoint("homepage_series", {}, false)
       } else if (this.data.selected === 0 && url === '/pages/userCenter/userCenter') {
-        bxPoint("homepage_bbs", {}, false)
+        bxPoint("homepage_mine_visit", {}, false)
       } else if (this.data.selected === 1 && url === '/pages/discovery/discovery') {
         // jj-2021-04-19
         bxPoint("bbs_homepage", {}, false)

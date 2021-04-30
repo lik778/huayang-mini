@@ -1,7 +1,6 @@
 .coursebox {
     display: flex;
     padding: 0 30rpx;
-    height: 220rpx;
     flex-direction: column;
     align-items: flex-start;
     margin-top: 20rpx;

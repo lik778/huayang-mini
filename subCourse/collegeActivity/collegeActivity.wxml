@@ -5,4 +5,12 @@
             {{item.title}}
         </view>
     </view>
+
+    <!-- 授权弹窗 -->
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent"
+                bind:authCompleteEvent="authCompleteEvent">
+    </authModule>
+
+    <!-- 未加入花样大学用户，不可参加校友活动 -->
+    <fluentLearnModal show="{{didShowFluentLearnModal}}" message="您还未加入花样大学" confirmText="立即加入" bind:close="onFluentLearnCloseTap" bind:confirm="onFluentLearnTap" />
 </view>

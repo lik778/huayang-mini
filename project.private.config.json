@@ -35,6 +35,18 @@
           "pathName": "mine/oldInviteNew/oldInviteNew",
           "query": "inviteId=11522901446496256",
           "scene": null
+        },
+        {
+          "name": "校友活动",
+          "pathName": "subCourse/collegeActivity/collegeActivity",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "训练营详情",
+          "pathName": "subCourse/campDetail/campDetail",
+          "query": "id=1",
+          "scene": null
         }
       ]
     }

@@ -1,6 +1,6 @@
-<view class="fluent-learn-modal" wx:if="{{didVisible}}">
-    <view class="box-wrap {{show?'box-fade-in':'box-fade-out'}}">
+<view class="fluent-learn-modal" wx:if="{{didVisible}}" bindtap="close">
+    <view class="box-wrap {{show?'box-fade-in':'box-fade-out'}}" catchtap="confirm">
         <view class="modal-message">{{message}}</view>
-        <view class="btn" bindtap="confirm">{{confirmText}}</view>
+        <view class="btn">{{confirmText}}</view>
     </view>
 </view>

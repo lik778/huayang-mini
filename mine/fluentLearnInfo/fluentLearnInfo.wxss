@@ -5,9 +5,33 @@
     padding-bottom: 338rpx;
 }
 
-.preview-video {
-    height: 420rpx;
+.hy-intro-video-wrap {
     width: 100vw;
+    position: relative;
+    font-size: 0;
+}
+
+.hy-video {
+    width: 100%;
+    height: 420rpx;
+}
+
+.hy-video-content-mask {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: transparent;
+}
+
+.pause-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 112rpx;
+    height: 112rpx;
 }
 
 /* 权益 */

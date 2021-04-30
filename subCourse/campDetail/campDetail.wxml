@@ -69,8 +69,8 @@
           data-item="{{item}}" data-index='{{index}}'>
           <view class="course-item-left">
             <block wx:if="{{!showLock}}">
-              <image src="{{iconSrcList.course}}" wx:if="{{item.type==='kecheng'}}"></image>
-              <image src="{{iconSrcList.video}}" wx:if="{{item.type==='video'}}"></image>
+              <!-- <image src="{{iconSrcList.course}}" wx:if="{{item.type==='kecheng'}}"></image> -->
+              <image src="{{iconSrcList.video}}" wx:if="{{item.type==='video'||item.type==='kecheng'}}"></image>
               <image src="{{iconSrcList.product}}" wx:if="{{item.type==='product'}}"></image>
               <image src="{{iconSrcList.url}}" wx:if="{{item.type==='url'}}"></image>
             </block>
@@ -80,8 +80,8 @@
             <view class="course-item-msg">
               <view class="course-item-right-top limit-one-line" wx:if="{{item.type==='url'}}">{{item.title}}</view>
               <view class="course-item-right-top  limit-one-line" wx:else>{{item.name}}</view>
-              <view class="course-item-right-bottom" wx:if='{{item.type==="kecheng"&&item.duration!=="NaN分钟"}}'>
-                {{item.duration}}</view>
+              <!-- <view class="course-item-right-bottom" wx:if='{{item.type==="kecheng"&&item.duration!=="NaN分钟"}}'>
+                {{item.duration}}</view> -->
             </view>
             <view class="{{showLock?'course-item-study course-item-study-lock':'course-item-study subject-bg-color'}}"
               wx:if="{{item.type==='url'||item.type==='product'}}">前往</view>

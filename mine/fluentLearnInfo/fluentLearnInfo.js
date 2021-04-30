@@ -15,6 +15,8 @@ Page({
     video: "",
     video_cover: "",
     newList: [],
+    previewVideo: null,
+    isCollegeVideoPlaying: false,
     equityImages: ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754dxzZTH.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754nyGpJw.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754xhlddI.jpg"], // 权益图片
   },
 
@@ -30,7 +32,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    this.data.previewVideo = wx.createVideoContext("hy-video-fluent-card-info-content", this)
   },
 
   /**
@@ -66,6 +68,31 @@ Page({
    */
   onReachBottom: function () {
 
+  },
+  // 初始化大学宣传视频，进入离开可视区域监听事件
+  initCollegeIntroVideoListener() {
+    let collegeOB = wx.createIntersectionObserver()
+    collegeOB.relativeToViewport({
+      top: 0,
+      bottom: 0
+    })
+      .observe('#hy-video-fluent-card-info-content', res => {
+        if (res && res.intersectionRatio > 0) {
+          // 进入可视区域
+        } else {
+          // 离开可视区域
+          this.onPauseCollegeVideo()
+        }
+      })
+  },
+  // 播放花样大学介绍视频
+  onPlayCollegeVideo() {
+    this.data.previewVideo.play()
+    this.setData({isCollegeVideoPlaying: true})
+  },
+  onPauseCollegeVideo() {
+    this.data.previewVideo.pause()
+    this.setData({isCollegeVideoPlaying: false})
   },
   /**
    * 跳转到视频详情页
@@ -111,6 +138,10 @@ Page({
         video: data.video,
         video_cover: data.video_cover
       })
+
+      if (this.data.video) {
+        this.initCollegeIntroVideoListener()
+      }
     })
   },
   /**

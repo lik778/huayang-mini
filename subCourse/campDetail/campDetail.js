@@ -7,35 +7,18 @@ import {
   getCampDetail,
   getClassLogo,
   getClassStudentData,
-  getCourseData,
   getCurentDayData,
   getFindBanner,
   getHasJoinCamp,
-  getWxRoomData,
+  getVideoCourseDetail,
   queryPunchCardQrCode,
   studyLogCreate
 } from "../../api/course/index"
-import {
-  getProductInfo,
-  getYouZanAppId
-} from "../../api/mall/index"
-import {
-  computeDate,
-  dateAddDays,
-  getLocalStorage,
-  getNowDate,
-  getNowDateAll,
-  setLocalStorage,
-  simpleDurationSimple
-} from "../../utils/util"
+import { getProductInfo, getYouZanAppId } from "../../api/mall/index"
+import { computeDate, dateAddDays, getLocalStorage, getNowDate, getNowDateAll, setLocalStorage } from "../../utils/util"
 import bxPoint from '../../utils/bxPoint'
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  getFluentCardInfo
-} from "../../api/mine/index"
-import dayjs from "dayjs"
+import { GLOBAL_KEY } from "../../lib/config"
+import { getFluentCardInfo } from "../../api/mine/index"
 
 Page({
 
@@ -227,81 +210,22 @@ Page({
           })
         }
       }
-
-      getCourseData({
-        kecheng_id: item.kecheng_id,
-      }).then((res) => {
-        if (res.id) {
-          if (res.kecheng_type === 0) {
-
-            // 直播
-            bxPoint('traincamp_every_day', {
-              videoSrc: this.data.videoData.src.split(VideoSrcHost)[1],
-              is_course: true,
-              lesson_num: `第${this.data.videoData.index+1}节课`,
-              traincamp_id: this.data.campId
-            }, false)
-
-            getWxRoomData({
-              zhibo_room_id: res.room_id
-            }).then(res => {
-              wx.navigateTo({
-                url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${res.zhibo_room.num}`,
-              })
-            })
-          } else if (res.kecheng_type === 1) {
-            // 回看
-
-
-            bxPoint('traincamp_every_day', {
-              videoSrc: this.data.videoData.src.split(VideoSrcHost)[1],
-              lesson_num: `第${this.data.videoData.index+1}节课`,
-              is_course: true,
-              traincamp_id: this.data.campId
-            }, false)
-            getWxRoomData({
-              zhibo_room_id: res.room_id
-            }).then(res => {
-              wx.navigateTo({
-                url: `/pages/webViewCommon/webViewCommon?link=${res.zhibo_room.link}`,
-              })
-            })
-          } else if (res.kecheng_type === 2) {
-            // 小额通
-
-            bxPoint('traincamp_every_day', {
-              lesson_num: `第${this.data.videoData.index+1}节课`,
-              is_course: false,
-              traincamp_id: this.data.campId
-            }, false)
-            wx.navigateTo({
-              url: `/pages/webViewCommon/webViewCommon?link=${res.xiaoetong_url}`,
-            })
-          } else {
-            // 结构化
-            bxPoint('traincamp_every_day', {
-              videoSrc: this.data.videoData.src.split(VideoSrcHost)[1],
-              lesson_num: `第${this.data.videoData.index+1}节课`,
-              is_course: true,
-              traincamp_id: this.data.campId
-            }, false)
-            wx.navigateTo({
-              url: `/subCourse/practiceDetail/practiceDetail?courseId=${res.id}&parentBootCampId=${this.data.campId}&lessonDate=${dayjs(this.data.showDate).valueOf()}&formCampDetail=payUser`,
-            })
-          }
-        } else {
-          wx.showToast({
-            title: '课程不存在',
-            icon: 'none',
-            duration: 3000,
-          })
+      this.setData({
+        videoData: {
+          src: item.src,
+          pic: item.pic,
+          index: index
         }
       })
+      wx.nextTick(() => {
+        this.playVideo()
+      })
     } else if (item.type === 'product') {
-
       // 商品
       bxPoint('traincamp_every_day', {
         lesson_num: `第${this.data.videoData.index+1}节课`,
+        day_num: this.data.dayNum,
+        kecheng_title: this.data.campData.name,
         is_course: false,
         traincamp_id: this.data.campId
       }, false)
@@ -321,6 +245,8 @@ Page({
         is_course: false,
         traincamp_id: this.data.campId,
         lesson_num: `第${this.data.videoData.index+1}节课`,
+        day_num: this.data.dayNum,
+        kecheng_title: this.data.campData.name,
       }, false)
       let link = encodeURIComponent(item.url)
       wx.navigateTo({
@@ -369,7 +295,7 @@ Page({
       start_date: this.data.joinDate,
       date: this.data.showDate
     }
-    if (this.data.createPoint) {
+    if (this.data.createPoint && this.data.hasStartCampType !== 1) {
       this.setData({
         createPoint: false
       })
@@ -393,6 +319,8 @@ Page({
       traincamp_id: this.data.campId,
       is_course: true,
       lesson_num: `第${this.data.videoData.index+1}节课`,
+      day_num: this.data.dayNum,
+      kecheng_title: this.data.campData.name,
     }, false)
     this.videoContext.play()
     this.videoContext.requestFullScreen()
@@ -520,8 +448,11 @@ Page({
     getCurentDayData({
       day_num: dayNum,
       traincamp_id: this.data.campId
-    }).then(res => {
+    }).then(async res => {
       let list = res.content ? JSON.parse(res.content) : []
+      let videoInitSrc = ''
+      let videoCoverInitSrc = ''
+      let index = ''
       if (dayNum !== 0) {
         dailyStudyCheck({
           user_id: this.data.userInfo.id,
@@ -547,14 +478,37 @@ Page({
       if (list.length > 0) {
         for (let i = 0; i < list.length; i++) {
           if (list[i].type === "kecheng") {
-            getCourseData({
-              kecheng_id: list[i].kecheng_id
-            }).then(res => {
-              list[i].duration = simpleDurationSimple(res.duration)
-              this.setData({
-                courseList: list,
-                canShowPage: true
+            let src = await new Promise(resolve => {
+              getVideoCourseDetail({
+                series_id: list[i].kecheng_id
+              }).then(courseData => {
+                let courseDetailList = JSON.parse(courseData.series_detail.video_detail)
+                let videoPlayerSrc = courseDetailList.filter((item, index) => {
+                  if (item.title === list[i].name) {
+                    list[i].src = item.url
+                    list[i].pic = courseData.series_detail.video_pic
+                    list[i].index = index
+                    return item
+                  }
+                })
+                videoInitSrc = videoInitSrc ? videoInitSrc : videoPlayerSrc[0].url
+                index = index === '' ? i : index
+                videoCoverInitSrc = videoCoverInitSrc ? videoCoverInitSrc : courseData.series_detail.video_pic
+                resolve({
+                  index,
+                  videoInitSrc,
+                  cover_pic: videoCoverInitSrc
+                })
               })
+            })
+            this.setData({
+              videoData: {
+                src: src.videoInitSrc,
+                pic: src.cover_pic,
+                index: src.index
+              },
+              courseList: list,
+              canShowPage: true
             })
           } else if (list[i].type === "video" && this.data.videoData.src === '') {
             this.setData({
@@ -641,19 +595,18 @@ Page({
     let userId = this.data.userInfo.id
     return new Promise(resolve => {
       checkNeedToFillInfo({
-        user_id: userId
+        user_id: userId,
+        traincamp_id: this.data.campId,
       }).then(res => {
         getFluentCardInfo({
           user_snow_id: this.data.userInfo.snow_id
-        }).then(({
-          data
-        }) => {
-          let isStudent = !!data
+        }).then((result) => {
+          let isStudent = !!result.data
           if (res.code === 0) {
             let data = res.data.hasAddr
             if (!data) {
               let rootUrl = baseUrl.baseUrl
-              let type = 2
+              let type = isStudent ? 2 : 1
               let link = encodeURIComponent(`${rootUrl}/#/home/huayangClubForm?id=${userId}&from=traincamp&type=${type}&campId=${this.data.campId}&special=${isStudent?true:''}`)
               wx.navigateTo({
                 url: `/subCourse/noAuthWebview/noAuthWebview?link=${link}`,
@@ -725,6 +678,7 @@ Page({
       lesson_num: `第${this.data.playIndex + 1}节课`,
       lesson_date: this.data.showDate,
       kecheng_title: `${this.data.courseList[this.data.playIndex].name}`,
+      day_num: this.data.dayNum,
       time_snippet: timeList.length === 0 ? listData : timeList, //事件片段
       total_duration: time, //视频总时间
       total_visit_duration: arr.length, // 总观看时间

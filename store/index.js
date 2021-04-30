@@ -38,8 +38,8 @@ export const store = observable({
 				let list = data ? params1 ? this.studentMoments.concat(data) : data : this.studentMoments
 				if (data) {
 					list.map(item => {
-						item.hasLike = item.has_like
-						item.likeCount = item.bubble.like_count
+						item.hasLike = item.hasLike ? item.hasLike : item.has_like
+						item.likeCount = item.likeCount ? item.likeCount : item.bubble.like_count
 						item.bubble.pics = typeof (item.bubble.pics) === 'object' ? item.bubble.pics : item.bubble.pics ? item.bubble.pics.split(',') : []
 					})
 				}
