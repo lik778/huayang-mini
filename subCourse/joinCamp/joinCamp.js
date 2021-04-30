@@ -1,10 +1,26 @@
 // 加入训练营
-import { ErrorLevel, GLOBAL_KEY } from "../../lib/config"
+import {
+  ErrorLevel,
+  GLOBAL_KEY
+} from "../../lib/config"
 
-import { collectError } from "../../api/auth/index"
+import {
+  collectError
+} from "../../api/auth/index"
 
-import { getCampDetail, getHasJoinCamp, getIosCustomerLink, joinCamp } from "../../api/course/index"
-import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, payCourse } from "../../utils/util"
+import {
+  getCampDetail,
+  getHasJoinCamp,
+  getIosCustomerLink,
+  joinCamp
+} from "../../api/course/index"
+import {
+  $notNull,
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  payCourse
+} from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -166,7 +182,7 @@ Page({
             this.setData({
               campDetailData: res,
               joinTime: pushTime,
-              buttonType: buttonType === 10 ? 10 : startDate === '' ? 1 : buttonType,
+              buttonType: buttonType === 7 ? 7 : buttonType === 10 ? 10 : startDate === '' ? 1 : buttonType,
               endTime: startDate,
               campId: id,
               isIosPlatform,
@@ -440,7 +456,7 @@ Page({
     if (this.data.promoteUid !== '') {
       shareLink += `&promote_uid=${this.data.promoteUid}`
     } else {
-      if (this.data.userInfo !== '' &&this.data.userInfo.kecheng_user.is_promoter&& this.data.userInfo.kecheng_user.is_promoter === 1) {
+      if (this.data.userInfo !== '' && this.data.userInfo.kecheng_user.is_promoter && this.data.userInfo.kecheng_user.is_promoter === 1) {
         shareLink += `&promote_uid=${this.data.userInfo.id}`
       }
     }
