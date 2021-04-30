@@ -43,8 +43,8 @@
           "scene": null
         },
         {
-          "name": "训练营详情",
-          "pathName": "subCourse/campDetail/campDetail",
+          "name": "subCourse/joinCamp/joinCamp",
+          "pathName": "subCourse/joinCamp/joinCamp",
           "query": "id=1",
           "scene": null
         }
