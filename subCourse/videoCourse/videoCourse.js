@@ -1,4 +1,8 @@
-import { ErrorLevel, FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
+import {
+  ErrorLevel,
+  FluentLearnUserType,
+  GLOBAL_KEY
+} from "../../lib/config"
 import {
   checkJoinVideoCourse,
   checkNeedSpecialManage,
@@ -21,8 +25,13 @@ import {
   payCourse,
   secondToMinute
 } from "../../utils/util"
-import { collectError } from "../../api/auth/index"
-import { getFluentCardInfo, getKechengWithFluentCard } from "../../api/mine/index"
+import {
+  collectError
+} from "../../api/auth/index"
+import {
+  getFluentCardInfo,
+  getKechengWithFluentCard
+} from "../../api/mine/index"
 import dayjs from "dayjs"
 
 const ButtonType = {
@@ -77,7 +86,7 @@ Page({
     from_co_channel: false,
     special: false, //该课程是否是安卓特殊处理课程
     showNoticeBox: true,
-    isIphoneXRSMax:isIphoneXRSMax(),
+    isIphoneXRSMax: isIphoneXRSMax(),
     didShowUnitPop: false,
     showUnitPopAnime: false,
     showContact: false,
@@ -198,6 +207,13 @@ Page({
   // 播放视频
   playVideo(e) {
     let index = Number(e.currentTarget.dataset.index)
+
+    // 切换视频时视频时长打点
+    if (this.data.playDurationsList.length) {
+      this.recordPlayDuration()
+    }
+
+
     if (index >= 0) {
       let series_detail = this.data.videoCourseData.series_detail.video_detail
       // 2021-01-14上线
@@ -343,7 +359,12 @@ Page({
               let legal = dayjs(res.data.expire_at).isBefore(dayjs().add(15, 'day'))
               let diffDays = dayjs(res.data.expire_at).diff(dayjs().format("YYYY-MM-DD HH:mm:ss"), 'day')
               if (didExpire && legal) {
-                this.setData({trialData: {...res.data}, trialDiffDays: diffDays})
+                this.setData({
+                  trialData: {
+                    ...res.data
+                  },
+                  trialDiffDays: diffDays
+                })
               }
             }
           }
@@ -709,7 +730,9 @@ Page({
     if (this.data.from_co_channel) {
       paramsData.co_channel_tag = 'co_lndx'
     }
-    this.setData({showContact: true})
+    this.setData({
+      showContact: true
+    })
 
     bxPoint("series_consult_chat_click", paramsData, false)
 
@@ -1002,8 +1025,14 @@ Page({
   },
 
   openUnitPop() {
-    this.setData({didShowUnitPop: true})
-    wx.nextTick(() => {this.setData({showUnitPopAnime: true})})
+    this.setData({
+      didShowUnitPop: true
+    })
+    wx.nextTick(() => {
+      this.setData({
+        showUnitPopAnime: true
+      })
+    })
     let data = this.data.videoCourseData.series_detail
     bxPoint("series_check_in", {
       series_id: data.id,
@@ -1013,9 +1042,13 @@ Page({
   },
 
   closeUnitPop() {
-    this.setData({showUnitPopAnime: false})
+    this.setData({
+      showUnitPopAnime: false
+    })
     let t = setTimeout(() => {
-      this.setData({didShowUnitPop: false})
+      this.setData({
+        didShowUnitPop: false
+      })
       clearTimeout(t)
     }, 400)
   },
@@ -1027,21 +1060,23 @@ Page({
       url: "/subCourse/videoCourseUnitShare/videoCourseUnitShare",
       success(res) {
         res.eventChannel.emit("transmitUnitShareData", {
-        	data: {
-        	  id: self.data.videoCourseData.series_detail.id,
-        	  date: dayjs().format("YYYY/MM/DD"),
-        		name: self.data.videoCourseData.series_detail.teacher_desc,
-						desc: self.data.videoCourseData.series_detail.name,
+          data: {
+            id: self.data.videoCourseData.series_detail.id,
+            date: dayjs().format("YYYY/MM/DD"),
+            name: self.data.videoCourseData.series_detail.teacher_desc,
+            desc: self.data.videoCourseData.series_detail.name,
             qrCode: self.data.videoCourseData.series_detail.qrcode,
-						avatar: self.data.userInfo.avatar_url,
-						nickname: self.data.userInfo.nick_name,
+            avatar: self.data.userInfo.avatar_url,
+            nickname: self.data.userInfo.nick_name,
             lesson_num: `第${self.data.nowCoursePlayIndex + 1}节课`,
             lesson_name: self.data.videoCourseData.series_detail.name,
-					}
+          }
         })
       },
       complete() {
-        bxPoint("series_video_friends", {series_id: self.data.videoCourseData.series_detail.id}, false)
+        bxPoint("series_video_friends", {
+          series_id: self.data.videoCourseData.series_detail.id
+        }, false)
       }
     })
   },
@@ -1068,8 +1103,12 @@ Page({
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
     getFluentCardInfo({
       user_snow_id: accountInfo.snow_id
-    }).then(({data}) => {
-      this.setData({isFluentCardVip: $notNull(data) && data.status === FluentLearnUserType.active})
+    }).then(({
+      data
+    }) => {
+      this.setData({
+        isFluentCardVip: $notNull(data) && data.status === FluentLearnUserType.active
+      })
     })
   },
 
@@ -1080,8 +1119,7 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-  },
+  onReady: function () {},
 
   //页面pv打点
   pageViewPoint() {

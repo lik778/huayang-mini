@@ -14,11 +14,25 @@ import {
   queryPunchCardQrCode,
   studyLogCreate
 } from "../../api/course/index"
-import { getProductInfo, getYouZanAppId } from "../../api/mall/index"
-import { computeDate, dateAddDays, getLocalStorage, getNowDate, getNowDateAll, setLocalStorage } from "../../utils/util"
+import {
+  getProductInfo,
+  getYouZanAppId
+} from "../../api/mall/index"
+import {
+  computeDate,
+  dateAddDays,
+  getLocalStorage,
+  getNowDate,
+  getNowDateAll,
+  setLocalStorage
+} from "../../utils/util"
 import bxPoint from '../../utils/bxPoint'
-import { GLOBAL_KEY } from "../../lib/config"
-import { getFluentCardInfo } from "../../api/mine/index"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
+import {
+  getFluentCardInfo
+} from "../../api/mine/index"
 
 Page({
 
@@ -294,6 +308,10 @@ Page({
       traincamp_id: this.data.campId,
       start_date: this.data.joinDate,
       date: this.data.showDate
+    }
+    // 切换视频时视频时长打点
+    if (this.data.playDurationsList.length) {
+      this.recordPlayDuration()
     }
     if (this.data.createPoint && this.data.hasStartCampType !== 1) {
       this.setData({
