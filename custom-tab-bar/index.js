@@ -41,28 +41,39 @@ Component({
       const data = e.currentTarget.dataset
       const url = data.path
 
+      // 首页TAB
       if (this.data.selected === 0 && url === '/pages/practice/practice') {
         bxPoint("homepage_series", {}, false)
+      } else if (this.data.selected === 0 && url === '/pages/studentMoments/studentMoments') {
+        bxPoint("homepage_bbs", {}, false)
       } else if (this.data.selected === 0 && url === '/pages/userCenter/userCenter') {
         bxPoint("homepage_mine_visit", {}, false)
-      } else if (this.data.selected === 1 && url === '/pages/discovery/discovery') {
-        // jj-2021-04-19
+      }
+
+      // 校友动态TAB
+      else if (this.data.selected === 1 && url === '/pages/discovery/discovery') {
         bxPoint("bbs_homepage", {}, false)
       } else if (this.data.selected === 1 && url === '/pages/practice/practice') {
-        // jj-2021-04-19
         bxPoint("bbs_series", {}, false)
       } else if (this.data.selected === 1 && url === '/pages/userCenter/userCenter') {
-        // jj-2021-04-19
         bxPoint("bbs_mine", {}, false)
+      }
+
+      // 学校课程TAB
+      else if (this.data.selected === 2 && url === '/pages/discovery/discovery') {
+        bxPoint("series_homepage_visit", {}, false)
       } else if (this.data.selected === 2 && url === '/pages/studentMoments/studentMoments') {
         bxPoint("series_bbs", {}, false)
       } else if (this.data.selected === 2 && url === '/pages/userCenter/userCenter') {
         bxPoint("series_mine_visit", {}, false)
-      } else if (this.data.selected === 3 && url === '/pages/discovery/discovery') {
-        // jj-2021-03-12梨花
+      }
+
+      // 我的TAB
+      else if (this.data.selected === 3 && url === '/pages/discovery/discovery') {
         bxPoint("applets_mine_homepage", {}, false)
+      } else if (this.data.selected === 3 && url === '/pages/studentMoments/studentMoments') {
+        bxPoint("applets_mine_bbs", {}, false)
       } else if (this.data.selected === 3 && url === '/pages/practice/practice') {
-        // jj-2021-03-12梨花
         bxPoint("applets_mine_series", {}, false)
       }
 

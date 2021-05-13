@@ -364,6 +364,7 @@ Page({
 				}
 			}
 		})
+		bxPoint("series_remind_open", {}, false)
 	},
 	// 打开入群引导弹窗
 	openGuide() {
@@ -380,6 +381,7 @@ Page({
 			clearTimeout(t)
 		}, 300)
 		setLocalStorage(GLOBAL_KEY.practiceGuideExpiredAt, dayjs(`${dayjs().year()}-${dayjs().month() + 1}-${dayjs().date()} 23:59:59`).format("YYYY-MM-DD HH:mm:ss"))
+		bxPoint("series_remind_close", {}, false)
 	},
 	subScribeMessage() {
 		let tempId = "Yak_FhmnmqkJIjVW1T-bSqIwmHCxsIt4asMN_XkCitY"

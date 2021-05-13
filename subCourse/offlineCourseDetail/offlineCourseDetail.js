@@ -290,5 +290,10 @@ Page({
 				clearTimeout(t)
 			}, 300)
 		}
+
+		bxPoint("offline_series_reserve", {
+			series_offline_id: this.data.productId,
+			series_offline_reserve_info: $notNull(this.data.reserveMessageForm) ? JSON.stringify(this.data.reserveMessageForm) : ""
+		}, false)
 	}
 })
