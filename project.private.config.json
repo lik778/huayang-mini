@@ -43,9 +43,9 @@
           "scene": null
         },
         {
-          "name": "subCourse/joinCamp/joinCamp",
-          "pathName": "subCourse/joinCamp/joinCamp",
-          "query": "id=1",
+          "name": "线下课详情页",
+          "pathName": "subCourse/offlineCourseDetail/offlineCourseDetail",
+          "query": "id=4",
           "scene": null
         }
       ]

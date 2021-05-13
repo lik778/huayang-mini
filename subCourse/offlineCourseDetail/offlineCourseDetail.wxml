@@ -83,4 +83,32 @@
 
     <!-- 客服弹窗 -->
     <contact show="{{didShowContact}}" sessionFrom="sf_kecheng_offline" bind:closeContactModal="onCloseContactModal" />
+
+    <!-- 预定信息弹窗 -->
+    <view class="reserve-message" wx:if="{{didShowReserveMessageModal}}">
+        <view class="rm-mask {{didShowReserveMessageAnimate ? 'active' : ''}}" catchtouchmove="onCatchtouchmove" catchtap="closeModal"></view>
+        <view class="rm-content {{didShowReserveMessageAnimate ? 'active' : ''}}" catchtouchmove="onCatchtouchmove">
+            <view class="rm-title">请您填写以下信息完成预定：</view>
+            <view class="rm-item" wx:if="{{reserveMessageForm.height !== undefined}}">
+                <text class="rm-item-left">身高：</text>
+                <view class="rm-item-right">
+                    <input class="rm-item-input" type="digit" value="{{reserveMessageForm.height}}" cursor-spacing="{{30}}" bindinput="onInputHeight"></input>
+                </view>
+            </view>
+            <view class="rm-item" wx:if="{{reserveMessageForm.idcard !== undefined}}">
+                <text class="rm-item-left">身份证：</text>
+                <view class="rm-item-right">
+                    <input class="rm-item-input" type="idcard" value="{{reserveMessageForm.idcard}}" cursor-spacing="{{30}}" bindinput="onInputIdCard"></input>
+                </view>
+            </view>
+            <view class="rm-tips" wx:if="{{reserveMessageForm.idcard !== undefined}}">会按照身份证为您购买保险</view>
+            <view class="rm-item" wx:if="{{reserveMessageForm.name !== undefined}}">
+                <text class="rm-item-left">姓名：</text>
+                <view class="rm-item-right">
+                    <input class="rm-item-input" type="text" value="{{reserveMessageForm.name}}" cursor-spacing="{{30}}" bindinput="onInputName"></input>
+                </view>
+            </view>
+            <view class="rm-btn" catchtap="reserve">立即预定</view>
+        </view>
+    </view>
 </view>

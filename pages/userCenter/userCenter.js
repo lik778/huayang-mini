@@ -3,21 +3,21 @@ import baseUrl from "../../lib/request"
 import dayjs from "dayjs"
 import { getFindBanner, getPhoneNumber } from "../../api/course/index"
 import {
-  checkUserHasAddress,
-  getFluentCardInfo,
-  getFluentDistributeGuide,
-  getFluentLearnInfo,
-  getPartnerInfo,
-  getUserInfo,
-  getUserOwnerClasses
+	checkUserHasAddress,
+	getFluentCardInfo,
+	getFluentDistributeGuide,
+	getFluentLearnInfo,
+	getPartnerInfo,
+	getUserInfo,
+	getUserOwnerClasses
 } from "../../api/mine/index"
 import {
-  $notNull,
-  getLocalStorage,
-  hasAccountInfo,
-  hasUserInfo,
-  setLocalStorage,
-  splitTargetNoString
+	$notNull,
+	getLocalStorage,
+	hasAccountInfo,
+	hasUserInfo,
+	setLocalStorage,
+	splitTargetNoString
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 import { getTaskEntranceStatus } from "../../api/task/index"
@@ -554,9 +554,8 @@ Page({
 
     // 04.25之前成为花样学生的用户，点击获取专属海报按钮时跳转老带新海报，反之跳转学生卡海报页
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-    wx.navigateTo({
-      url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id
-    })
+    // wx.navigateTo({url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id})
+    wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
     // if ($notNull(this.data.fluentLearnUserInfo)) {
     //   let createdAt = dayjs(this.data.fluentLearnUserInfo.created_at)
     //   if (createdAt.isBefore(dayjs("2021-04-25"))) {

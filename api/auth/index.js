@@ -166,3 +166,19 @@ export const collectError = (params) => {
 	request._post(url, compoundParams)
 }
 
+/**
+ * 设置小程序消息通知订阅状态
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export const updateSubscribeMessageStatus = (params) => {
+	return new Promise((resolve, reject) => {
+		request._post(URL.setSubscribeMessage, params).then(({data, code}) => {
+			if (code === 0) {
+				resolve(data)
+			}
+		}).catch((err) => {
+			reject(err)
+		})
+	})
+}

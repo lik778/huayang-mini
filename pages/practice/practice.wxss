@@ -372,3 +372,90 @@
     border: 3rpx solid white;
     box-sizing: border-box;
 }
+/* 引导加入花样学习活动群 */
+.guide-wrap {
+    position: fixed;
+    bottom: calc(env(safe-area-inset-bottom) + 60px + 24rpx);
+    left: 24rpx;
+    right: 24rpx;
+}
+
+.guide {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 120rpx;
+    padding: 24rpx 24rpx;
+    box-sizing: border-box;
+    border-radius: 999rpx;
+    font-size: 0;
+    background: white;
+    box-shadow: 0 0 20px 4px rgba(0, 0, 0, 0.08);
+    transform: translateY(150%);
+    transition: transform 200ms cubic-bezier(.5,.21,.43,.95);
+}
+
+.guide.animation {
+    transform: translateY(0);
+}
+
+.guide-pic {
+    display: inline-block;
+    width: 72rpx;
+    height: 72rpx;
+    vertical-align: middle;
+}
+
+.guide-text-wrap {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.guide-text {
+    display: block;
+    margin-left: 20rpx;
+    font: bold 30rpx/42rpx PingFangSC;
+    color: #CC0000;
+}
+
+.guide-btn {
+    width: 184rpx;
+    height: 64rpx;
+    text-align: center;
+    font: 500 32rpx/64rpx PingFangSC;
+    border-radius: 999rpx;
+    color: white;
+    background: #CC0000;
+    animation: practiceGuideFlashing 4s ease infinite;
+}
+
+.guide-close-icon {
+    position: absolute;
+    right: -4rpx;
+    top: -40rpx;
+    width: 40rpx;
+    height: 40rpx;
+    margin: 20rpx;
+}
+
+@keyframes practiceGuideFlashing {
+    16% {
+        transform: scale(1);
+    }
+
+    20% {
+        transform: scale(1.05);
+    }
+
+    24% {
+        transform: scale(1);
+    }
+
+    28% {
+        transform: scale(1.05);
+    }
+
+    32% {
+        transform: scale(1);
+    }
+}
