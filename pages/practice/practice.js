@@ -394,6 +394,9 @@ Page({
 				}
 			}
 		})
+
+		if (dayjs(getApp().globalData.showContactEnterTime).isAfter(dayjs())) return
+
 		let guideExpiredAt = getLocalStorage(GLOBAL_KEY.practiceGuideExpiredAt)
 		if (!guideExpiredAt || dayjs(guideExpiredAt).isBefore(dayjs())) {
 			let t = setTimeout(() => {
