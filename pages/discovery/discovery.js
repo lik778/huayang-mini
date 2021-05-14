@@ -392,12 +392,13 @@ Page({
 	},
 	onTodayRecommendTap() {
 		let item = this.data.todayRecommendCourse.kecheng_series
+		let self = this
 		wx.navigateTo({
 			url: `/subCourse/videoCourse/videoCourse?videoId=${item.id}`, complete() {
 				bxPoint("homepage_today_recom_click", {
 					is_today_recom: 1,
 					series_id: item.id,
-					today_recom_id: this.data.todayRecommendCourse.id,
+					today_recom_id: self.data.todayRecommendCourse.id,
 					kecheng_name: item.teacher_desc,
 					kecheng_subname: item.name,
 				}, false)
@@ -739,7 +740,7 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=231`})
+		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=236`})
 
 		let {scene, invite_user_id = "", source} = options
 		// 通过小程序码进入 scene=${source}

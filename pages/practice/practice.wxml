@@ -106,4 +106,19 @@
             <view class="list-none-text">课程努力制作中!</view>
         </view>
     </view>
+
+    <!-- 引导加入花样学习活动群 -->
+    <view class="guide-wrap" wx:if="{{!didAlreadySubscribe && didShowGuide}}" bindtap="onGuideTap">
+        <view class="guide {{didExecuteGuideAnimation ? 'animation' : ''}}">
+            <view>
+                <image class="guide-pic" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1620809929ShceDL.jpg"></image>
+                <view class="guide-text-wrap">
+                    <text class="guide-text">开启上课提醒</text>
+                    <text class="guide-text">不错过课程活动</text>
+                </view>
+            </view>
+            <view class="guide-btn">开启提醒</view>
+            <image class="guide-close-icon" catchtap="closeGuide" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618560964nUbRZc.jpg"></image>
+        </view>
+    </view>
 </view>

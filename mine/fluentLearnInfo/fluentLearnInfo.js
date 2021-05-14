@@ -122,8 +122,8 @@ Page({
   onShareBtnTap() {
     bxPoint("changxue_card_post", {}, false)
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-    wx.navigateTo({url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id})
-    // wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
+    // wx.navigateTo({url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id})
+    wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
   },
   /**
    * 获取学生卡权益

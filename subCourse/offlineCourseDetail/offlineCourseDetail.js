@@ -1,5 +1,13 @@
 import { createNewOfflineCourseOrder, getOfflineCourseDetail } from "../../api/course/index"
-import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, isIphoneXRSMax, payFluentCard } from "../../utils/util"
+import {
+	$notNull,
+	getLocalStorage,
+	hasAccountInfo,
+	hasUserInfo,
+	isIphoneXRSMax,
+	payFluentCard,
+	toast
+} from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config"
 import { getFluentCardInfo, getFluentLearnInfo } from "../../api/mine/index"
 import dayjs from "dayjs"
@@ -21,7 +29,13 @@ Page({
 		didShowContact: false,
 		payLock: false,
 		isIphoneX: false,
-		weekDays: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"]
+		weekDays: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
+		didReserveMessageSuccess: false,
+		reserveMessageForm: null,
+		didShowReserveMessageModal: false,
+		didShowReserveMessageAnimate: false,
+		cachedOrderType: "",
+		keyBoardHeight: 0
 	},
 
 	/**
@@ -137,21 +151,41 @@ Page({
 	createOrder(e) {
 		bxPoint("offline_series_buy", {series_offline_id: this.data.info.id}, false)
 		if (this.data.payLock) return
+
 		let order_type = e.currentTarget.dataset.key
+		// 是否需要填写预定信息
+		if (this.data.info.has_reserve_message === 1 && !this.data.didReserveMessageSuccess) {
+			if (this.data.reserveMessageForm == null) {
+				let fieldStringAry = this.data.info.reserve_message.split(",")
+				let form = {}
+				fieldStringAry.forEach((item) => form[item] = "")
+				this.setData({reserveMessageForm: form})
+			}
+			this.setData({didShowReserveMessageModal: true, cachedOrderType: order_type})
+			wx.nextTick(() => {
+				this.setData({didShowReserveMessageAnimate: true})
+			})
+			return
+		}
 		this.setData({payLock: true})
-		createNewOfflineCourseOrder({
+		let params = {
 			kecheng_offline_id: this.data.productId,
 			open_id: getLocalStorage(GLOBAL_KEY.openId),
 			user_id: getLocalStorage(GLOBAL_KEY.userId),
 			order_type
-		}).then(({data}) => {
+		}
+		if ($notNull(this.data.reserveMessageForm)) {
+			params["extra_info"] = JSON.stringify(this.data.reserveMessageForm)
+		}
+		createNewOfflineCourseOrder(params).then(({data}) => {
 			payFluentCard({id: data.id, name: "线下精品课购买"})
 				.then(() => {
 					this.setData({payLock: false})
 					wx.redirectTo({url: '/mine/personCourse/personCourse?index=1'})
 				})
 				.catch((err) => {
-					if (err.errMsg !== "requestPayment:fail cancel") {}
+					if (err.errMsg !== "requestPayment:fail cancel") {
+					}
 					this.setData({payLock: false})
 				})
 		}).catch(() => {
@@ -184,4 +218,84 @@ Page({
 			current: e.detail.current
 		})
 	},
+	onCatchtouchmove() {
+		return false
+	},
+	closeModal() {
+		this.setData({didShowReserveMessageAnimate: false})
+		let t = setTimeout(() => {
+			this.setData({didShowReserveMessageModal: false})
+			clearTimeout(t)
+		}, 300)
+	},
+	onKeyboardActive(e) {
+		this.setData({keyBoardHeight: e.detail.height})
+	},
+	onInputHeight(e) {
+		let form = this.data.reserveMessageForm
+		this.setData({reserveMessageForm: {...form, height: e.detail.value}})
+	},
+	onInputIdCard(e) {
+		let form = this.data.reserveMessageForm
+		this.setData({reserveMessageForm: {...form, idcard: e.detail.value}})
+	},
+	onInputName(e) {
+		let form = this.data.reserveMessageForm
+		this.setData({reserveMessageForm: {...form, name: e.detail.value}})
+	},
+	validParams(form) {
+		for (let key of Object.keys(form)) {
+			switch (key) {
+				case "height": {
+					if (!form["height"]) {
+						toast("请填写您的身高")
+						return false
+					}
+					if (form["height"] <= 0) {
+						toast("身高不合法")
+						return false
+					}
+					break
+				}
+				case "idcard": {
+					if (!form["idcard"]) {
+						toast("请填写您的身份证")
+						return false
+					}
+					let _IDRe18 = /^([1-6][1-9]|50)\d{4}(18|19|20)\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
+					let _IDre15 = /^([1-6][1-9]|50)\d{4}\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}$/
+					if (_IDRe18.test(form["idcard"]) || _IDre15.test(form["idcard"])) {
+					} else {
+						toast("身份证格式不合法")
+						return false
+					}
+					break
+				}
+				case "name": {
+					if (!form["name"]) {
+						toast("请填写您的姓名")
+						return false
+					}
+					break
+				}
+			}
+		}
+		return true
+	},
+	reserve() {
+		let bool = this.validParams(this.data.reserveMessageForm)
+		if (bool) {
+			this.setData({didShowReserveMessageAnimate: false})
+			let t = setTimeout(() => {
+				this.setData({didShowReserveMessageModal: false, didReserveMessageSuccess: true})
+				this.createOrder({currentTarget: {dataset: {key: this.data.cachedOrderType}}})
+				clearTimeout(t)
+			}, 300)
+		}
+
+		bxPoint("offline_series_reserve", {
+			series_offline_id: this.data.productId,
+			series_offline_reserve_info: $notNull(this.data.reserveMessageForm) ? JSON.stringify(this.data.reserveMessageForm) : ""
+		}, false)
+	}
 })

@@ -1,9 +1,11 @@
 import { getFindBanner, getModelDataList, getVideoTypeList, queryVideoCourseListByBuyTag } from "../../api/course/index"
 import { FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
-import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
+import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo, setLocalStorage } from "../../utils/util"
 import { getFluentCardInfo } from "../../api/mine/index"
 import bxPoint from "../../utils/bxPoint"
 import { getYouZanAppId } from "../../api/mall/index"
+import dayjs from "dayjs"
+import { updateSubscribeMessageStatus } from "../../api/auth/index"
 
 Page({
 
@@ -52,6 +54,9 @@ Page({
 		pageScrollLock: false, // 页面滑动记录锁
 		didShowFixedTabsLayout: false, // 是否需要固定Tabs到顶部
 		didFromDiscovery: false, // 是否来自首页金刚位
+		didShowGuide: false, // 是否展示入群引导
+		didExecuteGuideAnimation: false, // 是否执行入群引导动画
+		didAlreadySubscribe: false, // 是否已经订阅课程提醒
 	},
 	getBanner() {
 		return new Promise((resolve) => {
@@ -315,6 +320,91 @@ Page({
 			wx.navigateTo({url: path})
 		}
 	},
+	onGuideTap() {
+		let tempId = "Yak_FhmnmqkJIjVW1T-bSqIwmHCxsIt4asMN_XkCitY"
+		let self = this
+		wx.getSetting({
+			withSubscriptions: true,
+			success(res) {
+				if (res.subscriptionsSetting[tempId] === "reject") {
+					wx.showModal({
+						title: '订阅消息',
+						content: '订阅花样百姓消息，不错过精品课程和活动。务必设置订阅消息为允许哦',
+						confirmText: '立即订阅',
+						confirmColor: '#33c71b',
+						success(res) {
+							if (res.confirm) {
+								wx.openSetting()
+							}
+						}
+					})
+				} else if (res.subscriptionsSetting[tempId] === "accept") {
+					self.setData({didAlreadySubscribe: true})
+				} else {
+					wx.requestSubscribeMessage({
+						tmplIds: [tempId],
+						success(response) {
+							if (response.errMsg === "requestSubscribeMessage:ok" && response[tempId] === "accept") {
+								updateSubscribeMessageStatus({
+									app_id: "wx85d130227f745fc5",
+									open_id: getLocalStorage(GLOBAL_KEY.openId),
+									template_id: tempId
+								}).then()
+							} else if (response[tempId] === "reject") {
+								// 用户拒绝授权，则三天之内不再显示
+								self.setData({didExecuteGuideAnimation: false})
+								let t = setTimeout(() => {
+									self.setData({didShowGuide: false})
+									clearTimeout(t)
+								}, 300)
+								setLocalStorage(GLOBAL_KEY.practiceGuideExpiredAt, dayjs(`${dayjs().year()}-${dayjs().month() + 1}-${dayjs().add(3, 'day').date()} 23:59:59`).format("YYYY-MM-DD HH:mm:ss"))
+							}
+						}
+					})
+				}
+			}
+		})
+		bxPoint("series_remind_open", {}, false)
+	},
+	// 打开入群引导弹窗
+	openGuide() {
+		this.setData({didShowGuide: true})
+		wx.nextTick(() => {
+			this.setData({didExecuteGuideAnimation: true})
+		})
+	},
+	// 关闭入群引导弹窗
+	closeGuide() {
+		this.setData({didExecuteGuideAnimation: false})
+		let t = setTimeout(() => {
+			this.setData({didShowGuide: false})
+			clearTimeout(t)
+		}, 300)
+		setLocalStorage(GLOBAL_KEY.practiceGuideExpiredAt, dayjs(`${dayjs().year()}-${dayjs().month() + 1}-${dayjs().date()} 23:59:59`).format("YYYY-MM-DD HH:mm:ss"))
+		bxPoint("series_remind_close", {}, false)
+	},
+	subScribeMessage() {
+		let tempId = "Yak_FhmnmqkJIjVW1T-bSqIwmHCxsIt4asMN_XkCitY"
+		let self = this
+		wx.getSetting({
+			withSubscriptions: true,
+			success(res) {
+				if (res.subscriptionsSetting[tempId] === "accept") {
+					self.setData({didAlreadySubscribe: true})
+				}
+			}
+		})
+
+		if (dayjs(getApp().globalData.showContactEnterTime).isAfter(dayjs())) return
+
+		let guideExpiredAt = getLocalStorage(GLOBAL_KEY.practiceGuideExpiredAt)
+		if (!guideExpiredAt || dayjs(guideExpiredAt).isBefore(dayjs())) {
+			let t = setTimeout(() => {
+				this.openGuide()
+				clearTimeout(t)
+			}, 1000)
+		}
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
@@ -364,6 +454,9 @@ Page({
 				selected: 2
 			})
 		}
+
+		// 检查订阅消息
+		this.subScribeMessage()
 
 		this.getFluentInfo()
 

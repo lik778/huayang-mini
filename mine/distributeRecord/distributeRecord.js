@@ -74,8 +74,8 @@ Page({
   // 跳转专属海报页
   goToFluentCardDistribute() {
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-    wx.navigateTo({url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id})
-    // wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
+    // wx.navigateTo({url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id})
+    wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
   },
   // tab按钮点击事件
   onTapChange(e) {

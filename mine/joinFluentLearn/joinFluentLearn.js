@@ -221,10 +221,8 @@ Page({
 		}
 
 		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-		wx.navigateTo({
-			url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id
-		})
-		// wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
+		// wx.navigateTo({url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id})
+		wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
 	},
 	/**
 	 * 授权失败
