@@ -34,7 +34,8 @@ Page({
 		reserveMessageForm: null,
 		didShowReserveMessageModal: false,
 		didShowReserveMessageAnimate: false,
-		cachedOrderType: ""
+		cachedOrderType: "",
+		keyBoardHeight: 0
 	},
 
 	/**
@@ -153,6 +154,8 @@ Page({
 
 		let order_type = e.currentTarget.dataset.key
 
+		console.error(1)
+
 		// 是否需要填写预定信息
 		if (this.data.info.has_reserve_message === 1 && !this.data.didReserveMessageSuccess) {
 			if (this.data.reserveMessageForm == null) {
@@ -161,12 +164,15 @@ Page({
 				fieldStringAry.forEach((item) => form[item] = "")
 				this.setData({reserveMessageForm: form})
 			}
+			console.error(2)
 			this.setData({didShowReserveMessageModal: true, cachedOrderType: order_type})
 			wx.nextTick(() => {
 				this.setData({didShowReserveMessageAnimate: true})
 			})
 			return
 		}
+
+		console.error(3)
 
 		this.setData({payLock: true})
 		let params = {
@@ -228,6 +234,9 @@ Page({
 			this.setData({didShowReserveMessageModal: false})
 			clearTimeout(t)
 		}, 300)
+	},
+	onKeyboardActive(e) {
+		this.setData({keyBoardHeight: e.detail.height})
 	},
 	onInputHeight(e) {
 		let form = this.data.reserveMessageForm
