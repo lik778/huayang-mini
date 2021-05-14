@@ -414,7 +414,7 @@
 .guide-text {
     display: block;
     margin-left: 20rpx;
-    font: bold 30rpx/42rpx PingFangSC;
+    font: 30rpx/42rpx PingFangSC;
     color: #CC0000;
 }
 
