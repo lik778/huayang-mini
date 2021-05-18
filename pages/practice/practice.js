@@ -349,7 +349,10 @@ Page({
 									app_id: "wx85d130227f745fc5",
 									open_id: getLocalStorage(GLOBAL_KEY.openId),
 									template_id: tempId
-								}).then()
+								}).then(() => {
+									// 检查开课通知订阅状态
+									self.subScribeMessage()
+								})
 							} else if (response[tempId] === "reject") {
 								// 用户拒绝授权，则三天之内不再显示
 								self.setData({didExecuteGuideAnimation: false})
@@ -455,7 +458,7 @@ Page({
 			})
 		}
 
-		// 检查订阅消息
+		// 检查开课通知订阅状态
 		this.subScribeMessage()
 
 		this.getFluentInfo()
