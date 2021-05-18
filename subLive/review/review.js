@@ -1,7 +1,7 @@
 // subLive/review/review.js
 import { getLiveInfo, getWatchLiveAuth, statisticsWatchNo } from "../../api/live/course"
 import { getLocalStorage, setLocalStorage } from "../../utils/util"
-import { GLOBAL_KEY, SHARE_PARAMS } from "../../lib/config"
+import { GLOBAL_KEY } from "../../lib/config"
 import Dialog from "../../miniprogram_npm/@vant/weapp/dialog/dialog"
 import { checkAuth } from "../../utils/auth"
 import { bindWxPhoneNumber } from "../../api/auth/index"
@@ -32,7 +32,7 @@ Page({
 	auth(zhiboRoomId) {
 		let userId = getLocalStorage(GLOBAL_KEY.userId)
 		if (userId == null) {
-			this.setData({show: true})
+			// this.setData({show: true})
 		} else {
 			// 获取直播权限
 			getWatchLiveAuth({room_id: zhiboRoomId, user_id: userId}).then(res => {
