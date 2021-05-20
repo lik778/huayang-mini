@@ -21,6 +21,7 @@ Page({
 		isFluentLearnVIP: false, // 是否是学生卡会员
 		keyArr: [],
 		bottomLock: true,
+		didShowAuth: false,
 		pageSize: {
 			limit: 10,
 			offset: 0
@@ -321,6 +322,7 @@ Page({
 		}
 	},
 	onGuideTap() {
+		if (!hasUserInfo()) return this.setData({didShowAuth: true})
 		let tempId = "Yak_FhmnmqkJIjVW1T-bSqIwmHCxsIt4asMN_XkCitY"
 		let self = this
 		wx.getSetting({
@@ -407,6 +409,18 @@ Page({
 				clearTimeout(t)
 			}, 1000)
 		}
+	},
+	// 用户授权取消
+	authCancelEvent() {
+		this.setData({
+			didShowAuth: false
+		})
+	},
+	// 用户确认授权
+	authCompleteEvent() {
+		this.setData({
+			didShowAuth: false,
+		})
 	},
 	/**
 	 * 生命周期函数--监听页面加载
