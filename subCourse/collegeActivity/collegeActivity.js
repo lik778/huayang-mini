@@ -67,7 +67,7 @@ Page({
 		if (activityId) {
 			if (this.data.didFluentCardUser) {
 				let link = `${request.baseUrl}/#/home/detail/${activityId}`
-				wx.navigateTo({url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}`})
+				wx.navigateTo({url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}&didUserIsFluentCardMember=yes`})
 			} else {
 				this.setData({didShowFluentLearnModal: true})
 			}
