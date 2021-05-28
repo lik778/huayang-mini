@@ -1,4 +1,3 @@
-import { wxGetUserInfoPromise } from '../../utils/auth.js'
 import { GLOBAL_KEY, Version } from '../../lib/config.js'
 import { bindUserInfo, bindWxPhoneNumber, checkFocusLogin, getWxInfo } from "../../api/auth/index"
 import { $notNull, getLocalStorage, hasUserInfo, setLocalStorage } from "../../utils/util"
@@ -33,41 +32,42 @@ Page({
 	 * 一键微信授权
 	 */
 	getUserInfo() {
-		try {
-			wxLoginPromise()
-				.then(async (code) => {
-					// 用code查询服务端是否有该用户信息，如果有更新本地用户信息，反之从微信获取用户信息保存到服务端
-					let wxOriginUserInfo = await getWxInfo({
-						code,
-						app_id: APP_LET_ID.tx
-					})
-					// 缓存openId
-					setLocalStorage(GLOBAL_KEY.openId, wxOriginUserInfo.openid)
+		wx.getUserProfile({
+				desc: '用于完善会员资料',
+				success: async res => {
+					let userInfo = res.userInfo
+					wxLoginPromise()
+						.then(async (code) => {
+							// 用code查询服务端是否有该用户信息，如果有更新本地用户信息，反之从微信获取用户信息保存到服务端
+							let wxOriginUserInfo = await getWxInfo({
+								code,
+								app_id: APP_LET_ID.tx
+							})
+							// 缓存openId
+							setLocalStorage(GLOBAL_KEY.openId, wxOriginUserInfo.openid)
 
-					wxGetUserInfoPromise().then(async (response) => {
-						const userInfo = response.userInfo
-						let params = {
-							open_id: getLocalStorage(GLOBAL_KEY.openId),
-							avatar_url: userInfo.avatarUrl,
-							city: userInfo.city,
-							nickname: userInfo.nickName,
-							province: userInfo.province,
-							country: userInfo.country,
-							gender: userInfo.gender
-						}
-						let originUserInfo = await bindUserInfo(params)
-						setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
-						bxPoint("applets_auth_status", {auth_type: "weixin", auth_result: "success"}, false)
-						this.setData({
-							show: true
+							let params = {
+								open_id: getLocalStorage(GLOBAL_KEY.openId),
+								avatar_url: userInfo.avatarUrl,
+								city: userInfo.city,
+								nickname: userInfo.nickName,
+								province: userInfo.province,
+								country: userInfo.country,
+								gender: userInfo.gender
+							}
+							let originUserInfo = await bindUserInfo(params)
+							setLocalStorage(GLOBAL_KEY.userInfo, originUserInfo)
+							bxPoint("applets_auth_status", {auth_type: "weixin", auth_result: "success"}, false)
+							this.setData({
+								show: true
+							})
 						})
-					}).catch(() => {
-						// 用户取消微信授权
-						bxPoint("applets_auth_status", {auth_type: "weixin", auth_result: "fail"}, false)
-					})
-				})
-		} catch (error) {
-		}
+				},
+			fail: (err) => {
+				// 用户取消微信授权
+				bxPoint("applets_auth_status", {auth_type: "weixin", auth_result: "fail"}, false)
+			}}
+		)
 	},
 	/**
 	 * 一键获取微信手机号
@@ -122,12 +122,11 @@ Page({
 							url: `${rootUrl}${link}&type=link&isModel=true`,
 						})
 					} else {
-						console.log(this.data.redirectPath)
 						wx.navigateTo({
 							url: this.data.redirectPath
 						})
 					}
-					return
+
 				}
 			}
 		} else {
@@ -158,7 +157,6 @@ Page({
 			redirectPath = decodeURIComponent(redirectPath)
 		}
 
-		console.log(redirectPath)
 		if (Number(fromWebView) === 1) {
 			redirectPath = decodeURIComponent(redirectPath)
 		}
@@ -191,7 +189,7 @@ Page({
 					url: '/pages/practice/practice'
 				})
 			}
-			return
+
 		}
 	},
 

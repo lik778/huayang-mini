@@ -458,7 +458,7 @@ Page({
 			if (this.data.didFluentCardUser) {
 				let link = `${request.baseUrl}/#/home/detail/${activityId}`
 				wx.navigateTo({
-					url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}`
+					url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}&didUserIsFluentCardMember=yes`
 				})
 			} else {
 				this.setData({didShowFluentLearnModal: true})
@@ -740,7 +740,7 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=236`})
+		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=241`})
 
 		let {scene, invite_user_id = "", source} = options
 		// 通过小程序码进入 scene=${source}

@@ -37,9 +37,9 @@
           "scene": null
         },
         {
-          "name": "校友活动",
-          "pathName": "subCourse/collegeActivity/collegeActivity",
-          "query": "",
+          "name": "pages/activePlatform/activePlatform",
+          "pathName": "pages/activePlatform/activePlatform",
+          "query": "link=https%3A%2F%2Fhuayang.baixing.cn%2F%23%2Fhome%2Fdetail%2F14&didUserIsFluentCardMember=yes",
           "scene": null
         },
         {
