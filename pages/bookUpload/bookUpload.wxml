@@ -1,0 +1,50 @@
+<view class="book-upload">
+    <view class="header">
+        <image class="cover" mode="aspectFill" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622516355gJbsJj.jpg"></image>
+    </view>
+    <view class="section">
+        <view class="title-01">花样时尚画册</view>
+        <view class="text-01">您的专属画册共24页，分别为封面、内页、封底，需要您准备33张照片。</view>
+        <view class="text-01">如果已经准备好了，我们开始上传照片吧～为了保障画册美观，请您务必上传清晰的照片哦！</view>
+        <view class="title-02">1、上传画册封面</view>
+        <view class="review" wx:if="{{cover}}">
+            <view class="review-item">
+                <image class="review-image" bindtap="previewCover" src="{{cover + '?x-oss-process=style/huayang-thumb'}}" mode="aspectFit"></image>
+                <image class="close-icon" catchtap="removeCover" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622538606NqOPcW.jpg" mode="aspectFill"></image>
+            </view>
+        </view>
+        <view class="upload-box" wx:else bindtap="chooseCover">
+            <image class="add-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622516832MkoKCu.jpg" mode="aspectFit"></image>
+        </view>
+        <view class="title-02">2、上传画册封底</view>
+        <view class="review" wx:if="{{backCover}}">
+            <view class="review-item">
+                <image class="review-image" src="{{backCover + '?x-oss-process=style/huayang-thumb'}}" mode="aspectFit" bindtap="previewBackCover"></image>
+                <image class="close-icon" catchtap="removeBackCover" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622538606NqOPcW.jpg" mode="aspectFill"></image>
+            </view>
+        </view>
+        <view class="upload-box" wx:else bindtap="chooseBackCover">
+            <image class="add-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622516832MkoKCu.jpg" mode="aspectFit"></image>
+        </view>
+        <view class="title-02" id="ding">3、上传画册内页</view>
+        <view class="title-03">共{{CONTENT_IMAGE_MAX_COUNT}}张，已上传{{contentImgs.length}}张</view>
+        <view class="review">
+            <view class="review-item" wx:for="{{contentImgs}}" wx:key="index" bindtap="previewContentImg" data-item="{{item}}">
+                <image class="review-image" src="{{item + '?x-oss-process=style/huayang-thumb'}}" mode="aspectFit"></image>
+                <image class="close-icon" catchtap="removeContentImg" data-item="{{item}}" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622538606NqOPcW.jpg" mode="aspectFill"></image>
+            </view>
+            <view class="review-item multiple" wx:if="{{contentImgs.length < CONTENT_IMAGE_MAX_COUNT}}" bindtap="chooseContentImgs">
+                <image class="add-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622516832MkoKCu.jpg" mode="aspectFit"></image>
+            </view>
+        </view>
+    </view>
+    <view class="fixed-view" wx:if="{{scrollTopNo >= dingOffsetNo}}">
+        <view class="title-02">3、上传画册内页</view>
+        <view class="title-03">共{{CONTENT_IMAGE_MAX_COUNT}}张，已上传{{contentImgs.length}}张</view>
+    </view>
+    <cover-view class="fixed-cover-view" wx:if="{{scrollTopNo >= dingOffsetNo}}"></cover-view>
+    <view class="footer" bindtap="upload">上传完成</view>
+
+    <!-- 授权弹窗 -->
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent" />
+</view>

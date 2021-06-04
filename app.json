@@ -29,13 +29,16 @@
     "pages/activePlatform/activePlatform",
     "pages/activePay/activePay",
     "pages/activePayCancel/activePayCancel",
-    "pages/studentMoments/studentMoments"
+    "pages/studentMoments/studentMoments",
+    "pages/bookUpload/bookUpload",
+    "pages/bookCustomSuccess/bookCustomSuccess"
   ],
   "requiredBackgroundModes": [
     "audio",
     "location"
   ],
-  "subpackages": [{
+  "subpackages": [
+    {
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -141,7 +144,8 @@
   },
   "tabBar": {
     "custom": true,
-    "list": [{
+    "list": [
+      {
         "pagePath": "pages/discovery/discovery"
       },
       {

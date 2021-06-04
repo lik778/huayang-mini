@@ -1,0 +1,5 @@
+<view class="book-custom-success">
+    <image class="icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622800236QBboTP.jpg" mode="aspectFit"></image>
+    <view class="text-01">画册图片已上传完成</view>
+    <view class="text-02">您的照片已全部上传完成，请联系欣欣老师帮您把画册制作完成。</view>
+</view>

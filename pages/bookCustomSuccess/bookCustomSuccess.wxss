@@ -1,0 +1,20 @@
+.book-custom-success {
+    padding: 0 90rpx;
+}
+.icon {
+    display: block;
+    width: 196rpx;
+    height: 114rpx;
+    margin: 220rpx auto 0;
+    font-size: 0;
+}
+
+.text-01 {
+    margin: 60rpx 0 40rpx;
+    font: 600 44rpx/44rpx PingFangSC;
+    text-align: center;
+}
+
+.text-02 {
+    font: 32rpx/44rpx PingFangSC;
+}

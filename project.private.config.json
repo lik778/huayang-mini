@@ -47,6 +47,18 @@
           "pathName": "subCourse/offlineCourseDetail/offlineCourseDetail",
           "query": "id=4",
           "scene": null
+        },
+        {
+          "name": "上传画册图片",
+          "pathName": "pages/bookUpload/bookUpload",
+          "query": "id=37",
+          "scene": null
+        },
+        {
+          "name": "上传成功页",
+          "pathName": "pages/bookCustomSuccess/bookCustomSuccess",
+          "query": "",
+          "scene": null
         }
       ]
     }
