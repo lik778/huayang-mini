@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "画册照片上传",
+  "usingComponents": {
+    "authModule": "../../components/auth/auth"
+  }
+}

@@ -1,0 +1,132 @@
+.book-upload {}
+
+.header {}
+
+.cover {
+    width: 100%;
+    height: 422rpx;
+}
+
+.section {
+    padding: 60rpx 55rpx 250rpx;
+    box-sizing: border-box;
+}
+
+.title-01 {
+    margin-bottom: 40rpx;
+    text-align: center;
+    font: 600 52rpx/52rpx PingFangSC;
+}
+
+.title-02 {
+    font: 600 36rpx/36rpx PingFangSC;
+}
+
+.title-03 {
+    margin-top: 30rpx;
+    font: 32rpx/32rpx PingFangSC;
+    color: rgba(0,0,0, 0.6);
+}
+
+.text-01 {
+    margin-bottom: 60rpx;
+    font: 36rpx/50rpx PingFangSC;
+}
+
+.review {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 64rpx 0 60rpx;
+}
+
+.review-item {
+    position: relative;
+    width: 192rpx;
+    height: 192rpx;
+    margin: 0 30rpx 30rpx 0;
+    box-sizing: border-box;
+}
+
+.review-item:nth-child(3n) {
+    margin-right: 0;
+}
+
+.review-item.multiple {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #F9F9F9;
+}
+
+.review-image {
+    width: inherit;
+    height: inherit;
+    font-size: 0;
+    background: #F9F9F9;
+}
+
+.close-icon {
+    position: absolute;
+    top: -24rpx;
+    right: -24rpx;
+    width: 48rpx;
+    height: 48rpx;
+    font-size: 0;
+}
+
+.upload-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 192rpx;
+    height: 192rpx;
+    margin: 40rpx 0 60rpx;
+    box-sizing: border-box;
+    background: #F9F9F9;
+    font-size: 0;
+}
+
+.upload-box:active {
+    opacity: 0.8;
+}
+
+.add-icon {
+    width: 56rpx;
+    height: 56rpx;
+}
+
+.fixed-view {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 42rpx 55rpx 24rpx;
+    box-sizing: border-box;
+    background: white;
+}
+
+.fixed-cover-view {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10rpx;
+    background: white;
+}
+
+.footer {
+    position: fixed;
+    bottom: 60rpx;
+    right: 60rpx;
+    left: 60rpx;
+    height: 96rpx;
+    background: #CC0000;
+    color: white;
+    font: 600 36rpx/96rpx PingFangSC;
+    text-align: center;
+    border-radius: 999rpx;
+}
+
+.footer:active {
+    background: #e32c2c;
+}
