@@ -177,6 +177,7 @@ Page({
 		if ($notNull(this.data.reserveMessageForm)) {
 			params["extra_info"] = JSON.stringify(this.data.reserveMessageForm)
 		}
+		// 要添加标识
 		createNewOfflineCourseOrder(params).then(({data}) => {
 			payFluentCard({id: data.id, name: "线下精品课购买"})
 				.then(() => {

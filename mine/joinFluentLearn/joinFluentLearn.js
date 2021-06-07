@@ -333,7 +333,7 @@ Page({
 				bxPoint("changxue_buy_pay", {}, false)
 			}
 		}
-
+		// 要添加标识
 		payForFluentCard(params).then(({
 			data,
 			code,
