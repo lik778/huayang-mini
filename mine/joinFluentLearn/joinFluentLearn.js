@@ -5,6 +5,9 @@ import {
 	getPartnerInfo,
 	payForFluentCard
 } from "../../api/mine/index"
+import {
+	agentUserBind
+} from "../../api/auth/index"
 
 import {
 	$notNull,
@@ -17,11 +20,19 @@ import {
 	setLocalStorage,
 	toast
 } from "../../utils/util"
-import { ErrorLevel, FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
+import {
+	ErrorLevel,
+	FluentLearnUserType,
+	GLOBAL_KEY
+} from "../../lib/config"
 import dayjs from "dayjs"
-import { collectError } from "../../api/auth/index"
+import {
+	collectError
+} from "../../api/auth/index"
 import bxPoint from "../../utils/bxPoint"
-import { queryQualityVideoList } from "../../api/live/index"
+import {
+	queryQualityVideoList
+} from "../../api/live/index"
 import baseUrl from "../../lib/request"
 
 Page({
@@ -60,8 +71,18 @@ Page({
 	onLoad: function (options) {
 		let {
 			inviteId,
-			channel
+			channel,
+			agent_id = '',
+			mode = ''
 		} = options
+		// 代理商渠道标识
+		if (agent_id) {
+			setLocalStorage("distributorStorage", JSON.stringify({
+				agent_id,
+				mode,
+				expire_at: new Date().getTime() + 86400000 * 2
+			}))
+		}
 		/**
 		 * 小程序卡片中满足 sceneInviteId=0 且 channel!=undefined 时，在支付时上传渠道来源
 		 */
@@ -141,9 +162,9 @@ Page({
 	initCollegeIntroVideoListener() {
 		let collegeOB = wx.createIntersectionObserver()
 		collegeOB.relativeToViewport({
-			top: 0,
-			bottom: 0
-		})
+				top: 0,
+				bottom: 0
+			})
 			.observe('#hy-video-join-fluent-learn-content', res => {
 				if (res && res.intersectionRatio > 0) {
 					// 进入可视区域
@@ -222,7 +243,9 @@ Page({
 
 		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
 		// wx.navigateTo({url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id})
-		wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
+		wx.navigateTo({
+			url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id
+		})
 	},
 	/**
 	 * 授权失败
@@ -333,7 +356,19 @@ Page({
 				bxPoint("changxue_buy_pay", {}, false)
 			}
 		}
-		// 要添加标识
+
+		// 代理商渠道标识
+		if (getLocalStorage("distributorStorage")) {
+			let info = JSON.parse(getLocalStorage('distributorStorage'))
+			if (new Date().getTime() <= info.expire_at) {
+				if (Number(info.mode) === 2) {
+					params.agent_id = info.agent_id
+				}
+			} else {
+				removeLocalStorage('distributorStorage')
+			}
+		}
+
 		payForFluentCard(params).then(({
 			data,
 			code,
@@ -426,11 +461,15 @@ Page({
 	// 播放花样大学介绍视频
 	onPlayCollegeVideo() {
 		this.data.previewVideo.play()
-		this.setData({isCollegeVideoPlaying: true})
+		this.setData({
+			isCollegeVideoPlaying: true
+		})
 	},
 	onPauseCollegeVideo() {
 		this.data.previewVideo.pause()
-		this.setData({isCollegeVideoPlaying: false})
+		this.setData({
+			isCollegeVideoPlaying: false
+		})
 	},
 	/**
 	 * 获取热门课程
