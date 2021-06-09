@@ -17,7 +17,7 @@ Component({
     },
     type: {
       type: Number,
-      value: 1, //1为会员注册,2为购买学生卡
+      value: 1, //1为会员注册,2为购买畅学卡
     },
     link: {
       type: String,

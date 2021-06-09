@@ -79,7 +79,7 @@ Component({
 		todayRecommend: null,
 		previewLink: "",
 		isIosPlatform: false,
-		isFluentLearnVIP: false, // 是否是学生卡会员
+		isFluentLearnVIP: false, // 是否是畅学卡会员
 	},
 
 	pageLifetimes: {
@@ -101,7 +101,7 @@ Component({
 		run() {
 			// 检查IOS
 			this.checkIos()
-			// 查询学生卡信息
+			// 查询畅学卡信息
 			this.getFluentInfo()
 		},
 		/**

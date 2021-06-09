@@ -1,6 +1,6 @@
 <view class="fluent-card-distribute">
     <cover-view class="navigation" style="padding-top:{{statusHeight+43}}px;">
-        <naviBar title="学生卡海报" color="#37383B" titleColor="white" hideIcon="{{true}}"></naviBar>
+        <naviBar title="畅学卡海报" color="#37383B" titleColor="white" hideIcon="{{true}}"></naviBar>
     </cover-view>
 
     <view class="canvas-wrap">
@@ -49,7 +49,7 @@
 
         <view class="desc-03">
             <view class="price">
-                <view>限时特价<text class="discount-price">{{discount_price}}</text>元</view>
+                <view>限时特价<text class="discount-price">{{discount_price}}</text>元/年</view>
                 <!--<text class="origin-price">原价{{price}}元/年</text>-->
             </view>
         </view>

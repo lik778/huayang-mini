@@ -45,9 +45,10 @@ Page({
 		],
 		permissionList: [
 			{
-				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618795707BlnIDa.jpg",
-				text01: "线下精品",
-				text02: "课参与权"
+				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618795720FvzYdk.jpg",
+				text01: "全年畅学",
+				text02: "线上课程"
+
 			},
 			{
 				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618795712nabBBP.jpg",
@@ -55,9 +56,9 @@ Page({
 				text02: "校友活动"
 			},
 			{
-				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618795720FvzYdk.jpg",
-				text01: "线上课程",
-				text02: "终生畅学"
+				icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618795707BlnIDa.jpg",
+				text01: "线上线下",
+				text02: "精品课程"
 			}
 		],
 		qrcode: "",
@@ -214,7 +215,7 @@ Page({
 		await drawFont(ctx, this.data.discount_price, '#CC0000', "400", "PingFangSC", 24, 35 + text01Width, 419 + 12)
 		ctx.font = '24px PingFang SC'
 		let text02Width = measureTextWidth(ctx, "365")
-		await drawFont(ctx, "元", '#000000', "400", "PingFangSC", 14, 35 + text01Width + text02Width, 419 + 8 + 12)
+		await drawFont(ctx, "元/年", '#000000', "400", "PingFangSC", 14, 35 + text01Width + text02Width, 419 + 8 + 12)
 		// await drawFont(ctx, `原价${this.data.price}元/年`, 'rgba(0,0,0, 0.5)', "400", "PingFangSC", 12, 35, 452)
 		// await drawLine(ctx, 'rgba(0,0,0, 0.5)', 1, 35, 460, 35 + 76, 460)
 		await drawBorderCircle(ctx, this.data.qrcode, 185 + 33, 412 + 33, 36)

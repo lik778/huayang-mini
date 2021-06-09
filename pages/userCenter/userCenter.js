@@ -60,11 +60,11 @@ Page({
     visibleTaskEntrance: false,
     cardBtnText: "授权登录",
     bannerList: [],
-    disHasFluentLearnUserInfo: false, // 是否有学生卡会员信息
-    isFluentLearnExpired: false, // 学生卡依然有效
-    cardName: "", // 学生卡名称
-    cardDesc: "", // 学生卡描述
-    auditInfo: null, // 学生卡引导私域配置信息
+    disHasFluentLearnUserInfo: false, // 是否有畅学卡会员信息
+    isFluentLearnExpired: false, // 畅学卡依然有效
+    cardName: "", // 畅学卡名称
+    cardDesc: "", // 畅学卡描述
+    auditInfo: null, // 畅学卡引导私域配置信息
     didVisibleAuditBtn: false, // 是否展示成为花样合伙人按钮
     partnerInfo: null, // 合伙人信息
     isPartner: false, // 当前用户是否是合伙人
@@ -336,11 +336,10 @@ Page({
         let data = res.data.hasAddr
         if (!data) {
           let hasShowClubVipAlertSign = getLocalStorage('hy_daxue_show_club_vip_alert_sign')
-          let threeDayTime = this.data.disHasFluentLearnUserInfo ? 86400 : 259200 //买了学生卡1天1显示没买3天一显示
+          let threeDayTime = this.data.disHasFluentLearnUserInfo ? 86400 : 259200 //买了畅学卡1天1显示没买3天一显示
           let threeDayLaterTimeStr = parseInt(new Date().getTime() / 1000) + threeDayTime
           let rootUrl = baseUrl.baseUrl
           let userId = this.data.userInfo.id
-          console.log(this.data.disHasFluentLearnUserInfo)
           let type = this.data.disHasFluentLearnUserInfo ? 2 : 1
           if (!hasShowClubVipAlertSign) {
             setTimeout(() => {
@@ -358,7 +357,7 @@ Page({
   },
 
   /**
-   * 请求学生卡信息
+   * 请求畅学卡信息
    */
   getFluentInfo() {
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
@@ -368,10 +367,10 @@ Page({
       data
     }) => {
       if ($notNull(data)) {
-        // 学生卡是否已过期
+        // 畅学卡是否已过期
         let isFluentLearnExpired = data.status === FluentLearnUserType.deactive
 
-        // 学生卡有效的用户引导加私域
+        // 畅学卡有效的用户引导加私域
         if (!isFluentLearnExpired) {
           getFluentDistributeGuide().then(({
             data
@@ -389,6 +388,9 @@ Page({
           isFluentLearnExpired,
           didVisibleVIPIcon: accountInfo.tag_list ? accountInfo.tag_list.includes("vip") : false,
           cardBtnText: isFluentLearnExpired ? "立即加入" : "查看权益"
+        })
+        this.setData({
+          ['fluentLearnUserInfo.expire_time'] : this.data.fluentLearnUserInfo.expire_time.match(/\S+/)[0]
         })
 
       } else {
@@ -552,7 +554,7 @@ Page({
       })
     }
 
-    // 04.25之前成为花样学生的用户，点击获取专属海报按钮时跳转老带新海报，反之跳转学生卡海报页
+    // 04.25之前成为花样学生的用户，点击获取专属海报按钮时跳转老带新海报，反之跳转畅学卡海报页
     let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
     // wx.navigateTo({url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id})
     wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
@@ -602,7 +604,7 @@ Page({
 
     this.calcUserCreatedTime()
 
-    // 获取学生卡文案
+    // 获取畅学卡文案
     getFluentLearnInfo().then(({
       data
     }) => {
@@ -711,7 +713,7 @@ Page({
     })
 
     if (hasAccountInfo() && hasUserInfo()) {
-      // 每次访问个人中心更新最新的账户数据和学生卡信息
+      // 每次访问个人中心更新最新的账户数据和畅学卡信息
       this.init()
       this.getUserSingerInfo().then(() => {
         this.getFluentInfo()

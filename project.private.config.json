@@ -13,13 +13,13 @@
     "miniprogram": {
       "list": [
         {
-          "name": "学生卡售前页",
+          "name": "畅学卡售前页",
           "pathName": "mine/joinFluentLearn/joinFluentLearn",
           "query": "",
           "scene": null
         },
         {
-          "name": "学生卡详情页",
+          "name": "畅学卡详情页",
           "pathName": "mine/fluentLearnInfo/fluentLearnInfo",
           "query": "",
           "scene": null
@@ -57,6 +57,18 @@
         {
           "name": "上传成功页",
           "pathName": "pages/bookCustomSuccess/bookCustomSuccess",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "首页",
+          "pathName": "pages/discovery/discovery",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "我的",
+          "pathName": "pages/userCenter/userCenter",
           "query": "",
           "scene": null
         }

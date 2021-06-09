@@ -12,7 +12,7 @@ Page({
     titleList: [],
     currentIndex: 0,
     showMoney: true,
-    isFluentLearnVIP: false, // 是否是学生卡会员
+    isFluentLearnVIP: false, // 是否是畅学卡会员
     keyArr: [],
     bottomLock: true,
     pageSize: {
