@@ -126,7 +126,7 @@ Page({
     wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
   },
   /**
-   * 获取学生卡权益
+   * 获取畅学卡权益
    */
   getCardInfo() {
     getFluentLearnInfo().then(({data}) => {

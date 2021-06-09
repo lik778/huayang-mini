@@ -170,7 +170,7 @@
     opacity: 0.8;
 }
 
-/* 固底按钮-非学生卡用户购买 */
+/* 固底按钮-非畅学卡用户购买 */
 .non-member {
     display: flex;
     justify-content: space-between;
@@ -223,7 +223,7 @@
     color: rgba(255, 255, 255, .8);
 }
 
-/* 学生卡用户购买 */
+/* 畅学卡用户购买 */
 .member {
     display: flex;
     justify-content: space-between;

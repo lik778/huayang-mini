@@ -180,7 +180,7 @@ Page({
 		})
 	},
 	/**
-	 * 学生卡专属弹窗回调事件
+	 * 畅学卡专属弹窗回调事件
 	 */
 	onFluentLearnConfirm() {
 		this.setData({
@@ -266,7 +266,7 @@ Page({
 		})
 	},
 	/**
-	 * 检查用户学生卡状态
+	 * 检查用户畅学卡状态
 	 */
 	checkUserFluentLearnStatus() {
 		if (!hasUserInfo() || !hasAccountInfo()) return
@@ -284,7 +284,7 @@ Page({
 		})
 	},
 	/**
-	 * 购买学生卡
+	 * 购买畅学卡
 	 * @returns {Promise<void>}
 	 */
 	async buy() {
@@ -311,7 +311,7 @@ Page({
 		} = await getFluentCardInfo({
 			user_snow_id: accountInfo.snow_id
 		})
-		// 检查用户学生卡是否有效，有效直接返回"用户中心" （true => 已过期， false =>  未过期）
+		// 检查用户畅学卡是否有效，有效直接返回"用户中心" （true => 已过期， false =>  未过期）
 		let didUserFluentLearnCardExpired = $notNull(data) ? data.status === FluentLearnUserType.deactive : true
 		if (!didUserFluentLearnCardExpired) {
 			return wx.switchTab({
@@ -377,10 +377,10 @@ Page({
 			if (code === 0) {
 				payFluentCard({
 						id: data.id,
-						name: "购买学生卡"
+						name: "购买畅学卡"
 					})
 					.then(() => {
-						// 购买学生卡成功，判断用户是否填写收货地址信息
+						// 购买畅学卡成功，判断用户是否填写收货地址信息
 						this.checkHasFillAddress().then(() => {
 							wx.navigateTo({
 								url: "/mine/fluentCardCallback/fluentCardCallback"
@@ -433,7 +433,7 @@ Page({
 		})
 	},
 	/**
-	 * 获取学生卡权益
+	 * 获取畅学卡权益
 	 */
 	getCardInfo() {
 		getFluentLearnInfo().then(({
