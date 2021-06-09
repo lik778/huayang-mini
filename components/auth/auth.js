@@ -2,6 +2,7 @@ import {
   wxLoginPromise
 } from "../../utils/auth"
 import {
+  agentUserBind,
   bindUserInfo,
   bindWxPhoneNumber,
   getWxInfo
@@ -127,9 +128,25 @@ Component({
               invite_user_id: getApp().globalData.super_user_id
             }
           }
+          // 代理商渠道标识
+          if (getLocalStorage("distributorStorage")) {
+            let info = JSON.parse(getLocalStorage('distributorStorage'))
+            if (new Date().getTime() <= info.expire_at) {
+              if (Number(info.mode) === 1) {
+                agentUserBind({
+                  agent_id: info.agent_id,
+                  user_id: getLocalStorage(GLOBAL_KEY.userId)
+                })
+              }
+            } else {
+              removeLocalStorage('distributorStorage')
+            }
+          }
+
           let originAccountInfo = await bindWxPhoneNumber(params)
           setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
         }
+
         this.complete()
 
         setWxUserInfoExpiredTime()

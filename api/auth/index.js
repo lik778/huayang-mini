@@ -1,6 +1,15 @@
 import request from "../../lib/request"
-import { ErrorLevel, GLOBAL_KEY, ROOT_URL, URL } from "../../lib/config"
-import { getLocalStorage, setLocalStorage, toast } from "../../utils/util"
+import {
+	ErrorLevel,
+	GLOBAL_KEY,
+	ROOT_URL,
+	URL
+} from "../../lib/config"
+import {
+	getLocalStorage,
+	setLocalStorage,
+	toast
+} from "../../utils/util"
 import dayjs from "dayjs"
 
 /**
@@ -10,7 +19,9 @@ import dayjs from "dayjs"
  */
 export function getWxInfo(params) {
 	return new Promise(resolve => {
-		request._get(URL.getWxInfo, params).then(({data}) => {
+		request._get(URL.getWxInfo, params).then(({
+			data
+		}) => {
 			resolve(data)
 		})
 	})
@@ -23,7 +34,10 @@ export function getWxInfo(params) {
  */
 export function bindUserInfo(params) {
 	return new Promise(resolve => {
-		request._post(URL.bindUserInfo, params).then(({code,data}) => {
+		request._post(URL.bindUserInfo, params).then(({
+			code,
+			data
+		}) => {
 			if (code === 0) {
 				resolve(data)
 			}
@@ -38,7 +52,10 @@ export function bindUserInfo(params) {
  */
 export function bindWxPhoneNumber(params) {
 	return new Promise(resolve => {
-		request._post(URL.bindWxPhoneNumber, params).then(({data, code}) => {
+		request._post(URL.bindWxPhoneNumber, params).then(({
+			data,
+			code
+		}) => {
 			// 服务端解析微信敏感数据失败
 			if (code === 112) {
 				toast('授权失败，请重试')
@@ -84,7 +101,10 @@ export async function getPhoneNumber(e) {
  */
 export function checkFocusLogin(params) {
 	return new Promise((resolve) => {
-		request._get(URL.checkFocusLogin, params).then(({data, code}) => {
+		request._get(URL.checkFocusLogin, params).then(({
+			data,
+			code
+		}) => {
 			if (code === 0) {
 				resolve(data)
 			}
@@ -96,7 +116,10 @@ export function checkFocusLogin(params) {
 // 检查是否刚成为会员需要弹窗
 export const checkBecomeVip = (params) => {
 	return new Promise((resolve) => {
-		request._get(URL.checkBecomeVip + "?" + params).then(({data, code}) => {
+		request._get(URL.checkBecomeVip + "?" + params).then(({
+			data,
+			code
+		}) => {
 			if (code === 0) {
 				resolve(data)
 			}
@@ -128,9 +151,21 @@ export const collectError = (params) => {
 	let userInfoString = getLocalStorage(GLOBAL_KEY.userInfo)
 	let accountInfoString = getLocalStorage(GLOBAL_KEY.accountInfo)
 	let systemInfoString = getLocalStorage(GLOBAL_KEY.systemParams)
-	let {user_id, nickname} = userInfoString ? JSON.parse(userInfoString) : {}
-	let {user_id: userId, nick_name, mobile} = accountInfoString ? JSON.parse(accountInfoString) : {}
-	let {model, system, SDKVersion, version} = systemInfoString ? JSON.parse(systemInfoString) : {}
+	let {
+		user_id,
+		nickname
+	} = userInfoString ? JSON.parse(userInfoString) : {}
+	let {
+		user_id: userId,
+		nick_name,
+		mobile
+	} = accountInfoString ? JSON.parse(accountInfoString) : {}
+	let {
+		model,
+		system,
+		SDKVersion,
+		version
+	} = systemInfoString ? JSON.parse(systemInfoString) : {}
 	let commonParams = {
 		userId: user_id || userId,
 		nickname: nickname || nick_name,
@@ -144,7 +179,10 @@ export const collectError = (params) => {
 	let compoundParams = {
 		page: params.page,
 		error_code: params.error_code,
-		error_message: JSON.stringify({...commonParams, ...params}),
+		error_message: JSON.stringify({
+			...commonParams,
+			...params
+		}),
 		platform: "applets"
 	}
 
@@ -173,7 +211,10 @@ export const collectError = (params) => {
  */
 export const updateSubscribeMessageStatus = (params) => {
 	return new Promise((resolve, reject) => {
-		request._post(URL.setSubscribeMessage, params).then(({data, code}) => {
+		request._post(URL.setSubscribeMessage, params).then(({
+			data,
+			code
+		}) => {
 			if (code === 0) {
 				resolve(data)
 			}
@@ -181,4 +222,10 @@ export const updateSubscribeMessageStatus = (params) => {
 			reject(err)
 		})
 	})
+}
+
+
+// 代理用户绑定
+export const agentUserBind = params => {
+	return request._post(URL.agentUserBind, params)
 }
