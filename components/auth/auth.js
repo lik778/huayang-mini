@@ -128,22 +128,24 @@ Component({
               invite_user_id: getApp().globalData.super_user_id
             }
           }
+
+
+          let originAccountInfo = await bindWxPhoneNumber(params)
           // 代理商渠道标识
           if (getLocalStorage("distributorStorage")) {
             let info = JSON.parse(getLocalStorage('distributorStorage'))
             if (new Date().getTime() <= info.expire_at) {
               if (Number(info.mode) === 1) {
+                console.log(originAccountInfo)
                 agentUserBind({
                   agent_id: info.agent_id,
-                  user_id: getLocalStorage(GLOBAL_KEY.userId)
+                  user_id: originAccountInfo.id
                 })
               }
             } else {
               removeLocalStorage('distributorStorage')
             }
           }
-
-          let originAccountInfo = await bindWxPhoneNumber(params)
           setLocalStorage(GLOBAL_KEY.accountInfo, originAccountInfo)
         }
 
