@@ -216,7 +216,7 @@ Page({
 			back_cover: this.data.backCover,
 			page_pic: JSON.stringify(pagePicData)
 		}).then(() => {
-			wx.redirectTo({url: "/pages/bookCustomSuccess/bookCustomSuccess"})
+			wx.redirectTo({url: "/pages/bookCustomSuccess/bookCustomSuccess?type=upload"})
 		})
 	},
 	// 生成内页数据
