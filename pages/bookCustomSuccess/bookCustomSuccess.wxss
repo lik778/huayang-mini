@@ -1,11 +1,18 @@
 .book-custom-success {
-    padding: 0 90rpx;
 }
 .icon {
     display: block;
     width: 196rpx;
     height: 114rpx;
     margin: 220rpx auto 0;
+    font-size: 0;
+}
+
+.icon-success {
+    display: block;
+    width: 212rpx;
+    height: 212rpx;
+    margin: 50rpx auto 0;
     font-size: 0;
 }
 
@@ -16,5 +23,32 @@
 }
 
 .text-02 {
+    width: 572rpx;
+    margin: 0 auto;
+    text-align: justify;
     font: 32rpx/44rpx PingFangSC;
+}
+
+.text-03 {
+    margin: 18rpx auto 40rpx;
+    text-align: center;
+    font: 600 44rpx/44rpx PingFangSC;
+}
+
+.text-04 {
+    width: 572rpx;
+    margin: 0 auto;
+    text-align: justify;
+    font: 32rpx/44rpx PingFangSC;
+}
+
+.btn {
+    width: 630rpx;
+    height: 96rpx;
+    margin: 80rpx auto 0;
+    text-align: center;
+    font: 600 36rpx/96rpx PingFangSC;
+    border-radius: 999rpx;
+    background: #CC0000;
+    color: white;
 }
