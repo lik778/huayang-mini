@@ -202,6 +202,8 @@ Page({
 		this.setData({contentImgs: this.data.contentImgs.slice().filter(n => n !== targetUrl)})
 	},
 	upload() {
+		if (!hasUserInfo() || !hasAccountInfo()) return this.setData({didShowAuth: true})
+
 		if (!this.data.magazineId) return toast("小程序码错误，请联系客服人员")
 		if (!this.data.cover) return toast("请上传封面图片")
 		if (!this.data.backCover) return toast("请上传封底图片")
