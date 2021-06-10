@@ -27,7 +27,7 @@ Page({
 			didShowAuth: false
 		})
 	},
-	// 非花样学生卡用户访问校友活动需要引导购买学生卡
+	// 非花样畅学卡用户访问校友活动需要引导购买畅学卡
 	onFluentLearnTap() {
 		wx.navigateTo({url: "/mine/joinFluentLearn/joinFluentLearn"})
 	},

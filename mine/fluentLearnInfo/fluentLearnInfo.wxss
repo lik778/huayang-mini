@@ -1,4 +1,4 @@
-/* 学生卡详情页 */
+/* 畅学卡详情页 */
 @import "../../assets/css/common.wxss";
 
 .fluent-learn-info {

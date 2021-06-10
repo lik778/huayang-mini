@@ -41,7 +41,7 @@
 
 		</block>
 	</view>
-	<!-- 学生卡 -->
+	<!-- 畅学卡 -->
 	<view class="vip-card {{ isFluentLearnExpired && 'overdue' }} {{ isPartner && 'partner' }}" bindtap="onFluentCardTap">
 		<view>
 			<view class="card-title {{ isFluentLearnExpired && 'overdue'}}">{{cardName}}</view>
@@ -51,7 +51,7 @@
 			<view class="card-info">
 				<block wx:if="{{disHasFluentLearnUserInfo}}">
 					<text class="card-nick-name {{ isFluentLearnExpired && 'overdue'}}">{{userInfo.nick_name}}</text>
-					<text class="expireDate">学号：{{fluentLearnUserInfo.num}}</text>
+					<text class="expireDate">有效期至：{{fluentLearnUserInfo.expire_time}} </text>
 				</block>
 			</view>
 			<view class="vip-btn {{ isFluentLearnExpired && 'overdue'}}">{{cardBtnText}} ›</view>
