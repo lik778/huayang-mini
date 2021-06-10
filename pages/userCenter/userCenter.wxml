@@ -97,7 +97,7 @@
 	<!-- 功能栏 -->
 	<view class="function {{ isPartner && 'partner' }}">
 		<view class="function-list">
-			<view class="function-item" bindtap="goToBooks">
+			<view class="function-item" bindtap="goToBooks" wx:if='{{false}}'>
 				<view class="function-item-left">
 					<image src="/assets/images/common/task.png" class="task-image"></image>
 					<view class="function-item-box">
