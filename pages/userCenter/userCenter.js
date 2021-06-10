@@ -3,21 +3,21 @@ import baseUrl from "../../lib/request"
 import dayjs from "dayjs"
 import { getFindBanner, getPhoneNumber } from "../../api/course/index"
 import {
-	checkUserHasAddress,
-	getFluentCardInfo,
-	getFluentDistributeGuide,
-	getFluentLearnInfo,
-	getPartnerInfo,
-	getUserInfo,
-	getUserOwnerClasses
+  checkUserHasAddress,
+  getFluentCardInfo,
+  getFluentDistributeGuide,
+  getFluentLearnInfo,
+  getPartnerInfo,
+  getUserInfo,
+  getUserOwnerClasses
 } from "../../api/mine/index"
 import {
-	$notNull,
-	getLocalStorage,
-	hasAccountInfo,
-	hasUserInfo,
-	setLocalStorage,
-	splitTargetNoString
+  $notNull,
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  setLocalStorage,
+  splitTargetNoString
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 import { getTaskEntranceStatus } from "../../api/task/index"
@@ -104,6 +104,12 @@ Page({
    */
   handleNickname(name) {
     return splitTargetNoString(name, 16)
+  },
+  /**
+   * 跳转到画册
+   */
+  goToBooks() {
+    wx.navigateTo({url: "/mine/books/books"})
   },
   /**
    * 跳转到提现页
@@ -340,7 +346,6 @@ Page({
           let threeDayLaterTimeStr = parseInt(new Date().getTime() / 1000) + threeDayTime
           let rootUrl = baseUrl.baseUrl
           let userId = this.data.userInfo.id
-          console.log(this.data.disHasFluentLearnUserInfo)
           let type = this.data.disHasFluentLearnUserInfo ? 2 : 1
           if (!hasShowClubVipAlertSign) {
             setTimeout(() => {

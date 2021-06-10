@@ -97,6 +97,16 @@
 	<!-- 功能栏 -->
 	<view class="function {{ isPartner && 'partner' }}">
 		<view class="function-list">
+			<view class="function-item" bindtap="goToBooks">
+				<view class="function-item-left">
+					<image src="/assets/images/common/task.png" class="task-image"></image>
+					<view class="function-item-box">
+						<view class="function-item-top">我的画册</view>
+						<view class="function-item-bottom">定制专属的时尚画册</view>
+					</view>
+				</view>
+				<image src="/assets/images/common/arrow.png"></image>
+			</view>
 			<view class="function-item" bindtap="goToConvertCashPage">
 				<view class="function-item-left">
 					<image src="/assets/images/common/balance.png" class="task-image"></image>

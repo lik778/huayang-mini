@@ -1,24 +1,9 @@
 import md5 from 'md5'
-import {
-	store
-} from "../store/index"
-import {
-	GLOBAL_KEY,
-	ROOT_URL,
-	URL,
-	WeChatLiveStatus
-} from '../lib/config'
-import {
-	createOrder
-} from "../api/mine/payVip"
-import {
-	getWatchLiveAuth,
-	statisticsWatchNo
-} from "../api/live/course"
+import { GLOBAL_KEY, ROOT_URL, URL, WeChatLiveStatus } from '../lib/config'
+import { createOrder } from "../api/mine/payVip"
+import { getWatchLiveAuth, statisticsWatchNo } from "../api/live/course"
 import request from "../lib/request"
-import {
-	getUserInfo
-} from "../api/mine/index"
+import { getUserInfo } from "../api/mine/index"
 import dayjs from "dayjs"
 
 const livePlayer = requirePlugin('live-player-plugin')
@@ -95,6 +80,37 @@ export const payFluentCard = function ({
 			data,
 			code
 		}) => {
+			if (code === 0) {
+				requestPayment({
+					prepay_id: data,
+					key: mallKey
+				}).then(res => {
+					resolve(res)
+				}).catch(err => {
+					reject(err)
+				})
+			}
+		})
+	})
+}
+
+/**
+ * 获取支付凭证
+ * @param id
+ * @param name
+ * @returns {Promise<unknown>}
+ */
+export const payCertificate = function ({id,name}) {
+	// 调用获取支付凭证
+	let getPaySignParams = {
+		open_id: getLocalStorage(GLOBAL_KEY.openId),
+		product_title: name,
+		order_id: id,
+		app_id: JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)).app_id
+	}
+	let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo" //商户key
+	return new Promise((resolve, reject) => {
+		request._post(URL.getPaySign, getPaySignParams).then(({data,code}) => {
 			if (code === 0) {
 				requestPayment({
 					prepay_id: data,

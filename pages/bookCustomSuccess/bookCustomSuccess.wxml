@@ -1,5 +1,16 @@
 <view class="book-custom-success">
-    <image class="icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622800236QBboTP.jpg" mode="aspectFit"></image>
-    <view class="text-01">画册图片已上传完成</view>
-    <view class="text-02">您的照片已全部上传完成，请联系欣欣老师帮您把画册制作完成。</view>
+    <block wx:if="{{didFromUpload}}">
+        <image class="icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622800236QBboTP.jpg" mode="aspectFit"></image>
+        <view class="text-01">画册图片已上传完成</view>
+        <view class="text-02">您的照片已全部上传完成，请联系欣欣老师帮您把画册制作完成。</view>
+    </block>
+    <block wx:else>
+        <image class="icon-success" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1623059035XrydGR.jpg" mode="aspectFit"></image>
+        <view class="text-03">恭喜您已付款成功！</view>
+        <view class="text-04">同学你好，接下来将有专业的服务管家欣欣，来帮您把时尚画册制作完成。请务必点击下方按钮，添加欣欣哦。</view>
+        <view class="btn" bindtap="openContactModal">添加管家欣欣立即制作</view>
+    </block>
+
+    <!-- 客服弹窗 -->
+    <contact show="{{didShowContact}}" sessionFrom="magazine_service" bind:closeContactModal="onCloseContactModal" />
 </view>
