@@ -51,12 +51,18 @@
         {
           "name": "上传画册图片",
           "pathName": "pages/bookUpload/bookUpload",
-          "query": "id=37",
+          "query": "id=44",
           "scene": null
         },
         {
           "name": "上传成功页",
           "pathName": "pages/bookCustomSuccess/bookCustomSuccess",
+          "query": "type=",
+          "scene": null
+        },
+        {
+          "name": "我的画册",
+          "pathName": "mine/books/books",
           "query": "",
           "scene": null
         },

@@ -1,6 +1,6 @@
 {
-  "navigationBarTitleText": "定制成功",
   "usingComponents": {
+    "authModule": "../../components/auth/auth",
     "contact": "../../components/contact/contact"
   }
 }

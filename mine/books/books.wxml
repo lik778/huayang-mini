@@ -1,0 +1,107 @@
+<view class="books">
+    <view class="own-book" wx:if="{{magazineList && magazineList.length > 0}}">
+        <view class="title-02">
+            <text class="text-02">我的画册</text>
+            <view class="contact-btn" bindtap="openContactModal">联系客服欣欣</view>
+        </view>
+        <view wx:for="{{magazineList}}" wx:key="index" bindtap="onBookItemTap" data-item="{{item}}">
+            <view class="book-item" wx:if="{{item.status !== 1}}">
+                <view class="book-item-cover">
+                    <image class="book-item-image" src="{{item.back_cover}}" mode="aspectFill"></image>
+                    <image class="book-item-image" src="{{item.cover}}" mode="aspectFill"></image>
+                </view>
+                <view class="book-item-content limit-one-line">
+                    <text class="text-03">{{item.status <= 3 ? '您的画册制作中，联系欣欣继续完善吧' : '如果喜欢，您还可以多印刷一些'}}</text>
+                    <text class="text-04">{{item.status <= 3 ? '联系欣欣 ›' : '立即印刷 ›'}}</text>
+                </view>
+            </view>
+            <view class="book-item upload" wx:else>
+                <image class="upload-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1623224336qOwFWC.jpg" mode="aspectFit"></image>
+                <view class="text-08">您已购的画册还未上传照片</view>
+                <view class="text-08">立即联系欣欣开始制作吧</view>
+                <view class="upload-btn">立即制作</view>
+            </view>
+        </view>
+    </view>
+
+    <view class="book-introduce">
+        <view class="title-01">花样时尚画册</view>
+        <view class="text-01">花样联合全国顶尖杂志社，让每一位爱美的50+新青年，拥有专属于自己的时尚画册。</view>
+        <view class="preview-img-01">
+            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1623222334WIpYTY.jpg" mode="aspectFill"></image>
+            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1623222329VcnZFS.jpg" mode="aspectFill"></image>
+        </view>
+
+        <view class="preview-video-wrap">
+            <video id="hy-book-introduce" bindtap="onPauseVideo" class="preview-video" src="https://outin-06348533aecb11e9b1eb00163e1a65b6.oss-cn-shanghai.aliyuncs.com/sv/4ca29caa-179eb82517f/4ca29caa-179eb82517f.mp4" poster="{{}}" controls="{{false}}"
+                   custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}"
+                   enable-progress-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}"
+                   show-play-btn="{{false}}" autoplay="{{false}}" loop="{{true}}"></video>
+            <view class="preview-video-mask" wx:if="{{!isIntroduceVideoPlaying}}" bindtap="onPlayVideo">
+                <image class="pause-icon" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619061373BeZzQx.jpg"></image>
+            </view>
+        </view>
+
+        <view class="description">
+            <view class="desc-item">
+                <image class="desc-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1623052598WoeuhE.jpg" mode="aspectFit"></image>
+                <text class="desc-text">专业设计师</text><text class="desc-text">打造画册模板</text>
+            </view>
+            <view class="desc-item">
+                <image class="desc-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1623052595uMPoaN.jpg" mode="aspectFit"></image>
+                <text class="desc-text">全国顶尖的</text><text class="desc-text">杂志印刷技术</text>
+            </view>
+        </view>
+
+        <view class="footer {{didShowFixedButton ? 'anime' : ''}}">
+            <block wx:if="{{magazineList && magazineList.length === 0}}">
+                <view class="contact" bindtap="openContactModal">
+                    <image class="contact-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1623054856OgMFQW.jpg" mode="aspectFit"></image>
+                    <text>联系客服</text>
+                </view>
+                <view class="footer-btn" bindtap="showBookModal">立即定制</view>
+            </block>
+            <view wx:else class="footer-btn normal" bindtap="showBookModal">定制新的画册</view>
+        </view>
+    </view>
+
+    <view class="book-modal" wx:if="{{didShowBookModal}}">
+        <view class="book-mask {{didExecuteBookModalAnimation ? 'anime' : ''}}" catchtap="hideBookModal" catchtouchmove="oncatchtouchmove"></view>
+        <view class="book-content {{didExecuteBookModalAnimation ? 'anime' : ''}}" catchtouchmove="oncatchtouchmove">
+            <block wx:if="{{didRenew}}">
+                <view class="title-03">请挑选画册模板</view>
+                <view class="book-content-box">
+                    <view class="book-content-item" wx:for="{{templateList}}" wx:key="index" bindtap="onTemplateChange" data-item="{{item}}">
+                        <image class="book-cover" src="{{item.cover}}" mode="aspectFill"></image>
+                        <view class="text-05">{{item.desc}}</view>
+                        <view class="book-select">
+                            <view class="select-icon {{selectedTemplateCategory === item.category ? 'active' : ''}}"></view>
+                            <text class="text-06">{{item.name}}</text>
+                        </view>
+                    </view>
+                </view>
+            </block>
+            <block wx:else>
+                <view class="renew-wrap">
+                    <image class="renew-image" src="{{renewTarget.back_cover}}" mode="aspectFill"></image>
+                    <image class="renew-image" src="{{renewTarget.cover}}" mode="aspectFill"></image>
+                </view>
+            </block>
+            <view class="count">
+                <text class="text-07">预定数量</text>
+                <view class="calculator">
+                    <view class="calc-icon {{selectedCount === 1 ? 'disabled' : ''}}" bindtap="subtract">-</view>
+                    <view class="calc-no">{{selectedCount}}</view>
+                    <view class="calc-icon" bindtap="add">+</view>
+                </view>
+            </view>
+            <view class="modal-btn" bindtap="buy">¥{{currentPrice}} 立即定制</view>
+        </view>
+    </view>
+
+    <!-- 授权弹窗 -->
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent" />
+
+    <!-- 客服弹窗 -->
+    <contact show="{{didShowContact}}" sessionFrom="magazine_service" bind:closeContactModal="onCloseContactModal" />
+</view>
