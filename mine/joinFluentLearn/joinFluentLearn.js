@@ -5,6 +5,9 @@ import {
 	getPartnerInfo,
 	payForFluentCard
 } from "../../api/mine/index"
+import {
+	agentUserBind
+} from "../../api/auth/index"
 
 import {
 	$notNull,
@@ -17,11 +20,19 @@ import {
 	setLocalStorage,
 	toast
 } from "../../utils/util"
-import { ErrorLevel, FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
+import {
+	ErrorLevel,
+	FluentLearnUserType,
+	GLOBAL_KEY
+} from "../../lib/config"
 import dayjs from "dayjs"
-import { collectError } from "../../api/auth/index"
+import {
+	collectError
+} from "../../api/auth/index"
 import bxPoint from "../../utils/bxPoint"
-import { queryQualityVideoList } from "../../api/live/index"
+import {
+	queryQualityVideoList
+} from "../../api/live/index"
 import baseUrl from "../../lib/request"
 
 Page({
@@ -60,8 +71,18 @@ Page({
 	onLoad: function (options) {
 		let {
 			inviteId,
-			channel
+			channel,
+			agent_id = '',
+			mode = ''
 		} = options
+		// 代理商渠道标识
+		if (agent_id) {
+			setLocalStorage("distributorStorage", JSON.stringify({
+				agent_id,
+				mode,
+				expire_at: new Date().getTime() + 86400000 * 2
+			}))
+		}
 		/**
 		 * 小程序卡片中满足 sceneInviteId=0 且 channel!=undefined 时，在支付时上传渠道来源
 		 */
@@ -141,9 +162,9 @@ Page({
 	initCollegeIntroVideoListener() {
 		let collegeOB = wx.createIntersectionObserver()
 		collegeOB.relativeToViewport({
-			top: 0,
-			bottom: 0
-		})
+				top: 0,
+				bottom: 0
+			})
 			.observe('#hy-video-join-fluent-learn-content', res => {
 				if (res && res.intersectionRatio > 0) {
 					// 进入可视区域
@@ -159,7 +180,7 @@ Page({
 		})
 	},
 	/**
-	 * 学生卡专属弹窗回调事件
+	 * 畅学卡专属弹窗回调事件
 	 */
 	onFluentLearnConfirm() {
 		this.setData({
@@ -222,7 +243,9 @@ Page({
 
 		let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
 		// wx.navigateTo({url: "/mine/oldInviteNew/oldInviteNew?inviteId=" + accountInfo.snow_id})
-		wx.navigateTo({url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id})
+		wx.navigateTo({
+			url: "/mine/fluentCardDistribute/fluentCardDistribute?inviteId=" + accountInfo.snow_id
+		})
 	},
 	/**
 	 * 授权失败
@@ -243,7 +266,7 @@ Page({
 		})
 	},
 	/**
-	 * 检查用户学生卡状态
+	 * 检查用户畅学卡状态
 	 */
 	checkUserFluentLearnStatus() {
 		if (!hasUserInfo() || !hasAccountInfo()) return
@@ -261,7 +284,7 @@ Page({
 		})
 	},
 	/**
-	 * 购买学生卡
+	 * 购买畅学卡
 	 * @returns {Promise<void>}
 	 */
 	async buy() {
@@ -288,7 +311,7 @@ Page({
 		} = await getFluentCardInfo({
 			user_snow_id: accountInfo.snow_id
 		})
-		// 检查用户学生卡是否有效，有效直接返回"用户中心" （true => 已过期， false =>  未过期）
+		// 检查用户畅学卡是否有效，有效直接返回"用户中心" （true => 已过期， false =>  未过期）
 		let didUserFluentLearnCardExpired = $notNull(data) ? data.status === FluentLearnUserType.deactive : true
 		if (!didUserFluentLearnCardExpired) {
 			return wx.switchTab({
@@ -334,6 +357,16 @@ Page({
 			}
 		}
 
+		// 代理商渠道标识
+		if (getLocalStorage("distributorStorage")) {
+			let info = JSON.parse(getLocalStorage('distributorStorage'))
+			if (new Date().getTime() <= info.expire_at) {
+				params.agent_id = info.agent_id
+			} else {
+				removeLocalStorage('distributorStorage')
+			}
+		}
+
 		payForFluentCard(params).then(({
 			data,
 			code,
@@ -342,10 +375,10 @@ Page({
 			if (code === 0) {
 				payFluentCard({
 						id: data.id,
-						name: "购买学生卡"
+						name: "购买畅学卡"
 					})
 					.then(() => {
-						// 购买学生卡成功，判断用户是否填写收货地址信息
+						// 购买畅学卡成功，判断用户是否填写收货地址信息
 						this.checkHasFillAddress().then(() => {
 							wx.navigateTo({
 								url: "/mine/fluentCardCallback/fluentCardCallback"
@@ -398,7 +431,7 @@ Page({
 		})
 	},
 	/**
-	 * 获取学生卡权益
+	 * 获取畅学卡权益
 	 */
 	getCardInfo() {
 		getFluentLearnInfo().then(({
@@ -426,11 +459,15 @@ Page({
 	// 播放花样大学介绍视频
 	onPlayCollegeVideo() {
 		this.data.previewVideo.play()
-		this.setData({isCollegeVideoPlaying: true})
+		this.setData({
+			isCollegeVideoPlaying: true
+		})
 	},
 	onPauseCollegeVideo() {
 		this.data.previewVideo.pause()
-		this.setData({isCollegeVideoPlaying: false})
+		this.setData({
+			isCollegeVideoPlaying: false
+		})
 	},
 	/**
 	 * 获取热门课程

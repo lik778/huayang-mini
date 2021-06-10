@@ -85,6 +85,7 @@ Page({
     dayNum: 0,
     canShowPage: false,
     showMyCredential: false, //是否显示我的结营证书
+    needRecordPlayTime: false, //是否需要打点
   },
 
   // 跳往训练营结营证书页
@@ -313,6 +314,7 @@ Page({
     if (this.data.playDurationsList.length) {
       this.recordPlayDuration()
     }
+
     if (this.data.createPoint && this.data.hasStartCampType !== 1) {
       this.setData({
         createPoint: false
@@ -340,6 +342,10 @@ Page({
       day_num: this.data.dayNum,
       kecheng_title: this.data.campData.name,
     }, false)
+
+    this.setData({
+      needRecordPlayTime: true
+    })
     this.videoContext.play()
     this.videoContext.requestFullScreen()
   },
@@ -693,9 +699,9 @@ Page({
       scene: 'page_traincamp',
       traincamp_id: this.data.campId,
       video_src: this.data.videoData.src.split(VideoSrcHost)[1],
-      lesson_num: `第${this.data.playIndex + 1}节课`,
+      lesson_num: `第${this.data.videoData.index + 1}节课`,
       lesson_date: this.data.showDate,
-      kecheng_title: `${this.data.courseList[this.data.playIndex].name}`,
+      kecheng_title: `${this.data.courseList[this.data.videoData.index].name}`,
       day_num: this.data.dayNum,
       time_snippet: timeList.length === 0 ? listData : timeList, //事件片段
       total_duration: time, //视频总时间
@@ -845,14 +851,25 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    this.recordPlayDuration()
+    if (this.data.needRecordPlayTime) {
+      this.setData({
+        needRecordPlayTime: false
+      })
+      this.recordPlayDuration()
+    }
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    this.recordPlayDuration()
+    if (this.data.needRecordPlayTime) {
+      this.setData({
+        needRecordPlayTime: false
+      })
+      this.recordPlayDuration()
+    }
   },
 
   /**

@@ -185,7 +185,7 @@
     border-radius: 999rpx;
 }
 
-/* 学生卡 */
+/* 畅学卡 */
 .vip-card {
     display: flex;
     flex-direction: column;

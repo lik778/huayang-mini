@@ -62,7 +62,7 @@ Page({
 		collegeVideoPost: "", // 大学宣传视频封面图
 		isCollegeVideoPlaying: false, // 大学宣传视频是否正在播放
 		didLoadSecondMain: false, // 是否完成第二部分数据内容加载
-		didShowFluentLearnModal: false, // 学生卡引导弹窗
+		didShowFluentLearnModal: false, // 畅学卡引导弹窗
 		_rejectModelCompetitionReload: false, // 授权成功是否跳过模特大赛相关函数
 	},
 	async run() {
@@ -119,7 +119,7 @@ Page({
 		let kingKongs = await getVideoTypeList()
 		this.setData({kingKongs})
 
-		// 获取学生卡权益信息
+		// 获取畅学卡权益信息
 		let {data: {video: collegeVideoUrl, video_cover: collegeVideoPost}} = await getFluentLearnInfo()
 		this.setData({
 			collegeVideoUrl: collegeVideoUrl ? collegeVideoUrl : undefined,
@@ -708,7 +708,7 @@ Page({
 			})
 		})
 	},
-	// 通过宣传视频进入学生卡权益页
+	// 通过宣传视频进入畅学卡权益页
 	goToJoinFluentCardPageByIntroVideo() {
 		if (this.data.isCollegeVideoPlaying) {
 			this.onPauseCollegeVideo()
@@ -729,7 +729,7 @@ Page({
 			didShowContact: false
 		})
 	},
-	// 非花样学生卡用户访问校友活动需要引导购买学生卡
+	// 非花样畅学卡用户访问校友活动需要引导购买畅学卡
 	onFluentLearnTap() {
 		wx.navigateTo({url: "/mine/joinFluentLearn/joinFluentLearn"})
 	},

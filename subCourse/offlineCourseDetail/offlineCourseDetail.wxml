@@ -49,7 +49,7 @@
         <!-- 未授权 -->
         <view class="no-auth" wx:if="{{btnType === 'no-auth'}}" bindtap="onAuthTap">授权登录</view>
 
-        <!-- 非学生卡用户购买 -->
+        <!-- 非畅学卡用户购买 -->
         <view class="non-member" wx:if="{{btnType === 'non-member'}}">
             <view class="non-member-price-wrap" bindtap="createOrder" data-key="1">
                 <text class="non-member-price">¥{{info.price}}</text>
@@ -57,11 +57,11 @@
             </view>
             <view class="non-member-discount-price-wrap" bindtap="createOrder" data-key="2">
                 <text class="member-price">¥{{info.new_member_price}}（含学员费）</text>
-                <text>加入花样大学，终身享受学员价</text>
+                <text>加入花样大学，全年享受学员价</text>
             </view>
         </view>
 
-        <!-- 学生卡用户购买 -->
+        <!-- 畅学卡用户购买 -->
         <view class="member" wx:if="{{btnType === 'member'}}">
             <view class="contact" bindtap="openContactModal">
                 <image class="contact-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618465081cKInuK.jpg"
