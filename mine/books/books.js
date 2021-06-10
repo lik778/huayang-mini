@@ -161,6 +161,7 @@ Page({
 	},
 	// 显示弹窗
 	showBookModal() {
+		if (!hasUserInfo() || !hasAccountInfo()) return this.setData({didShowAuth: true})
 		this.setData({didShowBookModal: true})
 		let t = setTimeout(() => {
 			this.setData({didExecuteBookModalAnimation: true})
