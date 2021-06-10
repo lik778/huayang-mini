@@ -51,7 +51,7 @@
         {
           "name": "上传画册图片",
           "pathName": "pages/bookUpload/bookUpload",
-          "query": "id=44",
+          "query": "id=47",
           "scene": null
         },
         {
