@@ -136,7 +136,6 @@ Component({
             let info = JSON.parse(getLocalStorage('distributorStorage'))
             if (new Date().getTime() <= info.expire_at) {
               if (Number(info.mode) === 1) {
-                console.log(originAccountInfo)
                 agentUserBind({
                   agent_id: info.agent_id,
                   user_id: originAccountInfo.id

@@ -361,9 +361,7 @@ Page({
 		if (getLocalStorage("distributorStorage")) {
 			let info = JSON.parse(getLocalStorage('distributorStorage'))
 			if (new Date().getTime() <= info.expire_at) {
-				if (Number(info.mode) === 2) {
-					params.agent_id = info.agent_id
-				}
+				params.agent_id = info.agent_id
 			} else {
 				removeLocalStorage('distributorStorage')
 			}
