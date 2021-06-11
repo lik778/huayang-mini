@@ -3,21 +3,21 @@ import baseUrl from "../../lib/request"
 import dayjs from "dayjs"
 import { getFindBanner, getPhoneNumber } from "../../api/course/index"
 import {
-  checkUserHasAddress,
-  getFluentCardInfo,
-  getFluentDistributeGuide,
-  getFluentLearnInfo,
-  getPartnerInfo,
-  getUserInfo,
-  getUserOwnerClasses
+	checkUserHasAddress,
+	getFluentCardInfo,
+	getFluentDistributeGuide,
+	getFluentLearnInfo,
+	getPartnerInfo,
+	getUserInfo,
+	getUserOwnerClasses
 } from "../../api/mine/index"
 import {
-  $notNull,
-  getLocalStorage,
-  hasAccountInfo,
-  hasUserInfo,
-  setLocalStorage,
-  splitTargetNoString
+	$notNull,
+	getLocalStorage,
+	hasAccountInfo,
+	hasUserInfo,
+	setLocalStorage,
+	splitTargetNoString
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 import { getTaskEntranceStatus } from "../../api/task/index"
@@ -581,7 +581,7 @@ Page({
       data
     }) => {
       this.setData({
-        visibleTaskEntrance: data == 1
+        visibleTaskEntrance: +data === 1
       })
     })
 

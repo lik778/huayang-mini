@@ -863,11 +863,10 @@ Page({
 		wx.showLoading({title: "发布中...", mask: true})
 		publishTask(params).then(({data}) => {
 			toast("发布作业成功", 1000)
-			console.log(data)
 			getApp().globalData.needInitialPageName = this.data.fromPageName
 			this.setData({launchLock: false})
-			wx.navigateBack()
 			wx.hideLoading()
+			wx.navigateBack()
 		}).catch(() => {
 			this.setData({launchLock: false})
 			wx.hideLoading()
