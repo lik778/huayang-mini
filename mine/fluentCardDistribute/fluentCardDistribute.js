@@ -195,7 +195,7 @@ Page({
 		await drawImage(ctx, this.data.comma02, 90 + title01Width, 110 + 20, 17, 14)
 		// 介绍
 		await drawFont(ctx, "花样大学", '#765534', "400", "PingFangSC", 14, 30, 155)
-		await drawFont(ctx, "上海首批政府认证线上老年大学", '#765534', "400", "PingFangSC", 14, 30, 176)
+		await drawFont(ctx, "上海首批政府授牌线上老年大学", '#765534', "400", "PingFangSC", 14, 30, 176)
 		for (let i = 0; i < 4; i++) {
 			await drawImage(ctx, this.data.previewList[i].image, 30 + 59 * i, 216, 50, 60)
 			await drawFont(ctx, this.data.previewList[i].text, '#000000', "400", "PingFangSC", 10, 35 + 59 * i, 284)

@@ -4,14 +4,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    didFromUpload: true,
+    didShowContact: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.setData({didFromUpload: options.type === "upload"})
   },
 
   /**
@@ -55,11 +56,12 @@ Page({
   onReachBottom: function () {
 
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  // 关闭联系客服
+  onCloseContactModal() {
+    this.setData({didShowContact: false})
+  },
+  // 打开联系客服
+  openContactModal() {
+    this.setData({didShowContact: true})
   }
 })

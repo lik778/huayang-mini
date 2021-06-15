@@ -16,9 +16,9 @@ Page({
 		cover: "",
 		// backCover: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689dgVoGT.png",
 		backCover: "",
-		CONTENT_IMAGE_MAX_COUNT: 31,
-		// contentImgs: ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689BCllur.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689BCllur.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689dgVoGT.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689jEdfTq.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689njZKFd.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689zWunRy.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689PWMVqk.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689goBVpN.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689XooLca.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979kzrwjt.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979URMJQa.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979HkliNC.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979mnaOJF.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979rmPpiA.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979zHugJQ.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979IAdTrp.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979PKogTR.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985WgTJxm.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985UoKfWm.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985RoUCUR.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985UKaXXl.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985KdNthF.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985fNqOQZ.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985gUqMhb.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540999AUtHZy.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540999bFwPmc.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540999mgPlOp.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622541000ghKUYx.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622541000kSbRmq.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622796401DHWuVc.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622796407uBErAT.png"],
+		// contentImgs: ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689BCllur.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689dgVoGT.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689jEdfTq.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689njZKFd.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689zWunRy.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689PWMVqk.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689goBVpN.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689XooLca.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979kzrwjt.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979URMJQa.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979HkliNC.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979mnaOJF.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979rmPpiA.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979zHugJQ.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979IAdTrp.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979PKogTR.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985WgTJxm.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985UoKfWm.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985RoUCUR.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985UKaXXl.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985KdNthF.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985fNqOQZ.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985gUqMhb.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540999AUtHZy.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540999bFwPmc.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540999mgPlOp.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622541000ghKUYx.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622541000kSbRmq.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622796401DHWuVc.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622796407uBErAT.png"],
 		contentImgs: [],
+		CONTENT_IMAGE_MAX_COUNT: 31,
 		scrollTopNo: 0,
 		dingOffsetNo: 0,
 	},
@@ -202,6 +202,8 @@ Page({
 		this.setData({contentImgs: this.data.contentImgs.slice().filter(n => n !== targetUrl)})
 	},
 	upload() {
+		if (!hasUserInfo() || !hasAccountInfo()) return this.setData({didShowAuth: true})
+
 		if (!this.data.magazineId) return toast("小程序码错误，请联系客服人员")
 		if (!this.data.cover) return toast("请上传封面图片")
 		if (!this.data.backCover) return toast("请上传封底图片")
@@ -214,7 +216,7 @@ Page({
 			back_cover: this.data.backCover,
 			page_pic: JSON.stringify(pagePicData)
 		}).then(() => {
-			wx.redirectTo({url: "/pages/bookCustomSuccess/bookCustomSuccess"})
+			wx.redirectTo({url: "/pages/bookCustomSuccess/bookCustomSuccess?type=upload"})
 		})
 	},
 	// 生成内页数据

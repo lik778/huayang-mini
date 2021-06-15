@@ -15,7 +15,7 @@
         {
           "name": "畅学卡售前页",
           "pathName": "mine/joinFluentLearn/joinFluentLearn",
-          "query": "",
+          "query": "mode=1&agent_id=1",
           "scene": null
         },
         {
@@ -39,7 +39,7 @@
         {
           "name": "pages/activePlatform/activePlatform",
           "pathName": "pages/activePlatform/activePlatform",
-          "query": "link=https%3A%2F%2Fhuayang.baixing.cn%2F%23%2Fhome%2Fdetail%2F14&didUserIsFluentCardMember=yes",
+          "query": "link=https%3A%2F%2Fhuayang.baixing.cn%2F%23%2Fhome%2Fdetail%2F72&didUserIsFluentCardMember=yes",
           "scene": null
         },
         {
@@ -51,12 +51,18 @@
         {
           "name": "上传画册图片",
           "pathName": "pages/bookUpload/bookUpload",
-          "query": "id=37",
+          "query": "id=47",
           "scene": null
         },
         {
           "name": "上传成功页",
           "pathName": "pages/bookCustomSuccess/bookCustomSuccess",
+          "query": "type=",
+          "scene": null
+        },
+        {
+          "name": "我的画册",
+          "pathName": "mine/books/books",
           "query": "",
           "scene": null
         },

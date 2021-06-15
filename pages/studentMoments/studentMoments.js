@@ -308,8 +308,10 @@ Page({
 
   // 动态设置x点赞(每10s刷新一次)
   initLikeMessage() {
+    if (!this.data.studentMoments.length) return
     let arr = getNElmentFromArray(userList, 40)
     let realArr = []
+
     for (let i in arr) {
       let randomNum = Math.floor(Math.random() * (0, this.data.studentMoments.length))
       let courseName = this.data.studentMoments[randomNum].bubble.title
