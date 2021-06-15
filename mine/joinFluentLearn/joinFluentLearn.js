@@ -51,9 +51,11 @@ Page({
 		isIphoneXRSMax: false,
 		previewVideo: null,
 		isCollegeVideoPlaying: false,
-		equityImages: ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754dxzZTH.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754nyGpJw.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754xhlddI.jpg"], // 权益图片
+		equityImages: 
+		["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1623744191cyqoPf.jpg", 
+		"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1623744296FOAkiM.jpg", 
+		"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1623744313wgpfWa.jpg"],
 	},
-
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
