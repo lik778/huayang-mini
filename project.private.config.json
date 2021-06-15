@@ -71,6 +71,17 @@
           "pathName": "pages/userCenter/userCenter",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "畅学卡权益页面",
+          "pathName": "mine/joinFluentLearn/joinFluentLearn",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "金刚钻",
+          "pathName": "pages/discovery/discovery",
+          "scene": null
         }
       ]
     }
