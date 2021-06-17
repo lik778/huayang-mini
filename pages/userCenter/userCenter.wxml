@@ -154,7 +154,8 @@
 				</view>
 				<image src="/assets/images/common/arrow.png"></image>
 			</view>
-			<view class="function-item" bindtap="goToTaskLaunchPage" wx:if="{{visibleTaskEntrance}}">
+<!--			<view class="function-item" bindtap="goToTaskLaunchPage" wx:if="{{visibleTaskEntrance}}">-->
+			<view class="function-item" bindtap="goToTaskLaunchPage" wx:if="{{true}}">
 				<view class="function-item-left">
 					<image src="/assets/images/common/task.png" class="task-image"></image>
 					<view class="function-item-box">
