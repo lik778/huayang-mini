@@ -45,7 +45,8 @@
     <view class="footer">
         <view class="footer-wrap" bindtap="goToDiscovery">
             <view>开始学习吧</view>
-            <view class="sub-text">让您的外在和内在都一样精彩</view>
+            <view class="sub-text">让你的外表和内在都更加精彩</view>
         </view>
     </view>
+    
 </view>
