@@ -164,6 +164,10 @@ Page({
       })
     }
   },
+
+  onCatchtouchmove() {
+		return false
+	},
   // 处理畅叙卡按钮点击事件
   onFluentCardTap() {
     if (!hasUserInfo() || !hasAccountInfo()) {
