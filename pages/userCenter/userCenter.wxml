@@ -129,12 +129,12 @@
 				<image src="/assets/images/common/arrow.png"></image>
 				<view
 					class="{{changeMoneyNoticeClass?'money-notice-main-position':'money-notice-main-position money-notice-main-position-hide'}}"
-					catchtouchmove="ture" wx:if='{{showMoneyNotice}}'>
+					catchtouchmove="onCatchtouchmove" wx:if='{{showMoneyNotice}}'>
 					<view>
 						<view class="money-notice-main">
 							<view class="money-notice-main-left">
 								<view class="money-notice-main-left-icon">
-									<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1615804138YeVQmv.jpg"></image>
+									<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1624610747xFFcfK.jpg"></image>
 								</view>
 								<view class="money-notice-main-left-desc">
 									<view class="money-notice-main-left-desc-top">我的余额</view>
@@ -198,11 +198,11 @@
 		bind:closeContactModal="onCloseContactModal" />
 	<!-- 余额提示弹窗 -->
 	<view class="{{changeMoneyNoticeClass?'money-notice':'money-notice money-notice-hide'}} " wx:if='{{showMoneyNotice}}'
-		catchtouchmove="ture">
+		catchtouchmove="onCatchtouchmove">
 		<view class="money-notice-bg" catchtap="closeMoneyNotice">
 		</view>
 	</view>
 	<!-- 加入俱乐部会员弹窗 -->
 	<clubVipAlert type="{{showClubVipAlertType}}" show="{{showClubVipAlert}}" bind:closeClubVipAlert='closeClubVipAlert'
-		catchtouchmove="ture" link="{{showClubVipAlertLink}}"></clubVipAlert>
+		catchtouchmove="onCatchtouchmove" link="{{showClubVipAlertLink}}"></clubVipAlert>
 </view>
