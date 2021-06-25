@@ -97,7 +97,17 @@
 	<!-- 功能栏 -->
 	<view class="function {{ isPartner && 'partner' }}">
 		<view class="function-list">
-			<view class="function-item" bindtap="goToBooks" wx:if='{{false}}'>
+			<view class="function-item" bindtap="goToTaskLaunchPage" wx:if="{{true}}">
+				<view class="function-item-left">
+					<image src="/assets/images/common/task.png" class="task-image"></image>
+					<view class="function-item-box">
+						<view class="function-item-top">我的作业</view>
+						<view class="function-item-bottom">查看作业记录</view>
+					</view>
+				</view>
+				<image src="/assets/images/common/arrow.png"></image>
+			</view>
+			<view class="function-item" bindtap="goToBooks">
 				<view class="function-item-left">
 					<image src="/assets/images/common/task.png" class="task-image"></image>
 					<view class="function-item-box">
@@ -109,7 +119,7 @@
 			</view>
 			<view class="function-item" bindtap="goToConvertCashPage">
 				<view class="function-item-left">
-					<image src="/assets/images/common/balance.png" class="task-image"></image>
+					<image src="/assets/images/common/newBalance.png" class="task-image"></image>
 					<view class="function-item-box">
 						<view class="function-item-top">我的余额</view>
 						<view class="function-item-bottom" wx:if="{{userInfo.mobile}}">当前余额：<text>{{userInfo.amount}}元</text></view>
@@ -154,16 +164,8 @@
 				</view>
 				<image src="/assets/images/common/arrow.png"></image>
 			</view>
-			<view class="function-item" bindtap="goToTaskLaunchPage" wx:if="{{visibleTaskEntrance}}">
-				<view class="function-item-left">
-					<image src="/assets/images/common/task.png" class="task-image"></image>
-					<view class="function-item-box">
-						<view class="function-item-top">我的作业</view>
-						<view class="function-item-bottom">查看作业记录</view>
-					</view>
-				</view>
-				<image src="/assets/images/common/arrow.png"></image>
-			</view>
+<!--			<view class="function-item" bindtap="goToTaskLaunchPage" wx:if="{{visibleTaskEntrance}}">-->
+
 			<view class="function-item" bindtap="toPromotion"
 				wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&showPromotion}}">
 				<view class="function-item-left">

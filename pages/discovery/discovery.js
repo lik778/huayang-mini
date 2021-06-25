@@ -740,7 +740,7 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=247`})
+		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=249`})
 
 		let {scene, invite_user_id = "", source} = options
 		// 通过小程序码进入 scene=${source}
