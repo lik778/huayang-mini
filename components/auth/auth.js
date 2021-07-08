@@ -15,7 +15,8 @@ import {
   $notNull,
   getLocalStorage,
   setLocalStorage,
-  setWxUserInfoExpiredTime
+  setWxUserInfoExpiredTime,
+  removeLocalStorage
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 
