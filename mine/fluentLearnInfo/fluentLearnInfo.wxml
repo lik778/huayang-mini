@@ -40,7 +40,7 @@
         </view>
     </view>
 
-    <view class="share-btn" bindtap="onShareBtnTap"></view>
+    <!-- <view class="share-btn" bindtap="onShareBtnTap"></view> -->
 
     <view class="footer">
         <view class="footer-wrap" bindtap="goToDiscovery">
