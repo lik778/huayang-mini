@@ -77,6 +77,18 @@
           "pathName": "pages/userCenter/userCenter",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "莘庄14天朗诵训练营作业发布",
+          "pathName": "subCourse/launchTask/launchTask",
+          "query": "themeType=0&themeId=7&themeTitle=莘庄14天朗诵训练营",
+          "scene": null
+        },
+        {
+          "name": "个人作业秀落地页",
+          "pathName": "subCourse/indexTask/indexTask",
+          "query": "taskId=3&nickname=derisfe&userId=4",
+          "scene": null
         }
       ]
     }
