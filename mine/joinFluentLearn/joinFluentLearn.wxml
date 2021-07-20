@@ -42,7 +42,7 @@
         </view>
     </view>
 
-    <view class="share-btn" bindtap="onShareBtnTap"></view>
+    <!-- <view class="share-btn" bindtap="onShareBtnTap"></view> -->
 
     <!-- 新版购买按钮 -->
     <view class="button-module" style="padding-bottom:{{isIphoneXRSMax?'20px':''}}">
