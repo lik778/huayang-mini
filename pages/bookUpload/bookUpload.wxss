@@ -128,7 +128,7 @@
     top: 0;
     left: 0;
     right: 0;
-    padding: 42rpx 55rpx 24rpx;
+    padding: 42rpx 60rpx 24rpx;
     box-sizing: border-box;
     background: white;
 }
