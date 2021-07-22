@@ -60,14 +60,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #F9F9F9;
+    background: #EEEEEE;
+}
+
+.review-image-wrap {
+    overflow: hidden;
+    width: inherit;
+    height: inherit;
+    background: #EEEEEE;
 }
 
 .review-image {
     width: inherit;
     height: inherit;
     font-size: 0;
-    background: #F9F9F9;
 }
 
 .cover-element {
@@ -105,7 +111,7 @@
     height: 192rpx;
     margin: 64rpx 0 60rpx;
     box-sizing: border-box;
-    background: #F9F9F9;
+    background: #EEEEEE;
     font-size: 0;
 }
 
