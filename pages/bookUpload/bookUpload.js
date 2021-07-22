@@ -281,6 +281,8 @@ Page({
 			page_pic: JSON.stringify(pagePicData)
 		}).then(() => {
 			wx.redirectTo({url: "/pages/bookCustomSuccess/bookCustomSuccess?type=upload"})
+		}).catch((err) => {
+			toast(err, 2000)
 		})
 	},
 	// 生成内页数据
