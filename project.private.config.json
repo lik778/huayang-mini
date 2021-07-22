@@ -15,7 +15,7 @@
         {
           "name": "畅学卡售前页",
           "pathName": "mine/joinFluentLearn/joinFluentLearn",
-          "query": "mode=1&agent_id=1",
+          "query": "mode=2&agent_id=3",
           "scene": null
         },
         {
