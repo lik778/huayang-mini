@@ -8,7 +8,7 @@
 }
 
 .section {
-    padding: 60rpx 55rpx 250rpx;
+    padding: 60rpx 60rpx 250rpx;
     box-sizing: border-box;
 }
 
@@ -41,13 +41,18 @@
 
 .review-item {
     position: relative;
-    width: 192rpx;
+    width: 288rpx;
     height: 192rpx;
-    margin: 0 30rpx 30rpx 0;
+    margin: 0 40rpx 40rpx 0;
     box-sizing: border-box;
 }
 
-.review-item:nth-child(3n) {
+.review-item.cover {
+    width: 288rpx;
+    height: 432rpx;
+}
+
+.review-item:nth-child(2n) {
     margin-right: 0;
 }
 
@@ -65,6 +70,24 @@
     background: #F9F9F9;
 }
 
+.cover-element {
+    position: absolute;
+    top: 36rpx;
+    left: 28rpx;
+    width: 230rpx;
+    height: 74rpx;
+    font-size: 0;
+}
+
+.back-cover-element {
+    position: absolute;
+    bottom: 68rpx;
+    left: 82rpx;
+    width: 126rpx;
+    height: 88rpx;
+    font-size: 0;
+}
+
 .close-icon {
     position: absolute;
     top: -24rpx;
@@ -78,12 +101,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 192rpx;
+    width: 288rpx;
     height: 192rpx;
-    margin: 40rpx 0 60rpx;
+    margin: 64rpx 0 60rpx;
     box-sizing: border-box;
     background: #F9F9F9;
     font-size: 0;
+}
+
+.upload-box.cover {
+    width: 288rpx;
+    height: 432rpx;
 }
 
 .upload-box:active {
