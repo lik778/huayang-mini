@@ -8,41 +8,61 @@
         <view class="text-01">如果已经准备好了，我们开始上传照片吧～为了保障画册美观，请您务必上传清晰的照片哦！</view>
         <view class="title-02">1、上传画册封面</view>
         <view class="review" wx:if="{{cover}}">
-            <view class="review-item">
+            <view class="review-item cover">
                 <image class="review-image" bindtap="previewCover" src="{{cover + '?x-oss-process=style/huayang-thumb'}}" mode="aspectFit"></image>
+                <image class="cover-element" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1626922522RxPwWa.jpg"></image>
                 <image class="close-icon" catchtap="removeCover" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622538606NqOPcW.jpg" mode="aspectFill"></image>
             </view>
         </view>
-        <view class="upload-box" wx:else bindtap="chooseCover">
+        <view class="upload-box cover" wx:else bindtap="chooseCover">
             <image class="add-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622516832MkoKCu.jpg" mode="aspectFit"></image>
         </view>
         <view class="title-02">2、上传画册封底</view>
         <view class="review" wx:if="{{backCover}}">
-            <view class="review-item">
-                <image class="review-image" src="{{backCover + '?x-oss-process=style/huayang-thumb'}}" mode="aspectFit" bindtap="previewBackCover"></image>
+            <view class="review-item cover">
+                <view class="review-image-wrap">
+                    <image class="review-image" src="{{backCover + '?x-oss-process=style/huayang-thumb'}}" mode="aspectFit" bindtap="previewBackCover"></image>
+                </view>
+                <image class="back-cover-element" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1626922525zWVMyl.jpg"></image>
                 <image class="close-icon" catchtap="removeBackCover" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622538606NqOPcW.jpg" mode="aspectFill"></image>
             </view>
         </view>
-        <view class="upload-box" wx:else bindtap="chooseBackCover">
+        <view class="upload-box cover" wx:else bindtap="chooseBackCover">
             <image class="add-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622516832MkoKCu.jpg" mode="aspectFit"></image>
         </view>
-        <view class="title-02" id="ding">3、上传画册内页</view>
-        <view class="title-03">共{{CONTENT_IMAGE_MAX_COUNT}}张，已上传{{contentImgs.length}}张</view>
+        <view class="title-02" id="ding1">3、上传画册内页</view>
+        <view class="title-03">横图{{HORIZONTAL_IMAGE_MAX_COUNT}}张，已上传{{horizontalImgs.length}}张</view>
         <view class="review">
-            <view class="review-item" wx:for="{{contentImgs}}" wx:key="index" bindtap="previewContentImg" data-item="{{item}}">
-                <image class="review-image" src="{{item + '?x-oss-process=style/huayang-thumb'}}" mode="aspectFit"></image>
-                <image class="close-icon" catchtap="removeContentImg" data-item="{{item}}" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622538606NqOPcW.jpg" mode="aspectFill"></image>
+            <view class="review-item" wx:for="{{horizontalImgs}}" wx:key="index" bindtap="previewContentImg" data-item="{{item}}">
+                <view class="review-image-wrap">
+                    <image class="review-image" src="{{item + '?x-oss-process=style/huayang-thumb'}}" mode="heightFix"></image>
+                </view>
+                <image class="close-icon" catchtap="removeContentImg" data-item="{{item}}" data-orient="h" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622538606NqOPcW.jpg" mode="aspectFill"></image>
             </view>
-            <view class="review-item multiple" wx:if="{{contentImgs.length < CONTENT_IMAGE_MAX_COUNT}}" bindtap="chooseContentImgs">
+            <view class="review-item multiple" wx:if="{{horizontalImgs.length < HORIZONTAL_IMAGE_MAX_COUNT}}" bindtap="chooseContentImgs" data-orient="h">
+                <image class="add-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622516832MkoKCu.jpg" mode="aspectFit"></image>
+            </view>
+        </view>
+        <view class="title-02" id="ding2"></view>
+        <view class="title-03">竖图{{VERTICAL_IMAGE_MAX_COUNT}}张，已上传{{verticalImgs.length}}张</view>
+        <view class="review">
+            <view class="review-item cover" wx:for="{{verticalImgs}}" wx:key="index" bindtap="previewContentImg" data-item="{{item}}">
+                <view class="review-image-wrap">
+                    <image class="review-image" src="{{item + '?x-oss-process=style/huayang-thumb'}}" mode="widthFix"></image>
+                </view>
+                <image class="close-icon" catchtap="removeContentImg" data-item="{{item}}" data-orient="v" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622538606NqOPcW.jpg" mode="aspectFill"></image>
+            </view>
+            <view class="review-item cover multiple" wx:if="{{verticalImgs.length < VERTICAL_IMAGE_MAX_COUNT}}" bindtap="chooseContentImgs" data-orient="v">
                 <image class="add-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622516832MkoKCu.jpg" mode="aspectFit"></image>
             </view>
         </view>
     </view>
-    <view class="fixed-view" wx:if="{{scrollTopNo >= dingOffsetNo}}">
+    <view class="fixed-view" wx:if="{{scrollTopNo >= ding1OffsetNo}}">
         <view class="title-02">3、上传画册内页</view>
-        <view class="title-03">共{{CONTENT_IMAGE_MAX_COUNT}}张，已上传{{contentImgs.length}}张</view>
+        <view class="title-03" wx:if="{{scrollTopNo < ding2OffsetNo}}">横图{{HORIZONTAL_IMAGE_MAX_COUNT}}张，已上传{{horizontalImgs.length}}张</view>
+        <view class="title-03" wx:else>竖图{{VERTICAL_IMAGE_MAX_COUNT}}张，已上传{{verticalImgs.length}}张</view>
     </view>
-    <cover-view class="fixed-cover-view" wx:if="{{scrollTopNo >= dingOffsetNo}}"></cover-view>
+    <cover-view class="fixed-cover-view" wx:if="{{scrollTopNo >= ding1OffsetNo}}"></cover-view>
     <view class="footer" bindtap="upload">上传完成</view>
 
     <!-- 授权弹窗 -->
