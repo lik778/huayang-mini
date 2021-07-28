@@ -31,7 +31,9 @@
     "pages/activePayCancel/activePayCancel",
     "pages/studentMoments/studentMoments",
     "pages/bookUpload/bookUpload",
-    "pages/bookCustomSuccess/bookCustomSuccess"
+    "pages/bookCustomSuccess/bookCustomSuccess",
+    "pages/personAlbum/personAlbum",
+    "pages/activityAlbum/activityAlbum"
   ],
   "requiredBackgroundModes": [
     "audio",

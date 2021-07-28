@@ -12,15 +12,21 @@ Page({
 	data: {
 		didShowAuth: false,
 		magazineId: 0,
-		// cover: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689BCllur.png",
+		// cover: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1626847428CHXheo.png",
 		cover: "",
-		// backCover: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689dgVoGT.png",
+		// backCover: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1626847428CHXheo.png",
 		backCover: "",
-		// contentImgs: ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689BCllur.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689dgVoGT.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689jEdfTq.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689njZKFd.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689zWunRy.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689PWMVqk.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689goBVpN.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689XooLca.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979kzrwjt.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979URMJQa.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979HkliNC.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979mnaOJF.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979rmPpiA.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979zHugJQ.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979IAdTrp.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979PKogTR.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985WgTJxm.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985UoKfWm.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985RoUCUR.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985UKaXXl.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985KdNthF.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985fNqOQZ.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985gUqMhb.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540999AUtHZy.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540999bFwPmc.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540999mgPlOp.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622541000ghKUYx.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622541000kSbRmq.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622796401DHWuVc.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622796407uBErAT.png"],
+		// horizontalImgs: ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689BCllur.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689dgVoGT.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689jEdfTq.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689njZKFd.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689zWunRy.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689PWMVqk.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689goBVpN.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540689XooLca.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979kzrwjt.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979URMJQa.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979HkliNC.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979mnaOJF.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622796407uBErAT.png"],
+		horizontalImgs: [],
+		// verticalImgs: ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979zHugJQ.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979IAdTrp.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540979PKogTR.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985WgTJxm.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985UoKfWm.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985RoUCUR.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985UKaXXl.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985KdNthF.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985fNqOQZ.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540985gUqMhb.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540999AUtHZy.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540999bFwPmc.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622540999mgPlOp.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622541000ghKUYx.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622541000kSbRmq.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622796401DHWuVc.png", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1622796407uBErAT.png"],
+		verticalImgs: [],
 		contentImgs: [],
 		CONTENT_IMAGE_MAX_COUNT: 31,
+		HORIZONTAL_IMAGE_MAX_COUNT: 13, // 横图
+		VERTICAL_IMAGE_MAX_COUNT: 18, // 竖图
 		scrollTopNo: 0,
-		dingOffsetNo: 0,
+		ding1OffsetNo: 0,
+		ding2OffsetNo: 0,
 	},
 
 	/**
@@ -84,12 +90,29 @@ Page({
 		let self = this
 		// 检查用户授权
 		this.setData({didShowAuth: !hasUserInfo() || !hasAccountInfo()})
-		// 获取DING偏移高度
+		// 获取DING1偏移高度
 		let domQuery = wx.createSelectorQuery()
-		domQuery.select("#ding").boundingClientRect()
+		domQuery.select("#ding1").boundingClientRect()
 		domQuery.exec(function (res) {
 			self.setData({
-				dingOffsetNo: res[0].top - 21
+				ding1OffsetNo: res[0].top - 21
+			})
+		})
+
+		let t = setTimeout(() => {
+			this.queryDing2OffsetNo()
+			clearTimeout(t)
+		}, 500)
+	},
+	queryDing2OffsetNo() {
+		let self = this
+		// 获取DING2偏移高度
+		let domQuery = wx.createSelectorQuery()
+		domQuery.select("#ding2").boundingClientRect()
+		domQuery.selectViewport().scrollOffset()
+		domQuery.exec(function (res) {
+			self.setData({
+				ding2OffsetNo: res[0].top + res[1].scrollTop - 70
 			})
 		})
 	},
@@ -106,6 +129,10 @@ Page({
 					let {tempFilePaths} = res
 					let promiseArray = tempFilePaths.map((tempFilePath) => self.uploadFileToWxService(tempFilePath))
 					Promise.all(promiseArray).then((images) => {
+						let t = setTimeout(() => {
+							self.queryDing2OffsetNo()
+							clearTimeout(t)
+						}, 500)
 						resolve(images)
 					})
 				},
@@ -117,6 +144,9 @@ Page({
 						error_message: err
 					})
 					reject(err)
+				},
+				complete() {
+
 				}
 			})
 		})
@@ -183,10 +213,32 @@ Page({
 	removeBackCover() {
 		this.setData({backCover: ""})
 	},
-	chooseContentImgs() {
-		this.chooseImg(this.data.CONTENT_IMAGE_MAX_COUNT - this.data.contentImgs.length)
+	chooseContentImgs(e) {
+		let orientation = e.currentTarget.dataset.orient
+		let count = 9
+		switch (orientation) {
+			case "h": {
+				count = this.data.HORIZONTAL_IMAGE_MAX_COUNT - this.data.horizontalImgs.length
+				break
+			}
+			case "v": {
+				count = this.data.VERTICAL_IMAGE_MAX_COUNT - this.data.verticalImgs.length
+				break
+			}
+		}
+		this.chooseImg(count)
 			.then((imageUrls) => {
-				this.setData({contentImgs: [...this.data.contentImgs, ...imageUrls]})
+				switch (orientation) {
+					case "h": {
+						this.setData({horizontalImgs: [...this.data.horizontalImgs, ...imageUrls]})
+						break
+					}
+					case "v": {
+						this.setData({verticalImgs: [...this.data.verticalImgs, ...imageUrls]})
+						break
+					}
+				}
+				this.data.contentImgs = [...this.data.horizontalImgs, ...this.data.verticalImgs]
 				wx.hideLoading()
 			})
 			.catch(() => {
@@ -194,12 +246,23 @@ Page({
 			})
 	},
 	previewContentImg(e) {
-		let targetUrl = e.currentTarget.dataset.item
-		this.previewImg(this.data.contentImgs, targetUrl)
+		let {item} = e.currentTarget.dataset
+		this.previewImg(this.data.contentImgs, item)
 	},
 	removeContentImg(e) {
-		let targetUrl = e.currentTarget.dataset.item
-		this.setData({contentImgs: this.data.contentImgs.slice().filter(n => n !== targetUrl)})
+		let {item, orient} = e.currentTarget.dataset
+		switch (orient) {
+			case "h": {
+				this.setData({horizontalImgs: this.data.horizontalImgs.slice().filter(n => n !== item)})
+				break
+			}
+			case "v": {
+				this.setData({verticalImgs: this.data.verticalImgs.slice().filter(n => n !== item)})
+				break
+			}
+		}
+
+		this.data.contentImgs = [...this.data.horizontalImgs, ...this.data.verticalImgs]
 	},
 	upload() {
 		if (!hasUserInfo() || !hasAccountInfo()) return this.setData({didShowAuth: true})
@@ -207,7 +270,8 @@ Page({
 		if (!this.data.magazineId) return toast("小程序码错误，请联系客服人员")
 		if (!this.data.cover) return toast("请上传封面图片")
 		if (!this.data.backCover) return toast("请上传封底图片")
-		if (this.data.contentImgs.length < this.data.CONTENT_IMAGE_MAX_COUNT) return toast(`请再上传${this.data.CONTENT_IMAGE_MAX_COUNT - this.data.contentImgs.length}张内页图片`)
+		if (this.data.horizontalImgs.length < this.data.HORIZONTAL_IMAGE_MAX_COUNT) return toast(`请再上传${this.data.HORIZONTAL_IMAGE_MAX_COUNT - this.data.horizontalImgs.length}张横图`)
+		if (this.data.verticalImgs.length < this.data.VERTICAL_IMAGE_MAX_COUNT) return toast(`请再上传${this.data.VERTICAL_IMAGE_MAX_COUNT - this.data.verticalImgs.length}张竖图`)
 
 		let pagePicData = this.generateInnerPageData(this.data.contentImgs)
 		uploadBookServiceResource({
@@ -217,6 +281,8 @@ Page({
 			page_pic: JSON.stringify(pagePicData)
 		}).then(() => {
 			wx.redirectTo({url: "/pages/bookCustomSuccess/bookCustomSuccess?type=upload"})
+		}).catch((err) => {
+			toast(err, 2000)
 		})
 	},
 	// 生成内页数据
