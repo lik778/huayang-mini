@@ -1,0 +1,18 @@
+<view class="person-album">
+    <view class="banner" style="background-image: url('{{info.album.cover}}');">
+        <view class="layer-01">
+            <text>照片 {{photoNum}}</text>
+            <view class="divider" />
+            <text>访问 {{visitNum}}</text>
+        </view>
+    </view>
+    <view class="layer-02">个人相册</view>
+    <view class="container">
+        <image class="picture" wx:for="{{pictures}}" wx:key="index" bindtap="onPictureTap" data-url="{{item.media_url}}" src="{{item.media_url + '?x-oss-process=style/huayang-small-thumb'}}" mode="aspectFill"></image>
+    </view>
+    <view class="refresh"></view>
+    <view class="footer">
+        <button open-type="share" class="btn share">分享给好友</button>
+        <view class="btn" bindtap="more">更多精彩照片 ›</view>
+    </view>
+</view>
