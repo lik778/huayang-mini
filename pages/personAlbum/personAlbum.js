@@ -23,6 +23,8 @@ Page({
 	 */
 	onLoad: function (options) {
 		let {id} = options
+		console.log(id);
+
 		if (id) {
 			this.data.albumCollectionId = id
 		}
@@ -77,7 +79,7 @@ Page({
 		return {
 			imageUrl: this.data.info.album.cover,
 			title: "个人精彩相册，看看美美照片",
-			path: "/pages/personAlbum/personAlbum?id" + this.data.albumCollectionId
+			path: "/pages/personAlbum/personAlbum?id=" + this.data.albumCollectionId
 		}
 	},
 	onPictureTap(e) {
