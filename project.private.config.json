@@ -98,7 +98,7 @@
         },
         {
           "name": "活动相册",
-          "pathName": "pages/acitivtyAlbum/acticityAlbum",
+          "pathName": "pages/activityAlbum/activityAlbum",
           "query": "link=https%3A%2F%2Fdev.huayangbaixing.com%2F%23%2Fhome%2Falbums%2F26",
           "scene": null
         }

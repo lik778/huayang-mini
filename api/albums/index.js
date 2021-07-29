@@ -34,3 +34,20 @@ export function getPeronAlbumInActivity(params) {
 			})
 	})
 }
+
+/**
+ * 获取相册信息
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export function getPhotoAlbumDetail(params) {
+	return new Promise((resolve, reject) => {
+		request._get(URL.queryAlbumDetail, params)
+			.then(({data}) => {
+				resolve(data)
+			})
+			.catch((err) => {
+				reject(err)
+			})
+	})
+}

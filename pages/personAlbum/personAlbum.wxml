@@ -10,7 +10,7 @@
     <view class="container">
         <image class="picture" wx:for="{{pictures}}" wx:key="index" bindtap="onPictureTap" data-url="{{item.media_url}}" src="{{item.media_url + '?x-oss-process=style/huayang-small-thumb'}}" mode="aspectFill"></image>
     </view>
-    <view class="refresh"></view>
+    <view class="refresh" bindtap="refresh"></view>
     <view class="footer">
         <button open-type="share" class="btn share">分享给好友</button>
         <view class="btn" bindtap="more">更多精彩照片 ›</view>
