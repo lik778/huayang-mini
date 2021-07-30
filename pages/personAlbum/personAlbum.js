@@ -15,19 +15,20 @@ Page({
 		pictures: [],
 		info: null,
 		photoNum: 0,
-		visitNum: 0
+		visitNum: 0,
+		isFromH5: false
 	},
 
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		let {id} = options
-		console.log(id);
+		let {id, from} = options
 
 		if (id) {
 			this.data.albumCollectionId = id
 		}
+		this.setData({isFromH5: from === "h5"})
 	},
 
 	/**
@@ -77,7 +78,7 @@ Page({
 	 */
 	onShareAppMessage: function () {
 		return {
-			imageUrl: this.data.info.album.cover,
+			imageUrl: this.data.info.album.detail_header_pic,
 			title: "个人精彩相册，看看美美照片",
 			path: "/pages/personAlbum/personAlbum?id=" + this.data.albumCollectionId
 		}
@@ -86,6 +87,9 @@ Page({
 		wx.previewImage({urls: this.data.pictures.map(n => n.media_url), current: e.currentTarget.dataset.url})
 	},
 	more() {
+		if (this.data.isFromH5) {
+			return wx.navigateBack()
+		}
 		let link = ""
 		switch (request.baseUrl) {
 			case ROOT_URL.dev: {

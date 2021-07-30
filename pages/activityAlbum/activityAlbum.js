@@ -70,6 +70,7 @@ Page({
    */
   onShareAppMessage: function () {
     return {
+      imageUrl: this.data.albumInfo.detail_header_pic,
       title: $notNull(this.data.albumInfo) ? this.data.albumInfo.name : "",
       path: `/pages/activityAlbum/activityAlbum?link=https%3A%2F%2Fhuayang.baixing.com%2F%23%2Fhome%2Falbums%2F${this.data.albumId}`
     }

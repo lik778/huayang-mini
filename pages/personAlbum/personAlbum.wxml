@@ -1,5 +1,5 @@
 <view class="person-album">
-    <view class="banner" style="background-image: url('{{info.album.cover}}');">
+    <view class="banner" style="background-image: url('{{info.album.detail_header_pic}}');">
         <view class="layer-01">
             <text>照片 {{photoNum}}</text>
             <view class="divider" />
@@ -13,6 +13,6 @@
     <view class="refresh" bindtap="refresh"></view>
     <view class="footer">
         <button open-type="share" class="btn share">分享给好友</button>
-        <view class="btn" bindtap="more">更多精彩照片 ›</view>
+        <view class="btn" bindtap="more">{{isFromH5 ? "返回继续查找照片" : "更多精彩照片 ›"}}</view>
     </view>
 </view>

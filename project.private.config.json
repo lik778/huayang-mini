@@ -93,7 +93,7 @@
         {
           "name": "个人相册",
           "pathName": "pages/personAlbum/personAlbum",
-          "query": "id=171",
+          "query": "id=328&from=h5",
           "scene": null
         },
         {
