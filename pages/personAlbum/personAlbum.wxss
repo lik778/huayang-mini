@@ -1,0 +1,109 @@
+.person-album {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 148rpx;
+    min-height: calc(100vh - 148rpx);
+    background: #222222;
+}
+
+.banner {
+    position: relative;
+    height: 500rpx;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.layer-01 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 72rpx;
+    background: rgba(0,0,0,0.6);
+}
+
+.layer-01 > text {
+    font: 32rpx/72rpx PingFangSC;
+    color: white;
+}
+
+.divider {
+    width: 2rpx;
+    height: 36rpx;
+    margin: 18rpx 60rpx;
+    background: white;
+    opacity: 0.4;
+}
+
+.layer-02 {
+    margin: 60rpx auto;
+    text-align: center;
+    color: white;
+    font: 48rpx/48rpx PingFangSC;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0;
+}
+
+.picture {
+    width: 248rpx;
+    height: 248rpx;
+    margin-bottom: 3rpx;
+    background: rgba(0,0,0, 0.3);
+}
+
+.picture:nth-child(3n-1) {
+    margin: 0 3rpx;
+}
+
+.footer {
+    position: fixed;
+    height: 88rpx;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30rpx 40rpx;
+    background: #222;
+}
+
+.btn {
+    width: 348rpx;
+    height: 88rpx;
+    box-sizing: border-box;
+    border: 2rpx solid #999999;
+    border-radius: 999rpx;
+    text-align: center;
+    font: 600 36rpx/88rpx PingFangSC;
+    color: white;
+}
+
+.btn:active {
+    opacity: 0.9;
+}
+
+.share {
+    width: 288rpx;
+    font-weight: 500;
+    border: 0 none;
+    background: #CC3333;
+}
+
+.refresh {
+    position: fixed;
+    left: 0;
+    top: 802rpx;
+    width: 108rpx;
+    height: 120rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1627365662PjNHyP.jpg") no-repeat center;
+    background-size: cover;
+}

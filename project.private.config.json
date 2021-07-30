@@ -89,6 +89,18 @@
           "pathName": "subCourse/indexTask/indexTask",
           "query": "taskId=3&nickname=derisfe&userId=4",
           "scene": null
+        },
+        {
+          "name": "个人相册",
+          "pathName": "pages/personAlbum/personAlbum",
+          "query": "id=328&from=h5",
+          "scene": null
+        },
+        {
+          "name": "活动相册",
+          "pathName": "pages/activityAlbum/activityAlbum",
+          "query": "link=https%3A%2F%2Fdev.huayangbaixing.com%2F%23%2Fhome%2Falbums%2F26",
+          "scene": null
         }
       ]
     }
