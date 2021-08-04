@@ -137,7 +137,7 @@
 
 /* 线下精品课 */
 .offline-course {
-  padding: 0 30rpx 40rpx;
+  padding: 0 30rpx 80rpx;
 }
 
 /* 线下课卡片样式 */
@@ -409,7 +409,7 @@
 }
 
 .travel-layout {
-  margin: 40rpx 0;
+  margin: 0 0 40rpx 0;
   font: 500 52rpx/52rpx PingFangSC;
 }
 
@@ -465,7 +465,7 @@
   align-items: center;
   width: 690rpx;
   height: 88rpx;
-  margin: 40rpx auto 100rpx;
+  margin: 40rpx auto 80rpx;
   border-radius: 999rpx;
   border: 1rpx solid black;
   font: 500 36rpx/36rpx PingFangSC;

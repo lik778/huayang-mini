@@ -79,7 +79,7 @@ Page({
 	onShareAppMessage: function () {
 		return {
 			imageUrl: this.data.info.album.detail_header_pic,
-			title: "个人精彩相册，看看美美照片",
+			title: `个人精彩相册`,
 			path: "/pages/personAlbum/personAlbum?id=" + this.data.albumCollectionId
 		}
 	},

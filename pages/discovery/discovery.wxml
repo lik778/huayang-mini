@@ -27,45 +27,45 @@
     </view>
 
     <!-- 花样大学介绍 -->
-    <view class="hy-intro" wx:if="{{!didFluentCardUser && collegeVideoUrl}}">
-        <view class="layer" bindtap="goToJoinFluentCardPage">
-            <text>花样大学介绍</text>
-            <view class="hy-intro-btn">加入花样大学 ›</view>
-        </view>
-        <view class="hy-intro-video-wrap">
-            <video id="hy-video-content" bindtap="onPauseCollegeVideo" class="hy-video" src="{{collegeVideoUrl}}" poster="{{collegeVideoPost}}" controls="{{false}}"
-                   custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}"
-                   enable-progress-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}"
-                   show-play-btn="{{false}}" autoplay="{{false}}" loop="{{true}}"></video>
-            <view class="hy-video-content-mask" wx:if="{{!isCollegeVideoPlaying}}" catchtap="goToJoinFluentCardPageByIntroVideo">
-                <image catchtap="onPlayCollegeVideo" class="pause-icon" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619061373BeZzQx.jpg"></image>
-            </view>
+    <!--    <view class="hy-intro" wx:if="{{!didFluentCardUser && collegeVideoUrl}}">-->
+    <!--        <view class="layer" bindtap="goToJoinFluentCardPage">-->
+    <!--            <text>花样大学介绍</text>-->
+    <!--            <view class="hy-intro-btn">加入花样大学 ›</view>-->
+    <!--        </view>-->
+    <!--        <view class="hy-intro-video-wrap">-->
+    <!--            <video id="hy-video-content" bindtap="onPauseCollegeVideo" class="hy-video" src="{{collegeVideoUrl}}" poster="{{collegeVideoPost}}" controls="{{false}}"-->
+    <!--                   custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}"-->
+    <!--                   enable-progress-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}"-->
+    <!--                   show-play-btn="{{false}}" autoplay="{{false}}" loop="{{true}}"></video>-->
+    <!--            <view class="hy-video-content-mask" wx:if="{{!isCollegeVideoPlaying}}" catchtap="goToJoinFluentCardPageByIntroVideo">-->
+    <!--                <image catchtap="onPlayCollegeVideo" class="pause-icon" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619061373BeZzQx.jpg"></image>-->
+    <!--            </view>-->
+    <!--        </view>-->
+    <!--    </view>-->
+
+    <!-- 今日推荐 -->
+    <view class="today-recommend" wx:if="{{previewVideoLink}}" bindtap="onTodayRecommendTap">
+        <view>今日推荐课程</view>
+        <video id="preview-video-content" class="preview-video" src="{{previewVideoLink}}" controls="{{false}}"
+               custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}"
+               enable-progress-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}"
+               show-play-btn="{{false}}" autoplay="{{false}}" loop="{{true}}"></video>
+        <view class="recommend-course-title">{{todayRecommendCourse.kecheng_series.teacher_desc}}</view>
+        <view class="recommend-course-info">
+            <view class="recommend-course-info-title limit-one-line">{{todayRecommendCourse.kecheng_series.name}}</view>
+            <view class="about-recommend-course">查看 ›</view>
         </view>
     </view>
 
-    <!-- 直播 -->
-    <liveLayout wx:if="{{liveList.length > 0}}" class="limit-two-line" liveList="{{liveList}}"
-                bind:openUserAuth="openUserAuth"/>
+    <!-- 精品课程 -->
+    <bestCourseLayout wx:if="{{courseList.length > 0}}" courseList="{{courseList}}"/>
 
-    <!-- 线下乐活课堂 -->
-    <view class="offline-course" wx:if="{{offlineList.length > 0}}">
-        <view class="layer">线下乐活课堂</view>
-        <view class="offline-course-item" wx:for="{{offlineList}}" wx:key="index" data-item="{{item}}" bindtap="goToOfflineCourseDetail">
-            <image class="pic" src="{{item.cover}}" mode="aspectFill"></image>
-            <view class="title limit-two-line">{{item.title}}</view>
-            <view class="info">
-                <view class="info-wrap">
-                    <view class="price-wrap">
-                        <text>¥</text><text class="price">{{item.price}}</text>
-                    </view>
-                    <view class="discount-price-wrap">
-                        <text class="discount-price">¥{{item.discount_price}}</text>
-                        <image class="tag" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618455791dTGykq.jpg"
-                               mode="aspectFit"></image>
-                    </view>
-                </view>
-                <view class="no">{{item.buy_count}}人已购</view>
-            </view>
+    <!-- 校友活动 -->
+    <view class="college-activity" wx:if="{{activityList.length > 0}}">
+        <view class="layer">校友活动</view>
+        <view class="college-activity-item" wx:for="{{activityList}}" wx:key="index" data-item="{{item}}" bindtap="onCollegeActivityTap">
+            <image class="college-activity-picture" mode="aspectFill" src="{{item.cover_url}}"></image>
+            <view class="college-activity-title limit-two-line">{{item.title}}</view>
         </view>
     </view>
 
@@ -90,30 +90,31 @@
         <view class="more-travel" bindtap="onMoreTravelLineTap">查看更多游学路线 ›</view>
     </view>
 
-    <!-- 校友活动 -->
-    <view class="college-activity" wx:if="{{activityList.length > 0}}">
-        <view class="layer">校友活动</view>
-        <view class="college-activity-item" wx:for="{{activityList}}" wx:key="index" data-item="{{item}}" bindtap="onCollegeActivityTap">
-            <image class="college-activity-picture" mode="aspectFill" src="{{item.cover_url}}"></image>
-            <view class="college-activity-title limit-two-line">{{item.title}}</view>
+    <!-- 线下乐活课堂 -->
+    <view class="offline-course" wx:if="{{offlineList.length > 0}}">
+        <view class="layer">线下乐活课堂</view>
+        <view class="offline-course-item" wx:for="{{offlineList}}" wx:key="index" data-item="{{item}}" bindtap="goToOfflineCourseDetail">
+            <image class="pic" src="{{item.cover}}" mode="aspectFill"></image>
+            <view class="title limit-two-line">{{item.title}}</view>
+            <view class="info">
+                <view class="info-wrap">
+                    <view class="price-wrap">
+                        <text>¥</text><text class="price">{{item.price}}</text>
+                    </view>
+                    <view class="discount-price-wrap">
+                        <text class="discount-price">¥{{item.discount_price}}</text>
+                        <image class="tag" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618455791dTGykq.jpg"
+                               mode="aspectFit"></image>
+                    </view>
+                </view>
+                <view class="no">{{item.buy_count}}人已购</view>
+            </view>
         </view>
     </view>
 
-    <!-- 今日推荐 -->
-    <view class="today-recommend" wx:if="{{previewVideoLink}}" bindtap="onTodayRecommendTap">
-        <view>今日推荐课程</view>
-        <video id="preview-video-content" class="preview-video" src="{{previewVideoLink}}" controls="{{false}}"
-               custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}"
-               enable-progress-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}"
-               show-play-btn="{{false}}" autoplay="{{false}}" loop="{{true}}"></video>
-        <view class="recommend-course-title">{{todayRecommendCourse.kecheng_series.teacher_desc}}</view>
-        <view class="recommend-course-info">
-            <view class="recommend-course-info-title limit-one-line">{{todayRecommendCourse.kecheng_series.name}}</view>
-            <view class="about-recommend-course">查看 ›</view>
-        </view>
-    </view>
-    <!-- 精品课程 -->
-    <bestCourseLayout wx:if="{{courseList.length > 0}}" courseList="{{courseList}}"/>
+    <!-- 直播 -->
+    <liveLayout wx:if="{{liveList.length > 0}}" class="limit-two-line" liveList="{{liveList}}"
+                bind:openUserAuth="openUserAuth"/>
 
     <!-- 分隔 -->
     <view class="separate-line"></view>

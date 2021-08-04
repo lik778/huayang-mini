@@ -36,6 +36,19 @@ export function queryTravelList(params) {
 	})
 }
 
+// 获取近期游学产品列表
+export function queryRecentTravelList(params) {
+	return new Promise((resolve, reject) => {
+		request._get(URL.getRecentTravelList, params).then(({data}) => {
+			data = data || []
+			data = data.map(n => n.travel_product)
+			resolve(data)
+		}).catch((err) => {
+			reject(err)
+		})
+	})
+}
+
 // 增加游学产品访问数量
 export function addTravelVisitNumber(params) {
 	request._post(URL.addTravelVisitNo, params)
