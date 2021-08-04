@@ -1,8 +1,4 @@
-import {
-  ErrorLevel,
-  FluentLearnUserType,
-  GLOBAL_KEY
-} from "../../lib/config"
+import { ErrorLevel, FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import {
   checkJoinVideoCourse,
   checkNeedSpecialManage,
@@ -25,13 +21,8 @@ import {
   payCourse,
   secondToMinute
 } from "../../utils/util"
-import {
-  collectError
-} from "../../api/auth/index"
-import {
-  getFluentCardInfo,
-  getKechengWithFluentCard
-} from "../../api/mine/index"
+import { collectError } from "../../api/auth/index"
+import { getFluentCardInfo, getKechengWithFluentCard } from "../../api/mine/index"
 import dayjs from "dayjs"
 
 const ButtonType = {
@@ -573,6 +564,7 @@ Page({
               buttonType = ButtonType.noLogin
             }
             res.series_detail.video_detail = videoCourseList
+            videoCourseList = videoCourseList.reverse()
             this.setData({
               videoCourseData: res,
               videoPlayerSrc,

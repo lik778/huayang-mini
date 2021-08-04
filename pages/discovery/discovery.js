@@ -11,14 +11,14 @@ import { getActivityList, getFindBanner, getOfflineCourseAllData, getVideoTypeLi
 import { GLOBAL_KEY, WeChatLiveStatus } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import { getYouZanAppId } from "../../api/mall/index"
-import { getFluentCardInfo, getFluentLearnInfo } from "../../api/mine/index"
+import { getFluentCardInfo } from "../../api/mine/index"
 import {
 	addTravelVisitNumber,
 	getDiscoveryRemindData,
 	getRecommendLiveList,
 	queryQualityVideoList,
+	queryRecentTravelList,
 	queryTodayRecommendCourse,
-	queryTravelList,
 	updateLiveStatus
 } from "../../api/live/index"
 import dayjs from "dayjs"
@@ -120,14 +120,14 @@ Page({
 		this.setData({kingKongs})
 
 		// 获取畅学卡权益信息
-		let {data: {video: collegeVideoUrl, video_cover: collegeVideoPost}} = await getFluentLearnInfo()
-		this.setData({
-			collegeVideoUrl: collegeVideoUrl ? collegeVideoUrl : undefined,
-			collegeVideoPost
-		})
-		if (collegeVideoUrl) {
-			this.initCollegeIntroVideoListener()
-		}
+		// let {data: {video: collegeVideoUrl, video_cover: collegeVideoPost}} = await getFluentLearnInfo()
+		// this.setData({
+		// 	collegeVideoUrl: collegeVideoUrl ? collegeVideoUrl : undefined,
+		// 	collegeVideoPost
+		// })
+		// if (collegeVideoUrl) {
+		// 	this.initCollegeIntroVideoListener()
+		// }
 
 		// 检查用户身份
 		if (hasUserInfo() && hasAccountInfo()) {
@@ -172,7 +172,7 @@ Page({
 		})
 
 		// 花样游学
-		let travelList = await queryTravelList()
+		let travelList = await queryRecentTravelList({limit: 99999})
 		travelList = travelList.map(n => {
 			let t = {...n, covers: n.pics.split(",")}
 			if (t.discount_price <= 0) {
