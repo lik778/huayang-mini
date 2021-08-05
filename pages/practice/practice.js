@@ -16,7 +16,8 @@ Page({
 		current: 0,
 		bannerList: [],
 		titleList: [],
-		currentIndex: 0,
+		currentIndex: -1,
+		currentTagName: "",
 		showMoney: true,
 		isFluentLearnVIP: false, // 是否是畅学卡会员
 		keyArr: [],
@@ -109,8 +110,8 @@ Page({
 			category
 		}
 
-		// 模特训练(index=3)，加载所有数据
-		if (index === 3) {
+		// 模特训练，加载所有数据
+		if (this.currentTagName === "模特训练") {
 			params.offset = 0
 			params.limit = 9999
 		}
@@ -161,14 +162,18 @@ Page({
 
 				return res
 			})
-			if (refresh || index === 3) {
+			if (refresh || this.data.currentTagName === "模特训练") {
 				handledList = [...handledList]
 			} else {
 				handledList = this.data.videoList.concat(handledList)
 			}
 			this.setData({
 				videoList: handledList,
-				bottomLock: bottomLock
+				bottomLock: bottomLock,
+				pageSize: {
+					offset: this.data.pageSize.offset + this.data.pageSize.limit,
+					limit: this.data.pageSize.limit
+				}
 			})
 		})
 	},
@@ -182,7 +187,7 @@ Page({
 				keyArr.push(res[i].key)
 			}
 			this.setData({titleList: arr, keyArr: keyArr})
-			this.changeTab(index)
+			this.changeTab({index, tagname: arr[index]})
 			if (this.data.didFromDiscovery && this.data.tabsOffsetTop !== 0) {
 				this.setData({didFromDiscovery: false})
 				getApp().globalData.discoveryToPracticeTabIndex = undefined
@@ -192,17 +197,21 @@ Page({
 	},
 	// 切换tab
 	changeTab(e) {
-		let index = ''
-		if (e) {
+		let index = ""
+		let tagName = ""
+		if ($notNull(e)) {
 			if (e.currentTarget) {
 				index = e.currentTarget.dataset.index
+				tagName = e.currentTarget.dataset.tagname
 			} else {
-				index = e
+				index = e.index
+				tagName = e.tagname
 			}
-			// 学校课程页内部切换tab，不重新请求数据
-			if (!this.data.didFromDiscovery && (+index === +this.data.currentIndex)) return
 
-			this.setData({currentIndex: index})
+			// 学校课程页内部切换tab，不重新请求数据
+			// if (!this.data.didFromDiscovery && (+index === +this.data.currentIndex)) return
+
+			this.setData({currentIndex: index, currentTagName: tagName})
 		} else {
 			index = 0
 		}
@@ -223,7 +232,7 @@ Page({
 			})
 		}
 
-		if (index === 3) {
+		if (this.data.currentTagName === "模特训练") {
 			// 模特训练，底部填充结构化课程（含分页功能）
 			this.getModelStructureList()
 		}
@@ -456,9 +465,6 @@ Page({
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
 	onReady: function () {
-		if (getApp().globalData.discoveryToPracticeTabIndex === undefined) {
-			this.getTabList(0)
-		}
 	},
 
 	/**
@@ -482,6 +488,8 @@ Page({
 		if (index !== undefined) {
 			this.setData({didFromDiscovery: true, currentIndex: index})
 			this.getTabList(index)
+		} else {
+			this.getTabList(0)
 		}
 
 		bxPoint("series_visit", {})
@@ -522,18 +530,7 @@ Page({
 	 */
 	onReachBottom: function () {
 		if (this.data.bottomLock) {
-			this.setData({
-				pageSize: {
-					offset: this.data.pageSize.offset + this.data.pageSize.limit,
-					limit: this.data.pageSize.limit
-				}
-			})
 			this.getVideoList(this.data.currentIndex, false)
-		}
-
-		if (this.data.currentIndex === 3 && !this.data.noMoreStructureData) {
-			// 模特训练，底部填充结构化课程（含分页功能）
-			this.getModelStructureList()
 		}
 	},
 
