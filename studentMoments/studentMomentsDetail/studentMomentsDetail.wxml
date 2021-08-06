@@ -55,7 +55,7 @@
       </view>
     </view>
     <!-- 评论 -->
-    <view class="comment-module">
+    <view class="comment-module" wx:if="{{didShowComment}}">
       <view class="comment-title">评论 {{detailData.bubble.comment_count}}</view>
       <view class="comment-main">
         <view class="comment-input">

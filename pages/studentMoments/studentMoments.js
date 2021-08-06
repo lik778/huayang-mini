@@ -1,32 +1,20 @@
 // pages/studentMoments/studentMoments.js
+import { createStoreBindings } from 'mobx-miniprogram-bindings'
+import { userList } from "../../utils/mock"
 import {
-  createStoreBindings
-} from 'mobx-miniprogram-bindings'
-import {
-  userList
-} from "../../utils/mock"
-import {
-  isIphoneXRSMax,
-  getRandomNumberByRange,
-  getNElmentFromArray,
   getLocalStorage,
-  createAnimationFun,
-  setLocalStorage,
-  removeLocalStorage
+  getNElmentFromArray,
+  getRandomNumberByRange,
+  isIphoneXRSMax,
+  removeLocalStorage,
+  setLocalStorage
 } from "../../utils/util"
-import {
-  getBarrageList,
-  createBarrage,
-  getStudentCommentList
-} from "../../api/studentComments/index"
-import {
-  store
-} from '../../store/index'
-import {
-  GLOBAL_KEY
-} from '../../lib/config'
+import { createBarrage, getBarrageList } from "../../api/studentComments/index"
+import { store } from '../../store/index'
+import { GLOBAL_KEY } from '../../lib/config'
 import bxPoint from "../../utils/bxPoint"
 import dayjs from "dayjs"
+
 Page({
   /**
    * 页面的初始数据
@@ -40,7 +28,7 @@ Page({
     }, //点赞+评论+分享icon
     likeUserInfo: [], //点赞人信息
     interval: 10000, //点赞翻转自动滑动时间
-    swiperCurrent: 0, //当前swiper下标 
+    swiperCurrent: 0, //当前swiper下标
     doommList: [],
     nowBarrageTextNum: 0,
     huayangLogo: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618451480ZWGEID.jpg',
@@ -83,7 +71,8 @@ Page({
     showStudentMomentLike: false, //显示点赞动画
     authType: '', //0是点赞授权，1是评论授权，控制授完权的自动请求数据操作,2是发布弹幕
     authData: "", //点赞函导致授权的类型
-    didShowContribute: true
+    didShowContribute: true,
+    didShowComment: false
   },
 
   /**
@@ -98,7 +87,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    this.setData({didShowComment: !dayjs(getApp().globalData.showContactEnterTime).isAfter(dayjs())})
   },
 
   /**
