@@ -2,12 +2,12 @@
 <view class="container" wx:if="{{campData!==''&&canShowPage}}">
   <!-- 返回按钮 -->
   <view class="back-icon" bindtap="back" style="padding-top:{{statusBarHeight}}px">
-    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597131543zKwtZa.jpg"></image>
+    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1597131543zKwtZa.jpg" mode="aspectFill"></image>
   </view>
   <!-- banner -->
   <view class="banner">
     <view class="banner-img">
-      <image src="{{campData.cover_pic}}"></image>
+      <image src="{{campData.cover_pic}}" mode="aspectFill"></image>
     </view>
     <view class="camp-title">
       {{campData.name}}
