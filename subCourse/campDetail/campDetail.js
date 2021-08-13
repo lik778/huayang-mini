@@ -14,25 +14,11 @@ import {
   queryPunchCardQrCode,
   studyLogCreate
 } from "../../api/course/index"
-import {
-  getProductInfo,
-  getYouZanAppId
-} from "../../api/mall/index"
-import {
-  computeDate,
-  dateAddDays,
-  getLocalStorage,
-  getNowDate,
-  getNowDateAll,
-  setLocalStorage
-} from "../../utils/util"
+import { getProductInfo, getYouZanAppId } from "../../api/mall/index"
+import { computeDate, dateAddDays, getLocalStorage, getNowDate, getNowDateAll, setLocalStorage } from "../../utils/util"
 import bxPoint from '../../utils/bxPoint'
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
-import {
-  getFluentCardInfo
-} from "../../api/mine/index"
+import { GLOBAL_KEY } from "../../lib/config"
+import { getFluentCardInfo } from "../../api/mine/index"
 
 Page({
 
@@ -744,9 +730,12 @@ Page({
     // 通过小程序码进入 scene=${source}
     if (scene) {
       let sceneAry = decodeURIComponent(scene).split('/')
-      let [sceneSource = ''] = sceneAry
+      let [sceneSource = '', id] = sceneAry
       if (sceneSource) {
         getApp().globalData.source = sceneSource
+      }
+      if (id) {
+        campId = id
       }
       this.setData({
         backIndex: true,
