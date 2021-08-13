@@ -201,8 +201,8 @@ Page({
 			await drawFont(ctx, this.data.previewList[i].text, '#000000', "400", "PingFangSC", 10, 35 + 59 * i, 284)
 		}
 		await drawFont(ctx, "加入花样老年大学，即享", '#765534', '500', 'PingFangSC', 14, 30, 323)
-		await drawFont(ctx, "3", '#DEA265', '700', 'PingFangSC', 24, 200-40, 316)
-		await drawFont(ctx, "大权益", '#765534', '500', 'PingFangSC', 14, 215-38, 323)
+		await drawFont(ctx, "3", '#DEA265', '700', 'PingFangSC', 24, 200-15, 316)
+		await drawFont(ctx, "大权益", '#765534', '500', 'PingFangSC', 14, 215-13, 323)
 		for (let i = 0; i < 3; i++) {
 			await drawImage(ctx, this.data.permissionList[i].icon, 28 + 84 * i, 356, 20, 20)
 			await drawFont(ctx, this.data.permissionList[i].text01, '#000000', "400", "PingFangSC", 10, 51 + 84 * i, 354)
