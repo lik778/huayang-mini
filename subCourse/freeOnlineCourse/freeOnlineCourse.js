@@ -21,7 +21,7 @@ Page({
      */
     onShareAppMessage: function () {
         return {
-            title: "一起学习花样大学精品免费课",
+            title: "一起学习花样老年大学精品免费课",
             path: "/subCourse/freeOnlineCourse/freeOnlineCourse"
         }
     },

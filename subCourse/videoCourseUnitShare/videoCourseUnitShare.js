@@ -136,7 +136,7 @@ Page({
     // slogan
     ctx.save()
     ctx.font = `${13}px PingFangSC`
-    this.drawName(ctx, "正在花样大学学习", 13, 85, 357, "black")
+    this.drawName(ctx, "正在花样老年大学学习", 13, 85, 357, "black")
     ctx.restore()
     // 课程名称
     ctx.save()

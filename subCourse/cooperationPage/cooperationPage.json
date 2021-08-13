@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "花样大学资源共享平台",
+  "navigationBarTitleText": "花样老年大学资源共享平台",
   "usingComponents": {
     "authModule": "../../components/auth/auth"
   }

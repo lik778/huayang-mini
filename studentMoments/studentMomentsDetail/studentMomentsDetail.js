@@ -290,7 +290,7 @@ Page({
       message_id: this.data.id
     },false)
     return {
-      title: "快来看看花样大学精彩的校友动态！",
+      title: "快来看看花样老年大学精彩的校友动态！",
       path: `/studentMoments/studentMomentsDetail/studentMomentsDetail?id=${this.data.id}`,
       imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618803112KiZxTl.jpg"
     }

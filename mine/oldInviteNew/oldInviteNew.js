@@ -102,7 +102,7 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: '一起加入花样大学，让退休生活更精彩！',
+      title: '一起加入花样老年大学，让退休生活更精彩！',
       path: `/mine/joinFluentLearn/joinFluentLearn?inviteId=${this.data.distributeId}`
     }
   },
@@ -151,7 +151,7 @@ Page({
     // 用户信息
     await drawCircleHeadIcon(ctx, this.data.avatar,44, 85, 20 )
     await drawFont(ctx, calcStringLen(this.data.nickname) > 16 ? `我是${splitTargetNoString(this.data.nickname, 16)}..` : `我是${this.data.nickname}`, '#ffffff', "400", "PingFangSC", 12, 70, 69)
-    await drawFont(ctx, "和我一起加入花样大学吧!", '#ffffff', "400", "PingFangSC", 12, 70, 86)
+    await drawFont(ctx, "和我一起加入花样老年大学吧!", '#ffffff', "400", "PingFangSC", 12, 70, 86)
     // 二维码
     await drawBorderCircle(ctx, this.data.qrcode, 23 + 30, 428 + 30, 30)
 

@@ -120,7 +120,7 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-			title: '花样大学入学申请',
+			title: '花样老年大学入学申请',
 			path: `/mine/joinSchool/joinSchool`
 		}
   }

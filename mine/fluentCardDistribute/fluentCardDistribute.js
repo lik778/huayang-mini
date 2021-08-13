@@ -189,18 +189,18 @@ Page({
 		await drawCircleHeadIcon(ctx, this.data.avatar, 54, 106, 24)
 		await drawImage(ctx, this.data.comma01, 90, 86 - 20, 17, 14)
 		await drawFont(ctx, calcStringLen(this.data.nickname) > 16 ? `我是${splitTargetNoString(this.data.nickname, 16)}..` : `我是${this.data.nickname}`, '#000000', "400", "PingFangSC", 14, 90, 86)
-		await drawFont(ctx, "和我一起加入花样大学吧!", '#000000', "500", "PingFangSC", 14, 90, 110)
+		await drawFont(ctx, "和我一起加入花样老年大学吧!", '#000000', "500", "PingFangSC", 14, 90, 110)
 		ctx.font = '14px PingFang SC'
-		let title01Width = measureTextWidth(ctx, "和我一起加入花样大学吧") - 12
+		let title01Width = measureTextWidth(ctx, "和我一起加入花样老年大学吧") - 12
 		await drawImage(ctx, this.data.comma02, 90 + title01Width, 110 + 20, 17, 14)
 		// 介绍
-		await drawFont(ctx, "花样大学", '#765534', "400", "PingFangSC", 14, 30, 155)
+		await drawFont(ctx, "花样老年大学", '#765534', "400", "PingFangSC", 14, 30, 155)
 		await drawFont(ctx, "上海首批政府授牌线上老年大学", '#765534', "400", "PingFangSC", 14, 30, 176)
 		for (let i = 0; i < 4; i++) {
 			await drawImage(ctx, this.data.previewList[i].image, 30 + 59 * i, 216, 50, 60)
 			await drawFont(ctx, this.data.previewList[i].text, '#000000', "400", "PingFangSC", 10, 35 + 59 * i, 284)
 		}
-		await drawFont(ctx, "加入花样大学，即享", '#765534', '500', 'PingFangSC', 14, 30, 323)
+		await drawFont(ctx, "加入花样老年大学，即享", '#765534', '500', 'PingFangSC', 14, 30, 323)
 		await drawFont(ctx, "3", '#DEA265', '700', 'PingFangSC', 24, 200-40, 316)
 		await drawFont(ctx, "大权益", '#765534', '500', 'PingFangSC', 14, 215-38, 323)
 		for (let i = 0; i < 3; i++) {

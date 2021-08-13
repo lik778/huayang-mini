@@ -158,7 +158,7 @@ Page({
       src = '/pages/studentMoments/studentMoments'
     }
     return {
-      title: "快来看看花样大学精彩的校友动态！",
+      title: "快来看看花样老年大学精彩的校友动态！",
       path: src,
       imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618803112KiZxTl.jpg"
     }

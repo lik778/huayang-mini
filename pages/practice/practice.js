@@ -539,7 +539,7 @@ Page({
 	 */
 	onShareAppMessage: function () {
 		return {
-			title: "花样大学精品课程，让退休生活更精彩！",
+			title: "花样老年大学精品课程，让退休生活更精彩！",
 			path: `/pages/practice/practice?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
 		}
 	}
