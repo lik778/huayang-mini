@@ -730,12 +730,9 @@ Page({
     // 通过小程序码进入 scene=${source}
     if (scene) {
       let sceneAry = decodeURIComponent(scene).split('/')
-      let [sceneSource = '', id] = sceneAry
+      let [sceneSource = ''] = sceneAry
       if (sceneSource) {
         getApp().globalData.source = sceneSource
-      }
-      if (id) {
-        campId = id
       }
       this.setData({
         backIndex: true,
