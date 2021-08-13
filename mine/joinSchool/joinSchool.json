@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText":"花样大学入学申请",
+  "navigationBarTitleText":"花样老年大学入学申请",
   "usingComponents": {
     "van-radio": "../../miniprogram_npm/@vant/weapp/radio/index",
     "van-radio-group": "../../miniprogram_npm/@vant/weapp/radio-group/index",

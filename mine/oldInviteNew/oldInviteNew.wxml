@@ -12,7 +12,7 @@
             <image class="avatar-image" src="{{avatar}}" style="top:{{65*yRatio}}px;left:{{24*xRatio}}px;height:{{40*xRatio}}px;width:{{40*xRatio}}px;" mode="aspectFit"></image>
             <view class="content" style="top:{{69*yRatio}}px;left:{{70*xRatio}}px;font:{{12*xRatio}}px/{{17*xRatio}}px PingFangSC;">
                 <view class="limit-one-line" style="width:{{156*xRatio}}px;">我是{{nickname}}</view>
-                <view>和我一起加入花样大学吧!</view>
+                <view>和我一起加入花样老年大学吧!</view>
             </view>
         </view>
 

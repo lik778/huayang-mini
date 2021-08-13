@@ -70,7 +70,7 @@ Page({
 	 */
 	onShareAppMessage: function () {
 		return {
-			title: "和我一起参加花样大学精品线下课吧",
+			title: "和我一起参加花样老年大学精品线下课吧",
 			path: "/subCourse/offlineCourse/offlineCourse"
 		}
 	},

@@ -99,7 +99,7 @@ Page({
 	 */
 	onShareAppMessage: function () {
 		return {
-			title: "花样大学校友活动招募中",
+			title: "花样老年大学校友活动招募中",
 			path: "/subCourse/collegeActivity/collegeActivity"
 		}
 	},

@@ -12,7 +12,7 @@
           </image>
         </view>
         <view class="alert-title">
-          <view>{{type===1?'恭喜您加入花样百姓':'恭喜您成为花样大学学生'}}</view>
+          <view>{{type===1?'恭喜您加入花样百姓':'恭喜您成为花样老年大学学生'}}</view>
           <view>{{type===1?'跟着花样一起学、一起游':'让退休生活更加精彩！'}}</view>
         </view>
         <view class="alert-button" bindtap="join">立即加入</view>
