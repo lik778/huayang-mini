@@ -752,7 +752,6 @@ Page({
 			this.setData({
 				swiperVideoList: data.list || []
 			})
-			console.log(data.list)
 		})
 	},
 
