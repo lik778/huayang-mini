@@ -1,0 +1,16 @@
+<!--others/goodMorningResult/goodMorningResult.wxml-->
+<view class="container">
+  <view class="bg" style="padding-top:{{isIphoneXRSMax?'125px':'50px'}}">
+    <image src="{{posterBg}}"></image>
+  </view>
+  <view class="sharer-button" wx:if='{{!sharer}}' style="bottom: {{isIphoneXRSMax?'50px':'10px'}}">
+    <view class=" sharer-button-left" bindtap="saveToAlbums">保存相册</view>
+    <view>
+      <button class="sharer-button-right" open-type="share">分享好友</button>
+    </view>
+  </view>
+  <view class="receiver-button" wx:else style="bottom: {{isIphoneXRSMax?'50px':'10px'}}">
+    <view class="receiver-button-left" bindtap="wonderfulVideo">花样精彩视频</view>
+    <view class="receiver-button-right" bindtap="goodMorningSignIn">早安签到</view>
+  </view>
+</view>

@@ -13,93 +13,9 @@
     "miniprogram": {
       "list": [
         {
-          "name": "畅学卡售前页",
-          "pathName": "mine/joinFluentLearn/joinFluentLearn",
-          "query": "mode=2&agent_id=3",
-          "scene": null
-        },
-        {
-          "name": "畅学卡详情页",
-          "pathName": "mine/fluentLearnInfo/fluentLearnInfo",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "学校课程TAB",
-          "pathName": "pages/practice/practice",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "周年庆海报",
-          "pathName": "mine/oldInviteNew/oldInviteNew",
-          "query": "inviteId=11522901446496256",
-          "scene": null
-        },
-        {
-          "name": "pages/activePlatform/activePlatform",
-          "pathName": "pages/activePlatform/activePlatform",
-          "query": "link=https%3A%2F%2Fhuayang.baixing.cn%2F%23%2Fhome%2Fdetail%2F72&didUserIsFluentCardMember=yes",
-          "scene": null
-        },
-        {
-          "name": "线下课详情页",
-          "pathName": "subCourse/offlineCourseDetail/offlineCourseDetail",
-          "query": "id=4",
-          "scene": null
-        },
-        {
-          "name": "上传画册图片",
-          "pathName": "pages/bookUpload/bookUpload",
-          "query": "id=51",
-          "scene": null
-        },
-        {
-          "name": "上传成功页",
-          "pathName": "pages/bookCustomSuccess/bookCustomSuccess",
-          "query": "type=",
-          "scene": null
-        },
-        {
-          "name": "我的画册",
-          "pathName": "mine/books/books",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "首页",
-          "pathName": "pages/discovery/discovery",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "我的",
-          "pathName": "pages/userCenter/userCenter",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "莘庄14天朗诵训练营作业发布",
-          "pathName": "subCourse/launchTask/launchTask",
-          "query": "themeType=0&themeId=7&themeTitle=莘庄14天朗诵训练营",
-          "scene": null
-        },
-        {
-          "name": "个人作业秀落地页",
-          "pathName": "subCourse/indexTask/indexTask",
-          "query": "taskId=3&nickname=derisfe&userId=4",
-          "scene": null
-        },
-        {
-          "name": "个人相册",
-          "pathName": "pages/personAlbum/personAlbum",
-          "query": "id=328&from=h5",
-          "scene": null
-        },
-        {
-          "name": "活动相册",
-          "pathName": "pages/activityAlbum/activityAlbum",
-          "query": "link=https%3A%2F%2Fdev.huayangbaixing.com%2F%23%2Fhome%2Falbums%2F26",
+          "name": "others/goodMorningResult/goodMorningResult",
+          "pathName": "others/goodMorningResult/goodMorningResult",
+          "query": "sharer=true&img=https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629856084iRFBFR.jpg",
           "scene": null
         }
       ]
