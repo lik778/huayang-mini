@@ -2,28 +2,15 @@
 <view class="discovery" style="visibility: {{canShow?'visible':'hidden'}};">
     <view id='first-screen'>
         <!-- 时尚视频轮播 -->
-        <view class="swiper-video-module" wx:if='{{true}}'>
-            <swiper indicator-dots="{{indicatorDots}}" previousMargin="38" nextMargin='18'
-                bindchange='changeSwiperCurrent' current="{{swiperVideoCurrent}}">
-                <block wx:for="{{swiperVideoList}}" wx:key="index">
-                    <swiper-item item-id='swiper-video-swiper-item'>
-                        <view class="swiper-video-item {{item}}">
-                            <view class="swiper-video-item-box">
-                                <video src="{{item.video_url}}" object-fit="fill" controls="{{false}}"
-                                    show-center-play-btn="{{false}}"></video>
-                                <cover-image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629860904cymQmM.jpg"
-                                    class="swiper-video-play-icon" wx:if="{{swiperVideoCurrent===index}}"></cover-image>
-                            </view>
-                        </view>
-                    </swiper-item>
-                </block>
-            </swiper>
+        <view class="swiper-video-module" wx:if='{{swiperVideoList.length}}'>
+            <video-swiper id='test' videoList="{{swiperVideoList}}" bindtap="changePlayingStatus"
+                bindchange='initPlayStatus' duration='200' playStatus="{{playStatus}}" />
         </view>
 
         <!-- 广告位 -->
-        <view class="advertisement-module" wx:if='{{advertisementList}}'>
-            <image src="{{advertisementList}}" style="height:{{advertisementImageHeight}}px"
-                class="advertisement-item-image"></image>
+        <view class="advertisement-module" wx:if='{{advertisementList.length}}'>
+            <image src="{{advertisementList[0].pic_url}}" style="height:{{advertisementImageHeight}}px"
+                bindtap="bannerTap" data-item="{{advertisementList[0]}}" class="advertisement-item-image"></image>
         </view>
     </view>
 
@@ -34,6 +21,7 @@
                 wx:key='index'>
                 <image src="{{item.icon}}"></image>
                 <text>{{item.title}}</text>
+                <view class="red-dot" wx:if="{{item.title==='每日签到'&&showGoodMorningRedDot}}"></view>
                 <view class="fixed-site-popup" wx:if="{{item.title==='每日签到'&&showGoodMorningNoticePopup}}">
                     <view class="fixed-site-popup-cover">
                         <image src="{{item.icon}}"></image>
@@ -62,15 +50,30 @@
             </view>
         </view>
         <view class="new-activity-main">
-            <view class="new-activity-item" wx:for="{{newActivityList}}" wx:key='index' bindtap="newActivityItemTap"
-                data-item="{{item.link_url}}" data-type='{{item.type}}'>
+            <view class="new-activity-item" wx:for="{{newActivityList}}" wx:key='index'>
                 <view class="new-activity-item-top">
-                    <image src="{{item.cover}}">
+                    <video src="{{item.video_url}}" show-center-play-btn='{{false}}' object-fit="fill"
+                        bindpause="pauseNewActivityVideo" controls="{{true}}" id="new-activity-item-video-{{index}}"
+                        wx:if='{{item.video_url&&newActivityVideoPlayIndex===index}}'></video>
+                    <image src="{{item.cover}}" data-type='{{item.type}}'
+                        bindtap="{{item.video_url?'playNewActivityVideo':'newActivityItemTap'}}"
+                        class="new-activity-item-play-cover" data-index='{{index}}' data-item="{{item.link_url}}"
+                        wx:if="{{!item.video_url||newActivityVideoPlayIndex!==index}}">
                     </image>
-                    <view class="new-activity-item-label">{{item.label}}</view>
+                    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629877073cFVNcu.jpg"
+                        data-index='{{index}}'
+                        wx:if="{{(!item.video_url||newActivityVideoPlayIndex!==index)&&item.video_url}}"
+                        class="new-activity-item-play-icon" bindtap="playNewActivityVideo">
+                    </image>
+                    <view class="new-activity-item-label"
+                        wx:if="{{!item.video_url||newActivityVideoPlayIndex!==index}}">
+                        {{item.label}}</view>
                 </view>
-                <view class="new-activity-item-title">{{item.title}}</view>
-                <view class="new-activity-item-bottom">
+                <view class="new-activity-item-title" data-item="{{item.link_url}}" bindtap="newActivityItemTap"
+                    data-type='{{item.type}}'>
+                    {{item.title}}</view>
+                <view class="new-activity-item-bottom" data-item="{{item.link_url}}" bindtap="newActivityItemTap"
+                    data-type='{{item.type}}'>
                     <view class="new-activity-item-bottom-date">{{item.time}}</view>
                     <view class="new-activity-item-bottom-button">点击查看</view>
                 </view>

@@ -533,12 +533,13 @@
 /* 广告位 */
 .advertisement-module {
   padding: 60rpx 30rpx;
+  padding-top: 0;
 }
 
 .advertisement-item-image {
   width: 100%;
   vertical-align: bottom;
-  border-radius: 16rpx;
+  border-radius: 8rpx;
 }
 
 /* 金刚位 */
@@ -607,6 +608,17 @@
   font-weight: 400;
   color: #000000;
   line-height: 28rpx;
+}
+
+/* 金刚位早上好红点提示 */
+.red-dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background-color: #FF4433;
+  position: absolute;
+  right: 6px;
+  bottom: 12px;
 }
 
 /* 花样最新活动 */
@@ -698,7 +710,12 @@
   justify-content: center;
 }
 
-.new-activity-item-top image {
+.new-activity-item-top video {
+  width: 100%;
+  height: 100%;
+}
+
+.new-activity-item-play-cover {
   width: 100%;
   vertical-align: bottom;
 }
@@ -761,6 +778,17 @@
   line-height: 72rpx;
   text-align: center;
   background-color: #CC0000;
+}
+
+.new-activity-item-play-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  width: 96rpx;
+  height: 96rpx;
+  vertical-align: bottom;
 }
 
 /* 全局遮罩层 */
@@ -853,14 +881,14 @@
 }
 
 /* 头部视频播放区域 */
-.swiper-video-module {
-  width: 100vw;
-  height: 1020rpx;
+#first-screen {
+  padding-top: 20rpx;
 }
 
-.swiper-video-module swiper {
-  width: 100%;
-  height: 100%;
+.swiper-video-module {
+  width: 100vw;
+  height: 996rpx;
+  padding-bottom: 60rpx;
 }
 
 .swiper-video-item {

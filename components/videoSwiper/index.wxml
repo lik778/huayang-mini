@@ -1,0 +1,24 @@
+<view class="container">
+  <swiper class="video-swiper" circular="{{circular}}" easing-function="{{easingFunction}}" current="1" next-margin="18"
+    previous-margin="38" duration="{{duration}}" bindanimationfinish="animationfinish">
+    <!-- curQueue 循环会导致video重新插入，objectFit 不可变更 -->
+    <swiper-item wx:for="{{curQueue}}" wx:key="id">
+      <video id="video_{{index}}" class="video_item video_item_{{index}}" loop="{{loop}}"
+        enable-progress-gesture="{{false}}" show-center-play-btn="{{false}}" controls="{{false}}"
+        src="{{item.video_url}}" data-id="{{item.id}}" object-fit="{{item.objectFit || 'cover'}}" data-index="{{index}}"
+        bindplay="onPlay" bindpause="onPause" bindended="onEnded" binderror="onError" bindtimeupdate="onTimeUpdate"
+        bindwaiting="onWaiting" bindprogress="onProgress" bindloadedmetadata="onLoadedMetaData">
+        <view class="swiper-video-sign">
+          {{item.label}}
+        </view>
+        <view class="pause-icon" wx:if="{{playStatus===0}}">
+          <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629860904cymQmM.jpg"></image>
+        </view>
+      </video>
+      <view class="swiper-video-desc">{{item.description}}</view>
+    </swiper-item>
+  </swiper>
+  <view class="swiper-video-dot-list">
+    <view class="swiper-video-dot-item swiper-video-dot-item-{{index}}" wx:for="{{dotList}}" wx:key='index'></view>
+  </view>
+</view>

@@ -5,6 +5,7 @@
     "liveLayout": "../../components/liveLayout/liveLayout",
     "bestCourseLayout": "../../components/bestCourseLayout/bestCourseLayout",
     "contact": "../../components/contact/contact",
+    "video-swiper": "/components/videoSwiper/index",
     "fluentLearnModal": "../../components/fluentLearnModal/fluentLearnModal"
   }
 }
