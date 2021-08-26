@@ -114,7 +114,7 @@ module.exports =
                 },
                 swiperDotList: {
                     type: Array,
-                    value: [true, true, true, true, false]
+                    value: [1, 2, 1, 1, 0]
                 },
                 swiperVideoCurrent: {
                     type: Number,
@@ -140,8 +140,10 @@ module.exports =
                 nextVideoPlayNoticeIndex: 0,
                 _last: 1,
                 _change: -1,
+                currentPlayIndex: 1,
                 _invalidUp: 0,
                 _invalidDown: 0,
+                animation: '',
                 _videoContexts: [],
             },
             lifetimes: {
@@ -189,6 +191,7 @@ module.exports =
                         item: curQueue[_last]
                     });
                     if (direction === 'up') {
+                        this.translateFun(0)
                         if (this.data._invalidDown === 0) {
                             var change = (_change + 1) % 3;
                             var add = nextQueue.shift();
@@ -205,6 +208,7 @@ module.exports =
                         }
                     }
                     if (direction === 'down') {
+                        this.translateFun(1)
                         if (this.data._invalidUp === 0) {
                             var _change2 = _change;
                             var _remove = curQueue[_change2];
@@ -229,13 +233,32 @@ module.exports =
                     }
                     this.setData({
                         curQueue: curQueue,
-                        circular: circular
+                        circular,
+                        currentPlayIndex: current
                     });
                 },
                 playCurrent: function playCurrent(current) {
                     this.data._videoContexts.forEach(function (ctx, index) {
                         index !== current ? ctx.pause() : ctx.play();
                     });
+                },
+                translateFun: function (e) {
+                    return
+                    this.animation = wx.createAnimation()
+                    if (e === 1) {
+                        this.animation.translateX(-11).step({
+                            duration: 200
+                        })
+                    } else {
+                        this.animation.translateX(-11).step({
+                            duration: 200
+                        })
+                    }
+
+
+                    this.setData({
+                        animation: this.animation.export()
+                    })
                 },
                 onPlay: function onPlay(e) {
                     // this.setData({
@@ -244,6 +267,7 @@ module.exports =
                     this.trigger(e, 'play');
                 },
                 onPause: function onPause(e) {
+
                     this.trigger(e, 'pause');
                 },
                 onEnded: function onEnded(e) {

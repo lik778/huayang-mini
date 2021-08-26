@@ -87,7 +87,8 @@ Page({
 		newActivityVideoPlayIndex: -1, //花样最新活动当前播放视频下标
 		newActivityVideoPlaying: false, //花样最新活动视频是否在播放中
 		showGoodMorningRedDot: false, //金刚位每日签到红点提示
-		swiperDotList: [true, true, true, true, false],
+		swiperDotList: [1, 1, 2, 1, 1, 0, 0],
+		swiperDotIsEnd: false
 	},
 	async run() {
 		// 请求花样大学首页弹窗任务
@@ -632,7 +633,6 @@ Page({
 	},
 	/* 花样最新活动点击 */
 	newActivityItemTap(e) {
-		console.log(e)
 		let meta = e.currentTarget.dataset.meta
 		/* 最新活动点击打点 */
 		bxPoint("new_homepage_activity_click", {
@@ -822,36 +822,105 @@ Page({
 			this.setData({
 				swiperVideoCurrent: current - 1
 			}, () => {
-				this.manageSwiperDotActive(this.data.swiperVideoCurrent)
+				this.manageSwiperDotActive(this.data.swiperVideoCurrent, -1)
 			})
 		} else if (e.detail.direction === 'up') {
 			// 滑到后一个
 			this.setData({
 				swiperVideoCurrent: current + 1
 			}, () => {
-				this.manageSwiperDotActive(this.data.swiperVideoCurrent)
+				this.manageSwiperDotActive(this.data.swiperVideoCurrent, 1)
 			})
 		}
-		// console.log(this.data.swiperVideoList)
-		// console.log(this.data.swiperVideoCurrent)
 		this.setData({
 			playStatus: 1
 		})
 	},
 
-	/*  */
-	manageSwiperDotActive(e) {
-		let arr = new Array(5).fill(true)
-		if (e >= 2) {
-			arr[0] = false
-		}
-		if (e <= this.data.swiperVideoList.length - 1) {
-			arr[4] = false
+	/* 处理视频播放指示器展示 */
+	manageSwiperDotActive(e, e1) {
+		let index = e
+		let listLength = this.data.swiperVideoList.length
+		let arr = [] //数组中0为小点；1为大点；2为激活点
+		let commonOne = [0, 0, 2, 1, 1, 0, 0]
+		let commonTwo = [0, 0, 1, 2, 1, 0, 0]
+		let commonThree = [0, 0, 1, 1, 2, 1, 1]
+		// e为当前视频下标,e1:1为下标+1；-1为下标-1
+		// swiperDotList
+		if (index === 0) {
+			arr = [2, 2, 1, 1, 1, 0, 0]
+		} else if (index === 1) {
+			this.setData({
+				swiperDotIsEnd: false
+			})
+			arr = [1, 1, 2, 1, 1, 0, 0]
+		} else if (index === 2) {
+			if (this.data.swiperDotIsEnd) {
+				arr = commonOne
+			} else if (e1 === -1) {
+				arr = commonTwo
+			} else {
+				arr = [1, 1, 1, 2, 1, 0, 0]
+			}
+		} else if (index === 3) {
+			if (this.data.swiperDotIsEnd) {
+				arr = commonOne
+			} else if (e1 === -1) {
+				arr = commonTwo
+			} else {
+				arr = [1, 1, 1, 1, 2, 0, 0]
+			}
+		} else if (index > 3) {
+			if (this.data.swiperDotIsEnd) {
+				if (listLength === index) {
+					arr = [0, 0, 1, 1, 1, 2, 2]
+				} else if (listLength - 1 === index) {
+					arr = commonThree
+				} else if (listLength - 2 === index) {
+					arr = [0, 0, 1, 2, 1, 1, 1]
+				} else if (listLength - index >= 3) {
+					// this.setData({
+					// 	swiperVideoCurrent: 0
+					// })
+					arr = commonOne
+				}
+			} else {
+				if (listLength - 1 === index) {
+					arr = commonThree
+				} else {
+					arr = [0, 0, 1, 1, 2, 0, 0]
+				}
+			}
+			if (listLength - index < 2) {
+				this.setData({
+					swiperDotIsEnd: true
+				})
+			}
 		}
 		this.setData({
 			swiperDotList: arr
 		})
+		// 	console.log(e, e1)
 	},
+
+	translateFun: function (e) {
+		// return
+		this.animation = wx.createAnimation()
+		if (e === 1) {
+				this.animation.translateX(-11).step({
+						duration: 200
+				})
+		} else {
+				this.animation.translateX(-11).step({
+						duration: 200
+				})
+		}
+
+
+		this.setData({
+				animation: this.animation.export()
+		})
+},
 
 	/* 花样最新活动视频播放点击 */
 	playNewActivityVideo(e) {

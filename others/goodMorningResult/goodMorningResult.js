@@ -24,7 +24,7 @@ Page({
         wx.saveImageToPhotosAlbum({
           filePath: res.path,
           success: (res1) => {
-            if (res1.errMsg === 'getImageInfo:ok') {
+            if (res1.errMsg === 'saveImageToPhotosAlbum:ok') {
               wx.showToast({
                 title: '保存成功'
               })
@@ -128,6 +128,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "我在花样百姓，和我一起学习、游玩吧，开心每一天！",
+      path: `/others/goodMorningResult/goodMorningResult?img=${this.data.posterBg}&sharer=true`
+    }
   }
 })

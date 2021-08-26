@@ -9,7 +9,7 @@
         src="{{item.video_url}}" data-id="{{item.id}}" object-fit="{{item.objectFit || 'cover'}}" data-index="{{index}}"
         bindplay="onPlay" bindpause="onPause" bindended="onEnded" binderror="onError" bindtimeupdate="onTimeUpdate"
         bindwaiting="onWaiting" bindprogress="onProgress" bindloadedmetadata="onLoadedMetaData">
-        <view class="swiper-video-sign">
+        <view class="swiper-video-sign" wx:if="{{playStatus===0||currentPlayIndex!==index}}">
           {{item.label}}
         </view>
         <view class="pause-icon" wx:if="{{playStatus===0}}">
@@ -27,8 +27,8 @@
   </swiper>
   <view class="swiper-video-dot-list">
     <view
-      class="{{item?'swiper-video-dot-item':'swiper-video-dot-item swiper-video-dot-item-small'}}{{swiperVideoCurrent===index?' swiper-video-dot-item-active':''}}"
-      wx:for="{{swiperDotList}}" wx:key='index'>
+      class="{{item?'swiper-video-dot-item':'swiper-video-dot-item swiper-video-dot-item-small'}} swiper-video-dot-item-{{item}}"
+      animation="{{item===2?animation:''}}" wx:for="{{swiperDotList}}" wx:key='index'>
     </view>
   </view>
 </view>
