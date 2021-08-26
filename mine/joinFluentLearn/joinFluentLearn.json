@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "加入花样大学",
+  "navigationBarTitleText": "加入花样老年大学",
   "usingComponents": {
     "authModule": "../../components/auth/auth",
     "fluentLearnModal": "../../components/fluentLearnModal/fluentLearnModal",

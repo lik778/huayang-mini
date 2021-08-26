@@ -1,10 +1,11 @@
 {
-  "navigationBarTitleText":"花样大学",
+  "navigationBarTitleText":"花样老年大学",
   "usingComponents": {
     "authModule": "../../components/auth/auth",
     "liveLayout": "../../components/liveLayout/liveLayout",
     "bestCourseLayout": "../../components/bestCourseLayout/bestCourseLayout",
     "contact": "../../components/contact/contact",
+    "video-swiper": "/components/videoSwiper/index",
     "fluentLearnModal": "../../components/fluentLearnModal/fluentLearnModal"
   }
 }

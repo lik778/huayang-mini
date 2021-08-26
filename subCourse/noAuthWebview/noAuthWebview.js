@@ -89,7 +89,7 @@ Page({
   onShareAppMessage: function () {
 
     let path = this.data.needAuthMsg ? `/subCourse/noAuthWebview/noAuthWebview?link=${encodeURIComponent(this.data.link)}&login=${this.data.needAuthMsg}` : `/subCourse/noAuthWebview/noAuthWebview?link=${encodeURIComponent(this.data.link)}`
-    let title = this.data.changeTitle ? '花样大学精品课程包' : ''
+    let title = this.data.changeTitle ? '花样老年大学精品课程包' : ''
     return {
       title: title,
       path: path

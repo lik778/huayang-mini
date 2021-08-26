@@ -48,6 +48,7 @@
     justify-content: space-around;
     margin-left: 24rpx;
     height: 96rpx;
+    width: calc(100% - 120rpx);
     font: 28rpx/32rpx PingFangSC;
 }
 

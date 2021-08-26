@@ -8,7 +8,7 @@
     </view>
     <view class="main" style="padding-top:{{statusBarHeight+40}}px">
         <view class="desc">
-            {{isAnniversary ? "欢迎加入花样大学周年庆的学习训练营，开启课程学习之旅。请您确认所在的班级，并填写礼包的收货信息，点击下方按钮完成新生报到。" : "欢迎加入花样训练营，开启课程学习之旅。请您确认所在的班级，然后点击下方按钮完成新生报到。"}}
+            {{isAnniversary ? "欢迎加入花样老年大学周年庆的学习训练营，开启课程学习之旅。请您确认所在的班级，并填写礼包的收货信息，点击下方按钮完成新生报到。" : "欢迎加入花样训练营，开启课程学习之旅。请您确认所在的班级，然后点击下方按钮完成新生报到。"}}
         </view>
         <view class="title">{{info.name}}</view>
         <view class="date">{{info.date}}期 {{info.class_num}}班</view>

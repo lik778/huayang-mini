@@ -1,10 +1,15 @@
+import { getPhotoAlbumDetail } from "../../api/albums/index"
+import { $notNull } from "../../utils/util"
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    link: ""
+    link: "",
+    albumId: 0,
+    albumInfo: null
   },
 
   /**
@@ -12,8 +17,10 @@ Page({
    */
   onLoad: function (options) {
     let link = decodeURIComponent(options.link)
+    let albumId = link.match(/[^\/]*$/)[0]
     if (link) {
-      this.setData({link})
+      this.setData({link, albumId})
+      this.run()
     }
   },
 
@@ -58,4 +65,20 @@ Page({
   onReachBottom: function () {
 
   },
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    return {
+      imageUrl: this.data.albumInfo.detail_header_pic,
+      title: $notNull(this.data.albumInfo) ? this.data.albumInfo.name : "",
+      path: `/pages/activityAlbum/activityAlbum?link=https%3A%2F%2Fhuayang.baixing.com%2F%23%2Fhome%2Falbums%2F${this.data.albumId}`
+    }
+  },
+  run() {
+    getPhotoAlbumDetail({album_id: this.data.albumId})
+      .then((data) => {
+        this.setData({albumInfo: data})
+      })
+  }
 })

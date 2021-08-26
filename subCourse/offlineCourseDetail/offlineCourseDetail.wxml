@@ -57,7 +57,7 @@
             </view>
             <view class="non-member-discount-price-wrap" bindtap="createOrder" data-key="2">
                 <text class="member-price">¥{{info.new_member_price}}（含学员费）</text>
-                <text>加入花样大学，全年享受学员价</text>
+                <text>加入花样老年大学，全年享受学员价</text>
             </view>
         </view>
 

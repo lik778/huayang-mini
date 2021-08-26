@@ -1,26 +1,13 @@
 // studentMoments/studentMomentsDetail/studentMomentsDetail.js
-import {
-  queryQualityVideoList
-} from "../../api/live/index"
-import {
-  getStudentMomentDetail,
-  publishComment
-} from "../../api/studentComments/index"
-import {
-  store
-} from '../../store/index'
-import {
-  createStoreBindings
-} from 'mobx-miniprogram-bindings'
-import {
-  getLocalStorage,
-  isIphoneXRSMax,
-  createLocalCommentItem
-} from "../../utils/util"
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
+import { queryQualityVideoList } from "../../api/live/index"
+import { getStudentMomentDetail, publishComment } from "../../api/studentComments/index"
+import { store } from '../../store/index'
+import { createStoreBindings } from 'mobx-miniprogram-bindings'
+import { createLocalCommentItem, getLocalStorage, isIphoneXRSMax } from "../../utils/util"
+import { GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
+import dayjs from "dayjs"
+
 Page({
 
   /**
@@ -67,6 +54,7 @@ Page({
     showPublishComment: false,
     changeAnimationClass: true,
     authType: '', //0是点赞授权，1是评论授权，控制授完权的自动请求数据操作
+    didShowComment: false
   },
 
   // swiper下标更改
@@ -247,7 +235,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    this.setData({didShowComment: !dayjs(getApp().globalData.showContactEnterTime).isAfter(dayjs())})
   },
 
   /**
@@ -302,7 +290,7 @@ Page({
       message_id: this.data.id
     },false)
     return {
-      title: "快来看看花样大学精彩的校友动态！",
+      title: "快来看看花样老年大学精彩的校友动态！",
       path: `/studentMoments/studentMomentsDetail/studentMomentsDetail?id=${this.data.id}`,
       imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618803112KiZxTl.jpg"
     }
