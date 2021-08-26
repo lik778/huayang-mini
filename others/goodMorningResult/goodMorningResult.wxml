@@ -5,7 +5,7 @@
   </view>
   <view class="sharer-button" wx:if='{{!sharer}}' style="bottom: {{isIphoneXRSMax?'50px':'10px'}}">
     <view class=" sharer-button-left" bindtap="saveToAlbums">保存相册</view>
-    <view>
+    <view bindtap="share">
       <button class="sharer-button-right" open-type="share">分享好友</button>
     </view>
   </view>

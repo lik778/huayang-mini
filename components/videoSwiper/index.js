@@ -1,3 +1,7 @@
+import {
+    setLocalStorage,
+    getLocalStorage
+} from "../../utils/util"
 module.exports =
     (function (modules) {
         var installedModules = {};
@@ -108,6 +112,14 @@ module.exports =
                     type: Number,
                     value: 1
                 },
+                swiperDotList: {
+                    type: Array,
+                    value: [true, true, true, true, false]
+                },
+                swiperVideoCurrent: {
+                    type: Number,
+                    value: 1
+                },
                 videoList: {
                     type: Array,
                     value: [],
@@ -122,7 +134,10 @@ module.exports =
                 nextQueue: [],
                 prevQueue: [],
                 curQueue: [],
+                threeSecondCountDownImgList: ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629940855ZSqKBI.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629940837EpoWYm.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629940818YNUgNl.jpg'],
                 circular: false,
+                swiperCompnoentCurrentIndex: 1,
+                nextVideoPlayNoticeIndex: 0,
                 _last: 1,
                 _change: -1,
                 _invalidUp: 0,
@@ -155,6 +170,7 @@ module.exports =
                     }
                 },
                 animationfinish: function animationfinish(e) {
+
                     var _data = this.data,
                         _last = _data._last,
                         _change = _data._change,
@@ -167,10 +183,11 @@ module.exports =
                     if (diff === 0) return;
                     this.data._last = current;
                     this.playCurrent(current);
-                    this.triggerEvent('change', {
-                        activeId: curQueue[current].id
-                    });
                     var direction = diff === 1 || diff === -2 ? 'up' : 'down';
+                    this.triggerEvent('change', {
+                        direction,
+                        item: curQueue[_last]
+                    });
                     if (direction === 'up') {
                         if (this.data._invalidDown === 0) {
                             var change = (_change + 1) % 3;
@@ -221,13 +238,44 @@ module.exports =
                     });
                 },
                 onPlay: function onPlay(e) {
+                    // this.setData({
+                    //     autoplay: false
+                    // })
                     this.trigger(e, 'play');
                 },
                 onPause: function onPause(e) {
                     this.trigger(e, 'pause');
                 },
                 onEnded: function onEnded(e) {
+                    let showNextVideoPlayNotice = getLocalStorage("showNextVideoPlayNotice") ? false : true
                     this.trigger(e, 'ended');
+                    if (this.data.nextQueue.length <= 0 && this.data._last + 1 >= 3) {
+                        /* 全部播放完毕 */
+                        return
+                    }
+                    if (showNextVideoPlayNotice) {
+                        setLocalStorage("showNextVideoPlayNotice", new Date().getTime())
+                        this.setData({
+                            showNextVideoPlayNotice: true,
+                        })
+                        let timer = setInterval(() => {
+                            if (this.data.nextVideoPlayNoticeIndex >= 2) {
+                                clearInterval(timer)
+                                this.setData({
+                                    swiperCompnoentCurrentIndex: this.data._last + 1 >= 3 ? 0 : this.data._last + 1,
+                                    showNextVideoPlayNotice: false
+                                })
+                                return
+                            }
+                            this.setData({
+                                nextVideoPlayNoticeIndex: this.data.nextVideoPlayNoticeIndex + 1
+                            })
+                        }, 1000)
+                    } else {
+                        this.setData({
+                            swiperCompnoentCurrentIndex: this.data._last + 1 >= 3 ? 0 : this.data._last + 1
+                        })
+                    }
                 },
                 onError: function onError(e) {
                     this.trigger(e, 'error');

@@ -87,6 +87,7 @@ Page({
 		newActivityVideoPlayIndex: -1, //花样最新活动当前播放视频下标
 		newActivityVideoPlaying: false, //花样最新活动视频是否在播放中
 		showGoodMorningRedDot: false, //金刚位每日签到红点提示
+		swiperDotList: [true, true, true, true, false],
 	},
 	async run() {
 		// 请求花样大学首页弹窗任务
@@ -631,6 +632,16 @@ Page({
 	},
 	/* 花样最新活动点击 */
 	newActivityItemTap(e) {
+		console.log(e)
+		let meta = e.currentTarget.dataset.meta
+		/* 最新活动点击打点 */
+		bxPoint("new_homepage_activity_click", {
+			activity_content_id: meta.id,
+			activity_content_category: meta.type,
+			activity_content_date: meta.time,
+			activity_content_title: meta.title,
+			activity_content_type: meta.video_url ? 2 : 1,
+		})
 		let type = e.currentTarget.dataset.type
 		let item = e.currentTarget.dataset.item
 		let rootPage = ['/pages/discovery/discovery', '/pages/studentMoments/studentMoments', '/pages/practice/practice', '/pages/userCenter/userCenter']
@@ -668,7 +679,7 @@ Page({
 			let nowTime = parseInt(new Date().getTime() / 1000) //当前时间-s
 			let nowHour = new Date().getHours() //当前小时数
 			let localTime = getLocalStorage("good_morning_expire_at") || '' //本次缓存上次显示弹窗的时间
-			if (3 < nowHour && nowHour < 19) {
+			if (3 < nowHour && nowHour < 18) {
 				// 当天4-10点内显示
 				if (!localTime) {
 					setLocalStorage("good_morning_expire_at", nowTime)
@@ -690,12 +701,16 @@ Page({
 	},
 	/* 关闭早上好弹窗 */
 	closeGoodMorningPopup() {
+		/* 早安签到弹窗右上角退出点击 */
+		bxPoint("new_homepage_morning_exit_click")
 		this.setData({
 			needShowGoodMorningPopup: false
 		})
 	},
 	/* 早上好弹窗点击立即签到；高亮金刚位 */
 	showGoodMorningHighLight() {
+		/* 早安签到弹窗"早安签到"按钮点击打点 */
+		bxPoint("new_homepage_morning_sign_click")
 		const query = wx.createSelectorQuery()
 		query.select('#first-screen').boundingClientRect().exec(res => {
 			wx.pageScrollTo({
@@ -713,6 +728,10 @@ Page({
 	/* 金刚位点击 */
 	fixedSiteItemTap(e) {
 		let item = e.currentTarget.dataset.item
+		/* 内容分类点击打点 */
+		bxPoint("new_homepage_tab_button", {
+			tab_tag: item.title === '每日签到' ? 1 : item.title === '精品课程' ? 2 : 3
+		})
 		if (item.title === '每日签到') {
 			let isDev = request.baseUrl === 'https://dev.huayangbaixing.com' ? true : false
 			let link = isDev ? 'https://dev.huayangbaixing.com/#/signIn/playbill?from=true' : 'https://huayang.baixing.com/#/signIn/playbill?from=true'
@@ -777,6 +796,61 @@ Page({
 				}, 1000)
 			})
 		}
+		/* 头部视频内容点击打点 */
+		bxPoint('new_homepage_header_vedio_click', {
+			header_vedio_id: video.data.curQueue[video.data._last].id,
+			header_vedio_duration: this.data.currentSwiperVideoDuration
+		})
+	},
+	/* 视频播放 */
+	swiperVideoUpdate(e) {
+		this.setData({
+			currentSwiperVideoDuration: Math.round(e.detail.currentTime)
+		})
+	},
+
+	/* swiper切换时重置播放状态 */
+	initPlayStatus(e) {
+		/* 头部视频内容主动滑动打点 */
+		bxPoint("new_homepage_header_vedio_slide", {
+			header_vedio_id: e.detail.item.id,
+			header_vedio_play_duration: this.data.currentSwiperVideoDuration
+		})
+		let current = this.data.swiperVideoCurrent
+		if (e.detail.direction === 'down') {
+			// 滑到前一个
+			this.setData({
+				swiperVideoCurrent: current - 1
+			}, () => {
+				this.manageSwiperDotActive(this.data.swiperVideoCurrent)
+			})
+		} else if (e.detail.direction === 'up') {
+			// 滑到后一个
+			this.setData({
+				swiperVideoCurrent: current + 1
+			}, () => {
+				this.manageSwiperDotActive(this.data.swiperVideoCurrent)
+			})
+		}
+		// console.log(this.data.swiperVideoList)
+		// console.log(this.data.swiperVideoCurrent)
+		this.setData({
+			playStatus: 1
+		})
+	},
+
+	/*  */
+	manageSwiperDotActive(e) {
+		let arr = new Array(5).fill(true)
+		if (e >= 2) {
+			arr[0] = false
+		}
+		if (e <= this.data.swiperVideoList.length - 1) {
+			arr[4] = false
+		}
+		this.setData({
+			swiperDotList: arr
+		})
 	},
 
 	/* 花样最新活动视频播放点击 */
@@ -817,6 +891,8 @@ Page({
 			})
 		}
 	},
+
+
 	onPageScroll(e) {
 		if (e.scrollTop > 500 && this.data.playStatus === 1) {
 			let video = this.selectComponent(`#test`)
@@ -835,6 +911,10 @@ Page({
 
 	/* 广告位点击 */
 	bannerTap(e) {
+		/* 广告位点击打点 */
+		bxPoint("new_homepage_banner_click", {
+			banner_id: e.currentTarget.dataset.item.id
+		})
 		let link = e.currentTarget.dataset.item.link
 		let rootPage = ['/pages/discovery/discovery', '/pages/studentMoments/studentMoments', '/pages/practice/practice', '/pages/userCenter/userCenter']
 		if (rootPage.indexOf(link) !== -1) {
@@ -861,7 +941,6 @@ Page({
 				showGoodMorningRedDot: true
 			})
 		}
-		// showGoodMorningRedDot
 	},
 	/**
 	 * 生命周期函数--监听页面加载

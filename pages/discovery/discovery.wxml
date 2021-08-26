@@ -4,7 +4,9 @@
         <!-- 时尚视频轮播 -->
         <view class="swiper-video-module" wx:if='{{swiperVideoList.length}}'>
             <video-swiper id='test' videoList="{{swiperVideoList}}" bindtap="changePlayingStatus"
-                bindchange='initPlayStatus' duration='200' playStatus="{{playStatus}}" />
+                bindtimeupdate="swiperVideoUpdate" swiperDotList="{{swiperDotList}}"
+                swiperVideoCurrent="{{swiperVideoCurrent}}" bindchange='initPlayStatus' duration='200'
+                playStatus="{{playStatus}}" />
         </view>
 
         <!-- 广告位 -->
@@ -58,7 +60,7 @@
                     <image src="{{item.cover}}" data-type='{{item.type}}'
                         bindtap="{{item.video_url?'playNewActivityVideo':'newActivityItemTap'}}"
                         class="new-activity-item-play-cover" data-index='{{index}}' data-item="{{item.link_url}}"
-                        wx:if="{{!item.video_url||newActivityVideoPlayIndex!==index}}">
+                        data-meta='{{item}}' wx:if="{{!item.video_url||newActivityVideoPlayIndex!==index}}">
                     </image>
                     <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629877073cFVNcu.jpg"
                         data-index='{{index}}'
@@ -70,10 +72,10 @@
                         {{item.label}}</view>
                 </view>
                 <view class="new-activity-item-title" data-item="{{item.link_url}}" bindtap="newActivityItemTap"
-                    data-type='{{item.type}}'>
+                    data-meta='{{item}}' data-type='{{item.type}}'>
                     {{item.title}}</view>
                 <view class="new-activity-item-bottom" data-item="{{item.link_url}}" bindtap="newActivityItemTap"
-                    data-type='{{item.type}}'>
+                    data-meta='{{item}}' data-type='{{item.type}}'>
                     <view class="new-activity-item-bottom-date">{{item.time}}</view>
                     <view class="new-activity-item-bottom-button">点击查看</view>
                 </view>
