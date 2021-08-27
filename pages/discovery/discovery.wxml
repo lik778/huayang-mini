@@ -5,7 +5,7 @@
         <view class="swiper-video-module" wx:if='{{swiperVideoList.length}}'>
             <video-swiper id='test' videoList="{{swiperVideoList}}" bindtap="changePlayingStatus"
                 bindtimeupdate="swiperVideoUpdate" swiperDotList="{{swiperDotList}}"
-                swiperVideoCurrent="{{swiperVideoCurrent}}" bindchange='initPlayStatus' duration='200'
+                swiperVideoCurrent="{{swiperVideoCurrent}}" bindchange='initPlayStatus' duration='500'
                 playStatus="{{playStatus}}" />
         </view>
 
@@ -55,7 +55,8 @@
             <view class="new-activity-item" wx:for="{{newActivityList}}" wx:key='index'>
                 <view class="new-activity-item-top">
                     <video src="{{item.video_url}}" show-center-play-btn='{{false}}' object-fit="fill"
-                        bindpause="pauseNewActivityVideo" controls="{{true}}" id="new-activity-item-video-{{index}}"
+                        bindpause="pauseNewActivityVideo" id="new-activity-item-video-{{index}}"
+                        bindfullscreenchange='enterFullNewActivityVideo'
                         wx:if='{{item.video_url&&newActivityVideoPlayIndex===index}}'></video>
                     <image src="{{item.cover}}" data-type='{{item.type}}'
                         bindtap="{{item.video_url?'playNewActivityVideo':'newActivityItemTap'}}"

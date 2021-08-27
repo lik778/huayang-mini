@@ -74,7 +74,7 @@ Page({
 			title: '精品课程'
 		}, {
 			icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629776397YvDIih.jpg",
-			title: '城市漫游'
+			title: '城市慢游'
 		}], //金刚位列表
 		showGoodMorningNoticePopup: false, //显示早上好金刚位高亮提示框
 		showGoodMoringPopup: false, //显示早上好弹窗(是否在播放视频过程中,true代表不在)
@@ -87,8 +87,9 @@ Page({
 		newActivityVideoPlayIndex: -1, //花样最新活动当前播放视频下标
 		newActivityVideoPlaying: false, //花样最新活动视频是否在播放中
 		showGoodMorningRedDot: false, //金刚位每日签到红点提示
-		swiperDotList: [1, 1, 2, 1, 1, 0, 0],
-		swiperDotIsEnd: false
+		swiperDotList: [1, 2, 1, 1, 0],
+		swiperDotIsEnd: false,
+		enterFullNewActivityVideo: false
 	},
 	async run() {
 		// 请求花样大学首页弹窗任务
@@ -679,7 +680,7 @@ Page({
 			let nowTime = parseInt(new Date().getTime() / 1000) //当前时间-s
 			let nowHour = new Date().getHours() //当前小时数
 			let localTime = getLocalStorage("good_morning_expire_at") || '' //本次缓存上次显示弹窗的时间
-			if (3 < nowHour && nowHour < 18) {
+			if (3 < nowHour && nowHour < 10) {
 				// 当天4-10点内显示
 				if (!localTime) {
 					setLocalStorage("good_morning_expire_at", nowTime)
@@ -747,7 +748,7 @@ Page({
 			wx.switchTab({
 				url: '/pages/practice/practice',
 			})
-		} else if (item.title === '城市漫游') {
+		} else if (item.title === '城市慢游') {
 			wx.navigateToMiniProgram({
 				appId: "wx2ea757d51abc1f47",
 				path: '/pages/index/index',
@@ -839,56 +840,97 @@ Page({
 
 	/* 处理视频播放指示器展示 */
 	manageSwiperDotActive(e, e1) {
+		let lastArr = this.data.swiperDotList.concat([])
 		let index = e
 		let listLength = this.data.swiperVideoList.length
 		let arr = [] //数组中0为小点；1为大点；2为激活点
-		let commonOne = [0, 0, 2, 1, 1, 0, 0]
-		let commonTwo = [0, 0, 1, 2, 1, 0, 0]
-		let commonThree = [0, 0, 1, 1, 2, 1, 1]
+		let commonOne = [0, 2, 1, 1, 0]
+		let commonThree = [0, 1, 1, 2, 1]
 		// e为当前视频下标,e1:1为下标+1；-1为下标-1
-		// swiperDotList
 		if (index === 0) {
-			arr = [2, 2, 1, 1, 1, 0, 0]
+			arr = [2, 1, 1, 1, 0]
 		} else if (index === 1) {
 			this.setData({
 				swiperDotIsEnd: false
 			})
-			arr = [1, 1, 2, 1, 1, 0, 0]
+			arr = [1, 2, 1, 1, 0]
 		} else if (index === 2) {
 			if (this.data.swiperDotIsEnd) {
 				arr = commonOne
+				if (e1 === -1) {
+					this.swiperDotAnimation(e1, arr, lastArr)
+				}
 			} else if (e1 === -1) {
-				arr = commonTwo
+			
+				arr = commonOne
+				this.swiperDotAnimation(e1, arr, lastArr)
 			} else {
-				arr = [1, 1, 1, 2, 1, 0, 0]
+				arr = [1, 1, 2, 1, 0]
 			}
 		} else if (index === 3) {
 			if (this.data.swiperDotIsEnd) {
 				arr = commonOne
+				if (e1 === -1) {
+					this.swiperDotAnimation(e1, arr, lastArr)
+				}
 			} else if (e1 === -1) {
-				arr = commonTwo
+				arr = commonOne
+				this.swiperDotAnimation(e1, arr, lastArr)
 			} else {
-				arr = [1, 1, 1, 1, 2, 0, 0]
+				arr = [1, 1, 1, 2, 0]
 			}
 		} else if (index > 3) {
 			if (this.data.swiperDotIsEnd) {
 				if (listLength === index) {
-					arr = [0, 0, 1, 1, 1, 2, 2]
+					arr = [0, 1, 1, 1, 2]
 				} else if (listLength - 1 === index) {
 					arr = commonThree
 				} else if (listLength - 2 === index) {
-					arr = [0, 0, 1, 2, 1, 1, 1]
+					arr = [0, 1, 2, 1, 1]
 				} else if (listLength - index >= 3) {
+					if (e1 === 1) {
+						let list = this.data.swiperDotList
+						let activeIndex = this.data.swiperDotList.indexOf(2)
+						if (activeIndex < 3) {
+							let temp = list[activeIndex];
+							list[activeIndex] = list[activeIndex + 1];
+							list[activeIndex + 1] = temp;
+							arr = list
+						} else {
+							arr = [0, 1, 1, 2, 0]
+							this.swiperDotAnimation(e1, arr, lastArr)
+						}
+					} else {
+						arr = commonOne
+						this.swiperDotAnimation(e1, arr, lastArr)
+					}
 					// this.setData({
 					// 	swiperVideoCurrent: 0
 					// })
-					arr = commonOne
 				}
 			} else {
 				if (listLength - 1 === index) {
 					arr = commonThree
 				} else {
-					arr = [0, 0, 1, 1, 2, 0, 0]
+					if (e1 === -1) {
+						let list = this.data.swiperDotList
+						let activeIndex = this.data.swiperDotList.indexOf(2)
+						if (activeIndex > 1) {
+							let temp = list[activeIndex];
+							list[activeIndex] = list[activeIndex - 1];
+							list[activeIndex - 1] = temp;
+							arr = list
+						} else {
+							arr = commonOne
+							this.swiperDotAnimation(e1, arr, lastArr)
+						}
+					} else {
+						arr = [0, 1, 1, 2, 0]
+						let activeIndex = this.data.swiperDotList.indexOf(2)
+						if (activeIndex === 3) {
+							this.swiperDotAnimation(e1, arr, lastArr)
+						}
+					}
 				}
 			}
 			if (listLength - index < 2) {
@@ -900,27 +942,14 @@ Page({
 		this.setData({
 			swiperDotList: arr
 		})
-		// 	console.log(e, e1)
 	},
 
-	translateFun: function (e) {
-		// return
-		this.animation = wx.createAnimation()
-		if (e === 1) {
-				this.animation.translateX(-11).step({
-						duration: 200
-				})
-		} else {
-				this.animation.translateX(-11).step({
-						duration: 200
-				})
-		}
+	/* swiper指示点动画 */
+	swiperDotAnimation(e, arr, lastArr) {
+		let test = this.selectComponent("#test")
+		test.translateFun(e)
+	},
 
-
-		this.setData({
-				animation: this.animation.export()
-		})
-},
 
 	/* 花样最新活动视频播放点击 */
 	playNewActivityVideo(e) {
@@ -937,6 +966,20 @@ Page({
 		})
 	},
 
+	enterFullNewActivityVideo(e) {
+		if (e.detail.fullScreen) {
+			// 进入全屏
+			this.setData({
+				enterFullNewActivityVideo: true
+			})
+		} else {
+			// 退出全屏
+			this.setData({
+				enterFullNewActivityVideo: false
+			})
+		}
+	},
+
 	/* 花样最新活动视频播放暂停 */
 	pauseNewActivityVideo() {
 		this.setData({
@@ -947,11 +990,12 @@ Page({
 	/* 离开可视区暂停视频播放（头部视频+花样最新活动视频） */
 	estimateVideoLocation() {
 		for (let i = 0; i < this.data.newActivityList.length; i++) {
-			wx.createIntersectionObserver().relativeToViewport({
+			let obj = wx.createIntersectionObserver(this)
+			obj.relativeToViewport({
 				top: -50,
 				bottom: -50
 			}).observe('#new-activity-item-video-' + i, res => {
-				if (res && res.intersectionRatio <= 0) {
+				if (res && res.intersectionRatio <= 0 && !this.data.enterFullNewActivityVideo) {
 					this.setData({
 						newActivityVideoPlayIndex: -1,
 						newActivityVideoPlaying: false
