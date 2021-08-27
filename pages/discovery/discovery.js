@@ -679,7 +679,7 @@ Page({
 		let nowTime = parseInt(new Date().getTime() / 1000) //当前时间-s
 		let nowHour = new Date().getHours() //当前小时数
 		let localTime = getLocalStorage("good_morning_expire_at") || '' //本次缓存上次显示弹窗的时间
-		if (0 < nowHour && nowHour < 10) {
+		if (3 < nowHour && nowHour < 10) {
 			// 当天4-10点内显示
 			if (!localTime) {
 				setLocalStorage("good_morning_expire_at", nowTime)
@@ -701,7 +701,7 @@ Page({
 	/* 关闭早上好弹窗 */
 	closeGoodMorningPopup() {
 		/* 早安签到弹窗右上角退出点击 */
-		bxPoint("new_homepage_morning_exit_click")
+		bxPoint("new_homepage_morning_exit_click", false)
 		this.setData({
 			needShowGoodMorningPopup: false
 		})
@@ -709,7 +709,7 @@ Page({
 	/* 早上好弹窗点击立即签到；高亮金刚位 */
 	showGoodMorningHighLight() {
 		/* 早安签到弹窗"早安签到"按钮点击打点 */
-		bxPoint("new_homepage_morning_sign_click")
+		bxPoint("new_homepage_morning_sign_click", false)
 		const query = wx.createSelectorQuery()
 		query.select('#first-screen').boundingClientRect().exec(res => {
 			wx.pageScrollTo({
