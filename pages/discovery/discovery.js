@@ -82,13 +82,9 @@ Page({
 		newActivityList: [], //花样最新活动列表
 		goodMorningPopupBg: "", //早上好弹窗背景图
 		needShowGoodMorningPopup: false, //是否显示早上好弹窗(本地缓存是否显示过+是否在显示时间段内)
-		swiperVideoCurrent: 1, //头部视频swiper下标
-		playStatus: 1, //播放状态
 		newActivityVideoPlayIndex: -1, //花样最新活动当前播放视频下标
 		newActivityVideoPlaying: false, //花样最新活动视频是否在播放中
 		showGoodMorningRedDot: false, //金刚位每日签到红点提示
-		swiperDotList: [1, 2, 1, 1, 0],
-		swiperDotIsEnd: false,
 		enterFullNewActivityVideo: false
 	},
 	async run() {
@@ -642,7 +638,7 @@ Page({
 			activity_content_date: meta.time,
 			activity_content_title: meta.title,
 			activity_content_type: meta.video_url ? 2 : 1,
-		})
+		}, false)
 		let type = e.currentTarget.dataset.type
 		let item = e.currentTarget.dataset.item
 		let rootPage = ['/pages/discovery/discovery', '/pages/studentMoments/studentMoments', '/pages/practice/practice', '/pages/userCenter/userCenter']
@@ -673,29 +669,31 @@ Page({
 	},
 	/* 初始化是否显示早上好弹窗 */
 	initShowGoodmorningPopup() {
-		if (this.data.showGoodMoringPopup) {
-			// 不在播放视频
-			let todayStartTime = new Date(new Date().setHours(0, 0, 0, 0)) / 1000 //当天0点
-			let secondDayTime = new Date(new Date().setHours(0, 0, 0, 0)) / 1000 + 86400 //第二天0点
-			let nowTime = parseInt(new Date().getTime() / 1000) //当前时间-s
-			let nowHour = new Date().getHours() //当前小时数
-			let localTime = getLocalStorage("good_morning_expire_at") || '' //本次缓存上次显示弹窗的时间
-			if (3 < nowHour && nowHour < 10) {
-				// 当天4-10点内显示
-				if (!localTime) {
+		let video = this.selectComponent(`#videoSwiper`)
+		if (video.__data__.playingVideo) {
+			return
+		}
+		// 不在播放视频
+		let todayStartTime = new Date(new Date().setHours(0, 0, 0, 0)) / 1000 //当天0点
+		let secondDayTime = new Date(new Date().setHours(0, 0, 0, 0)) / 1000 + 86400 //第二天0点
+		let nowTime = parseInt(new Date().getTime() / 1000) //当前时间-s
+		let nowHour = new Date().getHours() //当前小时数
+		let localTime = getLocalStorage("good_morning_expire_at") || '' //本次缓存上次显示弹窗的时间
+		if (0 < nowHour && nowHour < 10) {
+			// 当天4-10点内显示
+			if (!localTime) {
+				setLocalStorage("good_morning_expire_at", nowTime)
+				this.setData({
+					needShowGoodMorningPopup: true
+				})
+			} else {
+				if (localTime > todayStartTime && localTime < secondDayTime) {
+					// 当天已显示弹窗
+				} else {
 					setLocalStorage("good_morning_expire_at", nowTime)
 					this.setData({
 						needShowGoodMorningPopup: true
 					})
-				} else {
-					if (localTime > todayStartTime && localTime < secondDayTime) {
-						// 当天已显示弹窗
-					} else {
-						setLocalStorage("good_morning_expire_at", nowTime)
-						this.setData({
-							needShowGoodMorningPopup: true
-						})
-					}
 				}
 			}
 		}
@@ -732,7 +730,7 @@ Page({
 		/* 内容分类点击打点 */
 		bxPoint("new_homepage_tab_button", {
 			tab_tag: item.title === '每日签到' ? 1 : item.title === '精品课程' ? 2 : 3
-		})
+		}, false)
 		if (item.title === '每日签到') {
 			let isDev = request.baseUrl === 'https://dev.huayangbaixing.com' ? true : false
 			let link = isDev ? 'https://dev.huayangbaixing.com/#/signIn/playbill?from=true' : 'https://huayang.baixing.com/#/signIn/playbill?from=true'
@@ -773,181 +771,6 @@ Page({
 				swiperVideoList: data.list || []
 			})
 		})
-	},
-
-	/* swiper视频组件点击 */
-	changePlayingStatus() {
-		let video = this.selectComponent(`#test`)
-		let currentVideo = video.data._videoContexts[video.data._last]
-		if (this.data.playStatus === 0) {
-			this.setData({
-				playStatus: 1,
-				showGoodMoringPopup: false
-			}, () => {
-				currentVideo.play()
-			})
-		} else {
-			this.setData({
-				playStatus: 0,
-				showGoodMoringPopup: true
-			}, () => {
-				currentVideo.pause()
-				setTimeout(() => {
-					this.initShowGoodmorningPopup()
-				}, 1000)
-			})
-		}
-		/* 头部视频内容点击打点 */
-		bxPoint('new_homepage_header_vedio_click', {
-			header_vedio_id: video.data.curQueue[video.data._last].id,
-			header_vedio_duration: this.data.currentSwiperVideoDuration
-		})
-	},
-	/* 视频播放 */
-	swiperVideoUpdate(e) {
-		this.setData({
-			currentSwiperVideoDuration: Math.round(e.detail.currentTime)
-		})
-	},
-
-	/* swiper切换时重置播放状态 */
-	initPlayStatus(e) {
-		/* 头部视频内容主动滑动打点 */
-		bxPoint("new_homepage_header_vedio_slide", {
-			header_vedio_id: e.detail.item.id,
-			header_vedio_play_duration: this.data.currentSwiperVideoDuration
-		})
-		let current = this.data.swiperVideoCurrent
-		if (e.detail.direction === 'down') {
-			// 滑到前一个
-			this.setData({
-				swiperVideoCurrent: current - 1
-			}, () => {
-				this.manageSwiperDotActive(this.data.swiperVideoCurrent, -1)
-			})
-		} else if (e.detail.direction === 'up') {
-			// 滑到后一个
-			this.setData({
-				swiperVideoCurrent: current + 1
-			}, () => {
-				this.manageSwiperDotActive(this.data.swiperVideoCurrent, 1)
-			})
-		}
-		this.setData({
-			playStatus: 1
-		})
-	},
-
-	/* 处理视频播放指示器展示 */
-	manageSwiperDotActive(e, e1) {
-		let lastArr = this.data.swiperDotList.concat([])
-		let index = e
-		let listLength = this.data.swiperVideoList.length
-		let arr = [] //数组中0为小点；1为大点；2为激活点
-		let commonOne = [0, 2, 1, 1, 0]
-		let commonThree = [0, 1, 1, 2, 1]
-		// e为当前视频下标,e1:1为下标+1；-1为下标-1
-		if (index === 0) {
-			arr = [2, 1, 1, 1, 0]
-		} else if (index === 1) {
-			this.setData({
-				swiperDotIsEnd: false
-			})
-			arr = [1, 2, 1, 1, 0]
-		} else if (index === 2) {
-			if (this.data.swiperDotIsEnd) {
-				arr = commonOne
-				if (e1 === -1) {
-					this.swiperDotAnimation(e1, arr, lastArr)
-				}
-			} else if (e1 === -1) {
-			
-				arr = commonOne
-				this.swiperDotAnimation(e1, arr, lastArr)
-			} else {
-				arr = [1, 1, 2, 1, 0]
-			}
-		} else if (index === 3) {
-			if (this.data.swiperDotIsEnd) {
-				arr = commonOne
-				if (e1 === -1) {
-					this.swiperDotAnimation(e1, arr, lastArr)
-				}
-			} else if (e1 === -1) {
-				arr = commonOne
-				this.swiperDotAnimation(e1, arr, lastArr)
-			} else {
-				arr = [1, 1, 1, 2, 0]
-			}
-		} else if (index > 3) {
-			if (this.data.swiperDotIsEnd) {
-				if (listLength === index) {
-					arr = [0, 1, 1, 1, 2]
-				} else if (listLength - 1 === index) {
-					arr = commonThree
-				} else if (listLength - 2 === index) {
-					arr = [0, 1, 2, 1, 1]
-				} else if (listLength - index >= 3) {
-					if (e1 === 1) {
-						let list = this.data.swiperDotList
-						let activeIndex = this.data.swiperDotList.indexOf(2)
-						if (activeIndex < 3) {
-							let temp = list[activeIndex];
-							list[activeIndex] = list[activeIndex + 1];
-							list[activeIndex + 1] = temp;
-							arr = list
-						} else {
-							arr = [0, 1, 1, 2, 0]
-							this.swiperDotAnimation(e1, arr, lastArr)
-						}
-					} else {
-						arr = commonOne
-						this.swiperDotAnimation(e1, arr, lastArr)
-					}
-					// this.setData({
-					// 	swiperVideoCurrent: 0
-					// })
-				}
-			} else {
-				if (listLength - 1 === index) {
-					arr = commonThree
-				} else {
-					if (e1 === -1) {
-						let list = this.data.swiperDotList
-						let activeIndex = this.data.swiperDotList.indexOf(2)
-						if (activeIndex > 1) {
-							let temp = list[activeIndex];
-							list[activeIndex] = list[activeIndex - 1];
-							list[activeIndex - 1] = temp;
-							arr = list
-						} else {
-							arr = commonOne
-							this.swiperDotAnimation(e1, arr, lastArr)
-						}
-					} else {
-						arr = [0, 1, 1, 2, 0]
-						let activeIndex = this.data.swiperDotList.indexOf(2)
-						if (activeIndex === 3) {
-							this.swiperDotAnimation(e1, arr, lastArr)
-						}
-					}
-				}
-			}
-			if (listLength - index < 2) {
-				this.setData({
-					swiperDotIsEnd: true
-				})
-			}
-		}
-		this.setData({
-			swiperDotList: arr
-		})
-	},
-
-	/* swiper指示点动画 */
-	swiperDotAnimation(e, arr, lastArr) {
-		let test = this.selectComponent("#test")
-		test.translateFun(e)
 	},
 
 
@@ -1005,29 +828,12 @@ Page({
 		}
 	},
 
-
-	onPageScroll(e) {
-		if (e.scrollTop > 500 && this.data.playStatus === 1) {
-			let video = this.selectComponent(`#test`)
-			let currentVideo = video.data._videoContexts[video.data._last]
-			this.setData({
-				playStatus: 0,
-				showGoodMoringPopup: true
-			}, () => {
-				setTimeout(() => {
-					this.initShowGoodmorningPopup()
-				}, 1000)
-				currentVideo.pause()
-			})
-		}
-	},
-
 	/* 广告位点击 */
 	bannerTap(e) {
 		/* 广告位点击打点 */
 		bxPoint("new_homepage_banner_click", {
 			banner_id: e.currentTarget.dataset.item.id
-		})
+		}, false)
 		let link = e.currentTarget.dataset.item.link
 		let rootPage = ['/pages/discovery/discovery', '/pages/studentMoments/studentMoments', '/pages/practice/practice', '/pages/userCenter/userCenter']
 		if (rootPage.indexOf(link) !== -1) {
@@ -1055,6 +861,7 @@ Page({
 			})
 		}
 	},
+	stopMove() {},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
@@ -1191,6 +998,13 @@ Page({
 		return {
 			title: "我在花样百姓，和我一起学习、游玩吧，开心每一天！",
 			path: `/pages/discovery/discovery?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
+		}
+	},
+	onPageScroll(e) {
+		if (e.scrollTop > 500) {
+			let video = this.selectComponent(`#videoSwiper`)
+			video.videoContext.pause()
+			video.pauseVideoAuto()
 		}
 	}
 })

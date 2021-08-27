@@ -5,7 +5,7 @@
     "liveLayout": "../../components/liveLayout/liveLayout",
     "bestCourseLayout": "../../components/bestCourseLayout/bestCourseLayout",
     "contact": "../../components/contact/contact",
-    "video-swiper": "/components/videoSwiper/index",
+    "video-swiper": "/components/videoSwiper/video-swiper",
     "fluentLearnModal": "../../components/fluentLearnModal/fluentLearnModal"
   }
 }

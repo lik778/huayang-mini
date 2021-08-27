@@ -2,13 +2,8 @@
 <view class="discovery" style="visibility: {{canShow?'visible':'hidden'}};">
     <view id='first-screen'>
         <!-- 时尚视频轮播 -->
-        <view class="swiper-video-module" wx:if='{{swiperVideoList.length}}'>
-            <video-swiper id='test' videoList="{{swiperVideoList}}" bindtap="changePlayingStatus"
-                bindtimeupdate="swiperVideoUpdate" swiperDotList="{{swiperDotList}}"
-                swiperVideoCurrent="{{swiperVideoCurrent}}" bindchange='initPlayStatus' duration='500'
-                playStatus="{{playStatus}}" />
-        </view>
-
+        <video-swiper bindpauseVideo='initShowGoodmorningPopup' id='videoSwiper' videoList="{{swiperVideoList}}">
+        </video-swiper>
         <!-- 广告位 -->
         <view class="advertisement-module" wx:if='{{advertisementList.length}}'>
             <image src="{{advertisementList[0].pic_url}}" style="height:{{advertisementImageHeight}}px"
@@ -229,6 +224,6 @@
         bind:close="onFluentLearnCloseTap" bind:confirm="onFluentLearnTap" />
 
     <!-- 全局遮罩层 -->
-    <view class="global-cover" wx:if="{{needShowGoodMorningPopup||showGoodMorningNoticePopup}}" bindtap="closeAllPopup">
+    <view class="global-cover" wx:if="{{needShowGoodMorningPopup||showGoodMorningNoticePopup}}" bindtap="closeAllPopup" catchtouchmove="stopMove">
     </view>
 </view>
