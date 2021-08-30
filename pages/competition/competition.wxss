@@ -1,0 +1,210 @@
+.competition {
+    padding-bottom: 250rpx;
+    font-size: 0;
+}
+
+.bg {
+    height: 542rpx;
+    width: 100vw;
+    padding: 188rpx 0 0 40rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1630034878MhdJOe.jpg") no-repeat center;
+    background-size: cover;
+    color: white;
+    box-sizing: border-box;
+}
+
+.title {
+    margin-bottom: 32rpx;
+    font: 500 52rpx/56rpx PingFangSC;
+}
+
+.sub-title {
+    font: 32rpx/32rpx PingFangSC;
+}
+
+.fast-enter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: -89rpx 50rpx 0;
+}
+
+.fast-long-item {
+    width: 100%;
+    height: 163rpx;
+    margin-bottom: 22rpx;
+}
+
+.fast-normal-item > image, .fast-long-item > image {
+    width: 100%;
+    height: 100%;
+    border-radius: 8rpx;
+    background: #eee;
+}
+
+.fast-normal-item {
+    width: 314rpx;
+    height: 164rpx;
+    margin-bottom: 22rpx;
+}
+
+.media, .video, .history-photos {
+    margin-top: 80rpx;
+    padding: 0 30rpx;
+}
+
+.layer-title {
+    margin-bottom: 44rpx;
+    font: 500 48rpx/48rpx PingFangSC;
+}
+
+.media-item {
+    overflow: hidden;
+    width: 692rpx;
+    margin-bottom: 40rpx;
+    border-radius: 16rpx;
+    background: white;
+    box-shadow: 0 8rpx 16rpx 0 rgba(0, 0, 0, 0.05);
+}
+
+.media-cover {
+    width: inherit;
+    height: 294rpx;
+    background: #eee;
+}
+
+.media-item-title {
+    padding: 30rpx;
+    font: 36rpx/50rpx PingFangSC;
+}
+
+.more-media-btn {
+    width: 100%;
+    height: 88rpx;
+    border: 1px solid #000000;
+    border-radius: 999rpx;
+    font: 36rpx/88rpx PingFangSC;
+    text-align: center;
+}
+
+.swiper-box {
+    position: relative;
+    background: #eee;
+}
+
+.swiper-item-box {
+    position: relative;
+    width: 100%;
+    height: 388rpx;
+}
+
+.swiper-item-box image {
+    width: 100%;
+    height: 100%;
+}
+
+.play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 104rpx;
+    height: 104rpx;
+    transform: translate(-50%, -50%);
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1630051063diKFOC.jpg") no-repeat center;
+    background-size: contain;
+}
+
+.swiper-dot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -20rpx;
+}
+
+.swiper-dot-item {
+    width: 12rpx;
+    height: 12rpx;
+    border-radius: 999rpx;
+    background: #CCCCCC;
+    margin-right: 10rpx;
+}
+
+.active {
+    background: #3A3C48;
+}
+
+.history-item {
+    padding: 0 20rpx;
+    margin-bottom: 40rpx;
+}
+
+.history-title {
+    margin-bottom: 40rpx;
+    font: 500 40rpx/40rpx PingFangSC;
+}
+
+.photo-card {
+    margin-bottom: 40rpx;
+}
+
+.photo-title {
+    margin-bottom: 16rpx;
+    font: 36rpx/36rpx PingFangSC;
+    color: #666666;
+}
+
+.photo-content {
+    overflow: hidden;
+    position: relative;
+    border-radius: 15rpx;
+}
+
+.photo-cover {
+    width: 100%;
+    height: 323rpx;
+}
+
+.photo-layer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13rpx 40rpx;
+    box-sizing: border-box;
+    font: 32rpx/42rpx PingFangSC;
+    color: white;
+    background: rgba(0,0,0, 0.6);
+}
+
+.separate {
+    width: 2rpx;
+    height: 34rpx;
+    background: rgba(255,255,255, 0.4);
+}
+
+
+.share-btn {
+    position: fixed;
+    right: 30rpx;
+    bottom: 200rpx;
+    width: 176rpx;
+    height: 80rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1630051473GDELSF.jpg") no-repeat center;
+    background-size: contain;
+}
+
+.share-btn:active {
+    opacity: 0.9;
+}
+
+#competitionVideo {
+    position: fixed;
+    left: 999px;
+}

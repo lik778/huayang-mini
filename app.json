@@ -16,6 +16,7 @@
   ],
   "pages": [
     "pages/discovery/discovery",
+    "pages/competition/competition",
     "pages/practice/practice",
     "pages/userCenter/userCenter",
     "pages/auth/auth",
@@ -33,7 +34,8 @@
     "pages/bookUpload/bookUpload",
     "pages/bookCustomSuccess/bookCustomSuccess",
     "pages/personAlbum/personAlbum",
-    "pages/activityAlbum/activityAlbum"
+    "pages/activityAlbum/activityAlbum",
+    "pages/mediaList/mediaList"
   ],
   "requiredBackgroundModes": [
     "audio",
@@ -152,7 +154,7 @@
         "pagePath": "pages/discovery/discovery"
       },
       {
-        "pagePath": "pages/studentMoments/studentMoments"
+        "pagePath": "pages/competition/competition"
       },
       {
         "pagePath": "pages/practice/practice"

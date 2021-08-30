@@ -79,12 +79,6 @@
           "scene": null
         },
         {
-          "name": "莘庄14天朗诵训练营作业发布",
-          "pathName": "subCourse/launchTask/launchTask",
-          "query": "themeType=0&themeId=7&themeTitle=莘庄14天朗诵训练营",
-          "scene": null
-        },
-        {
           "name": "个人作业秀落地页",
           "pathName": "subCourse/indexTask/indexTask",
           "query": "taskId=3&nickname=derisfe&userId=4",
@@ -100,6 +94,18 @@
           "name": "活动相册",
           "pathName": "pages/activityAlbum/activityAlbum",
           "query": "link=https%3A%2F%2Fdev.huayangbaixing.com%2F%23%2Fhome%2Falbums%2F26",
+          "scene": null
+        },
+        {
+          "name": "大赛专题页",
+          "pathName": "pages/competition/competition",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "大赛媒体列表页",
+          "pathName": "pages/mediaList/mediaList",
+          "query": "",
           "scene": null
         }
       ]

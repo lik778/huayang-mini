@@ -376,8 +376,22 @@ Page({
     }
   },
 
+  getFreeVideoCourse() {
+    return new Promise((resolve) => {
+      let openid = getLocalStorage(GLOBAL_KEY.openId)
+      joinVideoCourse({
+        open_id: openid,
+        series_id: this.data.videoCourseId,
+      }).then(() => {
+        this.setData({noPayForCourse: true})
+        resolve()
+      })
+    })
+  },
+
   // 获取视频课程详情信息
   getVideoCourseData(buttonType = '') {
+    let self = this
     // 请求详情接口
     getVideoCourseDetail({
       series_id: this.data.videoCourseId,
@@ -404,7 +418,7 @@ Page({
           })
         }
         wx.getSystemInfo({
-          success: (res1) => {
+          success: async (res1) => {
             // 设置加入按钮状态
             if (buttonType === ButtonType.joined) {
               // 已购买
@@ -415,8 +429,9 @@ Page({
                 // ios平台
                 isIos = true
                 if ((res.series_detail.price === 0 || res.series_detail.discount_price === '') && userGrade >= res.series_detail.user_grade) {
-                  // 如果是免费课程则直接显示加入按钮
-                  buttonType = ButtonType.free
+                  // 如果是免费课程则自动加入
+                  await self.getFreeVideoCourse()
+                  buttonType = ButtonType.joined
                 } else {
                   buttonType = ButtonType.ios
                 }
@@ -428,8 +443,9 @@ Page({
                   buttonType = ButtonType.ios
                 } else {
                   if (res.series_detail.discount_price === 0 || res.series_detail.price === 0) {
-                    // 完全免费
-                    buttonType = ButtonType.free
+                    // 完全免费则自动加入
+                    await self.getFreeVideoCourse()
+                    buttonType = ButtonType.joined
                   } else {
                     // 收费
                     if (res.series_detail.discount_price > 0) {

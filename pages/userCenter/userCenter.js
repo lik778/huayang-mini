@@ -3,21 +3,21 @@ import baseUrl from "../../lib/request"
 import dayjs from "dayjs"
 import { getFindBanner, getPhoneNumber } from "../../api/course/index"
 import {
-	checkUserHasAddress,
-	getFluentCardInfo,
-	getFluentDistributeGuide,
-	getFluentLearnInfo,
-	getPartnerInfo,
-	getUserInfo,
-	getUserOwnerClasses
+  checkUserHasAddress,
+  getFluentCardInfo,
+  getFluentDistributeGuide,
+  getFluentLearnInfo,
+  getPartnerInfo,
+  getUserInfo,
+  getUserOwnerClasses
 } from "../../api/mine/index"
 import {
-	$notNull,
-	getLocalStorage,
-	hasAccountInfo,
-	hasUserInfo,
-	setLocalStorage,
-	splitTargetNoString
+  $notNull,
+  getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
+  setLocalStorage,
+  splitTargetNoString
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 import { getTaskEntranceStatus } from "../../api/task/index"
@@ -458,7 +458,7 @@ Page({
     this.getUserSingerInfo().then(() => {
       this.getFluentInfo()
     })
-    this.queryUserPartnerInfo()
+    // this.queryUserPartnerInfo()
     // 获取加入学习群高度，用来判断显示余额显示
     let userId = !!getLocalStorage(GLOBAL_KEY.userId)
     if (userId) {
@@ -481,6 +481,30 @@ Page({
       let userId = getLocalStorage(GLOBAL_KEY.userId)
       wx.navigateTo({
         url: `/subCourse/personTask/personTask?visit_user_id=${userId}`,
+      })
+    } else {
+      this.setData({
+        didShowAuth: true
+      })
+    }
+  },
+  goToTaskBootcampPage() {
+    if (hasUserInfo() && hasAccountInfo()) {
+      bxPoint("applet_mine_click_bootcamp", {}, false)
+      wx.navigateTo({
+        url: "/mine/personBootcamp/personBootcamp"
+      })
+    } else {
+      this.setData({
+        didShowAuth: true
+      })
+    }
+  },
+  goToTaskCoursePage() {
+    if (hasUserInfo() && hasAccountInfo()) {
+      bxPoint("applet_mine_click_course", {}, false)
+      wx.navigateTo({
+        url: "/mine/personCourse/personCourse"
       })
     } else {
       this.setData({
@@ -730,8 +754,7 @@ Page({
       })
 
       // 检查用户合伙人状态
-      this.queryUserPartnerInfo()
-
+      // this.queryUserPartnerInfo()
     }
   },
 
