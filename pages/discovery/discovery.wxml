@@ -49,7 +49,7 @@
         <view class="new-activity-main">
             <view class="new-activity-item" wx:for="{{newActivityList}}" wx:key='index'>
                 <view class="new-activity-item-top">
-                    <video src="{{item.video_url}}" show-center-play-btn='{{false}}' object-fit="fill"
+                    <video src="{{item.video_url}}" show-center-play-btn='{{false}}' object-fit="cover"
                         bindpause="pauseNewActivityVideo" id="new-activity-item-video-{{index}}"
                         bindfullscreenchange='enterFullNewActivityVideo'
                         wx:if='{{item.video_url&&newActivityVideoPlayIndex===index}}'></video>

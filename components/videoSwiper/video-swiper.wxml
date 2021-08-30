@@ -9,7 +9,7 @@
           <image src="https://preview.qiantucdn.com/paixin/60/51/97/34558PICgP6jb4c7Ex7PZ_PIC2018.jpg!kuan320"
             class="swiper-video" wx:if="{{index-currentVideoIndex>=3}}"></image>
           <!-- 视频 -->
-          <video object-fit="fill" id="swiper-video-{{index}}" src="{{item.video_url}}" controls="{{false}}"
+          <video object-fit="cover" id="swiper-video-{{index}}" src="{{item.video_url}}" controls="{{false}}"
             enable-play-gesture="{{false}}" enable-progress-gesture="{{false}}" show-center-play-btn="{{false}}" data-id='{{index}}'
             bindtimeupdate="swiperVideoUpdate" class="swiper-video" bindended="videoEnd" wx:else bindtap="pauseVideo">
             <!-- 播放icon -->
