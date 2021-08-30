@@ -213,7 +213,7 @@ Page({
 				if (res && res.intersectionRatio > 0) {
 				} else {
 					// 离开可视区域
-					self.pauseVideo()
+					self.data.videoClass && self.pauseVideo()
 				}
 			})
 	},
