@@ -20,9 +20,9 @@
               wx:if="{{currentVideoIndex!==index||!playingVideo}}" class="pause-icon"
               src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629860904cymQmM.jpg"></image>
             <!-- 视频标签 -->
-            <view class="video-label" wx:if="{{currentVideoIndex!==index||!playingVideo}}">
+            <!-- <view class="video-label" wx:if="{{currentVideoIndex!==index||!playingVideo}}">
               {{item.label}}
-            </view>
+            </view> -->
             <!-- 倒计时icon -->
             <view class="count-down" wx:if='{{showCountDown}}'>
               <image src="{{countDownIconList[countDownCurrentIndex]}}"></image>
