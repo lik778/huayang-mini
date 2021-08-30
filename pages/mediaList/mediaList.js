@@ -59,7 +59,10 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    return {
+      title: "2021花样时尚模特大赛，绽放趁现在！",
+      path: "/pages/mediaList/mediaList"
+    }
   },
 
   /**

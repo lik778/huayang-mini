@@ -30,7 +30,7 @@
         <view class="layer-title">大赛精彩视频</view>
 
         <view class="swiper-box" id="swiper-box">
-            <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}"
+            <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular interval="{{3000}}"
                     duration="{{500}}">
                 <swiper-item wx:for="{{videoList}}" wx:key="index" bindtap="handleVideoTap" data-item="{{item}}">
                     <view class="play-btn"></view>

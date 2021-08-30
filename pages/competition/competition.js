@@ -85,7 +85,10 @@ Page({
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
-
+		return {
+			title: "2021花样时尚模特大赛，绽放趁现在！",
+			path: "/pages/competition/competition"
+		}
 	},
 	run() {
 		getBannerList({scene: 22}).then((data) => {
