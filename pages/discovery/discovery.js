@@ -686,7 +686,7 @@ Page({
 		let nowTime = parseInt(new Date().getTime() / 1000) //当前时间-s
 		let nowHour = new Date().getHours() //当前小时数
 		let localTime = getLocalStorage("good_morning_expire_at") || '' //本次缓存上次显示弹窗的时间
-		if (3 < nowHour && nowHour < 18) {
+		if (3 < nowHour && nowHour < 10) {
 			// 当天4-10点内显示
 			if (!localTime) {
 				setLocalStorage("good_morning_expire_at", nowTime)

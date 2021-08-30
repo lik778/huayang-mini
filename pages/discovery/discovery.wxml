@@ -26,7 +26,7 @@
                         <text>{{item.title}}</text>
                     </view>
                     <view class="fixed-site-popup-box">
-                        <view>点击早安签到</view>
+                        <view>点击每日签到</view>
                         <view>开启美好新一天</view>
                     </view>
                 </view>
