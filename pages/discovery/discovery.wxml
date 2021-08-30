@@ -2,7 +2,8 @@
 <view class="discovery" style="visibility: {{canShow?'visible':'hidden'}};">
     <view id='first-screen'>
         <!-- 时尚视频轮播 -->
-        <video-swiper bindpauseVideo='initShowGoodmorningPopup' id='videoSwiper' videoList="{{swiperVideoList}}" bindqueryNextList='queryNextList'>
+        <video-swiper bindpauseVideo='initShowGoodmorningPopup' id='videoSwiper' videoList="{{swiperVideoList}}"
+            bindqueryNextList='queryNextList'>
         </video-swiper>
         <!-- 广告位 -->
         <view class="advertisement-module" wx:if='{{advertisementList.length}}'>
@@ -25,7 +26,7 @@
                         <text>{{item.title}}</text>
                     </view>
                     <view class="fixed-site-popup-box">
-                        <view>每日早安签到</view>
+                        <view>点击每日签到</view>
                         <view>开启美好新一天</view>
                     </view>
                 </view>
@@ -139,7 +140,7 @@
     <!-- 直播 -->
     <liveLayout wx:if="{{liveList.length > 0}}" class="limit-two-line" liveList="{{liveList}}"
         bind:openUserAuth="openUserAuth" />
-        
+
     <!-- 大赛&活动 -->
     <view class="other-activity" wx:if="{{showModelBanner}}">
         <!-- 大赛 -->
@@ -188,7 +189,7 @@
     </view>
 
     <!-- 早上好弹窗 -->
-    <view class="good-morning-popup" wx:if="{{needShowGoodMorningPopup}}">
+    <view class="good-morning-popup" catchtouchmove="stopMove" wx:if="{{needShowGoodMorningPopup}}">
         <view class="good-morning-popup-box">
             <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629790110bECsII.jpg"
                 class="good-morning-icon">
@@ -221,6 +222,7 @@
         bind:close="onFluentLearnCloseTap" bind:confirm="onFluentLearnTap" />
 
     <!-- 全局遮罩层 -->
-    <view class="global-cover" wx:if="{{needShowGoodMorningPopup||showGoodMorningNoticePopup}}" bindtap="closeAllPopup" catchtouchmove="stopMove">
+    <view class="global-cover" wx:if="{{needShowGoodMorningPopup||showGoodMorningNoticePopup}}" bindtap="closeAllPopup"
+        catchtouchmove="stopMove">
     </view>
 </view>

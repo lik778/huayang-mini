@@ -630,7 +630,7 @@ Page({
 			}
 			this.setData({
 				newActivityList: list,
-				goodMorningPopupBg: link,
+				goodMorningPopupBg: link + "?x-oss-process=style/huayang",
 				nowDate: (dayjs().month() + 1 < 10 ? '0' + (dayjs().month() + 1) : dayjs().month() + 1) + '.' + dayjs().date()
 			})
 		})
@@ -1027,6 +1027,7 @@ Page({
 			let video = this.selectComponent(`#videoSwiper`)
 			video.videoContext.pause()
 			video.pauseVideoAuto()
+			this.initShowGoodmorningPopup()
 		}
 	}
 })
