@@ -420,14 +420,14 @@
 /* 广告位 */
 .ad {
     position: relative;
-    top: 0;
+    top: -24rpx;
     width: 690rpx;
     height: 172rpx;
     margin: 0 auto 40rpx;
 }
 
 .ad.nodata {
-    top: 172rpx;
+    top: 160rpx;
 }
 
 .ad.partner {
