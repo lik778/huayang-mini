@@ -24,12 +24,12 @@
               {{item.label}}
             </view> -->
             <!-- 倒计时icon -->
-            <view class="count-down" wx:if='{{showCountDown}}'>
+            <view class="count-down" wx:if='{{showCountDown}}' catchtap="stopMove">
               <image src="{{countDownIconList[countDownCurrentIndex]}}"></image>
               <text>即将播放下一个视频</text>
             </view>
             <!-- 倒计时icon遮罩层 -->
-            <view class="count-down-cover" wx:if='{{showCountDown}}'>
+            <view class="count-down-cover" catchtap="stopMove" wx:if='{{showCountDown}}'>
             </view>
             <!-- 缓冲中loading -->
             <van-loading custom-class='video-loading' type="spinner" size="50px" color="#FFFFFF"
