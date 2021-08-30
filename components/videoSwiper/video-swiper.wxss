@@ -5,12 +5,21 @@
 
 .swiper-father {
   width: 100vw;
-  height: 946rpx;
+  height: 980rpx;
 }
 
 .swiper-son {
   width: 600rpx;
+  border-radius: 16rpx 16rpx 12rpx 12rpx;
   overflow: hidden;
+}
+
+.swiper-son-box {
+  width: 600rpx;
+  box-shadow: 0px 10rpx 20rpx 0px rgba(0, 0, 0, 0.05);
+  margin-top: 16rpx;
+  border-radius: 16rpx;
+  margin-left: 20rpx;
 }
 
 .swiper-video {
@@ -18,7 +27,7 @@
   height: 800rpx;
   vertical-align: bottom;
   position: relative;
-  border-radius: 6px 6px 0px 0px;
+  border-radius: 16rpx 16rpx 0px 0px;
 }
 
 .video-label {
@@ -29,10 +38,11 @@
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #FFFFFF;
-  line-height: 22rpx;
+  line-height: 48rpx;
   background: #FF4433;
   border-radius: 0px 6rpx 0px 0px;
-  padding: 8rpx 20rpx;
+  padding: 0 20rpx;
+  height: 48rpx;
 }
 
 .pause-icon {
@@ -91,17 +101,19 @@
   font-weight: bold;
   color: #000000;
   line-height: 40rpx;
-  height: 140rpx;
+  height: 142rpx;
   display: flex;
   align-items: center;
-  padding: 0 28rpx;
-  width: calc(100% - 38rpx);
+  width: 600rpx;
   box-sizing: border-box;
   background: #fff;
   text-align: justify;
-  box-shadow: 0px 6rpx 12rpx 0px rgba(0, 0, 0, 0.06);
-  border-radius: 0px 0px 12rpx 12rpx;
+  border-radius: 0px 0px 16rpx 16rpx;
   word-break: break-all;
+}
+
+.swiper-video-desc view {
+  padding: 0 28rpx;
 }
 
 .swiper-video-dot-list {
@@ -110,7 +122,7 @@
   margin: 0 auto;
   justify-content: center;
   overflow: hidden;
-  margin-top: 40rpx;
+  margin-top: 26rpx;
 }
 
 .swiper-video-dot-list>view {

@@ -46,7 +46,7 @@ Component({
       if (this.videoContext) {
         this.videoContext.stop()
       }
-      if (index > this.data.currentVideoIndex) {
+      if (index >= this.data.currentVideoIndex) {
         /* 左滑 */
         this.manageSwiperDotActive1(index, 1)
       } else {
@@ -55,7 +55,7 @@ Component({
       }
       /* 头部视频内容主动滑动打点 */
       bxPoint("new_homepage_header_vedio_slide", {
-        header_vedio_id: this.data.videoList[Number(e.detail.currentItemId)].id,
+        header_vedio_id: this.data.videoList[Number(e.detail.currentItemId) - 1].id,
         header_vedio_play_duration: this.data.swiperPlayDuration
       }, false)
       this.setData({
@@ -114,7 +114,7 @@ Component({
     },
 
     /* 当前视频播放完成 */
-    async videoEnd() {
+    async videoEnd(e) {
       let index = this.data.currentVideoIndex + 1
       if (index >= this.data.videoList.length) {
         this.setData({
@@ -123,6 +123,13 @@ Component({
         return
       }
       await this.manageCountDown()
+      let params = {
+        detail: {
+          current: index,
+          currentItemId: Number(e.currentTarget.dataset.id) - 1
+        }
+      }
+      // this.changeSwiperCurrentIndex(params)
       this.setData({
         currentVideoIndex: index
       })
@@ -186,7 +193,6 @@ Component({
         dotList = new Array(5).fill(1)
         dotList.splice(index, 1, 2)
       } else {
-        /* 待改进 */
         if (direction === 'left') {
           if (currentActive < 3) {
             let temp = list[currentActive];

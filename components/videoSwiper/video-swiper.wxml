@@ -1,35 +1,39 @@
 <!--components/videoSwiper/video-swiper.wxml-->
 <view class="video-swiper">
   <swiper class="swiper-father" current="{{currentVideoIndex}}" bindchange='changeSwiperCurrentIndex'
-    bindanimationfinish='changeFinish' previous-margin="38" next-margin="18">
+    bindanimationfinish='changeFinish' previous-margin="30" next-margin="24">
     <block wx:for="{{videoList}}" :key='index'>
       <swiper-item item-id="{{index}}" class="swiper-son" catchtouchmove="{{showCountDown?'nocCatchTap':''}}">
-        <!-- 默认显示图片-优化 -->
-        <image src="https://preview.qiantucdn.com/paixin/60/51/97/34558PICgP6jb4c7Ex7PZ_PIC2018.jpg!kuan320"
-          class="swiper-video" wx:if="{{index-currentVideoIndex>=3}}"></image>
-        <!-- 视频 -->
-        <video object-fit="fill" id="swiper-video-{{index}}" src="{{item.video_url}}" controls="{{false}}"
-          enable-play-gesture="{{false}}" enable-progress-gesture="{{false}}" show-center-play-btn="{{false}}"
-          bindtimeupdate="swiperVideoUpdate" class="swiper-video" bindended="videoEnd" wx:else bindtap="pauseVideo">
-          <!-- 播放icon -->
-          <image catchtap="playVideo" data-index="{{index}}" data-id="{{item.id}}"
-            wx:if="{{currentVideoIndex!==index||!playingVideo}}" class="pause-icon"
-            src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629860904cymQmM.jpg"></image>
-          <!-- 视频标签 -->
-          <view class="video-label" wx:if="{{currentVideoIndex!==index||!playingVideo}}">
-            {{item.label}}
+        <view class="swiper-son-box">
+          <!-- 默认显示图片-优化 -->
+          <image src="https://preview.qiantucdn.com/paixin/60/51/97/34558PICgP6jb4c7Ex7PZ_PIC2018.jpg!kuan320"
+            class="swiper-video" wx:if="{{index-currentVideoIndex>=3}}"></image>
+          <!-- 视频 -->
+          <video object-fit="fill" id="swiper-video-{{index}}" src="{{item.video_url}}" controls="{{false}}"
+            enable-play-gesture="{{false}}" enable-progress-gesture="{{false}}" show-center-play-btn="{{false}}" data-id='{{index}}'
+            bindtimeupdate="swiperVideoUpdate" class="swiper-video" bindended="videoEnd" wx:else bindtap="pauseVideo">
+            <!-- 播放icon -->
+            <image catchtap="playVideo" data-index="{{index}}" data-id="{{item.id}}"
+              wx:if="{{currentVideoIndex!==index||!playingVideo}}" class="pause-icon"
+              src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629860904cymQmM.jpg"></image>
+            <!-- 视频标签 -->
+            <view class="video-label" wx:if="{{currentVideoIndex!==index||!playingVideo}}">
+              {{item.label}}
+            </view>
+            <!-- 倒计时icon -->
+            <view class="count-down" wx:if='{{showCountDown}}'>
+              <image src="{{countDownIconList[countDownCurrentIndex]}}"></image>
+              <text>即将播放下一个视频</text>
+            </view>
+            <!-- 倒计时icon遮罩层 -->
+            <view class="count-down-cover" wx:if='{{showCountDown}}'>
+            </view>
+          </video>
+          <!-- 描述 -->
+          <view class="swiper-video-desc">
+            <view>{{item.description}}</view>
           </view>
-          <!-- 倒计时icon -->
-          <view class="count-down" wx:if='{{showCountDown}}'>
-            <image src="{{countDownIconList[countDownCurrentIndex]}}"></image>
-            <text>即将播放下一个视频</text>
-          </view>
-          <!-- 倒计时icon遮罩层 -->
-          <view class="count-down-cover" wx:if='{{showCountDown}}'>
-          </view>
-        </video>
-        <!-- 描述 -->
-        <view class="swiper-video-desc">{{item.description}}</view>
+        </view>
       </swiper-item>
     </block>
   </swiper>
