@@ -65,7 +65,7 @@ Page({
 		didLoadSecondMain: false, // 是否完成第二部分数据内容加载
 		didShowFluentLearnModal: false, // 畅学卡引导弹窗
 		_rejectModelCompetitionReload: false, // 授权成功是否跳过模特大赛相关函数
-		advertisementList: 'https://axure-file.lanhuapp.com/f8f3e725-66f9-4caa-89f3-1573911c8c5b__1dd021732307149f401bbbb2e0fed5ca.png', //广告位数据列表
+		advertisementList: '', //广告位数据列表
 		advertisementImageHeight: 115, //广告位图片高;默认为设计图的115px
 		fixedSiteList: [{
 			icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629776383tAOPGh.jpg",

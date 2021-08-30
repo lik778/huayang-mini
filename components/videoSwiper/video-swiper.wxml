@@ -6,7 +6,8 @@
       <swiper-item item-id="{{index}}" class="swiper-son" catchtouchmove="{{showCountDown?'nocCatchTap':''}}">
         <view class="swiper-son-box">
           <!-- 默认显示图片-优化 -->
-          <image src="" class="swiper-video" wx:if="{{index-currentVideoIndex>=5}}"></image>
+          <image src="" class="swiper-video" wx:if="{{index-currentVideoIndex>=5||currentVideoIndex-index>=5}}">
+          </image>
           <!-- 视频 -->
           <video bindwaiting='showLoading' bindloadedmetadata='videoLoadingEnd' object-fit="cover"
             id="swiper-video-{{index}}" src="{{item.video_url}}" controls="{{false}}" initial-time='0.01'
