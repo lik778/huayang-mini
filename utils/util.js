@@ -1,9 +1,21 @@
 import md5 from 'md5'
-import { GLOBAL_KEY, ROOT_URL, URL, WeChatLiveStatus } from '../lib/config'
-import { createOrder } from "../api/mine/payVip"
-import { getWatchLiveAuth, statisticsWatchNo } from "../api/live/course"
+import {
+	GLOBAL_KEY,
+	ROOT_URL,
+	URL,
+	WeChatLiveStatus
+} from '../lib/config'
+import {
+	createOrder
+} from "../api/mine/payVip"
+import {
+	getWatchLiveAuth,
+	statisticsWatchNo
+} from "../api/live/course"
 import request from "../lib/request"
-import { getUserInfo } from "../api/mine/index"
+import {
+	getUserInfo
+} from "../api/mine/index"
 import dayjs from "dayjs"
 
 const livePlayer = requirePlugin('live-player-plugin')
@@ -100,7 +112,10 @@ export const payFluentCard = function ({
  * @param name
  * @returns {Promise<unknown>}
  */
-export const payCertificate = function ({id,name}) {
+export const payCertificate = function ({
+	id,
+	name
+}) {
 	// 调用获取支付凭证
 	let getPaySignParams = {
 		open_id: getLocalStorage(GLOBAL_KEY.openId),
@@ -110,7 +125,10 @@ export const payCertificate = function ({id,name}) {
 	}
 	let mallKey = "fx1d9n8wdo8brfk2iou30fhybaixingo" //商户key
 	return new Promise((resolve, reject) => {
-		request._post(URL.getPaySign, getPaySignParams).then(({data,code}) => {
+		request._post(URL.getPaySign, getPaySignParams).then(({
+			data,
+			code
+		}) => {
 			if (code === 0) {
 				requestPayment({
 					prepay_id: data,
@@ -1280,4 +1298,16 @@ export const createLocalCommentItem = (content, id) => {
 		avatar_url: userInfo.avatar_url
 	}
 	return returnObj
+}
+
+
+export const shuffle = (arr) => {
+	var len = arr.length;
+	for (var i = 0; i < len - 1; i++) {
+		var index = parseInt(Math.random() * (len - i));
+		var temp = arr[index];
+		arr[index] = arr[len - i - 1];
+		arr[len - i - 1] = temp;
+	}
+	return arr;
 }
