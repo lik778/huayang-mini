@@ -1,6 +1,6 @@
 /* components/videoSwiper/video-swiper.wxss */
 .video-swiper {
-  padding-bottom: 60rpx;
+  padding-bottom: 80rpx;
 }
 
 .swiper-father {
@@ -92,7 +92,7 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 10;
+  z-index: 11;
 }
 
 .swiper-video-desc {
@@ -104,12 +104,21 @@
   height: 142rpx;
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 600rpx;
   box-sizing: border-box;
   background: #fff;
   text-align: justify;
   border-radius: 0px 0px 16rpx 16rpx;
   word-break: break-all;
+}
+
+.video-loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
 }
 
 .swiper-video-desc view {

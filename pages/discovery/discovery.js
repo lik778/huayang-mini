@@ -6,6 +6,7 @@ import {
 	hasUserInfo,
 	removeLocalStorage,
 	setLocalStorage,
+	shuffle
 } from "../../utils/util"
 import {
 	getActivityList,
@@ -85,7 +86,13 @@ Page({
 		newActivityVideoPlayIndex: -1, //花样最新活动当前播放视频下标
 		newActivityVideoPlaying: false, //花样最新活动视频是否在播放中
 		showGoodMorningRedDot: false, //金刚位每日签到红点提示
-		enterFullNewActivityVideo: false
+		enterFullNewActivityVideo: false, //最新活动视频是否进入全屏
+		headerVideoPagination: {
+			offset: 0,
+			limit: 30
+		},
+		swiperVideoList: [],
+		headerVideoPaginationTrue: true
 	},
 	async run() {
 		// 请求花样大学首页弹窗任务
@@ -760,15 +767,30 @@ Page({
 			showGoodMorningNoticePopup: false
 		})
 	},
+
+	/* 头部视频数据分页 */
+	queryNextList() {
+		if (this.data.headerVideoPaginationTrue) {
+			let param = Object.assign({}, this.data.headerVideoPagination, {
+				offset: this.data.headerVideoPagination.offset + this.data.headerVideoPagination.limit
+			})
+			this.setData({
+				headerVideoPagination: param
+			}, () => {
+				this.headerVideoManage()
+			})
+		}
+	},
 	/* 头部视频相关数据处理 */
 	headerVideoManage() {
-		getIndexHeaderVideoList({
-			limit: 999
-		}).then(({
+		getIndexHeaderVideoList(this.data.headerVideoPagination).then(({
 			data
 		}) => {
+			let list = this.data.swiperVideoList.length > 0 ? this.data.swiperVideoList.concat(data.list || []) : data.list || []
+			list = shuffle(list)
 			this.setData({
-				swiperVideoList: data.list || []
+				swiperVideoList: list,
+				headerVideoPaginationTrue: data.list.length >= this.data.headerVideoPagination.limit ? true : false
 			})
 		})
 	},
@@ -996,7 +1018,7 @@ Page({
 	 */
 	onShareAppMessage: function () {
 		return {
-			title: "我在花样百姓，和我一起学习、游玩吧，开心每一天！",
+			title: "在花样百姓，过积极、健康、时尚的品质生活。",
 			path: `/pages/discovery/discovery?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
 		}
 	},

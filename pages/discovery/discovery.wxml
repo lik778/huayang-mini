@@ -2,7 +2,7 @@
 <view class="discovery" style="visibility: {{canShow?'visible':'hidden'}};">
     <view id='first-screen'>
         <!-- 时尚视频轮播 -->
-        <video-swiper bindpauseVideo='initShowGoodmorningPopup' id='videoSwiper' videoList="{{swiperVideoList}}">
+        <video-swiper bindpauseVideo='initShowGoodmorningPopup' id='videoSwiper' videoList="{{swiperVideoList}}" bindqueryNextList='queryNextList'>
         </video-swiper>
         <!-- 广告位 -->
         <view class="advertisement-module" wx:if='{{advertisementList.length}}'>
@@ -53,7 +53,7 @@
                         bindpause="pauseNewActivityVideo" id="new-activity-item-video-{{index}}"
                         bindfullscreenchange='enterFullNewActivityVideo'
                         wx:if='{{item.video_url&&newActivityVideoPlayIndex===index}}'></video>
-                    <image src="{{item.cover}}" data-type='{{item.type}}'
+                    <image src="{{item.cover}}" data-type='{{item.type}}' mode="widthFix"
                         bindtap="{{item.video_url?'playNewActivityVideo':'newActivityItemTap'}}"
                         class="new-activity-item-play-cover" data-index='{{index}}' data-item="{{item.link_url}}"
                         data-meta='{{item}}' wx:if="{{!item.video_url||newActivityVideoPlayIndex!==index}}">
@@ -139,10 +139,7 @@
     <!-- 直播 -->
     <liveLayout wx:if="{{liveList.length > 0}}" class="limit-two-line" liveList="{{liveList}}"
         bind:openUserAuth="openUserAuth" />
-
-    <!-- 分隔 -->
-    <view class="separate-line"></view>
-
+        
     <!-- 大赛&活动 -->
     <view class="other-activity" wx:if="{{showModelBanner}}">
         <!-- 大赛 -->

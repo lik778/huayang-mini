@@ -129,7 +129,8 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: "我在花样百姓，和我一起学习、游玩吧，开心每一天！",
+      title: "早上好~开启美丽新一天！",
+      imageUrl:this.data.posterBg,
       path: `/others/goodMorningResult/goodMorningResult?img=${this.data.posterBg}&sharer=true`
     }
   }

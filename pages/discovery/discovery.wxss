@@ -97,7 +97,7 @@
 .college-activity-picture {
   width: 100%;
   height: 344rpx;
-  margin-bottom: 16rpx;
+  margin-bottom: 24rpx;
   border-radius: 16rpx 16rpx 6rpx 6rpx;
 }
 
@@ -111,7 +111,7 @@
 }
 
 .competition-title {
-  margin: 40rpx 0 20rpx;
+  margin: 0 0 20rpx;
   height: 76rpx;
   font: 500 52rpx/76rpx PingFangSC;
   color: rgba(0, 0, 0, 1);
@@ -545,7 +545,7 @@
 /* 金刚位 */
 .fixed-site-module {
   padding: 0 76rpx;
-  padding-bottom: 94rpx;
+  padding-bottom: 100rpx;
 }
 
 .fixed-site-list {

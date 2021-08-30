@@ -7,7 +7,8 @@ Component({
   properties: {
     videoList: {
       type: Array,
-      value: []
+      value: [],
+      observer: function (newVal, oldVal) {}
     },
     currentVideoIndex: {
       type: Number,
@@ -27,7 +28,8 @@ Component({
     direction: 'left',
     swiperDotIsEnd: false,
     animationingStatus: false,
-    swiperPlayDuration: ''
+    swiperPlayDuration: '',
+    videoLoading: true
   },
 
   lifetimes: {
@@ -49,15 +51,27 @@ Component({
       if (index >= this.data.currentVideoIndex) {
         /* 左滑 */
         this.manageSwiperDotActive1(index, 1)
+        /* 头部视频内容主动滑动打点 */
+        bxPoint("new_homepage_header_vedio_slide", {
+          header_vedio_id: this.data.videoList[Number(e.detail.currentItemId) - 1].id,
+          header_vedio_play_duration: this.data.swiperPlayDuration
+        }, false)
       } else {
         /* 右滑 */
         this.manageSwiperDotActive1(index, -1)
+        /* 头部视频内容主动滑动打点 */
+        bxPoint("new_homepage_header_vedio_slide", {
+          header_vedio_id: this.data.videoList[Number(e.detail.currentItemId) + 1].id,
+          header_vedio_play_duration: this.data.swiperPlayDuration
+        }, false)
       }
-      /* 头部视频内容主动滑动打点 */
-      bxPoint("new_homepage_header_vedio_slide", {
-        header_vedio_id: this.data.videoList[Number(e.detail.currentItemId) - 1].id,
-        header_vedio_play_duration: this.data.swiperPlayDuration
-      }, false)
+
+      let videoTotal = this.data.videoList.length
+      let current = index + 1
+      if (videoTotal - current <= 5) {
+        this.triggerEvent("queryNextList")
+      }
+
       this.setData({
         currentVideoIndex: index
       })
@@ -67,7 +81,8 @@ Component({
     /* 记录视频播放时长 */
     swiperVideoUpdate(e) {
       this.setData({
-        swiperPlayDuration: Math.round(e.detail.currentTime)
+        swiperPlayDuration: Math.round(e.detail.currentTime),
+        videoLoading: false,
       })
     },
 
@@ -93,12 +108,20 @@ Component({
       })
     },
 
+    observers: {
+      'videoList'(item1, item2) {
+        console.log(item1, item2)
+      }
+    },
+
+    /* 指示器动画开始 */
     animationing() {
       this.setData({
         animationingStatus: true
       })
     },
 
+    /* 指示器动画结束 */
     animationend() {
       this.setData({
         direction: '',
@@ -106,11 +129,24 @@ Component({
       })
     },
 
-
     /* 点击按钮播放视频 */
     playVideo(e) {
       let index = e.currentTarget.dataset.index
       this.playVideoCommon(index)
+    },
+
+    /* 视频元数据加载完成 */
+    videoLoadingEnd() {
+      this.setData({
+        videoLoading: false
+      })
+    },
+
+    /* 显示视频loading */
+    showLoading() {
+      this.setData({
+        videoLoading: true
+      })
     },
 
     /* 当前视频播放完成 */
@@ -123,13 +159,6 @@ Component({
         return
       }
       await this.manageCountDown()
-      let params = {
-        detail: {
-          current: index,
-          currentItemId: Number(e.currentTarget.dataset.id) - 1
-        }
-      }
-      // this.changeSwiperCurrentIndex(params)
       this.setData({
         currentVideoIndex: index
       })
