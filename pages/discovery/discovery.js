@@ -630,7 +630,7 @@ Page({
 			}
 			this.setData({
 				newActivityList: list,
-				goodMorningPopupBg: link,
+				goodMorningPopupBg: link + "?x-oss-process=style/huayang",
 				nowDate: (dayjs().month() + 1 < 10 ? '0' + (dayjs().month() + 1) : dayjs().month() + 1) + '.' + dayjs().date()
 			})
 		})
@@ -686,7 +686,7 @@ Page({
 		let nowTime = parseInt(new Date().getTime() / 1000) //当前时间-s
 		let nowHour = new Date().getHours() //当前小时数
 		let localTime = getLocalStorage("good_morning_expire_at") || '' //本次缓存上次显示弹窗的时间
-		if (3 < nowHour && nowHour < 10) {
+		if (3 < nowHour && nowHour < 18) {
 			// 当天4-10点内显示
 			if (!localTime) {
 				setLocalStorage("good_morning_expire_at", nowTime)
@@ -1027,6 +1027,7 @@ Page({
 			let video = this.selectComponent(`#videoSwiper`)
 			video.videoContext.pause()
 			video.pauseVideoAuto()
+			this.initShowGoodmorningPopup()
 		}
 	}
 })
