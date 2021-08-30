@@ -8,29 +8,20 @@ import {
 	setLocalStorage,
 	shuffle
 } from "../../utils/util"
-import {
-	getActivityList,
-	getFindBanner,
-	getOfflineCourseAllData,
-} from "../../api/course/index"
-import {
-	getBannerList
-} from "../../api/mall/index"
-import {
-	GLOBAL_KEY,
-	WeChatLiveStatus
-} from "../../lib/config"
+import { getActivityList, getFindBanner, getOfflineCourseAllData, } from "../../api/course/index"
+import { getBannerList } from "../../api/mall/index"
+import { GLOBAL_KEY, WeChatLiveStatus } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import {
 	addTravelVisitNumber,
 	getDiscoveryRemindData,
+	getGoodMorningBgTemplate,
+	getIndexHeaderVideoList,
+	getNewActivityList,
 	getRecommendLiveList,
 	queryQualityVideoList,
 	queryRecentTravelList,
-	updateLiveStatus,
-	getNewActivityList,
-	getGoodMorningBgTemplate,
-	getIndexHeaderVideoList
+	updateLiveStatus
 } from "../../api/live/index"
 import dayjs from "dayjs"
 import request from "../../lib/request"

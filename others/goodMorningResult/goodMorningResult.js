@@ -1,8 +1,7 @@
 // others/goodMorningResult/goodMorningResult.js
 import bxPoint from "../../utils/bxPoint"
-import {
-  isIphoneXRSMax
-} from "../../utils/util"
+import { isIphoneXRSMax } from "../../utils/util"
+
 Page({
 
   /**

@@ -1,5 +1,6 @@
 // components/videoSwiper/video-swiper.js
 import bxPoint from "../../utils/bxPoint"
+
 Component({
   /**
    * 组件的属性列表

@@ -220,7 +220,7 @@
       </view>
     </view>
     <!-- 未登录 -->
-    <view class="pay-button-no-login subject-bg-color pay-button-common" bindtap="login" wx:if="{{buttonType===1}}">登录授权
+    <view class="pay-button-no-login subject-bg-color pay-button-common" bindtap="login" wx:if="{{buttonType===1}}">立即登录
     </view>
     <!-- 邀请折扣 -->
     <view class="pay-button-invite" wx:if='{{buttonType===7||buttonType===8}}'>

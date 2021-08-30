@@ -13,17 +13,17 @@ Component({
         isDIY: false
       },
       {
-        "pagePath": "/pages/studentMoments/studentMoments",
-        "selectedIconPath": "../assets/images/common/student-moments-active.png",
-        "iconPath": "../assets/images/common/student-moments.png",
-        "text": "校友动态",
+        "pagePath": "/pages/competition/competition",
+        "selectedIconPath": "../assets/images/common/competitionActive.png",
+        "iconPath": "../assets/images/common/competition.png",
+        "text": "大赛",
         isDIY: false
       },
       {
         "pagePath": "/pages/practice/practice",
         "selectedIconPath": "../assets/images/common/practiceActive.png",
         "iconPath": "../assets/images/common/practice.png",
-        "text": "学校课程",
+        "text": "课程",
         isDIY: false
       },
       {
@@ -50,7 +50,7 @@ Component({
         bxPoint("homepage_mine_visit", {}, false)
       }
 
-      // 校友动态TAB
+      // 大赛TAB
       else if (this.data.selected === 1 && url === '/pages/discovery/discovery') {
         bxPoint("bbs_homepage", {}, false)
       } else if (this.data.selected === 1 && url === '/pages/practice/practice') {
