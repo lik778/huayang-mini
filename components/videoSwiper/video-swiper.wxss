@@ -75,7 +75,7 @@
   color: #FFFFFF;
   line-height: 32rpx;
   white-space: nowrap;
-  z-index: 11;
+  z-index: 12;
 }
 
 .count-down image {
@@ -111,6 +111,7 @@
   text-align: justify;
   border-radius: 0px 0px 16rpx 16rpx;
   word-break: break-all;
+  text-align: center;
 }
 
 .video-loading {
