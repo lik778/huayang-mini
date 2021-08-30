@@ -3,9 +3,13 @@
 .user-center {
     position: relative;
     background: #F9F9F9;
-    padding-bottom: 250rpx;
+    padding-bottom: 200rpx;
     min-height: 100vh;
     box-sizing: border-box;
+}
+
+.user-center.nodata {
+    padding-bottom: 300rpx;
 }
 
 /* 个人信息  */
@@ -416,14 +420,14 @@
 /* 广告位 */
 .ad {
     position: relative;
-    top: -108rpx;
+    top: 0;
     width: 690rpx;
     height: 172rpx;
-    margin: 40rpx auto 0;
+    margin: 0 auto 40rpx;
 }
 
 .ad.nodata {
-    top: 60rpx;
+    top: 172rpx;
 }
 
 .ad.partner {
@@ -448,9 +452,9 @@
     margin: 0 auto;
     background: #fff;
     border-radius: 8rpx;
-    box-shadow: 0px 0px 12rpx 0px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 12rpx 0px rgba(0, 0, 0, 0.05);
     position: relative;
-    top: -68rpx;
+    top: -88rpx;
 }
 
 .function.nodata {

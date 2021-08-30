@@ -1,4 +1,4 @@
-import { hasAccountInfo, hasUserInfo } from "../../utils/util"
+import { $notNull, hasAccountInfo, hasUserInfo } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
 import { getBannerList } from "../../api/mall/index"
 import {
@@ -23,7 +23,8 @@ Page({
 		videoList: [],
 		albumList: [],
 		videoClass: null,
-		currentVideoUrl: ""
+		currentVideoUrl: "",
+		isPlaying: false
 	},
 
 	/**
@@ -120,16 +121,22 @@ Page({
 					Object.entries(ab).forEach(([key, values]) => {
 						list = data.map(n => {
 							let target = values.find(_ => _.album_id === n.id)
-							n.pic_count = n.pic_count >= 10000 ? (n.pic_count / 10000).toFixed(1) + "w" : n.pic_count
-							n.video_count = n.video_count >= 10000 ? (n.video_count / 10000).toFixed(1) + "w" : n.video_count
-							n.view_count = n.view_count >= 10000 ? (n.view_count / 10000).toFixed(1) + "w" : n.view_count
-							target.album = n
+							if ($notNull(target)) {
+								n.pic_count = n.pic_count >= 10000 ? (n.pic_count / 10000).toFixed(1) + "w" : n.pic_count
+								n.video_count = n.video_count >= 10000 ? (n.video_count / 10000).toFixed(1) + "w" : n.video_count
+								n.view_count = n.view_count >= 10000 ? (n.view_count / 10000).toFixed(1) + "w" : n.view_count
+								target.album = n
+							} else {
+								target = null
+							}
 							return target
 						})
-						ary.push({name: key, content: list})
+						ary.push({name: key, content: list.filter(n => n)})
 					})
 				})
 				this.setData({albumList: ary})
+
+				this.initVideoListener()
 			})
 		})
 	},
@@ -184,18 +191,31 @@ Page({
 		this.setData({currentVideoUrl: src})
 		let t = setTimeout(() => {
 			this.data.videoClass.play()
-			this.data.videoClass.requestFullScreen({direction: 90})
+			this.setData({isPlaying: true})
 			clearTimeout(t)
 		}, 200)
 	},
-	screenChange(e) {
-		this.data.videoClass.controls = !e.detail.fullScreen
-		if (e.detail.fullScreen) {
-			// 进入全屏
-		} else {
-			// 退出全屏
-			this.data.videoClass.stop()
-		}
+	pauseVideo() {
+		this.setData({isPlaying: false})
+		this.data.videoClass.pause()
+	},
+	endVideo() {
+		this.pauseVideo()
+	},
+	initVideoListener() {
+		let self = this
+		let previewOB = wx.createIntersectionObserver()
+		previewOB.relativeToViewport({
+			top: -50,
+			bottom: -50
+		})
+			.observe('#competitionVideo', res => {
+				if (res && res.intersectionRatio > 0) {
+				} else {
+					// 离开可视区域
+					self.pauseVideo()
+				}
+			})
 	},
 	handleAlbumTap(e) {
 		let item = e.currentTarget.dataset.item

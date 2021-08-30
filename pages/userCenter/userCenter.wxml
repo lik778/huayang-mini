@@ -1,4 +1,4 @@
-<view class="user-center">
+<view class="user-center {{nodata && 'nodata'}}">
 	<view class="banner">
 		<!-- 背景图 -->
 		<image class="banner-bg {{nodata && 'nodata'}}"
@@ -13,7 +13,7 @@
 			<view class="no-data-layout" wx:if="{{nodata}}" bindtap="getAuth">
 				<text class="no-data-title">花样百姓</text>
 				<text class="no-data-sub-title">面向50岁+新青年的生活方式平台，倡导和引领积极、健康、时尚的品质生活方式。</text>
-				<view class="no-data-btn">立即登陆</view>
+				<view class="no-data-btn">立即登录</view>
 			</view>
 			<view wx:else class="user-info">
 				<view class="nick-name">
@@ -90,15 +90,6 @@
 	<!--			src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603873700ScBmHI.jpg" class="add-btn"></image>-->
 	<!--	</view>-->
 
-	<!-- 广告位 -->
-	<view class="ad {{ nodata && 'nodata' }}" wx:if="{{bannerList.length > 0}}">
-		<swiper class="swiper-item-box" circular autoplay interval="{{3000}}" duration="{{500}}">
-			<swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="onBannerItemTap" data-item="{{item}}">
-				<view class="swiper-cover"></view>
-				<image mode="cover" src="{{item.pic_url}}"></image>
-			</swiper-item>
-		</swiper>
-	</view>
 	<!-- 功能栏 -->
 	<view class="function {{ nodata && 'nodata' }}">
 		<view class="function-list">
@@ -212,6 +203,17 @@
 			</view>
 		</view>
 	</view>
+
+	<!-- 广告位 -->
+	<view class="ad {{ nodata && 'nodata' }}" wx:if="{{bannerList.length > 0}}">
+		<swiper class="swiper-item-box" circular autoplay interval="{{3000}}" duration="{{500}}">
+			<swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="onBannerItemTap" data-item="{{item}}">
+				<view class="swiper-cover"></view>
+				<image mode="cover" src="{{item.pic_url}}"></image>
+			</swiper-item>
+		</swiper>
+	</view>
+
 	<!-- 授权弹窗 -->
 	<authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
 	</authModule>
