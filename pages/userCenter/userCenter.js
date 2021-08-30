@@ -45,6 +45,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    loading: false,
     userInfo: null,
     fluentLearnUserInfo: null,
     didShowAuth: false,
@@ -620,7 +621,7 @@ Page({
       info.nickname = this.handleNickname(info.nickname)
       this.setData({
         userInfo: info,
-        nodata: false,
+        nodata: true,
       })
     } else if (hasUserInfo() && hasAccountInfo()) {
       // 有微信信息且有手机号信息
@@ -661,6 +662,8 @@ Page({
         })
       }, 500)
     }
+
+    this.setData({loading: true})
   },
 
 

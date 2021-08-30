@@ -88,6 +88,10 @@
     text-align: center;
 }
 
+.video {
+    margin-bottom: 110rpx;
+}
+
 .swiper-box {
     position: relative;
     background: #eee;
