@@ -1,0 +1,56 @@
+<!--components/videoSwiper/video-swiper.wxml-->
+<view class="video-swiper">
+  <swiper class="swiper-father" current="{{currentVideoIndex}}" bindchange='changeSwiperCurrentIndex'
+    bindanimationfinish='changeFinish' previous-margin="30" next-margin="24">
+    <block wx:for="{{videoList}}" :key='index'>
+      <swiper-item item-id="{{index}}" class="swiper-son" catchtouchmove="{{showCountDown?'nocCatchTap':''}}">
+        <view class="swiper-son-box">
+          <!-- 默认显示图片-优化 -->
+          <image src="" class="swiper-video" wx:if="{{index-currentVideoIndex>=5||currentVideoIndex-index>=5}}">
+          </image>
+          <!-- 视频 -->
+          <video bindwaiting='showLoading' bindloadedmetadata='videoLoadingEnd' object-fit="cover"
+            id="swiper-video-{{index}}" src="{{item.video_url}}" controls="{{false}}" initial-time='0.01'
+            poster="{{item.video_url+'?x-oss-process=video/snapshot,t_0,f_jpg,w_0,h_0,ar_auto'}}"
+            enable-play-gesture="{{false}}" enable-progress-gesture="{{false}}" show-center-play-btn="{{false}}"
+            data-id='{{index}}' bindtimeupdate="swiperVideoUpdate" class="swiper-video" bindended="videoEnd" wx:else
+            bindtap="pauseVideo">
+            <!-- 播放icon -->
+            <image catchtap="playVideo" data-index="{{index}}" data-id="{{item.id}}"
+              wx:if="{{currentVideoIndex!==index||!playingVideo}}" class="pause-icon"
+              src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629860904cymQmM.jpg"></image>
+            <!-- 视频标签 -->
+            <!-- <view class="video-label" wx:if="{{currentVideoIndex!==index||!playingVideo}}">
+              {{item.label}}
+            </view> -->
+            <!-- 倒计时icon -->
+            <view class="count-down" wx:if='{{showCountDown}}' catchtap="stopMove">
+              <image src="{{countDownIconList[countDownCurrentIndex]}}"></image>
+              <text>即将播放下一个视频</text>
+            </view>
+            <!-- 倒计时icon遮罩层 -->
+            <view class="count-down-cover" catchtap="stopMove" wx:if='{{showCountDown}}'>
+            </view>
+            <!-- 缓冲中loading -->
+            <van-loading custom-class='video-loading' type="spinner" size="50px" color="#FFFFFF"
+              wx:if='{{videoLoading&&currentVideoIndex===index&&1&&!(currentVideoIndex!==index||!playingVideo)}}'>
+            </van-loading>
+          </video>
+          <!-- 描述 -->
+          <view class="swiper-video-desc">
+            <view>{{item.description}}</view>
+          </view>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+  <!-- swiper指示点 -->
+  <view class="swiper-video-dot-list">
+    <view class="swiper-video-dot-item-{{item}} {{item===2&&!animationingStatus?'swiper-video-dot-item-active':''}}"
+      wx:for="{{swiperDotList}}" wx:key='index'>
+      <view bindanimationend="animationend" bindanimationstart="animationing"
+        class="{{direction==='right'&&item===2?'swiper-video-dot-item-right':direction==='left'&&item===2?'swiper-video-dot-item-left':''}}">
+      </view>
+    </view>
+  </view>
+</view>

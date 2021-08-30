@@ -1,0 +1,56 @@
+/* others/goodMorningResult/goodMorningResult.wxss */
+.container {
+  background: rgba(55, 56, 59, 1);
+  height: 100vh;
+}
+
+.bg {
+  padding-top: 106rpx;
+  text-align: center;
+}
+
+.bg image {
+  width: 650rpx;
+  height: 866rpx;
+  vertical-align: bottom;
+}
+
+.sharer-button,
+.receiver-button {
+  width: calc(100vw - 60rpx);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0 auto;
+}
+
+.sharer-button-left,
+.receiver-button-left {
+  width: 330rpx;
+  height: 96rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 96rpx;
+  text-align: center;
+  background: #FFFFFF;
+  border-radius: 999rpx;
+}
+
+.sharer-button-right,
+.receiver-button-right {
+  width: 330rpx;
+  height: 96rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 96rpx;
+  text-align: center;
+  background: #FFCC22;
+  border-radius: 999rpx;
+}

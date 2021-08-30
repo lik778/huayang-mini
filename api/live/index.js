@@ -3,7 +3,9 @@ import { URL } from "../../lib/config"
 
 export function getLiveList(params) {
 	return new Promise((resolve, reject) => {
-		request._get(URL.liveList, params).then(({data}) => {
+		request._get(URL.liveList, params).then(({
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		}).catch((err) => {
@@ -15,7 +17,9 @@ export function getLiveList(params) {
 // 获取推荐直播课程
 export function getRecommendLiveList(params) {
 	return new Promise((resolve, reject) => {
-		request._get(URL.recommendLiveList, params).then(({data}) => {
+		request._get(URL.recommendLiveList, params).then(({
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		}).catch((err) => {
@@ -27,7 +31,9 @@ export function getRecommendLiveList(params) {
 // 获取游学产品列表
 export function queryTravelList(params) {
 	return new Promise((resolve, reject) => {
-		request._get(URL.getTravelList, params).then(({data}) => {
+		request._get(URL.getTravelList, params).then(({
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		}).catch((err) => {
@@ -39,7 +45,9 @@ export function queryTravelList(params) {
 // 获取近期游学产品列表
 export function queryRecentTravelList(params) {
 	return new Promise((resolve, reject) => {
-		request._get(URL.getRecentTravelList, params).then(({data}) => {
+		request._get(URL.getRecentTravelList, params).then(({
+			data
+		}) => {
 			data = data || []
 			data = data.map(n => n.travel_product)
 			resolve(data)
@@ -57,7 +65,9 @@ export function addTravelVisitNumber(params) {
 // 获取今日推荐课程
 export function queryTodayRecommendCourse(params) {
 	return new Promise((resolve, reject) => {
-		request._get(URL.getTodayRecommendCourse, params).then(({data}) => {
+		request._get(URL.getTodayRecommendCourse, params).then(({
+			data
+		}) => {
 			data = data || {}
 			resolve(data)
 		}).catch((err) => {
@@ -69,7 +79,9 @@ export function queryTodayRecommendCourse(params) {
 // 获取精品课程列表
 export function queryQualityVideoList(params) {
 	return new Promise((resolve, reject) => {
-		request._get(URL.getQualityVideoList, params).then(({data}) => {
+		request._get(URL.getQualityVideoList, params).then(({
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		}).catch((err) => {
@@ -81,7 +93,9 @@ export function queryQualityVideoList(params) {
 // 获取专栏课程
 export function querySectionCourseList(params) {
 	return new Promise((resolve, reject) => {
-		request._get(URL.getSectionCourseList, params).then(({data}) => {
+		request._get(URL.getSectionCourseList, params).then(({
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		}).catch((err) => {
@@ -92,7 +106,9 @@ export function querySectionCourseList(params) {
 
 export function getLiveBannerList(params) {
 	return new Promise(resolve => {
-		request._get(URL.getLiveBannerList, params).then(({data}) => {
+		request._get(URL.getLiveBannerList, params).then(({
+			data
+		}) => {
 			data = data || []
 			resolve(data)
 		})
@@ -105,7 +121,9 @@ export function updateLiveStatus(params) {
 
 export function setPoint(params) {
 	return new Promise((resolve, reject) => {
-		request._post(URL.point, params).then(({ code }) => {
+		request._post(URL.point, params).then(({
+			code
+		}) => {
 			if (code === 0) {
 				resolve()
 			}
@@ -123,7 +141,9 @@ export function setPoint(params) {
  */
 export function getRemind(params) {
 	return new Promise((resolve, reject) => {
-		request._get(URL.getRemind, params).then(({ data }) => {
+		request._get(URL.getRemind, params).then(({
+			data
+		}) => {
 			resolve(data)
 		}).catch(() => {
 			reject()
@@ -137,7 +157,9 @@ export function getRemind(params) {
  */
 export function getAttemptTimes() {
 	return new Promise((resolve, reject) => {
-		request._get(URL.queryAttemptTimes).then(({data}) => {
+		request._get(URL.queryAttemptTimes).then(({
+			data
+		}) => {
 			resolve(data)
 		}).catch(() => {
 			reject()
@@ -167,11 +189,28 @@ export function getAttempt(params) {
  */
 export function getDiscoveryRemindData(params) {
 	return new Promise((resolve, reject) => {
-		request._get(URL.queryDiscoveryRemindData, params).then(({data}) => {
+		request._get(URL.queryDiscoveryRemindData, params).then(({
+			data
+		}) => {
 			data = data || {}
 			resolve(data)
 		}).catch((err) => {
 			reject(err)
 		})
 	})
+}
+
+/* 获取最新活动列表 */
+export const getNewActivityList = params => {
+	return request._get(URL.getNewActivityList, params)
+}
+
+/* 获取早上好背景模版 */
+export const getGoodMorningBgTemplate = params => {
+	return request._get(URL.getGoodMorningBgTemplate, params)
+}
+
+/* 获取首页头部视频列表 */
+export const getIndexHeaderVideoList = params => {
+	return request._get(URL.getIndexHeaderVideoList, params)
 }

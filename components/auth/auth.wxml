@@ -7,7 +7,7 @@
             <view class="sure">
                 <button wx:if="{{didGetPhoneNumber}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="hidden-button"></button>
                 <button wx:if="{{!didGetPhoneNumber}}" bindtap="getUserInfo" class="hidden-button"></button>
-                <view class="button subject-bg-color">{{didGetPhoneNumber ? "手机号授权" : "微信登录"}}</view>
+                <view class="button subject-bg-color">{{didGetPhoneNumber ? "手机号登录" : "微信登录"}}</view>
             </view>
             <view class="cancel" bind:tap="cancel">取消</view>
         </view>

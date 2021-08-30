@@ -41,8 +41,7 @@
     "audio",
     "location"
   ],
-  "subpackages": [
-    {
+  "subpackages": [{
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -138,6 +137,12 @@
         "category/category",
         "temporary/temporary"
       ]
+    },
+    {
+      "root": "others",
+      "pages": [
+        "goodMorningResult/goodMorningResult"
+      ]
     }
   ],
   "window": {
@@ -149,8 +154,7 @@
   },
   "tabBar": {
     "custom": true,
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/discovery/discovery"
       },
       {
