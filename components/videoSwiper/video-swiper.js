@@ -218,6 +218,7 @@ Component({
       let currentActive = this.data.swiperDotList.indexOf(2)
       let list = this.data.swiperDotList
       let dotList = []
+      // dotList数组中数字0代表小指示点，1是灰大指示点，2是黑指示点
       if (videoTotal <= 5) {
         dotList = new Array(5).fill(1)
         dotList.splice(index, 1, 2)
