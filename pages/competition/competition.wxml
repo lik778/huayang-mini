@@ -65,7 +65,10 @@
         </view>
     </view>
 
-    <button open-type="share" class="share-btn" bindtap="handleShareBtnTap"></button>
+    <view class="share-btn" bindtap="handleShareBtnTap">
+        <button class="share-hide-btn" open-type="share"></button>
+        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1630051473GDELSF.jpg" mode="aspectFit"></image>
+    </view>
 
     <!-- 授权弹窗 -->
     <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent"
@@ -75,7 +78,6 @@
     <video id="competitionVideo"
            src="{{currentVideoUrl}}"
            bindfullscreenchange="screenChange"
-           direction="{{0}}"
            vslide-gesture-in-fullscreen="{{false}}"
            custom-cache="{{false}}" object-fit="contain" enable-play-gesture="{{false}}"
            enable-progress-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}"

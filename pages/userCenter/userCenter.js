@@ -797,7 +797,7 @@ Page({
    */
   onShareAppMessage: function (res) {
     return {
-      title: '我在花样百姓，和我一起学习、游玩吧，开心每一天！',
+      title: '在花样百姓，过积极、健康、时尚的品质生活',
       path: `/pages/discovery/discovery?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
     }
   },

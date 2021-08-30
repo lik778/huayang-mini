@@ -196,12 +196,25 @@
     bottom: 200rpx;
     width: 176rpx;
     height: 80rpx;
-    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1630051473GDELSF.jpg") no-repeat center;
-    background-size: contain;
+    font-size: 0;
+}
+
+.share-btn > image {
+    width: 100%;
+    height: 100%;
 }
 
 .share-btn:active {
     opacity: 0.9;
+}
+
+.share-hide-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    opacity: 0;
 }
 
 #competitionVideo {

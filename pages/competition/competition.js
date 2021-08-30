@@ -181,7 +181,7 @@ Page({
 		this.setData({currentVideoUrl: src})
 		let t = setTimeout(() => {
 			this.data.videoClass.play()
-			this.data.videoClass.requestFullScreen()
+			this.data.videoClass.requestFullScreen({direction: 90})
 			clearTimeout(t)
 		}, 200)
 	},
