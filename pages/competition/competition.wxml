@@ -5,7 +5,7 @@
         <view class="sub-title" bindtap="handleIntroduce">大赛介绍 ›</view>
     </view>
 
-    <view class="fast-enter" wx:if="{{bannerList.length > 0}}">
+    <view class="fast-enter" wx:if="{{bannerList && bannerList.length > 0}}">
         <view class="fast-long-item" wx:if="{{bannerList.length % 2 === 1}}" bindtap="handleBannerTap"
               data-item="{{bannerList[0]}}">
             <image src="{{bannerList[0].pic_url}}" mode="aspectFill"></image>
@@ -17,10 +17,10 @@
         </view>
     </view>
 
-    <view class="media">
+    <view class="media" wx:if="{{mediaList && mediaList.length > 0}}">
         <view class="layer-title">大赛媒体报道</view>
 
-        <view class="media-item" wx:if="{{mediaList.length > 0}}" wx:for="{{mediaList}}" bindtap="handleMediaTap"
+        <view class="media-item" wx:for="{{mediaList}}" bindtap="handleMediaTap"
               data-item="{{item}}">
             <image class="media-cover" src="{{item.cover}}" mode="aspectFill"></image>
             <view class="media-item-title">{{item.title}}</view>
@@ -29,7 +29,7 @@
         <view class="more-media-btn" bindtap="findMoreMediaTap">更多媒体报道 ›</view>
     </view>
 
-    <view class="video">
+    <view class="video" wx:if="{{videoList && videoList.length > 0}}">
         <view class="layer-title">大赛精彩视频</view>
 
         <view class="swiper-box" id="swiper-box">
