@@ -60,7 +60,7 @@
     </view>
 
     <view class="history-photos">
-        <view class="layer-title">历届精彩相册</view>
+        <view class="layer-title history-main-title">历届精彩相册</view>
 
         <view class="history-item" wx:for="{{albumList}}" wx:key="index">
             <view class="history-title">{{item.name}}</view>
