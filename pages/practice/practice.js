@@ -59,7 +59,6 @@ Page({
 		didShowGuide: false, // 是否展示入群引导
 		didExecuteGuideAnimation: false, // 是否执行入群引导动画
 		didAlreadySubscribe: false, // 是否已经订阅课程提醒
-		didNeedReloadShowLifetime: true, // 是否执行onShow生命周期
 	},
 	getBanner() {
 		return new Promise((resolve) => {
@@ -96,8 +95,6 @@ Page({
 					kecheng_dis_price: item.discount_price,
 					kecheng_teacher: item.teacher.name,
 				}, false)
-
-				self.setData({didNeedReloadShowLifetime: false})
 			}
 		})
 	},
@@ -105,9 +102,6 @@ Page({
 		let self = this
 		wx.navigateTo({
 			url: "/subCourse/practiceDetail/practiceDetail?courseId=" + e.currentTarget.dataset.id,
-			complete() {
-				self.setData({didNeedReloadShowLifetime: false})
-			}
 		})
 	},
 	// 获取课程列表
@@ -467,6 +461,8 @@ Page({
 			}
 		})
 
+		this.getTabList(0)
+
 		// ios规则适配
 		this.checkIos()
 	},
@@ -493,16 +489,14 @@ Page({
 
 		this.getFluentInfo()
 
-		if (this.data.didNeedReloadShowLifetime) {
-			// 首页金刚位进入，页面Tabs固定在顶部
-			let index = getApp().globalData.discoveryToPracticeTabIndex
-			if (index !== undefined) {
-				this.setData({didFromDiscovery: true, currentIndex: index})
-				this.getTabList(index)
-			} else {
-				this.getTabList(0)
-			}
-		}
+		// // 首页金刚位进入，页面Tabs固定在顶部
+		// let index = getApp().globalData.discoveryToPracticeTabIndex
+		// if (index !== undefined) {
+		// 	this.setData({didFromDiscovery: true, currentIndex: index})
+		// 	this.getTabList(index)
+		// } else {
+		// 	this.getTabList(0)
+		// }
 
 		bxPoint("series_visit", {})
 	},
