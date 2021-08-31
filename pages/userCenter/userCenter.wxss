@@ -227,7 +227,7 @@
     flex-direction: column;
     justify-content: space-between;
     position: relative;
-    top: -108rpx;
+    top: -128rpx;
     width: 650rpx;
     height: 280rpx;
     margin: 0 auto 42rpx;
@@ -424,7 +424,7 @@
 /* 广告位 */
 .ad {
     position: relative;
-    top: -24rpx;
+    top: -44rpx;
     width: 690rpx;
     height: 172rpx;
     margin: 0 auto 40rpx;
@@ -458,7 +458,7 @@
     border-radius: 8rpx;
     box-shadow: 0 0 12rpx 0px rgba(0, 0, 0, 0.05);
     position: relative;
-    top: -88rpx;
+    top: -108rpx;
 }
 
 .function.nodata {
