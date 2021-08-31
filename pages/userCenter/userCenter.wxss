@@ -36,6 +36,10 @@
     height: 828rpx;
 }
 
+.banner-bg.signIn {
+    height: 624rpx;
+}
+
 .message {
     position: absolute;
     padding: 0 30rpx;
