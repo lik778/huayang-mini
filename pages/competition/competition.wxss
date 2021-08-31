@@ -59,6 +59,10 @@
     font: 500 48rpx/48rpx PingFangSC;
 }
 
+.layer-title.history-main-title {
+    margin-bottom: 60rpx;
+}
+
 .media-item {
     overflow: hidden;
     width: 692rpx;
@@ -157,17 +161,17 @@
 }
 
 .history-item {
-    margin-bottom: 40rpx;
+    margin-bottom: 80rpx;
 }
 
 .history-title {
-    margin-bottom: 40rpx;
+    margin-bottom: 32rpx;
     font: 500 40rpx/40rpx PingFangSC;
 }
 
 .photo-card {
     padding: 0 20rpx;
-    margin-bottom: 40rpx;
+    margin-bottom: 32rpx;
 }
 
 .photo-title {
