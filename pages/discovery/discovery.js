@@ -190,7 +190,7 @@ Page({
 			travelList
 		})
 
-		this.travelLayoutListener()
+		// this.travelLayoutListener()
 	},
 	// 监听游学板块是否进入可视区域
 	travelLayoutListener() {
@@ -916,7 +916,7 @@ Page({
 		this.initGoodMorningRedDot()
 		/* 获取广告位数据 */
 		getBannerList({
-			scene: 16
+			scene: 8
 		}).then(res => {
 			this.setData({
 				advertisementList: res.length > 0 ? res : []
@@ -1019,6 +1019,7 @@ Page({
 			video.videoContext.pause()
 			video.pauseVideoAuto()
 			this.initShowGoodmorningPopup()
+			this.runSecondMain()
 		}
 	}
 })
