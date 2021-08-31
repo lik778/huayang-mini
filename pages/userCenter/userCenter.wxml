@@ -1,7 +1,7 @@
 <view class="user-center {{nodata && 'nodata'}}" wx:if="{{loading}}">
     <view class="banner">
         <!-- 背景图 -->
-        <image class="banner-bg {{nodata && 'nodata'}}"
+        <image class="banner-bg {{nodata ? 'nodata' : 'signIn'}}"
                src="{{ nodata ? '/assets/images/common/banner-bg-sign.png' : '/assets/images/common/banner-bg.png' }}">
         </image>
         <!-- 个人信息 -->
@@ -186,18 +186,18 @@
             </view>
             <!--			<view class="function-item" bindtap="goToTaskLaunchPage" wx:if="{{visibleTaskEntrance}}">-->
 
-            <view class="function-item" bindtap="toPromotion"
-                  wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&showPromotion}}">
-                <view class="function-item-left">
-                    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604487601QeseJU.jpg"
-                           style="width:52rpx;height:52rpx;margin-right: 20rpx;margin-left:-4rpx;"></image>
-                    <view class="function-item-box">
-                        <view class="function-item-top">我的推广</view>
-                        <view class="function-item-bottom">分享花样课，收获感谢金</view>
-                    </view>
-                </view>
-                <image src="/assets/images/common/arrow.png"></image>
-            </view>
+            <!--            <view class="function-item" bindtap="toPromotion"-->
+            <!--                  wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&showPromotion}}">-->
+            <!--                <view class="function-item-left">-->
+            <!--                    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604487601QeseJU.jpg"-->
+            <!--                           style="width:52rpx;height:52rpx;margin-right: 20rpx;margin-left:-4rpx;"></image>-->
+            <!--                    <view class="function-item-box">-->
+            <!--                        <view class="function-item-top">我的推广</view>-->
+            <!--                        <view class="function-item-bottom">分享花样课，收获感谢金</view>-->
+            <!--                    </view>-->
+            <!--                </view>-->
+            <!--                <image src="/assets/images/common/arrow.png"></image>-->
+            <!--            </view>-->
             <view class="function-item" data-mobile="{{phoneNumber}}" bindtap="callPhone">
                 <view class="function-item-left">
                     <image src="/assets/images/common/contact.png" class="task-image"></image>
