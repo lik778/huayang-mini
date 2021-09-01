@@ -699,7 +699,7 @@ Page({
 	/* 关闭早上好弹窗 */
 	closeGoodMorningPopup() {
 		/* 早安签到弹窗右上角退出点击 */
-		bxPoint("new_homepage_morning_exit_click", false)
+		bxPoint("new_homepage_morning_exit_click",{}, false)
 		this.setData({
 			needShowGoodMorningPopup: false
 		})
@@ -707,7 +707,7 @@ Page({
 	/* 早上好弹窗点击立即签到；高亮金刚位 */
 	showGoodMorningHighLight() {
 		/* 早安签到弹窗"早安签到"按钮点击打点 */
-		bxPoint("new_homepage_morning_sign_click", false)
+		bxPoint("new_homepage_morning_sign_click",{}, false)
 		const query = wx.createSelectorQuery()
 		query.select('#first-screen').boundingClientRect().exec(res => {
 			wx.pageScrollTo({
