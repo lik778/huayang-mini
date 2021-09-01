@@ -122,6 +122,7 @@ Page({
 						list = data.map(n => {
 							let target = values.find(_ => _.album_id === n.id)
 							if ($notNull(target)) {
+								n.cover = n.cover + "?" + +new Date()
 								n.pic_count = n.pic_count >= 10000 ? (n.pic_count / 10000).toFixed(1) + "w" : n.pic_count
 								n.video_count = n.video_count >= 10000 ? (n.video_count / 10000).toFixed(1) + "w" : n.video_count
 								n.view_count = n.view_count >= 10000 ? (n.view_count / 10000).toFixed(1) + "w" : n.view_count
