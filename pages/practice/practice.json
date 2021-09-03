@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText":"学校课程",
+  "navigationBarTitleText":"花样老年大学",
   "usingComponents": {
     "authModule": "../../components/auth/auth"
   }
