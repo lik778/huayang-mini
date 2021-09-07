@@ -29,7 +29,7 @@ Component({
     direction: 'left',
     swiperDotIsEnd: false,
     animationingStatus: false,
-    swiperPlayDuration: '',
+    swiperPlayDuration: 0,
     videoLoading: true,
     videoTotalDuration: ''
   },
