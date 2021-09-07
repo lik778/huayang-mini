@@ -8,9 +8,18 @@ import {
 	setLocalStorage,
 	shuffle
 } from "../../utils/util"
-import { getActivityList, getFindBanner, getOfflineCourseAllData, } from "../../api/course/index"
-import { getBannerList } from "../../api/mall/index"
-import { GLOBAL_KEY, WeChatLiveStatus } from "../../lib/config"
+import {
+	getActivityList,
+	getFindBanner,
+	getOfflineCourseAllData,
+} from "../../api/course/index"
+import {
+	getBannerList
+} from "../../api/mall/index"
+import {
+	GLOBAL_KEY,
+	WeChatLiveStatus
+} from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import {
 	addTravelVisitNumber,
@@ -611,7 +620,8 @@ Page({
 	async getNewActivityData() {
 		let link = "https://huayang-img.oss-cn-shanghai.aliyuncs.com/zw_playbill/" + (await getGoodMorningBgTemplate()).data[0] + ".jpg"
 		getNewActivityList({
-			status: 1
+			status: 1,
+			path: 2
 		}).then(res => {
 			let list = res.data.list || []
 			if (list.length) {
@@ -699,7 +709,7 @@ Page({
 	/* 关闭早上好弹窗 */
 	closeGoodMorningPopup() {
 		/* 早安签到弹窗右上角退出点击 */
-		bxPoint("new_homepage_morning_exit_click",{}, false)
+		bxPoint("new_homepage_morning_exit_click", {}, false)
 		this.setData({
 			needShowGoodMorningPopup: false
 		})
@@ -707,7 +717,7 @@ Page({
 	/* 早上好弹窗点击立即签到；高亮金刚位 */
 	showGoodMorningHighLight() {
 		/* 早安签到弹窗"早安签到"按钮点击打点 */
-		bxPoint("new_homepage_morning_sign_click",{}, false)
+		bxPoint("new_homepage_morning_sign_click", {}, false)
 		const query = wx.createSelectorQuery()
 		query.select('#first-screen').boundingClientRect().exec(res => {
 			wx.pageScrollTo({
