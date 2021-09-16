@@ -6,23 +6,20 @@
     </view>
 
     <view class="fast-enter" wx:if="{{bannerList && bannerList.length > 0}}">
-        <view class="fast-long-item" wx:if="{{bannerList.length % 2 === 1}}" bindtap="handleBannerTap"
-              data-item="{{bannerList[0]}}">
-            <image src="{{bannerList[0].pic_url}}" mode="aspectFill"></image>
+        <view class="fast-long-item" wx:if="{{bannerList.length % 2 === 1}}" bindtap="handleBannerTap" data-item="{{bannerList[0]}}">
+            <image src="{{bannerList[0].pic_url+'?x-oss-process=style/huayang'}}" mode="aspectFill"></image>
         </view>
 
-        <view class="fast-normal-item" wx:if="{{secondBannerList.length > 0}}" wx:for="{{secondBannerList}}"
-              bindtap="handleBannerTap" data-item="{{item}}">
-            <image src="{{item.pic_url}}" mode="aspectFill"></image>
+        <view class="fast-normal-item" wx:if="{{secondBannerList.length > 0}}" wx:for="{{secondBannerList}}" bindtap="handleBannerTap" data-item="{{item}}">
+            <image src="{{item.pic_url+'?x-oss-process=style/huayang'}}" mode="aspectFill"></image>
         </view>
     </view>
 
     <view class="media" wx:if="{{mediaList && mediaList.length > 0}}">
         <view class="layer-title">大赛媒体报道</view>
 
-        <view class="media-item" wx:for="{{mediaList}}" bindtap="handleMediaTap"
-              data-item="{{item}}">
-            <image class="media-cover" src="{{item.cover}}" mode="aspectFill"></image>
+        <view class="media-item" wx:for="{{mediaList}}" bindtap="handleMediaTap" data-item="{{item}}">
+            <image class="media-cover" src="{{item.cover+'?x-oss-process=style/huayang'}}" mode="aspectFill"></image>
             <view class="media-item-title">{{item.title}}</view>
         </view>
 
@@ -33,28 +30,15 @@
         <view class="layer-title">大赛精彩视频</view>
 
         <view class="swiper-box" id="swiper-box">
-            <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular interval="{{3000}}"
-                    duration="{{500}}">
+            <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular interval="{{3000}}" duration="{{500}}">
                 <swiper-item wx:for="{{videoList}}" wx:key="index" bindtap="handleVideoTap" data-item="{{item}}">
                     <view class="play-btn"></view>
-                    <image mode="cover" src="{{item.cover}}"></image>
+                    <image mode="cover" src="{{item.cover+'?x-oss-process=style/huayang'}}"></image>
                 </swiper-item>
             </swiper>
-            <video id="competitionVideo"
-                   style="opacity: {{isPlaying ? 1 : 0}}; z-index: {{isPlaying ? 1 : -1}}"
-                   src="{{currentVideoUrl}}"
-                   controls="{{true}}"
-                   bindtap="pauseVideo"
-                   bindended="endVideo"
-                   vslide-gesture-in-fullscreen="{{false}}"
-                   custom-cache="{{false}}" object-fit="contain" enable-play-gesture="{{false}}"
-                   enable-progress-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}"
-                   show-fullscreen-btn="{{false}}"
-                   show-play-btn="{{false}}" autoplay="{{false}}" loop="{{true}}"
-            ></video>
+            <video id="competitionVideo" style="opacity: {{isPlaying ? 1 : 0}}; z-index: {{isPlaying ? 1 : -1}}" src="{{currentVideoUrl}}" controls="{{true}}" bindtap="pauseVideo" bindended="endVideo" vslide-gesture-in-fullscreen="{{false}}" custom-cache="{{false}}" object-fit="contain" enable-play-gesture="{{false}}" enable-progress-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}" show-fullscreen-btn="{{false}}" show-play-btn="{{false}}" autoplay="{{false}}" loop="{{true}}"></video>
             <view class="swiper-dot">
-                <view wx:for="{{videoList}}" wx:key="index" wx:if="{{videoList.length>1}}"
-                      class="{{current===index?'active swiper-dot-item':'swiper-dot-item'}}"></view>
+                <view wx:for="{{videoList}}" wx:key="index" wx:if="{{videoList.length>1}}" class="{{current===index?'active swiper-dot-item':'swiper-dot-item'}}"></view>
             </view>
         </view>
     </view>
@@ -64,11 +48,10 @@
 
         <view class="history-item" wx:for="{{albumList}}" wx:key="index">
             <view class="history-title">{{item.name}}</view>
-            <view class="photo-card" wx:for="{{item.content}}" bindtap="handleAlbumTap" data-item="{{contentItem}}"
-                  wx:for-index="contentIndex" wx:for-item="contentItem">
+            <view class="photo-card" wx:for="{{item.content}}" bindtap="handleAlbumTap" data-item="{{contentItem}}" wx:for-index="contentIndex" wx:for-item="contentItem">
                 <view class="photo-title">{{contentItem.name}}</view>
                 <view class="photo-content">
-                    <image class="photo-cover" src="{{contentItem.album.cover}}" mode="aspectFill"></image>
+                    <image class="photo-cover" src="{{contentItem.album.cover+'?x-oss-process=style/huayang'}}" mode="aspectFill"></image>
                     <view class="photo-layer">
                         <text class="photo-info">照片 {{contentItem.album.pic_count}}</text>
                         <view class="separate"></view>
@@ -87,7 +70,6 @@
     </view>
 
     <!-- 授权弹窗 -->
-    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent"
-                bind:authCompleteEvent="authCompleteEvent">
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
     </authModule>
 </view>
