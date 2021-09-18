@@ -34,6 +34,7 @@ import {
 } from "../../api/live/index"
 import dayjs from "dayjs"
 import request from "../../lib/request"
+const App = getApp()
 
 Page({
 
@@ -92,8 +93,36 @@ Page({
 			limit: 30
 		},
 		swiperVideoList: [],
-		headerVideoPaginationTrue: true
+		headerVideoPaginationTrue: true,
+		showGuideCollection: '', //引导用户收藏小程序卡片
 	},
+
+	/* 初始化引导收藏小程序卡片状态 */
+	initGuideColletionStatus() {
+		let status = getLocalStorage("need_show_guide_collection") ? false : true
+		if (status) {
+			this.setData({
+				showGuideCollection: 1
+			}, () => {
+				setLocalStorage('need_show_guide_collection', new Date().getTime())
+			})
+		}
+	},
+
+	/* 点击切换引导收藏小程序卡片样式 */
+	changeGuideCollectionStatus() {
+		this.setData({
+			showGuideCollection: 2
+		})
+	},
+
+	/* 关闭引导收藏小程序卡片样式 */
+	closeGuideCollection() {
+		this.setData({
+			showGuideCollection: ""
+		})
+	},
+
 	async run() {
 		// 请求花样大学首页弹窗任务
 		getDiscoveryRemindData().then((data) => {
@@ -528,6 +557,12 @@ Page({
 	},
 	_toggleView(timeNo = 300) {
 		let t = setTimeout(() => {
+			// 记录首次加载时长
+			if (this.data.showGuideCollection !== '') {
+				bxPoint("new_homepage_first_loading", {
+					first_loading_num: (new Date().getTime() - App.globalData.firstEnterTime) + "ms"
+				})
+			}
 			this.setData({
 				canShow: true
 			})
@@ -912,6 +947,8 @@ Page({
 				getApp().globalData.source = source
 			}
 		}
+
+		this.initGuideColletionStatus()
 
 		/* 动态处理广告3:1宽高比 */
 		this.setData({
