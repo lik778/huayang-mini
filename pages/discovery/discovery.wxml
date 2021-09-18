@@ -1,5 +1,15 @@
 <!--发现主页-->
 <view class="discovery" style="visibility: {{canShow?'visible':'hidden'}};">
+    <!-- 引导用户收藏小程序卡片 -->
+    <view class="guide-collection" wx:if='{{showGuideCollection!==""}}'>
+        <view class="guide-collection-first" bindtap="changeGuideCollectionStatus" wx:if='{{showGuideCollection===1}}'>
+            <image style="width:532rpx;height: 116rpx;" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1631956461xLaFRy.jpg"></image>
+        </view>
+        <view class="guide-collection-second" bindtap="closeGuideCollection" wx:if='{{showGuideCollection===2}}'>
+            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1631929212wEQTSo.jpg"></image>
+        </view>
+    </view>
+
     <view id='first-screen'>
         <!-- 时尚视频轮播 -->
         <video-swiper bindpauseVideo='initShowGoodmorningPopup' id='videoSwiper' videoList="{{swiperVideoList}}" bindqueryNextList='queryNextList'>

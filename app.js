@@ -5,12 +5,23 @@ import {
 	setLocalStorage,
 	setWxUserInfoExpiredTime
 } from './utils/util'
-import { GLOBAL_KEY } from './lib/config'
-import { collectError } from "./api/auth/index"
+import {
+	GLOBAL_KEY
+} from './lib/config'
+import {
+	collectError
+} from "./api/auth/index"
 import dayjs from "dayjs"
+import {
+	bxPoint
+} from "./utils/bxPoint"
 
 App({
 	onLaunch: function () {
+
+		// 记录首次加载时长
+		this.globalData.firstEnterTime = new Date().getTime()
+
 		wx.loadFontFace({
 			global: true,
 			family: 'Condensed',
@@ -147,6 +158,7 @@ App({
 		needInitialPageName: "", // 需要重新加载的页面  [ 综合作业广场｜主题作业广场 ]
 		didShowedTaskTip: false, // 是否已经展示过作业提示
 		discoveryToPracticeTabIndex: undefined, // 首页金刚位跳转
-		showContactEnterTime:"2021-09-16 23:00:00"
+		showContactEnterTime: "2021-09-16 23:00:00",
+		firstEnterTime: "", //首次加载时间
 	}
 })
