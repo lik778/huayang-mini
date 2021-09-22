@@ -78,7 +78,8 @@ Component({
 
       this.setData({
         currentVideoIndex: index,
-        videoTotalDuration: ''
+        videoTotalDuration: '',
+        videoLoading: true
       })
       this.playVideoCommon(index)
     },
@@ -108,9 +109,12 @@ Component({
     /* 统一播放视频 */
     playVideoCommon(index) {
       this.videoContext = wx.createVideoContext(`swiper-video-${index}`, this)
-      this.videoContext.play()
       this.setData({
         playingVideo: true
+      }, () => {
+        setTimeout(() => {
+          this.videoContext.play()
+        }, 200)
       })
     },
 
