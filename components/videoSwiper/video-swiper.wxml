@@ -21,7 +21,7 @@
             <view class="count-down-cover" catchtap="stopMove" wx:if='{{showCountDown}}'>
             </view>
             <!-- 缓冲中loading -->
-            <van-loading custom-class='video-loading' type="spinner" size="50px" color="#FFFFFF" wx:if='{{videoLoading&&currentVideoIndex===index&&1&&!(currentVideoIndex!==index||!playingVideo)}}'>
+            <van-loading custom-class='video-loading' type="spinner" size="50px" color="#FFFFFF" wx:if='{{videoLoading&&currentVideoIndex===index&&!(currentVideoIndex!==index||!playingVideo)}}'>
             </van-loading>
           </video>
           <!-- 描述 -->
