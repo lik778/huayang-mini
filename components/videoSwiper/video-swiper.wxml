@@ -20,7 +20,6 @@
             <!-- 倒计时icon遮罩层 -->
             <view class="count-down-cover" catchtap="stopMove" wx:if='{{showCountDown}}'>
             </view>
-            {{videoLoading}}{{currentVideoIndex}}{{index}}
             <!-- 缓冲中loading -->
             <van-loading custom-class='video-loading' type="spinner" size="50px" color="#FFFFFF" wx:if='{{videoLoading&&currentVideoIndex===index}}'>
             </van-loading>
