@@ -78,7 +78,8 @@ Component({
 
       this.setData({
         currentVideoIndex: index,
-        videoTotalDuration: ''
+        videoTotalDuration: '',
+        videoLoading: true
       })
       this.playVideoCommon(index)
     },
