@@ -135,6 +135,9 @@ Page({
 						ary.push({name: key, content: list.filter(n => n)})
 					})
 				})
+
+				ary[0] = ary[0] && ary[0].content.reverse()
+				ary[1] = ary[1] && ary[1].content.reverse()
 				this.setData({albumList: ary})
 
 				this.initVideoListener()
