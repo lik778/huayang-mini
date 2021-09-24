@@ -136,8 +136,8 @@ Page({
 					})
 				})
 
-				ary[0] = ary[0] && ary[0].content.reverse()
-				ary[1] = ary[1] && ary[1].content.reverse()
+				ary[0] = ary[0] && {name: ary[0].name, content: ary[0].content.reverse()}
+				ary[1] = ary[1] && {name: ary[1].name, content: ary[1].content.reverse()}
 				this.setData({albumList: ary})
 
 				this.initVideoListener()
