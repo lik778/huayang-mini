@@ -8,9 +8,7 @@ import {
 import { GLOBAL_KEY } from './lib/config'
 import { collectError } from "./api/auth/index"
 import dayjs from "dayjs"
-import {
-	bxPoint
-} from "./utils/bxPoint"
+import { bxPoint } from "./utils/bxPoint"
 
 App({
 	onLaunch: function () {
