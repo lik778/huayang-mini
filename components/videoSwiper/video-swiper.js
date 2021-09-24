@@ -29,8 +29,9 @@ Component({
     direction: 'left',
     swiperDotIsEnd: false,
     animationingStatus: false,
-    swiperPlayDuration: '',
-    videoLoading: true
+    swiperPlayDuration: 0,
+    videoLoading: true,
+    videoTotalDuration: ''
   },
 
   lifetimes: {
@@ -55,7 +56,8 @@ Component({
         /* 头部视频内容主动滑动打点 */
         bxPoint("new_homepage_header_vedio_slide", {
           header_vedio_id: this.data.videoList[Number(e.detail.currentItemId) - 1].id,
-          header_vedio_play_duration: this.data.swiperPlayDuration
+          header_vedio_play_duration: this.data.swiperPlayDuration,
+          header_vedio_duration: this.data.videoTotalDuration
         }, false)
       } else {
         /* 右滑 */
@@ -63,7 +65,8 @@ Component({
         /* 头部视频内容主动滑动打点 */
         bxPoint("new_homepage_header_vedio_slide", {
           header_vedio_id: this.data.videoList[Number(e.detail.currentItemId) + 1].id,
-          header_vedio_play_duration: this.data.swiperPlayDuration
+          header_vedio_play_duration: this.data.swiperPlayDuration,
+          header_vedio_duration: this.data.videoTotalDuration
         }, false)
       }
 
@@ -74,7 +77,9 @@ Component({
       }
 
       this.setData({
-        currentVideoIndex: index
+        currentVideoIndex: index,
+        videoTotalDuration: '',
+        videoLoading: true
       })
       this.playVideoCommon(index)
     },
@@ -84,6 +89,7 @@ Component({
       this.setData({
         swiperPlayDuration: Math.round(e.detail.currentTime),
         videoLoading: false,
+        videoTotalDuration: parseInt(e.detail.duration)
       })
     },
 
@@ -103,9 +109,12 @@ Component({
     /* 统一播放视频 */
     playVideoCommon(index) {
       this.videoContext = wx.createVideoContext(`swiper-video-${index}`, this)
-      this.videoContext.play()
       this.setData({
         playingVideo: true
+      }, () => {
+        setTimeout(() => {
+          this.videoContext.play()
+        }, 200)
       })
     },
 

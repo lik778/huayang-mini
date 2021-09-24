@@ -7,7 +7,7 @@
     height: 542rpx;
     width: 100vw;
     padding: 188rpx 0 0 40rpx;
-    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1630034878MhdJOe.jpg") no-repeat center;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1630034878MhdJOe.jpg?x-oss-process=style/huayang") no-repeat center;
     background-size: cover;
     color: white;
     box-sizing: border-box;

@@ -8,9 +8,18 @@ import {
 	setLocalStorage,
 	shuffle
 } from "../../utils/util"
-import { getActivityList, getFindBanner, getOfflineCourseAllData, } from "../../api/course/index"
-import { getBannerList } from "../../api/mall/index"
-import { GLOBAL_KEY, WeChatLiveStatus } from "../../lib/config"
+import {
+	getActivityList,
+	getFindBanner,
+	getOfflineCourseAllData,
+} from "../../api/course/index"
+import {
+	getBannerList
+} from "../../api/mall/index"
+import {
+	GLOBAL_KEY,
+	WeChatLiveStatus
+} from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import {
 	addTravelVisitNumber,
@@ -25,6 +34,7 @@ import {
 } from "../../api/live/index"
 import dayjs from "dayjs"
 import request from "../../lib/request"
+const App = getApp()
 
 Page({
 
@@ -83,8 +93,36 @@ Page({
 			limit: 30
 		},
 		swiperVideoList: [],
-		headerVideoPaginationTrue: true
+		headerVideoPaginationTrue: true,
+		showGuideCollection: '', //引导用户收藏小程序卡片
 	},
+
+	/* 初始化引导收藏小程序卡片状态 */
+	initGuideColletionStatus() {
+		let status = getLocalStorage("need_show_guide_collection") ? false : true
+		if (status) {
+			this.setData({
+				showGuideCollection: 1
+			}, () => {
+				setLocalStorage('need_show_guide_collection', new Date().getTime())
+			})
+		}
+	},
+
+	/* 点击切换引导收藏小程序卡片样式 */
+	changeGuideCollectionStatus() {
+		this.setData({
+			showGuideCollection: 2
+		})
+	},
+
+	/* 关闭引导收藏小程序卡片样式 */
+	closeGuideCollection() {
+		this.setData({
+			showGuideCollection: ""
+		})
+	},
+
 	async run() {
 		// 请求花样大学首页弹窗任务
 		getDiscoveryRemindData().then((data) => {
@@ -519,6 +557,12 @@ Page({
 	},
 	_toggleView(timeNo = 300) {
 		let t = setTimeout(() => {
+			// 记录首次加载时长
+			if (this.data.showGuideCollection !== '') {
+				bxPoint("new_homepage_first_loading", {
+					first_loading_num: (new Date().getTime() - App.globalData.firstEnterTime) + "ms"
+				})
+			}
 			this.setData({
 				canShow: true
 			})
@@ -611,7 +655,8 @@ Page({
 	async getNewActivityData() {
 		let link = "https://huayang-img.oss-cn-shanghai.aliyuncs.com/zw_playbill/" + (await getGoodMorningBgTemplate()).data[0] + ".jpg"
 		getNewActivityList({
-			status: 1
+			status: 1,
+			path: 2
 		}).then(res => {
 			let list = res.data.list || []
 			if (list.length) {
@@ -699,7 +744,7 @@ Page({
 	/* 关闭早上好弹窗 */
 	closeGoodMorningPopup() {
 		/* 早安签到弹窗右上角退出点击 */
-		bxPoint("new_homepage_morning_exit_click",{}, false)
+		bxPoint("new_homepage_morning_exit_click", {}, false)
 		this.setData({
 			needShowGoodMorningPopup: false
 		})
@@ -707,7 +752,7 @@ Page({
 	/* 早上好弹窗点击立即签到；高亮金刚位 */
 	showGoodMorningHighLight() {
 		/* 早安签到弹窗"早安签到"按钮点击打点 */
-		bxPoint("new_homepage_morning_sign_click",{}, false)
+		bxPoint("new_homepage_morning_sign_click", {}, false)
 		const query = wx.createSelectorQuery()
 		query.select('#first-screen').boundingClientRect().exec(res => {
 			wx.pageScrollTo({
@@ -902,6 +947,8 @@ Page({
 				getApp().globalData.source = source
 			}
 		}
+
+		this.initGuideColletionStatus()
 
 		/* 动态处理广告3:1宽高比 */
 		this.setData({

@@ -1,22 +1,29 @@
 <!--发现主页-->
 <view class="discovery" style="visibility: {{canShow?'visible':'hidden'}};">
+    <!-- 引导用户收藏小程序卡片 -->
+    <view class="guide-collection" wx:if='{{showGuideCollection!==""}}'>
+        <view class="guide-collection-first" bindtap="changeGuideCollectionStatus" wx:if='{{showGuideCollection===1}}'>
+            <image style="width:532rpx;height: 116rpx;" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1631956461xLaFRy.jpg"></image>
+        </view>
+        <view class="guide-collection-second" bindtap="closeGuideCollection" wx:if='{{showGuideCollection===2}}'>
+            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1631929212wEQTSo.jpg"></image>
+        </view>
+    </view>
+
     <view id='first-screen'>
         <!-- 时尚视频轮播 -->
-        <video-swiper bindpauseVideo='initShowGoodmorningPopup' id='videoSwiper' videoList="{{swiperVideoList}}"
-            bindqueryNextList='queryNextList'>
+        <video-swiper bindpauseVideo='initShowGoodmorningPopup' id='videoSwiper' videoList="{{swiperVideoList}}" bindqueryNextList='queryNextList'>
         </video-swiper>
         <!-- 广告位 -->
         <view class="advertisement-module" wx:if='{{advertisementList.length}}'>
-            <image src="{{advertisementList[0].pic_url}}" style="height:{{advertisementImageHeight}}px"
-                bindtap="bannerTap" data-item="{{advertisementList[0]}}" class="advertisement-item-image"></image>
+            <image src="{{advertisementList[0].pic_url}}" style="height:{{advertisementImageHeight}}px" bindtap="bannerTap" data-item="{{advertisementList[0]}}" class="advertisement-item-image"></image>
         </view>
     </view>
 
     <!-- 金刚位 -->
     <view class="fixed-site-module">
         <view class="fixed-site-list" id='fixed-site-list'>
-            <view class="fixed-site-item" bindtap="fixedSiteItemTap" data-item="{{item}}" wx:for="{{fixedSiteList}}"
-                wx:key='index'>
+            <view class="fixed-site-item" bindtap="fixedSiteItemTap" data-item="{{item}}" wx:for="{{fixedSiteList}}" wx:key='index'>
                 <image src="{{item.icon}}"></image>
                 <text>{{item.title}}</text>
                 <view class="red-dot" wx:if="{{item.title==='每日签到'&&showGoodMorningRedDot}}"></view>
@@ -50,29 +57,17 @@
         <view class="new-activity-main">
             <view class="new-activity-item" wx:for="{{newActivityList}}" wx:key='index'>
                 <view class="new-activity-item-top">
-                    <video src="{{item.video_url}}" show-center-play-btn='{{false}}' object-fit="cover"
-                        bindpause="pauseNewActivityVideo" id="new-activity-item-video-{{index}}"
-                        bindfullscreenchange='enterFullNewActivityVideo'
-                        wx:if='{{item.video_url&&newActivityVideoPlayIndex===index}}'></video>
-                    <image src="{{item.cover}}" data-type='{{item.type}}' mode="widthFix"
-                        bindtap="{{item.video_url?'playNewActivityVideo':'newActivityItemTap'}}"
-                        class="new-activity-item-play-cover" data-index='{{index}}' data-item="{{item.link_url}}"
-                        data-meta='{{item}}' wx:if="{{!item.video_url||newActivityVideoPlayIndex!==index}}">
+                    <video src="{{item.video_url}}" show-center-play-btn='{{false}}' object-fit="cover" bindpause="pauseNewActivityVideo" id="new-activity-item-video-{{index}}" bindfullscreenchange='enterFullNewActivityVideo' wx:if='{{item.video_url&&newActivityVideoPlayIndex===index}}'></video>
+                    <image src="{{item.cover+'?x-oss-process=style/huayang'}}" data-type='{{item.type}}' mode="widthFix" bindtap="{{item.video_url?'playNewActivityVideo':'newActivityItemTap'}}" class="new-activity-item-play-cover" data-index='{{index}}' data-item="{{item.link_url}}" data-meta='{{item}}' wx:if="{{!item.video_url||newActivityVideoPlayIndex!==index}}">
                     </image>
-                    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629877073cFVNcu.jpg"
-                        data-index='{{index}}'
-                        wx:if="{{(!item.video_url||newActivityVideoPlayIndex!==index)&&item.video_url}}"
-                        class="new-activity-item-play-icon" bindtap="playNewActivityVideo">
+                    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629877073cFVNcu.jpg" data-index='{{index}}' wx:if="{{(!item.video_url||newActivityVideoPlayIndex!==index)&&item.video_url}}" class="new-activity-item-play-icon" bindtap="playNewActivityVideo">
                     </image>
-                    <view class="new-activity-item-label"
-                        wx:if="{{!item.video_url||newActivityVideoPlayIndex!==index}}">
+                    <view class="new-activity-item-label" wx:if="{{!item.video_url||newActivityVideoPlayIndex!==index}}">
                         {{item.label}}</view>
                 </view>
-                <view class="new-activity-item-title" data-item="{{item.link_url}}" bindtap="newActivityItemTap"
-                    data-meta='{{item}}' data-type='{{item.type}}'>
+                <view class="new-activity-item-title" data-item="{{item.link_url}}" bindtap="newActivityItemTap" data-meta='{{item}}' data-type='{{item.type}}'>
                     {{item.title}}</view>
-                <view class="new-activity-item-bottom" data-item="{{item.link_url}}" bindtap="newActivityItemTap"
-                    data-meta='{{item}}' data-type='{{item.type}}'>
+                <view class="new-activity-item-bottom" data-item="{{item.link_url}}" bindtap="newActivityItemTap" data-meta='{{item}}' data-type='{{item.type}}'>
                     <view class="new-activity-item-bottom-date">{{item.time}}</view>
                     <view class="new-activity-item-bottom-button">点击查看</view>
                 </view>
@@ -86,9 +81,8 @@
     <!-- 校友活动 -->
     <view class="college-activity" wx:if="{{activityList.length > 0}}">
         <view class="layer">校友活动</view>
-        <view class="college-activity-item" wx:for="{{activityList}}" wx:key="index" data-item="{{item}}"
-            bindtap="onCollegeActivityTap">
-            <image class="college-activity-picture" mode="aspectFill" src="{{item.cover_url}}"></image>
+        <view class="college-activity-item" wx:for="{{activityList}}" wx:key="index" data-item="{{item}}" bindtap="onCollegeActivityTap">
+            <image class="college-activity-picture" mode="aspectFill" src="{{item.cover_url+'?x-oss-process=style/huayang'}}"></image>
             <view class="college-activity-title limit-two-line">{{item.title}}</view>
         </view>
     </view>
@@ -99,13 +93,12 @@
         <view class="travel-item" wx:for="{{travelList}}" wx:key="index" bindtap="onTravelTap" data-item="{{item}}">
             <swiper class="travel-cover" circular autoplay interval="{{3500 + index * 300}}" duration="{{500}}">
                 <swiper-item wx:for="{{item.covers}}" wx:for-item="coverItem" wx:key="index" data-item="{{coverItem}}">
-                    <image class="travel-cover" src="{{coverItem}}" mode="aspectFill"></image>
+                    <image class="travel-cover" src="{{coverItem+'?x-oss-process=style/huayang'}}" mode="aspectFill"></image>
                 </swiper-item>
             </swiper>
             <view class="travel-title limit-two-line">{{item.title}}</view>
             <view class="travel-info">
-                <view class="travel-price">¥<text class="price-01">{{item.discount_price / 100}}</text><text
-                        wx:if="{{item.price}}" class="price-02">¥{{item.price / 100}}</text>
+                <view class="travel-price">¥<text class="price-01">{{item.discount_price / 100}}</text><text wx:if="{{item.price}}" class="price-02">¥{{item.price / 100}}</text>
                 </view>
                 <view class="travel-visit-no">{{item.visit_count}}人看过</view>
             </view>
@@ -117,9 +110,8 @@
     <!-- 线下乐活课堂 -->
     <view class="offline-course" wx:if="{{offlineList.length > 0}}">
         <view class="layer">线下乐活课堂</view>
-        <view class="offline-course-item" wx:for="{{offlineList}}" wx:key="index" data-item="{{item}}"
-            bindtap="goToOfflineCourseDetail">
-            <image class="pic" src="{{item.cover}}" mode="aspectFill"></image>
+        <view class="offline-course-item" wx:for="{{offlineList}}" wx:key="index" data-item="{{item}}" bindtap="goToOfflineCourseDetail">
+            <image class="pic" src="{{item.cover+'?x-oss-process=style/huayang'}}" mode="aspectFill"></image>
             <view class="title limit-two-line">{{item.title}}</view>
             <view class="info">
                 <view class="info-wrap">
@@ -128,8 +120,7 @@
                     </view>
                     <view class="discount-price-wrap">
                         <text class="discount-price">¥{{item.discount_price}}</text>
-                        <image class="tag" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618455791dTGykq.jpg"
-                            mode="aspectFit"></image>
+                        <image class="tag" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618455791dTGykq.jpg" mode="aspectFit"></image>
                     </view>
                 </view>
                 <view class="no">{{item.buy_count}}人已购</view>
@@ -138,8 +129,7 @@
     </view>
 
     <!-- 直播 -->
-    <liveLayout wx:if="{{liveList.length > 0}}" class="limit-two-line" liveList="{{liveList}}"
-        bind:openUserAuth="openUserAuth" />
+    <liveLayout wx:if="{{liveList.length > 0}}" class="limit-two-line" liveList="{{liveList}}" bind:openUserAuth="openUserAuth" />
 
     <!-- 大赛&活动 -->
     <view class="other-activity" wx:if="{{showModelBanner}}">
@@ -147,8 +137,7 @@
         <view>
             <view class="competition-title">大赛</view>
             <view class="competition-list">
-                <view class="competition-item" bindtap="toModelCompetition" data-item='{{item}}'
-                    wx:for="{{competitionBannerList}}" wx:key="index">
+                <view class="competition-item" bindtap="toModelCompetition" data-item='{{item}}' wx:for="{{competitionBannerList}}" wx:key="index">
                     <image mode="aspectFill" src="{{item.pic_url}}"></image>
                     <view class="competition-item-title">{{item.title}}</view>
                 </view>
@@ -171,8 +160,7 @@
                     </view>
                 </view>
                 <view class="information-pop-btn" bindtap="onInformationPopTap">立即查看</view>
-                <image class="information-pop-close" bindtap="closeInformationPop" mode="aspectFit"
-                    src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617938508Usopwi.jpg"></image>
+                <image class="information-pop-close" bindtap="closeInformationPop" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617938508Usopwi.jpg"></image>
                 <view class="information-pop-clock">
                     <view class="information-pop-clock-item {{showInformationPopAnime ? 'animation' : ''}}"></view>
                 </view>
@@ -180,10 +168,8 @@
         </block>
         <block wx:if="{{popData.type === 'normal'}}">
             <view class="information-pop-picture-wrap" style="top: calc(50vh - 300rpx / {{popData.pictureRatio}});">
-                <image class="information-pop-picture {{showInformationPopAnime ? 'animation' : ''}}"
-                    bindtap="jumpToLink" src="{{popData.picture}}" mode="widthFix"></image>
-                <image class="information-pop-close" bindtap="closeInformationPop" mode="aspectFit"
-                    src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617938508Usopwi.jpg"></image>
+                <image class="information-pop-picture {{showInformationPopAnime ? 'animation' : ''}}" bindtap="jumpToLink" src="{{popData.picture}}" mode="widthFix"></image>
+                <image class="information-pop-close" bindtap="closeInformationPop" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617938508Usopwi.jpg"></image>
             </view>
         </block>
     </view>
@@ -191,8 +177,7 @@
     <!-- 早上好弹窗 -->
     <view class="good-morning-popup" catchtouchmove="stopMove" wx:if="{{needShowGoodMorningPopup}}">
         <view class="good-morning-popup-box">
-            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629790110bECsII.jpg"
-                class="good-morning-icon">
+            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629790110bECsII.jpg" class="good-morning-icon">
             </image>
             <view class="good-morning-main">
                 <view class="good-morning-main-title">早上好</view>
@@ -202,27 +187,22 @@
                 </view>
                 <view class="good-morning-main-button" bindtap="showGoodMorningHighLight">早安签到</view>
             </view>
-            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629790175dTzGqv.jpg"
-                class="good-morning-close" bindtap="closeGoodMorningPopup">
+            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629790175dTzGqv.jpg" class="good-morning-close" bindtap="closeGoodMorningPopup">
             </image>
         </view>
     </view>
 
     <!-- 授权弹窗 -->
-    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent"
-        bind:authCompleteEvent="authCompleteEvent">
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
     </authModule>
 
     <!-- 客服弹窗 -->
-    <contact show="{{didShowContact}}" isRootPage="{{true}}" sessionFrom="sf_study_guide"
-        bind:closeContactModal="onCloseContactModal" />
+    <contact show="{{didShowContact}}" isRootPage="{{true}}" sessionFrom="sf_study_guide" bind:closeContactModal="onCloseContactModal" />
 
     <!-- 未加入花样大学用户，不可参加校友活动 -->
-    <fluentLearnModal show="{{didShowFluentLearnModal}}" message="您还未加入花样老年大学" confirmText="立即加入"
-        bind:close="onFluentLearnCloseTap" bind:confirm="onFluentLearnTap" />
+    <fluentLearnModal show="{{didShowFluentLearnModal}}" message="您还未加入花样老年大学" confirmText="立即加入" bind:close="onFluentLearnCloseTap" bind:confirm="onFluentLearnTap" />
 
     <!-- 全局遮罩层 -->
-    <view class="global-cover" wx:if="{{needShowGoodMorningPopup||showGoodMorningNoticePopup}}" bindtap="closeAllPopup"
-        catchtouchmove="stopMove">
+    <view class="global-cover" wx:if="{{needShowGoodMorningPopup||showGoodMorningNoticePopup}}" bindtap="closeAllPopup" catchtouchmove="stopMove">
     </view>
 </view>

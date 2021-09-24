@@ -13,6 +13,31 @@
   font: 500 52rpx/52rpx PingFangSC;
 }
 
+/* 引导用户收藏小程序卡片 */
+.guide-collection {
+  position: fixed;
+  right: 30rpx;
+  z-index: 1000;
+  top: 0;
+}
+
+.guide-collection-first text:last-child {
+  width: 60rpx;
+  height: 40rpx;
+  border-radius: 999rpx;
+  background-color: #fff;
+  color: rgb(55, 190, 80);
+  padding: 8rpx 30rpx;
+  margin-left: 50rpx;
+  font-size: 24rpx;
+}
+
+.guide-collection-second image {
+  width: 432rpx;
+  height: 510rpx;
+  vertical-align: bottom;
+}
+
 /* 线下精品课 */
 .offline-course {
   padding: 0 30rpx 80rpx;
