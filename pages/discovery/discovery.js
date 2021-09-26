@@ -756,7 +756,7 @@ Page({
 		bxPoint("new_homepage_morning_sign_click", {}, false)
 		// 花样早上好优化版本
 		let isDev = request.baseUrl === 'https://dev.huayangbaixing.com' ? true : false
-		let link = isDev ? 'https://dev.huayangbaixing.com/#/signIn/playbill?from=true' : 'https://huayang.baixing.com/#/signIn/playbill?from=true'
+		let link = isDev ? 'https://dev.huayangbaixing.com/#/signIn/playbill/miniprogram' : 'https://huayang.baixing.com/#/signIn/playbill/miniprogram'
 		let nowTime = parseInt(new Date().getTime() / 1000) //当前时间-s
 		setLocalStorage("good_morning_click_time", nowTime)
 		this.setData({
@@ -789,7 +789,7 @@ Page({
 		}, false)
 		if (item.title === '每日签到') {
 			let isDev = request.baseUrl === 'https://dev.huayangbaixing.com' ? true : false
-			let link = isDev ? 'https://dev.huayangbaixing.com/#/signIn/playbill?from=true' : 'https://huayang.baixing.com/#/signIn/playbill?from=true'
+			let link = isDev ? 'https://dev.huayangbaixing.com/#/signIn/playbill/miniprogram' : 'https://huayang.baixing.com/#/signIn/playbill/miniprogram'
 			let nowTime = parseInt(new Date().getTime() / 1000) //当前时间-s
 			setLocalStorage("good_morning_click_time", nowTime)
 			this.setData({
