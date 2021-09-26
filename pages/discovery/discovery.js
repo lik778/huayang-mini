@@ -713,7 +713,7 @@ Page({
 	/* 初始化是否显示早上好弹窗 */
 	initShowGoodmorningPopup() {
 		let video = this.selectComponent(`#videoSwiper`)
-		if (video.__data__.playingVideo) {
+		if (video.__data__.playingVideo || this.data.didShowInformation) {
 			return
 		}
 		// 不在播放视频
@@ -722,7 +722,7 @@ Page({
 		let nowTime = parseInt(new Date().getTime() / 1000) //当前时间-s
 		let nowHour = new Date().getHours() //当前小时数
 		let localTime = getLocalStorage("good_morning_expire_at") || '' //本次缓存上次显示弹窗的时间
-		if (3 < nowHour && nowHour < 10) {
+		if (3 < nowHour && nowHour < 11) {
 			// 当天4-10点内显示
 			if (!localTime) {
 				setLocalStorage("good_morning_expire_at", nowTime)
@@ -753,19 +753,31 @@ Page({
 	showGoodMorningHighLight() {
 		/* 早安签到弹窗"早安签到"按钮点击打点 */
 		bxPoint("new_homepage_morning_sign_click", {}, false)
-		const query = wx.createSelectorQuery()
-		query.select('#first-screen').boundingClientRect().exec(res => {
-			wx.pageScrollTo({
-				duration: 50,
-				scrollTop: res[0].height - 50,
-				success: () => {
-					this.setData({
-						showGoodMorningNoticePopup: true,
-						needShowGoodMorningPopup: false
-					})
-				}
-			})
+		// 花样早上好优化版本
+		let isDev = request.baseUrl === 'https://dev.huayangbaixing.com' ? true : false
+		let link = isDev ? 'https://dev.huayangbaixing.com/#/signIn/playbill?from=true' : 'https://huayang.baixing.com/#/signIn/playbill?from=true'
+		let nowTime = parseInt(new Date().getTime() / 1000) //当前时间-s
+		setLocalStorage("good_morning_click_time", nowTime)
+		this.setData({
+			showGoodMorningRedDot: false
 		})
+		wx.navigateTo({
+			url: `/subCourse/noAuthWebview/noAuthWebview?link=${encodeURIComponent(link)}`,
+		})
+
+		// const query = wx.createSelectorQuery()
+		// query.select('#first-screen').boundingClientRect().exec(res => {
+		// 	wx.pageScrollTo({
+		// 		duration: 50,
+		// 		scrollTop: res[0].height - 50,
+		// 		success: () => {
+		// 			this.setData({
+		// 				showGoodMorningNoticePopup: true,
+		// 				needShowGoodMorningPopup: false
+		// 			})
+		// 		}
+		// 	})
+		// })
 	},
 	/* 金刚位点击 */
 	fixedSiteItemTap(e) {

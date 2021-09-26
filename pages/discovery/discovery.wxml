@@ -180,12 +180,12 @@
             <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629790110bECsII.jpg" class="good-morning-icon">
             </image>
             <view class="good-morning-main">
-                <view class="good-morning-main-title">早上好</view>
+                <view class="good-morning-main-title">为美好的每一天加油</view>
                 <view class="good-morning-main-image">
                     <image src="{{goodMorningPopupBg}}">
                     </image>
                 </view>
-                <view class="good-morning-main-button" bindtap="showGoodMorningHighLight">早安签到</view>
+                <view class="good-morning-main-button" bindtap="showGoodMorningHighLight">分享心情</view>
             </view>
             <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629790175dTzGqv.jpg" class="good-morning-close" bindtap="closeGoodMorningPopup">
             </image>
