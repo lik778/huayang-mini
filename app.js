@@ -13,9 +13,6 @@ import { bxPoint } from "./utils/bxPoint"
 App({
 	onLaunch: function () {
 
-		// 记录首次加载时长
-		this.globalData.firstEnterTime = new Date().getTime()
-
 		wx.loadFontFace({
 			global: true,
 			family: 'Condensed',
@@ -153,6 +150,5 @@ App({
 		didShowedTaskTip: false, // 是否已经展示过作业提示
 		discoveryToPracticeTabIndex: undefined, // 首页金刚位跳转
 		showContactEnterTime:"2021-09-24 14:00:00",
-		firstEnterTime: "", //首次加载时间
 	}
 })

@@ -95,6 +95,7 @@ Page({
 		swiperVideoList: [],
 		headerVideoPaginationTrue: true,
 		showGuideCollection: '', //引导用户收藏小程序卡片
+		firstEnterTime: ''
 	},
 
 	/* 初始化引导收藏小程序卡片状态 */
@@ -560,7 +561,7 @@ Page({
 			// 记录首次加载时长
 			if (this.data.showGuideCollection !== '') {
 				bxPoint("new_homepage_first_loading", {
-					first_loading_num: (new Date().getTime() - App.globalData.firstEnterTime) + "ms"
+					first_loading_num: (new Date().getTime() - this.data.firstEnterTime + 100) + "ms"
 				})
 			}
 			this.setData({
@@ -925,6 +926,10 @@ Page({
 	 */
 	onLoad: function (options) {
 		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=235`})
+		// 记录首次加载时长
+		this.setData({
+			firstEnterTime: new Date().getTime()
+		})
 		let {
 			scene,
 			invite_user_id = "",
