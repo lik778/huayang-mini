@@ -13,6 +13,31 @@
   font: 500 52rpx/52rpx PingFangSC;
 }
 
+/* 引导用户收藏小程序卡片 */
+.guide-collection {
+  position: fixed;
+  right: 30rpx;
+  z-index: 1000;
+  top: 0;
+}
+
+.guide-collection-first text:last-child {
+  width: 60rpx;
+  height: 40rpx;
+  border-radius: 999rpx;
+  background-color: #fff;
+  color: rgb(55, 190, 80);
+  padding: 8rpx 30rpx;
+  margin-left: 50rpx;
+  font-size: 24rpx;
+}
+
+.guide-collection-second image {
+  width: 432rpx;
+  height: 510rpx;
+  vertical-align: bottom;
+}
+
 /* 线下精品课 */
 .offline-course {
   padding: 0 30rpx 80rpx;
@@ -97,7 +122,7 @@
 .college-activity-picture {
   width: 100%;
   height: 344rpx;
-  margin-bottom: 16rpx;
+  margin-bottom: 24rpx;
   border-radius: 16rpx 16rpx 6rpx 6rpx;
 }
 
@@ -111,7 +136,7 @@
 }
 
 .competition-title {
-  margin: 40rpx 0 20rpx;
+  margin: 0 0 20rpx;
   height: 76rpx;
   font: 500 52rpx/76rpx PingFangSC;
   color: rgba(0, 0, 0, 1);
@@ -545,7 +570,7 @@
 /* 金刚位 */
 .fixed-site-module {
   padding: 0 76rpx;
-  padding-bottom: 94rpx;
+  padding-bottom: 100rpx;
 }
 
 .fixed-site-list {
@@ -617,8 +642,9 @@
   border-radius: 50%;
   background-color: #FF4433;
   position: absolute;
-  right: 6px;
-  bottom: 12px;
+  border: 1px solid #fff;
+  right: 10rpx;
+  bottom: 22rpx;
 }
 
 /* 花样最新活动 */
@@ -810,6 +836,7 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  margin-top: -30px;
   z-index: 60;
   background: #fff;
   border-radius: 16rpx;
@@ -894,6 +921,8 @@
 .swiper-video-item {
   width: 600rpx;
 }
+
+
 
 #swiper-video-swiper-item {
   width: 600rpx;

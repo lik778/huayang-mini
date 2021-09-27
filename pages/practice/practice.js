@@ -81,6 +81,7 @@ Page({
 	},
 	// 跳往视频课程详情页
 	toVideoCourseDetail(e) {
+		let self = this
 		let item = e.currentTarget.dataset.item
 		wx.navigateTo({
 			url: `/subCourse/videoCourse/videoCourse?videoId=${item.id}`,
@@ -98,7 +99,10 @@ Page({
 		})
 	},
 	onStructureItemTap(e) {
-		wx.navigateTo({url: "/subCourse/practiceDetail/practiceDetail?courseId=" + e.currentTarget.dataset.id})
+		let self = this
+		wx.navigateTo({
+			url: "/subCourse/practiceDetail/practiceDetail?courseId=" + e.currentTarget.dataset.id,
+		})
 	},
 	// 获取课程列表
 	getVideoList(index, refresh = true) {
@@ -457,6 +461,8 @@ Page({
 			}
 		})
 
+		this.getTabList(0)
+
 		// ios规则适配
 		this.checkIos()
 	},
@@ -483,14 +489,14 @@ Page({
 
 		this.getFluentInfo()
 
-		// 首页金刚位进入，页面Tabs固定在顶部
-		let index = getApp().globalData.discoveryToPracticeTabIndex
-		if (index !== undefined) {
-			this.setData({didFromDiscovery: true, currentIndex: index})
-			this.getTabList(index)
-		} else {
-			this.getTabList(0)
-		}
+		// // 首页金刚位进入，页面Tabs固定在顶部
+		// let index = getApp().globalData.discoveryToPracticeTabIndex
+		// if (index !== undefined) {
+		// 	this.setData({didFromDiscovery: true, currentIndex: index})
+		// 	this.getTabList(index)
+		// } else {
+		// 	this.getTabList(0)
+		// }
 
 		bxPoint("series_visit", {})
 	},

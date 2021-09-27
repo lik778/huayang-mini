@@ -1,7 +1,5 @@
 import request from "../../lib/request"
-import {
-	URL
-} from "../../lib/config"
+import { URL } from "../../lib/config"
 
 export function getLiveList(params) {
 	return new Promise((resolve, reject) => {

@@ -3,6 +3,7 @@ import bxPoint from "../../utils/bxPoint"
 import {
   isIphoneXRSMax
 } from "../../utils/util"
+
 Page({
 
   /**
@@ -17,14 +18,14 @@ Page({
   /* 保存相册 */
   saveToAlbums() {
     /* 海报生成后，"保存相册"按钮点击dad */
-    bxPoint("morning_poster_save_click")
+    bxPoint("morning_poster_save_click", {}, false)
     wx.getImageInfo({
       src: this.data.posterBg,
       success: (res) => {
         wx.saveImageToPhotosAlbum({
           filePath: res.path,
           success: (res1) => {
-            if (res1.errMsg === 'getImageInfo:ok') {
+            if (res1.errMsg === 'saveImageToPhotosAlbum:ok') {
               wx.showToast({
                 title: '保存成功'
               })
@@ -44,19 +45,19 @@ Page({
   /* 花样精彩视频点击 */
   wonderfulVideo() {
     /* 分享卡片进入后,"花样精彩视频"按钮点击打点 */
-    bxPoint("shared_morning_poster_vedio_click")
+    bxPoint("shared_morning_poster_vedio_click", {}, false)
     this.toIndex()
   },
 
   /* 分享好友点击打点 */
   share() {
-    bxPoint("morning_poster_share_click")
+    bxPoint("morning_poster_share_click", {}, false)
   },
 
   /* 早安签到按钮点击 */
   goodMorningSignIn() {
     /* 分享卡片进入后,"早安签到"按钮点击打点 */
-    bxPoint('shared_morning_poster_sign_click')
+    bxPoint('shared_morning_poster_sign_click', {}, false)
     this.toIndex()
   },
 
@@ -128,6 +129,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "早上好~开启美丽新一天！",
+      imageUrl: this.data.posterBg,
+      path: `/others/goodMorningResult/goodMorningResult?img=${this.data.posterBg}&sharer=true`
+    }
   }
 })

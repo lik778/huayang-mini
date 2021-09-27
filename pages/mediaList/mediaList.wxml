@@ -1,0 +1,9 @@
+<view class="media">
+    <view class="layer-title">大赛媒体报道</view>
+
+    <view class="media-item" wx:if="{{mediaList.length > 0}}" wx:for="{{mediaList}}" bindtap="handleMediaTap" data-item="{{item}}">
+        <image class="media-cover" src="{{item.cover}}" mode="aspectFill"></image>
+        <view class="media-item-title">{{item.title}}</view>
+    </view>
+
+</view>
