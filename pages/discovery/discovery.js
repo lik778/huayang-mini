@@ -654,7 +654,7 @@ Page({
 	},
 	/* 获取花样最新活动相关数据 */
 	async getNewActivityData() {
-		let link = "https://huayang-img.oss-cn-shanghai.aliyuncs.com/zw_playbill/" + (await getGoodMorningBgTemplate()).data[0] + ".jpg"
+		let link = "https://huayang-img.oss-cn-shanghai.aliyuncs.com/zw_playbill/" + (await getGoodMorningBgTemplate()).data.photo[0] + ".jpg"
 		getNewActivityList({
 			status: 1,
 			path: 2
@@ -714,7 +714,7 @@ Page({
 	/* 初始化是否显示早上好弹窗 */
 	initShowGoodmorningPopup() {
 		let video = this.selectComponent(`#videoSwiper`)
-		if (video.__data__.playingVideo) {
+		if (video.__data__.playingVideo || this.data.didShowInformation) {
 			return
 		}
 		// 不在播放视频
@@ -754,19 +754,31 @@ Page({
 	showGoodMorningHighLight() {
 		/* 早安签到弹窗"早安签到"按钮点击打点 */
 		bxPoint("new_homepage_morning_sign_click", {}, false)
-		const query = wx.createSelectorQuery()
-		query.select('#first-screen').boundingClientRect().exec(res => {
-			wx.pageScrollTo({
-				duration: 50,
-				scrollTop: res[0].height - 50,
-				success: () => {
-					this.setData({
-						showGoodMorningNoticePopup: true,
-						needShowGoodMorningPopup: false
-					})
-				}
-			})
+		// 花样早上好优化版本
+		let isDev = request.baseUrl === 'https://dev.huayangbaixing.com' ? true : false
+		let link = isDev ? 'https://dev.huayangbaixing.com/#/signIn/playbill/miniprogram' : 'https://huayang.baixing.com/#/signIn/playbill/miniprogram'
+		let nowTime = parseInt(new Date().getTime() / 1000) //当前时间-s
+		setLocalStorage("good_morning_click_time", nowTime)
+		this.setData({
+			showGoodMorningRedDot: false
 		})
+		wx.navigateTo({
+			url: `/subCourse/noAuthWebview/noAuthWebview?link=${encodeURIComponent(link)}`,
+		})
+
+		// const query = wx.createSelectorQuery()
+		// query.select('#first-screen').boundingClientRect().exec(res => {
+		// 	wx.pageScrollTo({
+		// 		duration: 50,
+		// 		scrollTop: res[0].height - 50,
+		// 		success: () => {
+		// 			this.setData({
+		// 				showGoodMorningNoticePopup: true,
+		// 				needShowGoodMorningPopup: false
+		// 			})
+		// 		}
+		// 	})
+		// })
 	},
 	/* 金刚位点击 */
 	fixedSiteItemTap(e) {
@@ -777,7 +789,7 @@ Page({
 		}, false)
 		if (item.title === '每日签到') {
 			let isDev = request.baseUrl === 'https://dev.huayangbaixing.com' ? true : false
-			let link = isDev ? 'https://dev.huayangbaixing.com/#/signIn/playbill?from=true' : 'https://huayang.baixing.com/#/signIn/playbill?from=true'
+			let link = isDev ? 'https://dev.huayangbaixing.com/#/signIn/playbill/miniprogram' : 'https://huayang.baixing.com/#/signIn/playbill/miniprogram'
 			let nowTime = parseInt(new Date().getTime() / 1000) //当前时间-s
 			setLocalStorage("good_morning_click_time", nowTime)
 			this.setData({

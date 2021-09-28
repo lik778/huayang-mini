@@ -1,5 +1,6 @@
 // others/goodMorningResult/goodMorningResult.js
 import bxPoint from "../../utils/bxPoint"
+import request from "../../lib/request"
 import {
   isIphoneXRSMax
 } from "../../utils/util"
@@ -58,7 +59,11 @@ Page({
   goodMorningSignIn() {
     /* 分享卡片进入后,"早安签到"按钮点击打点 */
     bxPoint('shared_morning_poster_sign_click', {}, false)
-    this.toIndex()
+    let isDev = request.baseUrl === 'https://dev.huayangbaixing.com' ? true : false
+		let link = isDev ? 'https://dev.huayangbaixing.com/#/signIn/playbill/miniprogram' : 'https://huayang.baixing.com/#/signIn/playbill/miniprogram'
+    wx.navigateTo({
+      url: `/subCourse/noAuthWebview/noAuthWebview?link=${encodeURIComponent(link)}`,
+    })
   },
 
   /* 花样精彩视频+早安签到 */
@@ -130,7 +135,7 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: "早上好~开启美丽新一天！",
+      title: "打开查看我与你分享的心情",
       imageUrl: this.data.posterBg,
       path: `/others/goodMorningResult/goodMorningResult?img=${this.data.posterBg}&sharer=true`
     }

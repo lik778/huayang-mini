@@ -10,7 +10,7 @@
     </view>
   </view>
   <view class="receiver-button" wx:else style="bottom: {{isIphoneXRSMax?'50px':'10px'}}">
-    <view class="receiver-button-left" bindtap="wonderfulVideo">花样精彩视频</view>
-    <view class="receiver-button-right" bindtap="goodMorningSignIn">早安签到</view>
+    <view class="receiver-button-left" bindtap="wonderfulVideo">访问花样百姓</view>
+    <view class="receiver-button-right" bindtap="goodMorningSignIn">我也要制作</view>
   </view>
 </view>
