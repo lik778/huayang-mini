@@ -182,7 +182,7 @@
             <view class="good-morning-main">
                 <view class="good-morning-main-title">为美好的每一天加油</view>
                 <view class="good-morning-main-image">
-                    <image src="{{goodMorningPopupBg}}">
+                    <image src="{{goodMorningPopupBg}}" mode="widthFix">
                     </image>
                 </view>
                 <view class="good-morning-main-button" bindtap="showGoodMorningHighLight">分享心情</view>

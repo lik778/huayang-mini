@@ -654,7 +654,7 @@ Page({
 	},
 	/* 获取花样最新活动相关数据 */
 	async getNewActivityData() {
-		let link = "https://huayang-img.oss-cn-shanghai.aliyuncs.com/zw_playbill/" + (await getGoodMorningBgTemplate()).data[0] + ".jpg"
+		let link = "https://huayang-img.oss-cn-shanghai.aliyuncs.com/zw_playbill/" + (await getGoodMorningBgTemplate()).data.photo[0] + ".jpg"
 		getNewActivityList({
 			status: 1,
 			path: 2
