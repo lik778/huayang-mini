@@ -36,11 +36,11 @@
     width: 200rpx;
     height: 64rpx;
     box-sizing: border-box;
-    border: 4rpx solid #CC0000;
+    border: 4rpx solid #FF5544;
     border-radius: 999rpx;
     text-align: center;
     font: 32rpx/58rpx PingFangSC;
-    color: #CC0000;
+    color: #FF5544;
 }
 
 .withdrawal:active {
@@ -84,11 +84,11 @@
 
 .txt-04 {
     font: 500 36rpx/36rpx PingFangSC;
-    color: #CC0000;
+    color: #FF5544;
 }
 
 .record-item-02 {
     margin-top: 18rpx;
     font: 32rpx/48rpx PingFangSC;
-    color: #CC0000;
+    color: #FF5544;
 }

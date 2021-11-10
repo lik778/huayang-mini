@@ -47,7 +47,7 @@
     font: 28rpx/28rpx PingFangSC;
 }
 .apply-success {
-    color: #CC0000;
+    color: #FF5544;
 }
 
 /* 训练营 */

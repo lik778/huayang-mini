@@ -46,7 +46,7 @@
   width: 84rpx;
   height: 8rpx;
   border-radius: 4rpx;
-  background: #CC0000;
+  background: #FF5544;
 }
 
 .main-item:first-child {
@@ -121,7 +121,7 @@
   width: 196rpx;
   height: 72rpx;
   border-radius: 36rpx;
-  border: 1px solid #CC0000;
+  border: 1px solid #FF5544;
   box-sizing: border-box;
   text-align: center;
   line-height: 72rpx;

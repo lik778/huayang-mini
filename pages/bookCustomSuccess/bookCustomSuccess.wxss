@@ -49,6 +49,6 @@
     text-align: center;
     font: 600 36rpx/96rpx PingFangSC;
     border-radius: 999rpx;
-    background: #CC0000;
+    background: #FF5544;
     color: white;
 }

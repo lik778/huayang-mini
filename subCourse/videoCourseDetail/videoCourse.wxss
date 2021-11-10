@@ -283,7 +283,7 @@
   width: 84rpx;
   height: 8rpx;
   border-radius: 4rpx;
-  background: #CC0000;
+  background: #FF5544;
 }
 
 .tab-active-one::after {
@@ -294,7 +294,7 @@
   width: 84rpx;
   height: 8rpx;
   border-radius: 4rpx;
-  background: #CC0000;
+  background: #FF5544;
 }
 
 .course-title-login-right {
@@ -334,7 +334,7 @@
 }
 
 .course-item-active {
-  border: 1px solid #CC0000;
+  border: 1px solid #FF5544;
   box-sizing: border-box;
 }
 

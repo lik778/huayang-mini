@@ -14,7 +14,7 @@ Page({
     limit: 10,
     recordList: [],
     status: ["", "审核中", "失败", "成功"],
-    statusColors: ["", "#EEA156", "#CC0000", "#40A100"]
+    statusColors: ["", "#EEA156", "#FF5544", "#40A100"]
   },
 
   /**

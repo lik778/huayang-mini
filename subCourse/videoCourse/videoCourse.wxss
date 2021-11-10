@@ -149,7 +149,7 @@
 }
 
 .remind {
-  color: #CC0000;
+  color: #FF5544;
 }
 
 .trial-contact {
@@ -196,7 +196,7 @@
   left: 50%;
   transform: translateX(-50%);
   bottom: -24rpx;
-  background: #CC0000;
+  background: #FF5544;
   border-radius: 999rpx;
   width: 84rpx;
   height: 8rpx;
@@ -236,11 +236,11 @@
 }
 
 .course-item-choosed {
-  border: 1px solid #CC0000;
+  border: 1px solid #FF5544;
 }
 
 .course-item-active {
-  color: #CC0000 !important;
+  color: #FF5544 !important;
 }
 
 .course-item-left {
@@ -694,7 +694,7 @@
 .pay-button-invite-one-left {
   width: 236rpx;
   height: 96rpx;
-  border: 1px solid #CC0000;
+  border: 1px solid #FF5544;
   border-radius: 999rpx;
   display: flex;
   flex-direction: column;
@@ -706,13 +706,13 @@
 .pay-button-invite-one-left view:first-child {
   margin-bottom: 14rpx;
   font: 28rpx/28rpx PingFangSC;
-  color: #CC0000;
+  color: #FF5544;
 }
 
 .pay-button-invite-one-right {
   width: 436rpx;
   height: 96rpx;
-  border: 1px solid #CC0000;
+  border: 1px solid #FF5544;
   border-radius: 999rpx;
   display: flex;
   font-size: 40rpx;
@@ -726,13 +726,13 @@
 .pay-button-invite-two-left view:last-child,
 .pay-button-invite-one-left view:last-child {
   font: 500 32rpx/32rpx PingFangSC;
-  color: #CC0000;
+  color: #FF5544;
 }
 
 .pay-button-invite-two-right {
   width: 436rpx;
   height: 96rpx;
-  border: 1px solid #CC0000;
+  border: 1px solid #FF5544;
   border-radius: 999rpx;
   display: flex;
   align-items: center;
@@ -762,19 +762,19 @@
 .pay-or-fluent-one-left {
   width: 330rpx;
   height: 96rpx;
-  border: 2rpx solid #CC0000;
+  border: 2rpx solid #FF5544;
   border-radius: 999rpx;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #CC0000;
+  color: #FF5544;
 }
 
 .pay-or-fluent-one-left.free-course {
   width: 100vw;
-  background: #CC0000;
+  background: #FF5544;
   color: white;
 }
 
@@ -804,7 +804,7 @@
 .pay-or-fluent-one-right {
   width: 330rpx;
   height: 96rpx;
-  border: 1px solid #CC0000;
+  border: 1px solid #FF5544;
   border-radius: 999rpx;
   display: flex;
   flex-direction: column;
@@ -962,7 +962,7 @@
   color: white;
   text-align: center;
   border-radius: 999rpx;
-  background: #CC0000;
+  background: #FF5544;
 }
 
 .unit-pop-close {

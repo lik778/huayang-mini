@@ -29,18 +29,13 @@
 }
 
 .tab-bar-item cover-image {
-  width: 52rpx;
-  height: 52rpx;
+  width: 74rpx;
+  height: 74rpx;
   margin-bottom: 4rpx;
 }
 
 .tab-bar-item cover-view {
   font-size: 32rpx;
-}
-
-.tab-bar-item cover-image.image-diy {
-  width: 52rpx;
-  height: 52rpx;
 }
 
 .tab-bar-item .content {

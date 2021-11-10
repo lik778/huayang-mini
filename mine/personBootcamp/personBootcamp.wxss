@@ -87,7 +87,7 @@
     height: 96rpx;
     margin: 0 auto;
     border-radius: 999rpx;
-    background: #CC0000;
+    background: #FF5544;
     color: white;
     font: 500 40rpx/96rpx PingFangSC;
     text-align: center;

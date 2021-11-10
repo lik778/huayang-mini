@@ -48,14 +48,14 @@
   height: 8rpx;
   width: 44px;
   border-radius: 999rpx;
-  background: #CC0000;
+  background: #FF5544;
   /*transition: left ease-in 300ms;*/
 }
 
 .tab-active {
   position: relative;
   /*font: 500 52rpx/74rpx PingFangSC;*/
-  color: #CC0000;
+  color: #FF5544;
 }
 
 .tab-pane {
@@ -348,7 +348,7 @@
   font-size: 32rpx;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
-  color: #CC0000;
+  color: #FF5544;
   line-height: 32rpx;
 }
 
@@ -356,7 +356,7 @@
   font-size: 32rpx;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
-  color: #CC0000;
+  color: #FF5544;
   line-height: 32rpx;
 }
 
@@ -412,7 +412,7 @@
 .price-one {
   margin-right: 20rpx;
   font: 500 32rpx/44rpx PingFangSC;
-  color: #CC0000;
+  color: #FF5544;
 }
 
 .price-two {
@@ -424,7 +424,7 @@
 .price-three {
   margin-right: 20rpx;
   font: 500 32rpx/32rpx PingFangSC;
-  color: #CC0000;
+  color: #FF5544;
 }
 
 .course-item-more-btn {
@@ -438,7 +438,7 @@
   background: white;
   border: 1rpx solid #ccc;
   /*color: white;*/
-  /*background: #CC0000;*/
+  /*background: #FF5544;*/
 }
 
 .course-item-more-btn.course-tab {
@@ -543,7 +543,7 @@
 .bootcamp-operate-discount-price {
   margin-right: 20rpx;
   font: 500 44rpx/60rpx PingFangSC;
-  color: #CC0000;
+  color: #FF5544;
 }
 
 .bootcamp-operate-sub-price {
@@ -556,7 +556,7 @@
   width: 200rpx;
   height: 64rpx;
   border-radius: 999rpx;
-  background: #CC0000;
+  background: #FF5544;
   color: white;
   text-align: center;
   font: 500 32rpx/64rpx PingFangSC;

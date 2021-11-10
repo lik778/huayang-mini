@@ -30,11 +30,11 @@
 
 /* 主题色 */
 .subject-font-color {
-    color: #CC0000 !important;
+    color: #FF5544 !important;
 }
 
 .subject-bg-color {
-    background-color: #CC0000 !important;
+    background-color: #FF5544 !important;
 }
 
 

@@ -179,7 +179,7 @@
 .choose-other {
     margin-right: 40rpx;
     box-sizing: border-box;
-    border: 2rpx solid #CC0000;
+    border: 2rpx solid #FF5544;
     font-weight: 400;
     background: white;
 }
@@ -189,7 +189,7 @@
     margin-right: 20rpx;
     width: 128rpx;
     font: 400 32rpx/44rpx PingFang SC;
-    color: #CC0000;
+    color: #FF5544;
 }
 
 .all-boot-camp:active {

@@ -1,7 +1,7 @@
 <!--发现主页-->
 <view class="discovery" style="visibility: {{canShow?'visible':'hidden'}};">
     <!-- 引导用户收藏小程序卡片 -->
-    <view class="guide-collection" wx:if='{{showGuideCollection!==""}}'>
+    <view class="guide-collection" wx:if='{{showGuideCollection!==""}}' style="top: {{statusBarHeight + 40}}px">
         <view class="guide-collection-first" bindtap="changeGuideCollectionStatus" wx:if='{{showGuideCollection===1}}'>
             <image style="width:532rpx;height: 116rpx;" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1631956461xLaFRy.jpg"></image>
         </view>
@@ -10,33 +10,38 @@
         </view>
     </view>
 
-    <view id='first-screen'>
-        <!-- 时尚视频轮播 -->
-        <video-swiper bindpauseVideo='initShowGoodmorningPopup' id='videoSwiper' videoList="{{swiperVideoList}}" bindqueryNextList='queryNextList'>
-        </video-swiper>
-        <!-- 广告位 -->
-        <view class="advertisement-module" wx:if='{{advertisementList.length}}'>
-            <image src="{{advertisementList[0].pic_url}}" style="height:{{advertisementImageHeight}}px" bindtap="bannerTap" data-item="{{advertisementList[0]}}" class="advertisement-item-image"></image>
+    <!-- 标题 -->
+    <view class="global-title">
+        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1636424145SJILsd.jpg" mode="aspectFit" class="logo"></image><text>生活有花样</text>
+    </view>
+
+    <!-- banner -->
+    <view wx:if="{{bannerList.length!==0}}">
+        <!-- banner 滚动区域 -->
+        <view class="swiper-box" id="swiper-box">
+            <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}" duration="{{500}}">
+                <swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="joinCampFromBanner" data-item="{{item}}">
+                    <view class="swiper-cover"></view>
+                    <image mode="aspectFill" src="{{item.pic_url}}"></image>
+                </swiper-item>
+            </swiper>
+            <view class="swiper-dot">
+                <view wx:for="{{bannerList}}" wx:key="index" wx:if="{{bannerList.length>1}}" class="{{current===index?'swiper-dot-item-active swiper-dot-item':'swiper-dot-item'}}"></view>
+            </view>
+        </view>
+
+        <view class="text-banner" wx:if="{{textBannerList.length > 0}}">
+            <text class="text-banner-item {{index === 1 ? 'black' : ''}} limit-one-line" wx:for="{{textBannerList}}">{{item.title}}</text>
         </view>
     </view>
 
-    <!-- 金刚位 -->
-    <view class="fixed-site-module">
-        <view class="fixed-site-list" id='fixed-site-list'>
-            <view class="fixed-site-item" bindtap="fixedSiteItemTap" data-item="{{item}}" wx:for="{{fixedSiteList}}" wx:key='index'>
-                <image src="{{item.icon}}"></image>
-                <text>{{item.title}}</text>
-                <view class="red-dot" wx:if="{{item.title==='每日签到'&&showGoodMorningRedDot}}"></view>
-                <view class="fixed-site-popup" wx:if="{{item.title==='每日签到'&&showGoodMorningNoticePopup}}">
-                    <view class="fixed-site-popup-cover">
-                        <image src="{{item.icon}}"></image>
-                        <text>{{item.title}}</text>
-                    </view>
-                    <view class="fixed-site-popup-box">
-                        <view>点击每日签到</view>
-                        <view>开启美好新一天</view>
-                    </view>
-                </view>
+    <!-- 品质好物 -->
+    <view class="qualities">
+        <view class="quality-title"><text>品质好物</text></view>
+        <view class="quality-content">
+            <view class="quality-item" wx:for="{{qualityList}}" wx:key="index">
+                <image class="quality-item-picture" src="{{item.cover}}" mode="aspectFit"></image>
+                <text class="quality-item-text limit-one-line">{{item.title}}</text>
             </view>
         </view>
     </view>
@@ -145,6 +150,16 @@
         </view>
     </view>
 
+    <!-- 金刚位 -->
+    <view class="fixed-site-module">
+        <view class="fixed-site-list" id='fixed-site-list'>
+            <view class="fixed-site-item" bindtap="fixedSiteItemTap" data-item="{{item}}" wx:for="{{fixedSiteList}}" wx:key='index'>
+                <image src="{{item.icon}}"></image>
+                <text>{{item.title}}</text>
+            </view>
+        </view>
+    </view>
+
     <!-- 全局消息弹窗 -->
     <view class="information" catchtouchmove="onCatchtouchmove" wx:if="{{didShowInformation}}">
         <view class="information-mask {{showInformationPopAnime ? 'animation' : ''}}"></view>
@@ -172,24 +187,6 @@
                 <image class="information-pop-close" bindtap="closeInformationPop" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617938508Usopwi.jpg"></image>
             </view>
         </block>
-    </view>
-
-    <!-- 早上好弹窗 -->
-    <view class="good-morning-popup" catchtouchmove="stopMove" wx:if="{{needShowGoodMorningPopup}}">
-        <view class="good-morning-popup-box">
-            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629790110bECsII.jpg" class="good-morning-icon">
-            </image>
-            <view class="good-morning-main">
-                <view class="good-morning-main-title">为美好的每一天加油</view>
-                <view class="good-morning-main-image">
-                    <image src="{{goodMorningPopupBg}}" mode="widthFix">
-                    </image>
-                </view>
-                <view class="good-morning-main-button" bindtap="showGoodMorningHighLight">分享心情</view>
-            </view>
-            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629790175dTzGqv.jpg" class="good-morning-close" bindtap="closeGoodMorningPopup">
-            </image>
-        </view>
     </view>
 
     <!-- 授权弹窗 -->

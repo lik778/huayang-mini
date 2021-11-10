@@ -32,7 +32,7 @@
     font: 32rpx/88rpx PingFangSC;
     color: white;
     text-align: center;
-    background: #CC0000;
+    background: #FF5544;
 }
 .empty-btn:active {
     opacity: 0.9;

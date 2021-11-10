@@ -133,7 +133,7 @@
 
 .learn {
     font: 500 32rpx/32rpx PingFangSC;
-    color: #CC0000;
+    color: #FF5544;
 }
 
 .share-btn {
@@ -170,7 +170,7 @@
     text-align: center;
     border-radius: 999rpx;
     font: 500 40rpx/36rpx PingFangSC;
-    background: #CC0000;
+    background: #FF5544;
 }
 
 .sub-text {

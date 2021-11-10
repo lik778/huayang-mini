@@ -88,7 +88,7 @@
 .calendar-right {
   width: 280rpx;
   height: 72rpx;
-  border: 1px solid #cc0000;
+  border: 1px solid #FF5544;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -96,7 +96,7 @@
   font-size: 36rpx;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
-  color: #CC0000;
+  color: #FF5544;
 }
 
 .video-box {
@@ -468,5 +468,5 @@
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
   /* color: #FFFFFF; */
-  border: 1px solid #CC0000;
+  border: 1px solid #FF5544;
 }

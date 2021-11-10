@@ -6,16 +6,12 @@ import {
 	hasUserInfo,
 	removeLocalStorage,
 	setLocalStorage,
-	shuffle
 } from "../../utils/util"
 import {
 	getActivityList,
 	getFindBanner,
 	getOfflineCourseAllData,
 } from "../../api/course/index"
-import {
-	getBannerList
-} from "../../api/mall/index"
 import {
 	GLOBAL_KEY,
 	WeChatLiveStatus
@@ -25,16 +21,14 @@ import {
 	addTravelVisitNumber,
 	getDiscoveryRemindData,
 	getGoodMorningBgTemplate,
-	getIndexHeaderVideoList,
 	getNewActivityList,
-	getRecommendLiveList,
+	getRecommendLiveList, queryQualityItems,
 	queryQualityVideoList,
 	queryRecentTravelList,
 	updateLiveStatus
 } from "../../api/live/index"
 import dayjs from "dayjs"
 import request from "../../lib/request"
-const App = getApp()
 
 Page({
 
@@ -42,6 +36,7 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
+		statusBarHeight: 0,
 		isIosPlatform: false,
 		showModelBanner: false,
 		didShowAuth: false,
@@ -66,8 +61,6 @@ Page({
 		didLoadSecondMain: false, // 是否完成第二部分数据内容加载
 		didShowFluentLearnModal: false, // 畅学卡引导弹窗
 		_rejectModelCompetitionReload: false, // 授权成功是否跳过模特大赛相关函数
-		advertisementList: '', //广告位数据列表
-		advertisementImageHeight: 115, //广告位图片高;默认为设计图的115px
 		fixedSiteList: [{
 			icon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1629776383tAOPGh.jpg",
 			title: '每日签到'
@@ -82,25 +75,49 @@ Page({
 		showGoodMoringPopup: false, //显示早上好弹窗(是否在播放视频过程中,true代表不在)
 		nowDate: '', //当前日期（月+日）- 花样最新活动
 		newActivityList: [], //花样最新活动列表
-		goodMorningPopupBg: "", //早上好弹窗背景图
-		needShowGoodMorningPopup: false, //是否显示早上好弹窗(本地缓存是否显示过+是否在显示时间段内)
 		newActivityVideoPlayIndex: -1, //花样最新活动当前播放视频下标
 		newActivityVideoPlaying: false, //花样最新活动视频是否在播放中
-		showGoodMorningRedDot: false, //金刚位每日签到红点提示
 		enterFullNewActivityVideo: false, //最新活动视频是否进入全屏
-		headerVideoPagination: {
-			offset: 0,
-			limit: 30
-		},
-		swiperVideoList: [],
-		headerVideoPaginationTrue: true,
 		showGuideCollection: '', //引导用户收藏小程序卡片
-		firstEnterTime: ''
+		firstEnterTime: '',
+		bannerList: [], // banner
+		current: 0, // banner索引
+		textBannerList: [], // text banner
+		qualityList: [], // 品质好物
+	},
+
+	// swiper切换
+	changeSwiperIndex(e) {
+		this.setData({
+			current: e.detail.current
+		})
+	},
+
+	// 处理轮播点击事件
+	joinCampFromBanner(e) {
+		let {link} = e.currentTarget.dataset.item
+		wx.navigateTo({
+			url: link, fail() {
+				wx.switchTab({url: link})
+			}
+		})
+	},
+
+	getBanner() {
+		return new Promise((resolve) => {
+			let promises = [getFindBanner({scene: 8}), getFindBanner({scene: 23})]
+			Promise.all(promises).then((arys) => {
+				let [bannerList, textBannerList] = arys
+				if ($notNull(bannerList)) this.setData({bannerList: bannerList})
+				if ($notNull(textBannerList)) this.setData({textBannerList: textBannerList.slice(0, 2)})
+				resolve(bannerList)
+			})
+		})
 	},
 
 	/* 初始化引导收藏小程序卡片状态 */
-	initGuideColletionStatus() {
-		let status = getLocalStorage("need_show_guide_collection") ? false : true
+	initGuideCollectionStatus() {
+		let status = getLocalStorage("need_show_guide_collection")
 		if (status) {
 			this.setData({
 				showGuideCollection: 1
@@ -235,9 +252,9 @@ Page({
 	travelLayoutListener() {
 		let travelOB = wx.createIntersectionObserver()
 		travelOB.relativeToViewport({
-				top: -50,
-				bottom: -50
-			})
+			top: -50,
+			bottom: -50
+		})
 			.observe('.travel', res => {
 				if (res && res.intersectionRatio > 0) {
 					// 进入可视区域
@@ -667,7 +684,6 @@ Page({
 			}
 			this.setData({
 				newActivityList: list,
-				goodMorningPopupBg: link + "?x-oss-process=style/huayang",
 				nowDate: (dayjs().month() + 1 < 10 ? '0' + (dayjs().month() + 1) : dayjs().month() + 1) + '.' + dayjs().date()
 			})
 		})
@@ -711,75 +727,6 @@ Page({
 		}
 
 	},
-	/* 初始化是否显示早上好弹窗 */
-	initShowGoodmorningPopup() {
-		let video = this.selectComponent(`#videoSwiper`)
-		if (video.__data__.playingVideo || this.data.didShowInformation) {
-			return
-		}
-		// 不在播放视频
-		let todayStartTime = new Date(new Date().setHours(0, 0, 0, 0)) / 1000 //当天0点
-		let secondDayTime = new Date(new Date().setHours(0, 0, 0, 0)) / 1000 + 86400 //第二天0点
-		let nowTime = parseInt(new Date().getTime() / 1000) //当前时间-s
-		let nowHour = new Date().getHours() //当前小时数
-		let localTime = getLocalStorage("good_morning_expire_at") || '' //本次缓存上次显示弹窗的时间
-		if (3 < nowHour && nowHour < 10) {
-			// 当天4-10点内显示
-			if (!localTime) {
-				setLocalStorage("good_morning_expire_at", nowTime)
-				this.setData({
-					needShowGoodMorningPopup: true
-				})
-			} else {
-				if (localTime > todayStartTime && localTime < secondDayTime) {
-					// 当天已显示弹窗
-				} else {
-					setLocalStorage("good_morning_expire_at", nowTime)
-					this.setData({
-						needShowGoodMorningPopup: true
-					})
-				}
-			}
-		}
-	},
-	/* 关闭早上好弹窗 */
-	closeGoodMorningPopup() {
-		/* 早安签到弹窗右上角退出点击 */
-		bxPoint("new_homepage_morning_exit_click", {}, false)
-		this.setData({
-			needShowGoodMorningPopup: false
-		})
-	},
-	/* 早上好弹窗点击立即签到；高亮金刚位 */
-	showGoodMorningHighLight() {
-		/* 早安签到弹窗"早安签到"按钮点击打点 */
-		bxPoint("new_homepage_morning_sign_click", {}, false)
-		// 花样早上好优化版本
-		let isDev = request.baseUrl === 'https://dev.huayangbaixing.com' ? true : false
-		let link = isDev ? 'https://dev.huayangbaixing.com/#/signIn/playbill/miniprogram' : 'https://huayang.baixing.com/#/signIn/playbill/miniprogram'
-		let nowTime = parseInt(new Date().getTime() / 1000) //当前时间-s
-		setLocalStorage("good_morning_click_time", nowTime)
-		this.setData({
-			showGoodMorningRedDot: false
-		})
-		wx.navigateTo({
-			url: `/subCourse/noAuthWebview/noAuthWebview?link=${encodeURIComponent(link)}`,
-		})
-
-		// const query = wx.createSelectorQuery()
-		// query.select('#first-screen').boundingClientRect().exec(res => {
-		// 	wx.pageScrollTo({
-		// 		duration: 50,
-		// 		scrollTop: res[0].height - 50,
-		// 		success: () => {
-		// 			this.setData({
-		// 				showGoodMorningNoticePopup: true,
-		// 				needShowGoodMorningPopup: false
-		// 			})
-		// 		}
-		// 	})
-		// })
-	},
 	/* 金刚位点击 */
 	fixedSiteItemTap(e) {
 		let item = e.currentTarget.dataset.item
@@ -788,7 +735,7 @@ Page({
 			tab_tag: item.title === '每日签到' ? 1 : item.title === '精品课程' ? 2 : 3
 		}, false)
 		if (item.title === '每日签到') {
-			let isDev = request.baseUrl === 'https://dev.huayangbaixing.com' ? true : false
+			let isDev = request.baseUrl === 'https://dev.huayangbaixing.com'
 			let link = isDev ? 'https://dev.huayangbaixing.com/#/signIn/playbill/miniprogram' : 'https://huayang.baixing.com/#/signIn/playbill/miniprogram'
 			let nowTime = parseInt(new Date().getTime() / 1000) //当前时间-s
 			setLocalStorage("good_morning_click_time", nowTime)
@@ -812,38 +759,9 @@ Page({
 	/* 点击遮罩层关闭相关弹窗 */
 	closeAllPopup() {
 		this.setData({
-			needShowGoodMorningPopup: false,
 			showGoodMorningNoticePopup: false
 		})
 	},
-
-	/* 头部视频数据分页 */
-	queryNextList() {
-		if (this.data.headerVideoPaginationTrue) {
-			let param = Object.assign({}, this.data.headerVideoPagination, {
-				offset: this.data.headerVideoPagination.offset + this.data.headerVideoPagination.limit
-			})
-			this.setData({
-				headerVideoPagination: param
-			}, () => {
-				this.headerVideoManage()
-			})
-		}
-	},
-	/* 头部视频相关数据处理 */
-	headerVideoManage() {
-		getIndexHeaderVideoList(this.data.headerVideoPagination).then(({
-			data
-		}) => {
-			let list = this.data.swiperVideoList.length > 0 ? this.data.swiperVideoList.concat(data.list || []) : data.list || []
-			list = shuffle(list)
-			this.setData({
-				swiperVideoList: list,
-				headerVideoPaginationTrue: data.list.length >= this.data.headerVideoPagination.limit ? true : false
-			})
-		})
-	},
-
 
 	/* 花样最新活动视频播放点击 */
 	playNewActivityVideo(e) {
@@ -899,40 +817,12 @@ Page({
 		}
 	},
 
-	/* 广告位点击 */
-	bannerTap(e) {
-		/* 广告位点击打点 */
-		bxPoint("new_homepage_banner_click", {
-			banner_id: e.currentTarget.dataset.item.id
-		}, false)
-		let link = e.currentTarget.dataset.item.link
-		let rootPage = ['/pages/discovery/discovery', '/pages/studentMoments/studentMoments', '/pages/practice/practice', '/pages/userCenter/userCenter']
-		if (rootPage.indexOf(link) !== -1) {
-			wx.switchTab({
-				url: link
-			})
-		} else {
-			wx.navigateTo({
-				url: link
-			})
-		}
+	getQualityList() {
+		queryQualityItems({label: 1, status: 1}).then(({data: {list}}) => {
+			this.setData({qualityList: list})
+		})
 	},
-	/* 初始化早上好红点显示 */
-	initGoodMorningRedDot() {
-		let time = getLocalStorage("good_morning_click_time")
-		let todayStartTime = new Date(new Date().setHours(0, 0, 0, 0)) / 1000 //当天0点
-		let secondDayTime = new Date(new Date().setHours(0, 0, 0, 0)) / 1000 + 86400 //第二天0点
-		if (time > todayStartTime && time < secondDayTime) {
-			this.setData({
-				showGoodMorningRedDot: false
-			})
-		} else {
-			this.setData({
-				showGoodMorningRedDot: true
-			})
-		}
-	},
-	stopMove() {},
+
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
@@ -940,7 +830,8 @@ Page({
 		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=235`})
 		// 记录首次加载时长
 		this.setData({
-			firstEnterTime: new Date().getTime()
+			firstEnterTime: new Date().getTime(),
+			statusBarHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
 		})
 		let {
 			scene,
@@ -965,27 +856,14 @@ Page({
 			}
 		}
 
-		this.initGuideColletionStatus()
+		this.getBanner().then()
 
-		/* 动态处理广告3:1宽高比 */
-		this.setData({
-			advertisementImageHeight: ((JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth - 30) / 3).toFixed(2)
-		})
+		this.getQualityList()
+
+		this.initGuideCollectionStatus()
 
 		/* 获取花样最新活动相关数据 */
 		this.getNewActivityData()
-		/* 获取头部视频相关数据 */
-		this.headerVideoManage()
-		/* 初始化早上好红点显示 */
-		this.initGoodMorningRedDot()
-		/* 获取广告位数据 */
-		getBannerList({
-			scene: 8
-		}).then(res => {
-			this.setData({
-				advertisementList: res.length > 0 ? res : []
-			})
-		})
 
 		// 检查用户是否需要引导
 		this.checkUserGuide()
@@ -1045,11 +923,6 @@ Page({
 				didShowFluentLearnModal: false
 			})
 		}
-		/* 保证离开页面后早上好弹窗关闭 */
-		this.setData({
-			needShowGoodMorningPopup: false,
-			showGoodMorningNoticePopup: false
-		})
 	},
 
 	/**
@@ -1067,7 +940,8 @@ Page({
 	/**
 	 * 页面上拉触底事件的处理函数
 	 */
-	onReachBottom: function () {},
+	onReachBottom: function () {
+	},
 	/**
 	 * 用户点击右上角分享
 	 */
@@ -1078,12 +952,5 @@ Page({
 		}
 	},
 	onPageScroll(e) {
-		if (e.scrollTop > 500) {
-			let video = this.selectComponent(`#videoSwiper`)
-			video.videoContext.pause()
-			video.pauseVideoAuto()
-			this.initShowGoodmorningPopup()
-			this.runSecondMain()
-		}
 	}
 })

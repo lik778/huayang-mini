@@ -24,10 +24,10 @@
     width: 200rpx;
     height: 56rpx;
     text-align: center;
-    border: 2rpx solid #CC0000;
+    border: 2rpx solid #FF5544;
     box-sizing: border-box;
     border-radius: 999rpx;
-    color: #CC0000;
+    color: #FF5544;
     font: 26rpx/52rpx PingFangSC;
 }
 
@@ -65,7 +65,7 @@
     font: 600 32rpx/32rpx PingFangSC;
     border-radius: 999rpx;
     color: white;
-    background: #CC0000;
+    background: #FF5544;
 }
 
 .book-item-cover {
@@ -96,7 +96,7 @@
 
 .text-04 {
     font: 32rpx/32rpx PingFangSC;
-    color: #CC0000;
+    color: #FF5544;
 }
 
 .text-02 {
@@ -219,7 +219,7 @@
     text-align: center;
     border-radius: 999rpx;
     color: white;
-    background: #CC0000;
+    background: #FF5544;
 }
 
 .normal {
@@ -316,7 +316,7 @@
 }
 
 .select-icon.active {
-    border: 16rpx solid #CC0000;
+    border: 16rpx solid #FF5544;
 }
 
 .text-06 {
@@ -381,7 +381,7 @@
     text-align: center;
     border-radius: 999rpx;
     color: white;
-    background: #CC0000;
+    background: #FF5544;
 }
 
 .modal-btn:active {
