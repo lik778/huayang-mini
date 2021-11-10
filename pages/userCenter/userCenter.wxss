@@ -81,7 +81,7 @@
     height: 80rpx;
     font: 600 32rpx/80rpx PingFangSC;
     text-align: center;
-    background: #CC0000;
+    background: #FF5544;
     border-radius: 999rpx;
 }
 
@@ -183,7 +183,7 @@
     text-align: center;
     border-radius: 999rpx;
     color: #834B25;
-    background: #CC0000 linear-gradient(90deg, #FBD8B3 0%, #ECCBA9 100%);
+    background: #FF5544 linear-gradient(90deg, #FBD8B3 0%, #ECCBA9 100%);
     animation: flashing 4s ease infinite;
 }
 
@@ -217,7 +217,7 @@
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 500;
     color: #834B25;
-    background: #CC0000 linear-gradient(90deg, #FBD8B3 0%, #ECCBA9 100%);
+    background: #FF5544 linear-gradient(90deg, #FBD8B3 0%, #ECCBA9 100%);
     border-radius: 999rpx;
 }
 
@@ -399,9 +399,9 @@
     height: 56rpx;
     border-radius: 999rpx;
     box-sizing: border-box;
-    border: 2rpx solid #CC0000;
+    border: 2rpx solid #FF5544;
     font: 500 32rpx/52rpx PingFangSC;
-    color: #CC0000;
+    color: #FF5544;
     text-align: center;
 }
 
@@ -528,7 +528,7 @@
 
 .function-item-bottom > text {
     font: 28rpx/28rpx PingFangSC;
-    color: #CC0000;
+    color: #FF5544;
 }
 
 .function-item-left .task-image {
@@ -643,7 +643,7 @@
     font-size: 28rpx;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
-    color: #CC0000;
+    color: #FF5544;
     line-height: 28rpx;
 }
 

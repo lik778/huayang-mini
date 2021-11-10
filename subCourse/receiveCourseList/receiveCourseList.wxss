@@ -159,7 +159,7 @@
     margin: 50rpx auto 0;
     border-radius: 999rpx;
     box-sizing: border-box;
-    border: 3rpx solid #CC0000;
+    border: 3rpx solid #FF5544;
     font: bold 40rpx/96rpx PingFangSC;
 }
 

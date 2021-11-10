@@ -175,7 +175,7 @@
 
 .discount-price {
     font: 500 48rpx/48rpx PingFangSC;
-    color: #CC0000;
+    color: #FF5544;
 }
 
 .origin-price {
@@ -213,11 +213,11 @@
     border-radius: 999rpx;
     font: 500 32rpx/96rpx PingFangSC;
     text-align: center;
-    color: #CC0000;
+    color: #FF5544;
     background: white;
 }
 
 .extrude {
-    background: #CC0000;
+    background: #FF5544;
     color: white;
 }

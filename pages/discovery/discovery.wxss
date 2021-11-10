@@ -5,6 +5,22 @@
   background: #fff;
 }
 
+.global-title {
+  padding: 108rpx 0 0 40rpx;
+  height: 176rpx;
+  margin-bottom: 28rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  font: 32rpx/32rpx PingFangSC;
+}
+
+.logo {
+  width: 192rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
+
 .layer {
   display: flex;
   justify-content: space-between;
@@ -18,7 +34,6 @@
   position: fixed;
   right: 30rpx;
   z-index: 1000;
-  top: 0;
 }
 
 .guide-collection-first text:last-child {
@@ -78,7 +93,7 @@
 .price-wrap {
   margin-right: 20rpx;
   font: 32rpx/48rpx PingFangSC;
-  color: #CC0000;
+  color: #FF5544;
 }
 
 .price-wrap>.price {
@@ -222,7 +237,7 @@
   font: 500 32rpx/64rpx PingFangSC;
   border-radius: 999rpx;
   color: white;
-  background: #CC0000;
+  background: #FF5544;
   animation: guideFlashing 4s ease infinite;
 }
 
@@ -343,7 +358,7 @@
   display: flex;
   align-items: flex-end;
   font: 32rpx/32rpx PingFangSC;
-  color: #CC0000;
+  color: #FF5544;
 }
 
 .price-01 {
@@ -520,7 +535,7 @@
   color: white;
   text-align: center;
   border-radius: 999rpx;
-  background: #CC0000;
+  background: #FF5544;
 }
 
 .information-pop-close {
@@ -557,8 +572,7 @@
 
 /* 广告位 */
 .advertisement-module {
-  padding: 60rpx 30rpx;
-  padding-top: 0;
+  padding: 0 30rpx 60rpx;
 }
 
 .advertisement-item-image {
@@ -570,7 +584,6 @@
 /* 金刚位 */
 .fixed-site-module {
   padding: 0 76rpx;
-  padding-bottom: 100rpx;
 }
 
 .fixed-site-list {
@@ -586,39 +599,6 @@
   position: relative;
 }
 
-.fixed-site-popup-cover {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 24rpx;
-  background: #fff;
-  border-radius: 16rpx;
-}
-
-.fixed-site-popup {
-  position: absolute;
-  left: -41rpx;
-  top: -41rpx;
-  z-index: 60;
-  padding: 16rpx;
-  border: 1px dashed #FFFFFF;
-  border-radius: 24rpx;
-}
-
-.fixed-site-popup-box {
-  position: absolute;
-  left: 16rpx;
-  top: 304rpx;
-  font-size: 52rpx;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 600;
-  color: #FFFFFF;
-  line-height: 74rpx;
-}
-
-.fixed-site-popup-box>view {
-  white-space: nowrap;
-}
 
 .fixed-site-item image {
   width: 160rpx;
@@ -635,22 +615,9 @@
   line-height: 28rpx;
 }
 
-/* 金刚位早上好红点提示 */
-.red-dot {
-  width: 12rpx;
-  height: 12rpx;
-  border-radius: 50%;
-  background-color: #FF4433;
-  position: absolute;
-  border: 1px solid #fff;
-  right: 10rpx;
-  bottom: 22rpx;
-}
-
 /* 花样最新活动 */
 .new-activity-module {
-  padding: 0 30rpx;
-  padding-bottom: 80rpx;
+  padding: 0 30rpx 80rpx;
 }
 
 .new-activity-title {
@@ -803,7 +770,7 @@
   color: #FFFFFF;
   line-height: 72rpx;
   text-align: center;
-  background-color: #CC0000;
+  background-color: #FF5544;
 }
 
 .new-activity-item-play-icon {
@@ -828,122 +795,116 @@
   z-index: 50;
 }
 
-/* 早安签到弹窗 */
-.good-morning-popup {
-  width: 640rpx;
-  height: 800rpx;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  margin-top: -30px;
-  z-index: 60;
-  background: #fff;
-  border-radius: 16rpx;
-}
-
-.good-morning-popup-box {
-  position: relative;
-}
-
-.good-morning-icon {
-  width: 150rpx;
-  height: 178rpx;
-  vertical-align: bottom;
-  position: absolute;
-  left: 50%;
-  top: -80rpx;
-  transform: translateX(-50%);
-}
-
-.good-morning-main {
-  padding-top: 80rpx;
-}
-
-.good-morning-main-title {
-  text-align: center;
-  padding: 20rpx 0;
-  font-size: 40rpx;
-  font-family: PingFang-SC-Bold, PingFang-SC;
-  font-weight: bold;
-  color: #000000;
-  line-height: 56rpx;
-}
-
-.good-morning-main-image {
-  text-align: center;
-  height: 440rpx;
-  overflow: hidden;
+/* banner */
+.swiper-box {
   display: flex;
   justify-content: center;
-  align-items: center;
-}
-
-.good-morning-main-image image {
-  width: 440rpx;
-  vertical-align: bottom;
-}
-
-.good-morning-close {
-  position: absolute;
-  right: 0;
-  top: -72rpx;
-  width: 32rpx;
-  height: 32rpx;
-}
-
-.good-morning-main-button {
-  width: 320rpx;
-  height: 88rpx;
-  background: #CC0000;
-  border-radius: 999rpx;
-  text-align: center;
-  line-height: 88rpx;
-  font-size: 36rpx;
-  font-family: PingFangSC-Semibold, PingFang SC;
-  font-weight: 600;
-  color: #FFFFFF;
-  margin: 0 auto;
-  margin-top: 44rpx;
-}
-
-/* 头部视频播放区域 */
-#first-screen {
-  padding-top: 20rpx;
-}
-
-.swiper-video-module {
-  width: 100vw;
-  height: 996rpx;
-  padding-bottom: 60rpx;
-}
-
-.swiper-video-item {
-  width: 600rpx;
-}
-
-
-
-#swiper-video-swiper-item {
-  width: 600rpx;
-}
-
-.swiper-video-item-box {
+  height: 310rpx;
+  margin: 30rpx 0;
   position: relative;
 }
 
-.swiper-video-item-box video {
-  width: 600rpx;
-  height: 800rpx;
-  vertical-align: bottom;
+.swiper-item-box {
+  width: 670rpx;
+  height: 310rpx;
 }
 
-.swiper-video-play-icon {
-  width: 132rpx;
-  height: 132rpx;
-  vertical-align: bottom;
+.swiper-item-box image {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
+  bottom: 20rpx;
+}
+
+.swiper-dot-item {
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 4rpx;
+  background: white;
+  margin-right: 8rpx;
+}
+
+.swiper-dot-item-active {
+  background: #FF5544;
+}
+
+/* text banner */
+.text-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40rpx;
+  padding: 0 40rpx;
+}
+
+.text-banner-item {
+  width: 320rpx;
+  height: 100rpx;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+  font: 36rpx/100rpx PingFangSC;
+  text-align: center;
+  color: white;
+  background: #FF5544;
+}
+
+.text-banner-item:active {
+  opacity: 0.9;
+}
+
+.text-banner-item.black {
+  color: #E5C4A9;
+  background: #111111;
+}
+
+/* 品质生活 */
+.qualities {
+  margin-bottom: 10rpx;
+}
+
+.quality-title {
+  padding: 20rpx 40rpx 20rpx 46rpx;
+  font: 500 48rpx/48rpx PingFangSC;
+}
+
+.quality-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 40rpx 40rpx;
+}
+
+.quality-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.quality-item:active {
+  opacity: 0.9;
+}
+
+.quality-item-picture {
+  width: 210rpx;
+  height: 210rpx;
+}
+
+.quality-item-text {
+  display: block;
+  margin-top: 20rpx;
+  width: 210rpx;
+  text-align: center;
+  font: 32rpx/32rpx PingFangSC;
+  color: black;
 }

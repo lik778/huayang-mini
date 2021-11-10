@@ -212,7 +212,7 @@ Page({
 		await drawFont(ctx, "限时特价", '#000000', "400", "PingFangSC", 14, 35, 419 + 8 + 12)
 		ctx.font = '14px PingFang SC'
 		let text01Width = measureTextWidth(ctx, "限时特价")
-		await drawFont(ctx, this.data.discount_price, '#CC0000', "400", "PingFangSC", 24, 35 + text01Width, 419 + 12)
+		await drawFont(ctx, this.data.discount_price, '#FF5544', "400", "PingFangSC", 24, 35 + text01Width, 419 + 12)
 		ctx.font = '24px PingFang SC'
 		let text02Width = measureTextWidth(ctx, "365")
 		await drawFont(ctx, "元/年", '#000000', "400", "PingFangSC", 14, 35 + text01Width + text02Width, 419 + 8 + 12)

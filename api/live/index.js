@@ -214,3 +214,8 @@ export const getGoodMorningBgTemplate = params => {
 export const getIndexHeaderVideoList = params => {
 	return request._get(URL.getIndexHeaderVideoList, params)
 }
+
+/* 获取品质商品 */
+export const queryQualityItems = params => {
+	return request._get(URL.getGoodLifeProducts, params)
+}

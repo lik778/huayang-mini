@@ -19,7 +19,7 @@
     justify-content: center;
     align-items: center;
     font: 28rpx/28rpx PingFangSC;
-    color: #CC0000;
+    color: #FF5544;
 }
 
 .sub-title:active {
@@ -125,14 +125,14 @@
 
 .course-item-bottom-module-left-dis {
     font: 500 32rpx/32rpx PingFangSC;
-    color: #CC0000;
+    color: #FF5544;
 }
 
 .course-item-bottom-module-left-one {
     font-size: 32rpx;
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 600;
-    color: #CC0000;
+    color: #FF5544;
     line-height: 32rpx;
 }
 

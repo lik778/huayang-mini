@@ -15,7 +15,7 @@
     width: 36rpx;
     height: 30rpx;
     margin-left: 12rpx;
-    background: #CC0000;
+    background: #FF5544;
     color: white;
     border-radius: 8rpx 2rpx 8rpx 2rpx;
     text-align: center;

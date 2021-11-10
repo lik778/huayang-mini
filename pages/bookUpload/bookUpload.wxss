@@ -154,7 +154,7 @@
     right: 60rpx;
     left: 60rpx;
     height: 96rpx;
-    background: #CC0000;
+    background: #FF5544;
     color: white;
     font: 600 36rpx/96rpx PingFangSC;
     text-align: center;

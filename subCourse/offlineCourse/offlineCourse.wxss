@@ -18,7 +18,7 @@
     border-radius: 8rpx 2rpx;
     text-align: center;
     font: 20rpx/30rpx PingFangSC;
-    background: #CC0000;
+    background: #FF5544;
     color: white;
 }
 
@@ -53,7 +53,7 @@
 .price-wrap {
     margin-right: 20rpx;
     font: 32rpx/48rpx PingFangSC;
-    color: #CC0000;
+    color: #FF5544;
 }
 
 .price-wrap > .price {

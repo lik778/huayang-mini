@@ -129,7 +129,7 @@
 .btn {
     height: inherit;
     width: inherit;
-    background: #CC0000;
+    background: #FF5544;
 }
 .btn.downloading {
     background: #222;
@@ -143,7 +143,7 @@
     left: 0;
     display: block;
     height: 96rpx;
-    background: #CC0000;
+    background: #FF5544;
     z-index: 1;
 }
 .btn-text {
