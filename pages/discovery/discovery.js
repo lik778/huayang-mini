@@ -86,6 +86,60 @@ Page({
 		qualityList: [], // 品质好物
 	},
 
+	handleQualityItemTap(e) {
+		let {link_url: link, type, id} = e.currentTarget.dataset.item
+		bxPoint("homepage_best_goods_detail", {goods_id: id}, false)
+		switch (Number(type)) {
+			case 1: {
+				// 花样好生活
+				wx.navigateTo({
+					url: link,
+					fail: () => {
+						wx.switchTab({url: link})
+					}
+				})
+				break
+			}
+			case 2: {
+				// 游学
+				wx.navigateToMiniProgram({appId: "wx2ea757d51abc1f47", path: link})
+				break
+			}
+			case 3: {
+				// H5
+				wx.navigateTo({url: link})
+				break
+			}
+			case 4: {
+				// 有赞（花样心选）
+				wx.navigateToMiniProgram({appId: "wx95fb6b5dbe8739b7", path: link})
+				break
+			}
+		}
+	},
+
+	navigateMiniprogram(link, linkType) {
+		switch (linkType) {
+			case "youzan": {
+				// 有赞（花样心选）
+				wx.navigateToMiniProgram({appId: "wx95fb6b5dbe8739b7", path: link})
+				break
+			}
+			case "travel": {
+				// 游学
+				wx.navigateToMiniProgram({appId: "wx2ea757d51abc1f47", path: link})
+				break
+			}
+			default: {
+				wx.navigateTo({
+					url: link, fail() {
+						wx.switchTab({url: link})
+					}
+				})
+			}
+		}
+	},
+
 	// swiper切换
 	changeSwiperIndex(e) {
 		this.setData({
@@ -94,13 +148,26 @@ Page({
 	},
 
 	// 处理轮播点击事件
-	joinCampFromBanner(e) {
-		let {link} = e.currentTarget.dataset.item
-		wx.navigateTo({
-			url: link, fail() {
-				wx.switchTab({url: link})
+	handleBannerTap(e) {
+		let {link, link_type, id} = e.currentTarget.dataset.item
+		bxPoint("new_homepage_banner_click", {banner_id: id}, false)
+		this.navigateMiniprogram(link, link_type)
+	},
+
+	// 处理文案轮播点击事件
+	handleTextBannerTap(e) {
+		let { index, item: {link, link_type, id} } = e.currentTarget.dataset
+		switch (+index) {
+			case 0: {
+				bxPoint("homepage_new_goods", {banner_id: id}, false)
+				break;
 			}
-		})
+			case 1: {
+				bxPoint("homepage_right_banner", {banner_id: id}, false)
+				break;
+			}
+		}
+		this.navigateMiniprogram(link, link_type)
 	},
 
 	getBanner() {
@@ -118,7 +185,7 @@ Page({
 	/* 初始化引导收藏小程序卡片状态 */
 	initGuideCollectionStatus() {
 		let status = getLocalStorage("need_show_guide_collection")
-		if (status) {
+		if (!status) {
 			this.setData({
 				showGuideCollection: 1
 			}, () => {
@@ -819,7 +886,8 @@ Page({
 
 	getQualityList() {
 		queryQualityItems({label: 1, status: 1}).then(({data: {list}}) => {
-			this.setData({qualityList: list})
+			list = list || []
+			this.setData({qualityList: list.slice(0, 6)})
 		})
 	},
 

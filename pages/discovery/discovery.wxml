@@ -20,7 +20,7 @@
         <!-- banner 滚动区域 -->
         <view class="swiper-box" id="swiper-box">
             <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}" duration="{{500}}">
-                <swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="joinCampFromBanner" data-item="{{item}}">
+                <swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="handleBannerTap" data-item="{{item}}">
                     <view class="swiper-cover"></view>
                     <image mode="aspectFill" src="{{item.pic_url}}"></image>
                 </swiper-item>
@@ -30,8 +30,9 @@
             </view>
         </view>
 
+        <!-- 文字 banner -->
         <view class="text-banner" wx:if="{{textBannerList.length > 0}}">
-            <text class="text-banner-item {{index === 1 ? 'black' : ''}} limit-one-line" wx:for="{{textBannerList}}">{{item.title}}</text>
+            <text class="text-banner-item {{index === 1 ? 'black' : ''}} limit-one-line" wx:for="{{textBannerList}}" bindtap="handleTextBannerTap" data-index="{{index}}" data-item="{{item}}">{{item.title}}</text>
         </view>
     </view>
 
@@ -39,9 +40,9 @@
     <view class="qualities">
         <view class="quality-title"><text>品质好物</text></view>
         <view class="quality-content">
-            <view class="quality-item" wx:for="{{qualityList}}" wx:key="index">
+            <view class="quality-item" wx:for="{{qualityList}}" wx:key="index" bindtap="handleQualityItemTap" data-item="{{item}}">
                 <image class="quality-item-picture" src="{{item.cover}}" mode="aspectFit"></image>
-                <text class="quality-item-text limit-one-line">{{item.title}}</text>
+                <text class="quality-item-text limit-one-line">{{item.description}}</text>
             </view>
         </view>
     </view>
