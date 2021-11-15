@@ -1,0 +1,214 @@
+@import "../../assets/css/common.wxss";
+.life {}
+
+/* title */
+.global-title {
+    padding: 108rpx 0 0 40rpx;
+    height: 176rpx;
+    margin-bottom: 28rpx;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    font: 32rpx/32rpx PingFangSC;
+}
+
+.logo {
+    width: 192rpx;
+    height: 40rpx;
+    margin-right: 20rpx;
+}
+
+/* banner */
+.swiper-box {
+    display: flex;
+    justify-content: center;
+    height: 310rpx;
+    margin: 30rpx 0;
+    position: relative;
+}
+
+.swiper-item-box {
+    width: 670rpx;
+    height: 310rpx;
+}
+
+.swiper-item-box image {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-dot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 20rpx;
+}
+
+.swiper-dot-item {
+    width: 8rpx;
+    height: 8rpx;
+    border-radius: 4rpx;
+    background: white;
+    margin-right: 8rpx;
+}
+
+.swiper-dot-item-active {
+    background: #FF5544;
+}
+
+/* TABS */
+.tabs {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 0 0 40rpx;
+}
+
+.tab-item {
+    width: 192rpx;
+    height: 48rpx;
+    margin: 24rpx 0 28rpx;
+    font: 300 48rpx/48rpx PingFangSC;
+}
+
+.tab-item.active {
+    font-weight: 500;
+}
+
+.tab-item:nth-child(2) {
+    margin-left: 60rpx;
+}
+
+.underline {
+    position: absolute;
+    bottom: 4rpx;
+    left: 64rpx;
+    width: 144rpx;
+    height: 8rpx;
+    background: linear-gradient(270deg, #FF5544 0%, #FF9E95 100%);
+    border-radius: 5px;
+    transition: left 300ms ease;
+}
+
+.underline.right-side {
+    left: 316rpx;
+}
+
+/* TAGS */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 40rpx;
+}
+
+.tag-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 144rpx;
+    height: 64rpx;
+    margin: 0 24rpx 24rpx 0;
+    background: #F2F2F4;
+    border-radius: 16rpx 0 16rpx 0;
+    box-sizing: border-box;
+    font: 32rpx/32rpx PingFangSC;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.tag-item:nth-child(4n) {
+    margin: 0 0 24rpx 0;
+}
+
+.tag-item.active {
+    color: #FF5544;
+    border: 2rpx solid #FF5544;
+    border-radius: 16rpx 0 16rpx 0;
+    background: white;
+}
+
+/* 商品列表 */
+.products {
+    padding: 20rpx 40rpx;
+    margin-bottom: 140rpx;
+}
+
+.product-item {
+    overflow: hidden;
+    width: 100%;
+    margin-bottom: 80rpx;
+}
+
+.product-picture {
+    float: left;
+    width: 210rpx;
+    height: 210rpx;
+    background: #eee;
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 250rpx;
+    height: 210rpx;
+}
+
+.product-name {
+    font: 32rpx/44rpx PingFangSC;
+}
+
+.product-size {
+    color: rgba(0, 0, 0, 0.8);
+    font: 28rpx/28rpx PingFangSC;
+}
+
+.product-operate {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.operate-left-side {
+    display: flex;
+    align-items: center;
+}
+
+.operate-left-side .vip {
+    width: 120rpx;
+    height: 42rpx;
+    font: 26rpx/42rpx PingFangSC;
+    text-align: center;
+    border-radius: 21rpx 0 21rpx 21rpx;
+    background: linear-gradient(90deg, #F4E4D4 0%, #E5C4A9 100%);
+    color: #442211;
+}
+
+.operate-left-side .discount-price {
+    margin-left: 20rpx;
+    color: #FF5544;
+    font: 500 32rpx/32rpx PingFangSC;
+}
+
+.product-operate .btn {
+    width: 144rpx;
+    height: 62rpx;
+    font: 32rpx/62rpx PingFangSC;
+    text-align: center;
+    background: #FF5544;
+    color: white;
+}
+
+.product-operate .btn:active {
+    opacity: 0.9;
+}
+
+.has-no-more {
+    margin-top: -20rpx;
+    text-align: center;
+    font: 30rpx/30rpx PingFangSC;
+    color: rgba(0,0,0,0.5);
+}

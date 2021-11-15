@@ -865,12 +865,15 @@
   background: #111111;
 }
 
-/* 品质生活 */
+/* 品质好物 */
 .qualities {
   margin-bottom: 10rpx;
 }
 
 .quality-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 20rpx 40rpx 20rpx 46rpx;
   font: 500 48rpx/48rpx PingFangSC;
 }
@@ -904,6 +907,69 @@
   display: block;
   margin-top: 20rpx;
   width: 210rpx;
+  text-align: center;
+  font: 32rpx/32rpx PingFangSC;
+  color: black;
+}
+
+.qualities .more, .life-style .more {
+  display: flex;
+  align-items: center;
+  font: 32rpx/32rpx PingFangSC;
+  color: rgba(0, 0, 0, 0.59);
+}
+
+.qualities .more:active, .life-style .more:active {
+  opacity: 0.85;
+}
+
+.qualities .more::after, .life-style .more::after {
+  content: "";
+  width: 14rpx;
+  height: 20rpx;
+  margin-left: 14rpx;
+  background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1636599641fwMNhr.jpg") no-repeat center;
+  background-size: contain;
+}
+
+/* 品质生活 */
+.life-style {
+  margin-bottom: 20rpx;
+}
+
+.life-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 40rpx 20rpx 46rpx;
+  font: 500 48rpx/48rpx PingFangSC;
+}
+
+.life-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 40rpx 0;
+}
+
+.life-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.life-item-picture {
+  width: 320rpx;
+  height: 214rpx;
+  background: #eee;
+}
+
+.life-item-text {
+  display: block;
+  margin: 24rpx 0 60rpx;
+  width: 320rpx;
   text-align: center;
   font: 32rpx/32rpx PingFangSC;
   color: black;

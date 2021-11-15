@@ -150,5 +150,6 @@ App({
 		didShowedTaskTip: false, // 是否已经展示过作业提示
 		discoveryToPracticeTabIndex: undefined, // 首页金刚位跳转
 		showContactEnterTime:"2021-09-24 14:00:00",
+		selectedQualityTabIndex: 0, // 当前选中的品质TAB
 	}
 })

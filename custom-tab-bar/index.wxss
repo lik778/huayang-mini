@@ -34,6 +34,10 @@
   margin-bottom: 4rpx;
 }
 
+.tab-bar-item cover-image.ground {
+  width: 110rpx;
+}
+
 .tab-bar-item cover-view {
   font-size: 32rpx;
 }
