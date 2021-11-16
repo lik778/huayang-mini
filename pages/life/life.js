@@ -1,6 +1,8 @@
 import bxPoint from "../../utils/bxPoint";
 import { getFindBanner } from "../../api/course/index";
 import { getGoodLifeProductList } from "../../api/life/index";
+import { getLocalStorage } from "../../utils/util";
+import { GLOBAL_KEY } from "../../lib/config";
 
 Page({
 
@@ -29,7 +31,6 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    console.log("onReady");
     this.run()
   },
 
@@ -44,7 +45,6 @@ Page({
       })
     }
 
-    console.log("onShow");
     // 读取品质TAB索引
     if (getApp().globalData.selectedQualityTabIndex > 0) {
       this.setData({
@@ -93,7 +93,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "严选品质好物和生活服务，为50+新青年搭建理想生活的消费场景。",
+      path: `/pages/life/life`
+    }
   },
 
   handleTagTap(e) {

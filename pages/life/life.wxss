@@ -1,5 +1,7 @@
 @import "../../assets/css/common.wxss";
-.life {}
+.life {
+    padding-bottom: 80rpx;
+}
 
 /* title */
 .global-title {
