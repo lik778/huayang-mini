@@ -81,6 +81,7 @@ Page({
 		bxPoint("course_details", {
 			from_uid: getApp().globalData.super_user_id,
 			source: getApp().globalData.source,
+			keChengId: this.data.courseId
 		})
 	},
 
