@@ -1,0 +1,56 @@
+<view class="life">
+    <!-- 标题 -->
+    <view class="global-title">
+        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1636424145SJILsd.jpg" mode="aspectFit" class="logo"></image><text>生活有花样</text>
+    </view>
+
+    <!-- banner -->
+    <view wx:if="{{bannerList.length!==0}}">
+        <!-- banner 滚动区域 -->
+        <view class="swiper-box" id="swiper-box">
+            <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}" duration="{{500}}">
+                <swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="handleBannerTap" data-item="{{item}}">
+                    <view class="swiper-cover"></view>
+                    <image mode="aspectFill" src="{{item.pic_url}}"></image>
+                </swiper-item>
+            </swiper>
+            <view class="swiper-dot">
+                <view wx:for="{{bannerList}}" wx:key="index" wx:if="{{bannerList.length>1}}" class="{{current===index?'swiper-dot-item-active swiper-dot-item':'swiper-dot-item'}}"></view>
+            </view>
+        </view>
+    </view>
+
+    <!-- TAB -->
+    <view class="tabs">
+        <view class="tab-item {{curTab === 1 ? 'active' : ''}}" bindtap="changeTab" data-index="1">品质好物</view>
+        <view class="tab-item {{curTab === 2 ? 'active' : ''}}" bindtap="changeTab" data-index="2">品质生活</view>
+        <view class="underline {{curTab === 2 ? 'right-side' : ''}}" />
+    </view>
+
+    <!-- TAG -->
+    <view class="tags">
+        <view class="tag-item {{curTag === index ? 'active' : ''}}" wx:for="{{TAGS}}" wx:key="index" bindtap="handleTagTap" data-index="{{index}}">{{item}}</view>
+    </view>
+
+    <!-- 商品列表 -->
+    <view class="products">
+        <view class="product-item" wx:for="{{productList}}" wx:key="index" bindtap="handleProductItemTap" data-item="{{item}}">
+            <image class="product-picture" src="{{item.image}}" mode="aspectFill" />
+            <view class="product-info">
+                <view class="product-name limit-two-line">{{item.title}}</view>
+                <view class="product-size">
+                    <text>原价 ¥{{item.origin_price}}</text>
+                </view>
+                <view class="product-operate">
+                    <view class="operate-left-side">
+                        <view class="vip">花粉价</view>
+                        <text class="discount-price">¥{{item.price}}</text>
+                    </view>
+                    <view class="btn">购买</view>
+                </view>
+            </view>
+        </view>
+        <view class="has-no-more">{{hasMore ? "正在加载中..." : "已经到底啦"}}</view>
+    </view>
+
+</view>

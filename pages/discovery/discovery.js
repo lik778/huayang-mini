@@ -84,8 +84,10 @@ Page({
 		current: 0, // banner索引
 		textBannerList: [], // text banner
 		qualityList: [], // 品质好物
+		lifeStyleList: [], // 品质生活
 	},
 
+	// 处理品质好物点击事件
 	handleQualityItemTap(e) {
 		let {link_url: link, type, id} = e.currentTarget.dataset.item
 		bxPoint("homepage_best_goods_detail", {goods_id: id}, false)
@@ -118,7 +120,40 @@ Page({
 		}
 	},
 
-	navigateMiniprogram(link, linkType) {
+	// 处理品质生活点击事件
+	handleLifeItemTap(e) {
+		let {link_url: link, type, id} = e.currentTarget.dataset.item
+		bxPoint("homepage_best_life_detail", {life_id: id}, false)
+		switch (Number(type)) {
+			case 1: {
+				// 花样好生活
+				wx.navigateTo({
+					url: link,
+					fail: () => {
+						wx.switchTab({url: link})
+					}
+				})
+				break
+			}
+			case 2: {
+				// 游学
+				wx.navigateToMiniProgram({appId: "wx2ea757d51abc1f47", path: link})
+				break
+			}
+			case 3: {
+				// H5
+				wx.navigateTo({url: link})
+				break
+			}
+			case 4: {
+				// 有赞（花样心选）
+				wx.navigateToMiniProgram({appId: "wx95fb6b5dbe8739b7", path: link})
+				break
+			}
+		}
+	},
+
+	naviMiniProgram(link, linkType) {
 		switch (linkType) {
 			case "youzan": {
 				// 有赞（花样心选）
@@ -151,7 +186,7 @@ Page({
 	handleBannerTap(e) {
 		let {link, link_type, id} = e.currentTarget.dataset.item
 		bxPoint("new_homepage_banner_click", {banner_id: id}, false)
-		this.navigateMiniprogram(link, link_type)
+		this.naviMiniProgram(link, link_type)
 	},
 
 	// 处理文案轮播点击事件
@@ -167,7 +202,7 @@ Page({
 				break;
 			}
 		}
-		this.navigateMiniprogram(link, link_type)
+		this.naviMiniProgram(link, link_type)
 	},
 
 	getBanner() {
@@ -889,6 +924,23 @@ Page({
 			list = list || []
 			this.setData({qualityList: list.slice(0, 6)})
 		})
+
+		// queryQualityItems({label: 2, status: 1}).then(({data: {list}}) => {
+		// 	list = list || []
+		// 	this.setData({lifeStyleList: list.slice(0, 4)})
+		// })
+	},
+
+	findMoreQualityItem() {
+		getApp().globalData.selectedQualityTabIndex = 1
+		bxPoint("homepage_best_goods_all", {}, false)
+		wx.switchTab({url: "/pages/life/life"})
+	},
+
+	findMoreLifeItem() {
+		getApp().globalData.selectedQualityTabIndex = 2
+		bxPoint("homepage_best_life_all", {}, false)
+		wx.switchTab({url: "/pages/life/life"})
 	},
 
 	/**
