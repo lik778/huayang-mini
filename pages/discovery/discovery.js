@@ -84,7 +84,7 @@ Page({
 		current: 0, // banner索引
 		textBannerList: [], // text banner
 		qualityList: [], // 品质好物
-		lifeStyleList: [,,,,], // 品质生活
+		lifeStyleList: [], // 品质生活
 	},
 
 	// 处理品质好物点击事件
@@ -925,10 +925,10 @@ Page({
 			this.setData({qualityList: list.slice(0, 6)})
 		})
 
-		queryQualityItems({label: 2, status: 1}).then(({data: {list}}) => {
-			list = list || []
-			this.setData({lifeStyleList: list.slice(0, 4)})
-		})
+		// queryQualityItems({label: 2, status: 1}).then(({data: {list}}) => {
+		// 	list = list || []
+		// 	this.setData({lifeStyleList: list.slice(0, 4)})
+		// })
 	},
 
 	findMoreQualityItem() {

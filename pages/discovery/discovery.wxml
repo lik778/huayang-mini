@@ -51,18 +51,18 @@
     </view>
 
     <!-- 品质生活 -->
-    <view class="life-style">
-        <view class="life-title">
-            <text>品质生活</text>
-            <text class="more" bindtap="findMoreLifeItem">查看全部</text>
-        </view>
-        <view class="life-content">
-            <view class="life-item" wx:for="{{lifeStyleList}}" wx:key="index" bindtap="handleLifeItemTap" data-item="{{item}}">
-                <image class="life-item-picture" src="{{item.cover}}" mode="aspectFill"></image>
-                <text class="life-item-text limit-one-line">{{item.description}}</text>
-            </view>
-        </view>
-    </view>
+    <!--    <view class="life-style">-->
+    <!--        <view class="life-title">-->
+    <!--            <text>品质生活</text>-->
+    <!--            <text class="more" bindtap="findMoreLifeItem">查看全部</text>-->
+    <!--        </view>-->
+    <!--        <view class="life-content">-->
+    <!--            <view class="life-item" wx:for="{{lifeStyleList}}" wx:key="index" bindtap="handleLifeItemTap" data-item="{{item}}">-->
+    <!--                <image class="life-item-picture" src="{{item.cover}}" mode="aspectFill"></image>-->
+    <!--                <text class="life-item-text limit-one-line">{{item.description}}</text>-->
+    <!--            </view>-->
+    <!--        </view>-->
+    <!--    </view>-->
 
     <!-- 最新活动 -->
     <view class="new-activity-module">

@@ -15,7 +15,7 @@ Component({
         "pagePath": "/pages/life/life",
         "selectedIconPath": "../assets/images/common/shopGroundActive.png",
         "iconPath": "../assets/images/common/shopGround.png",
-        "text": "生活馆",
+        "text": "严选",
       },
       {
         "pagePath": "/pages/competition/competition",
@@ -54,17 +54,6 @@ Component({
         bxPoint("homepage_bottom_tab_click", {homepage_bottom_tab_id: 4}, false)
       }
 
-      // 好生活TAB
-      else if (this.data.selected === 1 && url === '/pages/discovery/discovery') {
-        bxPoint("lifemall_bottom_tab_click", {lifemall_bottom_tab_id : 1}, false)
-      } else if (this.data.selected === 1 && url === 'pages/competition/competition') {
-        bxPoint("lifemall_bottom_tab_click", {lifemall_bottom_tab_id : 2}, false)
-      } else if (this.data.selected === 1 && url === '/pages/practice/practice') {
-        bxPoint("lifemall_bottom_tab_click", {lifemall_bottom_tab_id : 3}, false)
-      } else if (this.data.selected === 1 && url === '/pages/userCenter/userCenter') {
-        bxPoint("lifemall_bottom_tab_click", {lifemall_bottom_tab_id : 4}, false)
-      }
-
       // 大赛TAB
       else if (this.data.selected === 2 && url === '/pages/discovery/discovery') {
         bxPoint("show_bottom_tab_click", {show_bottom_tab_id : 1}, false)
@@ -98,7 +87,21 @@ Component({
         bxPoint("mine_bottom_tab_click", {mine_bottom_tab_id : 4}, false)
       }
 
-      wx.switchTab({url})
+      if (data.index === 1) {
+        // 跳转到有赞严选
+        wx.navigateToMiniProgram({
+          appId: "wx95fb6b5dbe8739b7",
+          path: "pages/common/blank-page/index",
+          success() {
+            bxPoint("lifemall_youzan_tab_click", {}, false)
+          },
+          fail() {
+            bxPoint("lifemall_youzan_tab_agreement_click", {}, false)
+          }
+        })
+      } else {
+        wx.switchTab({url})
+      }
     }
   }
 })

@@ -1,8 +1,6 @@
 import bxPoint from "../../utils/bxPoint";
 import { getFindBanner } from "../../api/course/index";
 import { getGoodLifeProductList } from "../../api/life/index";
-import { getLocalStorage } from "../../utils/util";
-import { GLOBAL_KEY } from "../../lib/config";
 
 Page({
 
