@@ -10,3 +10,12 @@ export function getGoodLifeProductList(params) {
 			})
 	})
 }
+
+// 获取有赞首页小程序地址
+export function getYouZanHomeLink() {
+	return new Promise((resolve) => {
+		request._get(URL.queryYouZanHomeLink).then(({data}) => {
+			resolve(data)
+		})
+	})
+}

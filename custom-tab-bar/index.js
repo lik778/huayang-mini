@@ -1,4 +1,5 @@
 import bxPoint from "../utils/bxPoint"
+import { getYouZanHomeLink } from "../api/life/index";
 
 Component({
   data: {
@@ -35,9 +36,15 @@ Component({
         "iconPath": "../assets/images/common/mine.png",
         "text": "我的",
       }
-    ]
+    ],
+    youZanHomeLink: ""
   },
   attached() {},
+  created() {
+    getYouZanHomeLink().then((link) => {
+      this.setData({youZanHomeLink: link})
+    })
+  },
   methods: {
     switchTab(e) {
       const data = e.currentTarget.dataset
@@ -88,14 +95,12 @@ Component({
       }
 
       if (data.index === 1) {
+        bxPoint("lifemall_youzan_tab_click", {}, false)
         // 跳转到有赞严选
         wx.navigateToMiniProgram({
           appId: "wx95fb6b5dbe8739b7",
-          path: "pages/common/blank-page/index",
+          path: this.data.youZanHomeLink,
           success() {
-            bxPoint("lifemall_youzan_tab_click", {}, false)
-          },
-          fail() {
             bxPoint("lifemall_youzan_tab_agreement_click", {}, false)
           }
         })
