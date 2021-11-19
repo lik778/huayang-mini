@@ -149,7 +149,7 @@ App({
 		needInitialPageName: "", // 需要重新加载的页面  [ 综合作业广场｜主题作业广场 ]
 		didShowedTaskTip: false, // 是否已经展示过作业提示
 		discoveryToPracticeTabIndex: undefined, // 首页金刚位跳转
-		showContactEnterTime:"2021-09-24 14:00:00",
+		showContactEnterTime:"2021-11-20 18:00:00",
 		selectedQualityTabIndex: 0, // 当前选中的品质TAB
 	}
 })
