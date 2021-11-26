@@ -1,0 +1,25 @@
+.channel-live {
+    padding-bottom: 40px;
+}
+
+.head {
+    font: 700 20px/40px "PingFang SC";
+    text-align: center;
+}
+
+.channel-item {
+    margin: 20px 20px 40px 20px;
+    padding: 15px;
+    border-radius: 3px;
+    background: #eee;
+}
+
+.title {
+    margin-bottom: 10px;
+    font: 500 18px/18px "PingFang SC";
+}
+
+image {
+    margin: 10px 0;
+    width: 100%;
+}
