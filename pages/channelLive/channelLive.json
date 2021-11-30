@@ -1,6 +1,6 @@
 {
+  "navigationBarTitleText": "花样直播",
   "usingComponents": {
     "authModule": "../../components/auth/auth"
-  },
-  "navigationStyle": "custom"
+  }
 }

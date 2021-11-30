@@ -1,25 +1,102 @@
+@import "../../assets/css/common.wxss";
+
 .channel-live {
-    padding-bottom: 40px;
+    padding: 30rpx 40rpx;
 }
 
-.head {
-    font: 700 20px/40px "PingFang SC";
+.official-account {
+    padding-bottom: 200rpx;
+}
+
+.layout {
+    margin-bottom: 60rpx;
+}
+
+.layout-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font: 300 48rpx/48rpx PingFangSC;
+}
+
+.record-btn {
+    display: flex;
+    align-items: center;
+    font: 32rpx/32rpx PingFangSC;
+    margin: 4rpx 0 4rpx 4rpx;
+    color: #FF5544;
+}
+
+.record-btn:active {
+    opacity: 0.8;
+}
+
+.add-icon {
+    width: 16rpx;
+    height: 16rpx;
+    margin-right: 8rpx;
+    font-size: 0;
+}
+
+.layout-item {
+    margin-top: 40rpx;
+    display: flex;
+    align-items: center;
+    font-size: 0;
+}
+
+.layout-cover {
+    width: 240rpx;
+    height: 240rpx;
+}
+
+.layout-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 240rpx;
+    margin-left: 40rpx;
+}
+
+.live-title {
+    width: 396rpx;
+    font: 36rpx/50rpx PingFangSC;
+}
+
+.live-date {
+    margin: 32rpx 0 0;
+    font: 28rpx/28rpx PingFangSC;
+    color: rgba(0,0,0, 0.8);
+}
+
+.live-btn {
+    width: 208rpx;
+    height: 64rpx;
+    border: 2rpx solid #FF5544;
+    box-sizing: border-box;
     text-align: center;
+    font: 32rpx/60rpx PingFangSC;
+    background: #FF5544;
+    color: white;
 }
 
-.channel-item {
-    margin: 20px 20px 40px 20px;
-    padding: 15px;
-    border-radius: 3px;
-    background: #eee;
+.live-btn:active {
+    opacity: 0.8;
 }
 
-.title {
-    margin-bottom: 10px;
-    font: 500 18px/18px "PingFang SC";
+.live-btn.subscribe {
+    background: #F2F2F4;
+    border-color: #F2F2F4;
+    color: #999999;
 }
 
-image {
-    margin: 10px 0;
-    width: 100%;
+.live-btn.review {
+    background: white;
+    color: #FF5544;
+}
+
+.attach {
+    width: 670rpx;
+    position: fixed;
+    bottom: 40rpx;
 }

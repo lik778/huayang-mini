@@ -1,29 +1,54 @@
-<view class="channel-live" style="padding-top: {{statusBarHeight}}px">
-    <view class="head">视频号</view>
-    <view class="channel-item">
-        <view class="title">直播信息</view>
-        <view class="main">视频号名称：{{noticeInfo.nickname}}</view>
-        <view>直播主题：{{liveInfo.description}}</view>
-        <image src="{{liveInfo.headUrl}}"></image>
-        <button bindtap="openLive">打开视频号直播</button>
-    </view>
-    <view class="channel-item">
-        <view class="title">直播预约信息</view>
-        <view class="main">视频号名称：{{noticeInfo.nickname}}</view>
-        <image src="{{noticeInfo.headUrl}}"></image>
-        <button bindtap="reserveLive">预约直播</button>
-    </view>
-    <view class="channel-item">
-        <view class="title">其他能力</view>
-<!--        <button bindtap="openChannelEvent">打开视频号活动页</button>-->
-        <button bindtap="openChannelVideo">打开视频号视频</button>
+<view class="channel-live {{didShowOfficialAccountComponent ? 'official-account' : ''}}" wx:if="{{showPage}}">
+    <!-- 正在直播 -->
+    <view class="layout">
+        <view class="layout-title">正在直播</view>
+        <view class="layout-item">
+            <image class="layout-cover" src="{{liveInfo.headUrl}}" mode="aspectFill"></image>
+            <view class="layout-content">
+                <view class="live-title limit-one-line">{{liveInfo.description}}</view>
+                <view class="live-btn" bindtap="openLive">立即进入</view>
+            </view>
+        </view>
     </view>
 
-    <button bindtap="onGuideTap">订阅消息（template id）</button>
+    <!-- 即将开播 -->
+    <view class="layout">
+        <view class="layout-title">
+            <text>即将开播</text>
+            <view class="record-btn" wx:if="{{!didSubscribeAllChannelLives}}" bindtap="onSubscribeTap" data-index="1">
+                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1638157356CPYsnk.jpg" mode="aspectFit" class="add-icon"></image>
+                <text>一键订阅</text>
+            </view>
+        </view>
+        <view class="layout-item" wx:for="{{subscribeChannelList}}" wx:key="index">
+            <image class="layout-cover" src="{{item.cover}}" mode="aspectFill"></image>
+            <view class="layout-content">
+                <view>
+                    <view class="live-title limit-one-line">{{item.title}}</view>
+                    <view class="live-date">{{item.start_time}}</view>
+                </view>
+                <view class="live-btn {{(item.sub || didSubscribeAllChannelLives) && 'subscribe'}}" bindtap="onSubscribeTap" data-index="2" data-item="{{item}}">
+                    {{(item.sub || didSubscribeAllChannelLives) ? "已订阅" : "开播提醒"}}</view>
+            </view>
+        </view>
+    </view>
 
-    <form class="custom-form-bottom" :report-submit="true" bindsubmit="formSubmit">
-        <button hover-class="none" form-type="submit" bindtap="submit">订阅消息（form id）</button>
-    </form>
+    <!-- 往期回放 -->
+    <view class="layout">
+        <view class="layout-title">往期回放</view>
+        <view class="layout-item" wx:for="{{reviewChannelList}}" wx:key="index">
+            <image class="layout-cover" src="{{item.cover}}" mode="aspectFill"></image>
+            <view class="layout-content" bindtap="onReview" data-item="{{item}}">
+                <view>
+                    <view class="live-title limit-one-line">{{item.title}}</view>
+                    <view class="live-date">{{item.start_time}}</view>
+                </view>
+                <view class="live-btn review">观看回放</view>
+            </view>
+        </view>
+    </view>
+
+    <official-account class="attach" bindload="officialLoad" binderror="officialError">关注</official-account>
 
     <!-- 授权弹窗 -->
     <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">

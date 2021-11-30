@@ -1,0 +1,9 @@
+<view class="channel-review">
+    <naviBar title="花样直播" titleColor="white" color="transparent"></naviBar>
+    <video
+            class="video-element"
+            custom-cache="{{false}}"
+            object-fit="contain"
+            controls="{{true}}"
+            src="{{link}}"/>
+</view>

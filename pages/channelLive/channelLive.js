@@ -1,7 +1,6 @@
-import { getLocalStorage, hasUserInfo, setLocalStorage, toast } from "../../utils/util";
+import { $notNull, getLocalStorage, hasUserInfo, setLocalStorage, toast } from "../../utils/util";
 import { GLOBAL_KEY } from "../../lib/config";
-import { updateSubscribeMessageStatus } from "../../api/auth/index";
-import dayjs from "dayjs";
+import { getChannelLives, subscribeMiniProgramMessage } from "../../api/channel/index";
 
 Page({
 
@@ -9,8 +8,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-    statusBarHeight: 0,
+    showPage: false, // 展示页面
+    LongSubscribeTempId: "Yak_FhmnmqkJIjVW1T-bSi3Sz6VC2-YOXAm-2YEmjpU", // 长期订阅
+    ShortSubscribeTempId: "6gL6L2QXs5r25jUnv_4ZET_0_iUi7GIah2EEr7TA3Zs", // 一次行订阅
+    didShowOfficialAccountComponent: false, // 是否展示公众号关注组件
+    didSubscribeAllChannelLives: false, // 是否预约所有视频号直播
+    reviewChannelList: [], // 往期回看直播数据
+    subscribeChannelList: [], // 预约直播数据
     channelLiveId: "sphSWeL8a8r2E1O", // 花样超模
+    // channelLiveId: "sphkeu2SwOQKZB7", // 花样百姓
     liveInfo: {},
     noticeInfo: {},
     eventId: 0,
@@ -21,9 +27,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      statusBarHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
-    })
+
   },
 
   /**
@@ -72,12 +76,25 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "",
+      path: "/pages/channelLive/channelLive"
+    }
   },
   run() {
     this.getChannelLiveInfo()
-    this.getChannelLiveNotice()
-    console.log(getLocalStorage(GLOBAL_KEY.openId));
+    // 检查用户是否已一键订阅所有直播预约
+    this.subScribeMessage(this.data.LongSubscribeTempId)
+    // 往期回放
+    getChannelLives({status: 1}).then((data) => {
+      this.setData({reviewChannelList: data})
+    })
+    // 即将开播
+    getChannelLives({status: 3}).then((data) => {
+      data = data.map(n => ({...n, sub: false}))
+      this.setData({subscribeChannelList: data})
+      this.loadHistorySubscribeChannelLives()
+    })
   },
   // 预约直播
   reserveLive() {
@@ -101,7 +118,7 @@ Page({
   openChannelVideo() {
     wx.openChannelsActivity({
       finderUserName: this.data.channelLiveId,
-      feedId: "export/UzFfAgtgekIEAQAAAAAAJQsut8rTvgAAAAstQy6ubaLX4KHWvLEZgBPEt4MYJ24ID7f9zNPgMJo_ahzkKw7Mn3_wFI6rKJDH",
+      feedId: "",
       success(res) {
         console.log("打开视频号视频成功", res)
       },
@@ -151,17 +168,62 @@ Page({
       }
     })
   },
-  onGuideTap() {
-    if (!hasUserInfo()) return this.setData({didShowAuth: true})
-    let tempId = "Yak_FhmnmqkJIjVW1T-bSg6oKsdUK5yvi3bU5_ha7i8"
+  // 加载历史已订阅视频号直播列表
+  loadHistorySubscribeChannelLives() {
+    if (this.data.didSubscribeAllChannelLives) return false
+    let oldData = this._getHistorySubscribeData()
+    let oldList = this.data.subscribeChannelList.slice()
+    oldData.forEach(subscribeId => {
+      let target = oldList.find(item => item.id === subscribeId)
+      target.sub = $notNull(target)
+    })
+    this.setData({subscribeChannelList: oldList})
+  },
+  _getHistorySubscribeData() {
+    let historyDataString = getLocalStorage(GLOBAL_KEY.historySubscribeChannelLiveList)
+    let historyData = []
+    if (historyDataString) {
+      historyData = JSON.parse(historyDataString)
+    }
+    return historyData
+  },
+  _setHistorySubscribeData(params) {
+    let oldData = this._getHistorySubscribeData()
+    oldData.push(params)
+    let newData = Array.from(new Set(oldData))
+    setLocalStorage(GLOBAL_KEY.historySubscribeChannelLiveList, JSON.stringify(newData))
+    wx.nextTick(() => {
+      this.loadHistorySubscribeChannelLives()
+    })
+  },
+  onSubscribeTap(e) {
+    // 订阅过长期通知
+    if (this.data.didSubscribeAllChannelLives) return false
+    let { index, item: { id, sub } = {} } = e.currentTarget.dataset
+    // 订阅过一次性通知
+    if (sub) return false
+    let tempId = ""
     let self = this
+    switch (+index) {
+      case 1: {
+        // 长期订阅
+        tempId = this.data.LongSubscribeTempId
+        break;
+      }
+      case 2: {
+        // 一次性订阅
+        tempId = this.data.ShortSubscribeTempId
+        break;
+      }
+    }
+    if (!hasUserInfo()) return this.setData({didShowAuth: true})
     wx.getSetting({
       withSubscriptions: true,
       success(res) {
         if (res.subscriptionsSetting[tempId] === "reject") {
           wx.showModal({
             title: '订阅消息',
-            content: '订阅花样百姓消息，不错过精彩直播视频。务必设置订阅消息为允许哦',
+            content: '订阅花样百姓消息，不错过精彩直播视频，务必设置订阅消息为允许哦',
             confirmText: '立即订阅',
             confirmColor: '#33c71b',
             success(res) {
@@ -171,24 +233,28 @@ Page({
             }
           })
         } else if (res.subscriptionsSetting[tempId] === "accept") {
-          toast("该用户已订阅消息")
+          console.log("该用户已订阅消息");
         } else {
           wx.requestSubscribeMessage({
             tmplIds: [tempId],
             success(response) {
               if (response.errMsg === "requestSubscribeMessage:ok" && response[tempId] === "accept") {
-                updateSubscribeMessageStatus({
-                  app_id: "wx85d130227f745fc5",
+                let params = {
                   open_id: getLocalStorage(GLOBAL_KEY.openId),
-                  template_id: tempId
-                }).then(() => {
-                  // 检查开课通知订阅状态
-                  self.subScribeMessage()
+                  status: 1,
+                }
+                if (id) {
+                  params['zhibo_id'] = id
+                  self._setHistorySubscribeData(id)
+                }
+                subscribeMiniProgramMessage(params).then(() => {
+                  if (tempId === self.data.LongSubscribeTempId) {
+                    self.subScribeMessage(tempId)
+                  }
                 })
               } else if (response[tempId] === "reject") {
                 // 用户拒绝授权，则三天之内不再显示
-                console.error("用户拒绝授权，则三天之内不再显示");
-                toast("用户拒绝授权");
+                console.error("用户拒绝授权");
               }
             }
           })
@@ -196,15 +262,20 @@ Page({
       }
     })
   },
-  subScribeMessage() {
-    let tempId = "Yak_FhmnmqkJIjVW1T-bSg6oKsdUK5yvi3bU5_ha7i8"
+  // 检查通知订阅状态
+  subScribeMessage(tempId) {
     let self = this
     wx.getSetting({
       withSubscriptions: true,
       success(res) {
         if (res.subscriptionsSetting[tempId] === "accept") {
-          self.setData({didAlreadySubscribe: true})
+          self.setData({didSubscribeAllChannelLives: true})
+        } else if (res.subscriptionsSetting[tempId] === "reject") {
+          self.setData({didSubscribeAllChannelLives: false})
         }
+      },
+      complete() {
+        self.setData({showPage: true})
       }
     })
   },
@@ -220,10 +291,16 @@ Page({
       didShowAuth: false,
     })
   },
-  formSubmit(e) {
-    let {formId} = e.$wx.detail;
-    // 上传formId
-    let openid = getLocalStorage(GLOBAL_KEY.openId);
-    // this.uploadFormId({open_id: openid, form_id: formId});
+  officialLoad(e) {
+    this.setData({didShowOfficialAccountComponent: true})
+    // console.log(e, "officialLoad");
   },
+  officialError(e) {
+    this.setData({didShowOfficialAccountComponent: false})
+    // console.log(e, "officialError");
+  },
+  onReview(e) {
+    let {video_url} = e.currentTarget.dataset.item
+    wx.navigateTo({url: "/pages/channelReview/channelReview?link=" + video_url})
+  }
 })
