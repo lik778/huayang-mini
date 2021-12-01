@@ -31,6 +31,10 @@
     opacity: 0.8;
 }
 
+.record-btn.subscribe {
+    color: #999999;
+}
+
 .add-icon {
     width: 16rpx;
     height: 16rpx;

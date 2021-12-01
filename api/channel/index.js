@@ -12,6 +12,18 @@ export function getChannelLives(params) {
 	})
 }
 
+/**
+ * 获取用户预约的单场视频号直播间
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export function getHistorySubscribeLives(params) {
+	return new Promise((resolve, reject) => {
+		request._get(URL.queryHistorySubscribeChannelLives, params).then(({data}) => {
+			resolve(data)
+		})
+	})
+}
 
 /**
  * 订阅小程序消息通知

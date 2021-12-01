@@ -1,6 +1,6 @@
 import { $notNull, getLocalStorage, hasUserInfo, setLocalStorage, toast } from "../../utils/util";
 import { GLOBAL_KEY } from "../../lib/config";
-import { getChannelLives, subscribeMiniProgramMessage } from "../../api/channel/index";
+import { getChannelLives, getHistorySubscribeLives, subscribeMiniProgramMessage } from "../../api/channel/index"
 import bxPoint from "../../utils/bxPoint";
 
 Page({
@@ -16,9 +16,8 @@ Page({
     didSubscribeAllChannelLives: false, // 是否预约所有视频号直播
     reviewChannelList: [], // 往期回看直播数据
     subscribeChannelList: [], // 预约直播数据
-    channelLiveId: "sphSWeL8a8r2E1O", // 花样超模
-    // channelLiveId: "sphkeu2SwOQKZB7", // 花样百姓
-    liveInfo: {},
+    channelLiveId: "sphkeu2SwOQKZB7", // 花样百姓
+    liveInfo: null,
     noticeInfo: {},
     eventId: 0,
     didShowAuth: false
@@ -78,7 +77,7 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: "",
+      title: "花样直播，为你的时尚生活助力",
       path: "/pages/channelLive/channelLive"
     }
   },
@@ -87,11 +86,11 @@ Page({
     // 检查用户是否已一键订阅所有直播预约
     this.subScribeMessage(this.data.LongSubscribeTempId)
     // 往期回放
-    getChannelLives({status: 1}).then((data) => {
+    getChannelLives({status: 3, is_show: 1}).then((data) => {
       this.setData({reviewChannelList: data})
     })
     // 即将开播
-    getChannelLives({status: 3}).then((data) => {
+    getChannelLives({status: 1, is_show: 1}).then((data) => {
       data = data.map(n => ({...n, sub: false}))
       this.setData({subscribeChannelList: data})
       this.loadHistorySubscribeChannelLives()
@@ -103,6 +102,7 @@ Page({
   },
   // 打开视频号直播
   openLive() {
+    if (!$notNull(this.data.liveInfo)) return
     wx.openChannelsLive({
       finderUserName: this.data.channelLiveId,
       feedId: this.data.liveInfo.feedId,
@@ -111,7 +111,7 @@ Page({
         console.log("打开视频号直播成功")
       },
       fail(err) {
-        console.log(err);
+        console.log(err)
       },
       complete() {
         bxPoint("live_notice_page_living", {live_notice_title: this.data.liveInfo.description}, false)
@@ -151,7 +151,9 @@ Page({
       finderUserName: this.data.channelLiveId,
       success(res) {
         console.log("直播信息", res)
-        self.setData({liveInfo: res})
+        if ($notNull(res) && res.status === 2) {
+          self.setData({liveInfo: res})
+        }
       },
       fail(err) {
         console.log(err)
@@ -175,30 +177,20 @@ Page({
   // 加载历史已订阅视频号直播列表
   loadHistorySubscribeChannelLives() {
     if (this.data.didSubscribeAllChannelLives) return false
-    let oldData = this._getHistorySubscribeData()
-    let oldList = this.data.subscribeChannelList.slice()
-    oldData.forEach(subscribeId => {
-      let target = oldList.find(item => item.id === subscribeId)
-      target.sub = $notNull(target)
-    })
-    this.setData({subscribeChannelList: oldList})
-  },
-  _getHistorySubscribeData() {
-    let historyDataString = getLocalStorage(GLOBAL_KEY.historySubscribeChannelLiveList)
-    let historyData = []
-    if (historyDataString) {
-      historyData = JSON.parse(historyDataString)
-    }
-    return historyData
-  },
-  _setHistorySubscribeData(params) {
-    let oldData = this._getHistorySubscribeData()
-    oldData.push(params)
-    let newData = Array.from(new Set(oldData))
-    setLocalStorage(GLOBAL_KEY.historySubscribeChannelLiveList, JSON.stringify(newData))
-    wx.nextTick(() => {
-      this.loadHistorySubscribeChannelLives()
-    })
+    let openId = getLocalStorage(GLOBAL_KEY.openId)
+    if (!openId) return false
+    getHistorySubscribeLives({open_id: openId})
+      .then((data) => {
+        let oldData = data || []
+        let oldList = this.data.subscribeChannelList.slice()
+        oldData.forEach(subscribeId => {
+          let target = oldList.find(item => item.id === subscribeId)
+          if (target) {
+            target.sub = $notNull(target)
+          }
+        })
+        this.setData({subscribeChannelList: oldList})
+      })
   },
   onSubscribeTap(e) {
     if (!hasUserInfo()) return this.setData({didShowAuth: true})
@@ -251,7 +243,9 @@ Page({
                 }
                 if (id) {
                   params['zhibo_id'] = id
-                  self._setHistorySubscribeData(id)
+                  wx.nextTick(() => {
+                    self.loadHistorySubscribeChannelLives()
+                  })
                 }
                 subscribeMiniProgramMessage(params).then(() => {
                   if (tempId === self.data.LongSubscribeTempId) {

@@ -1,14 +1,24 @@
 <view class="channel-live {{didShowOfficialAccountComponent ? 'official-account' : ''}}" wx:if="{{showPage}}">
     <!-- 正在直播 -->
-    <view class="layout">
-<!--    <view class="layout" wx:if="{{liveInfo.headUrl}}">-->
-        <view class="layout-title">正在直播</view>
-        <view class="layout-item">
+    <view class="layout" wx:if="{{liveInfo.headUrl}}">
+        <view class="layout-title">
+            <text>正在直播</text>
+            <block wx:if="{{liveInfo}}">
+                <view class="record-btn" wx:if="{{!didSubscribeAllChannelLives}}" bindtap="onSubscribeTap" data-index="1">
+                    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1638157356CPYsnk.jpg" mode="aspectFit" class="add-icon"></image>
+                    <text>一键订阅所有直播</text>
+                </view>
+                <view class="record-btn subscribe" wx:else>
+                    <text>已订阅所有直播</text>
+                </view>
+            </block>
+        </view>
+        <view class="layout-item" bindtap="openLive">
             <image class="layout-cover" src="{{liveInfo.headUrl}}" mode="aspectFill"></image>
             <image class="play-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1638325041LzYfnn.jpg" mode="aspectFit"></image>
             <view class="layout-content">
                 <view class="live-title limit-one-line">{{liveInfo.description}}</view>
-                <view class="live-btn" bindtap="openLive"><view class="dot"/><text>直播中</text></view>
+                <view class="live-btn"><view class="dot"/><text>直播中</text></view>
             </view>
         </view>
     </view>
@@ -17,10 +27,15 @@
     <view class="layout" wx:if="{{subscribeChannelList.length > 0}}">
         <view class="layout-title">
             <text>即将开播</text>
-            <view class="record-btn" wx:if="{{!didSubscribeAllChannelLives}}" bindtap="onSubscribeTap" data-index="1">
-                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1638157356CPYsnk.jpg" mode="aspectFit" class="add-icon"></image>
-                <text>一键订阅</text>
-            </view>
+            <block wx:if="{{!liveInfo}}">
+                <view class="record-btn" wx:if="{{!didSubscribeAllChannelLives}}" bindtap="onSubscribeTap" data-index="1">
+                    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1638157356CPYsnk.jpg" mode="aspectFit" class="add-icon"></image>
+                    <text>一键订阅所有直播</text>
+                </view>
+                <view class="record-btn subscribe" wx:else>
+                    <text>已订阅所有直播</text>
+                </view>
+            </block>
         </view>
         <view class="layout-item" wx:for="{{subscribeChannelList}}" wx:key="index">
             <image class="layout-cover" src="{{item.cover}}" mode="aspectFill"></image>
