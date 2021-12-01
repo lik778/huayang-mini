@@ -32,7 +32,9 @@
     "pages/personAlbum/personAlbum",
     "pages/activityAlbum/activityAlbum",
     "pages/mediaList/mediaList",
-    "pages/life/life"
+    "pages/life/life",
+    "pages/channelLive/channelLive",
+    "pages/channelReview/channelReview"
   ],
   "requiredBackgroundModes": [
     "audio",

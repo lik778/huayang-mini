@@ -1,4 +1,3 @@
-<!--subLive/review/review.wxml-->
 <view class="review">
   <view class="navigation">
     <naviBar title="花样直播" titleColor="transparent" color="transparent"></naviBar>
