@@ -39,9 +39,19 @@
 }
 
 .layout-item {
+    position: relative;
     margin-top: 40rpx;
     display: flex;
     align-items: center;
+    font-size: 0;
+}
+
+.play-icon{
+    position: absolute;
+    top: 78rpx;
+    left: 78rpx;
+    width: 84rpx;
+    height: 84rpx;
     font-size: 0;
 }
 
@@ -59,17 +69,20 @@
 }
 
 .live-title {
-    width: 396rpx;
+    width: 390rpx;
     font: 36rpx/50rpx PingFangSC;
 }
 
 .live-date {
-    margin: 32rpx 0 0;
+    margin: 28rpx 0 0;
     font: 28rpx/28rpx PingFangSC;
     color: rgba(0,0,0, 0.8);
 }
 
 .live-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 208rpx;
     height: 64rpx;
     border: 2rpx solid #FF5544;
@@ -93,6 +106,14 @@
 .live-btn.review {
     background: white;
     color: #FF5544;
+}
+
+.live-btn .dot {
+    width: 12rpx;
+    height: 12rpx;
+    margin-right: 12rpx;
+    border-radius: 999rpx;
+    background: #FFDD00;
 }
 
 .attach {

@@ -1,18 +1,20 @@
 <view class="channel-live {{didShowOfficialAccountComponent ? 'official-account' : ''}}" wx:if="{{showPage}}">
     <!-- 正在直播 -->
     <view class="layout">
+<!--    <view class="layout" wx:if="{{liveInfo.headUrl}}">-->
         <view class="layout-title">正在直播</view>
         <view class="layout-item">
             <image class="layout-cover" src="{{liveInfo.headUrl}}" mode="aspectFill"></image>
+            <image class="play-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1638325041LzYfnn.jpg" mode="aspectFit"></image>
             <view class="layout-content">
                 <view class="live-title limit-one-line">{{liveInfo.description}}</view>
-                <view class="live-btn" bindtap="openLive">立即进入</view>
+                <view class="live-btn" bindtap="openLive"><view class="dot"/><text>直播中</text></view>
             </view>
         </view>
     </view>
 
     <!-- 即将开播 -->
-    <view class="layout">
+    <view class="layout" wx:if="{{subscribeChannelList.length > 0}}">
         <view class="layout-title">
             <text>即将开播</text>
             <view class="record-btn" wx:if="{{!didSubscribeAllChannelLives}}" bindtap="onSubscribeTap" data-index="1">
@@ -34,7 +36,7 @@
     </view>
 
     <!-- 往期回放 -->
-    <view class="layout">
+    <view class="layout" wx:if="{{reviewChannelList.length > 0}}">
         <view class="layout-title">往期回放</view>
         <view class="layout-item" wx:for="{{reviewChannelList}}" wx:key="index">
             <image class="layout-cover" src="{{item.cover}}" mode="aspectFill"></image>

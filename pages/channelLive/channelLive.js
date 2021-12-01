@@ -1,6 +1,7 @@
 import { $notNull, getLocalStorage, hasUserInfo, setLocalStorage, toast } from "../../utils/util";
 import { GLOBAL_KEY } from "../../lib/config";
 import { getChannelLives, subscribeMiniProgramMessage } from "../../api/channel/index";
+import bxPoint from "../../utils/bxPoint";
 
 Page({
 
@@ -41,7 +42,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    bxPoint("live_notice_page_pv", {})
   },
 
   /**
@@ -106,11 +107,14 @@ Page({
       finderUserName: this.data.channelLiveId,
       feedId: this.data.liveInfo.feedId,
       nonceId: this.data.liveInfo.nonceId,
-      success(res) {
-        console.log("打开视频号直播成功", res)
+      success() {
+        console.log("打开视频号直播成功")
       },
       fail(err) {
         console.log(err);
+      },
+      complete() {
+        bxPoint("live_notice_page_living", {live_notice_title: this.data.liveInfo.description}, false)
       }
     })
   },
@@ -197,9 +201,10 @@ Page({
     })
   },
   onSubscribeTap(e) {
+    if (!hasUserInfo()) return this.setData({didShowAuth: true})
     // 订阅过长期通知
     if (this.data.didSubscribeAllChannelLives) return false
-    let { index, item: { id, sub } = {} } = e.currentTarget.dataset
+    let { index, item: { id, sub, title } = {} } = e.currentTarget.dataset
     // 订阅过一次性通知
     if (sub) return false
     let tempId = ""
@@ -208,15 +213,16 @@ Page({
       case 1: {
         // 长期订阅
         tempId = this.data.LongSubscribeTempId
+        bxPoint("live_notice_page_subscribe", {}, false)
         break;
       }
       case 2: {
         // 一次性订阅
         tempId = this.data.ShortSubscribeTempId
+        bxPoint("live_notice_page_remind", {live_notice_id: id, live_notice_title: title }, false)
         break;
       }
     }
-    if (!hasUserInfo()) return this.setData({didShowAuth: true})
     wx.getSetting({
       withSubscriptions: true,
       success(res) {
@@ -241,7 +247,7 @@ Page({
               if (response.errMsg === "requestSubscribeMessage:ok" && response[tempId] === "accept") {
                 let params = {
                   open_id: getLocalStorage(GLOBAL_KEY.openId),
-                  status: 1,
+                  status: index,
                 }
                 if (id) {
                   params['zhibo_id'] = id
@@ -293,6 +299,7 @@ Page({
   },
   officialLoad(e) {
     this.setData({didShowOfficialAccountComponent: true})
+    bxPoint("subsciptions_view", {}, false)
     // console.log(e, "officialLoad");
   },
   officialError(e) {
@@ -300,7 +307,12 @@ Page({
     // console.log(e, "officialError");
   },
   onReview(e) {
-    let {video_url} = e.currentTarget.dataset.item
-    wx.navigateTo({url: "/pages/channelReview/channelReview?link=" + video_url})
-  }
+    let {video_url, id, title} = e.currentTarget.dataset.item
+    wx.navigateTo({
+      url: "/pages/channelReview/channelReview?link=" + video_url,
+      success() {
+        bxPoint("live_notice_page_replay", {live_replay_id: id, live_replay_title: title}, false)
+      }
+    })
+  },
 })
