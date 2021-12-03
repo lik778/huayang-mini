@@ -5,19 +5,12 @@
   background: #fff;
 }
 
-/* icons */
-.icons {
-  padding: 250rpx 0;
-  text-align: center;
-  background: #eeeeee;
-}
-
 /* banner */
 .swiper-box {
   display: flex;
   justify-content: center;
   height: 310rpx;
-  margin: 20rpx 0 40rpx;
+  margin: 20rpx 0 0rpx;
   position: relative;
 }
 
@@ -51,4 +44,60 @@
 
 .swiper-dot-item-active {
   background: #FF5544;
+}
+
+/* icons */
+.icons {
+  overflow: hidden;
+  padding: 40rpx 40rpx 0;
+}
+
+.floor {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40rpx;
+}
+
+.f1, .f3 {
+  padding: 0 16rpx;
+}
+
+.f2 {
+  padding: 0 22rpx;
+}
+
+.f-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 0;
+}
+
+.f1 .f-icon, .f3 .f-icon {
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 999rpx;
+  background: #aaaaaa;
+}
+
+.f1 .f-title, .f3 .f-title {
+  margin-top: 20rpx;
+  font: 32rpx/32rpx PingFangSC;
+}
+
+.f2 .f-icon {
+  width: 80rpx;
+  height: 80rpx;
+  background: #aaaaaa;
+}
+
+.f2 .f-title {
+  margin-top: 20rpx;
+  font: 28rpx/28rpx PingFangSC;
+}
+
+.f3 .f-icon {
+  border-radius: 0;
 }

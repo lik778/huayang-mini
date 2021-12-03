@@ -18,7 +18,24 @@
 
     <!-- ICON区域 -->
     <view class="icons">
-        这是ICONS区域
+        <view class="floor f1">
+            <view class="f-box" wx:for="{{f1}}" wx:key="index">
+                <image class="f-icon" src="" mode="aspectFill"></image>
+                <text class="f-title">直播</text>
+            </view>
+        </view>
+        <view class="floor f2">
+            <view class="f-box" wx:for="{{f2}}" wx:key="index">
+                <image class="f-icon" src="" mode="aspectFill"></image>
+                <text class="f-title">今日好物</text>
+            </view>
+        </view>
+        <view class="floor f3">
+            <view class="f-box" wx:for="{{f3}}" wx:key="index">
+                <image class="f-icon" src="" mode="aspectFill"></image>
+                <text class="f-title">早安打卡</text>
+            </view>
+        </view>
     </view>
 
     <!-- 授权弹窗 -->

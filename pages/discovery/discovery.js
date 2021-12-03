@@ -18,6 +18,9 @@ Page({
 	data: {
 		isIosPlatform: false,
 		didShowAuth: false,
+		f1: [,,,,],
+		f2: [,,,,,],
+		f3: [,,,,],
 	},
 
 
@@ -104,8 +107,6 @@ Page({
 		// wx.navigateTo({url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=235`})
 		this.getBanner().then()
 
-		// 检查用户是否需要引导
-		this.checkUserGuide()
 		// 处理ios
 		this.checkIos()
 	},
