@@ -1,6 +1,5 @@
 {
   "navigationBarTitleText": "花样百姓",
-  "navigationStyle": "custom",
   "usingComponents": {
     "authModule": "../../components/auth/auth",
     "liveLayout": "../../components/liveLayout/liveLayout",
