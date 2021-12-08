@@ -52,3 +52,32 @@
 .swiper-dot-item-active {
   background: #FF5544;
 }
+
+
+/* 生活方式 */
+.life-style-title {
+  padding: 0 40rpx;
+  font-size: 48rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 48rpx;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  margin-top: 40rpx;
+  margin-bottom: 20rpx;
+}
+
+/* 已经到底啦 */
+.is-bottom-module {
+  display: flex;
+  justify-content: center;
+  padding-top: 40rpx;
+}
+
+.is-bottom {
+  width: 350rpx;
+  height: 30rpx;
+  vertical-align: bottom;
+}

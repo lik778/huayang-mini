@@ -21,6 +21,20 @@
         这是ICONS区域
     </view>
 
+    <!-- 生活方式 -->
+    <view class="life-style">
+        <view class="life-style-title">生活方式</view>
+        <view class="life-style-waterfall">
+            <waterfall bind:clickItem='toDetail' wx:if='{{waterfallList!==null}}' list="{{waterfallList}}"></waterfall>
+        </view>
+    </view>
+
+    <!-- 到底啦 -->
+    <view class="is-bottom-module" wx:if="{{isBottom}}">
+        <image class="is-bottom" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1638864447cJIUMH.jpg"></image>
+    </view>
+
+
     <!-- 授权弹窗 -->
     <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
     </authModule>

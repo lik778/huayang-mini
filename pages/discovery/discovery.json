@@ -6,6 +6,7 @@
     "bestCourseLayout": "../../components/bestCourseLayout/bestCourseLayout",
     "contact": "../../components/contact/contact",
     "video-swiper": "/components/videoSwiper/video-swiper",
-    "fluentLearnModal": "../../components/fluentLearnModal/fluentLearnModal"
+    "fluentLearnModal": "../../components/fluentLearnModal/fluentLearnModal",
+    "waterfall": "/components/waterfall/waterfall"
   }
 }
