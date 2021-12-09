@@ -8,7 +8,39 @@ Page({
    * 页面的初始数据
    */
   data: {
-    lifeId: ""
+    visitIcon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1638840893RreULx.jpg",
+    lifeId: "",
+    list: null,
+    detailInfo: null,
+    playing: false
+  },
+
+  /* 查看大图 */
+  amplification(e) {
+    let url = e.currentTarget.dataset.url
+    wx.previewImage({
+      current: url, // 当前显示图片的http链接
+      urls: this.data.list // 需要预览的图片http链接列表
+    })
+  },
+
+  /* 播放暂停 */
+  playEnd() {
+    this.setData({
+      playing: false
+    })
+  },
+
+  /* 播放视频 */
+  playVideo() {
+    this.videoContext = wx.createVideoContext(`video`, this)
+    this.setData({
+      playing: true
+    }, () => {
+      setTimeout(() => {
+        this.videoContext.play()
+      }, 200)
+    })
   },
 
   /* 获取详情信息 */
@@ -18,7 +50,11 @@ Page({
     }).then(({
       data
     }) => {
-      console.log(data)
+      let list = data.material_url.split(',')
+      this.setData({
+        list,
+        detailInfo: data
+      })
     })
   },
 

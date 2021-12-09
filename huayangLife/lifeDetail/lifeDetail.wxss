@@ -1,1 +1,143 @@
 /* huayangLife/lifeDetail/lifeDetail.wxss */
+.banner-swiper {
+  width: 100vw;
+  height: 750rpx;
+}
+
+.banner-swiper-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.banner-swiper-item image {
+  height: 750rpx;
+}
+
+.video {
+  position: relative;
+}
+
+.video video {
+  width: 100%;
+  height: 750rpx;
+  vertical-align: bottom;
+}
+
+.video .play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  width: 132rpx;
+  height: 132rpx;
+  vertical-align: bottom;
+}
+
+.cover-image {
+  width: 100%;
+  height: 750rpx;
+}
+
+.main {
+  padding: 46rpx 40rpx 120rpx;
+}
+
+.top-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 46rpx;
+  border-bottom: 0.5px solid #DDDDDD;
+}
+
+.top-line-left {
+  display: flex;
+  align-items: center;
+  font-size: 44rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 44rpx;
+}
+
+.top-line-right {
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: 26rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 26rpx;
+}
+
+.top-line-right button {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  opacity: 0;
+}
+
+.top-line-right image {
+  width: 56rpx;
+  height: 56rpx;
+  margin-right: 8rpx;
+  vertical-align: bottom;
+}
+
+.title {
+  font-size: 36rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 50rpx;
+  padding-top: 40rpx;
+  padding-bottom: 32rpx;
+  word-wrap: break-word;
+}
+
+.desc {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 56rpx;
+  padding-bottom: 40rpx;
+  word-wrap: break-word;
+}
+
+.bottom-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bottom-line-left {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 28rpx;
+}
+
+.bottom-line-right {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 28rpx;
+  display: flex;
+  align-items: center;
+}
+
+.bottom-line-right image {
+  width: 32rpx;
+  height: 32rpx;
+  vertical-align: bottom;
+  margin-right: 8rpx;
+}

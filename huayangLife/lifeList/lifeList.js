@@ -1,6 +1,7 @@
 // huayangLife/lifeList/lifeList.js
 import {
-  queryWaterfallList
+  queryWaterfallList,
+  recordWaterfallVisitCount
 } from "../../api/huayangLife/index"
 Page({
 
@@ -24,9 +25,14 @@ Page({
   /* 点击瀑布流跳转详情 */
   toDetail(e) {
     let item = e.detail.item
+    recordWaterfallVisitCount({
+      life_id: item.id
+    })
     if (item.type === 3) {
       /* 公众号文章 */
-      console.log('公众号文章')
+      wx.navigateTo({
+				url: `/subCourse/noAuthWebview/noAuthWebview?link=${item.material_url}`,
+			})
     } else {
       /* 跳转详情 */
       wx.navigateTo({
