@@ -1,11 +1,6 @@
 {
   "navigationBarTitleText": "花样百姓",
   "usingComponents": {
-    "authModule": "../../components/auth/auth",
-    "liveLayout": "../../components/liveLayout/liveLayout",
-    "bestCourseLayout": "../../components/bestCourseLayout/bestCourseLayout",
-    "contact": "../../components/contact/contact",
-    "video-swiper": "/components/videoSwiper/video-swiper",
-    "fluentLearnModal": "../../components/fluentLearnModal/fluentLearnModal"
+    "authModule": "../../components/auth/auth"
   }
 }

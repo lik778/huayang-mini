@@ -1,33 +1,53 @@
-import {
-	$notNull,
-	getLocalStorage,
-} from "../../utils/util"
-import {
-	getFindBanner,
-} from "../../api/course/index"
-import {
-	GLOBAL_KEY,
-} from "../../lib/config"
+import { $notNull, getLocalStorage } from "../../utils/util"
+import { getActivityList, getFindBanner } from "../../api/course/index"
+import { GLOBAL_KEY } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
+import { getHomeHeadLines, getHomeIcons } from "../../api/live/index"
+import dayjs from "dayjs"
 
 Page({
-
 	/**
 	 * 页面的初始数据
 	 */
 	data: {
 		isIosPlatform: false,
 		didShowAuth: false,
-		f1: [,,,,],
-		f2: [,,,,,],
-		f3: [,,,,],
+		f1: [],
+		f2: [],
+		f3: [],
+		headlines: [],
+		activityList: [],
+		movableAreaWidth: 0
 	},
+	run() {
+		// 加载icons
+		getHomeIcons().then(({data}) => {
+			data = data || []
+			if (data.length === 13) {
+				this.setData({f1: data.slice(0, 4), f2: data.slice(4, 9), f3: data.slice(9, 13)})
+			}
+		})
 
+		// 加载花样头条
+		getHomeHeadLines().then(({data}) => {
+			data = data || []
+			this.setData({headlines: data.slice()})
+		})
 
+		// 加载最新活动
+		getActivityList({offset: 0, limit: 5, platform: 1, homepage_show: 1})
+			.then(({list}) => {
+				list = list || []
+				this.setData({
+					activityList: list,
+					movableAreaWidth: list.length * 414 + (list.length - 1) * 16
+				})
+			})
+	},
 	naviMiniProgram(link, linkType) {
 		switch (linkType) {
 			case "youzan": {
-				// 有赞（花样心选）
+				// 有赞商城
 				wx.navigateToMiniProgram({appId: "wx95fb6b5dbe8739b7", path: link})
 				break
 			}
@@ -45,21 +65,19 @@ Page({
 			}
 		}
 	},
-
 	// swiper切换
 	changeSwiperIndex(e) {
 		this.setData({
 			current: e.detail.current
 		})
 	},
-
 	// 处理轮播点击事件
 	handleBannerTap(e) {
 		let {link, link_type, id} = e.currentTarget.dataset.item
 		bxPoint("new_homepage_banner_click", {banner_id: id}, false)
 		this.naviMiniProgram(link, link_type)
 	},
-
+	// 获取banner图片
 	getBanner() {
 		return new Promise((resolve) => {
 			let promises = [getFindBanner({scene: 8}), getFindBanner({scene: 23})]
@@ -71,11 +89,6 @@ Page({
 			})
 		})
 	},
-
-	run() {
-
-	},
-
 	// 用户授权取消
 	authCancelEvent() {
 		this.setData({
@@ -99,6 +112,39 @@ Page({
 				}
 			}
 		})
+	},
+	// 处理icon点击事件
+	onIconItemTap(e) {
+		let {item: {type, id, link_url}} = e.currentTarget.dataset
+		switch (+type) {
+			case 1: {
+				// 花样百姓
+				wx.switchTab({
+					url: link_url,
+					fail() {
+						wx.navigateTo({url: link_url})
+					}
+				})
+				break
+			}
+			case 2: {
+				// 花样游学
+				wx.navigateToMiniProgram({appId: "wx2ea757d51abc1f47", path: link_url})
+				break
+			}
+			case 3: {
+				// H5链接
+				wx.navigateTo({
+					url: `/pages/pureWebview/pureWebview?link=${link_url}`
+				})
+				break
+			}
+			case 4: {
+				// 有赞商城
+				wx.navigateToMiniProgram({appId: "wx95fb6b5dbe8739b7", path: link_url})
+				break
+			}
+		}
 	},
 	/**
 	 * 生命周期函数--监听页面加载

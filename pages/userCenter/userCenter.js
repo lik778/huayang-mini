@@ -540,8 +540,15 @@ Page({
   // 联系客服
   callPhone(e) {
     bxPoint("mine_contact", {}, false)
-    wx.makePhoneCall({
-      phoneNumber: e.currentTarget.dataset.mobile
+    wx.openCustomerServiceChat({
+      extInfo: {url: 'https://work.weixin.qq.com/kfid/kfc123f40d001f53b74'},
+      corpId: 'ww8d4cae43fb34dc92',
+      success(res) {
+        console.log(res);
+      },
+      fail(err) {
+        console.error(err);
+      }
     })
   },
   // 查询用户合伙人信息

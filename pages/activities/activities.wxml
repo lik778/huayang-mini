@@ -1,0 +1,15 @@
+<view class="activities">
+
+    <view class="activity-item" wx:for="{{list}}" wx:key="index" bindtap="goToPureWebview" data-item="{{item}}">
+        <image class="cover" src="{{item.cover_url}}" mode="aspectFill"></image>
+        <view class="content">
+            <view class="title limit-two-line">{{item.title}}</view>
+            <view class="separate"></view>
+            <view class="date">
+                <view class="year">{{item.year}}年</view>
+                <view>{{item.month}}月{{item.date}}日</view>
+            </view>
+        </view>
+    </view>
+
+</view>

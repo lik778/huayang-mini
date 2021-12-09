@@ -19,23 +19,48 @@
     <!-- ICON区域 -->
     <view class="icons">
         <view class="floor f1">
-            <view class="f-box" wx:for="{{f1}}" wx:key="index">
-                <image class="f-icon" src="" mode="aspectFill"></image>
-                <text class="f-title">直播</text>
+            <view class="f-box" wx:for="{{f1}}" wx:key="index" bindtap="onIconItemTap" data-item="{{item}}">
+                <image class="f-icon" src="{{item.cover}}" mode="aspectFill"></image>
+                <text class="f-title">{{item.title}}</text>
             </view>
         </view>
         <view class="floor f2">
-            <view class="f-box" wx:for="{{f2}}" wx:key="index">
-                <image class="f-icon" src="" mode="aspectFill"></image>
-                <text class="f-title">今日好物</text>
+            <view class="f-box" wx:for="{{f2}}" wx:key="index" bindtap="onIconItemTap" data-item="{{item}}">
+                <image class="f-icon" src="{{item.cover}}" mode="aspectFill"></image>
+                <text class="f-title">{{item.title}}</text>
             </view>
         </view>
+
+        <!-- 花样头条 -->
+        <view class="headlines-swiper-box" wx:if="{{headlines.length > 0}}">
+            <swiper class="headlines-item-box" vertical="{{true}}" circular autoplay interval="{{5000}}" duration="{{600}}">
+                <swiper-item wx:for="{{headlines}}" wx:key="index">
+                    <view class="headlines">
+                        <image class="headline-logo" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639021544uvbzaH.jpg" mode="aspectFit"></image>
+                        <view class="separate"></view>
+                        <view class="headline-text limit-one-line">{{item}}</view>
+                    </view>
+                </swiper-item>
+            </swiper>
+        </view>
+
         <view class="floor f3">
-            <view class="f-box" wx:for="{{f3}}" wx:key="index">
-                <image class="f-icon" src="" mode="aspectFill"></image>
-                <text class="f-title">早安打卡</text>
+            <view class="f-box" wx:for="{{f3}}" wx:key="index" bindtap="onIconItemTap" data-item="{{item}}">
+                <image class="f-icon" src="{{item.cover}}" mode="aspectFill"></image>
+                <text class="f-title">{{item.title}}</text>
             </view>
         </view>
+    </view>
+
+    <!-- 最新活动 -->
+    <view class="news" wx:if="{{activityList.length > 0}}">
+        <view class="news-title">
+            <text>最新活动</text>
+            <view class="news-more">查看更多</view>
+        </view>
+        <scroll-view class="news-content" scroll-x="true">
+            <image class="new-item" wx:for="{{activityList}}" wx:key="index" src="{{item.cover_url}}" mode="aspectFill"></image>
+        </scroll-view>
     </view>
 
     <!-- 授权弹窗 -->

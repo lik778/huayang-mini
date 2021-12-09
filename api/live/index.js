@@ -200,22 +200,17 @@ export function getDiscoveryRemindData(params) {
 	})
 }
 
-/* 获取最新活动列表 */
-export const getNewActivityList = params => {
-	return request._get(URL.getNewActivityList, params)
+/* 获取首页图标 */
+export const getHomeIcons = params => {
+	return request._get(URL.queryHomeIcons, params)
 }
 
-/* 获取早上好背景模版 */
-export const getGoodMorningBgTemplate = params => {
-	return request._get(URL.getGoodMorningBgTemplate, params)
+/* 花样头条 */
+export const getHomeHeadLines = () => {
+	return request._get(URL.queryHomeHeadLines)
 }
 
-/* 获取首页头部视频列表 */
-export const getIndexHeaderVideoList = params => {
-	return request._get(URL.getIndexHeaderVideoList, params)
-}
-
-/* 获取品质商品 */
-export const queryQualityItems = params => {
-	return request._get(URL.getGoodLifeProducts, params)
+/* 获取有赞同步的培训课 */
+export const getYouZanKeChengList = params => {
+	return request._get(URL.queryYouZanKeCheng, params)
 }
