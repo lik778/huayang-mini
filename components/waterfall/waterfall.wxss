@@ -57,6 +57,10 @@
   font-weight: 600;
   color: #000000;
   line-height: 42rpx;
+  display: flex;
+  flex-wrap: wrap;
+  height: 84rpx;
+  align-items: center;
 }
 
 .visit-count {

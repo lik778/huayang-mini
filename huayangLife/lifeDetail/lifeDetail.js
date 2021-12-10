@@ -124,6 +124,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "花样好生活，领略不同人生",
+      path: `/huayangLife/lifeDetail/lifeDetail?id=${this.data.lifeId}`
+    }
   }
 })

@@ -4,7 +4,7 @@
     <view class="left">
       <view class="item" wx:for="{{leftList}}" wx:key="index" bindtap="toDetail" data-item='{{item}}'>
         <view class="image" style="height: {{item.maxHeight}}px;">
-          <image style="height:{{item.height}}px" src="{{item.cover_url}}"></image>
+          <image style="height:{{item.height}}px" src="{{item.url}}"></image>
           <image wx:if="{{item.type===2}}" class="playicon" src="{{playIcon}}"></image>
         </view>
         <view class="item-bottom">

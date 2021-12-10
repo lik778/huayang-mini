@@ -31,8 +31,8 @@ Page({
     if (item.type === 3) {
       /* 公众号文章 */
       wx.navigateTo({
-				url: `/subCourse/noAuthWebview/noAuthWebview?link=${item.material_url}`,
-			})
+        url: `/subCourse/noAuthWebview/noAuthWebview?link=${item.material_url}`,
+      })
     } else {
       /* 跳转详情 */
       wx.navigateTo({
@@ -45,6 +45,7 @@ Page({
   changeTab(e) {
     this.setData({
       ['pagination.class']: e.detail.index === 0 ? "" : e.detail.index,
+      active: e.detail.index,
       ['pagination.offset']: 0,
       refresh: true,
       isBottom: false
@@ -76,7 +77,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getWaterfallList()
+    if (options.index) {
+      this.setData({
+        ['pagination.class']: Number(options.index),
+        ['pagination.offset']: 0,
+        refresh: true,
+        isBottom: false,
+        active: Number(options.index),
+      }, () => {
+        this.getWaterfallList()
+      })
+    } else {
+      this.getWaterfallList()
+    }
   },
 
   /**
@@ -140,6 +153,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "花样好生活，领略不同人生",
+      path: `/huayangLife/lifeList/lifeList`
+    }
   }
 })
