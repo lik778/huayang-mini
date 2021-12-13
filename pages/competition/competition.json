@@ -1,5 +1,5 @@
 {
-  "navigationStyle": "custom",
+  "navigationBarTitleText": "花样大赛",
   "usingComponents": {
     "authModule": "../../components/auth/auth"
   }

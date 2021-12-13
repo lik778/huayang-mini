@@ -4,14 +4,16 @@
     <view wx:if="{{bannerList.length!==0}}">
         <!-- banner 滚动区域 -->
         <view class="swiper-box" id="swiper-box">
-            <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}" duration="{{500}}">
+            <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}"
+                    duration="{{500}}">
                 <swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="handleBannerTap" data-item="{{item}}">
                     <view class="swiper-cover"></view>
                     <image mode="aspectFill" src="{{item.pic_url}}"></image>
                 </swiper-item>
             </swiper>
             <view class="swiper-dot">
-                <view wx:for="{{bannerList}}" wx:key="index" wx:if="{{bannerList.length>1}}" class="{{current===index?'swiper-dot-item-active swiper-dot-item':'swiper-dot-item'}}"></view>
+                <view wx:for="{{bannerList}}" wx:key="index" wx:if="{{bannerList.length>1}}"
+                      class="{{current===index?'swiper-dot-item-active swiper-dot-item':'swiper-dot-item'}}"></view>
             </view>
         </view>
     </view>
@@ -21,7 +23,7 @@
         <view class="floor f1">
             <view class="f-box" wx:for="{{f1}}" wx:key="index" bindtap="onIconItemTap" data-item="{{item}}">
                 <image class="f-icon" src="{{item.cover}}" mode="aspectFill"></image>
-                <text class="f-title">{{item.title}}</text>
+                <text class="f-title {{index === 0 ? 'live' : ''}}">{{item.title}}</text>
             </view>
         </view>
         <view class="floor f2">
@@ -33,19 +35,22 @@
 
         <!-- 花样头条 -->
         <view class="headlines-swiper-box" wx:if="{{headlines.length > 0}}">
-            <swiper class="headlines-item-box" vertical="{{true}}" circular autoplay interval="{{5000}}" duration="{{600}}">
-                <swiper-item wx:for="{{headlines}}" wx:key="index">
-                    <view class="headlines">
-                        <image class="headline-logo" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639021544uvbzaH.jpg" mode="aspectFit"></image>
-                        <view class="separate"></view>
-                        <view class="headline-text limit-one-line">{{item}}</view>
-                    </view>
-                </swiper-item>
-            </swiper>
+            <view class="headlines">
+                <image class="headline-logo" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639394426MnRoXN.jpg"
+                       mode="aspectFit"></image>
+                <view class="separate"></view>
+                <swiper class="headlines-item-box" vertical="{{true}}" circular autoplay interval="{{5000}}"
+                        duration="{{600}}">
+                    <swiper-item class="headline-item-box-wrap" wx:for="{{headlines}}" wx:key="index">
+                        <view class="headline-text limit-two-line">{{item}}</view>
+                    </swiper-item>
+                </swiper>
+            </view>
         </view>
 
         <view class="floor f3">
-            <view class="f-card" wx:for="{{f3}}" wx:key="index" bindtap="onIconItemTap" data-item="{{item}}" style="background-image: url('{{item.cover}}');">
+            <view class="f-card" wx:for="{{f3}}" wx:key="index" bindtap="onIconItemTap" data-item="{{item}}"
+                  style="background-image: url('{{item.cover}}');">
                 <text class="f-title">{{item.title}}</text>
             </view>
         </view>
@@ -57,13 +62,22 @@
             <text>最新活动</text>
             <view class="news-more" bindtap="onNewsMoreTap">查看更多</view>
         </view>
-        <scroll-view class="news-content" scroll-x="true">
-            <image class="new-item" bindtap="onNewsContentTap" data-item="{{item}}" wx:for="{{activityList}}" wx:key="index" src="{{item.cover_url}}" mode="aspectFill"></image>
+        <scroll-view class="news-content" scroll-x="true" enable-flex="true">
+            <view class="news-wrap" bindtap="onNewsContentTap" data-item="{{item}}" wx:for="{{activityList}}" wx:key="index">
+                <view class="new-item">
+                    <image class="new-image" src="{{item.cover_url}}" mode="aspectFill"></image>
+                    <view class="new-date">{{item.showDate}}</view>
+                </view>
+                <view class="new-title-wrap">
+                    <text class="new-title limit-two-line">{{item.title}}</text>
+                </view>
+            </view>
         </scroll-view>
     </view>
 
     <!-- 授权弹窗 -->
-    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent"
+                bind:authCompleteEvent="authCompleteEvent">
     </authModule>
 
 </view>

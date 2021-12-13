@@ -4,6 +4,7 @@ import { GLOBAL_KEY, ROOT_URL } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import { getHomeHeadLines, getHomeIcons } from "../../api/live/index"
 import request from "../../lib/request"
+import dayjs from "dayjs"
 
 Page({
 	/**
@@ -38,6 +39,7 @@ Page({
 		getActivityList({offset: 0, limit: 5, platform: 1, homepage_show: 1})
 			.then(({list}) => {
 				list = list || []
+				list = list.map(n => ({...n, showDate: `${dayjs(n.start_time).month()+1}月${dayjs(n.start_time).date()}日`}))
 				this.setData({
 					activityList: list,
 					movableAreaWidth: list.length * 414 + (list.length - 1) * 16
