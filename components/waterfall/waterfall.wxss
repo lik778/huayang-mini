@@ -39,6 +39,7 @@
 
 .item-bottom {
   padding: 0 20rpx;
+  padding-top: 20rpx;
   padding-bottom: 16rpx;
   border: 0.5px solid #DDDDDD;
   border-top: none;
@@ -51,7 +52,8 @@
 }
 
 .item-title {
-  margin: 20rpx 0;
+  margin-bottom: 20rpx;
+  /* margin: 20rpx 0; */
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;

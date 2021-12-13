@@ -1,18 +1,23 @@
 <!--huayangLife/lifeDetail/lifeDetail.wxml-->
 <view class="life-detail-container">
   <view class="banner">
-    <swiper wx:if='{{detailInfo.type==1}}' class="banner-swiper" indicator-dots autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" indicator-active-color='#FF5544' indicator-color='#fff'>
+    <swiper wx:if='{{detailInfo.type==1}}' class="banner-swiper" indicator-dots='{{false}}' interval="{{interval}}" circular duration="{{duration}}" style="height: {{detailInfo.maxHeight}}px;" indicator-active-color='#FF5544' bindchange="changeIndicator" indicator-color='#fff'>
       <block wx:for="{{list}}" wx:key="index">
         <swiper-item class="banner-swiper-item" bindtap="amplification" data-url="{{item}}">
-          <image src="{{item}}" mode="aspectFit"></image>
+          <image wx:if='{{index===0}}' src="{{item}}" mode='aspectFill'></image>
+          <image src="{{item}}" wx:else mode="aspectFit"></image>
         </swiper-item>
       </block>
+
     </swiper>
+    <view class="swiper-dot-list">
+      <view class="swiper-dot-box {{active===index?'swiper-dot-box-active':''}}" wx:for="{{list}}" wx:key="index"></view>
+    </view>
     <view class="video" wx:if="{{detailInfo.type==2}}">
-      <video bindpause="playEnd" id='video' src="{{list[0]}}" controls wx:if="{{playing}}"></video>
-      <view class="cover" wx:else bindtap="playVideo">
+      <video bindpause="playEnd" style="width: {{detailInfo.width}};height:{{detailInfo.maxHeight}}px" id='video' src="{{list[0]}}" controls wx:if="{{playing}}"></video>
+      <view class="cover" wx:else bindtap="playVideo" style="width: {{detailInfo.width}};height:{{detailInfo.maxHeight}}px">
         <image class="play" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639020271cHIBVq.jpg"></image>
-        <image src="{{detailInfo.cover_url}}" class="cover-image"></image>
+        <image src="{{detailInfo.cover_url}}" mode='aspectFill' class="cover-image"></image>
       </view>
     </view>
   </view>

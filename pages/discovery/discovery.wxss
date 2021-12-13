@@ -159,7 +159,7 @@
 
 .news-more {
   font: 32rpx/32rpx PingFangSC;
-  color: rgba(0,0,0, 0.8);
+  color: rgba(0, 0, 0, 0.8);
 }
 
 .news-more::after {
@@ -186,17 +186,24 @@
 
 /* 生活方式 */
 .life-style-title {
+  display: flex;
   padding: 0 40rpx;
+  align-items: center;
+  justify-content: space-between;
+  height: 88rpx;
+  margin-top: 40rpx;
+  margin-bottom: 20rpx;
+}
+
+.life-style-title-left {
   font-size: 48rpx;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
   color: #000000;
   line-height: 48rpx;
-  height: 88rpx;
   display: flex;
   align-items: center;
-  margin-top: 40rpx;
-  margin-bottom: 20rpx;
+
 }
 
 /* 已经到底啦 */
