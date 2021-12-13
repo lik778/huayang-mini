@@ -1,0 +1,40 @@
+<!--huayangLife/lifeDetail/lifeDetail.wxml-->
+<view class="life-detail-container">
+  <view class="banner">
+    <swiper wx:if='{{detailInfo.type==1}}' class="banner-swiper" indicator-dots autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" indicator-active-color='#FF5544' indicator-color='#fff'>
+      <block wx:for="{{list}}" wx:key="index">
+        <swiper-item class="banner-swiper-item" bindtap="amplification" data-url="{{item}}">
+          <image src="{{item}}" mode="aspectFit"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="video" wx:if="{{detailInfo.type==2}}">
+      <video bindpause="playEnd" id='video' src="{{list[0]}}" controls wx:if="{{playing}}"></video>
+      <view class="cover" wx:else bindtap="playVideo">
+        <image class="play" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639020271cHIBVq.jpg"></image>
+        <image src="{{detailInfo.cover_url}}" class="cover-image"></image>
+      </view>
+    </view>
+  </view>
+  <view class="main">
+    <view class="top-line">
+      <view class="top-line-left">
+        <text>{{detailInfo.author}}</text>
+      </view>
+      <view class="top-line-right">
+        <button open-type="share"></button>
+        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639018163AAXOrg.jpg"></image>
+        <text>分享</text>
+      </view>
+    </view>
+    <view class="title">{{detailInfo.title}}</view>
+    <view class="desc">{{detailInfo.content}}</view>
+    <view class="bottom-line">
+      <view class="bottom-line-left">{{detailInfo.created_at}}</view>
+      <view class="bottom-line-right">
+        <image src="{{visitIcon}}"></image>
+        <text>{{detailInfo.view_count||0}}</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -40,8 +40,7 @@
     "audio",
     "location"
   ],
-  "subpackages": [
-    {
+  "subpackages": [{
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -143,6 +142,12 @@
       "pages": [
         "goodMorningResult/goodMorningResult"
       ]
+    }, {
+      "root": "huayangLife",
+      "pages": [
+        "lifeDetail/lifeDetail",
+        "lifeList/lifeList"
+      ]
     }
   ],
   "window": {
@@ -154,8 +159,7 @@
   },
   "tabBar": {
     "custom": true,
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/discovery/discovery"
       },
       {

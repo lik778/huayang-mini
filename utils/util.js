@@ -1,9 +1,21 @@
 import md5 from 'md5'
-import { GLOBAL_KEY, ROOT_URL, URL, WeChatLiveStatus } from '../lib/config'
-import { createOrder } from "../api/mine/payVip"
-import { getWatchLiveAuth, statisticsWatchNo } from "../api/live/course"
+import {
+	GLOBAL_KEY,
+	ROOT_URL,
+	URL,
+	WeChatLiveStatus
+} from '../lib/config'
+import {
+	createOrder
+} from "../api/mine/payVip"
+import {
+	getWatchLiveAuth,
+	statisticsWatchNo
+} from "../api/live/course"
 import request from "../lib/request"
-import { getUserInfo } from "../api/mine/index"
+import {
+	getUserInfo
+} from "../api/mine/index"
 import dayjs from "dayjs"
 
 const livePlayer = requirePlugin('live-player-plugin')
@@ -1299,3 +1311,31 @@ export const shuffle = (arr) => {
 	}
 	return arr;
 }
+
+//获取图片原始宽高 parmas:{url:'',...},return {url:'',...,width:,height}
+export const preloadNetworkImg = (imgAry = []) => {
+	let promiseAry = [];
+	imgAry.forEach(item => {
+		item.url = item.url + '?x-oss-process=style/huayang'
+		promiseAry.push(
+			new Promise(resolve => {
+				wx.getImageInfo({
+					src: item.url,
+					success: res => {
+						let systemInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth
+						let imgWidth = parseInt((systemInfo / 375) * 164)
+						let maxHeight = parseInt(imgWidth * 1.33)
+						let radio = imgWidth / res.width
+						resolve({
+							width: imgWidth,
+							height: parseInt(res.height * radio),
+							maxHeight: parseInt(res.height * radio) > maxHeight ? maxHeight : parseInt(res.height * radio),
+							...item
+						});
+					}
+				})
+			})
+		);
+	});
+	return Promise.all(promiseAry);
+};

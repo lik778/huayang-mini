@@ -1,0 +1,41 @@
+<!--components/waterfall/waterfall.wxml-->
+<view class="waterfall-container">
+  <view class="list">
+    <view class="left">
+      <view class="item" wx:for="{{leftList}}" wx:key="index" bindtap="toDetail" data-item='{{item}}'>
+        <view class="image" style="height: {{item.maxHeight}}px;">
+          <image style="height:{{item.height}}px" src="{{item.url}}"></image>
+          <image wx:if="{{item.type===2}}" class="playicon" src="{{playIcon}}"></image>
+        </view>
+        <view class="item-bottom">
+          <view class="item-title"><text>{{item.title}}</text></view>
+          <view class="item-button">
+            <view class="nick-name">{{item.author}}</view>
+            <view class="visit-count">
+              <image src="{{visitIcon}}"></image>
+              <text>{{item.view_count}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="right">
+      <view class="item" wx:for="{{rightList}}" wx:key="index" bindtap="toDetail" data-item='{{item}}'>
+        <view class="image" style="height: {{item.maxHeight}}px;">
+          <image style="height:{{item.height}}px" src="{{item.cover_url}}"></image>
+          <image wx:if="{{item.type===2}}" class="playicon" src="{{playIcon}}"></image>
+        </view>
+        <view class="item-bottom">
+          <view class="item-title"><text>{{item.title}}</text></view>
+          <view class="item-button">
+            <view class="nick-name">{{item.author}}</view>
+            <view class="visit-count">
+              <image src="{{visitIcon}}"></image>
+              <text>{{item.view_count}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
