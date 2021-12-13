@@ -3,6 +3,7 @@ import {
   queryWaterfallList,
   recordWaterfallVisitCount
 } from "../../api/huayangLife/index"
+import bxPoint from "../../utils/bxPoint"
 Page({
 
   /**
@@ -28,6 +29,13 @@ Page({
     recordWaterfallVisitCount({
       life_id: item.id
     })
+
+    bxPoint("life_style_all_list_click", {
+      tag_id: Number(this.data.active) + 1,
+      life_id: item.id,
+      life_title: item.title
+    }, false)
+
     if (item.type === 3) {
       /* 公众号文章 */
       wx.navigateTo({
@@ -43,6 +51,11 @@ Page({
 
   /* 切换tab */
   changeTab(e) {
+    let index = e.detail.index
+    bxPoint("life_style_tab_button", {
+      tag_id: Number(index) + 1,
+    }, false)
+
     this.setData({
       ['pagination.class']: e.detail.index === 0 ? "" : e.detail.index,
       active: e.detail.index,
@@ -90,6 +103,9 @@ Page({
     } else {
       this.getWaterfallList()
     }
+
+    bxPoint("life_style_visit", {})
+
   },
 
   /**

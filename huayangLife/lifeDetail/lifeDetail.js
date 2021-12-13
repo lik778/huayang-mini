@@ -2,6 +2,7 @@
 import {
   queryWaterfallDetailInfo
 } from "../../api/huayangLife/index"
+import bxPoint from "../../utils/bxPoint"
 Page({
 
   /**
@@ -124,6 +125,11 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    bxPoint("life_style_detail_button", {
+      tag_id: Number(this.data.detailInfo.class) + 1,
+      life_id: this.data.detailInfo.id,
+      life_title: this.data.detailInfo.title
+    }, false)
     return {
       title: "花样好生活，领略不同人生",
       path: `/huayangLife/lifeDetail/lifeDetail?id=${this.data.lifeId}`

@@ -138,6 +138,13 @@ Page({
 		recordWaterfallVisitCount({
 			life_id: item.id
 		})
+
+
+		bxPoint("new_homepage_life_list_click", {
+			life_id: item.id,
+			life_title: item.title
+		}, false)
+
 		if (item.type === 3) {
 			/* 公众号文章 */
 			wx.navigateTo({
