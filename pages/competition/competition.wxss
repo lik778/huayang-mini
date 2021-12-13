@@ -1,3 +1,4 @@
+@import "../../assets/css/common.wxss";
 .competition {
     padding-bottom: 250rpx;
     font-size: 0;

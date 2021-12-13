@@ -45,8 +45,7 @@
         </view>
 
         <view class="floor f3">
-            <view class="f-box" wx:for="{{f3}}" wx:key="index" bindtap="onIconItemTap" data-item="{{item}}">
-                <image class="f-icon" src="{{item.cover}}" mode="aspectFill"></image>
+            <view class="f-card" wx:for="{{f3}}" wx:key="index" bindtap="onIconItemTap" data-item="{{item}}" style="background-image: url('{{item.cover}}');">
                 <text class="f-title">{{item.title}}</text>
             </view>
         </view>
@@ -56,10 +55,10 @@
     <view class="news" wx:if="{{activityList.length > 0}}">
         <view class="news-title">
             <text>最新活动</text>
-            <view class="news-more">查看更多</view>
+            <view class="news-more" bindtap="onNewsMoreTap">查看更多</view>
         </view>
         <scroll-view class="news-content" scroll-x="true">
-            <image class="new-item" wx:for="{{activityList}}" wx:key="index" src="{{item.cover_url}}" mode="aspectFill"></image>
+            <image class="new-item" bindtap="onNewsContentTap" data-item="{{item}}" wx:for="{{activityList}}" wx:key="index" src="{{item.cover_url}}" mode="aspectFill"></image>
         </scroll-view>
     </view>
 

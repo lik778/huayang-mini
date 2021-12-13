@@ -2,6 +2,7 @@ import { getActivityList } from "../../api/course/index"
 import dayjs from "dayjs"
 import { ROOT_URL } from "../../lib/config"
 import request from "../../lib/request"
+import bxPoint from "../../utils/bxPoint"
 
 Page({
 
@@ -30,7 +31,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    bxPoint("activity_visit", {})
   },
 
   /**
@@ -65,7 +66,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "50+线下活动，让你的退休生活更精彩",
+      path: "/pages/activities/activities"
+    }
   },
   // 启动函数
   run() {
@@ -98,7 +102,20 @@ Page({
         break
       }
     }
+
+    bxPoint("activity_list_click", {
+      activity_id: item.id,
+      activity_title: item.title,
+      activity_run_date: item.start_time
+    }, false)
+
     link += `/#/home/detail/${item.id}`
     wx.navigateTo({url: `/pages/pureWebview/pureWebview?link=${link}`})
+  },
+  onContactLogoTap() {
+    wx.openCustomerServiceChat({
+      extInfo: {url: 'https://work.weixin.qq.com/kfid/kfc16674b49d8f7dc5f'},
+      corpId: 'ww8d4cae43fb34dc92'
+    })
   }
 })

@@ -541,14 +541,8 @@ Page({
   callPhone(e) {
     bxPoint("mine_contact", {}, false)
     wx.openCustomerServiceChat({
-      extInfo: {url: 'https://work.weixin.qq.com/kfid/kfc123f40d001f53b74'},
-      corpId: 'ww8d4cae43fb34dc92',
-      success(res) {
-        console.log(res);
-      },
-      fail(err) {
-        console.error(err);
-      }
+      extInfo: {url: 'https://work.weixin.qq.com/kfid/kfc16674b49d8f7dc5f'},
+      corpId: 'ww8d4cae43fb34dc92'
     })
   },
   // 查询用户合伙人信息
@@ -744,7 +738,7 @@ Page({
   onShow: function () {
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({
-        selected: 4
+        selected: 1
       })
     }
     this.calcUserCreatedTime()

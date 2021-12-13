@@ -49,7 +49,7 @@
             <view class="consult-info">
                 <text class="consult-title">学院招生办</text>
                 <view class="consult-btn phone" bindtap="onPhoneCall">点击电话咨询</view>
-                <view class="consult-btn service">点击客服咨询</view>
+                <view class="consult-btn service" bindtap="handleServiceTap">点击客服咨询</view>
                 <text class="consult-time">服务时间：工作日9:00-18:00</text>
             </view>
         </view>

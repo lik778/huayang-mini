@@ -1,9 +1,10 @@
 import { $notNull, getLocalStorage } from "../../utils/util"
 import { getActivityList, getFindBanner } from "../../api/course/index"
-import { GLOBAL_KEY } from "../../lib/config"
+import { GLOBAL_KEY, ROOT_URL } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import { getHomeHeadLines, getHomeIcons } from "../../api/live/index"
 import dayjs from "dayjs"
+import request from "../../lib/request"
 
 Page({
 	/**
@@ -115,7 +116,12 @@ Page({
 	},
 	// 处理icon点击事件
 	onIconItemTap(e) {
-		let {item: {type, id, link_url}} = e.currentTarget.dataset
+		let {item: {type, link_url, rank}} = e.currentTarget.dataset
+		if (rank <= 9) {
+			bxPoint("new_homepage_tab_button_click", {tab_tag: rank}, false)
+		} else {
+			bxPoint("new_homepage_content_button_click", {tab_tag: rank}, false)
+		}
 		switch (+type) {
 			case 1: {
 				// 花样百姓
@@ -146,6 +152,36 @@ Page({
 			}
 		}
 	},
+	// 查看更多最新活动
+	onNewsMoreTap() {
+		bxPoint("new_homepage_activity_more_click", {}, false)
+		wx.navigateTo({url: "/pages/activities/activities"})
+	},
+	// 打开最新活动
+	onNewsContentTap(e) {
+		let {item} = e.currentTarget.dataset
+		let link = ""
+		switch (request.baseUrl) {
+			case ROOT_URL.dev: {
+				link = 'https://dev.huayangbaixing.com'
+				break
+			}
+			case ROOT_URL.prd: {
+				link = 'https://huayang.baixing.com'
+				break
+			}
+		}
+		bxPoint("new_homepage_activity_click", {
+			activity_id: item.id,
+			activity_title: item.title,
+			activity_run_date: item.start_time
+		}, false)
+
+		link += `/#/home/detail/${item.id}`
+		wx.navigateTo({
+			url: `/pages/pureWebview/pureWebview?link=${link}`
+		})
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
@@ -175,6 +211,7 @@ Page({
 		}
 
 		this.run()
+		bxPoint("homepage_visit", {})
 	},
 
 	/**
@@ -205,10 +242,11 @@ Page({
 	 */
 	onShareAppMessage: function () {
 		return {
-			title: "在花样百姓，过积极、健康、时尚的品质生活。",
+			title: "在花样百姓，过积极、健康、时尚的品质生活",
 			path: `/pages/discovery/discovery?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
 		}
 	},
 	onPageScroll(e) {
+
 	}
 })

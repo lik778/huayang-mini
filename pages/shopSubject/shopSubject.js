@@ -2,6 +2,7 @@ import { getFindBanner } from "../../api/course/index"
 import { $notNull } from "../../utils/util"
 import { getYouZanKeChengList } from "../../api/live/index"
 import dayjs from "dayjs"
+import bxPoint from "../../utils/bxPoint"
 
 Page({
 
@@ -32,7 +33,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-
+		bxPoint("course_visit", {})
 	},
 
 	/**
@@ -67,7 +68,10 @@ Page({
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
-
+		return {
+			title: "花样培训课，开启你的美丽蜕变",
+			path: "/pages/shopSubject/shopSubject"
+		}
 	},
 	// 启动函数
 	run() {
@@ -105,6 +109,7 @@ Page({
 	handleBannerTap(e) {
 		let {link, link_type, id} = e.currentTarget.dataset.item
 		this.naviMiniProgram(link, link_type)
+		bxPoint("course_banner_click", {banner_id: id}, false)
 	},
 	// 获取banner图片
 	getBanner() {
@@ -129,16 +134,24 @@ Page({
 	},
 	// 唤醒电话
 	onPhoneCall() {
+		bxPoint("course_phone_call_click", {}, false)
 		wx.makePhoneCall({
 			phoneNumber: "15000961093",
-			success() {
-			},
-			fail() {
+		})
+	},
+	// 唤醒客服消息
+	handleServiceTap() {
+		wx.openCustomerServiceChat({
+			extInfo: {url: 'https://work.weixin.qq.com/kfid/kfc85fe86a0e7ad8fa3'},
+			corpId: 'ww8d4cae43fb34dc92',
+			complete() {
+				bxPoint("course_service_click", {}, false)
 			}
 		})
 	},
 	// 跳转到有赞全部培训课列表页
 	onMoreTap() {
+		bxPoint("course_enroll_more_click", {}, false)
 		wx.navigateToMiniProgram({
 			appId: "wx95fb6b5dbe8739b7",
 			path: "pages/common/blank-page/index?weappSharePath=pages%2Fhome%2Ffeature%2Findex%3Falias%3DVDcBLnwO4l%26kdt_id%3D43257500",
@@ -148,6 +161,7 @@ Page({
 	onAdsItemTap(e) {
 		let {item} = e.currentTarget.dataset
 		if (item) {
+			bxPoint("course_enroll_list_click", {course_id: item.id, course_title: item.title}, false)
 			wx.navigateToMiniProgram({
 				appId: "wx95fb6b5dbe8739b7",
 				path: `${item.page_url}?alias=${item.alias}`,

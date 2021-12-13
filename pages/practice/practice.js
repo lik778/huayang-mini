@@ -435,6 +435,12 @@ Page({
 			didShowAuth: false,
 		})
 	},
+	onContactLogoTap() {
+		wx.openCustomerServiceChat({
+			extInfo: {url: 'https://work.weixin.qq.com/kfid/kfc85fe86a0e7ad8fa3'},
+			corpId: 'ww8d4cae43fb34dc92'
+		})
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
@@ -477,13 +483,6 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		if (typeof this.getTabBar === 'function' &&
-			this.getTabBar()) {
-			this.getTabBar().setData({
-				selected: 3
-			})
-		}
-
 		// 检查开课通知订阅状态
 		this.subScribeMessage()
 

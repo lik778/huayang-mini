@@ -59,10 +59,6 @@
   margin-bottom: 40rpx;
 }
 
-.f1, .f3 {
-  padding: 0 16rpx;
-}
-
 .f2 {
   padding: 0 22rpx;
 }
@@ -75,14 +71,24 @@
   font-size: 0;
 }
 
-.f1 .f-icon, .f3 .f-icon {
+.f-card {
+  width: 152rpx;
+  height: 120rpx;
+  padding: 20rpx 0 0 16rpx;
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.f1 .f-icon {
   width: 112rpx;
   height: 112rpx;
   border-radius: 999rpx;
   background: #aaaaaa;
 }
 
-.f1 .f-title, .f3 .f-title {
+.f1 .f-title {
   margin-top: 20rpx;
   font: 32rpx/32rpx PingFangSC;
 }
@@ -98,8 +104,8 @@
   font: 28rpx/28rpx PingFangSC;
 }
 
-.f3 .f-icon {
-  border-radius: 0;
+.f3 .f-title {
+
 }
 
 /* 花样头条 */

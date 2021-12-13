@@ -12,4 +12,5 @@
         </view>
     </view>
 
+    <view class="contact-logo" bindtap="onContactLogoTap"></view>
 </view>

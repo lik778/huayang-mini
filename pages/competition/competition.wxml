@@ -64,10 +64,12 @@
         </view>
     </view>
 
-    <view class="share-btn" bindtap="handleShareBtnTap">
-        <button class="share-hide-btn" open-type="share"></button>
-        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1630051473GDELSF.jpg" mode="aspectFit"></image>
-    </view>
+    <view class="contact-logo" bindtap="onContactLogoTap"></view>
+
+    <!--    <view class="share-btn" bindtap="handleShareBtnTap">-->
+    <!--        <button class="share-hide-btn" open-type="share"></button>-->
+    <!--        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1630051473GDELSF.jpg" mode="aspectFit"></image>-->
+    <!--    </view>-->
 
     <!-- 授权弹窗 -->
     <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
