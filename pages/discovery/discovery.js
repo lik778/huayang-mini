@@ -3,6 +3,7 @@ import {
 	getLocalStorage,
 } from "../../utils/util"
 import {
+	getActivityList,
 	getFindBanner,
 } from "../../api/course/index"
 import {
