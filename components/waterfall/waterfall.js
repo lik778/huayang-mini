@@ -69,22 +69,27 @@ Component({
         item.url = item.cover_url
       })
       preloadNetworkImg(list).then(res => {
+        let leftHeight = Number(this.data.leftListHeight)
+        let rightHeight = Number(this.data.rightListHeight)
+        let leftList = this.data.leftList.concat([])
+        let rightList = this.data.rightList.concat([])
         res.map(item => {
-          if (this.data.leftListHeight <= this.data.rightListHeight) {
-            let leftListOld = this.data.leftList.concat([])
-            leftListOld.push(item)
-            this.setData({
-              leftList: leftListOld,
-              leftListHeight: Number(this.data.leftListHeight) + Number(item.maxHeight)
-            })
+          item.view_count = item.view_count > 9999 ? (Math.floor(item.view_count / 1000) / 10) + '万' : item.view_count
+          if (leftHeight <= rightHeight) {
+            leftList.push(item)
+            leftHeight = leftHeight + 89 + Number(item.maxHeight)
+            // leftHeight = leftHeight + Number(item.maxHeight)
           } else {
-            let rightListOld = this.data.rightList.concat([])
-            rightListOld.push(item)
-            this.setData({
-              rightList: rightListOld,
-              rightListHeight: Number(this.data.rightListHeight) + Number(item.maxHeight)
-            })
+            rightList.push(item)
+            rightHeight = rightHeight + 89 + Number(item.maxHeight)
+            // rightHeight = rightHeight + Number(item.maxHeight)
           }
+          this.setData({
+            rightList,
+            leftList,
+            leftListHeight: leftHeight,
+            rightListHeight: rightHeight
+          })
           wx.hideLoading()
         })
       })

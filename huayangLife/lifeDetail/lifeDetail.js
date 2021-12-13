@@ -2,7 +2,14 @@
 import {
   queryWaterfallDetailInfo
 } from "../../api/huayangLife/index"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
+import {
+  getLocalStorage,
+  preloadNetworkImg
+} from "../../utils/util"
 Page({
 
   /**
@@ -11,6 +18,7 @@ Page({
   data: {
     visitIcon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1638840893RreULx.jpg",
     lifeId: "",
+    active: 0,
     list: null,
     detailInfo: null,
     playing: false
@@ -22,6 +30,14 @@ Page({
     wx.previewImage({
       current: url, // 当前显示图片的http链接
       urls: this.data.list // 需要预览的图片http链接列表
+    })
+  },
+
+  /* 轮播切换 */
+  changeIndicator(e) {
+    let index = e.detail.current
+    this.setData({
+      active: index
     })
   },
 
@@ -52,10 +68,32 @@ Page({
       data
     }) => {
       let list = data.material_url.split(',')
-      this.setData({
-        list,
-        detailInfo: data
+      preloadNetworkImg([{
+        id: this.data.lifeId,
+        url: data.type === 2 ? data.cover_url : list[0],
+      }]).then(res => {
+        let info = res[0]
+        let sysWidth = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenWidth
+        let radio = (sysWidth / info.width).toFixed(2)
+        let height = parseInt(radio * (info.height))
+        let maxHeight = parseInt(sysWidth * 1.33)
+        data.width = sysWidth
+        data.height = height
+        data.maxHeight = height > maxHeight ? maxHeight : height
+
+        this.setData({
+          list,
+          detailInfo: data
+        }, () => {
+          bxPoint('life_style_detail_pageview', {
+            tag_id: Number(this.data.detailInfo.class) + 1,
+            life_id: this.data.detailInfo.id,
+            life_title: this.data.detailInfo.title
+          })
+        })
       })
+      // console.log(list)
+
     })
   },
 

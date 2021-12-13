@@ -1316,7 +1316,7 @@ export const shuffle = (arr) => {
 export const preloadNetworkImg = (imgAry = []) => {
 	let promiseAry = [];
 	imgAry.forEach(item => {
-		item.url = item.url + '?x-oss-process=style/huayang'
+		item.url = item.url + `?x-oss-process=style/huayang&${new Date().getTime()}_${item.id}`
 		promiseAry.push(
 			new Promise(resolve => {
 				wx.getImageInfo({

@@ -77,7 +77,12 @@
 
     <!-- 生活方式 -->
     <view class="life-style">
-        <view class="life-style-title">生活方式</view>
+        <view class="life-style-title">
+            <view class="life-style-title-left">
+                生活方式
+            </view>
+            <view class="news-more" bindtap="toLifeList">查看更多</view>
+        </view>
         <view class="life-style-waterfall">
             <waterfall bind:clickItem='toDetail' wx:if='{{waterfallList!==null}}' list="{{waterfallList}}"></waterfall>
         </view>
