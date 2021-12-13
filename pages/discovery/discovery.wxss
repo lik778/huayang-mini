@@ -88,8 +88,21 @@
 }
 
 .f1 .f-title {
+  position: relative;
   margin-top: 20rpx;
   font: 32rpx/32rpx PingFangSC;
+}
+
+.f1 .f-title.live::after {
+  position: absolute;
+  top: 5rpx;
+  right: -30rpx;
+  content: "";
+  display: inline-block;
+  width: 21rpx;
+  height: 21rpx;
+  background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639396067OYdYSX.jpg") no-repeat center;
+  background-size: contain;
 }
 
 .f2 .f-icon {
@@ -113,21 +126,18 @@
   margin: 0 0 40rpx;
 }
 
-.headlines-item-box {
-  width: 670rpx;
-  height: 88rpx;
-}
-
 .headlines {
   display: flex;
   align-items: center;
-  padding: 12rpx 20rpx;
-  background: #F7F7F9;
+  width: 670rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+  border: 1px solid #DDDDDD;
 }
 
 .headline-logo {
   width: 52rpx;
-  height: 56rpx;
+  height: 54rpx;
   font-size: 0;
 }
 
@@ -138,9 +148,18 @@
   background: #DDDDDD;
 }
 
+.headlines-item-box {
+  width: 538rpx;
+  height: 84rpx;
+}
+
+.headline-item-box-wrap {
+  display: flex;
+  align-items: center;
+}
+
 .headline-text {
-  flex: 1;
-  font: 30rpx/30rpx PingFangSC;
+  font: 30rpx/48rpx PingFangSC;
 }
 
 /* 最新活动 */
@@ -174,14 +193,49 @@
 }
 
 .news-content {
-  white-space: nowrap;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.news-wrap {
+  margin-right: 16rpx;
+  width: 414rpx;
+  height: 330rpx;
 }
 
 .new-item {
-  display: inline-block;
+  position: relative;
   width: 414rpx;
   height: 206rpx;
-  margin-right: 16rpx;
+}
+
+.new-image {
+  width: inherit;
+  height: inherit;
+}
+
+.new-date {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 10rpx 12rpx;
+  font: 26rpx/26rpx PingFangSC;
+  background: linear-gradient(225deg, #FF8A67 0%, #FF5544 100%);
+  color: white;
+}
+
+.new-title-wrap {
+  padding: 20rpx 20rpx 19rpx;
+  border: 1rpx solid #DDDDDD;
+  border-top: 0 none;
+  box-sizing: border-box;
+}
+
+.new-title {
+  width: 374rpx;
+  height: 84rpx;
+  font: 600 30rpx/42rpx PingFangSC;
 }
 
 /* 生活方式 */
