@@ -44,13 +44,6 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		if (typeof this.getTabBar === 'function' &&
-			this.getTabBar()) {
-			this.getTabBar().setData({
-				selected: 2
-			})
-		}
-
 		bxPoint("model_homepage_visit", {})
 	},
 
@@ -246,5 +239,11 @@ Page({
 	},
 	handleShareBtnTap() {
 		bxPoint("model_share_click", {}, false)
-	}
+	},
+	onContactLogoTap() {
+		wx.openCustomerServiceChat({
+			extInfo: {url: 'https://work.weixin.qq.com/kfid/kfc85fe86a0e7ad8fa3'},
+			corpId: 'ww8d4cae43fb34dc92'
+		})
+	},
 })

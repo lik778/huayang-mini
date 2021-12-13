@@ -3,25 +3,33 @@ import {
 	getLocalStorage,
 } from "../../utils/util"
 import {
+	getActivityList,
+	getFindBanner,
+} from "../../api/course/index"
+import {
 	queryWaterfallList,
 	recordWaterfallVisitCount
 } from "../../api/huayangLife/index"
 import {
-	getFindBanner,
-} from "../../api/course/index"
-import {
 	GLOBAL_KEY,
 } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
+import { getHomeHeadLines, getHomeIcons } from "../../api/live/index"
+import request from "../../lib/request"
 
 Page({
-
 	/**
 	 * 页面的初始数据
 	 */
 	data: {
 		isIosPlatform: false,
 		didShowAuth: false,
+		f1: [],
+		f2: [],
+		f3: [],
+		headlines: [],
+		activityList: [],
+		movableAreaWidth: 0,
 		waterfallList: null, //生活方式瀑布流数据
 		waterfallLock: false, //瀑布流锁
 		isBottom: false, //生活方式到底啦
@@ -30,83 +38,76 @@ Page({
 			limit: 10
 		}, //生活方式瀑布流分页
 	},
+	run() {
+		// 加载icons
+		getHomeIcons().then(({data}) => {
+			data = data || []
+			if (data.length === 13) {
+				this.setData({f1: data.slice(0, 4), f2: data.slice(4, 9), f3: data.slice(9, 13)})
+			}
+		})
 
+		// 加载花样头条
+		getHomeHeadLines().then(({data}) => {
+			data = data || []
+			this.setData({headlines: data.slice()})
+		})
 
+		// 加载最新活动
+		getActivityList({offset: 0, limit: 5, platform: 1, homepage_show: 1})
+			.then(({list}) => {
+				list = list || []
+				this.setData({
+					activityList: list,
+					movableAreaWidth: list.length * 414 + (list.length - 1) * 16
+				})
+			})
+	},
 	naviMiniProgram(link, linkType) {
 		switch (linkType) {
 			case "youzan": {
-				// 有赞（花样心选）
-				wx.navigateToMiniProgram({
-					appId: "wx95fb6b5dbe8739b7",
-					path: link
-				})
+				// 有赞商城
+				wx.navigateToMiniProgram({appId: "wx95fb6b5dbe8739b7", path: link})
 				break
 			}
 			case "travel": {
 				// 游学
-				wx.navigateToMiniProgram({
-					appId: "wx2ea757d51abc1f47",
-					path: link
-				})
+				wx.navigateToMiniProgram({appId: "wx2ea757d51abc1f47", path: link})
 				break
 			}
 			default: {
 				wx.navigateTo({
-					url: link,
-					fail() {
-						wx.switchTab({
-							url: link
-						})
+					url: link, fail() {
+						wx.switchTab({url: link})
 					}
 				})
 			}
 		}
 	},
-
 	// swiper切换
 	changeSwiperIndex(e) {
 		this.setData({
 			current: e.detail.current
 		})
 	},
-
 	// 处理轮播点击事件
 	handleBannerTap(e) {
-		let {
-			link,
-			link_type,
-			id
-		} = e.currentTarget.dataset.item
-		bxPoint("new_homepage_banner_click", {
-			banner_id: id
-		}, false)
+		let {link, link_type, id} = e.currentTarget.dataset.item
+		bxPoint("new_homepage_banner_click", {banner_id: id}, false)
 		this.naviMiniProgram(link, link_type)
 	},
-
+	// 获取banner图片
 	getBanner() {
 		return new Promise((resolve) => {
-			let promises = [getFindBanner({
-				scene: 8
-			}), getFindBanner({
-				scene: 23
-			})]
+			let promises = [getFindBanner({scene: 8}), getFindBanner({scene: 23})]
 			Promise.all(promises).then((arys) => {
 				let [bannerList, textBannerList] = arys
-				if ($notNull(bannerList)) this.setData({
-					bannerList: bannerList
-				})
-				if ($notNull(textBannerList)) this.setData({
-					textBannerList: textBannerList.slice(0, 2)
-				})
+				if ($notNull(bannerList)) this.setData({bannerList: bannerList})
+				if ($notNull(textBannerList)) this.setData({textBannerList: textBannerList.slice(0, 2)})
 				resolve(bannerList)
 			})
 		})
 	},
-
-	run() {
-
-	},
-
 	// 用户授权取消
 	authCancelEvent() {
 		this.setData({
@@ -175,7 +176,74 @@ Page({
 			})
 		})
 	},
+	// 处理icon点击事件
+	onIconItemTap(e) {
+		let {item: {type, link_url, rank}} = e.currentTarget.dataset
+		if (rank <= 9) {
+			bxPoint("new_homepage_tab_button_click", {tab_tag: rank}, false)
+		} else {
+			bxPoint("new_homepage_content_button_click", {tab_tag: rank}, false)
+		}
+		switch (+type) {
+			case 1: {
+				// 花样百姓
+				wx.switchTab({
+					url: link_url,
+					fail() {
+						wx.navigateTo({url: link_url})
+					}
+				})
+				break
+			}
+			case 2: {
+				// 花样游学
+				wx.navigateToMiniProgram({appId: "wx2ea757d51abc1f47", path: link_url})
+				break
+			}
+			case 3: {
+				// H5链接
+				wx.navigateTo({
+					url: `/pages/pureWebview/pureWebview?link=${link_url}`
+				})
+				break
+			}
+			case 4: {
+				// 有赞商城
+				wx.navigateToMiniProgram({appId: "wx95fb6b5dbe8739b7", path: link_url})
+				break
+			}
+		}
+	},
+	// 查看更多最新活动
+	onNewsMoreTap() {
+		bxPoint("new_homepage_activity_more_click", {}, false)
+		wx.navigateTo({url: "/pages/activities/activities"})
+	},
+	// 打开最新活动
+	onNewsContentTap(e) {
+		let {item} = e.currentTarget.dataset
+		let link = ""
+		switch (request.baseUrl) {
+			case ROOT_URL.dev: {
+				link = 'https://dev.huayangbaixing.com'
+				break
+			}
+			case ROOT_URL.prd: {
+				link = 'https://huayang.baixing.com'
+				break
+			}
+		}
+		bxPoint("new_homepage_activity_click", {
+			activity_id: item.id,
+			activity_title: item.title,
+			activity_run_date: item.start_time
+		}, false)
 
+		link += `/#/home/detail/${item.id}`
+		wx.navigateTo({
+			url: `/pages/pureWebview/pureWebview?link=${link}`
+		})
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
@@ -206,6 +274,7 @@ Page({
 		}
 
 		this.run()
+		bxPoint("homepage_visit", {})
 	},
 
 	/**
@@ -249,7 +318,7 @@ Page({
 	 */
 	onShareAppMessage: function () {
 		return {
-			title: "在花样百姓，过积极、健康、时尚的品质生活。",
+			title: "在花样百姓，过积极、健康、时尚的品质生活",
 			path: `/pages/discovery/discovery?invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
 		}
 	},

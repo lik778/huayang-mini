@@ -1337,5 +1337,6 @@ export const preloadNetworkImg = (imgAry = []) => {
 			})
 		);
 	});
+	console.log(2121)
 	return Promise.all(promiseAry);
 };

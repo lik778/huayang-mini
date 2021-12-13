@@ -5,19 +5,12 @@
   background: #fff;
 }
 
-/* icons */
-.icons {
-  padding: 250rpx 0;
-  text-align: center;
-  background: #eeeeee;
-}
-
 /* banner */
 .swiper-box {
   display: flex;
   justify-content: center;
   height: 310rpx;
-  margin: 20rpx 0 40rpx;
+  margin: 20rpx 0 0rpx;
   position: relative;
 }
 
@@ -53,6 +46,143 @@
   background: #FF5544;
 }
 
+/* icons */
+.icons {
+  overflow: hidden;
+  padding: 40rpx 40rpx 0;
+}
+
+.floor {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40rpx;
+}
+
+.f2 {
+  padding: 0 22rpx;
+}
+
+.f-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 0;
+}
+
+.f-card {
+  width: 152rpx;
+  height: 120rpx;
+  padding: 20rpx 0 0 16rpx;
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.f1 .f-icon {
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 999rpx;
+}
+
+.f1 .f-title {
+  margin-top: 20rpx;
+  font: 32rpx/32rpx PingFangSC;
+}
+
+.f2 .f-icon {
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.f2 .f-title {
+  margin-top: 20rpx;
+  font: 28rpx/28rpx PingFangSC;
+}
+
+.f3 .f-title {
+  font: 28rpx/28rpx PingFangSC;
+}
+
+/* 花样头条 */
+.headlines-swiper-box {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 40rpx;
+}
+
+.headlines-item-box {
+  width: 670rpx;
+  height: 88rpx;
+}
+
+.headlines {
+  display: flex;
+  align-items: center;
+  padding: 12rpx 20rpx;
+  background: #F7F7F9;
+}
+
+.headline-logo {
+  width: 52rpx;
+  height: 56rpx;
+  font-size: 0;
+}
+
+.separate {
+  width: 2rpx;
+  height: 32rpx;
+  margin: 0 20rpx;
+  background: #DDDDDD;
+}
+
+.headline-text {
+  flex: 1;
+  font: 30rpx/30rpx PingFangSC;
+}
+
+/* 最新活动 */
+.news {
+  margin-bottom: 40rpx;
+  padding: 0 40rpx;
+}
+
+.news-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 88rpx;
+  font: 500 48rpx/48rpx PingFangSC;
+}
+
+.news-more {
+  font: 32rpx/32rpx PingFangSC;
+  color: rgba(0,0,0, 0.8);
+}
+
+.news-more::after {
+  content: "";
+  display: inline-block;
+  width: 14rpx;
+  height: 20rpx;
+  margin: 0 6rpx 0 14rpx;
+  font-size: 0;
+  background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639030949WbhIkj.jpg") no-repeat center;
+  background-size: contain;
+}
+
+.news-content {
+  white-space: nowrap;
+}
+
+.new-item {
+  display: inline-block;
+  width: 414rpx;
+  height: 206rpx;
+  margin-right: 16rpx;
+}
 
 /* 生活方式 */
 .life-style-title {

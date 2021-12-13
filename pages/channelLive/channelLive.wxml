@@ -65,6 +65,8 @@
         </view>
     </view>
 
+    <view class="contact-logo" wx:if="{{!didShowOfficialAccountComponent}}" bindtap="onContactLogoTap"></view>
+
     <official-account class="attach" bindload="officialLoad" binderror="officialError">关注</official-account>
 
     <!-- 授权弹窗 -->
