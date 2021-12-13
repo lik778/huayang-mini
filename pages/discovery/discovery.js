@@ -3,7 +3,6 @@ import { getActivityList, getFindBanner } from "../../api/course/index"
 import { GLOBAL_KEY, ROOT_URL } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import { getHomeHeadLines, getHomeIcons } from "../../api/live/index"
-import dayjs from "dayjs"
 import request from "../../lib/request"
 
 Page({
