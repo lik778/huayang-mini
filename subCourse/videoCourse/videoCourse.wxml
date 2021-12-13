@@ -104,7 +104,7 @@
   </view>
   <!-- 添加班主任 -->
   <view class="add-teacher" wx:if='{{noPayForCourse}}' bindtap="toAddteacher">
-    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599472362RzdPlv.jpg"></image>
+    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639365387qfwMOD.jpg"></image>
   </view>
   <!-- 猜你喜欢 -->
   <view class="guess-like" wx:if='{{videoCourseData.recommend_series||videoCourseData.recommend_traincamp}}'>

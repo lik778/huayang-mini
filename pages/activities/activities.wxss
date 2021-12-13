@@ -1,0 +1,45 @@
+@import "../../assets/css/common.wxss";
+.activities {
+    padding: 20rpx 40rpx 0;
+}
+
+.activity-item {
+    margin-bottom: 60rpx;
+}
+
+.activity-item:active {
+    opacity: 0.9;
+}
+
+.cover {
+    width: 670rpx;
+    height: 336rpx;
+    font-size: 0;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 18rpx;
+}
+
+.title {
+    width: 496rpx;
+    height: 88rpx;
+    font: 32rpx/44rpx PingFangSC;
+}
+
+.separate {
+    width: 2rpx;
+    height: 88rpx;
+    background: #DDDDDD;
+}
+
+.date {
+    width: 136rpx;
+    height: 88rpx;
+    font: 28rpx/44rpx PingFangSC;
+    color: rgba(0,0,0, 0.6);
+    text-align: right;
+}

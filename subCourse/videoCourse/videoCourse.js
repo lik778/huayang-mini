@@ -730,23 +730,11 @@ Page({
 
   // 加班主任按钮
   toAddteacher() {
-    let link = this.data.articleLink
-    // 2021-01-14上线
-    let paramsData = {
-      series_id: this.data.videoCourseId
-    }
-    if (this.data.from_co_channel) {
-      paramsData.co_channel_tag = 'co_lndx'
-    }
-    this.setData({
-      showContact: true
-    })
-
     bxPoint("series_consult_chat_click", paramsData, false)
-
-    // wx.navigateTo({
-    //   url: `/pages/webViewCommon/webViewCommon?link=${link}`,
-    // })
+    wx.openCustomerServiceChat({
+      extInfo: {url: 'https://work.weixin.qq.com/kfid/kfc85fe86a0e7ad8fa3'},
+      corpId: 'ww8d4cae43fb34dc92'
+    })
   },
 
   // 分享好友拼团

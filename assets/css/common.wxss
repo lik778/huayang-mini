@@ -38,6 +38,22 @@
 }
 
 
+/* 联系客服 */
+.contact-logo {
+    position: fixed;
+    bottom: 68rpx;
+    right: 0;
+    width: 136rpx;
+    height: 136rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639363293NVVxEy.jpg") no-repeat center;
+    background-size: cover;
+}
+
+.contact-logo:active {
+    opacity: 0.8;
+}
+
+
 
 
 
@@ -135,8 +151,6 @@
 
 
 /* 按钮忽大忽小 */
-
-
 @keyframes shark {
     0% {
         transform: scale(1);

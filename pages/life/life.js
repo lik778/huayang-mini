@@ -158,7 +158,7 @@ Page({
   naviMiniProgram(link, linkType) {
     switch (linkType) {
       case "youzan": {
-        // 有赞（花样心选）
+        // 有赞商城
         wx.navigateToMiniProgram({appId: "wx95fb6b5dbe8739b7", path: link})
         break
       }

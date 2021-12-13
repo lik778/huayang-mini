@@ -34,7 +34,10 @@
     "pages/mediaList/mediaList",
     "pages/life/life",
     "pages/channelLive/channelLive",
-    "pages/channelReview/channelReview"
+    "pages/channelReview/channelReview",
+    "pages/activities/activities",
+    "pages/pureWebview/pureWebview",
+    "pages/shopSubject/shopSubject"
   ],
   "requiredBackgroundModes": [
     "audio",
@@ -161,15 +164,6 @@
     "custom": true,
     "list": [{
         "pagePath": "pages/discovery/discovery"
-      },
-      {
-        "pagePath": "pages/life/life"
-      },
-      {
-        "pagePath": "pages/competition/competition"
-      },
-      {
-        "pagePath": "pages/practice/practice"
       },
       {
         "pagePath": "pages/userCenter/userCenter"
