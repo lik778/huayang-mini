@@ -79,7 +79,11 @@ Page({
 				list
 			}) => {
 				list = list || []
-				list = list.map(n => ({...n, showDate: `${dayjs(n.start_time).month()+1}月${dayjs(n.start_time).date()}日`}))
+				list = list.map(n => ({
+					...n,
+					showDate: `${dayjs(n.start_time).month()+1}月${dayjs(n.start_time).date()}日`,
+					didToday: dayjs().format("YYYY-MM-DD") === n.start_time
+				}))
 				this.setData({
 					activityList: list,
 					movableAreaWidth: list.length * 414 + (list.length - 1) * 16

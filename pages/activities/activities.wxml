@@ -12,5 +12,7 @@
         </view>
     </view>
 
+    <view class="no-more" wx:if="{{!hasMore}}">到底啦~</view>
+
     <view class="contact-logo" bindtap="onContactLogoTap"></view>
 </view>

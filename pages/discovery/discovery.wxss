@@ -95,12 +95,12 @@
 
 .f1 .f-title.live::after {
   position: absolute;
-  top: 5rpx;
+  top: 3rpx;
   right: -30rpx;
   content: "";
   display: inline-block;
-  width: 21rpx;
-  height: 21rpx;
+  width: 26rpx;
+  height: 26rpx;
   background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639396067OYdYSX.jpg") no-repeat center;
   background-size: contain;
 }
@@ -111,7 +111,7 @@
 }
 
 .f2 .f-title {
-  margin-top: 20rpx;
+  margin-top: 4rpx;
   font: 28rpx/28rpx PingFangSC;
 }
 
@@ -222,8 +222,12 @@
   left: 0;
   padding: 10rpx 12rpx;
   font: 26rpx/26rpx PingFangSC;
-  background: linear-gradient(225deg, #FF8A67 0%, #FF5544 100%);
   color: white;
+  background: rgba(0,0,0, 0.7);
+}
+
+.new-date.today {
+  background: linear-gradient(225deg, #FF8A67 0%, #FF5544 100%);
 }
 
 .new-title-wrap {

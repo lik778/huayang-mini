@@ -15,4 +15,6 @@
             <view class="course-studynum">共{{item.kechengSeries.visit_count}}人学习</view>
         </view>
     </view>
+
+    <view class="contact-logo" bindtap="onContactLogoTap"></view>
 </view>

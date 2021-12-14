@@ -10,7 +10,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    list: []
+    offset: 0,
+    limit: 10,
+    list: [],
+    hasMore: true
   },
 
   /**
@@ -59,7 +62,9 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    if (!this.data.hasMore) return
+    this.setData({offset: this.data.list.length})
+    this.getList()
   },
 
   /**
@@ -77,8 +82,11 @@ Page({
   },
   // 请求活动列表
   getList() {
-    getActivityList({offset: 0, limit: 10, platform: 1})
-      .then(({count, list}) => {
+    getActivityList({offset: this.data.offset, limit: this.data.limit, platform: 1, status: 1})
+      .then(({list}) => {
+        if (list.length < this.data.limit) {
+          this.setData({hasMore: false})
+        }
         list = list || []
         list = list.map(n => ({
           ...n,
@@ -86,7 +94,8 @@ Page({
           month: dayjs(n.start_time).month() + 1,
           date: dayjs(n.start_time).date(),
         }))
-        this.setData({list})
+        let oldList = this.data.list.slice()
+        this.setData({list: [...oldList, ...list]})
       })
   },
   goToPureWebview(e) {

@@ -1,6 +1,6 @@
 @import "../../assets/css/common.wxss";
 .activities {
-    padding: 20rpx 40rpx 0;
+    padding: 20rpx 40rpx 40rpx;
 }
 
 .activity-item {
@@ -42,4 +42,10 @@
     font: 28rpx/44rpx PingFangSC;
     color: rgba(0,0,0, 0.6);
     text-align: right;
+}
+
+.no-more {
+    font: 30rpx/30rpx PingFangSC;
+    text-align: center;
+    color: rgba(0,0,0, 0.7);
 }
