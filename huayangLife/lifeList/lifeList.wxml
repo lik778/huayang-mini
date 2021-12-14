@@ -1,0 +1,16 @@
+<!--huayangLife/lifeList/lifeList.wxml-->
+<view class="life-list-container">
+  <view class="type-bar">
+    <van-tabs border='{{false}}' active="{{ active }}" line-height='0' ellipsis="{{false}}" bind:click='changeTab'>
+      <van-tab class="tyoe-bar-item" title="{{item}}" wx:for="{{typeBarList}}" wx:key='index'></van-tab>
+    </van-tabs>
+  </view>
+  <view class="waterfall-list">
+    <waterfall refresh="{{refresh}}" bind:clickItem='toDetail' wx:if='{{waterfallList!==null}}' list="{{waterfallList}}"></waterfall>
+  </view>
+
+  <!-- 到底啦 -->
+  <view class="is-bottom-module" wx:if="{{isBottom}}">
+    <image class="is-bottom" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1638864447cJIUMH.jpg"></image>
+  </view>
+</view>

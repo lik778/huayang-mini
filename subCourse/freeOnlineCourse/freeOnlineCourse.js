@@ -63,5 +63,10 @@ Page({
             console.log(err);
         })
     },
-
+    onContactLogoTap() {
+        wx.openCustomerServiceChat({
+            extInfo: {url: 'https://work.weixin.qq.com/kfid/kfc85fe86a0e7ad8fa3'},
+            corpId: 'ww8d4cae43fb34dc92'
+        })
+    }
 })

@@ -1,3 +1,4 @@
+@import "/assets/css/common.wxss";
 .coursebox {
     display: flex;
     padding: 0 30rpx;

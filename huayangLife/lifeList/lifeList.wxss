@@ -1,0 +1,89 @@
+/* huayangLife/lifeList/lifeList.wxss */
+.life-list-container {
+  padding-bottom: 80rpx;
+}
+
+.type-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100vw - 20rpx);
+  z-index: 999;
+  background: #fff;
+  padding-top: 20rpx;
+  padding-bottom: 40rpx;
+}
+
+.waterfall-list {
+  padding-top: 120rpx;
+}
+
+.van-sticky-wrap {
+  height: 64rpx;
+}
+
+.life-list-container .van-tabs__scroll {
+  height: 64rpx;
+}
+
+.life-list-container .van-tabs .van-tabs__wrap {
+  height: 64rpx;
+}
+
+.life-list-container .van-tabs__line {
+  display: none;
+}
+
+.van-tabs__nav {
+  padding-left: 20rpx;
+}
+
+.life-list-container .van-tab {
+
+  margin-right: 12rpx;
+}
+
+.life-list-container .van-tab--complete {
+  padding: 0 !important;
+}
+
+.life-list-container .van-tabs .van-tabs__nav--complete {
+  padding-left: 20rpx;
+}
+
+.life-list-container .van-tab>view {
+  width: fit-content;
+  height: 60rpx;
+  padding: 0 24rpx;
+  line-height: 60rpx;
+  background: #F2F2F4;
+  border-radius: 8px 0px 8px 0px;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  border: 2rpx solid #F2F2F4;
+  box-sizing: border-box;
+  color: #000000;
+}
+
+.life-list-container .van-tab--active>view {
+  border: 2rpx solid #FF5544;
+  box-sizing: border-box;
+  color: #FF5544 !important;
+  border-radius: 16rpx 0px 16rpx 0px;
+  background: #fff;
+}
+
+
+/* 已经到底啦 */
+.is-bottom-module {
+  display: flex;
+  justify-content: center;
+  padding-top: 40rpx;
+}
+
+.is-bottom {
+  width: 350rpx;
+  height: 30rpx;
+  vertical-align: bottom;
+}

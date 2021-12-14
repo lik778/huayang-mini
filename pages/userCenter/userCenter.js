@@ -540,8 +540,9 @@ Page({
   // 联系客服
   callPhone(e) {
     bxPoint("mine_contact", {}, false)
-    wx.makePhoneCall({
-      phoneNumber: e.currentTarget.dataset.mobile
+    wx.openCustomerServiceChat({
+      extInfo: {url: 'https://work.weixin.qq.com/kfid/kfc16674b49d8f7dc5f'},
+      corpId: 'ww8d4cae43fb34dc92'
     })
   },
   // 查询用户合伙人信息
@@ -737,7 +738,7 @@ Page({
   onShow: function () {
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({
-        selected: 4
+        selected: 1
       })
     }
     this.calcUserCreatedTime()
