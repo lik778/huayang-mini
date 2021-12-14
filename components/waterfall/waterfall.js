@@ -73,15 +73,16 @@ Component({
         let rightHeight = Number(this.data.rightListHeight)
         let leftList = this.data.leftList.concat([])
         let rightList = this.data.rightList.concat([])
+        let commonHeight = parseInt(((JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).windowWidth) / 375) * 89) - 2
         res.map(item => {
           item.view_count = item.view_count > 9999 ? (Math.floor(item.view_count / 1000) / 10) + '万' : item.view_count
           if (leftHeight <= rightHeight) {
             leftList.push(item)
-            leftHeight = leftHeight + 89 + Number(item.maxHeight)
+            leftHeight = leftHeight + commonHeight + Number(item.maxHeight)
             // leftHeight = leftHeight + Number(item.maxHeight)
           } else {
             rightList.push(item)
-            rightHeight = rightHeight + 89 + Number(item.maxHeight)
+            rightHeight = rightHeight + commonHeight + Number(item.maxHeight)
             // rightHeight = rightHeight + Number(item.maxHeight)
           }
           this.setData({

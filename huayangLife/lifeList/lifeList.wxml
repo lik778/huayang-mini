@@ -1,7 +1,7 @@
 <!--huayangLife/lifeList/lifeList.wxml-->
 <view class="life-list-container">
   <view class="type-bar">
-    <van-tabs active="{{ active }}" line-height='0' ellipsis="{{false}}" bind:click='changeTab'>
+    <van-tabs active="{{ active }}" line-height='0' ellipsis="{{false}}" bind:click='changeTab' style='background:red'>
       <van-tab class="tyoe-bar-item" title="{{item}}" wx:for="{{typeBarList}}" wx:key='index'></van-tab>
     </van-tabs>
   </view>

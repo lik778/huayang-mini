@@ -7,7 +7,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: calc(100vw - 20rpx);
   z-index: 999;
   background: #fff;
   padding-top: 20rpx;
@@ -71,6 +71,7 @@
   box-sizing: border-box;
   color: #FF5544 !important;
   border-radius: 16rpx 0px 16rpx 0px;
+  background: #fff;
 }
 
 
