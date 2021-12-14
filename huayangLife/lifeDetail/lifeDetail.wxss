@@ -159,7 +159,7 @@
 
 .bottom-line-right image {
   width: 32rpx;
-  height: 32rpx;
+  height: 34rpx;
   vertical-align: bottom;
   margin-right: 8rpx;
 }
