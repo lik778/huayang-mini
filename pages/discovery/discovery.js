@@ -12,6 +12,7 @@ import {
 } from "../../api/huayangLife/index"
 import {
 	GLOBAL_KEY,
+	ROOT_URL
 } from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
 import {
