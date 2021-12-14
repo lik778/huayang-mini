@@ -10,7 +10,7 @@
       </block>
 
     </swiper>
-    <view class="swiper-dot-list">
+    <view class="swiper-dot-list" wx:if="{{detailInfo.type==1}}">
       <view class="swiper-dot-box {{active===index?'swiper-dot-box-active':''}}" wx:for="{{list}}" wx:key="index"></view>
     </view>
     <view class="video" wx:if="{{detailInfo.type==2}}">

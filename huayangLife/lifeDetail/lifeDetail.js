@@ -85,6 +85,10 @@ Page({
           list,
           detailInfo: data
         }, () => {
+          /* 加载完毕自动播放视频 */
+          setTimeout(() => {
+            this.playVideo()
+          }, 1000)
           bxPoint('life_style_detail_pageview', {
             tag_id: Number(this.data.detailInfo.class) + 1,
             life_id: this.data.detailInfo.id,
@@ -92,8 +96,6 @@ Page({
           })
         })
       })
-      // console.log(list)
-
     })
   },
 
