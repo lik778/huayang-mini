@@ -214,10 +214,10 @@ Page({
 
 	/* 获取花样生活瀑布流列表 */
 	getWaterfallList() {
-		wx.showLoading({
-			title: '加载中',
-			mask: true
-		})
+		// wx.showLoading({
+		// 	title: '加载中',
+		// 	mask: true
+		// })
 		queryWaterfallList(this.data.waterfallPagination).then(({
 			data
 		}) => {
