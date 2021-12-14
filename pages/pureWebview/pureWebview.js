@@ -56,4 +56,10 @@ Page({
   onReachBottom: function () {
 
   },
+  onShareAppMessage: function () {
+    return {
+      title: "50+线下活动，让你的退休生活更精彩",
+      path: `/pages/pureWebview/pureWebview?link=${this.data.link}`
+    }
+  },
 })
