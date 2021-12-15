@@ -1,0 +1,106 @@
+<!--teacherModule/index/index.wxml-->
+<view class="teacher-index">
+
+  <!-- 头部大banner -->
+  <view class="banner">
+    <swiper duration="500" circular class="swiper" bindchange="switchBanner">
+      <block wx:for="{{bannerList}}" wx:key="index">
+        <swiper-item class="swiper-item">
+          <view class="swiper-image">{{item}}</view>
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="swiper-indicator">
+      {{currentBannerIndex+1}}/{{bannerList.length}}
+    </view>
+  </view>
+
+  <!-- 老师信息 -->
+  <view class="teacher-info">
+    <view class="teacher-name-line">
+      <view class="teacher-name-line-left">
+        <text>方圆老师</text>
+        <image src="{{girlIcon}}" wx:if="{{false}}"></image>
+        <image src="{{boyIcon}}" wx:else></image>
+      </view>
+      <view class="teacher-name-line-right">
+        <image src="{{shareIcon}}"></image>
+        <text>分享</text>
+        <button open-type="share"></button>
+      </view>
+    </view>
+    <view class="teacher-sign">
+      <view class="teacher-sign-item" wx:for="{{signList}}" wx:key="index">{{item}}</view>
+    </view>
+    <view class="teacher-desc">让大家觉得自己真得走在变美的道路上，才是我最大的收获和快乐！</view>
+    <view class="teacher-other-info">
+      <view class="teacher-other-info-left">
+        <text>上海 ｜ </text>
+        <text class="teacher-other-info-left-special">曾任</text>
+        <text> 小学老师</text>
+      </view>
+      <view class="teacher-other-info-right">
+        <view class="teacher-other-info-right-visit">
+          <image src="{{visitIcon}}"></image>
+          <text>5617</text>
+        </view>
+        <view class="teacher-other-info-right-like">
+          <image src="{{likeIcon}}" wx:if="{{false}}"></image>
+          <image src="{{unLikeIcon}}" wx:else></image>
+          <text>369</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 主体 -->
+  <view class="main">
+    <!-- 荣誉 -->
+    <view class="honor">
+      <view class="honor-title common-title">
+        <view class="honor-title-left common-title-left">我的荣誉</view>
+        <view class="honor-title-right common-title-right">
+          <text>查看全部</text>
+          <image src="{{rightArrowIcon}}"></image>
+        </view>
+      </view>
+      <view class="honor-list">
+        <view class="honor-item">
+          <text>勋章1</text>
+          <image src=""></image>
+        </view>
+        <view class="honor-item">
+          <text>勋章1</text>
+          <image src="{{rightArrowIcon}}"></image>
+        </view>
+      </view>
+    </view>
+
+    <!-- 认证 -->
+    <view class="authentication">
+      <view class="authentication-title common-title">
+        <view class="authentication-title-left common-title-left">我的花样认证</view>
+        <view class="authentication-title-right common-title-right">
+          <text>查看全部</text>
+          <image src="{{rightArrowIcon}}"></image>
+        </view>
+      </view>
+      <view class="authentication-list">
+        <view class="authentication-item">
+          <image src="{{rightArrowIcon}}"></image>
+          <text>勋章1</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 动态 -->
+    <view class="moment"></view>
+
+    <!-- 留言板 -->
+    <view class="message"></view>
+
+    <!-- 商品推荐 -->
+    <view class="commodity-recommend"></view>
+  </view>
+
+</view>

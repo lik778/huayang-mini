@@ -151,6 +151,17 @@
         "lifeDetail/lifeDetail",
         "lifeList/lifeList"
       ]
+    }, {
+      "root": "teacherModule",
+      "pages": [
+        "index/index",
+        "poster/poster",
+        "honorList/honorList",
+        "momentList/momentList",
+        "momentPublish/momentPublish",
+        "momentDetail/momentDetail",
+        "messageList/messageList"
+      ]
     }
   ],
   "window": {
