@@ -54,12 +54,12 @@
 .item-title {
   margin-bottom: 20rpx;
   /* margin: 20rpx 0; */
-  overflow: hidden;
+  /* overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   overflow: hidden;
-  -webkit-box-orient: vertical;
+  -webkit-box-orient: vertical; */
 }
 
 .item-title text {
@@ -73,6 +73,7 @@
   flex-wrap: wrap;
   height: 84rpx;
   align-items: center;
+  overflow: hidden;
 }
 
 
