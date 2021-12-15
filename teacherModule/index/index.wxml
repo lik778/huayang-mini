@@ -94,10 +94,35 @@
     </view>
 
     <!-- 动态 -->
-    <view class="moment"></view>
+    <view class="moment">
+      <view class="moment-title common-title">
+        <view class="moment-title-left common-title-left">我的动态</view>
+        <view class="moment-title-right common-title-right">
+          <text>查看全部</text>
+          <image src="{{rightArrowIcon}}"></image>
+        </view>
+      </view>
+      <view class="moment-list">
+        <view class="moment-item" wx:for="{{momentList}}" wx:key='index'>
+          <image mode='aspectFill' wx:if='{{item.type===1}}' src="{{item.url}}"></image>
+          <view wx:else="" class="moment-item-video">
+            <video src="{{item.url}}" controls></video>
+            <image src="{{playIcon}}"></image>
+          </view>
+        </view>
+      </view>
+    </view>
 
     <!-- 留言板 -->
-    <view class="message"></view>
+    <view class="message">
+      <view class="message-title common-title">
+        <view class="message-title-left common-title-left">留言板 <text>32</text></view>
+        <view class="message-title-right common-title-right">
+          <text>查看全部</text>
+          <image src="{{rightArrowIcon}}"></image>
+        </view>
+      </view>
+    </view>
 
     <!-- 商品推荐 -->
     <view class="commodity-recommend"></view>

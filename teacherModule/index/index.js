@@ -16,6 +16,25 @@ Page({
     bannerList: [1, 2, 3],
     currentBannerIndex: 0,
     signList: ['测试', '爱情'],
+    momentList: [{
+      type: 1,
+      url: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg'
+    }, {
+      type: 1,
+      url: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg'
+    }, {
+      type: 1,
+      url: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg'
+    }, {
+      type: 1,
+      url: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg'
+    }, {
+      type: 1,
+      url: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg'
+    }, {
+      type: 2,
+      url: 'http://video.huayangbaixing.com/sv/11e82bfb-17da34e60ae/11e82bfb-17da34e60ae.mp4'
+    }, ]
   },
 
   /* 滑动banner */

@@ -255,6 +255,7 @@
   font-weight: 400;
   color: #000000;
   line-height: 28rpx;
+  margin-right: 20rpx;
 }
 
 .authentication-item image {
@@ -263,4 +264,35 @@
   vertical-align: bottom;
   border-radius: 50%;
   margin-bottom: 20rpx;
+}
+
+/* 动态 */
+.moment {
+  padding-top: 80rpx;
+}
+
+.moment-list {
+  padding-top: 40rpx;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.moment-item {
+  margin-right: 16rpx;
+  margin-bottom: 16rpx;
+
+  /* display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; */
+}
+
+.moment-item:nth-child(3) {
+  margin-right: 0;
+}
+
+.moment-item image {
+  width: 212rpx;
+  height: 212rpx;
+  vertical-align: bottom;
 }
