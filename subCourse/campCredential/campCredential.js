@@ -37,7 +37,7 @@ Page({
     hostBg: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606447725FvEaJd.jpg",
     LogoList: [],
     isRowStyle: false,
-    sevenActivityCampId: 16, //2021-12-15 7天私域快闪群活动训练营ID
+    sevenActivityCampId: 17, //2021-12-15 7天私域快闪群活动训练营ID
   },
 
   // 返回
