@@ -66,6 +66,7 @@ Component({
         wx.hideLoading()
       }
       list.map(item => {
+        // item.title = item.title.substring(0, 18)
         item.url = item.cover_url
       })
       preloadNetworkImg(list).then(res => {
