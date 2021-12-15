@@ -1,9 +1,22 @@
 // subCourse/campCredential/campCredential.js
-import { getLocalStorage, isIphoneXRSMax } from "../../utils/util"
-import { drawFont, drawImage, drawImageAuto, measureTextWidth, } from "../../utils/canvas"
-import { ErrorLevel, GLOBAL_KEY } from "../../lib/config"
+import {
+  getLocalStorage,
+  isIphoneXRSMax
+} from "../../utils/util"
+import {
+  drawFont,
+  drawImage,
+  drawImageAuto,
+  measureTextWidth,
+} from "../../utils/canvas"
+import {
+  ErrorLevel,
+  GLOBAL_KEY
+} from "../../lib/config"
 import bxPoint from "../../utils/bxPoint"
-import { collectError } from "../../api/auth/index"
+import {
+  collectError
+} from "../../api/auth/index"
 
 Page({
 
@@ -23,7 +36,8 @@ Page({
     Nowdate: '',
     hostBg: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606447725FvEaJd.jpg",
     LogoList: [],
-    isRowStyle: false
+    isRowStyle: false,
+    sevenActivityCampId: 16, //2021-12-15 7天私域快闪群活动训练营ID
   },
 
   // 返回
@@ -115,29 +129,30 @@ Page({
     ctx.font = 'normal 12px PingFangSC-Regular, PingFang SC'
     let campNameX = (286 - measureTextWidth(ctx, `《${campName}》`)) / 2
     ctx.scale(3, 3)
-    drawImage(ctx, this.data.hostBg, 0, 0, 286, 510).then(() => {
-      drawImageAuto(ctx, this.data.LogoList[0], this.data.LogoList[1]).then((res1) => {
+    drawImage(ctx, this.data.hostBg, 0, 0, 286, 510).then(async () => {
+      if (this.data.campData.id !== this.data.sevenActivityCampId) {
+        let res1 = await drawImageAuto(ctx, this.data.LogoList[0], this.data.LogoList[1])
         this.setData({
           isRowStyle: res1
         })
-        drawFont(ctx, String(userName), '#0B0B0B', 'bold', 'SourceHanSerifCN-Bold, SourceHanSerifCN', 22, userNameX, 177)
-        drawFont(ctx, `《${campName}》`, '#730807', 'normal', 'PingFangSC-Regular, PingFang SC', 12, campNameX, 237)
-        drawFont(ctx, this.data.Nowdate, '#000000', 'normal', 'PingFangSC-Light, PingFang SC', 10, 117, 342)
-        ctx.draw(false, () => {
-          wx.canvasToTempFilePath({
-            canvasId: 'canvas',
-            success: (res) => {
-              let tempFilePath = res.tempFilePath;
-              wx.hideLoading()
-              this.setData({
-                canvasSrc: tempFilePath
-              })
-            },
-            fail: function (res) {
-              console.log(res);
-            }
-          }, this);
-        })
+      }
+      drawFont(ctx, String(userName), '#0B0B0B', 'bold', 'SourceHanSerifCN-Bold, SourceHanSerifCN', 22, userNameX, 177)
+      drawFont(ctx, `《${campName}》`, '#730807', 'normal', 'PingFangSC-Regular, PingFang SC', 12, campNameX, 237)
+      drawFont(ctx, this.data.Nowdate, '#000000', 'normal', 'PingFangSC-Light, PingFang SC', 10, 117, 342)
+      ctx.draw(false, () => {
+        wx.canvasToTempFilePath({
+          canvasId: 'canvas',
+          success: (res) => {
+            let tempFilePath = res.tempFilePath;
+            wx.hideLoading()
+            this.setData({
+              canvasSrc: tempFilePath
+            })
+          },
+          fail: function (res) {
+            console.log(res);
+          }
+        }, this);
       })
     })
   },
@@ -148,7 +163,7 @@ Page({
   onLoad: function (options) {
     let logoList = ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606721434GSUkFm.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606721430eIijle.jpg']
     let campData = JSON.parse(options.campData)
-    campData.name=campData.name.length > 12 ? campData.name.slice(0, 12) : campData.name
+    campData.name = campData.name.length > 12 ? campData.name.slice(0, 12) : campData.name
     let userName = options.userName.length > 6 ? options.userName.slice(0, 6) : options.userName
     let logoData = options.logo === '' ? logoList : options.logo.split(",")
     let date = new Date();
@@ -168,7 +183,8 @@ Page({
       campData,
       userName,
       Nowdate,
-      LogoList: logoData
+      LogoList: logoData,
+      hostBg: campData.id === this.data.sevenActivityCampId ? 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639551039psUfBH.jpg' : "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606447725FvEaJd.jpg"
     })
 
     this.drawCredential()
