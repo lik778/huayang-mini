@@ -73,7 +73,8 @@ Page({
 				offset: 0,
 				limit: 5,
 				platform: 1,
-				homepage_show: 1
+				homepage_show: 1,
+				status: 1
 			})
 			.then(({
 				list

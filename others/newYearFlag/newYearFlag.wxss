@@ -1,0 +1,126 @@
+@import "/assets/css/common.wxss";
+
+.new-year-flag {
+    overflow: hidden;
+    padding: 0 29rpx;
+    font-size: 0;
+}
+
+.bg {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: inherit;
+    z-index: -1;
+}
+
+.pic-01 {
+    position: relative;
+    width: 692rpx;
+    padding-bottom: 290rpx;
+    margin: 100rpx 0 56rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639539841SVIGAS.jpg") no-repeat center;
+    background-size: contain;
+}
+
+.start-time {
+    position: absolute;
+    top: 214rpx;
+    width: inherit;
+    text-align: center;
+    font: 28rpx/64rpx PingFangSC;
+    color: white;
+}
+
+.pic-02 {
+    width: 626rpx;
+    height: 46rpx;
+    margin: 0 auto 30rpx;
+}
+
+.layer-01 {
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639539942lmvfXY.jpg") no-repeat center;
+    background-size: cover;
+}
+
+.layer-02 {
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639540022ILuxyb.jpg") no-repeat center;
+    background-size: cover;
+}
+
+.flag {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    height: 96rpx;
+    padding: 26rpx 38rpx;
+    border: 4rpx solid #BC0F17;
+    box-sizing: border-box;
+    background: white;
+}
+
+.prefix {
+    font: 500 32rpx/44rpx PingFangSC;
+    color: #AD1219;
+}
+
+input.flag-input {
+    flex: 1;
+    font: 32rpx/44rpx PingFangSC;
+}
+
+/* flags展示 */
+.history-flags {
+    overflow: hidden;
+    height: 140rpx;
+    padding: 0 26rpx;
+    margin: 30rpx 0 60rpx;
+}
+
+.history-flag-content {
+}
+
+.history-flag-content > text {
+    display: block;
+    font: 26rpx/36rpx PingFangSC;
+}
+
+/* 图片上传 */
+.upload-layer {
+    overflow: hidden;
+    position: relative;
+    height: 248rpx;
+}
+
+.pic-03 {
+    width: 644rpx;
+    height: 220rpx;
+    margin: 14rpx 24rpx 0;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639560249PIuHNw.jpg") no-repeat center;
+    background-size: contain;
+}
+
+.pic-04 {
+    position: absolute;
+    top: 0;
+    left: 254rpx;
+    width: 168rpx;
+    height: 248rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639560547lJeFll.jpg") no-repeat center;
+    background-size: contain;
+}
+
+/* 按钮 */
+.btn {
+    /*position: fixed;*/
+    /*bottom: 104rpx;*/
+    margin: 50rpx 0 38rpx;
+    width: 692rpx;
+    height: 100rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639560912eyVRJP.jpg") no-repeat center;
+    background-size: contain;
+
+}
