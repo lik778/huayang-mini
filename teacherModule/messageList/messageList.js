@@ -5,7 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    likeIcon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639538156QZXmPX.jpg",
+    unLikeIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639538135qpLqha.jpg',
   },
 
   /**

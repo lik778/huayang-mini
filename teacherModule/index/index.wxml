@@ -104,9 +104,9 @@
       </view>
       <view class="moment-list">
         <view class="moment-item" wx:for="{{momentList}}" wx:key='index'>
-          <image mode='aspectFill' wx:if='{{item.type===1}}' src="{{item.url}}"></image>
+          <image class="moment-image" mode='aspectFill' wx:if='{{item.type===1}}' src="{{item.url}}"></image>
           <view wx:else="" class="moment-item-video">
-            <video src="{{item.url}}" controls></video>
+            <video src="{{item.url}}" show-center-play-btn='{{false}}' controls='{{false}}'></video>
             <image src="{{playIcon}}"></image>
           </view>
         </view>
@@ -117,15 +117,62 @@
     <view class="message">
       <view class="message-title common-title">
         <view class="message-title-left common-title-left">留言板 <text>32</text></view>
-        <view class="message-title-right common-title-right">
+        <view class="message-title-right common-title-right" bindtap="toMessageList">
           <text>查看全部</text>
           <image src="{{rightArrowIcon}}"></image>
+        </view>
+      </view>
+      <view class="message-list">
+        <view class="message-item">
+          <view class="message-item-left">
+            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+          </view>
+          <view class="message-item-mid">
+            <view class="message-item-mid-top">小花花</view>
+            <view class="message-item-mid-bottom">方圆老师真是太棒了，热情积极，超有亲和力，好想参加有她的活动啊！</view>
+          </view>
+          <view class="message-item-right">
+            <image src="{{likeIcon}}" wx:if='{{false}}'></image>
+            <image src="{{unLikeIcon}}" wx:else></image>
+            <text>389</text>
+          </view>
+        </view>
+        <view class="message-item">
+          <view class="message-item-left">
+            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+          </view>
+          <view class="message-item-mid">
+            <view class="message-item-mid-top">小花花</view>
+            <view class="message-item-mid-bottom">方圆老师真是太棒了，热情积极，超有亲和力，好想参加有她的活动啊！</view>
+          </view>
+          <view class="message-item-right">
+            <image src="{{likeIcon}}" wx:if='{{true}}'></image>
+            <image src="{{unLikeIcon}}" wx:else></image>
+            <text>389</text>
+          </view>
+        </view>
+      </view>
+      <view class="message-publish">
+        <view class="message-publish-left">
+          <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+
+        </view>
+        <view class="message-publish-right">
+          <textarea placeholder="请输入您的留言"></textarea>
+          <view class="message-publish-button">留言</view>
         </view>
       </view>
     </view>
 
     <!-- 商品推荐 -->
-    <view class="commodity-recommend"></view>
+    <view class="commodity-recommend">
+      <view class="commodity-title common-title">
+        <view class="message-title-left common-title-left">一起花样好生活</view>
+      </view>
+      <view class="commodity-image">
+        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+      </view>
+    </view>
   </view>
 
 </view>

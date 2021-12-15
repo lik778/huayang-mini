@@ -45,6 +45,13 @@ Page({
     })
   },
 
+  /* 前往留言板列表 */
+  toMessageList() {
+    wx.navigateTo({
+      url: '/teacherModule/messageList/messageList',
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
