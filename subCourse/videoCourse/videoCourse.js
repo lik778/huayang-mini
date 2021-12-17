@@ -732,7 +732,7 @@ Page({
   toAddteacher() {
     bxPoint("series_consult_chat_click", paramsData, false)
     wx.openCustomerServiceChat({
-      extInfo: {url: 'https://work.weixin.qq.com/kfid/kfc85fe86a0e7ad8fa3'},
+      extInfo: {url: 'https://work.weixin.qq.com/kfid/kfc16674b49d8f7dc5f'},
       corpId: 'ww8d4cae43fb34dc92'
     })
   },
