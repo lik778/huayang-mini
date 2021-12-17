@@ -5,7 +5,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    uploadIcon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639626899gtUcEr.jpg",
+    deleteIcon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639705558KUnCxn.jpg",
+    previewImageList: ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639133818MuTmJA.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639133818MuTmJA.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639133818MuTmJA.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639133818MuTmJA.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639133818MuTmJA.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg', ],
   },
 
   /**

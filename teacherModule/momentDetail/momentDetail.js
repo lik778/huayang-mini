@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    playIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639538242RdmCxq.jpg',
   },
 
   /**

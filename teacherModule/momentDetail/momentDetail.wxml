@@ -1,2 +1,27 @@
 <!--teacherModule/momentDetail/momentDetail.wxml-->
-<text>teacherModule/momentDetail/momentDetail.wxml</text>
+<view class="moment-detail-container">
+  <view class="moment-detail">
+    <view class="moment-detail-left">
+      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+    </view>
+    <view class="moment-detail-right">
+      <view class="moment-detail-title">三个批发商</view>
+      <view class="moment-detail-desc">今天星期一明天星期二，后天星。</view>
+      <view class="moment-detail-media">
+        <view class="moment-detail-image-one" wx:if='{{true}}'>
+          <image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+        </view>
+        <view class="moment-detail-image" wx:else>
+        </view>
+        <view class="moment-detail-video">
+          <video src="" controls="{{false}}" show-play-btn="{{false}}"></video>
+          <image src="{{playIcon}}"></image>
+        </view>
+      </view>
+      <view class="moment-detail-time">
+        <text>今天 17:33</text>
+        <view class="moment-detail-time-delete">删除</view>
+      </view>
+    </view>
+  </view>
+</view>

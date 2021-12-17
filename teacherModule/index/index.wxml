@@ -23,10 +23,10 @@
         <image src="{{girlIcon}}" wx:if="{{false}}"></image>
         <image src="{{boyIcon}}" wx:else></image>
       </view>
-      <view class="teacher-name-line-right">
+      <view class="teacher-name-line-right" bindtap="toShare">
         <image src="{{shareIcon}}"></image>
         <text>分享</text>
-        <button open-type="share"></button>
+        <!-- <button open-type="share"></button> -->
       </view>
     </view>
     <view class="teacher-sign">
@@ -59,7 +59,7 @@
     <view class="honor">
       <view class="honor-title common-title">
         <view class="honor-title-left common-title-left">我的荣誉</view>
-        <view class="honor-title-right common-title-right">
+        <view class="honor-title-right common-title-right" bindtap="toHonorList">
           <text>查看全部</text>
           <image src="{{rightArrowIcon}}"></image>
         </view>
@@ -80,7 +80,7 @@
     <view class="authentication">
       <view class="authentication-title common-title">
         <view class="authentication-title-left common-title-left">我的花样认证</view>
-        <view class="authentication-title-right common-title-right">
+        <view class="authentication-title-right common-title-right" wx:if="{{false}}">
           <text>查看全部</text>
           <image src="{{rightArrowIcon}}"></image>
         </view>
@@ -97,7 +97,7 @@
     <view class="moment">
       <view class="moment-title common-title">
         <view class="moment-title-left common-title-left">我的动态</view>
-        <view class="moment-title-right common-title-right">
+        <view class="moment-title-right common-title-right" bindtap="toMomentList">
           <text>查看全部</text>
           <image src="{{rightArrowIcon}}"></image>
         </view>

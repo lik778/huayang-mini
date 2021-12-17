@@ -1,1 +1,145 @@
 /* teacherModule/poster/poster.wxss */
+.poster-container {
+  height: 100vh;
+  background: #37383B;
+}
+
+.poster-button-line {
+  position: fixed;
+  bottom: 60rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: calc(100% - 80rpx);
+}
+
+.poster-main-logo-right-box {
+  padding-top: 6rpx;
+  font-size: 22rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 32rpx;
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 30rpx;
+  padding-right: 40rpx;
+}
+
+.poster-button-left,
+.poster-button-right {
+  width: 320rpx;
+  height: 96rpx;
+  text-align: center;
+  line-height: 96rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FF5544;
+  line-height: 96rpx;
+  background-color: #FFFFFF;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height:calc(100% - 156rpx);
+}
+
+.poster-button-right {
+  background: #FF5544;
+  color: #fff;
+}
+
+.poster-main {
+  width: calc(100vw - 100rpx);
+  background: #fff;
+}
+
+.poster-main-logo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 44rpx;
+  padding-top: 20rpx;
+  /* padding-bottom: 30rpx; */
+}
+
+.poster-main-bg {}
+
+.poster-main-bg image {
+  width: 650rpx;
+  height: 650rpx;
+  vertical-align: bottom;
+}
+
+.poster-main-logo-left {
+  width: 240rpx;
+  height: 82rpx;
+  vertical-align: bottom;
+}
+
+.poster-main-logo-right {
+  width: 120rpx;
+  height: 120rpx;
+  vertical-align: bottom;
+}
+
+.poster-main-title {
+  font-size: 36rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 36rpx;
+  padding: 0 40rpx;
+  padding-top: 60rpx;
+}
+
+.poster-main-desc {
+  font-size: 26rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 36rpx;
+  padding: 0 40rpx;
+  padding-top: 30rpx;
+}
+
+
+.poster-button-line-one {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 136rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  z-index: 10;
+}
+
+
+.poster-button-line-one>view {
+  width: 320rpx;
+  height: 96rpx;
+  text-align: center;
+  line-height: 96rpx;
+  background-color: #fff;
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FF5544;
+  line-height: 96rpx;
+  border: 0.5px solid #FF4433;
+  margin-right: 30rpx;
+}
+
+
+.poster-button-line-one .poster-button-right-one {
+  background: #FF5544;
+  color: #fff;
+}

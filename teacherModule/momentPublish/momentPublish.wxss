@@ -1,1 +1,104 @@
 /* teacherModule/momentPublish/momentPublish.wxss */
+.moment-publish-container {
+  min-height: 100vh;
+  padding-bottom: 160rpx;
+}
+
+.main {
+  padding-left: 60rpx;
+  padding-right: 70rpx;
+
+}
+
+.input {
+  position: relative;
+  width: 100%;
+  height: 352rpx;
+  padding-top: 36rpx;
+}
+
+.input textarea {
+  width: 100%;
+  height: 300rpx;
+  vertical-align: bottom;
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 44rpx;
+}
+
+.text-num {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 9;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.4);
+  line-height: 32rpx;
+}
+
+.uploadModule {
+  padding-top: 60rpx;
+}
+
+.upload {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.preview-item {
+  display: flex;
+  flex-wrap: wrap;
+  width: 200rpx;
+  height: 200rpx;
+  position: relative;
+  margin-right: 10rpx;
+  margin-bottom: 10rpx;
+}
+
+.preview-item:nth-child(3n) {
+  margin-right: 0;
+}
+
+.preview-image {
+  width: 200rpx;
+  height: 200rpx;
+  vertical-align: bottom;
+}
+
+.delete-icon {
+  width: 200rpx;
+  height: 200rpx;
+  vertical-align: bottom;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.upload>image {
+  width: 200rpx;
+  height: 200rpx;
+  vertical-align: bottom;
+}
+
+.publish-line {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 196rpx;
+  background: #fff;
+}
+
+.publish-line image {
+  width: 100%;
+  height: 136rpx;
+  vertical-align: bottom;
+}

@@ -5,7 +5,23 @@ Page({
    * 页面的初始数据
    */
   data: {
+    uploadIcon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639626899gtUcEr.jpg",
+    playIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639538242RdmCxq.jpg',
+    type: 3
+  },
 
+  /* 前往发布动态 */
+  toUpload() {
+    wx.navigateTo({
+      url: '/teacherModule/momentPublish/momentPublish',
+    })
+  },
+
+  /* 前往动态详情 */
+  toMomentDetail() {
+    wx.navigateTo({
+      url: '/teacherModule/momentDetail/momentDetail',
+    })
   },
 
   /**

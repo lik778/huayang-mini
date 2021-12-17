@@ -1,2 +1,21 @@
 <!--teacherModule/honorList/honorList.wxml-->
-<text>teacherModule/honorList/honorList.wxml</text>
+<view class="honor-list-container">
+  <view class="honor-list">
+    <view class="honor-item">
+      <view class="honor-item-left">
+        <image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+      </view>
+      <view class="honor-item-right">
+        如果很长就换行国家二级舞蹈证书
+      </view>
+    </view>
+    <view class="honor-item">
+      <view class="honor-item-left">
+        <image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+      </view>
+      <view class="honor-item-right">
+        如果很长就换行国家二级舞蹈证书
+      </view>
+    </view>
+  </view>
+</view>

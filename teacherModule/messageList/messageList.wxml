@@ -37,5 +37,10 @@
     </view>
   </view>
 
-  <view class="message-publish"></view>
+  <view class="message-publish">
+    <view class="message-publish-box">
+      <input type="text" placeholder="请输入您的留言" />
+      <view class="message-publish-button">留言</view>
+    </view>
+  </view>
 </view>

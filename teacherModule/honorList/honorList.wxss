@@ -1,1 +1,36 @@
 /* teacherModule/honorList/honorList.wxss */
+.honor-list-container {}
+
+.honor-list {
+  padding: 0 40rpx;
+}
+
+.honor-item {
+  display: flex;
+  border-bottom: 1px solid #EFEFEF;
+  padding-bottom: 20rpx;
+  padding-top: 20rpx;
+}
+
+.honor-item:last-child {
+  border: none;
+}
+
+.honor-item-left {}
+
+.honor-item-left image {
+  width: 320rpx;
+  height: 240rpx;
+  vertical-align: bottom;
+}
+
+.honor-item-right {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 44rpx;
+  padding-left: 30rpx;
+  text-align: justify;
+  padding-top: 20rpx;
+}

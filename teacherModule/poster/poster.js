@@ -1,3 +1,10 @@
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
+import {
+  getLocalStorage
+} from "../../utils/util"
+
 // teacherModule/poster/poster.js
 Page({
 
@@ -5,13 +12,24 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    logo1: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639720620rzUaXZ.jpg",
+    systemInfo: '',
+    longScreen: true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.getSystemInfo({
+      success: (result) => {
+        console.log(result.screenHeight)
+        this.setData({
+          systemInfo: result,
+          longScreen: result.screenHeight > 736 ? true : false
+        })
+      },
+    })
 
   },
 

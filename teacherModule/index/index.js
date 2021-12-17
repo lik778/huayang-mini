@@ -52,6 +52,27 @@ Page({
     })
   },
 
+  /* 前往荣誉列表 */
+  toHonorList() {
+    wx.navigateTo({
+      url: '/teacherModule/honorList/honorList',
+    })
+  },
+
+  /* 前往动态列表 */
+  toMomentList() {
+    wx.navigateTo({
+      url: '/teacherModule/momentList/momentList',
+    })
+  },
+
+  /* 前往分享 */
+  toShare() {
+    wx.navigateTo({
+      url: '/teacherModule/poster/poster',
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */

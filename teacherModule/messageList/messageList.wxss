@@ -83,3 +83,45 @@
   white-space: nowrap;
   padding-top: 20rpx;
 }
+
+.message-publish {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 160rpx;
+  border-top: 0.5px solid #DDDDDD;
+}
+
+.message-publish-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20rpx;
+  padding-top: 20rpx;
+}
+
+.message-publish-box input {
+  background: #F9F9F9;
+  height: 80rpx;
+  padding: 0 16rpx;
+  box-sizing: border-box;
+  width: calc(100% - 120rpx);
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 32rpx;
+}
+
+.message-publish-button {
+  width: 120rpx;
+  height: 80rpx;
+  background-color: #FF5544;
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 80rpx;
+  text-align: center;
+}

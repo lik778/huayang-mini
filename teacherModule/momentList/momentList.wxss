@@ -1,1 +1,191 @@
 /* teacherModule/momentList/momentList.wxss */
+.moment-list-container {
+  padding: 0 32rpx;
+  padding-top: 20rpx;
+  padding-bottom: 80rpx;
+}
+
+.moment-list {}
+
+.moment-item {
+  display: flex;
+}
+
+.moment-item-line {
+  font-size: 60rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 60rpx;
+  padding-top: 100rpx;
+}
+
+.moment-item-box {
+  padding-top: 60rpx;
+  display: flex;
+}
+
+.today,
+.yesday {
+  font-size: 56rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 56rpx;
+}
+
+.day {
+  font-size: 56rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 56rpx;
+}
+
+.month {
+  font-size: 24rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 24rpx;
+  padding-left: 4rpx;
+}
+
+.moment-item-left {
+  flex-shrink: 0;
+}
+
+.moment-item-upload {
+  width: 160rpx;
+  height: 160rpx;
+  vertical-align: bottom;
+}
+
+.moment-item-right {
+  display: flex;
+  margin-bottom: 60rpx;
+  margin-left: 32rpx;
+}
+
+.moment-item-right-image {}
+
+.moment-item-right-text {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  padding-left: 12rpx;
+  line-height: 40rpx;
+}
+
+.moment-item-image-type-video {
+  position: relative;
+  width: 160rpx;
+  height: 160rpx;
+}
+
+.moment-item-image-type-video image {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.moment-item-image-type-video video {
+  width: 160rpx;
+  height: 160rpx;
+  vertical-align: bottom;
+
+}
+
+.moment-item-image-type-one image {
+  width: 160rpx;
+  height: 160rpx;
+  vertical-align: bottom;
+}
+
+.moment-item-image-type-two image {
+  width: 78rpx;
+  height: 160rpx;
+  margin-right: 4rpx;
+  vertical-align: bottom;
+}
+
+.moment-item-image-type-two image:last-child {
+  margin-right: 0;
+}
+
+.moment-item-image-type-three {
+  display: flex;
+}
+
+.moment-item-image-type-three-left {
+  width: 78rpx;
+  height: 160rpx;
+  margin-right: 4rpx;
+}
+
+.moment-item-image-type-three-left image {
+  width: 78rpx;
+  height: 160rpx;
+  margin-right: 4rpx;
+  vertical-align: bottom;
+}
+
+
+.moment-item-image-type-three-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.moment-item-image-type-three-right image {
+  width: 78rpx;
+  height: 78rpx;
+  vertical-align: bottom;
+  margin-bottom: 4rpx;
+}
+
+.moment-item-image-type-three-right image:last-child {
+  margin-bottom: 0;
+}
+
+.moment-item-image-type-four {
+  display: flex;
+}
+
+.moment-item-image-type-four-left {
+  display: flex;
+  flex-direction: column;
+  margin-right: 4rpx;
+}
+
+.moment-item-image-type-four-left image {
+  width: 78rpx;
+  height: 78rpx;
+  vertical-align: bottom;
+  margin-bottom: 4rpx;
+}
+
+.moment-item-image-type-four-left image:last-child {
+  margin-bottom: 0rpx;
+}
+
+.moment-item-image-type-four-right {
+  display: flex;
+  flex-direction: column;
+}
+
+.moment-item-image-type-four-right image {
+  width: 78rpx;
+  height: 78rpx;
+  vertical-align: bottom;
+  margin-bottom: 4rpx;
+}
+
+.moment-item-image-type-four-right image:last-child {
+  margin-bottom: 0rpx;
+}

@@ -1,2 +1,25 @@
 <!--teacherModule/poster/poster.wxml-->
-<text>teacherModule/poster/poster.wxml</text>
+<view class="poster-container">
+  <view class="main" style="align-items: {{longScreen?'center':'flex-start'}}">
+    <view class="poster-main">
+      <view class="poster-main-bg">
+        <image src=""></image>
+      </view>
+      <view class="poster-main-title">花样百姓 - 方圆老师</view>
+      <view class="poster-main-desc">这里是老师的简介，这里是简介，一段简介。大家觉得自己真得走在变美的道路上，才是我最大的收获和快乐！才是我最大的收获和快乐！才是我最大的收获和快乐！</view>
+      <view class="poster-main-logo">
+        <image class="poster-main-logo-left" src="{{logo1}}"></image>
+        <image class="poster-main-logo-right" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639720792atlCiz.jpg"></image>
+      </view>
+      <view class="poster-main-logo-right-box">长按识别查看</view>
+    </view>
+  </view>
+  <view class="poster-button-line" wx:if="{{longScreen}}">
+    <view class="poster-button-left">分享好友</view>
+    <view class="poster-button-right">保存图片</view>
+  </view>
+  <view class="poster-button-line-one" wx:else>
+    <view class="poster-button-left-one">分享好友</view>
+    <view class="poster-button-right-one">保存图片</view>
+  </view>
+</view>

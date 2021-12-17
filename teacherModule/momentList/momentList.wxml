@@ -1,2 +1,108 @@
 <!--teacherModule/momentList/momentList.wxml-->
-<text>teacherModule/momentList/momentList.wxml</text>
+<view class="moment-list-container">
+  <view class="moment-list">
+    <view>
+      <view class="moment-item-box">
+        <view class="moment-item-left">
+          <text class="today">今天</text>
+        </view>
+        <view class="moment-item-right" style="margin-bottom: 0;">
+          <image bindtap="toUpload" src="{{uploadIcon}}" class="moment-item-upload"></image>
+        </view>
+      </view>
+    </view>
+    <view class="moment-item" bindtap="toMomentDetail">
+      <view class="moment-item-line" wx:if="{{false}}">2020年</view>
+      <view class="moment-item-box" wx:else>
+        <view class="moment-item-left">
+          <text class="today" wx:if='{{type===1}}'>今天</text>
+          <text class="yesday" wx:if='{{type===2}}'>昨天</text>
+          <text class="day" wx:if='{{type===3}}'>12</text>
+          <text class="month" wx:if='{{type===3}}'>12月</text>
+        </view>
+        <view class="moment-item-right">
+
+          <view class="moment-item-right-image">
+            <view class="moment-item-image-type-one">
+              <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+            </view>
+            <view class="moment-item-image-type-two">
+              <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+              <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+            </view>
+            <view class="moment-item-image-type-three">
+              <view class="moment-item-image-type-three-left">
+                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+              </view>
+              <view class="moment-item-image-type-three-right">
+                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+              </view>
+            </view>
+            <view class="moment-item-image-type-four">
+              <view class="moment-item-image-type-four-left">
+                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+              </view>
+              <view class="moment-item-image-type-four-right">
+                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+              </view>
+            </view>
+            <view class="moment-item-image-type-video">
+              <video src="" controls="{{false}}" show-play-btn="{{false}}"></video>
+              <image src="{{playIcon}}"></image>
+            </view>
+          </view>
+          <view class="moment-item-right-text">今天星期一明天星期二，后天星期三，然后星期四，后天星期三，然后星期四嘎是的的…</view>
+        </view>
+      </view>
+    </view>
+    <view class="moment-item" bindtap="toMomentDetail">
+      <view class="moment-item-line" wx:if="{{false}}">2020年</view>
+      <view class="moment-item-box" wx:else>
+        <view class="moment-item-left">
+          <text class="today" wx:if='{{type===1}}'>今天</text>
+          <text class="yesday" wx:if='{{type===2}}'>昨天</text>
+          <text class="day" wx:if='{{type===3}}'>12</text>
+          <text class="month" wx:if='{{type===3}}'>12月</text>
+        </view>
+        <view class="moment-item-right">
+          <view class="moment-item-right-image">
+            <view class="moment-item-image-type-one">
+              <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+            </view>
+            <view class="moment-item-image-type-two">
+              <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+              <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+            </view>
+            <view class="moment-item-image-type-three">
+              <view class="moment-item-image-type-three-left">
+                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+              </view>
+              <view class="moment-item-image-type-three-right">
+                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+              </view>
+            </view>
+            <view class="moment-item-image-type-four">
+              <view class="moment-item-image-type-four-left">
+                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+              </view>
+              <view class="moment-item-image-type-four-right">
+                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+                <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+              </view>
+            </view>
+            <view class="moment-item-image-type-video">
+              <video src="" controls="{{false}}" show-play-btn="{{false}}"></video>
+              <image src="{{playIcon}}"></image>
+            </view>
+          </view>
+          <view class="moment-item-right-text">今天星期一明天星期二，后天星期三，然后星期四，后天星期三，然后星期四嘎是的的…</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

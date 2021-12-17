@@ -1,2 +1,22 @@
 <!--teacherModule/momentPublish/momentPublish.wxml-->
-<text>teacherModule/momentPublish/momentPublish.wxml</text>
+<view class="moment-publish-container">
+  <view class="main">
+    <view class="input">
+      <textarea placeholder="请输入您的动态内容"></textarea>
+      <view class="text-num">124/200</view>
+    </view>
+    <view class="uploadModule">
+      <view class="upload">
+        <view class="preview-item" wx:for="{{previewImageList}}" wx:key="index">
+          <image src="{{item}}" mode="aspectFill" class="preview-image"></image>
+          <image src="{{deleteIcon}}" class="delete-icon"></image>
+        </view>
+        <image src="{{uploadIcon}}" wx:if="{{previewImageList.length<9}}"></image>
+
+      </view>
+    </view>
+  </view>
+  <view class="publish-line">
+    <image class="publish-button" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639705899WfbfXG.jpg" />
+  </view>
+</view>
