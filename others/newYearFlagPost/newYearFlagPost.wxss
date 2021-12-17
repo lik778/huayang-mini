@@ -2,6 +2,7 @@
     overflow: hidden;
     min-height: 100vh;
     padding-bottom: 38rpx;
+    box-sizing: border-box;
     background: #333333;
     font-size: 0;
 }
@@ -94,8 +95,12 @@
 }
 
 .qrcode {
+    overflow: hidden;
     width: 120rpx;
     height: 120rpx;
+    border: 4rpx solid white;
+    border-radius: 999rpx;
+    background: white;
 }
 
 .foot-image {

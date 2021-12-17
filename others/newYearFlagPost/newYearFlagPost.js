@@ -180,8 +180,15 @@ Page({
 
 				// 二维码
 				if (this.data.upperData.qrcodeUrl) {
+					ctx.save()
+					ctx.beginPath()
+					ctx.arc(309, 478, 32, 0, 2 * Math.PI)
+					ctx.clip()
+					ctx.fillStyle = "#FFFFFF"
+					ctx.fill()
 					let qrcodeRes = await this._loadNetworkImageRes(canvas, this.data.upperData.qrcodeUrl,)
 					ctx.drawImage(qrcodeRes, 279, 448, 60, 60)
+					ctx.restore()
 				}
 
 				// 装饰5
