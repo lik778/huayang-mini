@@ -234,7 +234,6 @@ Page({
 						coverUrl: self.data.selectedImageUrl,
 						slogan: self.data.selectedSlogan
 					})
-					console.log(123);
 					self.setData({runHistoryFlagAnimate: false})
 				}
 			})
@@ -248,6 +247,7 @@ Page({
     this.setData({
       didShowAuth: false,
     })
+		this.generatePost()
   },
   // 用户授权取消
   authCancelEvent() {
