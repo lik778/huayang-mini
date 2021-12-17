@@ -145,7 +145,8 @@
       "root": "others",
       "pages": [
         "goodMorningResult/goodMorningResult",
-        "newYearFlag/newYearFlag"
+        "newYearFlag/newYearFlag",
+        "newYearFlagPost/newYearFlagPost"
       ]
     },
     {

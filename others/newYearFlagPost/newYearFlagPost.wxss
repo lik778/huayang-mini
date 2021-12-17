@@ -1,0 +1,168 @@
+.new-year-flag-post {
+    overflow: hidden;
+    min-height: 100vh;
+    padding-bottom: 38rpx;
+    background: #333333;
+    font-size: 0;
+}
+
+.post {
+    position: relative;
+    width: 710rpx;
+    height: 1136rpx;
+    padding: 38rpx 30rpx 30rpx;
+    margin: 54rpx auto;
+    box-sizing: border-box;
+    background: #BC0F17;
+}
+
+/* 基本信息 */
+.userinfo {
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    width: 88rpx;
+    height: 88rpx;
+    margin-right: 24rpx;
+    border-radius: 999rpx;
+}
+
+.nickname {
+    color: #EBD4B9;
+    font: 800 32rpx/60rpx PingFangSC;
+}
+
+/* 封面 */
+.cover {
+    display: block;
+    width: 560rpx;
+    height: 560rpx;
+    margin: 24rpx auto;
+}
+
+/* 口号 */
+.txt-01 {
+    width: 638rpx;
+    margin-bottom: 8rpx;
+    font: 800 34rpx/48rpx PingFangSC;
+    color: #EBD4B9;
+    text-align: center;
+}
+
+.slogan {
+    margin-bottom: 0;
+}
+
+/* 固定内容 */
+.fix-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 172rpx;
+    padding: 0 4rpx;
+    margin: 38rpx 0 28rpx;
+    box-sizing: border-box;
+    border-top: 2rpx solid #EBD4B9;
+    border-bottom: 2rpx solid #EBD4B9;
+}
+
+.content-left {
+    width: 306rpx;
+    height: 102rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639637453ebrsUZ.jpg") no-repeat center;
+    background-size: contain;
+}
+
+.content-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.content-right-text {
+    width: 176rpx;
+    margin-right: 22rpx;
+}
+
+.content-right-text > text {
+    display: block;
+    text-align: right;
+    font: 24rpx/34rpx PingFangSC;
+    color: #EBD4B9;
+}
+
+.qrcode {
+    width: 120rpx;
+    height: 120rpx;
+}
+
+.foot-image {
+    width: 644rpx;
+    height: 36rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639640014bmCvDd.jpg") no-repeat center;
+    background-size: contain;
+}
+
+/* 装饰图 */
+.decorate {
+    position: absolute;
+}
+
+.d1 {
+    top: 26rpx;
+    right: 28rpx;
+    width: 172rpx;
+    height: 56rpx;
+}
+
+.d2 {
+    top: 164rpx;
+    left: 44rpx;
+    width: 80rpx;
+    height: 344rpx;
+}
+
+.d3 {
+    top: 212rpx;
+    right: 86rpx;
+    width: 40rpx;
+    height: 452rpx;
+}
+
+/* 操作区域 */
+.operate {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30rpx;
+}
+
+
+.btn {
+    width: 332rpx;
+    height: 100rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639641019LRbONc.jpg") no-repeat center;
+    background-size: contain;
+}
+
+.btn:active {
+    opacity: 0.8;
+}
+
+.btn.save {
+    background-image: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639641125MHJgXV.jpg");
+}
+
+/* 真实海报 */
+.real-post {
+    position: fixed;
+    left: 2000px;
+    background: white;
+}
+
+#newYearFlagCanvas {
+    width:355px;
+    height:568px;
+}

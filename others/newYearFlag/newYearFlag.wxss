@@ -43,12 +43,12 @@
 
 .layer-01 {
     background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639539942lmvfXY.jpg") no-repeat center;
-    background-size: cover;
+    background-size: contain;
 }
 
 .layer-02 {
     background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639540022ILuxyb.jpg") no-repeat center;
-    background-size: cover;
+    background-size: contain;
 }
 
 .flag {
@@ -57,7 +57,7 @@
     align-items: center;
     height: 96rpx;
     padding: 26rpx 38rpx;
-    border: 4rpx solid #BC0F17;
+    border: 4rpx solid #bc0f17;
     box-sizing: border-box;
     background: white;
 }
@@ -76,7 +76,7 @@ input.flag-input {
 .history-flags {
     overflow: hidden;
     height: 140rpx;
-    padding: 0 26rpx;
+    padding: 0 6rpx 0 26rpx;
     margin: 30rpx 0 60rpx;
 }
 
@@ -92,7 +92,8 @@ input.flag-input {
 .upload-layer {
     overflow: hidden;
     position: relative;
-    height: 248rpx;
+    height: 252rpx;
+    margin-bottom: 50rpx;
 }
 
 .pic-03 {
@@ -106,21 +107,20 @@ input.flag-input {
 .pic-04 {
     position: absolute;
     top: 0;
-    left: 254rpx;
-    width: 168rpx;
-    height: 248rpx;
-    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639560547lJeFll.jpg") no-repeat center;
-    background-size: contain;
+    left: 216rpx;
+    width: 252rpx;
+    height: 252rpx;
 }
 
 /* 按钮 */
 .btn {
-    /*position: fixed;*/
-    /*bottom: 104rpx;*/
-    margin: 50rpx 0 38rpx;
+    margin: 0 0 38rpx;
     width: 692rpx;
     height: 100rpx;
     background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639560912eyVRJP.jpg") no-repeat center;
     background-size: contain;
+}
 
+.btn:active {
+    opacity: 0.9;
 }

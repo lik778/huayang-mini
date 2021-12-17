@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "新年成长目标",
-  "usingComponents": {}
+  "usingComponents": {
+    "authModule": "../../components/auth/auth"
+  }
 }
