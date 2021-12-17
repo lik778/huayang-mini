@@ -11,6 +11,7 @@ Page({
 	data: {
 		parentShareId: "",
 		historyFlagAnimate: {},
+		runHistoryFlagAnimate: true,
 		timer: null,
 		historyFlags: [
 			"2022年，玲要学会跳一支民族舞，争取加入花样艺术团",
@@ -22,7 +23,7 @@ Page({
 		selectedImageUrl: "",
 		selectedSlogan: "",
     didShowAuth: false,
-		lock: false
+		lock: false,
 	},
 
 	/**
@@ -52,7 +53,9 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-
+		if (!this.data.runHistoryFlagAnimate) {
+			this.setData({runHistoryFlagAnimate: true})
+		}
 	},
 
 	/**
@@ -130,7 +133,7 @@ Page({
 				}
 				wx.nextTick(() => {
 					animateCls.translateY(-offsetH * cur).step()
-					cur++
+					if (self.data.runHistoryFlagAnimate) cur++
 					self.setData({historyFlagAnimate: animateCls.export()})
 				})
 			}, 3 * 1000)
@@ -231,6 +234,8 @@ Page({
 						coverUrl: self.data.selectedImageUrl,
 						slogan: self.data.selectedSlogan
 					})
+					console.log(123);
+					self.setData({runHistoryFlagAnimate: false})
 				}
 			})
 			this.setData({lock: false})

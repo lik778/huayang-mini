@@ -1,5 +1,5 @@
 <view class="new-year-flag">
-    <image class="bg" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639539763FHdznf.jpg?x-oss-process=style/huayang-thumb" mode="widthFix"></image>
+    <image class="bg" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639539763FHdznf.jpg?x-oss-process=style/huayang-thumb" mode="scaleToFill"></image>
 
     <view class="pic-01">
         <text class="start-time">活动时间：2021年12月24日 - 2022年1月7日</text>
