@@ -62,18 +62,18 @@ Page({
 		getHomeHeadLines().then(({
 			data
 		}) => {
+			let headLines = []
 			if ($notNull(data)) {
-				let headLines = []
 				for (let key in data) {
 					let ary = data[key]
-					console.log(key, ary);
+
 					switch (key) {
 						// 花样活动
 						case "activity": {
 							ary.forEach(item => {
 								headLines.push({
 									type: "activity",
-									title: item.title,
+									title: `同城活动：${item.title}`,
 									id: item.id
 								})
 							})
@@ -83,10 +83,9 @@ Page({
 							// 有赞商品
 							ary.forEach(item => {
 								headLines.push({
-									type: "good",
-									title: item.title,
-									page_url: item.page_url,
-									alias: item.alias,
+									type: "youZan",
+									title: `严选上新：${item.title}`,
+									link: `${item.page_url}?alias=${item.alias}`
 								})
 							})
 							break
@@ -94,22 +93,53 @@ Page({
 						case "hylife": {
 							// 花样好生活
 							ary.forEach(item => {
+								if (+item.type === 3) {
+									// 公众号文章
+									headLines.push({
+										type: "huaYang",
+										title: `生活方式：${item.title}`,
+										link: `/subCourse/noAuthWebview/noAuthWebview?link=${item.material_url}`
+									})
+								} else {
+									// 图片集、视频
+									headLines.push({
+										type: "huaYang",
+										title: `生活方式：${item.title}`,
+										link: `/huayangLife/lifeDetail/lifeDetail?id=${item.id}`
+									})
+								}
+							})
+							break
+						}
+						case "kecheng": {
+							// 有赞培训课
+							ary.forEach(item => {
 								headLines.push({
-									type: "hylife",
-									title: item.title,
-									id: item.id
+									type: "youZan",
+									title: `最新课程：${item.title}`,
+									link: `${item.page_url}?alias=${item.alias}`
 								})
 							})
 							break
 						}
-						case "kecheng": {}
-						case "zhibo": {}
+						case "zhibo": {
+							// 花样视频号直播预约页
+							ary.forEach(item => {
+								headLines.push({
+									type: "huaYang",
+									title: `直播预告：${item.title}`,
+									link: "/pages/channelLive/channelLive"
+								})
+							})
+							break
+						}
 					}
 				}
 			}
-			// this.setData({
-			// 	headlines: data.slice()
-			// })
+
+			this.setData({
+				headlines: headLines.slice()
+			})
 		})
 
 		// 加载最新活动
@@ -277,6 +307,33 @@ Page({
 				waterfallLock: list.length >= this.data.waterfallPagination.limit ? false : true
 			})
 		})
+	},
+	// 处理花样头条点击事件
+	onHeadlineItemTap(e) {
+		let { item } = e.currentTarget.dataset
+		let { type, link } = item
+		switch (type) {
+			case "activity": {
+				this.onNewsContentTap({currentTarget: { dataset: {item} }})
+				break
+			}
+			case "huaYang": {
+				wx.navigateTo({
+					url: link,
+					fail() {
+						wx.switchTab({url: link})
+					}
+				})
+				break
+			}
+			case "youZan": {
+				wx.navigateToMiniProgram({
+					appId: "wx95fb6b5dbe8739b7",
+					path: link,
+				})
+				break
+			}
+		}
 	},
 	// 处理icon点击事件
 	onIconItemTap(e) {

@@ -41,8 +41,8 @@
                 <view class="separate"></view>
                 <swiper class="headlines-item-box" vertical="{{true}}" circular autoplay interval="{{5000}}"
                         duration="{{600}}">
-                    <swiper-item class="headline-item-box-wrap" wx:for="{{headlines}}" wx:key="index">
-                        <view class="headline-text limit-two-line">{{item}}</view>
+                    <swiper-item class="headline-item-box-wrap" wx:for="{{headlines}}" wx:key="index" bindtap="onHeadlineItemTap" data-item="{{item}}">
+                        <view class="headline-text limit-two-line">{{item.title}}</view>
                     </swiper-item>
                 </swiper>
             </view>

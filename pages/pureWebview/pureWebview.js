@@ -65,7 +65,7 @@ Page({
     if (this.data.didBrand) {
       // 花样品牌故事ICON，定制分享内容
       return {
-        title: "花样大学品牌介绍",
+        title: "花样百姓品牌介绍",
         imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639997736gcurPq.jpg",
         path: `/pages/pureWebview/pureWebview?link=${this.data.link}`
       }
