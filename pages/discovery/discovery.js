@@ -240,6 +240,7 @@ Page({
 			item: {
 				type,
 				link_url,
+				title,
 				rank
 			}
 		} = e.currentTarget.dataset
@@ -275,8 +276,12 @@ Page({
 			}
 			case 3: {
 				// H5链接
+				let link = `/pages/pureWebview/pureWebview?link=${link_url}`
+				if (title === "品牌故事") {
+					link += "&brand=true"
+				}
 				wx.navigateTo({
-					url: `/pages/pureWebview/pureWebview?link=${link_url}`
+					url: link
 				})
 				break
 			}
