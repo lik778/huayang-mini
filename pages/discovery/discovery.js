@@ -62,10 +62,54 @@ Page({
 		getHomeHeadLines().then(({
 			data
 		}) => {
-			data = data || []
-			this.setData({
-				headlines: data.slice()
-			})
+			if ($notNull(data)) {
+				let headLines = []
+				for (let key in data) {
+					let ary = data[key]
+					console.log(key, ary);
+					switch (key) {
+						// 花样活动
+						case "activity": {
+							ary.forEach(item => {
+								headLines.push({
+									type: "activity",
+									title: item.title,
+									id: item.id
+								})
+							})
+							break
+						}
+						case "good": {
+							// 有赞商品
+							ary.forEach(item => {
+								headLines.push({
+									type: "good",
+									title: item.title,
+									page_url: item.page_url,
+									alias: item.alias,
+								})
+							})
+							break
+						}
+						case "hylife": {
+							// 花样好生活
+							ary.forEach(item => {
+								headLines.push({
+									type: "hylife",
+									title: item.title,
+									id: item.id
+								})
+							})
+							break
+						}
+						case "kecheng": {}
+						case "zhibo": {}
+					}
+				}
+			}
+			// this.setData({
+			// 	headlines: data.slice()
+			// })
 		})
 
 		// 加载最新活动
@@ -240,6 +284,7 @@ Page({
 			item: {
 				type,
 				link_url,
+				title,
 				rank
 			}
 		} = e.currentTarget.dataset
@@ -275,8 +320,12 @@ Page({
 			}
 			case 3: {
 				// H5链接
+				let link = `/pages/pureWebview/pureWebview?link=${link_url}`
+				if (title === "品牌故事") {
+					link += "&brand=true"
+				}
 				wx.navigateTo({
-					url: `/pages/pureWebview/pureWebview?link=${link_url}`
+					url: link
 				})
 				break
 			}
@@ -320,9 +369,14 @@ Page({
 		}, false)
 
 		link += `/#/home/detail/${item.id}`
-		wx.navigateTo({
-			url: `/pages/pureWebview/pureWebview?link=${link}`
-		})
+
+		if (+item.pay_online === 1) {
+			// 收费活动
+			wx.navigateTo({url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}`})
+		} else {
+			// 免费活动
+			wx.navigateTo({url: `/pages/pureWebview/pureWebview?link=${link}`})
+		}
 	},
 	/**
 	 * 生命周期函数--监听页面加载
