@@ -312,6 +312,7 @@ Page({
 	onHeadlineItemTap(e) {
 		let { item } = e.currentTarget.dataset
 		let { type, link } = item
+		bxPoint("new_homepage_headline", {}, false)
 		switch (type) {
 			case "activity": {
 				this.onNewsContentTap({currentTarget: { dataset: {item} }})
