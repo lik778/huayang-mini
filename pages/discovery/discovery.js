@@ -62,9 +62,83 @@ Page({
 		getHomeHeadLines().then(({
 			data
 		}) => {
-			data = data || []
+			let headLines = []
+			if ($notNull(data)) {
+				for (let key in data) {
+					let ary = data[key]
+
+					switch (key) {
+						// 花样活动
+						case "activity": {
+							ary.forEach(item => {
+								headLines.push({
+									type: "activity",
+									title: `同城活动：${item.title}`,
+									id: item.id
+								})
+							})
+							break
+						}
+						case "good": {
+							// 有赞商品
+							ary.forEach(item => {
+								headLines.push({
+									type: "youZan",
+									title: `严选上新：${item.title}`,
+									link: `${item.page_url}?alias=${item.alias}`
+								})
+							})
+							break
+						}
+						case "hylife": {
+							// 花样好生活
+							ary.forEach(item => {
+								if (+item.type === 3) {
+									// 公众号文章
+									headLines.push({
+										type: "huaYang",
+										title: `生活方式：${item.title}`,
+										link: `/subCourse/noAuthWebview/noAuthWebview?link=${item.material_url}`
+									})
+								} else {
+									// 图片集、视频
+									headLines.push({
+										type: "huaYang",
+										title: `生活方式：${item.title}`,
+										link: `/huayangLife/lifeDetail/lifeDetail?id=${item.id}`
+									})
+								}
+							})
+							break
+						}
+						case "kecheng": {
+							// 有赞培训课
+							ary.forEach(item => {
+								headLines.push({
+									type: "youZan",
+									title: `最新课程：${item.title}`,
+									link: `${item.page_url}?alias=${item.alias}`
+								})
+							})
+							break
+						}
+						case "zhibo": {
+							// 花样视频号直播预约页
+							ary.forEach(item => {
+								headLines.push({
+									type: "huaYang",
+									title: `直播预告：${item.title}`,
+									link: "/pages/channelLive/channelLive"
+								})
+							})
+							break
+						}
+					}
+				}
+			}
+
 			this.setData({
-				headlines: data.slice()
+				headlines: headLines.slice()
 			})
 		})
 
@@ -234,6 +308,34 @@ Page({
 			})
 		})
 	},
+	// 处理花样头条点击事件
+	onHeadlineItemTap(e) {
+		let { item } = e.currentTarget.dataset
+		let { type, link } = item
+		bxPoint("new_homepage_headline", {}, false)
+		switch (type) {
+			case "activity": {
+				this.onNewsContentTap({currentTarget: { dataset: {item} }})
+				break
+			}
+			case "huaYang": {
+				wx.navigateTo({
+					url: link,
+					fail() {
+						wx.switchTab({url: link})
+					}
+				})
+				break
+			}
+			case "youZan": {
+				wx.navigateToMiniProgram({
+					appId: "wx95fb6b5dbe8739b7",
+					path: link,
+				})
+				break
+			}
+		}
+	},
 	// 处理icon点击事件
 	onIconItemTap(e) {
 		let {
@@ -325,9 +427,14 @@ Page({
 		}, false)
 
 		link += `/#/home/detail/${item.id}`
-		wx.navigateTo({
-			url: `/pages/pureWebview/pureWebview?link=${link}`
-		})
+
+		if (+item.pay_online === 1) {
+			// 收费活动
+			wx.navigateTo({url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}`})
+		} else {
+			// 免费活动
+			wx.navigateTo({url: `/pages/pureWebview/pureWebview?link=${link}`})
+		}
 	},
 	/**
 	 * 生命周期函数--监听页面加载
