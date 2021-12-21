@@ -5,6 +5,7 @@ Page({
    */
   data: {
     link: "",
+    didBrand: false, // 加载「花样百姓」品牌介绍文章时，定制化分享文案+图片
   },
 
   /**
@@ -13,6 +14,10 @@ Page({
   onLoad: function (options) {
     let link = decodeURIComponent(options.link)
     this.setData({link})
+
+    if (options.brand === "true") {
+      this.setData({didBrand: true})
+    }
   },
 
   /**
@@ -57,9 +62,19 @@ Page({
 
   },
   onShareAppMessage: function () {
-    return {
-      title: "50+线下活动，让你的退休生活更精彩",
-      path: `/pages/pureWebview/pureWebview?link=${this.data.link}`
+    if (this.data.didBrand) {
+      // 花样品牌故事ICON，定制分享内容
+      return {
+        title: "花样百姓品牌介绍",
+        imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639997736gcurPq.jpg",
+        path: `/pages/pureWebview/pureWebview?link=${this.data.link}`
+      }
+    } else {
+      // 常规活动分享内容
+      return {
+        title: "50+线下活动，让你的退休生活更精彩",
+        path: `/pages/pureWebview/pureWebview?link=${this.data.link}`
+      }
     }
   },
 })

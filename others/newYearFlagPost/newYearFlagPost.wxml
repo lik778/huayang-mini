@@ -1,0 +1,48 @@
+<view class="new-year-flag-post">
+    <!-- 海报 -->
+    <view class="post">
+        <!-- 基本信息 -->
+        <view class="userinfo">
+            <image class="avatar" src="{{accountInfo.avatar_url}}" mode="aspectFill"></image>
+            <text class="nickname">我是{{accountInfo.nick_name}}</text>
+        </view>
+
+        <!-- 封面 -->
+        <image class="cover" src="{{upperData.coverUrl}}" mode="aspectFit"></image>
+
+        <!-- 口号 -->
+        <view class="txt-01">我的2022年成长目标</view>
+        <view class="txt-01 slogan">{{upperData.slogan}}</view>
+
+        <!-- 固定内容 -->
+        <view class="fix-content">
+            <view class="content-left"></view>
+            <view class="content-right">
+                 <view class="content-right-text">
+                     <text>长按生成你的</text>
+                     <text>2022</text>
+                     <text>新年成长愿望</text>
+                 </view>
+                <image class="qrcode" src="{{upperData.qrcodeUrl}}" mode="aspectFit"></image>
+            </view>
+        </view>
+
+        <view class="foot-image"></view>
+
+        <!-- 装饰图 -->
+        <image class="decorate d1" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639640379yJRZFE.jpg" mode="aspectFit"></image>
+        <image class="decorate d2" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639640447QGtVoF.jpg" mode="aspectFit"></image>
+        <image class="decorate d3" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639640473MjxrLv.jpg" mode="aspectFit"></image>
+    </view>
+
+    <!-- 操作区域 -->
+    <view class="operate">
+        <view class="btn" bindtap="again"></view>
+        <view class="btn save" bindtap="generateCanvas"></view>
+    </view>
+
+    <!-- 真实海报 -->
+    <view class="real-post">
+        <canvas type="2d" id="newYearFlagCanvas"></canvas>
+    </view>
+</view>

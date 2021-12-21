@@ -1,0 +1,35 @@
+<view class="new-year-flag">
+    <image class="bg" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639539763FHdznf.jpg?x-oss-process=style/huayang-thumb" mode="scaleToFill"></image>
+
+    <view class="pic-01">
+        <text class="start-time">活动时间：2021年12月24日 - 2022年1月7日</text>
+    </view>
+
+    <view class="pic-02 layer-01"></view>
+
+    <view class="flag">
+        <text class="prefix">2022年我要：</text>
+        <input class="flag-input" value="{{selectedSlogan}}" bindinput="onInputChange" placeholder="请输入您的新年成长目标" />
+    </view>
+
+    <!-- flags展示 -->
+    <view class="history-flags">
+        <view class="history-flag-content" animation="{{historyFlagAnimate}}">
+            <text id="history-flag-item" class="limit-one-line">2022年，吉祥如意要学习走秀，瘦身10斤</text>
+            <text class="limit-one-line" wx:for="{{historyFlags}}" wx:key="index">{{item}}</text>
+        </view>
+    </view>
+
+    <!-- 图片上传 -->
+    <view class="pic-02 layer-02"></view>
+    <view class="upload-layer" bindtap="choosePhoto">
+        <view class="pic-03"></view>
+        <image class="pic-04" src="{{selectedImageUrl || 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639560547lJeFll.jpg'}}" mode="aspectFit"></image>
+    </view>
+
+    <!-- 按钮 -->
+    <view class="btn" bindtap="generatePost"></view>
+
+    <!-- 授权弹窗 -->
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent" />
+</view>

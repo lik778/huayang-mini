@@ -77,7 +77,8 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: "花样直播，为你的时尚生活助力",
+      title: "花样直播，成就向往的生活，成为更好的自己～",
+      imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639987387CcNSwq.jpg",
       path: "/pages/channelLive/channelLive"
     }
   },

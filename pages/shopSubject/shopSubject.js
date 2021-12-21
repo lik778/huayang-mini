@@ -154,7 +154,7 @@ Page({
 		bxPoint("course_enroll_more_click", {}, false)
 		wx.navigateToMiniProgram({
 			appId: "wx95fb6b5dbe8739b7",
-			path: "pages/common/blank-page/index?weappSharePath=pages%2Fhome%2Ffeature%2Findex%3Falias%3DVDcBLnwO4l%26kdt_id%3D43257500",
+			path: "packages/shop/goods/group/index?shopAutoEnter=1&alias=2x5gw6suji5z0",
 		})
 	},
 	// 培训课课程item点击
