@@ -34,6 +34,7 @@
 
 .record-btn.subscribe {
     color: #999999;
+    background: white;
 }
 
 .layout-current {

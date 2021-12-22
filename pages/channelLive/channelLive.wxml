@@ -45,9 +45,9 @@
         </view>
     </view>
 
-    <!-- 往期回放 -->
+    <!-- 精彩回放 -->
     <view class="layout" wx:if="{{reviewChannelList.length > 0}}">
-        <view class="layout-title">往期回放</view>
+        <view class="layout-title">精彩回放</view>
         <view class="layout-item" wx:for="{{reviewChannelList}}" wx:key="index">
             <image class="layout-cover" src="{{item.cover}}" mode="aspectFill"></image>
             <view class="layout-content" bindtap="onReview" data-item="{{item}}">
