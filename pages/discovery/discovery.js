@@ -21,6 +21,7 @@ import {
 } from "../../api/live/index"
 import request from "../../lib/request"
 import dayjs from "dayjs"
+import { getHomeChannelLive } from "../../api/channel/index"
 
 Page({
 	/**
@@ -42,7 +43,10 @@ Page({
 			offset: 0,
 			limit: 10
 		}, //生活方式瀑布流分页
-	},
+		channelLiveInfo: null, // 开播的视频号直播信息
+		noticeLiveInfo: null, // 未开播的视频号直播信息
+	}
+	,
 	run() {
 		// 加载icons
 		getHomeIcons().then(({
@@ -436,6 +440,64 @@ Page({
 			wx.navigateTo({url: `/pages/pureWebview/pureWebview?link=${link}`})
 		}
 	},
+	/* 获取首页直播预告 */
+	getCurrentChannelLive() {
+		this.getChannelLiveInfo().then((data) => {
+			this.setData({channelLiveInfo: data})
+		}).catch((err) => {
+			console.log(err);
+			getHomeChannelLive().then((res) => {
+				this.setData({channelLiveInfo: null})
+				if ($notNull(res)) {
+					let time = res[0].start_time
+					let isToday = dayjs(time).format("YYYY-MM-DD") === dayjs().format("YYYY-MM-DD")
+					time = `${isToday ? "今天" : "明天"} ${dayjs(time).format("HH:mm")}开播`
+					this.setData({noticeLiveInfo: { title: res[0].title, time }})
+				}
+			})
+		})
+	},
+	// 获取直播信息
+	getChannelLiveInfo() {
+		return new Promise((resolve, reject) => {
+			wx.getChannelsLiveInfo({
+				finderUserName: "sphkeu2SwOQKZB7", // 花样百姓
+				success(res) {
+					if ($notNull(res) && res.status === 2) {
+						console.log("直播信息 = ", res);
+						resolve(res)
+					} else {
+						reject("live done")
+					}
+				},
+				fail(err) {
+					reject(err)
+				}
+			})
+		})
+	},
+	// 处理直播预告点击事件
+	onLiveNoticeTap() {
+		bxPoint("new_homepage_view_page", {}, false)
+		if (this.data.channelLiveInfo) {
+			// 打开视频号直播间
+			wx.openChannelsLive({
+				finderUserName: "sphkeu2SwOQKZB7", // 花样百姓
+				feedId: this.data.channelLiveInfo.feedId,
+				nonceId: this.data.channelLiveInfo.nonceId,
+				success() {
+					console.log("打开视频号直播成功")
+				},
+				fail(err) {
+					console.log(err)
+				},
+				complete() {}
+			})
+		} else {
+			// 打开视频号直播预约页
+			wx.navigateTo({url: "/pages/channelLive/channelLive"})
+		}
+	},
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
@@ -446,6 +508,8 @@ Page({
 		this.getWaterfallList()
 		// 处理ios
 		this.checkIos()
+
+		this.run()
 	},
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
@@ -464,8 +528,8 @@ Page({
 				selected: 0
 			})
 		}
-
-		this.run()
+		// 获取最新直播预告
+		this.getCurrentChannelLive()
 		bxPoint("homepage_visit", {})
 	},
 

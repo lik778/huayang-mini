@@ -302,6 +302,8 @@ Page({
     // console.log(e, "officialError");
   },
   onReview(e) {
+    if (!hasUserInfo()) return this.setData({didShowAuth: true})
+
     let {video_url, id, title} = e.currentTarget.dataset.item
     wx.navigateTo({
       url: "/pages/channelReview/channelReview?link=" + video_url,
