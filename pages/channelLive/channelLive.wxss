@@ -1,7 +1,7 @@
 @import "../../assets/css/common.wxss";
 
 .channel-live {
-    padding: 30rpx 40rpx;
+    padding: 24rpx 40rpx;
 }
 
 .official-account {
@@ -22,9 +22,10 @@
 .record-btn {
     display: flex;
     align-items: center;
-    font: 32rpx/32rpx PingFangSC;
-    margin: 4rpx 0 4rpx 4rpx;
-    color: #FF5544;
+    padding: 16rpx 28rpx;
+    font: 24rpx/24rpx PingFangSC;
+    color: white;
+    background: #FF5544;
 }
 
 .record-btn:active {
@@ -35,11 +36,44 @@
     color: #999999;
 }
 
-.add-icon {
-    width: 16rpx;
-    height: 16rpx;
-    margin-right: 8rpx;
+.layout-current {
+    position: relative;
+    margin-top: 40rpx;
     font-size: 0;
+}
+
+.current-play-icon{
+    position: absolute;
+    top: 264rpx;
+    left: 264rpx;
+    width: 142rpx;
+    height: 142rpx;
+    font-size: 0;
+}
+
+.layout-current-cover {
+    width: 670rpx;
+    height: 670rpx;
+}
+
+.current-live-btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 16rpx 42rpx;
+    font: 32rpx/32rpx PingFangSC;
+    background: #FF5544;
+    color: white;
+}
+
+.current-live-btn > text::after {
+    content: "";
+    display: inline-block;
+    width: 26rpx;
+    height: 26rpx;
+    margin-left: 8rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1640053952rlclqR.jpg") no-repeat center;
+    background-size: contain;
 }
 
 .layout-item {

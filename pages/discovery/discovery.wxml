@@ -18,6 +18,18 @@
         </view>
     </view>
 
+    <!-- 直播预告 -->
+    <view class="live-notice" wx:if="{{channelLiveInfo || noticeLiveInfo}}" bindtap="onLiveNoticeTap">
+        <view class="notice-left">
+            <view class="notice-status">
+                <text>{{channelLiveInfo ? "直播中" : "预告"}}</text>
+                <image class="notice-img" wx:if="{{channelLiveInfo}}" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1640068784Bxthgq.jpg" mode="aspectFit"></image>
+            </view>
+            <view class="notice-title limit-one-line">{{channelLiveInfo ? channelLiveInfo.description : noticeLiveInfo.title}}</view>
+        </view>
+        <view class="notice-right">{{channelLiveInfo ? "点击进入直播间" : noticeLiveInfo.time}}</view>
+    </view>
+
     <!-- ICON区域 -->
     <view class="icons">
         <view class="floor f1">
