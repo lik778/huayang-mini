@@ -1,6 +1,11 @@
 import { $notNull, getLocalStorage, hasUserInfo, setLocalStorage, toast } from "../../utils/util";
 import { GLOBAL_KEY } from "../../lib/config";
-import { getChannelLives, getHistorySubscribeLives, subscribeMiniProgramMessage } from "../../api/channel/index"
+import {
+  getChannelLives,
+  getCurrentTimeChannelLiveInfo,
+  getHistorySubscribeLives,
+  subscribeMiniProgramMessage
+} from "../../api/channel/index"
 import bxPoint from "../../utils/bxPoint";
 
 Page({
@@ -153,7 +158,10 @@ Page({
       success(res) {
         console.log("直播信息", res)
         if ($notNull(res) && res.status === 2) {
-          self.setData({liveInfo: res})
+          getCurrentTimeChannelLiveInfo().then((data) => {
+            res.headUrl = data.cover || "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1640248293FUtNcA.jpg"
+            self.setData({liveInfo: res})
+          })
         }
       },
       fail(err) {
