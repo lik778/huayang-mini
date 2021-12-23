@@ -161,6 +161,8 @@ Page({
           getCurrentTimeChannelLiveInfo().then((data) => {
             res.headUrl = data.cover || "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1640248293FUtNcA.jpg"
             self.setData({liveInfo: res})
+          }).catch(() => {
+            self.setData({liveInfo: res})
           })
         }
       },
