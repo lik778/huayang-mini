@@ -443,6 +443,7 @@ Page({
 	/* 获取首页直播预告 */
 	getCurrentChannelLive() {
 		this.getChannelLiveInfo().then((data) => {
+			data.description = data.description || "花样喊你看直播"
 			this.setData({channelLiveInfo: data})
 		}).catch((err) => {
 			console.log(err);
