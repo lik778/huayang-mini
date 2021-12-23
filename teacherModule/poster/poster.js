@@ -4,6 +4,19 @@ import {
 import {
   getLocalStorage
 } from "../../utils/util"
+import {
+
+  drawImage,
+  drawFont,
+  drawManyText,
+  drawCircleHeadIcon,
+  drawCircleFill,
+  drawRact
+} from "../../utils/canvas"
+import {
+  getTeacherNewInfo,
+  createQrcode
+} from "../../api/teacherModule/index"
 
 // teacherModule/poster/poster.js
 Page({
@@ -14,7 +27,113 @@ Page({
   data: {
     logo1: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639720620rzUaXZ.jpg",
     systemInfo: '',
-    longScreen: true
+    longScreen: true,
+    teacherId: '',
+    detailInfo: '',
+    qrcode: "",
+    elementWidth: '',
+    elementHeight: ''
+  },
+
+
+  /* 保存海报 */
+  async savePoster() {
+    await this.drawPoster()
+    console.log(1)
+  },
+
+  /* 绘制海报 */
+  drawPoster() {
+    return new Promise(async resolve => {
+      wx.showLoading({
+        title: '绘制中',
+        mask: true
+      })
+
+      let elementWidth = this.data.elementWidth
+      let elementHeight = this.data.elementHeight
+
+      let ctx = wx.createCanvasContext('canvas')
+      ctx.scale(3, 3)
+
+      await drawRact(ctx, 0, 0, elementWidth, elementHeight, '#fff')
+
+      await drawImage(ctx, this.data.detailInfo.headIcon, 0, 0, elementWidth / 3, elementWidth / 3)
+
+      await drawFont(ctx, `花样百姓 - ${this.data.detailInfo.nickname}`, '#000', 'bold', 'PingFangSC-Medium, PingFang SC', 18, 20, elementWidth / 3 + 30)
+
+      await drawManyText(ctx, this.data.detailInfo.introduce, '#000', 'normal', 'PingFangSC-Regular, PingFang SC', 13, 20, elementWidth / 3 + 64, 286, 18)
+
+      await drawImage(ctx, this.data.logo1 + `?${new Date().getTime()}`, 20, (elementHeight / 3) - 75, 120, 40)
+
+      await drawImage(ctx, this.data.qrcode + `?${new Date().getTime()}`, (elementWidth / 3) - 83, (elementHeight / 3) - 94, 60, 60)
+
+      await drawFont(ctx, '长按识别查看', 'rgba(0,0,0，0.6)', 'normal', 'PingFangSC-Regular, PingFang SC', 11, 240, elementHeight / 3 - 32)
+
+      ctx.draw(false, () => {
+        wx.canvasToTempFilePath({
+          canvasId: 'canvas',
+          success(res) {
+            wx.hideLoading()
+            wx.saveImageToPhotosAlbum({
+              filePath: res.tempFilePath,
+              success: () => {
+                wx.showToast({
+                  title: '保存成功',
+                  duration: 1500,
+                })
+              },
+              fail(res2) {
+                wx.showModal({
+                  title: '相册授权',
+                  content: '保存失败，未获得您的授权，请前往设置授权',
+                  confirmText: '去设置',
+                  confirmColor: '#33c71b',
+                  success(res) {
+                    if (res.confirm) {
+                      wx.openSetting()
+                    }
+                  }
+                })
+              },
+            })
+          },
+        })
+      })
+
+    })
+
+  },
+
+  /* 获取老师详情 */
+  async getTeacherDetail() {
+    let detailInfo = await getTeacherNewInfo({
+      tutor_id: this.data.teacherId
+    })
+    let qrcode = await createQrcode({
+      tutor_id: this.data.teacherId,
+      filename: "师资名片_qrcode" + new Date().getTime() + '.png',
+      // path: "teacherModule/index/index",
+      path: "pages/discovery/discovery",
+      scene: `${this.data.teacherId}`
+    })
+    let info = detailInfo.data.tutor_info
+    info.headIcon = info.photo_wall.split(',')[0]
+    this.setData({
+      detailInfo: detailInfo.data.tutor_info,
+      qrcode: qrcode.data
+    }, () => {
+      let query = wx.createSelectorQuery();
+      query.select('.poster-main').boundingClientRect(async rect => {
+        let elementWidth = rect.width * 3
+        let elementHeight = rect.height * 3;
+        this.setData({
+          elementWidth,
+          elementHeight
+        })
+      }).exec();
+    })
+    console.log(detailInfo, qrcode)
   },
 
   /**
@@ -31,49 +150,20 @@ Page({
       },
     })
 
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
+    if (options.teacherId) {
+      this.setData({
+        teacherId: options.teacherId
+      }, () => {
+        this.getTeacherDetail()
+      })
+    } else {
+      wx.switchTab({
+        url: '/pages/discovery/discovery',
+      })
+    }
 
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
 
   /**
    * 用户点击右上角分享

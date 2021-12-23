@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "全部留言",
-  "usingComponents": {}
+  "usingComponents": {
+    "authModule": "../../components/auth/auth"
+  }
 }

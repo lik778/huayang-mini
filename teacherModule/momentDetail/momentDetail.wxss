@@ -42,7 +42,19 @@
   padding-top: 20rpx;
 }
 
-.moment-detail-image {}
+.moment-detail-image {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.moment-detail-image image {
+  width: 160rpx;
+  height: 160rpx;
+  vertical-align: bottom;
+  margin-right: 6rpx;
+  margin-bottom: 6rpx;
+}
 
 .moment-detail-image-one {
   display: flex;

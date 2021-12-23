@@ -1,4 +1,9 @@
 // teacherModule/momentList/momentList.js
+import {
+  getTeacherNewMomentList
+} from "../../api/teacherModule/index"
+import dayjs from "dayjs"
+
 Page({
 
   /**
@@ -7,20 +12,88 @@ Page({
   data: {
     uploadIcon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639626899gtUcEr.jpg",
     playIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639538242RdmCxq.jpg',
-    type: 3
+    pagination: {
+      tutor_id: "",
+      offset: 0,
+      limit: 10
+    },
+    type: 3,
+    lastMomentBelongYear: ""
+  },
+
+  /* 获取动态列表 */
+  getMomentList() {
+    getTeacherNewMomentList(this.data.pagination).then(({
+      data
+    }) => {
+      let list = data.list || []
+      let yestoday = dayjs().subtract(1, 'day').format('YYYY-MM-DD')
+      let today = dayjs().format('YYYY-MM-DD')
+      let nowYear = dayjs().format('YYYY')
+      let lastMomentYear = this.data.lastMomentBelongYear || nowYear
+      if (list.length) {
+        list.map((item) => {
+          let time = item.time.split(" ")[0]
+          if (dayjs(time).isSame(dayjs(yestoday))) {
+            item.dateType = '昨天'
+          } else if (dayjs(time).isSame(dayjs(today))) {
+            item.dateType = '今天'
+          } else {
+            let year = time.split('-')[0]
+            let month = time.split('-')[1]
+            let day = time.split('-')[2]
+            item.dateType = [year, month, day]
+          }
+          if (item.type === 2) {
+            item.media_type = 5
+          } else {
+            let url = item.media_url.split(',')
+            if (url.length <= 1) {
+              item.media_type = 1
+            } else if (url.length === 2) {
+              item.media_type = 2
+            } else if (url.length === 3) {
+              item.media_type = 3
+            } else if (url.length >= 4) {
+              item.media_type = 4
+            }
+            item.media_src = url
+          }
+          item.content = item.content.length > 38 ? item.content.substring(0, 38) + '...' : item.content
+        })
+        let newList = JSON.parse(JSON.stringify(list))
+        newList.map((item, index) => {
+          let nowMomentYear = item.time.split(' ')[0].split('-')[0]
+          if (nowMomentYear !== lastMomentYear) {
+            lastMomentYear = nowMomentYear
+            newList.splice(index, 0, {
+              time: '',
+              yearType: true,
+              year: nowMomentYear
+            })
+          }
+        })
+        console.log(newList)
+        this.setData({
+          momentList: newList,
+          lastMomentBelongYear: lastMomentYear
+        })
+      }
+    })
   },
 
   /* 前往发布动态 */
   toUpload() {
     wx.navigateTo({
-      url: '/teacherModule/momentPublish/momentPublish',
+      url: `/teacherModule/momentPublish/momentPublish?teacherId=${this.data.pagination.tutor_id}`,
     })
   },
 
   /* 前往动态详情 */
-  toMomentDetail() {
+  toMomentDetail(e) {
+    let item = e.currentTarget.dataset.item
     wx.navigateTo({
-      url: '/teacherModule/momentDetail/momentDetail',
+      url: `/teacherModule/momentDetail/momentDetail?momentId=${item.id}`,
     })
   },
 
@@ -28,42 +101,24 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if (options.teacherId) {
+      this.setData({
+        ['pagination.tutor_id']: options.teacherId
+      }, () => {
 
+      })
+    } else {
+      wx.switchTab({
+        url: '/pages/discovery/discovery',
+      })
+    }
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
+  onShow() {
+    wx.pageScrollTo({
+      duration: 0,
+      scrollTop: 0
+    })
+    this.getMomentList()
   },
 
   /**

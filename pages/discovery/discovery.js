@@ -27,6 +27,7 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
+		current:0,
 		isIosPlatform: false,
 		didShowAuth: false,
 		f1: [],

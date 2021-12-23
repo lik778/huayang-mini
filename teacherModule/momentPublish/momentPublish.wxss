@@ -60,6 +60,22 @@
   margin-bottom: 10rpx;
 }
 
+.moment-video {
+  width: 360rpx;
+  height: 480rpx;
+  vertical-align: bottom;
+}
+
+.play-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 96rpx;
+  height: 96rpx;
+  z-index: 9;
+}
+
 .preview-item:nth-child(3n) {
   margin-right: 0;
 }

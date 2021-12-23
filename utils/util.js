@@ -1,5 +1,8 @@
 import md5 from 'md5'
 import {
+	getOssCertificate
+} from "../api/task/index"
+import {
 	GLOBAL_KEY,
 	ROOT_URL,
 	URL,
@@ -17,8 +20,9 @@ import {
 	getUserInfo
 } from "../api/mine/index"
 import dayjs from "dayjs"
-
+import VODUpload from "./aliyun-upload-sdk-1.0.1.min"
 const livePlayer = requirePlugin('live-player-plugin')
+let aliyunUploader = null
 
 export const formatTime = date => {
 	const year = date.getFullYear()
@@ -1339,3 +1343,77 @@ export const preloadNetworkImg = (imgAry = []) => {
 	});
 	return Promise.all(promiseAry);
 };
+
+// 上传本地文件到微信服务器
+export const uploadFileToWxService = (filePath) => {
+	return new Promise((resolve, reject) => {
+		wx.uploadFile({
+			url: `${request.baseUrl}/hy/wx/applets/image/upload`,
+			filePath,
+			name: "hyimage",
+			success(res) {
+				let {
+					data
+				} = JSON.parse(res.data)
+				resolve(data)
+			},
+			error(err) {
+				let {
+					message
+				} = JSON.parse(err)
+				reject(message)
+			}
+		})
+	})
+}
+
+/* 直传视频到阿里云 */
+export const uploadVideoToAli = url => {
+	return new Promise(async resolve => {
+		wx.showLoading({
+			title: "上传中...",
+			mask: true
+		})
+		aliyunUploader = new VODUpload({
+			userId: "1416960148576552",
+			onUploadstarted: function (uploadInfo) {
+				let {
+					RequestId,
+					VideoId,
+					UploadAddress,
+					UploadAuth
+				} = aliyunUploader.custom_params
+				// 设置上传参数
+				aliyunUploader.setUploadAuthAndAddress(uploadInfo, UploadAuth, UploadAddress, VideoId)
+			},
+			// 文件上传成功
+			onUploadSucceed: function (uploadInfo) {
+				let callbackUrl = `https://video.huayangbaixing.com/${uploadInfo.object}`
+				wx.hideLoading()
+				resolve(callbackUrl)
+			},
+			// 文件上传失败
+			onUploadFailed: function (uploadInfo, code, message) {
+				console.error("文件上传失败", message)
+				wx.hideLoading()
+			},
+			// 上传凭证超时
+			onUploadTokenExpired: function (uploadInfo) {
+				console.error("上传凭证超时")
+			}
+		})
+
+		// 上传视频
+		let {
+			data
+		} = await getOssCertificate({
+			title: "video_task",
+			filename: url.split("://")[1]
+		})
+		aliyunUploader.custom_params = data
+		aliyunUploader.addFile({
+			url,
+		}, null, null, null, '{"Vod":{}}')
+		aliyunUploader.startUpload()
+	})
+}

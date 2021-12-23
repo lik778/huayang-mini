@@ -43,8 +43,7 @@
     "audio",
     "location"
   ],
-  "subpackages": [
-    {
+  "subpackages": [{
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -164,7 +163,8 @@
         "momentList/momentList",
         "momentPublish/momentPublish",
         "momentDetail/momentDetail",
-        "messageList/messageList"
+        "messageList/messageList",
+        "teacherList/teacherList"
       ]
     }
   ],
@@ -177,8 +177,7 @@
   },
   "tabBar": {
     "custom": true,
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/discovery/discovery"
       },
       {

@@ -1,5 +1,5 @@
 {
-  "navigationStyle": "custom",
+  "navigationBarTitleText": "花样之星",
   "usingComponents": {
     "authModule": "../../components/auth/auth"
   }

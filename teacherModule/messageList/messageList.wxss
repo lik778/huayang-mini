@@ -1,6 +1,7 @@
 /* teacherModule/messageList/messageList.wxss */
 .message-list-container {
   padding: 0 40rpx;
+  padding-bottom: 200rpx;
 }
 
 .message-list {}
@@ -16,6 +17,10 @@
   border: none;
 }
 
+.message-item-left-box {
+  display: flex;
+}
+
 .message-item-left {}
 
 .message-item-left image {
@@ -26,6 +31,7 @@
 }
 
 .message-item-mid {
+  width: 480rpx;
   padding-left: 20rpx;
   padding-right: 40rpx;
 }
@@ -91,6 +97,7 @@
   width: 100vw;
   height: 160rpx;
   border-top: 0.5px solid #DDDDDD;
+  background-color: #fff;
 }
 
 .message-publish-box {

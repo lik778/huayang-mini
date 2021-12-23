@@ -21,6 +21,12 @@
   vertical-align: bottom;
 }
 
+.swiper-image image {
+  width: 100%;
+  height: 100%;
+  vertical-align: bottom;
+}
+
 .swiper-indicator {
   position: absolute;
   right: 40rpx;
@@ -344,6 +350,11 @@
 .message-item {
   display: flex;
   padding-bottom: 40rpx;
+  align-items: center;
+}
+
+.message-item-left-box {
+  display: flex;
 }
 
 .message-item-left {}
@@ -356,6 +367,7 @@
 }
 
 .message-item-mid {
+  width: 480rpx;
   margin-left: 20rpx;
   margin-right: 40rpx;
 }
@@ -375,18 +387,23 @@
   color: rgba(0, 0, 0, 0.6);
   line-height: 40rpx;
   margin-top: 16rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .message-item-right {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   font-size: 28rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: rgba(0, 0, 0, 0.6);
   line-height: 28rpx;
-  padding-top: 26rpx;
 }
 
 .message-item-right image {

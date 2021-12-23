@@ -2,25 +2,26 @@
 <view class="moment-detail-container">
   <view class="moment-detail">
     <view class="moment-detail-left">
-      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+      <image src="{{teacherInfo.headIcon}}"></image>
     </view>
     <view class="moment-detail-right">
-      <view class="moment-detail-title">三个批发商</view>
-      <view class="moment-detail-desc">今天星期一明天星期二，后天星。</view>
+      <view class="moment-detail-title">{{teacherInfo.nickname}}</view>
+      <view class="moment-detail-desc">{{momentDetailInfo.content}}</view>
       <view class="moment-detail-media">
-        <view class="moment-detail-image-one" wx:if='{{true}}'>
-          <image mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+        <view class="moment-detail-image-one" wx:if='{{momentDetailInfo.mediaType===1}}'>
+          <image mode="widthFix" src="{{momentDetailInfo.mediaUrl[0]}}"></image>
         </view>
-        <view class="moment-detail-image" wx:else>
+        <view class="moment-detail-image" wx:if='{{momentDetailInfo.mediaType===2}}'>
+          <image mode="aspectFill" bindtap="previewImage" data-item='{{item}}' wx:key='index' wx:for="{{momentDetailInfo.mediaUrl}}" src="{{item}}"></image>
         </view>
-        <view class="moment-detail-video">
-          <video src="" controls="{{false}}" show-play-btn="{{false}}"></video>
-          <image src="{{playIcon}}"></image>
+        <view class="moment-detail-video" wx:if='{{momentDetailInfo.mediaType===3}}'>
+          <video id='moment-video' src="{{momentDetailInfo.media_url}}" controls="{{showControls}}" bindfullscreenchange='switchControls' show-center-play-btn="{{false}}"></video>
+          <image bindtap="playVideo" wx:if='{{!playingVideo}}' src="{{playIcon}}"></image>
         </view>
       </view>
       <view class="moment-detail-time">
-        <text>今天 17:33</text>
-        <view class="moment-detail-time-delete">删除</view>
+        <text>{{momentDetailInfo.dateType}}</text>
+        <view class="moment-detail-time-delete" wx:if="{{isOwner}}" bindtap="deleteMoment">删除</view>
       </view>
     </view>
   </view>

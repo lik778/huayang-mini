@@ -1,46 +1,36 @@
 <!--teacherModule/messageList/messageList.wxml-->
 <view class="message-list-container">
   <view class="message-list">
-    <view class="message-item">
-      <view class="message-item-left">
-        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
-      </view>
-      <view class="message-item-mid">
-        <view class="message-item-mid-top">小花花</view>
-        <view class="message-item-mid-bottom">方圆老师真是太棒了，热情积极，超有亲和力，好想参加有她的活动啊！</view>
+    <view class="message-item" wx:for="{{commentList}}" wx:key='index'>
+      <view class="message-item-left-box">
+        <view class="message-item-left">
+          <image src="{{item.headimg_url}}"></image>
+        </view>
+        <view class="message-item-mid">
+          <view class="message-item-mid-top">{{item.nickname}}</view>
+          <view class="message-item-mid-bottom">{{item.content}}</view>
+        </view>
       </view>
       <view class="message-item-right">
-        <view class="message-item-right-top">
-          <image wx:if="{{true}}" src="{{likeIcon}}"></image>
+        <view class="message-item-right-top" bindtap="likeComment" data-item="{{item}}">
+          <image wx:if="{{item.has_like}}" src="{{likeIcon}}"></image>
           <image wx:else src="{{unLikeIcon}}"></image>
-          <text>369</text>
+          <text>{{item.like_count}}</text>
         </view>
-        <view class="message-item-right-bottom">删除</view>
-      </view>
-    </view>
-    <view class="message-item">
-      <view class="message-item-left">
-        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
-      </view>
-      <view class="message-item-mid">
-        <view class="message-item-mid-top">小花花</view>
-        <view class="message-item-mid-bottom">方圆老师真是太棒了，热情积极，超有亲和力，好想参加有她的活动啊！</view>
-      </view>
-      <view class="message-item-right">
-        <view class="message-item-right-top">
-          <image wx:if="{{true}}" src="{{likeIcon}}"></image>
-          <image wx:else src="{{unLikeIcon}}"></image>
-          <text>369</text>
-        </view>
-        <view class="message-item-right-bottom">删除</view>
+        <view class="message-item-right-bottom" wx:if="{{isOwner}}" bindtap="deleteComment" data-item="{{item}}">删除</view>
       </view>
     </view>
   </view>
 
   <view class="message-publish">
     <view class="message-publish-box">
-      <input type="text" placeholder="请输入您的留言" />
-      <view class="message-publish-button">留言</view>
+      <input type="text" value="{{commentInputValue}}" placeholder="请输入您的留言" bindinput="inputComment" />
+      <view class="message-publish-button" bindtap="publishComment">留言</view>
     </view>
   </view>
+
+  <!-- 授权弹窗 -->
+  <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
+  </authModule>
+
 </view>
