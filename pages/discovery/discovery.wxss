@@ -64,7 +64,6 @@
 .notice-left {
   display: flex;
   align-items: center;
-  flex: 1;
   font-size: 0;
 }
 
@@ -83,8 +82,8 @@
 }
 
 .notice-title {
-  flex: 1;
-  margin: 0 16rpx;
+  max-width: 300rpx;
+  margin-left: 16rpx;
   font: 500 28rpx/40rpx PingFangSC;
   color: #666666;
 }
