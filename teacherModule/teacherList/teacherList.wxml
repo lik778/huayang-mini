@@ -5,7 +5,7 @@
     <view class="teacher-list-title-item {{currentTabIndex===2?'teacher-list-title-item-active':''}}" bindtap="changeTab" data-index='2'>团队</view>
   </view>
   <view class="teacher-list-main" style="padding-top:{{showTab?'176rpx':0}}">
-    <view class="teacher-list-item" wx:for="{{list}}" wx:key="index">
+    <view class="teacher-list-item" wx:for="{{list}}" wx:key="index" bindtap="toTeacherDetail" data-item="{{item}}">
       <view class="teacher-list-item-left">
         <view class="teacher-list-item-left-left">
           <image src="{{item.headIcon}}"></image>

@@ -153,7 +153,7 @@ Page({
     }
     bxPoint('teacher_message_wall_write', {
       teacher_id: this.data.teacherId
-    },false)
+    }, false)
     if (!this.data.commentPublishLock) {
       this.setData({
         commentPublishLock: true

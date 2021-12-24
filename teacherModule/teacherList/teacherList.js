@@ -31,6 +31,14 @@ Page({
     hasAuth: false, //是否授完权
   },
 
+  /* 前往老师详情 */
+  toTeacherDetail(e) {
+    let item = e.currentTarget.dataset.item
+    wx.navigateTo({
+      url: `/teacherModule/index/index?id=${item.id}`,
+    })
+  },
+
   /* 取消授权 */
   authCancelEvent() {
     this.setData({
@@ -159,6 +167,8 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "花样之星-花样优秀师资介绍",
+    }
   }
 })
