@@ -24,7 +24,7 @@
   <view class="poster-button-line-one" wx:else>
     <view class="poster-button-left-one">
       <text>分享好友</text>
-      <button open-type="share" class="button-share"></button>
+      <button open-type="share" class="button-share" bindtap="shareTap"></button>
     </view>
     <view class="poster-button-right-one" bindtap="savePoster">保存图片</view>
   </view>

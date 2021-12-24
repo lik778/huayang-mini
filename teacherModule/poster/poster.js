@@ -17,7 +17,7 @@ import {
   getTeacherNewInfo,
   createQrcode
 } from "../../api/teacherModule/index"
-
+import bxPoint from "../../utils/bxPoint"
 // teacherModule/poster/poster.js
 Page({
 
@@ -35,11 +35,19 @@ Page({
     elementHeight: ''
   },
 
+  /* 分享好友 */
+  shareTap(){
+    bxPoint('teacher_poster_share_click', {
+      teacher_id: this.data.teacherId
+    },false)
+  },
 
   /* 保存海报 */
   async savePoster() {
+    bxPoint('teacher_poster_save_click', {
+      teacher_id: this.data.teacherId
+    },false)
     await this.drawPoster()
-    console.log(1)
   },
 
   /* 绘制海报 */
@@ -154,6 +162,9 @@ Page({
       this.setData({
         teacherId: options.teacherId
       }, () => {
+        bxPoint('teacher_poster_page', {
+          teacher_id: this.data.teacherId
+        })
         this.getTeacherDetail()
       })
     } else {

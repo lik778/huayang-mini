@@ -17,6 +17,7 @@ import {
 import {
   getLocalStorage
 } from "../../utils/util"
+import bxPoint from "../../utils/bxPoint"
 Page({
 
   /**
@@ -53,6 +54,9 @@ Page({
       link_type,
       id
     } = data
+    bxPoint('teacher_banner_click', {
+      teacher_id: this.data.teacherId
+    }, false)
     this.naviMiniProgram(link, link_type)
   },
 
@@ -126,6 +130,9 @@ Page({
       })
       return
     }
+    bxPoint('teacher_detail_like', {
+      teacher_id: this.data.teacherId
+    }, false)
     if (!this.data.teacherLikeLock) {
       this.setData({
         teacherLikeLock: true
@@ -187,6 +194,9 @@ Page({
       })
       return
     }
+    bxPoint('teacher_message_write', {
+      teacher_id: this.data.teacherId
+    }, false)
     if (!this.data.commentPublishLock) {
       this.setData({
         commentPublishLock: true
@@ -330,6 +340,10 @@ Page({
     if (options.id || options.scene) {
       this.setData({
         teacherId: options.id || options.scene
+      }, () => {
+        bxPoint('teacher_detail_page', {
+          teacher_id: this.data.teacherId
+        })
       })
       this.getBannerList()
     } else {
@@ -366,6 +380,9 @@ Page({
 
   /* 前往留言板列表 */
   toMessageList() {
+    bxPoint('teacher_message_wall_more', {
+      teacher_id: this.data.teacherId
+    }, false)
     wx.navigateTo({
       url: `/teacherModule/messageList/messageList?teacherId=${this.data.teacherId}`,
     })
@@ -373,6 +390,9 @@ Page({
 
   /* 前往荣誉列表 */
   toHonorList() {
+    bxPoint('teacher_my_honor_all', {
+      teacher_id: this.data.teacherId
+    }, false)
     wx.navigateTo({
       url: `/teacherModule/honorList/honorList?teacherId=${this.data.teacherId}`,
     })
@@ -388,6 +408,9 @@ Page({
 
   /* 前往动态列表 */
   toMomentList() {
+    bxPoint('teacher_my_trends_all', {
+      teacher_id: this.data.teacherId
+    }, false)
     wx.navigateTo({
       url: `/teacherModule/momentList/momentList?teacherId=${this.data.teacherId}`,
     })
@@ -395,6 +418,9 @@ Page({
 
   /* 前往分享 */
   toShare() {
+    bxPoint('teacher_detail_share', {
+      teacher_id: this.data.teacherId
+    }, false)
     wx.navigateTo({
       url: `/teacherModule/poster/poster?teacherId=${this.data.teacherId}`,
     })

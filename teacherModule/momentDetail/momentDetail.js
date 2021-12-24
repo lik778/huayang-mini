@@ -11,6 +11,7 @@ import {
 import {
   GLOBAL_KEY
 } from "../../lib/config";
+import bxPoint from "../../utils/bxPoint"
 Page({
 
   /**
@@ -108,6 +109,11 @@ Page({
 
   /* 获取老师信息 */
   getTeacherInfo() {
+
+    bxPoint('teacher_my_trends_page', {
+      teacher_id: this.data.momentDetailInfo.tutor_id
+    })
+
     getTeacherNewInfo({
       tutor_id: this.data.momentDetailInfo.tutor_id
     }).then(({
@@ -170,6 +176,7 @@ Page({
       this.setData({
         momentId: options.momentId
       }, () => {
+      
         this.getMomentDetail()
 
       })

@@ -43,11 +43,13 @@ Page({
       return
     }
     let item = e.currentTarget.dataset.item
+    let limit = this.data.pagination.offset + this.data.pagination.limit
     likeTeacherNewComment({
       comment_id: item.id
     }).then(res => {
       this.setData({
-        ['pagination.offset']: 0
+        ['pagination.offset']: 0,
+        ['pagination.limit']: limit,
       }, () => {
         this.getCommentList(true)
       })
@@ -149,6 +151,9 @@ Page({
       })
       return
     }
+    bxPoint('teacher_message_wall_write', {
+      teacher_id: this.data.teacherId
+    },false)
     if (!this.data.commentPublishLock) {
       this.setData({
         commentPublishLock: true
@@ -197,22 +202,19 @@ Page({
       data
     }) => {
       let listCopy = this.data.commentList.concat()
-      listCopy = refresh ? data.list || [] : listCopy.concat(data.list || [])
-
       let list = []
-      if (listCopy.length) {
-        listCopy.map(item => {
+      if (data.list.length) {
+        data.list.map(item => {
           let obj = JSON.parse(JSON.stringify(item.comment))
           obj.has_like = item.has_like
           list.push(obj)
         })
       }
-
+      listCopy = refresh ? list : listCopy.concat(list)
       this.setData({
-        commentList: list,
+        commentList: listCopy,
         noData: data.list ? data.list.length >= this.data.pagination.limit ? false : true : true
       })
-      console.log(list)
     })
   },
 
@@ -234,6 +236,9 @@ Page({
         ['pagination.tutor_id']: options.teacherId,
         teacherId: options.teacherId
       }, () => {
+        bxPoint('teacher_message_wall_page', {
+          teacher_id: this.data.teacherId
+        })
         this.getCommentList()
         this.initUserAuthStatus()
       })

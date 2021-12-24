@@ -2,6 +2,7 @@
 import {
   getTeacherNewHonorList
 } from "../../api/teacherModule/index"
+import bxPoint from "../../utils/bxPoint"
 Page({
 
   /**
@@ -40,6 +41,9 @@ Page({
       this.setData({
         ['pagination.tutor_id']: options.teacherId
       }, () => {
+        bxPoint('teacher_my_honor_page', {
+          teacher_id: options.teacherId
+        })
         this.getHonorList()
       })
     } else {

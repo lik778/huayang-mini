@@ -9,6 +9,7 @@ import {
   getTeacherNewTeacherList,
   likeTeacherNew
 } from "../../api/teacherModule/index"
+
 Page({
 
   /**
@@ -57,6 +58,7 @@ Page({
     }
 
     let item = e.currentTarget.dataset.item
+    let limit = this.data.pagination.offset + this.data.pagination.limit
     likeTeacherNew({
       tutor_id: item.id
     }).then(res => {
@@ -75,7 +77,12 @@ Page({
           mask: true
         })
       }
-      this.getList(true)
+      this.setData({
+        ['pagination.offset']: 0,
+        ['pagination.limit']: limit,
+      }, () => {
+        this.getList(true)
+      })
     })
   },
 
