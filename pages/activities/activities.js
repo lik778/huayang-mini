@@ -119,7 +119,14 @@ Page({
     }, false)
 
     link += `/#/home/detail/${item.id}`
-    wx.navigateTo({url: `/pages/pureWebview/pureWebview?link=${link}`})
+
+    if (+item.pay_online === 1) {
+      // 收费活动
+      wx.navigateTo({url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}`})
+    } else {
+      // 免费活动
+      wx.navigateTo({url: `/pages/pureWebview/pureWebview?link=${link}`})
+    }
   },
   onContactLogoTap() {
     wx.openCustomerServiceChat({

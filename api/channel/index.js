@@ -13,6 +13,38 @@ export function getChannelLives(params) {
 }
 
 /**
+ * 直播预告首页显示
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export function getHomeChannelLive(params) {
+	return new Promise((resolve, reject) => {
+		request._get(URL.queryHomeChannelLive, params).then(({data}) => {
+			data = data || []
+			resolve(data)
+		}).catch((err) => {
+			reject(err)
+		})
+	})
+}
+
+/**
+ * 获取当前时间段的视频号直播信息
+ * @param params
+ * @returns {Promise<unknown>}
+ */
+export function getCurrentTimeChannelLiveInfo(params) {
+	return new Promise((resolve, reject) => {
+		request._get(URL.queryCurrentTimeChannelLive, params).then(({data}) => {
+			data = data || {}
+			resolve(data)
+		}).catch((err) => {
+			reject(err)
+		})
+	})
+}
+
+/**
  * 获取用户预约的单场视频号直播间
  * @param params
  * @returns {Promise<unknown>}

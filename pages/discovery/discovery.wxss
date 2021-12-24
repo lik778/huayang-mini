@@ -46,6 +46,53 @@
   background: #FF5544;
 }
 
+/* 直播预告 */
+.live-notice {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 88rpx;
+  padding: 0 20rpx;
+  margin: 40rpx 40rpx 0;
+  background: #FFF1F1;
+}
+
+.live-notice:active {
+  opacity: 0.8;
+}
+
+.notice-left {
+  display: flex;
+  align-items: center;
+  font-size: 0;
+}
+
+.notice-status {
+  padding: 4rpx 20rpx;
+  border-radius: 999rpx;
+  font: 28rpx/40rpx PingFangSC;
+  background: #FF5C39;
+  color: white;
+}
+
+.notice-img {
+  width: 25rpx;
+  height: 25rpx;
+  margin-left: 8rpx;
+}
+
+.notice-title {
+  max-width: 300rpx;
+  margin-left: 16rpx;
+  font: 500 28rpx/40rpx PingFangSC;
+  color: #666666;
+}
+
+.notice-right {
+  font: 500 28rpx/40rpx PingFangSC;
+  color: #FF5544;
+}
+
 /* icons */
 .icons {
   overflow: hidden;
