@@ -3,7 +3,7 @@
   <view class="main" style="align-items: {{longScreen?'center':'flex-start'}}">
     <view class="poster-main">
       <view class="poster-main-bg">
-        <image src="{{detailInfo.headIcon}}"></image>
+        <image src="{{detailInfo.headIcon}}" style="width:{{elementWidth/3}}px;height:{{elementWidth/3}}px"></image>
       </view>
       <view class="poster-main-title">花样百姓 - {{detailInfo.nickname}}</view>
       <view class="poster-main-desc">{{detailInfo.introduce}}</view>

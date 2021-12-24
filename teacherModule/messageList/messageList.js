@@ -11,6 +11,7 @@ import {
   deleteTeacherNewComment,
   likeTeacherNewComment
 } from "../../api/teacherModule/index"
+import bxPoint from "../../utils/bxPoint"
 Page({
 
   /**
