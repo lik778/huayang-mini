@@ -14,30 +14,16 @@
 
 /* 个人信息  */
 .banner {
-    width: 100%;
-    height: 502rpx;
-    position: relative;
-}
-
-.banner.partner {
-    height: 828rpx;
+    margin-bottom: 40rpx;
 }
 
 .banner-bg {
-    width: 100%;
-    height: 502rpx;
+    height: 400rpx;
+    background: black;
 }
 
-.banner-bg.nodata {
+.banner-bg.sign {
     height: 556rpx;
-}
-
-.banner-bg.partner {
-    height: 828rpx;
-}
-
-.banner-bg.signIn {
-    height: 624rpx;
 }
 
 .message {
@@ -82,7 +68,6 @@
     font: 600 32rpx/80rpx PingFangSC;
     text-align: center;
     background: #FF5544;
-    border-radius: 999rpx;
 }
 
 .message .user-info {
@@ -126,67 +111,6 @@
     line-height: 52rpx;
 }
 
-.message .lifetime {
-    margin-top: 24rpx;
-    font: 36rpx/36rpx PingFangSC;
-    color: white;
-}
-
-.first-distribute {
-    position: absolute;
-    top: 384rpx;
-    width: 100vw;
-    box-sizing: border-box;
-    padding: 0 40rpx;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font: 32rpx/32rpx PingFangSC;
-    color: white;
-}
-
-.first-distribute text text {
-    padding-left: 12rpx;
-}
-
-.first-distribute.second-distribute {
-    top: 458rpx;
-}
-
-.distribute-content {
-    display: flex;
-    align-items: center;
-}
-
-.distribute-avatar {
-    width: 48rpx;
-    height: 48rpx;
-    margin-right: 12rpx;
-    border-radius: 999rpx;
-}
-
-.more-list {
-    font-size: 32rpx;
-    font-family: PingFangSC-Light, PingFang SC;
-    font-weight: 300;
-    color: rgba(250, 250, 250, 0.7);
-    line-height: 32rpx;
-}
-
-.distribute-btn {
-    position: absolute;
-    top: 560rpx;
-    left: 136rpx;
-    width: 480rpx;
-    height: 80rpx;
-    font: 500 32rpx/80rpx PingFangSC;
-    text-align: center;
-    border-radius: 999rpx;
-    color: #834B25;
-    background: #FF5544 linear-gradient(90deg, #FBD8B3 0%, #ECCBA9 100%);
-    animation: flashing 4s ease infinite;
-}
-
 /* 专属邀请码 */
 .invite-self-code {
     position: absolute;
@@ -219,206 +143,6 @@
     color: #834B25;
     background: #FF5544 linear-gradient(90deg, #FBD8B3 0%, #ECCBA9 100%);
     border-radius: 999rpx;
-}
-
-/* 畅学卡 */
-.vip-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-    top: -128rpx;
-    width: 650rpx;
-    height: 280rpx;
-    margin: 0 auto 42rpx;
-    padding: 40rpx 40rpx 30rpx;
-    box-sizing: border-box;
-    border-radius: 20rpx;
-    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612780577ayAFJu.jpg") no-repeat center;
-    background-size: contain;
-}
-
-.vip-card.partner {
-    top: -208rpx;
-}
-
-.vip-card.overdue {
-    background-image: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1612507782rKcPcv.jpg");
-}
-
-.card-title {
-    margin-bottom: 20rpx;
-    font: 500 40rpx/40rpx PingFangSC;
-    color: #FFE8D0;
-}
-
-.card-title.overdue {
-    color: black;
-}
-
-.card-desc {
-    font: 32rpx/32rpx PingFangSC;
-    color: #FFFFFF;
-}
-
-.card-desc.overdue {
-    color: black;
-}
-
-.card-data {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.card-info {
-    display: flex;
-    flex-direction: column;
-    color: #874F29;
-}
-
-.card-nick-name {
-    color: #FFE8D0;
-    font: 500 28rpx/28rpx PingFangSC;
-}
-
-.card-nick-name.overdue {
-    color: #636363;
-}
-
-.expireDate {
-    margin-top: 16rpx;
-    font: 400 28rpx/28rpx PingFangSC;
-    color: #FFE8D0;
-}
-
-.vip-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 216rpx;
-    height: 72rpx;
-    border-radius: 999rpx;
-    border: 2rpx solid #F0D3B4;
-    box-sizing: border-box;
-    text-align: center;
-    color: #F2D7B9;
-    font: 32rpx/32rpx PingFangSC;
-}
-
-.vip-btn.overdue {
-    border: 0 none;
-    color: #F6E5D0;
-    background: linear-gradient(90deg, #262321 0%, #3E3733 100%);
-}
-
-/* 引导按钮 */
-.guide-btn {
-    position: relative;
-    top: -108rpx;
-    width: 630rpx;
-    height: 88rpx;
-    margin: 0 auto 40rpx;
-    border-radius: 999rpx;
-    color: #834B25;
-    font: 500 36rpx/88rpx PingFangSC;
-    text-align: center;
-    background: linear-gradient(90deg, #FBD8B3 0%, #ECCBA9 100%);
-    animation: flashing 5s ease infinite;
-}
-
-.guide-btn.partner {
-    top: -212rpx
-}
-
-.guide-btn:active {
-    opacity: 0.9;
-}
-
-/* 我的 */
-.person {
-    width: calc(100% - 60rpx);
-    margin: 0 auto;
-    padding: 30rpx;
-    background: #fff;
-    border-radius: 8rpx;
-    box-sizing: border-box;
-    box-shadow: 0px 0px 12rpx 0px rgba(0, 0, 0, 0.05);
-    position: relative;
-    top: -108rpx;
-}
-
-.person.partner {
-    top: -212rpx;
-}
-
-.layout {
-    margin-bottom: 50rpx;
-    font: 500 44rpx/60rpx PingFangSC;
-    color: #333;
-}
-
-.person-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 40rpx;
-}
-
-.content-element {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 192rpx;
-    height: 244rpx;
-    border-radius: 20rpx;
-    box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-    background: white;
-}
-
-.content-element:active {
-    opacity: 0.8;
-}
-
-.ele-icon {
-    width: 56rpx;
-    height: 56rpx;
-    font-size: 0;
-}
-
-.ele-title {
-    margin: 4rpx 0 16rpx;
-    font: 36rpx/44rpx Helvetica;
-}
-
-.ele-btn {
-    width: 128rpx;
-    height: 56rpx;
-    border-radius: 999rpx;
-    box-sizing: border-box;
-    border: 2rpx solid #FF5544;
-    font: 500 32rpx/52rpx PingFangSC;
-    color: #FF5544;
-    text-align: center;
-}
-
-.ele-no {
-    font: 500 56rpx/80rpx PingFangSC;
-    color: #333;
-}
-
-.add-btn {
-    width: 630rpx;
-    height: 96rpx;
-    font-size: 0;
-    animation: flashing 5s ease infinite;
-}
-
-.add-btn:active {
-    opacity: 0.8;
 }
 
 /* 广告位 */
@@ -457,16 +181,6 @@
     background: #fff;
     border-radius: 8rpx;
     box-shadow: 0 0 12rpx 0px rgba(0, 0, 0, 0.05);
-    position: relative;
-    top: -108rpx;
-}
-
-.function.nodata {
-    top: 100rpx;
-}
-
-.function.partner {
-    top: -172rpx;
 }
 
 .function-item {
@@ -477,7 +191,6 @@
     margin-right: 38rpx;
     border-bottom: 1px solid #F2F2F2;
     padding: 24rpx 0 20rpx 0;
-    position: relative;
 }
 
 .function-item:last-child {
@@ -559,131 +272,6 @@
     16% {
         transform: scale(1);
     }
-}
-
-
-/* 余额指示弹窗 */
-.money-notice-main-position {
-    position: absolute;
-    left: -20px;
-    top: 0;
-    width: calc(100vw - 30px);
-    height: 100%;
-    z-index: 11;
-    animation: slideContentUp 0.3s linear forwards;
-}
-
-.money-notice-main-position>view {
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
-
-.money-notice {
-    position: absolute;
-    z-index: 10;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.67);
-    animation: slideContentUp 0.2s linear forwards;
-}
-
-.money-notice-bg {
-    position: relative;
-    width: calc(100% - 60rpx);
-    height: 100%;
-    margin: 0 auto;
-}
-
-.money-notice-main {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 0;
-    width: calc(100% - 60rpx);
-    display: flex;
-    justify-content: space-between;
-    background: #fff;
-    align-items: center;
-    padding: 30rpx;
-}
-
-.money-notice-main-left {
-    display: flex;
-    align-items: center;
-}
-
-.money-notice-main-left-icon image {
-    width: 52rpx;
-    height: 52rpx;
-    padding-right: 28rpx;
-    vertical-align: bottom;
-}
-
-.money-notice-main-left-desc-top {
-    font-size: 36rpx;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
-    color: #000000;
-    line-height: 36rpx;
-    padding-bottom: 20rpx;
-}
-
-.money-notice-main-left-desc-bottom {
-    font-size: 28rpx;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
-    color: rgba(0, 0, 0, 0.6);
-    line-height: 28rpx;
-}
-
-.money-notice-main-left-desc-bottom text {
-    font-size: 28rpx;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
-    color: #FF5544;
-    line-height: 28rpx;
-}
-
-.money-notice-main-right image {
-    width: 12rpx;
-    height: 24rpx;
-    vertical-align: bottom;
-}
-
-.money-notice-sign {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 160rpx;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.money-notice-sign image {
-    width: 16rpx;
-    height: 94rpx;
-    vertical-align: bottom;
-
-}
-
-.money-notice-sign view {
-    font-size: 36rpx;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
-    color: #FFFFFF;
-    line-height: 60rpx;
-}
-
-.money-notice-hide {
-    animation: slideContentDown 0.3s linear forwards;
-}
-
-.money-notice-main-position-hide {
-    animation: slideContentDown 0.3s linear forwards;
 }
 
 /* 动画 */
