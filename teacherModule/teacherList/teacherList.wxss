@@ -95,6 +95,7 @@
   font-weight: 400;
   color: rgba(0, 0, 0, 0.8);
   line-height: 40rpx;
+  word-wrap: break-word;
 }
 
 .teacher-list-item-right {

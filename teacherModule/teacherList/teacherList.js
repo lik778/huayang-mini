@@ -31,7 +31,7 @@ Page({
     hasAuth: false, //是否授完权
   },
 
-  catchTap(){},
+  catchTap() {},
 
   /* 前往老师详情 */
   toTeacherDetail(e) {
@@ -121,7 +121,6 @@ Page({
           list: listCopy,
           noData: data.list.length >= this.data.pagination.limit ? false : true
         })
-        console.log(list)
       })
     }
 
@@ -139,6 +138,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+    this.getList()
+  },
+
+  onShow() {
     if (getLocalStorage(GLOBAL_KEY.userId)) {
       this.setData({
         hasAuth: true
@@ -148,7 +152,6 @@ Page({
         hasAuth: false
       })
     }
-    this.getList()
   },
 
 

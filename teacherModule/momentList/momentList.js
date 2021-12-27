@@ -2,6 +2,12 @@
 import {
   getTeacherNewMomentList
 } from "../../api/teacherModule/index"
+import {
+  getLocalStorage
+} from "../../utils/util"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 import dayjs from "dayjs"
 
 Page({
@@ -17,8 +23,11 @@ Page({
       offset: 0,
       limit: 10
     },
+    statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
     type: 3,
-    lastMomentBelongYear: ""
+    teacherUserId: "",
+    lastMomentBelongYear: "",
+    backPath: ""
   },
 
   /* 获取动态列表 */
@@ -73,7 +82,6 @@ Page({
             })
           }
         })
-        console.log(newList)
         this.setData({
           momentList: newList,
           lastMomentBelongYear: lastMomentYear
@@ -93,17 +101,34 @@ Page({
   toMomentDetail(e) {
     let item = e.currentTarget.dataset.item
     wx.navigateTo({
-      url: `/teacherModule/momentDetail/momentDetail?momentId=${item.id}`,
+      url: `/teacherModule/momentDetail/momentDetail?momentId=${item.id}&teacherUserId=${this.data.teacherUserId}`,
     })
+  },
+
+  /* 初始化登录状态 */
+  initUserAuthStatus() {
+    let publishUserId = this.data.teacherUserId
+    let authUserId = getLocalStorage(GLOBAL_KEY.userId) ? getLocalStorage(GLOBAL_KEY.userId) : ''
+    if (Number(publishUserId) === Number(authUserId)) {
+      this.setData({
+        isOwner: true
+      })
+    } else {
+      this.setData({
+        isOwner: false
+      })
+    }
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (options.teacherId) {
+    if (options.teacherId && options.teacherUserId) {
       this.setData({
-        ['pagination.tutor_id']: options.teacherId
+        ['pagination.tutor_id']: options.teacherId,
+        teacherUserId: options.teacherUserId,
+        backPath: `/teacherModule/index/index?id=${options.teacherId}`
       }, () => {
 
       })
@@ -118,6 +143,7 @@ Page({
       duration: 0,
       scrollTop: 0
     })
+    this.initUserAuthStatus()
     this.getMomentList()
   },
 
@@ -132,6 +158,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "有一条你关注的动态",
+      path: `/teacherModule/index/index?teacherId=${this.data.teacherUserId}`
+    }
   }
 })

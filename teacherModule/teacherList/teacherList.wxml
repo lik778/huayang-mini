@@ -12,10 +12,10 @@
         </view>
         <view class="teacher-list-item-left-right">
           <view class="teacher-list-item-left-right-top">{{item.nickname}}</view>
-          <view class="teacher-list-item-left-right-bottom">{{item.introduce}}</view>
+          <view class="teacher-list-item-left-right-bottom">{{item.slogan}}</view>
         </view>
       </view>
-      <view class="teacher-list-item-right" catchtap="{{item.has_like?'catchTap':'likeTeacher'}}" data-item='{{item}}'>
+      <view class="teacher-list-item-right" catchtap="likeTeacher" data-item='{{item}}'>
         <image src="{{likeIcon}}" wx:if='{{item.has_like}}'></image>
         <image src="{{unLikeIcon}}" wx:else></image>
         <text>{{item.like_count}}</text>

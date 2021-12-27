@@ -1,0 +1,71 @@
+/* components/naviBarBack/naviBarBack.wxss */
+.navibar-back {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  z-index: 99;
+}
+
+.type-one {
+  position: fixed;
+  left: 14rpx;
+  z-index: 100;
+}
+
+.type-one image {
+  width: 64rpx;
+  height: 64rpx;
+  vertical-align: bottom;
+}
+
+.type-two {
+  width: 100vw;
+  background: transparent;
+  position: relative;
+}
+
+.type-two image {
+  width: 64rpx;
+  height: 64rpx;
+  vertical-align: bottom;
+  position: absolute;
+  left: 14rpx;
+  font-size: 34rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 38rpx;
+}
+
+.type-two text {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+
+.type-three {
+  width: 100vw;
+  background: transparent;
+  position: relative;
+}
+
+.type-three image {
+  width: 64rpx;
+  height: 64rpx;
+  vertical-align: bottom;
+  position: absolute;
+  left: 14rpx;
+  font-size: 34rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 38rpx;
+}
+
+.type-three text {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}

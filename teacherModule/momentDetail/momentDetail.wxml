@@ -1,11 +1,12 @@
 <!--teacherModule/momentDetail/momentDetail.wxml-->
 <view class="moment-detail-container">
+  <naviBar title='动态详情' showType='3' backPath="{{backPath}}" needRedirect='{{true}}'></naviBar>
   <view class="moment-detail">
     <view class="moment-detail-left">
       <image src="{{teacherInfo.headIcon}}"></image>
     </view>
     <view class="moment-detail-right">
-      <view class="moment-detail-title">{{teacherInfo.nickname}}</view>
+      <view class="moment-detail-title">{{teacherInfo.tutor_info.nickname}}</view>
       <view class="moment-detail-desc">{{momentDetailInfo.content}}</view>
       <view class="moment-detail-media">
         <view class="moment-detail-image-one" wx:if='{{momentDetailInfo.mediaType===1}}'>

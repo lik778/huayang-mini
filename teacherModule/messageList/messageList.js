@@ -26,6 +26,7 @@ Page({
       limit: 10
     },
     teacherId: "",
+    teacherUserId: "",
     noData: false,
     didShowAuth: false,
     hasAuth: false,
@@ -104,21 +105,6 @@ Page({
         }
       }
     })
-  },
-
-  /* 初始化登录状态 */
-  initUserAuthStatus() {
-    let publishUserId = this.data.teacherId
-    let authUserId = getLocalStorage(GLOBAL_KEY.userId) ? getLocalStorage(GLOBAL_KEY.userId) : ''
-    if (Number(publishUserId) === Number(authUserId)) {
-      this.setData({
-        isOwner: true
-      })
-    } else {
-      this.setData({
-        isOwner: false
-      })
-    }
   },
 
 
@@ -219,6 +205,23 @@ Page({
     })
   },
 
+  /* 初始化登录状态 */
+  initUserAuthStatus() {
+    let publishUserId = this.data.teacherUserId
+    let authUserId = getLocalStorage(GLOBAL_KEY.userId) ? getLocalStorage(GLOBAL_KEY.userId) : ''
+
+    if (Number(publishUserId) === Number(authUserId)) {
+      this.setData({
+        isOwner: true
+      })
+    } else {
+      this.setData({
+        isOwner: false
+      })
+    }
+  },
+
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -232,10 +235,11 @@ Page({
         hasAuth: false
       })
     }
-    if (options.teacherId) {
+    if (options.teacherId && options.teacherUserId) {
       this.setData({
         ['pagination.tutor_id']: options.teacherId,
-        teacherId: options.teacherId
+        teacherId: options.teacherId,
+        teacherUserId: options.teacherUserId
       }, () => {
         bxPoint('teacher_message_wall_page', {
           teacher_id: this.data.teacherId
@@ -265,6 +269,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "花样留言板，有好友给你点赞的老师留言了",
+      path: `/teacherModule/index/index?teacherId=${this.data.teacherId}`
+    }
   }
 })

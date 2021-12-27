@@ -1,6 +1,6 @@
 <!--teacherModule/index/index.wxml-->
 <view class="teacher-index">
-
+  <naviBar title='老师主页' showType='1' backPath='/pages/discovery/discovery' isRootBar='{{true}}'></naviBar>
   <!-- 头部大banner -->
   <view class="banner">
     <swiper duration="500" circular class="swiper" bindchange="switchBanner">
@@ -37,8 +37,8 @@
     <view class="teacher-desc">{{teacherMainInfo.slogan}}</view>
     <view class="teacher-other-info">
       <view class="teacher-other-info-left">
-        <text wx:if="{{teacherMainInfo.address}}">{{teacherMainInfo.address||'都撒到'}}</text>
-        <text wx:if="{{teacherMainInfo.address}}"> ｜ </text>
+        <text wx:if="{{teacherMainInfo.address}}">{{teacherMainInfo.address||''}}</text>
+        <text wx:if="{{teacherMainInfo.address&&teacherMainInfo.job}}"> ｜ </text>
         <text wx:if="{{teacherMainInfo.job}}" class="teacher-other-info-left-special">曾任</text>
         <text wx:if="{{teacherMainInfo.job}}"> {{teacherMainInfo.job||'湿答答'}}</text>
       </view>
@@ -59,10 +59,10 @@
   <!-- 主体 -->
   <view class="main">
     <!-- 荣誉 -->
-    <view class="honor" wx:if="{{honorList.length}}" bindtap="toHonorList" wx:if="{{honorList.length}}">
+    <view class="honor" bindtap="toHonorList" wx:if="{{honorList.length}}">
       <view class="honor-title common-title">
         <view class="honor-title-left common-title-left">我的荣誉</view>
-        <view class="honor-title-right common-title-right">
+        <view class="honor-title-right common-title-right" wx:if="{{honorList.length>5}}">
           <text>查看全部</text>
           <image src="{{rightArrowIcon}}"></image>
         </view>
@@ -93,7 +93,7 @@
     </view>
 
     <!-- 动态 -->
-    <view class="moment" wx:if="{{momentList.length}}">
+    <view class="moment">
       <view class="moment-title common-title">
         <view class="moment-title-left common-title-left">我的动态</view>
         <view class="moment-title-right common-title-right" bindtap="toMomentList">
@@ -101,7 +101,7 @@
           <image src="{{rightArrowIcon}}"></image>
         </view>
       </view>
-      <view class="moment-list">
+      <view class="moment-list" wx:if="{{momentList.length}}">
         <view class="moment-item" wx:for="{{momentList}}" wx:key='index'>
           <image class="moment-image" mode='aspectFill' wx:if='{{item.type===1}}' src="{{item.media_url[0]}}" bindtap="toMomentDetail" data-item='{{item}}'></image>
           <view wx:else class="moment-item-video" bindtap="toMomentDetail" data-item='{{item}}'>

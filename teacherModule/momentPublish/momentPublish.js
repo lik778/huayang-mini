@@ -1,11 +1,15 @@
 // teacherModule/momentPublish/momentPublish.js
 import request from "../../lib/request"
 import {
+  getLocalStorage,
   uploadVideoToAli
 } from "../../utils/util"
 import {
   publishTeacherNewMoment
 } from "../../api/teacherModule/index"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 Page({
 
   /**
@@ -15,13 +19,15 @@ Page({
     uploadIcon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639626899gtUcEr.jpg",
     deleteIcon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639705558KUnCxn.jpg",
     playIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639538242RdmCxq.jpg',
+    statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
     previewImageList: [],
     momentInputValue: '',
     teacherId: "",
     mediaType: 'image',
     lock: false,
     showControls: false,
-    playingVideo: false
+    playingVideo: false,
+    backPath: ''
   },
 
   /* 动态视频进/退全屏 */
@@ -91,7 +97,7 @@ Page({
             lock: false
           })
           wx.navigateTo({
-            url: `/teacherModule/momentList/momentList?teacherId=${this.data.teacherId}`,
+            url: `/teacherModule/momentList/momentList?teacherId=${this.data.teacherId}&teacherUserId=${getLocalStorage(GLOBAL_KEY.userId)}`,
           })
         }, 2000)
       }).catch(() => {
@@ -100,8 +106,6 @@ Page({
         })
       })
     }
-
-    console.log(this.data.momentInputValue, this.data.previewImageList, this.data.mediaType)
   },
 
   /* 上传动态视频 */
@@ -136,7 +140,6 @@ Page({
                 success: (res1) => {
                   let data = JSON.parse(res1.data)
                   let imgLink = data.data
-                  console.log(imgLink)
                   resolve({
                     src: imgLink,
                     type: 1
@@ -184,10 +187,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options)
     if (options.teacherId) {
       this.setData({
-        teacherId: options.teacherId
+        teacherId: options.teacherId,
+        backPath: `/teacherModule/momentList/momentList?teacherId=${options.teacherId}&teacherUserId=${getLocalStorage(GLOBAL_KEY.userId)}`
       })
     } else {
       wx.switchTab({
@@ -195,18 +198,4 @@ Page({
       })
     }
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

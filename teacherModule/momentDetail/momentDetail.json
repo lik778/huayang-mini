@@ -1,4 +1,6 @@
 {
-  "navigationBarTitleText": "动态详情",
-  "usingComponents": {}
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "naviBar": "../../components/naviBarBack/naviBarBack"
+  }
 }

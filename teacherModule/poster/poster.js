@@ -141,7 +141,6 @@ Page({
         })
       }).exec();
     })
-    console.log(detailInfo, qrcode)
   },
 
   /**
@@ -150,7 +149,6 @@ Page({
   onLoad: function (options) {
     wx.getSystemInfo({
       success: (result) => {
-        console.log(result.screenHeight)
         this.setData({
           systemInfo: result,
           longScreen: result.screenHeight > 736 ? true : false
@@ -180,6 +178,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "你点赞的老师动态更新了，一起来看看吧！",
+      path: `/teacherModule/index/index?teacherId=${this.data.teacherId}`
+    }
   }
 })

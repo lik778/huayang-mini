@@ -49,6 +49,8 @@ Page({
     teacherLikeLock: false, //点赞老师锁
     medalTotal: 0, //勋章总数
     medalList: [], //勋章列表
+    statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
+    backPath: "/pages/discovery/discovery"
   },
 
   /* 点击Banner */
@@ -257,7 +259,6 @@ Page({
         commentList: list,
         commentTotalCount: data.count
       })
-      console.log("留言列表", list)
     })
   },
 
@@ -277,7 +278,6 @@ Page({
       this.setData({
         momentList: data.list || []
       })
-      console.log('动态列表', data.list)
     })
   },
 
@@ -292,7 +292,6 @@ Page({
       this.setData({
         honorList: data.list || []
       })
-      console.log('荣誉列表', data.list)
     })
   },
 
@@ -309,6 +308,7 @@ Page({
       })
 
       data.address = data.address ? data.address.split(',')[1] : ''
+      data.address = data.address ? data.address.split('市')[0] : ''
       data.photo = data.photo_wall.split(",")
       data.keywordArr = data.keyword ? data.keyword.split(',') : []
       this.setData({
@@ -316,7 +316,6 @@ Page({
         userInfo: userInfo ? JSON.parse(userInfo) : ''
       }, () => {
         this.getMedalList()
-        console.log('详情数据', data)
       })
     })
   },
@@ -344,7 +343,6 @@ Page({
         medalTotal: data.count,
         medalList: data.list || []
       })
-      console.log('勋章列表', data)
     })
   },
 
@@ -408,7 +406,7 @@ Page({
       teacher_id: this.data.teacherId
     }, false)
     wx.navigateTo({
-      url: `/teacherModule/messageList/messageList?teacherId=${this.data.teacherId}`,
+      url: `/teacherModule/messageList/messageList?teacherId=${this.data.teacherId}&teacherUserId=${this.data.teacherMainInfo.user_id}`,
     })
   },
 
@@ -424,19 +422,31 @@ Page({
 
   /* 前往动态详情 */
   toMomentDetail(e) {
+    if (!this.data.hasAuth) {
+      this.setData({
+        didShowAuth: true
+      })
+      return
+    }
     let item = e.currentTarget.dataset.item
     wx.navigateTo({
-      url: `/teacherModule/momentDetail/momentDetail?momentId=${item.id}`,
+      url: `/teacherModule/momentDetail/momentDetail?momentId=${item.id}&teacherUserId=${this.data.teacherMainInfo.user_id}`,
     })
   },
 
   /* 前往动态列表 */
   toMomentList() {
+    if (!this.data.hasAuth) {
+      this.setData({
+        didShowAuth: true
+      })
+      return
+    }
     bxPoint('teacher_my_trends_all', {
       teacher_id: this.data.teacherId
     }, false)
     wx.navigateTo({
-      url: `/teacherModule/momentList/momentList?teacherId=${this.data.teacherId}`,
+      url: `/teacherModule/momentList/momentList?teacherId=${this.data.teacherId}&teacherUserId=${this.data.teacherMainInfo.user_id}`,
     })
   },
 
@@ -454,6 +464,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "你点赞的老师动态更新了，一起来看看吧！",
+      path: `/teacherModule/index/index?id=${this.data.teacherId}`
+    }
   }
 })

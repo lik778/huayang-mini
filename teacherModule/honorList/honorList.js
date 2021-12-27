@@ -29,7 +29,6 @@ Page({
         honorList: list,
         noData: data.list ? data.list.length >= this.data.pagination.limit ? false : true : true
       })
-      console.log(list)
     })
   },
 
@@ -68,6 +67,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "荣誉详情信息",
+      path: `/teacherModule/honorList/honorList?teacherId=${this.data.pagination.tutor_id}`
+    }
   }
 })

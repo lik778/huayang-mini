@@ -1,7 +1,8 @@
 <!--teacherModule/momentList/momentList.wxml-->
 <view class="moment-list-container">
-  <view class="moment-list">
-    <view>
+  <naviBar title='动态列表' showType='3' backPath="{{backPath}}" needRedirect='{{true}}'></naviBar>
+  <view class="moment-list" wx:if="{{momentList.length||isOwner}}">
+    <view wx:if="{{isOwner}}">
       <view class="moment-item-box">
         <view class="moment-item-left">
           <text class="today">今天</text>
@@ -56,5 +57,9 @@
         </view>
       </view>
     </view>
+  </view>
+  <view class="no-data" wx:else>
+    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1640586204FbXenn.jpg"></image>
+    <text>暂无动态</text>
   </view>
 </view>

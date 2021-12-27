@@ -1,0 +1,18 @@
+<!--components/naviBarBack/naviBarBack.wxml-->
+<view class="navibar-back" style="position: {{showType===3?'inherit':'fixed'}};">
+  <!-- 只需要返回按钮 -->
+  <view class="type-one" wx:if="{{showType===1}}" style="top:{{statusBarHeight+6}}px" bindtap="back">
+    <image src="{{backIconLucency}}"></image>
+  </view>
+  <!-- 只需要返回按钮+标题 -->
+  <view class="type-two" wx:if="{{showType===2}}" style="height: {{statusBarHeight+43}}px;background: {{navibarBgColor}};">
+    <image src="{{backIconLucency}}" style="top:{{statusBarHeight+6}}px" bindtap="back"></image>
+    <text style="top:{{statusBarHeight+12}}px;color: {{titleColor}};">{{title}}</text>
+  </view>
+  <!-- 需要返回按钮+标题+背景色 -->
+  <view class="type-three" wx:if="{{showType===3}}" style="height: {{statusBarHeight+43}}px;background: {{navibarBgColor}};">
+    <image src="{{backIconLucency}}" style="top:{{statusBarHeight+6}}px" bindtap="back"></image>
+    <text style="top:{{statusBarHeight+12}}px;color: {{titleColor}};">{{title}}</text>
+  </view>
+
+</view>

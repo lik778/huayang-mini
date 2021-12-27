@@ -24,7 +24,9 @@ Page({
     teacherInfo: "",
     playingVideo: false,
     showControls: false,
-    isOwner: false
+    isOwner: false,
+    teacherUserId: '',
+    backPath: ""
   },
 
 
@@ -55,7 +57,7 @@ Page({
             })
             setTimeout(() => {
               wx.navigateTo({
-                url: `/teacherModule/momentList/momentList?teacherId=${this.data.momentDetailInfo.tutor_id}`,
+                url: `/teacherModule/momentList/momentList?teacherId=${this.data.momentDetailInfo.tutor_id}&teacherUserId=${this.data.teacherUserId}`,
               })
             }, 2000)
           })
@@ -66,7 +68,7 @@ Page({
 
   /* 初始化登录状态 */
   initUserAuthStatus() {
-    let publishUserId = this.data.momentDetailInfo.tutor_id
+    let publishUserId = this.data.teacherUserId
     let authUserId = getLocalStorage(GLOBAL_KEY.userId) ? getLocalStorage(GLOBAL_KEY.userId) : ''
     if (Number(publishUserId) === Number(authUserId)) {
       this.setData({
@@ -119,11 +121,10 @@ Page({
     }).then(({
       data
     }) => {
-      data.headIcon = data.photo_wall.split(',')[0]
+      data.headIcon = data.tutor_info.photo_wall.split(',')[0]
       this.setData({
         teacherInfo: data
       })
-      console.log(data)
     })
   },
 
@@ -157,14 +158,13 @@ Page({
         data.dateType = dayjs(data.time).format("YYYY年MM月DD日 HH:mm")
       }
 
-
       this.setData({
-        momentDetailInfo: data
+        momentDetailInfo: data,
+        backPath: `/teacherModule/momentList/momentList?teacherId=${data.tutor_id}&teacherUserId=${getLocalStorage(GLOBAL_KEY.userId)}`
       }, () => {
         this.getTeacherInfo()
         this.initUserAuthStatus()
       })
-      console.log(data)
     })
   },
 
@@ -172,11 +172,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (options.momentId) {
+    if (options.momentId && options.teacherUserId) {
       this.setData({
-        momentId: options.momentId
+        momentId: options.momentId,
+        teacherUserId: options.teacherUserId,
+
       }, () => {
-      
+
         this.getMomentDetail()
 
       })
@@ -188,51 +190,12 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "有一条你关注的动态",
+      path: `/teacherModule/index/index?teacherId=${this.data.momentDetailInfo.tutor_id}`
+    }
   }
 })

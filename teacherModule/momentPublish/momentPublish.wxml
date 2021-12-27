@@ -1,5 +1,6 @@
 <!--teacherModule/momentPublish/momentPublish.wxml-->
 <view class="moment-publish-container">
+  <naviBar title='发布动态' showType='3' backPath="{{backPath}}" needRedirect='{{true}}'></naviBar>
   <view class="main">
     <view class="input">
       <textarea value='{{momentInputValue}}' bindinput="inputMomentValue" placeholder="请输入您的动态内容" maxlength="200"></textarea>
