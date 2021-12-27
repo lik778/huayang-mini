@@ -40,7 +40,7 @@
         <text wx:if="{{teacherMainInfo.address}}">{{teacherMainInfo.address||''}}</text>
         <text wx:if="{{teacherMainInfo.address&&teacherMainInfo.job}}"> ｜ </text>
         <text wx:if="{{teacherMainInfo.job}}" class="teacher-other-info-left-special">曾任</text>
-        <text wx:if="{{teacherMainInfo.job}}"> {{teacherMainInfo.job||'湿答答'}}</text>
+        <text wx:if="{{teacherMainInfo.job}}"> {{teacherMainInfo.job||''}}</text>
       </view>
       <view class="teacher-other-info-right">
         <view class="teacher-other-info-right-visit">
@@ -62,7 +62,7 @@
     <view class="honor" bindtap="toHonorList" wx:if="{{honorList.length}}">
       <view class="honor-title common-title">
         <view class="honor-title-left common-title-left">我的荣誉</view>
-        <view class="honor-title-right common-title-right" wx:if="{{honorList.length>5}}">
+        <view class="honor-title-right common-title-right" wx:if="{{honorList.length}}">
           <text>查看全部</text>
           <image src="{{rightArrowIcon}}"></image>
         </view>
@@ -70,7 +70,7 @@
       <view class="honor-list">
         <view class="honor-item" wx:for="{{honorList}}" :key='index'>
           <text>{{item.title}}</text>
-          <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1640571847elhefo.jpg"></image>
+          <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1640598577eDoejU.jpg"></image>
         </view>
       </view>
     </view>

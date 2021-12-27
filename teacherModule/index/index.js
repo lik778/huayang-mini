@@ -311,6 +311,7 @@ Page({
       data.address = data.address ? data.address.split('市')[0] : ''
       data.photo = data.photo_wall.split(",")
       data.keywordArr = data.keyword ? data.keyword.split(',') : []
+      console.log(data)
       this.setData({
         teacherMainInfo: data,
         userInfo: userInfo ? JSON.parse(userInfo) : ''

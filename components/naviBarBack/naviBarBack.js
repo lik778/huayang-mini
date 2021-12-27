@@ -72,7 +72,7 @@ Component({
       } else {
         if (this.data.backPath) {
           if (this.data.needRedirect) {
-            wx.redirectTo({
+            wx.reLaunch({
               url: this.data.backPath,
             })
           } else {
