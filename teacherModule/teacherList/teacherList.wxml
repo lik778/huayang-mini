@@ -15,7 +15,7 @@
           <view class="teacher-list-item-left-right-bottom">{{item.introduce}}</view>
         </view>
       </view>
-      <view class="teacher-list-item-right" catchtap="{{item.has_like?'':'likeTeacher'}}" data-item='{{item}}'>
+      <view class="teacher-list-item-right" catchtap="{{item.has_like?'catchTap':'likeTeacher'}}" data-item='{{item}}'>
         <image src="{{likeIcon}}" wx:if='{{item.has_like}}'></image>
         <image src="{{unLikeIcon}}" wx:else></image>
         <text>{{item.like_count}}</text>

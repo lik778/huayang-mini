@@ -6,7 +6,8 @@ import {
   getTeacherNewCommentList,
   publishTeacherNewComment,
   likeTeacherNew,
-  likeTeacherNewComment
+  likeTeacherNewComment,
+  getTeacherNewMedalList
 } from "../../api/teacherModule/index"
 import {
   getFindBanner,
@@ -32,7 +33,9 @@ Page({
     boyIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639538413HLQLzn.jpg',
     rightArrowIcon: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639538221DoDrbl.jpg",
     playIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639538242RdmCxq.jpg',
+    defaultHeadIcon: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1640571997EfDxwM.jpg',
     currentBannerIndex: 0,
+    userInfo: '',
     bottomBannerList: [],
     honorList: [], //荣誉列表
     momentList: [], //动态列表
@@ -44,6 +47,8 @@ Page({
     hasAuth: false, //是否授完权
     showControls: false, //显示动态
     teacherLikeLock: false, //点赞老师锁
+    medalTotal: 0, //勋章总数
+    medalList: [], //勋章列表
   },
 
   /* 点击Banner */
@@ -170,7 +175,7 @@ Page({
   authCompleteEvent() {
     this.setData({
       didShowAuth: false,
-      hasAuth: true
+      hasAuth: true,
     }, () => {
       this.getDetail()
       this.getHonorList()
@@ -298,6 +303,7 @@ Page({
     }).then(({
       data
     }) => {
+      let userInfo = getLocalStorage(GLOBAL_KEY.accountInfo)
       data = Object.assign({}, data.tutor_info, {
         has_like: data.has_like
       })
@@ -306,8 +312,10 @@ Page({
       data.photo = data.photo_wall.split(",")
       data.keywordArr = data.keyword ? data.keyword.split(',') : []
       this.setData({
-        teacherMainInfo: data
+        teacherMainInfo: data,
+        userInfo: userInfo ? JSON.parse(userInfo) : ''
       }, () => {
+        this.getMedalList()
         console.log('详情数据', data)
       })
     })
@@ -321,6 +329,22 @@ Page({
       this.setData({
         bottomBannerList: res || []
       })
+    })
+  },
+
+  /* 获取勋章列表 */
+  getMedalList() {
+    getTeacherNewMedalList({
+      authentication: this.data.teacherMainInfo.authentication,
+      limit: 5
+    }).then(({
+      data
+    }) => {
+      this.setData({
+        medalTotal: data.count,
+        medalList: data.list || []
+      })
+      console.log('勋章列表', data)
     })
   },
 

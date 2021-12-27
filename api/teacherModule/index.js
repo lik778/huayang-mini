@@ -67,3 +67,8 @@ export const likeTeacherNewComment = (params) => {
 export const getTeacherNewTeacherList = (params) => {
   return request._get(URL.getTeacherNewTeacherList, params)
 }
+
+/* 获取老师勋章列表 */
+export const getTeacherNewMedalList = (params) => {
+  return request._get(URL.getTeacherNewMedalList, params)
+}

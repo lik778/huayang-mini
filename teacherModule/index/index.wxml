@@ -59,10 +59,10 @@
   <!-- 主体 -->
   <view class="main">
     <!-- 荣誉 -->
-    <view class="honor" wx:if="{{honorList.length}}" bindtap="toHonorList">
+    <view class="honor" wx:if="{{honorList.length}}" bindtap="toHonorList" wx:if="{{honorList.length}}">
       <view class="honor-title common-title">
         <view class="honor-title-left common-title-left">我的荣誉</view>
-        <view class="honor-title-right common-title-right" wx:if="{{honorList.length}}">
+        <view class="honor-title-right common-title-right">
           <text>查看全部</text>
           <image src="{{rightArrowIcon}}"></image>
         </view>
@@ -70,33 +70,33 @@
       <view class="honor-list">
         <view class="honor-item" wx:for="{{honorList}}" :key='index'>
           <text>{{item.title}}</text>
-          <image src="{{item.photo_url}}"></image>
+          <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1640571847elhefo.jpg"></image>
         </view>
       </view>
     </view>
 
     <!-- 认证 -->
-    <view class="authentication">
+    <view class="authentication" wx:if="{{medalTotal>0}}">
       <view class="authentication-title common-title">
         <view class="authentication-title-left common-title-left">我的花样认证</view>
-        <view class="authentication-title-right common-title-right" wx:if="{{false}}">
+        <view class="authentication-title-right common-title-right" wx:if="{{medalTotal>5}}">
           <text>查看全部</text>
           <image src="{{rightArrowIcon}}"></image>
         </view>
       </view>
       <view class="authentication-list">
-        <view class="authentication-item">
-          <image src="{{rightArrowIcon}}"></image>
-          <text>勋章1</text>
+        <view class="authentication-item" wx:for="{{medalList}}" wx:key='index'>
+          <image src="{{item.icon_url}}"></image>
+          <text>{{item.name}}</text>
         </view>
       </view>
     </view>
 
     <!-- 动态 -->
-    <view class="moment">
+    <view class="moment" wx:if="{{momentList.length}}">
       <view class="moment-title common-title">
         <view class="moment-title-left common-title-left">我的动态</view>
-        <view class="moment-title-right common-title-right" bindtap="toMomentList" wx:if="{{momentList.length}}">
+        <view class="moment-title-right common-title-right" bindtap="toMomentList">
           <text>查看全部</text>
           <image src="{{rightArrowIcon}}"></image>
         </view>
@@ -141,7 +141,7 @@
       </view>
       <view class="message-publish">
         <view class="message-publish-left">
-          <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639130596SBmWKG.jpg"></image>
+          <image src="{{userInfo?userInfo.avatar_url:defaultHeadIcon}}"></image>
 
         </view>
         <view class="message-publish-right">

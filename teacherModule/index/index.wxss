@@ -239,7 +239,7 @@
 
 .honor-item image {
   width: 34rpx;
-  height: 30rpx;
+  height: 32rpx;
   vertical-align: bottom;
   margin-left: 12rpx;
 }

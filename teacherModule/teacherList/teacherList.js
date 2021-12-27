@@ -31,6 +31,8 @@ Page({
     hasAuth: false, //是否授完权
   },
 
+  catchTap(){},
+
   /* 前往老师详情 */
   toTeacherDetail(e) {
     let item = e.currentTarget.dataset.item
