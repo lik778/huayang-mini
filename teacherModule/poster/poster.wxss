@@ -68,11 +68,14 @@
   /* padding-bottom: 30rpx; */
 }
 
-.poster-main-bg {}
+.poster-main-bg {
+  width: 100%;
+  height: calc(100vw - 100rpx);
+}
 
 .poster-main-bg image {
-  width: 650rpx;
-  height: 650rpx;
+  width: 100%;
+  height: calc(100vw - 100rpx);
   vertical-align: bottom;
 }
 
@@ -153,7 +156,7 @@ poster-button-left {
   position: absolute;
   left: 0;
   top: 0;
-  width: 100%;
+  width:320rpx;
   height: 100%;
   z-index: 10;
   opacity: 0;

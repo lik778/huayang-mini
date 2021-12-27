@@ -36,17 +36,17 @@ Page({
   },
 
   /* 分享好友 */
-  shareTap(){
+  shareTap() {
     bxPoint('teacher_poster_share_click', {
       teacher_id: this.data.teacherId
-    },false)
+    }, false)
   },
 
   /* 保存海报 */
   async savePoster() {
     bxPoint('teacher_poster_save_click', {
       teacher_id: this.data.teacherId
-    },false)
+    }, false)
     await this.drawPoster()
   },
 
@@ -76,7 +76,7 @@ Page({
 
       await drawImage(ctx, this.data.qrcode + `?${new Date().getTime()}`, (elementWidth / 3) - 83, (elementHeight / 3) - 94, 60, 60)
 
-      await drawFont(ctx, '长按识别查看', 'rgba(0,0,0，0.6)', 'normal', 'PingFangSC-Regular, PingFang SC', 11, 240, elementHeight / 3 - 32)
+      await drawFont(ctx, '长按识别查看', '#000', 'normal', 'PingFangSC-Regular, PingFang SC', 11, (elementWidth / 3) - 86, elementHeight / 3 - 32)
 
       ctx.draw(false, () => {
         wx.canvasToTempFilePath({
