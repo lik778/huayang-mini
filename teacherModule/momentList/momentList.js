@@ -29,7 +29,8 @@ Page({
     lastMomentBelongYear: "",
     backPath: "",
     momentList: [],
-    noData: false
+    noData: false,
+    isOwner: false
   },
 
   /* 获取动态列表 */
@@ -89,7 +90,6 @@ Page({
             })
           }
         })
-        console.log(newList, data.list)
         this.setData({
           momentList: newList,
           lastMomentBelongYear: lastMomentYear,
@@ -151,7 +151,8 @@ Page({
       lastMomentBelongYear: "",
       ['pagination.offset']: 0,
       momentList: [],
-      noData: false
+      noData: false,
+      isOwner: false
     }, () => {
       this.initUserAuthStatus(true)
       this.getMomentList()

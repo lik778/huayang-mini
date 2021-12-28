@@ -1,6 +1,6 @@
 <!--teacherModule/momentList/momentList.wxml-->
 <view class="moment-list-container">
-  <naviBar title='动态列表' showType='3' backPath="{{backPath}}"></naviBar>
+  <naviBar title='动态列表' showType='3' backPath="{{backPath}}" needRedirect='{{true}}'></naviBar>
   <view class="moment-list" wx:if="{{momentList.length||isOwner}}">
     <view wx:if="{{isOwner}}">
       <view class="moment-item-box">

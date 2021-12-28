@@ -1,6 +1,6 @@
 <!--teacherModule/index/index.wxml-->
 <view class="teacher-index">
-  <naviBar title='老师主页' showType='1' backPath='/teacherModule/teacherList/teacherList' isRootBar='{{false}}'></naviBar>
+  <naviBar title='老师主页' showType='1' backPath='/teacherModule/teacherList/teacherList' isRootBar='{{false}}'  needRedirect='{{true}}'></naviBar>
   <!-- 头部大banner -->
   <view class="banner">
     <swiper duration="500" circular class="swiper" bindchange="switchBanner">
