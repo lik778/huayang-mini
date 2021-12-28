@@ -394,16 +394,17 @@ Page({
     // }
   },
   run() {
-    // 获取师资信息
-    getUserPersonPageInfo()
-      .then(({data}) => {
-        if ($notNull(data)) {
-          this.setData({teacherInfo: data})
-        }
+    if (hasAccountInfo()) {
+      // 获取师资信息
+      getUserPersonPageInfo()
+        .then(({data}) => {
+          if ($notNull(data)) {
+            this.setData({teacherInfo: data})
+          }
 
-        this.setData({isUserHaveTeacherCard: $notNull(data)})
-      })
-
+          this.setData({isUserHaveTeacherCard: $notNull(data)})
+        })
+    }
 
     if (hasUserInfo() && !hasAccountInfo()) {
       // 有微信信息没有手机号信息
