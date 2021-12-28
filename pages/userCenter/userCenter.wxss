@@ -30,13 +30,14 @@
 
 .message {
     position: absolute;
-    padding-left: 50rpx;
+    padding: 0 50rpx;
     display: flex;
     align-items: center;
     top: 168rpx;
     color: #fff;
     font-size: 44rpx;
     font-weight: bold;
+    box-sizing: border-box;
 }
 
 .message > image {
