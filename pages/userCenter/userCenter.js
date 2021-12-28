@@ -1,15 +1,10 @@
 import { FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
-import baseUrl from "../../lib/request"
 import dayjs from "dayjs"
 import { getFindBanner, getPhoneNumber } from "../../api/course/index"
 import {
-  checkUserHasAddress,
   getFluentCardInfo,
-  getFluentDistributeGuide,
   getFluentLearnInfo,
-  getPartnerInfo,
-  getUserInfo,
-  getUserOwnerClasses
+  getUserInfo, getUserPersonPageInfo,
 } from "../../api/mine/index"
 import {
   $notNull,
@@ -49,54 +44,18 @@ Page({
     userInfo: null,
     fluentLearnUserInfo: null,
     didShowAuth: false,
-    didVisibleVIPIcon: false,
     statusHeight: 0,
     nodata: true,
     phoneNumber: "",
     existNo: undefined,
-    activity_count: 0,
-    kecheng_count: 0,
-    traincamp_count: 0,
-    showPromotion: true,
-    visibleTaskEntrance: false,
     cardBtnText: "授权登录",
     bannerList: [],
     disHasFluentLearnUserInfo: false, // 是否有畅学卡会员信息
     isFluentLearnExpired: false, // 畅学卡依然有效
     cardName: "", // 畅学卡名称
     cardDesc: "", // 畅学卡描述
-    auditInfo: null, // 畅学卡引导私域配置信息
-    didVisibleAuditBtn: false, // 是否展示成为花样合伙人按钮
-    partnerInfo: null, // 合伙人信息
-    isPartner: false, // 当前用户是否是合伙人
-    didShowContact: false,
-    showMoneyNotice: false,
-    showMoneyNoticeTop: '',
-    changeMoneyNoticeClass: true,
-    showClubVipAlert: false,
-    showClubVipAlertType: ''
-  },
-  // 关闭加入花样俱乐部弹窗
-  closeClubVipAlert() {
-    this.setData({
-      showClubVipAlert: false,
-      showClubVipAlertType: ''
-    })
-  },
-
-  onCloseContactModal() {
-    this.setData({
-      didShowContact: false
-    })
-  },
-  /**
-   * 指导按钮点击事件
-   */
-  onGuideBtnTap() {
-    this.setData({
-      didShowContact: true
-    })
-    bxPoint("join_chat", {})
+    isUserHaveTeacherCard: false, // 当前用户是否有教师卡片
+    teacherInfo: null
   },
   /**
    * 处理长昵称
@@ -165,23 +124,12 @@ Page({
       })
     }
   },
-
-  onCatchtouchmove() {
-		return false
-	},
-  // 处理畅叙卡按钮点击事件
+  // 处理畅学卡按钮点击事件
   onFluentCardTap() {
     if (!hasUserInfo() || !hasAccountInfo()) {
-      this.setData({
-        didShowAuth: true
-      })
+      this.setData({didShowAuth: true})
     } else {
       if (this.data.disHasFluentLearnUserInfo && !this.data.isFluentLearnExpired) {
-        this.data.fluentLearnUserInfo && bxPoint("mine_changxue_find", {
-          changxue_id: this.data.fluentLearnUserInfo.id,
-          changxue_buy_date: this.data.fluentLearnUserInfo.created_at,
-          changxue_expire_date: this.data.fluentLearnUserInfo.expire_time,
-        }, false)
         wx.navigateTo({
           url: "/mine/fluentLearnInfo/fluentLearnInfo"
         })
@@ -192,45 +140,6 @@ Page({
         })
       }
     }
-  },
-  // 跳往我的推广
-  toPromotion() {
-    bxPoint("mine_promotion", {}, false)
-    getUserInfo("scene=zhide").then(res => {
-      setLocalStorage(GLOBAL_KEY.accountInfo, res)
-      wx.navigateTo({
-        url: '/mine/promotion/promotion',
-      })
-    }).catch(() => {
-      this.setData({
-        showPromotion: false
-      })
-    })
-  },
-
-  // 获取用户主题营、课程、活动数量数据
-  queryContentInfo() {
-    if (hasUserInfo() && hasAccountInfo()) {
-      getUserOwnerClasses({
-        user_id: getLocalStorage(GLOBAL_KEY.userId)
-      }).then((data) => {
-        let {
-          activity_count = 0, kecheng_count = 0, traincamp_count = 0
-        } = data
-        this.setData({
-          activity_count,
-          kecheng_count,
-          traincamp_count
-        })
-      })
-    }
-  },
-  // 加私域
-  joinPrivateDomain() {
-    this.setData({
-      didShowContact: true
-    })
-    bxPoint("mine_sign_in_private_group", {}, false)
   },
   // 计算用户帐号创建日期
   calcUserCreatedTime() {
@@ -245,38 +154,6 @@ Page({
       })
     }
   },
-  // 处理用户卡片点击
-  handleCardTap(e) {
-    if (hasUserInfo() && hasAccountInfo()) {
-      switch (e.currentTarget.dataset.ele) {
-        case "bootcamp": {
-          bxPoint("applet_mine_click_bootcamp", {}, false)
-          wx.navigateTo({
-            url: "/mine/personBootcamp/personBootcamp"
-          })
-          return
-        }
-        case "course": {
-          bxPoint("applet_mine_click_course", {}, false)
-          wx.navigateTo({
-            url: "/mine/personCourse/personCourse"
-          })
-          return
-        }
-        case "activity": {
-          bxPoint("applet_mine_click_activity", {}, false)
-          wx.navigateTo({
-            url: "/mine/personActivity/personActivity"
-          })
-          return
-        }
-      }
-    } else {
-      this.setData({
-        didShowAuth: true
-      })
-    }
-  },
   // 获取用户信息
   getUserSingerInfo() {
     if (!hasUserInfo() || !hasAccountInfo()) return Promise.reject()
@@ -285,21 +162,6 @@ Page({
         res.amount = Number((res.amount / 100).toFixed(2))
         setLocalStorage(GLOBAL_KEY.accountInfo, res)
         res.nick_name = this.handleNickname(res.nick_name)
-        // 判断是否成为俱乐部会员，未成为则跳转填写信息
-        // if (!$notNull(res.student)) {
-        //   let hasShowClubVipAlertSign = getLocalStorage('hy_daxue_show_club_vip_alert_sign')
-        //   let threeDayTime = 259200 //s
-        //   let threeDayLaterTimeStr = parseInt(new Date().getTime() / 1000) + threeDayTime
-        //   if (!hasShowClubVipAlertSign) {
-        //     setTimeout(() => {
-        //       this.setData({
-        //         showClubVipAlert: true,
-        //         showClubVipAlertType: 1
-        //       })
-        //       setLocalStorage("hy_daxue_show_club_vip_alert_sign", threeDayLaterTimeStr)
-        //     }, 1000)
-        //   }
-        // }
         this.setData({
           userInfo: res
         })
@@ -309,15 +171,10 @@ Page({
         if (err === -2) {
           setTimeout(() => {
             this.setData({
-              isPartner: false,
               nodata: true,
               userInfo: null,
               cardBtnText: "授权登录",
               disHasFluentLearnUserInfo: false,
-              traincamp_count: 0,
-              kecheng_count: 0,
-              activity_count: 0,
-              didVisibleAuditBtn: false
             })
           }, 1000)
           return
@@ -337,36 +194,6 @@ Page({
     })
   },
 
-
-  // 检查是否填写收获地址表单
-  checkHasFillAddress() {
-    checkUserHasAddress({
-      user_id: this.data.userInfo.id
-    }).then(res => {
-      if (res.code === 0) {
-        let data = res.data.hasAddr
-        if (!data) {
-          let hasShowClubVipAlertSign = getLocalStorage('hy_daxue_show_club_vip_alert_sign')
-          let threeDayTime = this.data.disHasFluentLearnUserInfo ? 86400 : 259200 //买了畅学卡1天1显示没买3天一显示
-          let threeDayLaterTimeStr = parseInt(new Date().getTime() / 1000) + threeDayTime
-          let rootUrl = baseUrl.baseUrl
-          let userId = this.data.userInfo.id
-          let type = this.data.disHasFluentLearnUserInfo ? 2 : 1
-          if (!hasShowClubVipAlertSign) {
-            setTimeout(() => {
-              this.setData({
-                showClubVipAlert: true,
-                showClubVipAlertType: type,
-                showClubVipAlertLink: encodeURIComponent(`${rootUrl}/#/home/huayangClubForm?id=${userId}&from=daxue&type=${type}`)
-              })
-              setLocalStorage("hy_daxue_show_club_vip_alert_sign", threeDayLaterTimeStr)
-            }, 1000)
-          }
-        }
-      }
-    })
-  },
-
   /**
    * 请求畅学卡信息
    */
@@ -381,23 +208,10 @@ Page({
         // 畅学卡是否已过期
         let isFluentLearnExpired = data.status === FluentLearnUserType.deactive
 
-        // 畅学卡有效的用户引导加私域
-        if (!isFluentLearnExpired) {
-          getFluentDistributeGuide().then(({
-            data
-          }) => {
-            this.setData({
-              didVisibleAuditBtn: data.status === 1,
-              auditInfo: data
-            })
-          })
-        }
-
         this.setData({
           fluentLearnUserInfo: data,
           disHasFluentLearnUserInfo: !!data,
           isFluentLearnExpired,
-          didVisibleVIPIcon: accountInfo.tag_list ? accountInfo.tag_list.includes("vip") : false,
           cardBtnText: isFluentLearnExpired ? "立即加入" : "查看权益"
         })
         this.setData({
@@ -449,17 +263,14 @@ Page({
       this.setData({
         disHasFluentLearnUserInfo: !!data
       })
-      this.checkHasFillAddress()
     })
   },
 
   reloadUserCenter() {
     this.run()
-    this.queryContentInfo()
     this.getUserSingerInfo().then(() => {
       this.getFluentInfo()
     })
-    // this.queryUserPartnerInfo()
     // 获取加入学习群高度，用来判断显示余额显示
     let userId = !!getLocalStorage(GLOBAL_KEY.userId)
     if (userId) {
@@ -482,6 +293,17 @@ Page({
       let userId = getLocalStorage(GLOBAL_KEY.userId)
       wx.navigateTo({
         url: `/subCourse/personTask/personTask?visit_user_id=${userId}`,
+      })
+    } else {
+      this.setData({
+        didShowAuth: true
+      })
+    }
+  },
+  goToJoinedActivities() {
+    if (hasUserInfo() && hasAccountInfo()) {
+      wx.navigateTo({
+        url: "/mine/joinedActivities/joinedActivities"
       })
     } else {
       this.setData({
@@ -514,16 +336,11 @@ Page({
     }
   },
   // 我的订单
-  toOrder() {
-    if (hasUserInfo() && hasAccountInfo()) {
-      wx.navigateTo({
-        url: '/mine/mineOrder/mineOrder',
-      })
-    } else {
-      this.setData({
-        didShowAuth: true
-      })
-    }
+  goToYouZanOrderPage() {
+    wx.navigateToMiniProgram({
+      appId: "wx95fb6b5dbe8739b7",
+      path: "packages/trade/order/list/index"
+    })
   },
   // 获取客服号码
   getNumber() {
@@ -543,35 +360,6 @@ Page({
     wx.openCustomerServiceChat({
       extInfo: {url: 'https://work.weixin.qq.com/kfid/kfc16674b49d8f7dc5f'},
       corpId: 'ww8d4cae43fb34dc92'
-    })
-  },
-  // 查询用户合伙人信息
-  queryUserPartnerInfo() {
-    if (!hasAccountInfo()) return
-    let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
-    getPartnerInfo({
-      user_snow_id: accountInfo.snow_id,
-      with_child: 1
-    }).then(({
-      data
-    }) => {
-      if ($notNull(data)) {
-        let lv = Level.find(_ => _.value === +data.distribute_user.level)
-        let partnerData = {
-          firstNo: data.distribute_user.first_num,
-          secondNo: data.distribute_user.second_num,
-          firstUserAvatars: $notNull(data.first_list) ? data.first_list.filter(_ => _.user).map(_ => _.user.avatar_url) : [],
-          secondUserAvatars: $notNull(data.second_list) ? data.second_list.filter(_ => _.user).map(_ => _.user.avatar_url) : [],
-          level: $notNull(lv) ? lv.label : "",
-          exclusiveCode: data.distribute_user.num,
-          distribute_user: data.distribute_user
-        }
-        this.setData({
-          partnerInfo: partnerData,
-          isPartner: data.distribute_user.status === 2
-        })
-
-      }
     })
   },
   // 跳转到分销人列表页
@@ -606,15 +394,17 @@ Page({
     // }
   },
   run() {
-    // 检查是否展示作业秀入口
-    getTaskEntranceStatus().then(({
-      data
-    }) => {
-      this.setData({
-        visibleTaskEntrance: +data === 1
-      })
-    })
+    if (hasAccountInfo()) {
+      // 获取师资信息
+      getUserPersonPageInfo()
+        .then(({data}) => {
+          if ($notNull(data)) {
+            this.setData({teacherInfo: data})
+          }
 
+          this.setData({isUserHaveTeacherCard: $notNull(data)})
+        })
+    }
 
     if (hasUserInfo() && !hasAccountInfo()) {
       // 有微信信息没有手机号信息
@@ -629,7 +419,6 @@ Page({
       this.kingOfTheWorld()
       this.setData({
         nodata: false,
-        showPromotion: true,
       })
     } else {
       // nothing
@@ -693,19 +482,12 @@ Page({
     }
   },
 
-  // 关闭指示弹窗
-  closeMoneyNotice() {
-    this.setData({
-      changeMoneyNoticeClass: false
+  // 跳转到个人主页
+  goToPersonCard() {
+    wx.navigateTo({
+      url: `/teacherModule/index/index?id=${this.data.teacherInfo.id}`
     })
-    setTimeout(() => {
-      this.setData({
-        showMoneyNotice: false,
-        changeMoneyNoticeClass: true
-      })
-    }, 200)
   },
-
 
   /**
    * 生命周期函数--监听页面加载
@@ -743,7 +525,6 @@ Page({
     }
     this.calcUserCreatedTime()
     bxPoint("applets_mine", {})
-    this.queryContentInfo()
     this.getBanner()
     this.getNumber()
     this.setData({
@@ -757,8 +538,6 @@ Page({
         this.getFluentInfo()
       })
 
-      // 检查用户合伙人状态
-      // this.queryUserPartnerInfo()
     }
   },
 
@@ -766,13 +545,6 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    if (this.data.didShowContact) {
-      wx.nextTick(() => {
-        this.setData({
-          didShowContact: false
-        })
-      })
-    }
   },
 
   /**

@@ -1,104 +1,56 @@
 <view class="user-center {{nodata && 'nodata'}}" wx:if="{{loading}}">
     <view class="banner">
         <!-- 背景图 -->
-        <image class="banner-bg {{nodata ? 'nodata' : 'signIn'}}"
-               src="{{ nodata ? '/assets/images/common/banner-bg-sign.png' : '/assets/images/common/banner-bg.png' }}">
-        </image>
+        <image class="banner-bg {{ nodata ? 'sign' : ''}}" src="{{ nodata ? '/assets/images/common/banner-bg-sign.png' : '/assets/images/common/banner-bg.png' }}"/>
         <!-- 个人信息 -->
         <view class="message">
-
             <view class="no-data-layout" wx:if="{{nodata}}" bindtap="getAuth">
                 <text class="no-data-title">花样百姓</text>
                 <text class="no-data-sub-title">面向50岁+新青年的生活方式平台，倡导和引领积极、健康、时尚的品质生活方式。</text>
                 <view class="no-data-btn">立即登录</view>
             </view>
             <block wx:else>
-                <image
-                        src="{{userInfo.avatar_url}}"
-                        bindtap="getAuth"></image>
+                <image src="{{userInfo.avatar_url}}" bindtap="getAuth"></image>
                 <view class="user-info">
                     <view class="nick-name">
-                        <view class="name limit-one-line"
-                              style="max-width: {{didVisibleVIPIcon ? '320rpx' : '500rpx'}};">
-                            {{userInfo.nick_name || userInfo.nickname}}
-                        </view>
-                        <view wx:if="{{didVisibleVIPIcon}}">
-                            <image class="vip-tag"
-                                   src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1617084326OPjkYJ.jpg"></image>
-                            <text class="name-text">花样注册会员</text>
-                        </view>
+                        <view class="name limit-one-line" style="max-width: {{isUserHaveTeacherCard ? '350rpx' : '500rpx'}};">{{userInfo.nick_name || userInfo.nickname}}</view>
+                        <view class="teacher-card" wx:if="{{isUserHaveTeacherCard}}" bindtap="goToPersonCard">个人主页</view>
                     </view>
-                    <!--<text class="lifetime" wx:if="{{isPartner}}">花样{{ partnerInfo.level }}</text>-->
-                    <!--<text class="lifetime" wx:if="{{false}}">您已在花样第{{existNo}}天</text>-->
                 </view>
             </block>
         </view>
-
-        <!--		<block wx:if="{{isPartner}}">-->
-        <!--			<view class="first-distribute">-->
-        <!--				<text>我推荐的同学<text>{{ partnerInfo.firstNo }} 人</text></text>-->
-        <!--				<view class="distribute-content" bindtap="goToDistributeListPage" data-index="1">-->
-        <!--					<image class="distribute-avatar" mode="aspectFill" src="{{item}}" wx:for="{{ partnerInfo.firstUserAvatars }}">-->
-        <!--					</image>-->
-        <!--					<text class="more-list">查看更多 ›</text>-->
-        <!--				</view>-->
-
-        <!--			</view>-->
-
-        <!--			<view class="invite-self-code">-->
-        <!--				<view class="invite-self-code-right" bindtap="generatePoster">邀请好友加入花样老年大学</view>-->
-        <!--			</view>-->
-        <!--		</block>-->
     </view>
-    <!-- 畅学卡 -->
-    <view wx:if="{{!nodata}}" class="vip-card {{ isFluentLearnExpired && 'overdue' }} {{ isPartner && 'partner' }}"
-          bindtap="onFluentCardTap">
-        <view>
-            <view class="card-title {{ isFluentLearnExpired && 'overdue'}}">{{cardName}}</view>
-            <view class="card-desc {{ isFluentLearnExpired && 'overdue'}}">{{cardDesc}}</view>
-        </view>
-        <view class="card-data">
-            <view class="card-info">
-                <block wx:if="{{disHasFluentLearnUserInfo}}">
-                    <text class="card-nick-name {{ isFluentLearnExpired && 'overdue'}}">{{userInfo.nick_name}}</text>
-                    <text class="expireDate">有效期至：{{fluentLearnUserInfo.expire_time}} </text>
-                </block>
-            </view>
-            <view class="vip-btn {{ isFluentLearnExpired && 'overdue'}}">{{cardBtnText}} ›</view>
-        </view>
-    </view>
-
-    <!-- 引导按钮 -->
-    <!--	<view class="guide-btn {{ isPartner && 'partner' }}" wx:if="{{didVisibleAuditBtn && !isPartner}}"-->
-    <!--		bindtap="onGuideBtnTap">{{auditInfo.text}}</view>-->
-
-    <!-- 我的学习 -->
-    <!--	<view class="person {{ isPartner && 'partner' }}">-->
-    <!--		<view class="layout">我的学习</view>-->
-    <!--		<view class="person-content">-->
-    <!--			<view class="content-element" bindtap="handleCardTap" data-ele="bootcamp">-->
-    <!--				<view class="ele-no">{{traincamp_count}}</view>-->
-    <!--				<view class="ele-title">主题营</view>-->
-    <!--				<view class="ele-btn">查看</view>-->
-    <!--			</view>-->
-    <!--			<view class="content-element" bindtap="handleCardTap" data-ele="course">-->
-    <!--				<view class="ele-no">{{kecheng_count}}</view>-->
-    <!--				<view class="ele-title">课程</view>-->
-    <!--				<view class="ele-btn">查看</view>-->
-    <!--			</view>-->
-    <!--			<view class="content-element" bindtap="handleCardTap" data-ele="activity">-->
-    <!--				<view class="ele-no">{{activity_count}}</view>-->
-    <!--				<view class="ele-title">活动</view>-->
-    <!--				<view class="ele-btn">查看</view>-->
-    <!--			</view>-->
-    <!--		</view>-->
-    <!--		<image bindtap="joinPrivateDomain" wx:if="{{!didVisibleAuditBtn}}" mode="aspectFit"-->
-    <!--			src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603873700ScBmHI.jpg" class="add-btn"></image>-->
-    <!--	</view>-->
 
     <!-- 功能栏 -->
-    <view class="function {{ nodata && 'nodata' }}">
+    <view class="function">
         <view class="function-list">
+            <view class="function-item" bindtap="goToYouZanOrderPage">
+                <view class="function-item-left">
+                    <image src="/assets/images/common/order.png"></image>
+                    <view class="function-item-box">
+                        <view class="function-item-top">我的订单</view>
+                    </view>
+                </view>
+                <image src="/assets/images/common/arrow.png"></image>
+            </view>
+            <view class="function-item" bindtap="onFluentCardTap">
+                <view class="function-item-left">
+                    <image src="/assets/images/common/fluentCard.png"></image>
+                    <view class="function-item-box">
+                        <view class="function-item-top">我的畅学卡</view>
+                    </view>
+                </view>
+                <image src="/assets/images/common/arrow.png"></image>
+            </view>
+            <view class="function-item" bindtap="goToJoinedActivities">
+                <view class="function-item-left">
+                    <image src="/assets/images/common/mineActivities.png"></image>
+                    <view class="function-item-box">
+                        <view class="function-item-top">我的活动</view>
+                    </view>
+                </view>
+                <image src="/assets/images/common/arrow.png"></image>
+            </view>
             <view class="function-item" bindtap="goToTaskBootcampPage">
                 <view class="function-item-left">
                     <image src="/assets/images/common/bootcamp.png" class="task-image"></image>
@@ -147,57 +99,8 @@
                     </view>
                 </view>
                 <image src="/assets/images/common/arrow.png"></image>
-                <!--				<view-->
-                <!--					class="{{changeMoneyNoticeClass?'money-notice-main-position':'money-notice-main-position money-notice-main-position-hide'}}"-->
-                <!--					catchtouchmove="onCatchtouchmove" wx:if='{{showMoneyNotice}}'>-->
-                <!--					<view>-->
-                <!--						<view class="money-notice-main">-->
-                <!--							<view class="money-notice-main-left">-->
-                <!--								<view class="money-notice-main-left-icon">-->
-                <!--									<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1624610747xFFcfK.jpg"></image>-->
-                <!--								</view>-->
-                <!--								<view class="money-notice-main-left-desc">-->
-                <!--									<view class="money-notice-main-left-desc-top">我的余额</view>-->
-                <!--									<view class="money-notice-main-left-desc-bottom">当前余额：<text>{{userInfo.amount}}元</text></view>-->
-                <!--								</view>-->
-                <!--							</view>-->
-                <!--							<view class="money-notice-main-right">-->
-                <!--								<image src="/assets/images/common/arrow.png"></image>-->
-                <!--							</view>-->
-                <!--						</view>-->
-                <!--						<view class="money-notice-sign">-->
-                <!--							<image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1615805274CurqeO.jpg"></image>-->
-                <!--							<view>点击<text style="font-weight:600;">“我的余额”</text></view>-->
-                <!--							<view>可以查看具体明细哦</view>-->
-                <!--						</view>-->
-                <!--					</view>-->
 
-                <!--				</view>-->
             </view>
-            <view class="function-item" wx:if="{{false}}" bindtap="toOrder">
-                <view class="function-item-left">
-                    <image src="/assets/images/common/order.png"></image>
-                    <view class="function-item-box">
-                        <view class="function-item-top">我的订单</view>
-                        <view class="function-item-bottom">查询订单信息</view>
-                    </view>
-                </view>
-                <image src="/assets/images/common/arrow.png"></image>
-            </view>
-            <!--			<view class="function-item" bindtap="goToTaskLaunchPage" wx:if="{{visibleTaskEntrance}}">-->
-
-            <!--            <view class="function-item" bindtap="toPromotion"-->
-            <!--                  wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&showPromotion}}">-->
-            <!--                <view class="function-item-left">-->
-            <!--                    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604487601QeseJU.jpg"-->
-            <!--                           style="width:52rpx;height:52rpx;margin-right: 20rpx;margin-left:-4rpx;"></image>-->
-            <!--                    <view class="function-item-box">-->
-            <!--                        <view class="function-item-top">我的推广</view>-->
-            <!--                        <view class="function-item-bottom">分享花样课，收获感谢金</view>-->
-            <!--                    </view>-->
-            <!--                </view>-->
-            <!--                <image src="/assets/images/common/arrow.png"></image>-->
-            <!--            </view>-->
             <view class="function-item" bindtap="callPhone">
                 <view class="function-item-left">
                     <image src="/assets/images/common/contact.png" class="task-image"></image>
@@ -222,19 +125,5 @@
     </view>
 
     <!-- 授权弹窗 -->
-    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent"
-                bind:authCompleteEvent="authCompleteEvent">
-    </authModule>
-    <!-- 客服弹窗 -->
-    <contact show="{{didShowContact}}" isRootPage="{{true}}" sessionFrom="sf_study_guide"
-             bind:closeContactModal="onCloseContactModal"/>
-    <!-- 余额提示弹窗 -->
-    <!--	<view class="{{changeMoneyNoticeClass?'money-notice':'money-notice money-notice-hide'}} " wx:if='{{showMoneyNotice}}'-->
-    <!--		catchtouchmove="onCatchtouchmove">-->
-    <!--		<view class="money-notice-bg" catchtap="closeMoneyNotice">-->
-    <!--		</view>-->
-    <!--	</view>-->
-    <!-- 加入俱乐部会员弹窗 -->
-    <clubVipAlert type="{{showClubVipAlertType}}" show="{{showClubVipAlert}}" bind:closeClubVipAlert='closeClubVipAlert'
-                  catchtouchmove="onCatchtouchmove" link="{{showClubVipAlertLink}}"></clubVipAlert>
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent" />
 </view>

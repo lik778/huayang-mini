@@ -28,6 +28,7 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
+		current:0,
 		isIosPlatform: false,
 		didShowAuth: false,
 		f1: [],
@@ -152,7 +153,8 @@ Page({
 				limit: 5,
 				platform: 1,
 				homepage_show: 1,
-				status: 1
+				status: 1,
+			  sort: "begin_time"
 			})
 			.then(({
 				list

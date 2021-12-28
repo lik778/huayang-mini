@@ -43,8 +43,7 @@
     "audio",
     "location"
   ],
-  "subpackages": [
-    {
+  "subpackages": [{
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -73,7 +72,8 @@
         "wvDistributeApply/wvDistributeApply",
         "cardWithdraw/cardWithdraw",
         "oldInviteNew/oldInviteNew",
-        "books/books"
+        "books/books",
+        "joinedActivities/joinedActivities"
       ]
     },
     {
@@ -155,6 +155,18 @@
         "lifeDetail/lifeDetail",
         "lifeList/lifeList"
       ]
+    }, {
+      "root": "teacherModule",
+      "pages": [
+        "index/index",
+        "poster/poster",
+        "honorList/honorList",
+        "momentList/momentList",
+        "momentPublish/momentPublish",
+        "momentDetail/momentDetail",
+        "messageList/messageList",
+        "teacherList/teacherList"
+      ]
     }
   ],
   "window": {
@@ -166,8 +178,7 @@
   },
   "tabBar": {
     "custom": true,
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/discovery/discovery"
       },
       {

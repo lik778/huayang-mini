@@ -1,0 +1,110 @@
+/* teacherModule/momentDetail/momentDetail.wxss */
+.moment-detail-container {}
+
+.moment-detail {
+  padding-left: 32rpx;
+  padding-right: 60rpx;
+  display: flex;
+  padding-top: 20rpx;
+}
+
+.moment-detail-left {}
+
+.moment-detail-left image {
+  width: 80rpx;
+  height: 80rpx;
+  vertical-align: bottom;
+  border-radius: 50%;
+}
+
+.moment-detail-right {
+  padding-left: 20rpx;
+}
+
+.moment-detail-title {
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #7D90A9;
+  line-height: 32rpx;
+  padding-bottom: 20rpx;
+}
+
+.moment-detail-desc {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 44rpx;
+}
+
+.moment-detail-media {
+  padding-top: 20rpx;
+}
+
+.moment-detail-image {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.moment-detail-image image {
+  width: 160rpx;
+  height: 160rpx;
+  vertical-align: bottom;
+  margin-right: 6rpx;
+  margin-bottom: 6rpx;
+}
+
+.moment-detail-image-one {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.moment-detail-image-one image {
+  width: 360rpx;
+  vertical-align: bottom;
+  height: 480rpx;
+}
+
+.moment-detail-video {
+  width: 360rpx;
+  height: 480rpx;
+  position: relative;
+}
+
+.moment-detail-video video {
+  width: 100%;
+  height: 100%;
+  vertical-align: bottom;
+}
+
+.moment-detail-video image {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 96rpx;
+  height: 96rpx;
+  z-index: 10;
+}
+
+.moment-detail-time {
+  display: flex;
+  align-items: center;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #666666;
+  line-height: 28rpx;
+  padding-top: 26rpx;
+}
+
+.moment-detail-time-delete {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #729CBD;
+  line-height: 28rpx;
+  padding-left: 18rpx;
+}

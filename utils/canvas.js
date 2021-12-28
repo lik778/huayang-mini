@@ -238,3 +238,33 @@ export const drawCircleFill = (ctx, color, x, y, r) => {
     resolve()
   })
 }
+
+/* 绘制多行文本 */
+export const drawManyText = (ctx, text, fontColor, fontWeight = 'normal', fontFamily, fontSize, x, y, maxWidth, lineHeight) => {
+  return new Promise(resolve => {
+    ctx.save();
+    let arrText = text.split("");
+    ctx.setFontSize(fontSize)
+    let line = "";
+    ctx.font = `normal ${fontWeight} ${fontSize}px ${fontFamily}`
+    ctx.setFillStyle(fontColor)
+    ctx.textBaseline = "top";
+    ctx.setTextBaseline('top')
+    ctx.setTextAlign('left')
+    for (let n = 0; n < arrText.length; n++) {
+      let testLine = line + arrText[n];
+      let metrics = ctx.measureText(testLine);
+      let testWidth = metrics.width;
+      if (testWidth > maxWidth && n > 0) {
+        ctx.fillText(line, x, y);
+        line = arrText[n];
+        y += lineHeight;
+      } else {
+        line = testLine;
+      }
+    }
+    ctx.fillText(line, x, y);
+    ctx.restore();
+    resolve();
+  });
+}

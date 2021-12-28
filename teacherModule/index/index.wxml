@@ -1,0 +1,169 @@
+<!--teacherModule/index/index.wxml-->
+<view class="teacher-index">
+  <naviBar title='老师主页' showType='1' backPath='/teacherModule/teacherList/teacherList' isRootBar='{{false}}'  needRedirect='{{true}}'></naviBar>
+  <!-- 头部大banner -->
+  <view class="banner">
+    <swiper duration="500" circular class="swiper" bindchange="switchBanner">
+      <block wx:for="{{teacherMainInfo.photo}}" wx:key="index">
+        <swiper-item class="swiper-item">
+          <view class="swiper-image">
+            <image bindtap="visitEveryOne" data-item='{{item}}' data-index="{{index}}" src="{{item}}"></image>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="swiper-indicator">
+      {{currentBannerIndex+1}}/{{teacherMainInfo.photo.length}}
+    </view>
+  </view>
+
+  <!-- 老师信息 -->
+  <view class="teacher-info">
+    <view class="teacher-name-line">
+      <view class="teacher-name-line-left">
+        <text>{{teacherMainInfo.nickname}}</text>
+        <image src="{{girlIcon}}" wx:if="{{teacherMainInfo.gender===2}}"></image>
+        <image src="{{boyIcon}}" wx:if='{{teacherMainInfo.gender===1}}'></image>
+      </view>
+      <view class="teacher-name-line-right" bindtap="toShare">
+        <image src="{{shareIcon}}"></image>
+        <text>分享</text>
+        <!-- <button open-type="share"></button> -->
+      </view>
+    </view>
+    <view class="teacher-sign" wx:if='{{teacherMainInfo.keywordArr.length}}'>
+      <view class="teacher-sign-item" wx:for="{{teacherMainInfo.keywordArr}}" wx:key="index">{{item}}</view>
+    </view>
+    <view class="teacher-desc">{{teacherMainInfo.slogan}}</view>
+    <view class="teacher-other-info">
+      <view class="teacher-other-info-left">
+        <text wx:if="{{teacherMainInfo.address}}">{{teacherMainInfo.address||''}}</text>
+        <text wx:if="{{teacherMainInfo.address&&teacherMainInfo.job}}"> ｜ </text>
+        <text wx:if="{{teacherMainInfo.job}}" class="teacher-other-info-left-special">曾任</text>
+        <text wx:if="{{teacherMainInfo.job}}"> {{teacherMainInfo.job||''}}</text>
+      </view>
+      <view class="teacher-other-info-right">
+        <view class="teacher-other-info-right-visit">
+          <image src="{{visitIcon}}"></image>
+          <text>{{teacherMainInfo.visit_count}}</text>
+        </view>
+        <view class="teacher-other-info-right-like" bindtap="likeTeacher">
+          <image src="{{likeIcon}}" wx:if="{{teacherMainInfo.has_like}}"></image>
+          <image src="{{unLikeIcon}}" wx:else></image>
+          <text>{{teacherMainInfo.like_count}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 主体 -->
+  <view class="main">
+    <!-- 荣誉 -->
+    <view class="honor" bindtap="toHonorList" wx:if="{{honorList.length}}">
+      <view class="honor-title common-title">
+        <view class="honor-title-left common-title-left">我的荣誉</view>
+        <view class="honor-title-right common-title-right" wx:if="{{honorList.length}}">
+          <text>查看全部</text>
+          <image src="{{rightArrowIcon}}"></image>
+        </view>
+      </view>
+      <view class="honor-list">
+        <view class="honor-item" wx:for="{{honorList}}" :key='index'>
+          <text>{{item.title}}</text>
+          <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1640598577eDoejU.jpg"></image>
+        </view>
+      </view>
+    </view>
+
+    <!-- 认证 -->
+    <view class="authentication" wx:if="{{medalTotal>0}}">
+      <view class="authentication-title common-title">
+        <view class="authentication-title-left common-title-left">我的花样认证</view>
+        <view class="authentication-title-right common-title-right" wx:if="{{medalTotal>5&&false}}">
+          <text>查看全部</text>
+          <image src="{{rightArrowIcon}}"></image>
+        </view>
+      </view>
+      <view class="authentication-list">
+        <view class="authentication-item" wx:for="{{medalList}}" wx:key='index'>
+          <image src="{{item.icon_url}}"></image>
+          <text>{{item.name}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 动态 -->
+    <view class="moment">
+      <view class="moment-title common-title">
+        <view class="moment-title-left common-title-left">我的动态</view>
+        <view class="moment-title-right common-title-right" bindtap="toMomentList">
+          <text>查看全部</text>
+          <image src="{{rightArrowIcon}}"></image>
+        </view>
+      </view>
+      <view class="moment-list" wx:if="{{momentList.length}}">
+        <view class="moment-item" wx:for="{{momentList}}" wx:key='index'>
+          <image class="moment-image" mode='aspectFill' wx:if='{{item.type===1}}' src="{{item.media_url[0]}}" bindtap="toMomentDetail" data-item='{{item}}'></image>
+          <view wx:else class="moment-item-video" bindtap="toMomentDetail" data-item='{{item}}'>
+            <video src="{{item.media_url}}" show-center-play-btn='{{false}}' controls='{{false}}'></video>
+            <image src="{{playIcon}}"></image>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 留言板 -->
+    <view class="message">
+      <view class="message-title common-title">
+        <view class="message-title-left common-title-left">留言板 <text>{{commentTotalCount}}</text></view>
+        <view class="message-title-right common-title-right" bindtap="toMessageList" wx:if='{{commentList.length}}'>
+          <text>查看全部</text>
+          <image src="{{rightArrowIcon}}"></image>
+        </view>
+      </view>
+      <view class="message-list">
+        <view class="message-item" wx:for="{{commentList}}" wx:key='index'>
+          <view class="message-item-left-box">
+            <view class="message-item-left">
+              <image src="{{item.headimg_url}}"></image>
+            </view>
+            <view class="message-item-mid">
+              <view class="message-item-mid-top">{{item.nickname}}</view>
+              <view class="message-item-mid-bottom">{{item.content}}</view>
+            </view>
+          </view>
+          <view class="message-item-right" bindtap="likeComment" data-item='{{item}}'>
+            <image src="{{likeIcon}}" wx:if='{{item.has_like}}'></image>
+            <image src="{{unLikeIcon}}" wx:else></image>
+            <text>{{item.like_count}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="message-publish">
+        <view class="message-publish-left">
+          <image src="{{userInfo?userInfo.avatar_url:defaultHeadIcon}}"></image>
+
+        </view>
+        <view class="message-publish-right">
+          <textarea value="{{commentInputValue}}" bindinput="inputComment" maxlength="100" placeholder="请输入您的留言"></textarea>
+          <view class="message-publish-button" bindtap="publishComment">留言</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 商品推荐 -->
+    <view class="commodity-recommend">
+      <view class="commodity-title common-title">
+        <view class="message-title-left common-title-left">一起花样好生活</view>
+      </view>
+      <view class="commodity-image" bindtap="handleBannerTap">
+        <image src="{{bottomBannerList[0].pic_url}}"></image>
+      </view>
+    </view>
+  </view>
+
+  <!-- 授权弹窗 -->
+  <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
+  </authModule>
+
+</view>

@@ -1,0 +1,34 @@
+<!--teacherModule/poster/poster.wxml-->
+<view class="poster-container">
+  <view class="main" style="align-items: {{longScreen?'center':'flex-start'}}">
+    <view class="poster-main">
+      <view class="poster-main-bg">
+        <image src="{{detailInfo.headIcon}}"></image>
+      </view>
+      <view class="poster-main-title">花样百姓 - {{detailInfo.nickname}}</view>
+      <view class="poster-main-desc">{{detailInfo.introduce}}</view>
+      <view class="poster-main-logo">
+        <image class="poster-main-logo-left" src="{{logo1}}"></image>
+        <image class="poster-main-logo-right" src="{{qrcode}}"></image>
+      </view>
+      <view class="poster-main-logo-right-box">长按识别查看</view>
+    </view>
+  </view>
+  <view class="poster-button-line" wx:if="{{longScreen}}">
+    <view class="poster-button-left">
+      <text>分享好友</text>
+      <button open-type="share" class="button-share"></button>
+    </view>
+    <view class="poster-button-right" bindtap="savePoster">保存图片</view>
+  </view>
+  <view class="poster-button-line-one" wx:else>
+    <view class="poster-button-left-one">
+      <text>分享好友</text>
+      <button open-type="share" class="button-share" bindtap="shareTap"></button>
+    </view>
+    <view class="poster-button-right-one" bindtap="savePoster">保存图片</view>
+  </view>
+
+  <canvas id='canvas' canvas-id="canvas" style="width:{{elementWidth}}px;height:{{elementHeight}}px;position:absolute;left:-2000px;bottom:-2000px"></canvas>
+
+</view>

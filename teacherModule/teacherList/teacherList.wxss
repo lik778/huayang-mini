@@ -1,0 +1,122 @@
+/* teacherModule/teacherList/teacherList.wxss */
+.teacher-list-container {}
+
+.teacher-list-title {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 176rpx;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 0 40rpx;
+  box-sizing: border-box;
+}
+
+.teacher-list-title-item {
+  font-size: 48rpx;
+  font-family: PingFangSC-Light, PingFang SC;
+  font-weight: 300;
+  color: #000000;
+  line-height: 48rpx;
+  margin-right: 60rpx;
+}
+
+.teacher-list-title-item-active {
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  position: relative;
+}
+
+.teacher-list-title-item-active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -24rpx;
+  z-index: 11;
+  transform: translate(-50%, -50%);
+  width: 72rpx;
+  height: 8rpx;
+  background: linear-gradient(270deg, #FF5544 0%, #FF9E95 100%);
+  border-radius: 6px;
+}
+
+.teacher-list-main {
+  padding-top: 176rpx;
+  margin: 0 44rpx;
+}
+
+.teacher-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 48rpx 0;
+  border-bottom: 2rpx solid #EFEFEF;
+}
+
+.teacher-list-item:last-child {
+  border: none;
+}
+
+.teacher-list-item-left {
+  display: flex;
+  align-items: center;
+}
+
+.teacher-list-item-left-left {
+  padding-right: 28rpx;
+}
+
+.teacher-list-item-left-left image {
+  width: 120rpx;
+  height: 120rpx;
+  vertical-align: bottom;
+  border-radius: 50%;
+}
+
+.teacher-list-item-left-right {
+  width: 420rpx;
+}
+
+.teacher-list-item-left-right-top {
+  font-size: 40rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 40rpx;
+  padding-bottom: 24rpx;
+}
+
+.teacher-list-item-left-right-bottom {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.8);
+  line-height: 40rpx;
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.teacher-list-item-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 28rpx;
+}
+
+.teacher-list-item-right image {
+  width: 64rpx;
+  height: 68rpx;
+  vertical-align: bottom;
+  margin-bottom: 6rpx;
+}

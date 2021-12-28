@@ -1,0 +1,25 @@
+<!--teacherModule/momentPublish/momentPublish.wxml-->
+<view class="moment-publish-container">
+  <naviBar title='发布动态' showType='3' backPath="{{backPath}}" needRedirect='{{true}}'></naviBar>
+  <view class="main">
+    <view class="input">
+      <textarea value='{{momentInputValue}}' bindinput="inputMomentValue" placeholder="请输入您的动态内容" maxlength="200"></textarea>
+      <view class="text-num">{{momentInputValue.length}}/200</view>
+    </view>
+    <view class="uploadModule">
+      <view class="upload">
+        <view class="preview-item" wx:for="{{previewImageList}}" wx:key="index" style="width:{{item.type===2?'360rpx':'200rpx'}};height:{{item.type===2?'480rpx':'200rpx'}}">
+          <image src="{{item.src}}" wx:if='{{item.type===1}}' mode="aspectFill" class="preview-image"></image>
+          <video id='moment-video' class="moment-video" src="{{item.src}}" wx:else controls="{{showControls}}" bindfullscreenchange="switchControls" show-center-play-btn="{{false}}"></video>
+          <image src="{{deleteIcon}}" bindtap="deleteImage" data-index='{{index}}' class="delete-icon"></image>
+          <image src="{{playIcon}}" wx:if='{{item.type===2&&!playingVideo}}' bindtap="playVideo" class="play-icon"></image>
+        </view>
+        <image src="{{uploadIcon}}" bindtap="uploadMomentImage" wx:if="{{previewImageList.length<9&&mediaType==='image'}}"></image>
+
+      </view>
+    </view>
+  </view>
+  <view class="publish-line">
+    <image class="publish-button" bindtap="publishMoment" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639705899WfbfXG.jpg" />
+  </view>
+</view>

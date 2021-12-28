@@ -1,0 +1,29 @@
+<!--teacherModule/teacherList/teacherList.wxml-->
+<view class="teacher-list-container">
+  <naviBar title='花样之星' showType='3' backPath="/pages/discovery/discovery" isRootBar='{{true}}'></naviBar>
+  <view class="teacher-list-title" wx:if="{{showTab}}">
+    <view class="teacher-list-title-item {{currentTabIndex===1?'teacher-list-title-item-active':''}}" bindtap="changeTab" data-index='1'>个人</view>
+    <view class="teacher-list-title-item {{currentTabIndex===2?'teacher-list-title-item-active':''}}" bindtap="changeTab" data-index='2'>团队</view>
+  </view>
+  <view class="teacher-list-main" style="padding-top:{{showTab?'176rpx':0}}">
+    <view class="teacher-list-item" wx:for="{{list}}" wx:key="index" bindtap="toTeacherDetail" data-item="{{item}}">
+      <view class="teacher-list-item-left">
+        <view class="teacher-list-item-left-left">
+          <image src="{{item.headIcon}}"></image>
+        </view>
+        <view class="teacher-list-item-left-right">
+          <view class="teacher-list-item-left-right-top">{{item.nickname}}</view>
+          <view class="teacher-list-item-left-right-bottom">{{item.slogan}}</view>
+        </view>
+      </view>
+      <view class="teacher-list-item-right" catchtap="likeTeacher" data-item='{{item}}' data-index="{{index}}">
+        <image src="{{likeIcon}}" wx:if='{{item.has_like}}'></image>
+        <image src="{{unLikeIcon}}" wx:else></image>
+        <text>{{item.like_count}}</text>
+      </view>
+    </view>
+  </view>
+  <!-- 授权弹窗 -->
+  <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
+  </authModule>
+</view>

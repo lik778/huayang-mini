@@ -1,0 +1,134 @@
+/* teacherModule/messageList/messageList.wxss */
+.message-list-container {
+  padding: 0 40rpx;
+  padding-bottom: 200rpx;
+}
+
+.message-list {}
+
+.message-item {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #EFEFEF;
+  padding: 32rpx 0;
+}
+
+.message-item:last-child {
+  border: none;
+}
+
+.message-item-left-box {
+  display: flex;
+}
+
+.message-item-left {}
+
+.message-item-left image {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  vertical-align: bottom;
+}
+
+.message-item-mid {
+  width: 480rpx;
+  padding-left: 20rpx;
+  padding-right: 40rpx;
+}
+
+
+
+.message-item-mid-top {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 32rpx;
+  padding-bottom: 16rpx;
+}
+
+.message-item-mid-bottom {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 40rpx;
+}
+
+.message-item-right {
+  width: 60rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.message-item-right-top {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 28rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.message-item-right-top image {
+  width: 40rpx;
+  height: 44rpx;
+  vertical-align: bottom;
+  margin-bottom: 8rpx;
+}
+
+.message-item-right-bottom {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #729CBD;
+  line-height: 28rpx;
+  white-space: nowrap;
+  padding-top: 20rpx;
+}
+
+.message-publish {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 160rpx;
+  border-top: 0.5px solid #DDDDDD;
+  background-color: #fff;
+}
+
+.message-publish-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20rpx;
+  padding-top: 20rpx;
+}
+
+.message-publish-box input {
+  background: #F9F9F9;
+  height: 80rpx;
+  padding: 0 16rpx;
+  box-sizing: border-box;
+  width: calc(100% - 120rpx);
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  line-height: 32rpx;
+}
+
+.message-publish-button {
+  width: 120rpx;
+  height: 80rpx;
+  background-color: #FF5544;
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 80rpx;
+  text-align: center;
+}
