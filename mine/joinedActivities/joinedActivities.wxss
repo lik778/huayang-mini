@@ -1,0 +1,113 @@
+@import "/assets/css/common.wxss";
+
+.joined-activities {
+    padding: 40rpx;
+}
+
+.tags {
+    display: flex;
+    margin-bottom: 20rpx;
+}
+
+.tag-item {
+    padding: 16rpx 24rpx;
+    margin-right: 16rpx;
+    border: 2rpx solid #F2F2F4;
+    border-radius: 16rpx 0 16rpx 0;
+    box-sizing: border-box;
+    font: 28rpx/28rpx PingFangSC;
+    background: #F2F2F4;
+    color: #000000;
+}
+
+.tag-item.active {
+    border-color: #FF5544;
+    background: white;
+    color: #FF5544;
+}
+
+.activity-item {
+    margin-bottom: 60rpx;
+}
+
+.activity-item:active {
+    opacity: 0.9;
+}
+
+.cover {
+    width: 670rpx;
+    height: 336rpx;
+    font-size: 0;
+    background: #eeeeee;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 18rpx;
+}
+
+.title {
+    width: 496rpx;
+    height: 88rpx;
+    font: 32rpx/44rpx PingFangSC;
+}
+
+.separate {
+    width: 2rpx;
+    height: 88rpx;
+    background: #DDDDDD;
+}
+
+.date {
+    width: 136rpx;
+    height: 88rpx;
+    font: 28rpx/44rpx PingFangSC;
+    color: rgba(0,0,0, 0.6);
+    text-align: right;
+}
+
+.no-more {
+    font: 28rpx/28rpx PingFangSC;
+    text-align: center;
+    color: #969696;
+}
+
+.no-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 320rpx;
+}
+
+.no-data-img {
+    width: 322rpx;
+    height: 260rpx;
+    font-size: 0;
+}
+
+.tips {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: -22rpx 0 80rpx;
+}
+
+.tips > text {
+    font: 32rpx/44rpx PingFangSC;
+    color: rgba(0,0,0, 0.6);
+}
+
+.tips-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 522rpx;
+    height: 88rpx;
+    font: 500 32rpx/44rpx PingFangSC;
+    color: white;
+    background: #FF5544;
+}
