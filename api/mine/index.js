@@ -269,3 +269,13 @@ export function getStudentInfoByUserId(params) {
 export const checkUserHasAddress = (params) => {
   return request._get(URL.checkUserHasAddress, params)
 }
+
+// 根据手机号查询用户报名的活动
+export function getUserJoinedActivitiesByMobile(params) {
+  return request._get(URL.queryUserJoinedActivitiesByMobile, params)
+}
+
+// 个人中心获取师资信息
+export function getUserPersonPageInfo(params) {
+  return request._get(URL.queryUserPersonPageInfo, params)
+}

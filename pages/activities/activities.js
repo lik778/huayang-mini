@@ -82,7 +82,7 @@ Page({
   },
   // 请求活动列表
   getList() {
-    getActivityList({offset: this.data.offset, limit: this.data.limit, platform: 1, status: 1})
+    getActivityList({offset: this.data.offset, limit: this.data.limit, platform: 1, status: 1, sort: "begin_time"})
       .then(({list}) => {
         if (list.length < this.data.limit) {
           this.setData({hasMore: false})

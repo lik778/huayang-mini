@@ -1,7 +1,6 @@
 @import "../../assets/css/common.wxss";
 
 .user-center {
-    position: relative;
     background: #F9F9F9;
     padding-bottom: 200rpx;
     min-height: 100vh;
@@ -14,10 +13,13 @@
 
 /* 个人信息  */
 .banner {
+    overflow: hidden;
     margin-bottom: 40rpx;
+    font-size: 0;
 }
 
 .banner-bg {
+    width: 100%;
     height: 400rpx;
     background: black;
 }
@@ -28,7 +30,7 @@
 
 .message {
     position: absolute;
-    padding: 0 30rpx;
+    padding-left: 50rpx;
     display: flex;
     align-items: center;
     top: 168rpx;
@@ -79,6 +81,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 510rpx;
 }
 
 .message .user-info .vip-tag {
@@ -109,6 +112,22 @@
     font-weight: 600;
     color: #FFFFFF;
     line-height: 52rpx;
+}
+
+.message .teacher-card {
+    display: inline-block;
+    font: 32rpx/32rpx PingFangSC;
+}
+
+.message .teacher-card::after {
+    display: inline-block;
+    content: "";
+    width: 14rpx;
+    height: 20rpx;
+    margin: 6rpx 0 0 14rpx;
+    font-size: 0;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1640678877oPKQYZ.jpg") no-repeat center;
+    background-size: contain;
 }
 
 /* 专属邀请码 */
@@ -147,11 +166,9 @@
 
 /* 广告位 */
 .ad {
-    position: relative;
-    top: -44rpx;
     width: 690rpx;
     height: 172rpx;
-    margin: 0 auto 40rpx;
+    margin: 60rpx auto 40rpx;
 }
 
 .ad.nodata {
@@ -246,7 +263,7 @@
 
 .function-item-left .task-image {
     width: 52rpx;
-    height: 52rpx;
+    height: 54rpx;
     vertical-align: bottom;
     margin-left: -4rpx;
     margin-right: 20rpx;

@@ -73,7 +73,8 @@
         "wvDistributeApply/wvDistributeApply",
         "cardWithdraw/cardWithdraw",
         "oldInviteNew/oldInviteNew",
-        "books/books"
+        "books/books",
+        "joinedActivities/joinedActivities"
       ]
     },
     {

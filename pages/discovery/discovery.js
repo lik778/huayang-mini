@@ -152,7 +152,8 @@ Page({
 				limit: 5,
 				platform: 1,
 				homepage_show: 1,
-				status: 1
+				status: 1,
+			  sort: "begin_time"
 			})
 			.then(({
 				list

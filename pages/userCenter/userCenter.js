@@ -1,13 +1,10 @@
 import { FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
-import baseUrl from "../../lib/request"
 import dayjs from "dayjs"
 import { getFindBanner, getPhoneNumber } from "../../api/course/index"
 import {
-  checkUserHasAddress,
   getFluentCardInfo,
   getFluentLearnInfo,
-  getPartnerInfo,
-  getUserInfo,
+  getUserInfo, getUserPersonPageInfo,
 } from "../../api/mine/index"
 import {
   $notNull,
@@ -51,19 +48,14 @@ Page({
     nodata: true,
     phoneNumber: "",
     existNo: undefined,
-    visibleTaskEntrance: false,
     cardBtnText: "授权登录",
     bannerList: [],
     disHasFluentLearnUserInfo: false, // 是否有畅学卡会员信息
     isFluentLearnExpired: false, // 畅学卡依然有效
     cardName: "", // 畅学卡名称
     cardDesc: "", // 畅学卡描述
-  },
-  // 关闭加入花样俱乐部弹窗
-  closeClubVipAlert() {
-    this.setData({
-      showClubVipAlertType: ''
-    })
+    isUserHaveTeacherCard: false, // 当前用户是否有教师卡片
+    teacherInfo: null
   },
   /**
    * 处理长昵称
@@ -132,23 +124,12 @@ Page({
       })
     }
   },
-
-  onCatchtouchmove() {
-		return false
-	},
-  // 处理畅叙卡按钮点击事件
+  // 处理畅学卡按钮点击事件
   onFluentCardTap() {
     if (!hasUserInfo() || !hasAccountInfo()) {
-      this.setData({
-        didShowAuth: true
-      })
+      this.setData({didShowAuth: true})
     } else {
       if (this.data.disHasFluentLearnUserInfo && !this.data.isFluentLearnExpired) {
-        this.data.fluentLearnUserInfo && bxPoint("mine_changxue_find", {
-          changxue_id: this.data.fluentLearnUserInfo.id,
-          changxue_buy_date: this.data.fluentLearnUserInfo.created_at,
-          changxue_expire_date: this.data.fluentLearnUserInfo.expire_time,
-        }, false)
         wx.navigateTo({
           url: "/mine/fluentLearnInfo/fluentLearnInfo"
         })
@@ -210,33 +191,6 @@ Page({
       this.setData({
         bannerList: list
       })
-    })
-  },
-
-
-  // 检查是否填写收获地址表单
-  checkHasFillAddress() {
-    checkUserHasAddress({
-      user_id: this.data.userInfo.id
-    }).then(res => {
-      if (res.code === 0) {
-        let data = res.data.hasAddr
-        if (!data) {
-          let hasShowClubVipAlertSign = getLocalStorage('hy_daxue_show_club_vip_alert_sign')
-          let threeDayTime = this.data.disHasFluentLearnUserInfo ? 86400 : 259200 //买了畅学卡1天1显示没买3天一显示
-          let threeDayLaterTimeStr = parseInt(new Date().getTime() / 1000) + threeDayTime
-          let rootUrl = baseUrl.baseUrl
-          let userId = this.data.userInfo.id
-          if (!hasShowClubVipAlertSign) {
-            setTimeout(() => {
-              this.setData({
-                showClubVipAlertLink: encodeURIComponent(`${rootUrl}/#/home/huayangClubForm?id=${userId}&from=daxue&type=${type}`)
-              })
-              setLocalStorage("hy_daxue_show_club_vip_alert_sign", threeDayLaterTimeStr)
-            }, 1000)
-          }
-        }
-      }
     })
   },
 
@@ -309,7 +263,6 @@ Page({
       this.setData({
         disHasFluentLearnUserInfo: !!data
       })
-      this.checkHasFillAddress()
     })
   },
 
@@ -347,6 +300,17 @@ Page({
       })
     }
   },
+  goToJoinedActivities() {
+    if (hasUserInfo() && hasAccountInfo()) {
+      wx.navigateTo({
+        url: "/mine/joinedActivities/joinedActivities"
+      })
+    } else {
+      this.setData({
+        didShowAuth: true
+      })
+    }
+  },
   goToTaskBootcampPage() {
     if (hasUserInfo() && hasAccountInfo()) {
       bxPoint("applet_mine_click_bootcamp", {}, false)
@@ -372,8 +336,11 @@ Page({
     }
   },
   // 我的订单
-  toOrder() {
-    console.log("跳转到有赞订单页");
+  goToYouZanOrderPage() {
+    wx.navigateToMiniProgram({
+      appId: "wx95fb6b5dbe8739b7",
+      path: "packages/trade/order/list/index"
+    })
   },
   // 获取客服号码
   getNumber() {
@@ -427,14 +394,15 @@ Page({
     // }
   },
   run() {
-    // 检查是否展示作业秀入口
-    getTaskEntranceStatus().then(({
-      data
-    }) => {
-      this.setData({
-        visibleTaskEntrance: +data === 1
+    // 获取师资信息
+    getUserPersonPageInfo()
+      .then(({data}) => {
+        if ($notNull(data)) {
+          this.setData({teacherInfo: data})
+        }
+
+        this.setData({isUserHaveTeacherCard: $notNull(data)})
       })
-    })
 
 
     if (hasUserInfo() && !hasAccountInfo()) {
@@ -511,6 +479,13 @@ Page({
         setLocalStorage('need_show_mine_sign', 'false')
       }
     }
+  },
+
+  // 跳转到个人主页
+  goToPersonCard() {
+    wx.navigateTo({
+      url: `/teacherModule/index/index?id=${this.data.teacherInfo.id}`
+    })
   },
 
   /**
