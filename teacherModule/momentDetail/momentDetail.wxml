@@ -10,7 +10,7 @@
       <view class="moment-detail-desc">{{momentDetailInfo.content}}</view>
       <view class="moment-detail-media">
         <view class="moment-detail-image-one" wx:if='{{momentDetailInfo.mediaType===1}}'>
-          <image mode="widthFix" src="{{momentDetailInfo.mediaUrl[0]}}"></image>
+          <image mode="widthFix" bindtap="previewImage" data-item='{{item}}' src="{{momentDetailInfo.mediaUrl[0]}}"></image>
         </view>
         <view class="moment-detail-image" wx:if='{{momentDetailInfo.mediaType===2}}'>
           <image mode="aspectFill" bindtap="previewImage" data-item='{{item}}' wx:key='index' wx:for="{{momentDetailInfo.mediaUrl}}" src="{{item}}"></image>

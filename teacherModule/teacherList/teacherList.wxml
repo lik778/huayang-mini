@@ -1,5 +1,6 @@
 <!--teacherModule/teacherList/teacherList.wxml-->
 <view class="teacher-list-container">
+  <naviBar title='花样之星' showType='3' backPath="/pages/discovery/discovery" isRootBar='{{true}}'></naviBar>
   <view class="teacher-list-title" wx:if="{{showTab}}">
     <view class="teacher-list-title-item {{currentTabIndex===1?'teacher-list-title-item-active':''}}" bindtap="changeTab" data-index='1'>个人</view>
     <view class="teacher-list-title-item {{currentTabIndex===2?'teacher-list-title-item-active':''}}" bindtap="changeTab" data-index='2'>团队</view>
@@ -15,7 +16,7 @@
           <view class="teacher-list-item-left-right-bottom">{{item.slogan}}</view>
         </view>
       </view>
-      <view class="teacher-list-item-right" catchtap="likeTeacher" data-item='{{item}}'>
+      <view class="teacher-list-item-right" catchtap="likeTeacher" data-item='{{item}}' data-index="{{index}}">
         <image src="{{likeIcon}}" wx:if='{{item.has_like}}'></image>
         <image src="{{unLikeIcon}}" wx:else></image>
         <text>{{item.like_count}}</text>

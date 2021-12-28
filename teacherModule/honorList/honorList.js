@@ -18,6 +18,15 @@ Page({
     honorList: []
   },
 
+  /* 预览图片 */
+  previewImage(e) {
+    wx.previewImage({
+      urls: [e.currentTarget.dataset.item.photo_url],
+      current: e.currentTarget.dataset.item.photo_url
+    })
+  },
+
+
   /* 获取荣誉列表 */
   getHonorList(refresh = false) {
     getTeacherNewHonorList(this.data.pagination).then(({

@@ -3,7 +3,7 @@
   <view class="honor-list">
     <view class="honor-item" wx:for="{{honorList}}" wx:key="index">
       <view class="honor-item-left">
-        <image mode="aspectFit" src="{{item.photo_url}}"></image>
+        <image mode="aspectFit" src="{{item.photo_url}}" bindtap="previewImage" data-item='{{item}}'></image>
       </view>
       <view class="honor-item-right">
         {{item.title}}

@@ -53,6 +53,8 @@
 
 .moment-item-left {
   flex-shrink: 0;
+  width: 118rpx;
+  white-space: nowrap;
 }
 
 .moment-item-upload {
@@ -63,7 +65,7 @@
 
 .moment-item-right {
   display: flex;
-  margin-bottom: 60rpx;
+  /* margin-bottom: 60rpx; */
   margin-left: 32rpx;
 }
 

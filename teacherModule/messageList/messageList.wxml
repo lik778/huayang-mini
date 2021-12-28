@@ -12,7 +12,7 @@
         </view>
       </view>
       <view class="message-item-right">
-        <view class="message-item-right-top" bindtap="likeComment" data-item="{{item}}">
+        <view class="message-item-right-top" bindtap="likeComment" data-item="{{item}}" data-index='{{index}}'>
           <image wx:if="{{item.has_like}}" src="{{likeIcon}}"></image>
           <image wx:else src="{{unLikeIcon}}"></image>
           <text>{{item.like_count}}</text>

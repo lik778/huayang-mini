@@ -96,7 +96,7 @@ Page({
           this.setData({
             lock: false
           })
-          wx.navigateTo({
+          wx.redirectTo({
             url: `/teacherModule/momentList/momentList?teacherId=${this.data.teacherId}&teacherUserId=${getLocalStorage(GLOBAL_KEY.userId)}`,
           })
         }, 2000)

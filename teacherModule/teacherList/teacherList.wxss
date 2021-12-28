@@ -96,6 +96,11 @@
   color: rgba(0, 0, 0, 0.8);
   line-height: 40rpx;
   word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .teacher-list-item-right {

@@ -54,13 +54,12 @@ Component({
   methods: {
     /* 返回 */
     back() {
-      console.log(getCurrentPages())
-      if (getCurrentPages().length === 1) {
-        wx.switchTab({
-          url: '/pages/discovery/discovery',
-        })
-        return
-      }
+      // if (getCurrentPages().length === 1) {
+      //   wx.switchTab({
+      //     url: '/pages/discovery/discovery',
+      //   })
+      //   return
+      // }
       if (this.data.isRootBar) {
         if (this.data.backPath) {
           wx.switchTab({

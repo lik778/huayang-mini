@@ -121,8 +121,8 @@ Page({
     let qrcode = await createQrcode({
       tutor_id: this.data.teacherId,
       filename: "师资名片_qrcode" + new Date().getTime() + '.png',
-      // path: "teacherModule/index/index",
-      path: "pages/discovery/discovery",
+      path: "teacherModule/index/index",
+      // path: "pages/discovery/discovery",
       scene: `${this.data.teacherId}`
     })
     let info = detailInfo.data.tutor_info
@@ -147,6 +147,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
     wx.getSystemInfo({
       success: (result) => {
         this.setData({
@@ -170,7 +171,6 @@ Page({
         url: '/pages/discovery/discovery',
       })
     }
-
   },
 
 
@@ -180,7 +180,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: "你点赞的老师动态更新了，一起来看看吧！",
-      path: `/teacherModule/index/index?teacherId=${this.data.teacherId}`
+      path: `/teacherModule/index/index?id=${this.data.teacherId}`
     }
   }
 })

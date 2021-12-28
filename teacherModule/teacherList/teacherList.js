@@ -1,6 +1,7 @@
 // teacherModule/teacherList/teacherList.js
 import {
-  getLocalStorage
+  getLocalStorage,
+  debounce
 } from "../../utils/util"
 import {
   GLOBAL_KEY
@@ -29,6 +30,8 @@ Page({
     list: [],
     didShowAuth: false, //授权弹窗
     hasAuth: false, //是否授完权
+    timer: null,
+    likeTapList: []
   },
 
   catchTap() {},
@@ -68,31 +71,37 @@ Page({
     }
 
     let item = e.currentTarget.dataset.item
-    let limit = this.data.pagination.offset + this.data.pagination.limit
-    likeTeacherNew({
-      tutor_id: item.id
-    }).then(res => {
-      if (item.has_like) {
-        wx.showToast({
-          title: '已取消点赞',
-          icon: 'none',
-          duration: 1500,
-          mask: true
+    let index = e.currentTarget.dataset.index
+
+    let list = this.data.list.concat([])
+    let likeTapList = this.data.likeTapList.concat([])
+
+    if (this.data.likeTapList.indexOf(item.id) === -1) {
+      likeTapList.push(item.id)
+    } else {
+      let index = this.data.likeTapList.indexOf(item.id)
+      likeTapList.splice(index, 1)
+    }
+
+    list[index].has_like = !list[index].has_like
+    list[index].like_count = list[index].has_like ? list[index].like_count + 1 : list[index].like_count - 1
+    this.setData({
+      list,
+      likeTapList
+    })
+
+    if (this.data.timer) {
+      clearTimeout(this.data.timer)
+    }
+
+    this.setData({
+      timer: setTimeout(() => {
+        this.data.likeTapList.map(item => {
+          likeTeacherNew({
+            tutor_id: item
+          })
         })
-      } else {
-        wx.showToast({
-          title: '点赞成功',
-          icon: 'none',
-          duration: 1500,
-          mask: true
-        })
-      }
-      this.setData({
-        ['pagination.offset']: 0,
-        ['pagination.limit']: limit,
-      }, () => {
-        this.getList(true)
-      })
+      }, 1000)
     })
   },
 

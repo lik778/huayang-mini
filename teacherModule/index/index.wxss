@@ -242,6 +242,7 @@
   height: 38rpx;
   vertical-align: bottom;
   margin-left: 12rpx;
+  margin-bottom: -4rpx;
 }
 
 /* 认证 */
@@ -264,8 +265,9 @@
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #000000;
-  line-height: 28rpx;
+  line-height: 36rpx;
   margin-right: 20rpx;
+  text-align: center;
 }
 
 .authentication-item image {

@@ -50,7 +50,8 @@ Page({
     medalTotal: 0, //勋章总数
     medalList: [], //勋章列表
     statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
-    backPath: "/pages/discovery/discovery"
+    backPath: "/pages/discovery/discovery",
+    isOwner: false
   },
 
   /* 点击Banner */
@@ -111,21 +112,6 @@ Page({
       comment_id: item.id
     }).then(res => {
       this.getCommentList()
-      if (item.has_like) {
-        wx.showToast({
-          title: '已取消点赞',
-          icon: 'none',
-          duration: 1500,
-          mask: true
-        })
-      } else {
-        wx.showToast({
-          title: '点赞成功',
-          icon: 'none',
-          duration: 1500,
-          mask: true
-        })
-      }
     })
   },
 
@@ -140,30 +126,11 @@ Page({
     bxPoint('teacher_detail_like', {
       teacher_id: this.data.teacherId
     }, false)
-    if (!this.data.teacherLikeLock) {
-      this.setData({
-        teacherLikeLock: true
-      })
-      likeTeacherNew({
-        tutor_id: this.data.teacherId
-      }).then(() => {
-        wx.showToast({
-          title: '点赞成功',
-          icon: 'none'
-        })
-        this.getDetail()
-        setTimeout(() => {
-          this.setData({
-            teacherLikeLock: false
-          })
-        }, 2000)
-      }).catch(() => {
-        this.setData({
-          teacherLikeLock: false
-        })
-      })
-    }
-
+    likeTeacherNew({
+      tutor_id: this.data.teacherId
+    }).then(() => {
+      this.getDetail()
+    })
   },
 
   /* 取消授权 */
@@ -281,6 +248,21 @@ Page({
     })
   },
 
+  /* 初始化登录状态 */
+  initUserAuthStatus() {
+    let publishUserId = this.data.teacherMainInfo.user_id
+    let authUserId = getLocalStorage(GLOBAL_KEY.userId) ? getLocalStorage(GLOBAL_KEY.userId) : ''
+    if (Number(publishUserId) === Number(authUserId)) {
+      this.setData({
+        isOwner: true
+      })
+    } else {
+      this.setData({
+        isOwner: false
+      })
+    }
+  },
+
   /* 获取老师荣誉列表 */
   getHonorList() {
     getTeacherNewHonorList({
@@ -311,11 +293,11 @@ Page({
       data.address = data.address ? data.address.split('市')[0] : ''
       data.photo = data.photo_wall.split(",")
       data.keywordArr = data.keyword ? data.keyword.split(',') : []
-      console.log(data)
       this.setData({
         teacherMainInfo: data,
         userInfo: userInfo ? JSON.parse(userInfo) : ''
       }, () => {
+        this.initUserAuthStatus()
         this.getMedalList()
       })
     })

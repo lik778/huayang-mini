@@ -1,6 +1,7 @@
 {
-  "navigationBarTitleText": "花样之星",
+  "navigationStyle": "custom",
   "usingComponents": {
-    "authModule": "../../components/auth/auth"
+    "authModule": "../../components/auth/auth",
+    "naviBar": "../../components/naviBarBack/naviBarBack"
   }
 }

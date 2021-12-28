@@ -33,7 +33,9 @@ Page({
     commentPublishLock: false,
     isOwner: false,
     commentInputValue: "",
-    commentList: []
+    commentList: [],
+    likeTapList: [],
+    timer: null,
   },
 
   /* 给评论点赞 */
@@ -45,32 +47,40 @@ Page({
       return
     }
     let item = e.currentTarget.dataset.item
-    let limit = this.data.pagination.offset + this.data.pagination.limit
-    likeTeacherNewComment({
-      comment_id: item.id
-    }).then(res => {
-      this.setData({
-        ['pagination.offset']: 0,
-        ['pagination.limit']: limit,
-      }, () => {
-        this.getCommentList(true)
-      })
-      if (item.has_like) {
-        wx.showToast({
-          title: '已取消点赞',
-          icon: 'none',
-          duration: 1500,
-          mask: true
-        })
-      } else {
-        wx.showToast({
-          title: '点赞成功',
-          icon: 'none',
-          duration: 1500,
-          mask: true
-        })
-      }
+    let index = e.currentTarget.dataset.index
+    let list = this.data.commentList.concat([])
+    let likeTapList = this.data.likeTapList.concat([])
+
+    if (this.data.likeTapList.indexOf(item.id) === -1) {
+      likeTapList.push(item.id)
+    } else {
+      let index = this.data.likeTapList.indexOf(item.id)
+      likeTapList.splice(index, 1)
+    }
+
+    list[index].has_like = !list[index].has_like
+    list[index].like_count = list[index].has_like ? list[index].like_count + 1 : list[index].like_count - 1
+    this.setData({
+      commentList: list,
+      likeTapList
     })
+
+    if (this.data.timer) {
+      clearTimeout(this.data.timer)
+    }
+
+    this.setData({
+      likeTapList: [],
+      timer: setTimeout(() => {
+        this.data.likeTapList.map(item => {
+          likeTeacherNewComment({
+            comment_id: item
+          })
+        })
+      }, 1000)
+    })
+
+
   },
 
   /* 删除评论 */
@@ -271,7 +281,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: "花样留言板，有好友给你点赞的老师留言了",
-      path: `/teacherModule/index/index?teacherId=${this.data.teacherId}`
+      path: `/teacherModule/index/index?id=${this.data.teacherId}`
     }
   }
 })

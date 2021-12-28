@@ -27,11 +27,13 @@ Page({
     type: 3,
     teacherUserId: "",
     lastMomentBelongYear: "",
-    backPath: ""
+    backPath: "",
+    momentList: [],
+    noData: false
   },
 
   /* 获取动态列表 */
-  getMomentList() {
+  getMomentList(refresh = false) {
     getTeacherNewMomentList(this.data.pagination).then(({
       data
     }) => {
@@ -41,18 +43,23 @@ Page({
       let nowYear = dayjs().format('YYYY')
       let lastMomentYear = this.data.lastMomentBelongYear || nowYear
       if (list.length) {
+        let dateTypeList = []
         list.map((item) => {
           let time = item.time.split(" ")[0]
           if (dayjs(time).isSame(dayjs(yestoday))) {
-            item.dateType = '昨天'
+            item.dateType = dateTypeList.indexOf('昨天') === -1 ? '昨天' : ''
           } else if (dayjs(time).isSame(dayjs(today))) {
-            item.dateType = '今天'
+            item.dateType = dateTypeList.indexOf('今天') === -1 && !this.data.isOwner ? '今天' : ''
           } else {
             let year = time.split('-')[0]
             let month = time.split('-')[1]
             let day = time.split('-')[2]
-            item.dateType = [year, month, day]
+            item.dateType = dateTypeList.indexOf([year, month, day]) === -1 ? [year, month, day] : ''
           }
+          if (item.dateType) {
+            dateTypeList.push(item.dateType)
+          }
+
           if (item.type === 2) {
             item.media_type = 5
           } else {
@@ -70,7 +77,7 @@ Page({
           }
           item.content = item.content.length > 38 ? item.content.substring(0, 38) + '...' : item.content
         })
-        let newList = JSON.parse(JSON.stringify(list))
+        let newList = JSON.parse(JSON.stringify(refresh ? list : this.data.momentList.concat(list)))
         newList.map((item, index) => {
           let nowMomentYear = item.time.split(' ')[0].split('-')[0]
           if (nowMomentYear !== lastMomentYear) {
@@ -82,9 +89,11 @@ Page({
             })
           }
         })
+        console.log(newList, data.list)
         this.setData({
           momentList: newList,
-          lastMomentBelongYear: lastMomentYear
+          lastMomentBelongYear: lastMomentYear,
+          noData: data.list.length >= 10 ? false : true
         })
       }
     })
@@ -129,8 +138,6 @@ Page({
         ['pagination.tutor_id']: options.teacherId,
         teacherUserId: options.teacherUserId,
         backPath: `/teacherModule/index/index?id=${options.teacherId}`
-      }, () => {
-
       })
     } else {
       wx.switchTab({
@@ -138,20 +145,30 @@ Page({
       })
     }
   },
+
   onShow() {
-    wx.pageScrollTo({
-      duration: 0,
-      scrollTop: 0
+    this.setData({
+      lastMomentBelongYear: "",
+      ['pagination.offset']: 0,
+      momentList: [],
+      noData: false
+    }, () => {
+      this.initUserAuthStatus(true)
+      this.getMomentList()
     })
-    this.initUserAuthStatus()
-    this.getMomentList()
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    if (!this.data.noData) {
+      this.setData({
+        ['pagination.offset']: this.data.pagination.offset + this.data.pagination.limit
+      }, () => {
+        this.getMomentList()
+      })
+    }
   },
 
   /**
@@ -160,7 +177,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: "有一条你关注的动态",
-      path: `/teacherModule/index/index?teacherId=${this.data.teacherUserId}`
+      path: `/teacherModule/index/index?id=${this.data.teacherUserId}`
     }
   }
 })

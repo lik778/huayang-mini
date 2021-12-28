@@ -1,6 +1,6 @@
 <!--teacherModule/index/index.wxml-->
 <view class="teacher-index">
-  <naviBar title='老师主页' showType='1' backPath='/pages/discovery/discovery' isRootBar='{{true}}'></naviBar>
+  <naviBar title='老师主页' showType='1' backPath='/teacherModule/teacherList/teacherList' isRootBar='{{false}}'></naviBar>
   <!-- 头部大banner -->
   <view class="banner">
     <swiper duration="500" circular class="swiper" bindchange="switchBanner">
@@ -47,7 +47,7 @@
           <image src="{{visitIcon}}"></image>
           <text>{{teacherMainInfo.visit_count}}</text>
         </view>
-        <view class="teacher-other-info-right-like" bindtap="{{teacherMainInfo.has_like?'':'likeTeacher'}}">
+        <view class="teacher-other-info-right-like" bindtap="likeTeacher">
           <image src="{{likeIcon}}" wx:if="{{teacherMainInfo.has_like}}"></image>
           <image src="{{unLikeIcon}}" wx:else></image>
           <text>{{teacherMainInfo.like_count}}</text>
@@ -79,7 +79,7 @@
     <view class="authentication" wx:if="{{medalTotal>0}}">
       <view class="authentication-title common-title">
         <view class="authentication-title-left common-title-left">我的花样认证</view>
-        <view class="authentication-title-right common-title-right" wx:if="{{medalTotal>5}}">
+        <view class="authentication-title-right common-title-right" wx:if="{{medalTotal>5&&false}}">
           <text>查看全部</text>
           <image src="{{rightArrowIcon}}"></image>
         </view>
