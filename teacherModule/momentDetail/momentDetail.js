@@ -157,10 +157,10 @@ Page({
       } else {
         data.dateType = dayjs(data.time).format("YYYY年MM月DD日 HH:mm")
       }
-      
+
       this.setData({
         momentDetailInfo: data,
-        backPath: `/teacherModule/momentList/momentList?teacherId=${data.tutor_id}&teacherUserId=${getLocalStorage(GLOBAL_KEY.userId)}`
+        backPath: `/teacherModule/momentList/momentList?teacherId=${data.tutor_id}&teacherUserId=${this.data.teacherUserId}`
       }, () => {
         this.getTeacherInfo()
         this.initUserAuthStatus()
