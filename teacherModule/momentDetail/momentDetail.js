@@ -193,9 +193,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    console.log(this.data.momentDetailInfo)
     return {
       title: "有一条你关注的动态",
-      path: `/teacherModule/index/index?teacherId=${this.data.momentDetailInfo.tutor_id}`
+      path: `/teacherModule/index/index?id=${this.data.momentDetailInfo.tutor_id}`
     }
   }
 })
