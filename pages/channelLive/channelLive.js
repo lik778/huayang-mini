@@ -1,4 +1,4 @@
-import { $notNull, getLocalStorage, hasUserInfo, setLocalStorage, toast } from "../../utils/util";
+import { $notNull, getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util"
 import { GLOBAL_KEY } from "../../lib/config";
 import {
   getChannelLives,
@@ -312,7 +312,7 @@ Page({
     // console.log(e, "officialError");
   },
   onReview(e) {
-    if (!hasUserInfo()) return this.setData({didShowAuth: true})
+    if (!hasAccountInfo()) return this.setData({didShowAuth: true})
 
     let {video_url, id, title} = e.currentTarget.dataset.item
     wx.navigateTo({

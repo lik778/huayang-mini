@@ -25,7 +25,7 @@
                 <text>{{channelLiveInfo ? "直播中" : "预告"}}</text>
                 <image class="notice-img" wx:if="{{channelLiveInfo}}" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1640068784Bxthgq.jpg" mode="aspectFit"></image>
             </view>
-            <view class="notice-title limit-one-line">{{channelLiveInfo ? channelLiveInfo.description : noticeLiveInfo.title}}</view>
+            <view class="notice-title limit-one-line {{channelLiveInfo ? 'small-width' : ''}}">{{channelLiveInfo ? channelLiveInfo.description : noticeLiveInfo.title}}</view>
         </view>
         <view class="notice-right">{{channelLiveInfo ? "点击进入直播间" : noticeLiveInfo.time}}</view>
     </view>

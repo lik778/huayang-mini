@@ -88,6 +88,10 @@
   color: #666666;
 }
 
+.notice-title.small-width {
+  max-width: 250rpx;
+}
+
 .notice-right {
   font: 500 28rpx/40rpx PingFangSC;
   color: #FF5544;
