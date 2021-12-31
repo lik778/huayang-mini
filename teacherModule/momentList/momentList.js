@@ -133,6 +133,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
     if (options.teacherId && options.teacherUserId) {
       this.setData({
         ['pagination.tutor_id']: options.teacherId,
@@ -178,7 +179,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: "有一条你关注的动态",
-      path: `/teacherModule/index/index?id=${this.data.teacherUserId}`
+      path: `/teacherModule/index/index?id=${this.data.teacherId}`
     }
   }
 })
