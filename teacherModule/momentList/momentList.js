@@ -178,7 +178,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: "有一条你关注的动态",
-      path: `/teacherModule/index/index?id=${this.data.teacherId}`
+      path: `/teacherModule/index/index?id=${this.data.pagination.tutor_id}`
     }
   }
 })
