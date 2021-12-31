@@ -168,7 +168,6 @@
 
 .list-none-text {
     font: 36rpx/36rpx PingFangSC;
-    padding-left: 24rpx;
     color: rgba(0, 0, 0, 0.4);
 }
 

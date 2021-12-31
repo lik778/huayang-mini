@@ -43,7 +43,8 @@
     "audio",
     "location"
   ],
-  "subpackages": [{
+  "subpackages": [
+    {
       "root": "mine",
       "pages": [
         "joinVip/joinVip",
@@ -130,7 +131,9 @@
         "offlineCourse/offlineCourse",
         "offlineCourseDetail/offlineCourseDetail",
         "freeOnlineCourse/freeOnlineCourse",
-        "collegeActivity/collegeActivity"
+        "collegeActivity/collegeActivity",
+        "qualityCourse/qualityCourse",
+        "historyActivity/historyActivity"
       ]
     },
     {
@@ -155,7 +158,8 @@
         "lifeDetail/lifeDetail",
         "lifeList/lifeList"
       ]
-    }, {
+    },
+    {
       "root": "teacherModule",
       "pages": [
         "index/index",
@@ -178,7 +182,8 @@
   },
   "tabBar": {
     "custom": true,
-    "list": [{
+    "list": [
+      {
         "pagePath": "pages/discovery/discovery"
       },
       {
