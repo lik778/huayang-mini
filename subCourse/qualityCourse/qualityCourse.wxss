@@ -1,3 +1,4 @@
+@import "/assets/css/common.wxss";
 
 /* 学院选项卡 */
 .type-list,.fixed-type-list {
@@ -179,4 +180,60 @@
 
 .course-logo-icon-one {
     width: 32rpx;
+}
+
+/* 结构化课程 */
+.structure-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    height: 200rpx;
+    border-radius: 8rpx;
+    margin-bottom: 30rpx;
+    box-sizing: border-box;
+    padding: 30rpx 20rpx 30rpx 30rpx;
+    font-size: 0;
+    color: white;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.structure-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.structure-title {
+    white-space: nowrap;
+    font: 500 44rpx/60rpx PingFangSC;
+}
+
+.structure-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font: 32rpx/44rpx PingFangSC;
+    color: white;
+}
+
+.structure-desc {
+    max-width: 400rpx;
+}
+
+.structure-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200rpx;
+    height: 64rpx;
+    border-radius: 999rpx;
+    border: 3rpx solid white;
+    box-sizing: border-box;
 }

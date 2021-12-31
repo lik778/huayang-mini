@@ -1,4 +1,3 @@
-// subCourse/historyActivity/historyActivity.js
 Page({
 
   /**

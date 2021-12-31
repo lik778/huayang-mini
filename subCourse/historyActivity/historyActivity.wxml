@@ -1,2 +1,3 @@
-<!--subCourse/historyActivity/historyActivity.wxml-->
-<text>subCourse/historyActivity/historyActivity.wxml</text>
+ <view class="history-activity">
+     history activity
+ </view>
