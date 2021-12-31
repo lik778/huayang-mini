@@ -1,3 +1,15 @@
  <view class="history-activity">
-     history activity
+
+     <!-- TAG -->
+     <view class="tags">
+         <view class="tag-item"></view>
+     </view>
+
+     <view class="content">
+         <view class="content-item">
+             <image class="cover" src="" mode=""></image>
+             <view class="title"></view>
+         </view>
+     </view>
+
  </view>
