@@ -1,7 +1,7 @@
 <!--subLive/review/review.wxml-->
 <view class="review">
   <view class="navigation">
-    <naviBar title="花样百姓+" titleColor="transparent" color="transparent"></naviBar>
+    <naviBar title="花样百姓" titleColor="transparent" color="transparent"></naviBar>
   </view>
   <video
     custom-cache="{{false}}"

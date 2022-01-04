@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "生活方式",
   "usingComponents": {
     "waterfall": "/components/waterfall/waterfall",
     "van-tab": "@vant/weapp/tab/index",

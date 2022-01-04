@@ -207,7 +207,7 @@ Page({
 	 */
 	onShareAppMessage: function () {
 		return {
-			title: '花样百姓+',
+			title: '花样百姓',
 			path: '/pages/mall/mall'
 		}
 	}
