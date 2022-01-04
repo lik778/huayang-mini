@@ -1,3 +1,5 @@
+import { getActivityList } from "../../api/course/index"
+
 Page({
 
   /**
@@ -11,7 +13,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.run()
   },
 
   /**
@@ -60,6 +62,24 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+
+  },
+  run() {
+    this.getList()
+  },
+
+  getList() {
+
+    getActivityList({
+      sort: "rank",
+      status: 1,
+      colleage_activity: 1,
+      platform: 1,
+      limit: 10,
+      offset: 0
+    }).then((data) => {
+      console.log(data);
+    })
 
   }
 })
