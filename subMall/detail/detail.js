@@ -120,7 +120,7 @@ Page({
 	 */
 	onShareAppMessage: function () {
 		return {
-			title: "花样百姓+",
+			title: "花样百姓",
 			path: '/subMall/detail/detail?prdId=' + this.data.prdId
 		}
 	}
