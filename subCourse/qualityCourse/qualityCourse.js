@@ -144,6 +144,7 @@ Page({
       params.user_id = getLocalStorage(GLOBAL_KEY.userId)
     }
     queryVideoCourseListByBuyTag(params).then(list => {
+      list = list || []
       list = list.map(_ => {
         return {
           ..._.kecheng_series,

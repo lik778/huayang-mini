@@ -1,124 +1,89 @@
-<view class="list" id="practice-page">
-    <!-- 活动banner -->
-    <view wx:if="{{bannerList.length!==0}}">
-        <!-- banner 滚动区域 -->
-        <view class="swiper-box" id="swiper-box">
-            <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}" duration="{{500}}">
-                <swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="joinCampFromBanner" data-item="{{item}}">
-                    <view class="swiper-cover"></view>
-                    <image mode="aspectFill" src="{{item.pic_url}}"></image>
-                </swiper-item>
-            </swiper>
-            <view class="swiper-dot">
-                <view wx:for="{{bannerList}}" wx:key="index" wx:if="{{bannerList.length>1}}" class="{{current===index?'swiper-dot-item-active swiper-dot-item':'swiper-dot-item'}}"></view>
+<view class="practice">
+    <!-- 大学介绍 -->
+    <view class="layout">
+        <view class="layout-header">
+            <view class="left">
+                <view class="icon"></view>
+                <text>大学介绍</text>
+            </view>
+            <view class="right"><text>查看全部</text></view>
+        </view>
+        <view class="layout-content">
+            <image class="cover" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1641795509EtQbdn.jpg" mode="aspectFill"></image>
+            <view class="desc">花样老年大学成立于2020年5月4日，是花样百姓旗下的新概念中老年大学，是首批政府认可的社会老年大学、上海市教委合作的时尚类师资认证独家培训机构，同时还是上海市老年教育师资培训中心基地。</view>
+        </view>
+    </view>
+
+    <!-- 特色课程 -->
+    <view class="layout">
+        <view class="layout-header">
+            <view class="left">特色课程</view>
+        </view>
+        <view class="layout-content">
+            <view class="icons">
+                <view class="icon-item" wx:for="{{specials}}" wx:key="index">
+                    <image class="icon-image" src="{{item.url}}" mode="aspectFit"></image>
+                    <text class="icon-text">{{item.title}}</text>
+                </view>
             </view>
         </view>
     </view>
 
-    <!-- 分类课程快速入口 -->
-    <view class="hyper-channel">
-        <view class="hyper-item" wx:for="{{fastMarkAry}}" wx:key="index" bindtap="onHyperTap" data-item="{{item}}">
-            <image class="hyper-image" src="{{item.picture+'?x-oss-process=style/huayang'}}" mode="aspectFill"></image>
-            <view class="hyper-text">{{item.name}}</view>
+    <!-- 师资力量 -->
+    <view class="layout">
+        <view class="layout-header">
+            <view class="left">师资力量</view>
+            <view class="right">查看全部</view>
         </view>
-    </view>
-
-    <!-- 学院Tabs -->
-    <view class="type-list">
-        <view class="{{currentIndex===index?'main-title-item active':'main-title-item'}}" wx:for="{{titleList}}" wx:key="index" bindtap="changeTab" data-index="{{index}}" data-tagname="{{item}}">
-            {{item}}
-        </view>
-    </view>
-
-    <!-- 固定学员Tabs -->
-    <block wx:if="{{didShowFixedTabsLayout}}">
-        <cover-view class="fixed-type-list-shadow"></cover-view>
-        <view class="fixed-type-list">
-            <view class="{{currentIndex===index?'main-title-item active':'main-title-item'}}" wx:for="{{titleList}}" wx:key="index" bindtap="changeTab" data-index="{{index}}" data-tagname="{{item}}">
-                {{item}}
-            </view>
-        </view>
-    </block>
-
-    <view class="list-main" wx:if="{{currentIndex === 3 || videoList.length>0}}">
-        <view class="course-item" wx:for="{{videoList}}" wx:key="index" bindtap="toVideoCourseDetail" data-item="{{item}}">
-            <view class="course-logo">
-                <image class="course-image" src="{{item.cover_pic}}"></image>
-                <!-- 口碑 -->
-                <image class="course-logo-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610509385fvXMxP.jpg" wx:if='{{item.series_tag===1}}'></image>
-                <!-- 新课 -->
-                <image class="course-logo-icon course-logo-icon-one" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610509422TAlohv.jpg" wx:if='{{item.series_tag===2}}'></image>
-            </view>
-            <view class="course-info">
-                <view class="course-info-top">
-                    <!-- 主标题 -->
-                    <view class="course-info-main-title limit-one-line">{{item.teacher_desc}}</view>
-                    <!-- 副标题 -->
-                    <view class="course-info-sub-title limit-one-line">{{item.name}}</view>
-                    <!-- 老师介绍 -->
-                    <view class="course-info-teacher limit-one-line">{{item.teacher.name}} {{item.teacher.teacher_desc}}
+        <view class="layout-content">
+            <view class="teachers">
+                <view class="teacher-item">
+                    <image class="teacher-avatar" src="" mode="aspectFill"></image>
+                    <view class="teacher-info">
+                        <text class="teacher-name limit-one-line">xxx老师</text>
+                        <view class="teacher-desc">xxxxxxxxxxxxxxxxxxxxxxxxx</view>
                     </view>
                 </view>
-                <!-- 价钱+学习人数 -->
-                <view class="course-info-bottom">
-                    <view class="course-info-bottom-left" wx:if="{{showMoney && !isFluentLearnVIP}}">
-                        <view class="course-info-bottom-left-module" wx:if="{{item.tipsText}}">
-                            <text class="course-info-bottom-right-module-one">{{item.tipsText}}</text>
-                            <text class="course-info-bottom-right-module-one-two" wx:if='{{item.price>0}}'>¥{{item.price}}</text>
+            </view>
+        </view>
+    </view>
+
+    <!-- 精品课程 -->
+    <view class="layout">
+        <view class="layout-header">
+            <view class="left">精品课程</view>
+            <view class="right">查看全部</view>
+        </view>
+        <view class="layout-content">
+            <view class="courses">
+                <view class="course-item">
+                    <image class="course-cover" src="" mode="aspectFill"></image>
+                    <view class="course-info">
+                        <view class="course-message">
+                            <text class="course-title limit-one-line">xxxxxxx</text>
+                            <view class="course-desc limit-one-line">xxxxxxxxxxxxxxxxxxxxxxxxxxxx</view>
+                            <view class="course-teacher">xxxxxxxxxxxxxxxx</view>
                         </view>
-                        <view class="course-info-bottom-left-module" wx:else>
-                            <text class="course-info-bottom-left-module-one subject-font-color">
-                                <text wx:if="{{item.didBought}}">已购</text>
-                                <text wx:else>{{item.discount_price ? '¥'+item.discount_price : '免费'}}</text>
-                            </text>
-                            <text class="course-info-bottom-left-module-two" style="text-decoration: {{item.didBought?'none':'line-through'}};">
-                                <text wx:if="{{item.didBought}}">去学习</text>
-                                <text wx:else>{{item.price>0?"¥"+item.price:""}}</text>
-                            </text>
-                        </view>
-                    </view>
-                    <view class="course-info-bottom-right">
-                        共{{item.visit_count}}人学习
+                        <view class="course-view-count">共有xxx万人学习</view>
                     </view>
                 </view>
             </view>
         </view>
-        <block wx:if="{{currentTagName === '模特训练' && structuredList.length > 0}}">
-            <!-- 结构化课程 -->
-            <view class="structure-item" wx:for="{{structuredList}}" wx:key="index" bindtap="onStructureItemTap" style="background-image: url('{{item.cover_pic}}');" data-id="{{item.id}}">
-                <text class="structure-title limit-one-line">{{item.name}}</text>
-                <view class="structure-bottom">
-                    <text class="structure-desc limit-one-line">{{item.desc}}</text>
-                    <view class="structure-btn">立即参加</view>
+    </view>
+
+    <!-- 过往活动 -->
+    <view class="layout">
+        <view class="layout-header">
+            <view class="left">过往活动</view>
+            <view class="right">查看全部</view>
+        </view>
+        <view class="layout-content">
+            <view class="history-activities">
+                <view class="activity-item" wx:for="{{historyActivities}}" wx:key="index">
+                    <image class="activity-cover" src="{{item.url}}" mode="aspectFill"></image>
+                    <view class="activity-text">{{item.title}}</view>
                 </view>
             </view>
-        </block>
-    </view>
-    <view class="list-main" wx:else>
-        <view class="list-none">
-            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1599548149wNjJgb.jpg"></image>
-            <view class="list-none-text">课程努力制作中!</view>
         </view>
     </view>
-
-    <view class="contact-logo" bindtap="onContactLogoTap"></view>
-
-    <!-- 引导加入花样学习活动群 -->
-    <!--    <view class="guide-wrap" wx:if="{{!didAlreadySubscribe && didShowGuide}}" bindtap="onGuideTap">-->
-    <!--        <view class="guide {{didExecuteGuideAnimation ? 'animation' : ''}}">-->
-    <!--            <view>-->
-    <!--                <image class="guide-pic" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1620809929ShceDL.jpg"></image>-->
-    <!--                <view class="guide-text-wrap">-->
-    <!--                    <text class="guide-text">开启上课提醒</text>-->
-    <!--                    <text class="guide-text">不错过课程活动</text>-->
-    <!--                </view>-->
-    <!--            </view>-->
-    <!--            <view class="guide-btn">开启提醒</view>-->
-    <!--            <image class="guide-close-icon" catchtap="closeGuide" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618560964nUbRZc.jpg"></image>-->
-    <!--        </view>-->
-    <!--    </view>-->
-
-    <!-- 授权弹窗 -->
-    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent">
-    </authModule>
 </view>
