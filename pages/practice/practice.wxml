@@ -21,7 +21,7 @@
         </view>
         <view class="layout-content">
             <view class="icons">
-                <view class="icon-item" wx:for="{{specials}}" wx:key="index">
+                <view class="icon-item" wx:for="{{specials}}" wx:key="index" bindtap="onSpecialItemTap" data-item="{{item}}">
                     <image class="icon-image" src="{{item.url}}" mode="aspectFit"></image>
                     <text class="icon-text">{{item.title}}</text>
                 </view>
@@ -33,15 +33,15 @@
     <view class="layout">
         <view class="layout-header">
             <view class="left">师资力量</view>
-            <view class="right">查看全部</view>
+            <view class="right" bindtap="goToTeacherListPage">查看全部</view>
         </view>
         <view class="layout-content">
             <view class="teachers">
-                <view class="teacher-item">
-                    <image class="teacher-avatar" src="" mode="aspectFill"></image>
+                <view class="teacher-item" wx:for="{{teachers}}" wx:key="index" bindtap="onTeacherTap" data-item="{{item}}">
+                    <image class="teacher-avatar" src="{{item.avatar}}" mode="aspectFill"></image>
                     <view class="teacher-info">
-                        <text class="teacher-name limit-one-line">xxx老师</text>
-                        <view class="teacher-desc">xxxxxxxxxxxxxxxxxxxxxxxxx</view>
+                        <text class="teacher-name limit-one-line">{{item.nickname}}老师</text>
+                        <view class="teacher-desc">{{item.introduce}}</view>
                     </view>
                 </view>
             </view>
@@ -52,19 +52,19 @@
     <view class="layout">
         <view class="layout-header">
             <view class="left">精品课程</view>
-            <view class="right">查看全部</view>
+            <view class="right" bindtap="goToQualityListPage">查看全部</view>
         </view>
         <view class="layout-content">
             <view class="courses">
-                <view class="course-item">
-                    <image class="course-cover" src="" mode="aspectFill"></image>
+                <view class="course-item" wx:for="{{qualityList}}" wx:key="index" bindtap="onCourseItemTap" data-item="{{item}}">
+                    <image class="course-cover" src="{{item.cover_pic}}" mode="aspectFill"></image>
                     <view class="course-info">
                         <view class="course-message">
-                            <text class="course-title limit-one-line">xxxxxxx</text>
-                            <view class="course-desc limit-one-line">xxxxxxxxxxxxxxxxxxxxxxxxxxxx</view>
-                            <view class="course-teacher">xxxxxxxxxxxxxxxx</view>
+                            <text class="course-title limit-one-line">{{item.teacher_desc}}</text>
+                            <view class="course-desc limit-one-line">{{item.name}}</view>
+                            <view class="course-teacher">{{item.teacher.name}} {{item.teacher.teacher_desc}}</view>
                         </view>
-                        <view class="course-view-count">共有xxx万人学习</view>
+                        <view class="course-view-count">共有{{item.visit_count}}万人学习</view>
                     </view>
                 </view>
             </view>
@@ -79,7 +79,7 @@
         </view>
         <view class="layout-content">
             <view class="history-activities">
-                <view class="activity-item" wx:for="{{historyActivities}}" wx:key="index">
+                <view class="activity-item" wx:for="{{historyActivities}}" wx:key="index" bindtap="onHistoryActivityTap" data-item="{{item}}">
                     <image class="activity-cover" src="{{item.url}}" mode="aspectFill"></image>
                     <view class="activity-text">{{item.title}}</view>
                 </view>

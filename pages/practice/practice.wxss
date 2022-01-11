@@ -95,6 +95,7 @@
 
 .teacher-item {
     display: flex;
+    margin-bottom: 20rpx;
 }
 
 .teacher-avatar {
@@ -129,6 +130,7 @@
 .course-item {
     display: flex;
     align-items: center;
+    margin-bottom: 20rpx;
 }
 
 .course-cover {

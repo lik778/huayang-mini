@@ -757,3 +757,8 @@ export function getModelDataList(params) {
 export function getJoinedOfflineCourseList(params) {
 	return request._get(URL.queryJoinedOfflineCourseList, params)
 }
+
+// 获取导师信息列表
+export function getTeacherList(params) {
+	return request._get(URL.queryTeacherList, params)
+}
