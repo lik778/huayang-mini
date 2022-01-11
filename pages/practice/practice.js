@@ -14,10 +14,10 @@ Page({
 		],
 		teachers: [],
 		historyActivities: [
-			{type: 1, title: "校友活动", url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1641799298XQtCDM.jpg", link: ""},
-			{type: 1, title: "校友活动", url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1641799309bqfggg.jpg", link: ""},
-			{type: 2, title: "乐活课堂", url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1641799198EXiDKp.jpg", link: ""},
-			{type: 3, title: "游学课程", url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1641799319IWuDsW.jpg", link: ""},
+			{type: 1, title: "校友活动", url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1631257916CHZEUB.jpg", link: "/pages/pureWebview/pureWebview?link=https%3A%2F%2Fhuayang.baixing.com%2F%23%2Fhome%2Fdetail%2F197"},
+			{type: 1, title: "校友活动", url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1631257708rRSvsX.jpg", link: "/pages/pureWebview/pureWebview?link=https%3A%2F%2Fhuayang.baixing.com%2F%23%2Fhome%2Fdetail%2F207"},
+			{type: 2, title: "乐活课堂", url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619173877VZdQkJ.jpg", link: "/subCourse/offlineCourseDetail/offlineCourseDetail?id=7"},
+			{type: 3, title: "游学课程", url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1641799319IWuDsW.jpg", link: "goToTravelMiniProgram"},
 		],
 		qualityList: []
 	},
