@@ -60,10 +60,14 @@ Component({
       //   })
       //   return
       // }
+      let self = this
       if (this.data.isRootBar) {
         if (this.data.backPath) {
           wx.switchTab({
             url: this.data.backPath,
+            fail() {
+              wx.navigateBack()
+            }
           })
         } else {
           wx.navigateBack()

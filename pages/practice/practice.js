@@ -1,4 +1,5 @@
 import { getTeacherList, queryVideoCourseListByBuyTag } from "../../api/course/index"
+import request from "../../lib/request"
 
 Page({
 
@@ -16,8 +17,8 @@ Page({
 		historyActivities: [
 			{type: 1, title: "校友活动", url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1631257916CHZEUB.jpg", link: "/pages/pureWebview/pureWebview?link=https%3A%2F%2Fhuayang.baixing.com%2F%23%2Fhome%2Fdetail%2F197"},
 			{type: 1, title: "校友活动", url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1631257708rRSvsX.jpg", link: "/pages/pureWebview/pureWebview?link=https%3A%2F%2Fhuayang.baixing.com%2F%23%2Fhome%2Fdetail%2F207"},
-			{type: 2, title: "乐活课堂", url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619173877VZdQkJ.jpg", link: "/subCourse/offlineCourseDetail/offlineCourseDetail?id=7"},
-			{type: 3, title: "游学课程", url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1641799319IWuDsW.jpg", link: "goToTravelMiniProgram"},
+			{type: 1, title: "乐活课堂", url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619173877VZdQkJ.jpg", link: "/subCourse/offlineCourseDetail/offlineCourseDetail?id=7"},
+			{type: 2, title: "游学课程", id: 7, url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1641799319IWuDsW.jpg"},
 		],
 		qualityList: []
 	},
@@ -75,7 +76,11 @@ Page({
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
-
+		return {
+			title: "花样老年大学，为银发新青年打造社交体验式学习新场景",
+			path: "/pages/practice/practice",
+			imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1641885461KyCzXh.jpg"
+		}
 	},
 	run() {
 		// 获取讲师列表
@@ -135,6 +140,11 @@ Page({
 		})
 	},
 
+	// 打开大学介绍页
+	goToIntroduce() {
+		wx.navigateTo({url: "/subCourse/introduce/introduce"})
+	},
+
 	// 处理特色课程点击
 	onSpecialItemTap(e) {
 		let {item} = e.currentTarget.dataset
@@ -143,13 +153,13 @@ Page({
 
 	// 打开师资列表
 	goToTeacherListPage() {
-		wx.navigateTo({url: "/teacherModule/teacherList/teacherList"})
+		wx.navigateTo({url: "/teacherModule/teacherList/teacherList?didFromPracticePage=yes"})
 	},
 
 	// 查看老师信息
 	onTeacherTap(e) {
 		let {item} = e.currentTarget.dataset
-		wx.navigateTo({url: "/teacherModule/index/index?id=" + item.id})
+		wx.navigateTo({url: "/teacherModule/index/index?id=" + item.id + "&didFromPracticePage=yes"})
 	},
 
 	// 打开精品课程
@@ -166,6 +176,18 @@ Page({
 	// 打开过往活动
 	onHistoryActivityTap(e) {
 		let {item} = e.currentTarget.dataset
+		if (Number(item.type) === 2) {
+			wx.navigateToMiniProgram({
+				appId: "wx2ea757d51abc1f47",
+				path: `/pages/travelDetail/travelDetail?productId=${item.id}`,
+			})
+			return true
+		}
 		wx.navigateTo({url: item.link})
+	},
+
+	// 查看过往所有活动
+	goToHistoryActivitiesPage() {
+		wx.navigateTo({url: "/subCourse/historyActivity/historyActivity"})
 	}
 })

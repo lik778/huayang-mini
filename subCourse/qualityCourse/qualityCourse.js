@@ -93,7 +93,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "一起学习花样老年大学精品线上课程",
+      path: "/subCourse/qualityCourse/qualityCourse"
+    }
   },
   // 启动函数
   run() {

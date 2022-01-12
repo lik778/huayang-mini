@@ -6,7 +6,7 @@
                 <view class="icon"></view>
                 <text>大学介绍</text>
             </view>
-            <view class="right"><text>查看全部</text></view>
+            <view class="right" bindtap="goToIntroduce"><text>查看全部</text></view>
         </view>
         <view class="layout-content">
             <image class="cover" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1641795509EtQbdn.jpg" mode="aspectFill"></image>
@@ -40,7 +40,7 @@
                 <view class="teacher-item" wx:for="{{teachers}}" wx:key="index" bindtap="onTeacherTap" data-item="{{item}}">
                     <image class="teacher-avatar" src="{{item.avatar}}" mode="aspectFill"></image>
                     <view class="teacher-info">
-                        <text class="teacher-name limit-one-line">{{item.nickname}}老师</text>
+                        <text class="teacher-name limit-one-line">{{item.nickname}}</text>
                         <view class="teacher-desc">{{item.introduce}}</view>
                     </view>
                 </view>
@@ -75,7 +75,7 @@
     <view class="layout">
         <view class="layout-header">
             <view class="left">过往活动</view>
-            <view class="right">查看全部</view>
+            <view class="right" bindtap="goToHistoryActivitiesPage">查看全部</view>
         </view>
         <view class="layout-content">
             <view class="history-activities">

@@ -50,7 +50,7 @@ Page({
     medalTotal: 0, //勋章总数
     medalList: [], //勋章列表
     statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
-    backPath: "/pages/discovery/discovery",
+    naviBarBackPath: "/teacherModule/teacherList/teacherList",
     isOwner: false
   },
 
@@ -333,6 +333,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let { didFromPracticePage } = options
+    if (didFromPracticePage === "yes") {
+      this.setData({naviBarBackPath: "/pages/practice/practice"})
+    }
+
     if (getLocalStorage(GLOBAL_KEY.userId)) {
       this.setData({
         hasAuth: true

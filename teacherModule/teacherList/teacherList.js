@@ -31,7 +31,8 @@ Page({
     didShowAuth: false, //授权弹窗
     hasAuth: false, //是否授完权
     timer: null,
-    likeTapList: []
+    likeTapList: [],
+    naviBarBackPath: "/pages/discovery/discovery", // 左上角返回跳转地址
   },
 
   catchTap() {},
@@ -147,7 +148,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let { didFromPracticePage } = options
+    if (didFromPracticePage === "yes") {
+      this.setData({naviBarBackPath: "/pages/practice/practice"})
+    }
     this.getList()
   },
 

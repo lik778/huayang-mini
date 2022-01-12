@@ -133,7 +133,8 @@
         "freeOnlineCourse/freeOnlineCourse",
         "collegeActivity/collegeActivity",
         "qualityCourse/qualityCourse",
-        "historyActivity/historyActivity"
+        "historyActivity/historyActivity",
+        "introduce/introduce"
       ]
     },
     {
