@@ -2,6 +2,7 @@ import { getActivityList, getRecommendOfflineCourse } from "../../api/course/ind
 import { queryTravelList } from "../../api/live/index"
 import request from "../../lib/request"
 import { ROOT_URL } from "../../lib/config"
+import bxPoint from "../../utils/bxPoint"
 Page({
 
   /**
@@ -36,7 +37,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    bxPoint("activity_view_page", {})
   },
 
   /**
@@ -97,6 +98,7 @@ Page({
           let prefix = request.baseUrl === ROOT_URL.dev ? "https%3A%2F%2Fdev.huayangbaixing.com%2F%23%2Fhome%2Fdetail%2F" : "https%3A%2F%2Fhuayang.baixing.com%2F%23%2Fhome%2Fdetail%2F"
           list = list || []
           list = list.map(n => ({
+            id: n.id,
             cover: n.cover_url,
             title: n.title,
             link: `/pages/pureWebview/pureWebview?link=${prefix}${n.id}`
@@ -113,6 +115,7 @@ Page({
         queryTravelList({offset: 0, limit: 9999}).then((data) => {
           data = data || []
           data = data.map((n) => ({
+            id: n.id,
             cover: n.pics.split(",")[0],
             title: n.name,
             link: n.buy_link
@@ -129,6 +132,7 @@ Page({
         getRecommendOfflineCourse().then(({data}) => {
           data = data || []
           data = data.map((n) => ({
+            id: n.id,
             cover: n.cover_pic.split(",")[0],
             title: n.title,
             link: `/subCourse/offlineCourseDetail/offlineCourseDetail?id=${n.id}`
@@ -149,10 +153,12 @@ Page({
     this.setData({curTagIndex: Number(index)})
 
     this.getList()
+    bxPoint("activity_view_tab_button_click", {activity_tag_id: index}, false)
   },
 
   onItemTap(e) {
     let {item} = e.currentTarget.dataset
+    bxPoint("activity_view_list_click", {activity_tag_id: this.data.curTagIndex, activity_id: item.id}, false)
     if (this.data.curTagIndex === 2) {
       // 游学课程
       wx.navigateToMiniProgram({
