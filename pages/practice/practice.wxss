@@ -1,461 +1,202 @@
 @import "../../assets/css/common.wxss";
-.list {
-    padding-bottom: 160rpx;
+
+/* 通用布局 */
+.practice {
+    padding: 20rpx 40rpx;
+    font-size: 0;
 }
 
-/* banner */
-.swiper-box {
-    height: 139px;
-    position: relative;
+.layout {
+    margin-bottom: 40rpx;
 }
 
-.swiper-item-box {
-    width: 100%;
-    height: 125px;
-}
-
-.swiper-item-box image {
-    width: 100%;
-    height: 100%;
-    /* border-radius: 8rpx; */
-}
-
-.swiper-dot {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 0;
-}
-
-.swiper-dot-item {
-    width: 22rpx;
-    height: 8rpx;
-    border-radius: 4rpx;
-    background: rgba(216, 216, 216, 1);
-    margin-right: 8rpx;
-}
-
-.swiper-dot-item-active {
-    background: #3A3C48;
-}
-
-/* 分类课程快速入口 */
-.hyper-channel {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 30px 0;
-    height: 232px;
-    box-sizing: border-box;
-}
-
-.hyper-item {
-    overflow: hidden;
-    position: relative;
-    width: 320rpx;
-    height: 80px;
-    border-radius: 8rpx;
-}
-
-.hyper-item:active {
-    opacity: 0.8;
-}
-
-.hyper-item:first-child {
-    margin: 0 24rpx 24rpx 0;
-}
-
-.hyper-item:nth-child(2) {
-    margin-bottom: 24rpx;
-}
-
-.hyper-item:nth-child(3) {
-    margin-right: 24rpx;
-}
-
-.hyper-image {
-    width: 320rpx;
-    height: 80px;
-}
-
-.hyper-text {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 8px;
-    font: bold 28rpx/28rpx PingFangSC;
-    background: rgba(0,0,0, .4);
-    color: white;
-}
-
-/* 学院选项卡 */
-.type-list,.fixed-type-list {
+.layout-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20rpx 30rpx 20rpx;
-    background: #fff;
+    height: 88rpx;
+    margin-bottom: 20rpx;
 }
 
-.fixed-type-list {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 30;
+.left {
+    display: flex;
+    align-items: center;
+    font: 500 48rpx/48rpx PingFangSC;
 }
 
-.fixed-type-list-shadow {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 6rpx;
-    background: white;
+.icon {
+    width: 56rpx;
+    height: 56rpx;
+    margin-right: 12rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1641793689eSiiiM.jpg") no-repeat center;
+    background-size: contain;
 }
 
-.main-title-item {
-    font: 500 36rpx/60rpx PingFangSC;
-    color: rgba(0, 0, 0, 1);
+.right {
+    font: 32rpx/32rpx PingFangSC;
+    color: rgba(0, 0, 0, 0.8);
 }
 
-.main-title-item:last-child {
-    margin-right: 0;
-}
-
-.active {
-    position: relative;
-    font: 500 40rpx/60rpx PingFangSC;
-    color: #FF5544;
-}
-
-.active::after {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: -8rpx;
+.right::after {
     content: "";
-    width: 84rpx;
-    height: 8rpx;
-    border-radius: 4rpx;
-    background: #FF5544;
+    display: inline-block;
+    width: 14rpx;
+    height: 20rpx;
+    margin: 6rpx 0 0 14rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1641794088OtNQES.jpg") no-repeat center;
+    background-size: contain;
 }
 
-/* 视频课程列表 */
-.list-main {
-    margin: 0 auto;
-    padding: 20rpx 0 50rpx;
-    width: calc(100% - 60rpx);
-    min-height: calc(100vh - 232rpx);
+.right:active {
+    opacity: 0.8;
 }
 
-.list-none {
+/* 大学介绍 */
+.cover {
+    width: 670rpx;
+    height: 446rpx;
+}
+
+.desc {
+    margin-top: 20rpx;
+    font: 30rpx/42rpx PingFangSC;
+}
+
+/* 特色课程 */
+.icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.icon-item {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.list-none image {
-    width: 550rpx;
-    height: 300rpx;
-    vertical-align: bottom;
+.icon-item:active {
+    opacity: 0.8;
 }
 
-.list-none-text {
-    font: 36rpx/36rpx PingFangSC;
-    padding-left: 24rpx;
-    color: rgba(0, 0, 0, 0.4);
+.icon-image {
+    width: 112rpx;
+    height: 114rpx;
+    margin-bottom: 18rpx;
+}
+
+.icon-text {
+    font: 32rpx/32rpx PingFangSC;
+}
+
+/* 师资力量 */
+.teachers {
+}
+
+.teacher-item {
+    display: flex;
+    margin-bottom: 20rpx;
+}
+
+.teacher-avatar {
+    width: 240rpx;
+    height: 240rpx;
+}
+
+.teacher-info {
+    width: 406rpx;
+    margin-left: 24rpx;
+}
+
+.teacher-name {
+    margin-bottom: 20rpx;
+    font: 500 32rpx/44rpx PingFangSC;
+}
+
+.teacher-desc {
+    font: 28rpx/40rpx PingFangSC;
+    color: rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+/* 精品课程 */
+.courses {
 }
 
 .course-item {
     display: flex;
     align-items: center;
-    box-sizing: border-box;
-    margin-bottom: 30rpx;
+    margin-bottom: 20rpx;
 }
 
-.course-item:active {
-    opacity: 0.9;
-}
-
-.course-image {
+.course-cover {
     width: 166rpx;
     height: 220rpx;
-    font-size: 0;
-    border-radius: 8rpx;
     margin-right: 24rpx;
 }
 
 .course-info {
-    width: calc(100% - 190rpx);
-    height: 220rpx;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    height: 220rpx;
+    width: calc(100% - 190rpx);
 }
 
-/* 视频改版 */
-.course-info-main-title {
-    height: 36rpx;
-    font: 500 36rpx/36rpx PingFangSC;
-    color: #000000;
+.course-message {
 }
-
-.course-info-sub-title {
-    height: 32rpx;
-    font: 32rpx/32rpx PingFangSC;
-    color: #000000;
-    margin: 28rpx 0 20rpx;
-}
-
-.course-info-teacher {
-    height: 32rpx;
-    font: 32rpx/32rpx PingFangSC;
-    color: rgba(0, 0, 0, 0.6);
-}
-
-.course-info-bottom-right-module-one {
-    font: 500 32rpx/32rpx PingFangSC;
-    color: #FF5544;
-}
-
-.course-info-bottom-left-module-two {
-    font: 28rpx/28rpx PingFangSC;
-    color: rgba(0, 0, 0, 0.6);
-    line-height: 28rpx;
-    padding-left: 10rpx;
-}
-
-.course-info-bottom-right-module-one-two {
-    font: 500 32rpx/32rpx PingFangSC;
-    color: rgba(0, 0, 0, 0.6);
-    text-decoration-line: line-through;
-    padding-left: 10rpx;
-}
-
-.course-info-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-
-.course-info-bottom-right {
-    font-size: 24rpx;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
-    color: rgba(0, 0, 0, 0.6);
-    line-height: 28rpx;
-}
-
-.course-info-bottom-left-module-one {
-    font-size: 32rpx;
-    font-family: PingFangSC-Medium, PingFang SC;
-    font-weight: 600;
-    line-height: 32rpx;
-}
-
-.course-logo {
-    position: relative;
-}
-
-.course-logo-icon {
-    position: absolute;
-    right: 24rpx;
-    top: 0;
-    width: 52rpx;
-    height: 30rpx;
-    border-top-right-radius: 8rpx;
-}
-
-.course-logo-icon-one {
-    width: 32rpx;
-}
-
-/* 视频改版 */
 
 .course-title {
-    font: 32rpx/44rpx PingFangSC;
-    color: #000;
+    font: 500 36rpx/36rpx PingFangSC;
 }
 
-.course-operate {
+.course-desc {
+    margin: 28rpx 0 20rpx;
+    font: 32rpx/32rpx PingFangSC;
+}
+
+.course-teacher {
+    font: 32rpx/32rpx PingFangSC;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.course-view-count {
+    font: 24rpx/24rpx PingFangSC;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+/* 过往活动 */
+.history-activities {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
 }
 
-.course-visit-count {
-    font: 28rpx/40rpx PingFangSC;
-    color: #666;
-}
-
-.price {
-    font: 32rpx/44rpx PingFangSC;
-}
-
-.price-one {
-    margin-right: 20rpx;
-    font: 32rpx/44rpx PingFangSC;
-    color: #FF5544;
-}
-
-.price-two {
-    font: 28rpx/40rpx PingFangSC;
-    color: #666;
-    text-decoration: line-through;
-}
-
-.price-three {
-    margin-right: 20rpx;
-    font: 32rpx/32rpx PingFangSC;
-    color: #FF5544;
-}
-
-
-/* 结构化课程 */
-.structure-item {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.activity-item {
     position: relative;
-    height: 200rpx;
-    border-radius: 8rpx;
-    margin-bottom: 30rpx;
-    box-sizing: border-box;
-    padding: 30rpx 20rpx 30rpx 30rpx;
-    font-size: 0;
-    color: white;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
+    width: 320rpx;
+    height: 162rpx;
+    margin-bottom: 24rpx;
 }
 
-.structure-bg {
+.activity-cover {
+    width: inherit;
+    height: inherit;
+}
+
+.activity-text {
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.structure-title {
-    white-space: nowrap;
-    font: 500 44rpx/60rpx PingFangSC;
-}
-
-.structure-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font: 32rpx/44rpx PingFangSC;
+    padding: 16rpx;
+    font: bold 28rpx/28rpx PingFangSC;
     color: white;
+    background: rgba(0, 0, 0, 0.4);
 }
 
-.structure-desc {
-    max-width: 400rpx;
-}
-
-.structure-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 200rpx;
-    height: 64rpx;
-    border-radius: 999rpx;
-    border: 3rpx solid white;
-    box-sizing: border-box;
-}
-/* 引导加入花样学习活动群 */
-.guide-wrap {
-    position: fixed;
-    bottom: calc(env(safe-area-inset-bottom) + 60px + 24rpx);
-    left: 24rpx;
-    right: 24rpx;
-}
-
-.guide {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 120rpx;
-    padding: 24rpx 24rpx;
-    box-sizing: border-box;
-    border-radius: 999rpx;
-    font-size: 0;
-    background: white;
-    box-shadow: 0 0 20px 4px rgba(0, 0, 0, 0.08);
-    transform: translateY(150%);
-    transition: transform 200ms cubic-bezier(.5,.21,.43,.95);
-}
-
-.guide.animation {
-    transform: translateY(0);
-}
-
-.guide-pic {
-    display: inline-block;
-    width: 72rpx;
-    height: 72rpx;
-    vertical-align: middle;
-}
-
-.guide-text-wrap {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.guide-text {
-    display: block;
-    margin-left: 20rpx;
-    font: 30rpx/42rpx PingFangSC;
-    color: #FF5544;
-}
-
-.guide-btn {
-    width: 184rpx;
-    height: 64rpx;
-    text-align: center;
-    font: 500 32rpx/64rpx PingFangSC;
-    border-radius: 999rpx;
-    color: white;
-    background: #FF5544;
-    animation: practiceGuideFlashing 4s ease infinite;
-}
-
-.guide-close-icon {
-    position: absolute;
-    right: -4rpx;
-    top: -40rpx;
-    width: 40rpx;
-    height: 40rpx;
-    margin: 20rpx;
-}
-
-@keyframes practiceGuideFlashing {
-    16% {
-        transform: scale(1);
-    }
-
-    20% {
-        transform: scale(1.05);
-    }
-
-    24% {
-        transform: scale(1);
-    }
-
-    28% {
-        transform: scale(1.05);
-    }
-
-    32% {
-        transform: scale(1);
-    }
-}

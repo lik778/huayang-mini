@@ -1,0 +1,3 @@
+<view class="introduce" style="visibility: {{didVisible ? 'visible' : 'hidden'}}">
+    <image class="img-item" wx:for="{{IMAGES}}" src="{{item}}" mode="widthFix" lazy-load="{{true}}"></image>
+</view>

@@ -1,0 +1,15 @@
+ <view class="history-activity">
+
+     <!-- TAG -->
+     <view class="tags">
+         <view class="tag-item {{item.type === curTagIndex ? 'active' : ''}}" bindtap="onTagTap" data-index="{{item.type}}" wx:for="{{TAGS}}" wx:key="index">{{item.title}}</view>
+     </view>
+
+     <view class="content">
+         <view class="content-item" wx:for="{{list}}" wx:key="index" bindtap="onItemTap" data-item="{{item}}">
+             <image class="cover" src="{{item.cover}}" mode="aspectFill"></image>
+             <view class="title limit-one-line">{{item.title}}</view>
+         </view>
+     </view>
+
+ </view>

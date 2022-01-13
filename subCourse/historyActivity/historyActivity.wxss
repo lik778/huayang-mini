@@ -1,0 +1,49 @@
+@import "/assets/css/common.wxss";
+
+.history-activity {
+    padding: 0 30rpx;
+}
+
+.tags {
+    display: flex;
+    align-items: center;
+    padding: 20rpx 0;
+}
+
+.tag-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 160rpx;
+    height: 60rpx;
+    margin-right: 20rpx;
+    background: #F2F2F4;
+    border-radius: 16rpx 0 16rpx 0;
+    border: 2rpx solid #F2F2F4;
+    font: 28rpx/28rpx PingFangSC;
+    box-sizing: border-box;
+}
+
+.tag-item.active {
+    color: #FF5544;
+    border-color: #FF5544;
+    background: white;
+}
+
+.content {
+    font-size: 0;
+}
+
+.content-item {
+    margin-bottom: 20rpx;
+}
+
+.cover {
+    width: 690rpx;
+    height: 344rpx;
+    margin-bottom: 16rpx;
+}
+
+.title {
+    font: 500 36rpx/50rpx PingFangSC;
+}
