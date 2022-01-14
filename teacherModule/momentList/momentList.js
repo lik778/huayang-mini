@@ -172,13 +172,4 @@ Page({
     }
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-    return {
-      title: "有一条你关注的动态",
-      path: `/teacherModule/index/index?id=${this.data.pagination.tutor_id}`
-    }
-  }
 })

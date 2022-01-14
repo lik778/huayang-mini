@@ -10,6 +10,7 @@ import {
   getTeacherNewTeacherList,
   likeTeacherNew
 } from "../../api/teacherModule/index"
+import bxPoint from "../../utils/bxPoint"
 
 Page({
 
@@ -40,6 +41,9 @@ Page({
   /* 前往老师详情 */
   toTeacherDetail(e) {
     let item = e.currentTarget.dataset.item
+    bxPoint('hy_star_teacher_list_click', {
+      teacher_id: item.id
+    })
     wx.navigateTo({
       url: `/teacherModule/index/index?id=${item.id}`,
     })
@@ -148,10 +152,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let { didFromPracticePage } = options
+    let {
+      didFromPracticePage
+    } = options
     if (didFromPracticePage === "yes") {
-      this.setData({naviBarBackPath: "/pages/practice/practice"})
+      this.setData({
+        naviBarBackPath: "/pages/practice/practice"
+      })
     }
+    bxPoint('hy_star_page', {})
     this.getList()
   },
 
@@ -187,6 +196,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: "花样之星-花样优秀师资介绍",
+      imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1642128252uSJuIX.jpg"
     }
   }
 })

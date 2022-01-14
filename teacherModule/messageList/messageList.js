@@ -275,13 +275,4 @@ Page({
     }
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-    return {
-      title: "花样留言板，有好友给你点赞的老师留言了",
-      path: `/teacherModule/index/index?id=${this.data.teacherId}`
-    }
-  }
 })
