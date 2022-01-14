@@ -43,7 +43,7 @@ Page({
     let item = e.currentTarget.dataset.item
     bxPoint('hy_star_teacher_list_click', {
       teacher_id: item.id
-    })
+    }, false)
     wx.navigateTo({
       url: `/teacherModule/index/index?id=${item.id}`,
     })
