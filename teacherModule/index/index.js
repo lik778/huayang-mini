@@ -454,7 +454,8 @@ Page({
   onShareAppMessage: function () {
     return {
       title: "你点赞的老师动态更新了，一起来看看吧！",
-      path: `/teacherModule/index/index?id=${this.data.teacherId}`
+      path: `/teacherModule/index/index?id=${this.data.teacherId}`,
+      imageUrl:"https://huayang-img.oss-cn-shanghai.aliyuncs.com/1642128252uSJuIX.jpg"
     }
   }
 })
