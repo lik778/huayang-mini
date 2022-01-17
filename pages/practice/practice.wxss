@@ -52,13 +52,40 @@
 }
 
 /* 大学介绍 */
-.cover {
+.swiper-item-box {
     width: 670rpx;
     height: 446rpx;
 }
 
+.swiper-item-box image {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-dot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -24rpx;
+}
+
+.swiper-dot-item {
+    width: 8rpx;
+    height: 8rpx;
+    border-radius: 4rpx;
+    background: #DDDDDD;
+    margin-right: 8rpx;
+}
+
+.swiper-dot-item-active {
+    background: #FF5544;
+}
+
 .desc {
-    margin-top: 20rpx;
+    margin-top: 40rpx;
     font: 30rpx/42rpx PingFangSC;
 }
 
@@ -68,7 +95,6 @@
     justify-content: space-between;
     align-items: center;
 }
-
 .icon-item {
     display: flex;
     flex-direction: column;

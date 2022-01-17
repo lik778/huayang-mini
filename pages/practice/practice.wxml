@@ -9,7 +9,17 @@
             <view class="right" bindtap="goToIntroduce"><text>查看全部</text></view>
         </view>
         <view class="layout-content">
-            <image class="cover" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1641795509EtQbdn.jpg" mode="aspectFill"></image>
+            <view style="position: relative;">
+                <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}" duration="{{500}}">
+                    <swiper-item wx:for="{{bannerList}}" wx:key="index">
+                        <image src="{{item}}" mode="aspectFill"></image>
+                    </swiper-item>
+                </swiper>
+                <view class="swiper-dot">
+                    <view wx:for="{{bannerList}}" wx:key="index" wx:if="{{bannerList.length>1}}"
+                          class="{{current===index?'swiper-dot-item-active swiper-dot-item':'swiper-dot-item'}}"></view>
+                </view>
+            </view>
             <view class="desc">花样老年大学成立于2020年5月4日，是花样百姓旗下的新概念中老年大学，是首批政府认可的社会老年大学、上海市教委合作的时尚类师资认证独家培训机构，同时还是上海市老年教育师资培训中心基地。</view>
         </view>
     </view>
