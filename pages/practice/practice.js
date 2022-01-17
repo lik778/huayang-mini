@@ -1,5 +1,4 @@
 import { getTeacherList, queryVideoCourseListByBuyTag } from "../../api/course/index"
-import request from "../../lib/request"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -21,7 +20,9 @@ Page({
 			{type: 2, title: "乐活课堂", id: 7, url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619173877VZdQkJ.jpg", link: "/subCourse/offlineCourseDetail/offlineCourseDetail?id=7"},
 			{type: 3, title: "游学课程", id: 7, url: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1641799319IWuDsW.jpg"},
 		],
-		qualityList: []
+		qualityList: [],
+		bannerList: ["https://huayang-img.oss-cn-shanghai.aliyuncs.com/1641795509EtQbdn.jpg", "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1642386059SPIZvR.jpg"],
+		current: 0,
 	},
 
 	/**
@@ -198,5 +199,11 @@ Page({
 	goToHistoryActivitiesPage() {
 		bxPoint("university_activity_view_all_click", {}, false)
 		wx.navigateTo({url: "/subCourse/historyActivity/historyActivity"})
-	}
+	},
+
+	changeSwiperIndex(e) {
+		this.setData({
+			current: e.detail.current
+		})
+	},
 })
