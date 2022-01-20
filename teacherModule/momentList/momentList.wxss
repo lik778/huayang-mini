@@ -116,6 +116,10 @@
   vertical-align: bottom;
 }
 
+.moment-item-image-type-two {
+  display: flex;
+}
+
 .moment-item-image-type-two image:last-child {
   margin-right: 0;
 }
