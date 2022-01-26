@@ -117,7 +117,11 @@ Page({
    */
   goToDiscovery() {
     bxPoint("changxue_card_learn_click", {}, false)
-    wx.reLaunch({url: "/pages/discovery/discovery"})
+    // 去往老年大学精品课程列表页
+    wx.navigateTo({
+      url: '/subCourse/qualityCourse/qualityCourse',
+    })
+    // wx.reLaunch({url: "/pages/discovery/discovery"})
   },
   /**
    * 分享按钮点击事件
