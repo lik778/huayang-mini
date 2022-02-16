@@ -1,0 +1,102 @@
+<view class="company-introduce">
+    <!-- 使命愿景价值观 -->
+    <view class="title">使命愿景价值观</view>
+    <image class="img01" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644558845UoWkvn.jpg"
+           mode="aspectFill"></image>
+    <view class="line">
+        <text class="capsule mission">使命</text><text class="txt01">提升退休生活的幸福指数</text>
+    </view>
+    <view class="line">
+        <text class="capsule vision">愿景</text><text class="txt01">人人都可以拥有一个充实、幸福的第二人生</text>
+    </view>
+    <view class="line supplement01">
+        <text class="capsule value">价值观</text><text class="txt01">真诚 分享 终身成长</text>
+    </view>
+
+    <!-- 企业介绍 -->
+    <view class="title">企业介绍</view>
+    <view class="sub-title st01">公司发展概述</view>
+    <image class="img02" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644562697BYHVBY.jpg"
+           mode="aspectFit"></image>
+    <text class="desc supplement02">花样百姓成立于2019年，是新三板公司百姓网集团旗下全资子公司。百姓网成立于2005年，是国内领先的分类信息平台，也是中国老牌优秀互联网企业。2016年3月正式挂牌新三板，2020年入围创新层。</text>
+
+    <view class="sub-title st02">花样百姓里程碑</view>
+    <view class="milestone">
+        <view class="mileLine" style="height:{{milestoneHeight}}px;"></view>
+
+        <view id="time-el-start" class="time time-title">2019年8月31日</view>
+        <view class="time time-desc">花样百姓正式对公众</view>
+
+        <view class="time time-title">2019年9月</view>
+        <view class="time time-desc">第一届“绽放趁现在·花样时尚模特大赛”启动举办，超过100支团队、1000人参与赛事</view>
+
+        <view class="time time-title">2020年5月4日</view>
+        <view class="time time-desc">花样老年大学正式成立</view>
+
+        <view class="time time-title">2020年8月</view>
+        <view class="time time-desc">第二届“绽放趁现在·花样时尚模特大赛”启动，总决赛亮相亚洲最大T台秀场——上海国际时尚中心，影响力覆盖华东，以高端、专业又有温度的口碑效应轰动业内</view>
+
+        <view class="time time-title">2020年12月</view>
+        <view class="time time-desc">花样老年大学获得上海市教委授牌，成为首批政府认可的社会力量举办的老年大学</view>
+
+        <view class="time time-title">2021年1月</view>
+        <view class="time time-desc">国家教育部副部长翁铁慧远程连线花样大学考察</view>
+
+        <view class="time time-title">2021年6月</view>
+        <view class="time time-desc">第三届“花样时尚模特大赛”面向全国启动招募，全国十个城市分赛区，累计参与选手超过5000人</view>
+
+        <view class="time time-title">2021年9月</view>
+        <view class="time time-desc">花样老年大学成为上海市老年大学指定时尚类师资认证培训机构</view>
+
+        <view class="time time-title">2021年12月</view>
+        <view class="time time-desc">上海市老年教育工作小组办、上海市老年教育信息中心授予花样百姓创始人罗颖女士“先进个人”荣誉称号</view>
+
+        <view  id="time-el-end" class="time time-title">2021年12月</view>
+        <view class="time time-desc">花样老年大学被授牌成为上海市老年教育师资培训中心基地</view>
+    </view>
+
+    <view class="sub-title st03">花样百姓logo释义</view>
+    <image class="img03" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644564556miiMKM.jpg" mode="aspectFit"></image>
+
+    <view class="desc">
+        花样百姓的logo创作灵感来自于佛教艺术中曼陀罗（坛城）的图形，寓意着福德和智慧在这里“汇聚”。创始人花花创办的初心，就是希望在中国加速老龄化的趋势下，打造一个汇聚优质社会资源的平台，打造一个传递积极幸福生活理念的社区，帮助越来越多的人们拥有一个充实、幸福的第二人生。
+    </view>
+    <view class="desc supplement03">
+        Logo的中间有一个隐含的字母“B”和“X”，是“百姓”（Baixing）拼音的首字母组合，“百姓”被花瓣包裹，寓意着百姓的幸福人生如花儿一样绽放。
+    </view>
+
+    <!-- 企业荣誉 -->
+    <view class="title">企业荣誉</view>
+    <view class="sub-title st04">政府奖章</view>
+
+    <view class="option-title">花样百姓</view>
+    <view class="option">上海市老年教育师资培训中心基地</view>
+    <view class="option">上海市教委时尚类师资认证独家培训机构</view>
+    <view class="option">上海市闵行区社区学院战略合作企业</view>
+    <view class="option">上海市老年学学会老龄产业专业委员会会员单位</view>
+    <view class="pics">
+        <image class="img04" style="margin-right: 15rpx;" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644565180ZqEVCn.jpg" mode="aspectFill"></image>
+        <image class="img04" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644565197QuaKIE.jpg" mode="aspectFill"></image>
+    </view>
+
+    <view class="option-title">百姓网</view>
+    <view class="option">上海市文明单位</view>
+    <view class="option">中国互联网协会会员单位</view>
+    <view class="option">上海市AAA级安全网站</view>
+    <view class="option">2016年度上海最佳网站</view>
+    <view class="option">上海市信息网络安全管理协会理事单位</view>
+    <view class="option">上海市互联网协会会员单位</view>
+    <view class="option">上海市信息服务业行业协会会员单位</view>
+    <view class="option">闵行区经济突出贡献单位</view>
+
+    <view class="sub-title st05">媒体报道</view>
+    <view class="link">《环球时报》专题报道花样时尚模特大赛</view>
+    <view class="link">《福布斯》杂志专访花样百姓创始人罗颖女士</view>
+    <view class="link">《新民晚报》专题报道花样大学</view>
+    <view class="link">《ELLE》杂志专题报道花样百姓系列活动</view>
+    <view class="link">上海电视台新闻综合频道专题报道花样时尚模特大赛</view>
+
+    <view class="sub-title st06">团队介绍</view>
+    <view class="desc">花样百姓的团队是一群热情优秀的年轻人，团队成员来自于一线互联网公司、知名媒体和公益机构。她们因为被花样百姓的使命感召而汇聚，对“第二人生”的幸福事业充满了热情。花样百姓的团队是用户心中最闪亮的星，她们让用户的感受永远都是“温暖、有爱又专业”。</view>
+    <image class="img05" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644565508OVtcza.jpg" mode="aspectFit"></image>
+</view>

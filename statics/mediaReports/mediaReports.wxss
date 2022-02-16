@@ -1,0 +1,25 @@
+@import "/assets/css/common.wxss";
+.media-reports {
+    padding: 40rpx;
+    font-size: 0;
+}
+
+.media-item {
+    margin-bottom: 60rpx;
+}
+
+.media-item:active {
+    opacity: 0.8;
+}
+
+.cover {
+    width: 670rpx;
+    height: 360rpx;
+}
+
+.title {
+    padding: 30rpx;
+    border: 1rpx solid #DDDDDD;
+    border-top: 0 none;
+    font: 500 32rpx/44rpx PingFangSC;
+}

@@ -1,0 +1,211 @@
+.company-introduce {
+    padding: 40rpx;
+    font-size: 0;
+}
+
+/* 通用 */
+.title {
+    height: 88rpx;
+    font: 500 48rpx/88rpx PingFangSC;
+}
+
+.sub-title {
+    position: relative;
+    margin: 40rpx 0 0 28rpx;
+    font: 500 32rpx/44rpx PingFangSC;
+}
+
+.sub-title::before {
+    content: "";
+    position: absolute;
+    top: 14rpx;
+    left: -28rpx;
+    width: 13rpx;
+    height: 13rpx;
+    transform: rotate(45deg);
+    background: #FF6658;
+}
+
+.desc {
+    display: block;
+    font: 28rpx/40rpx PingFangSC;
+    text-align: justify;
+}
+
+.line {
+    margin-bottom: 30rpx;
+    display: flex;
+    align-items: center;
+}
+
+/* 使命愿景价值观 */
+.img01 {
+    width: 670rpx;
+    height: 372rpx;
+    margin: 20rpx 0 40rpx;
+}
+
+.capsule {
+    width: 134rpx;
+    height: 64rpx;
+    border-radius: 999rpx;
+    font: 600 30rpx/64rpx PingFangSC;
+    text-align: center;
+    color: white;
+}
+
+.mission {
+    background: #FF6658;
+}
+
+.vision {
+    background: #FD8A50;
+}
+
+.value {
+    background: #FFA46A;
+}
+
+.txt01 {
+    width: 518rpx;
+    margin-left: 22rpx;
+    font: 30rpx/42rpx PingFangSC;
+}
+
+.supplement01 {
+    padding-bottom: 50rpx;
+}
+
+/* 企业介绍 */
+.st01 {
+    margin: 40rpx 0 30rpx 28rpx;
+}
+
+.img02 {
+    display: block;
+    width: 338rpx;
+    height: 74rpx;
+    margin-bottom: 16rpx;
+}
+
+.supplement02 {
+    margin-bottom: 60rpx;
+}
+
+.st02 {
+    margin-bottom: 26rpx;
+}
+
+.time {
+    margin-left: 28rpx;
+    font: 28rpx/48rpx PingFangSC;
+}
+
+.time-title {
+    position: relative;
+    color: #F24B3C;
+}
+
+.time-title::before {
+    content: "";
+    position: absolute;
+    top: 22rpx;
+    left: -28rpx;
+    width: 8rpx;
+    height: 8rpx;
+    border-radius: 999rpx;
+    background: #BBBBBB;
+}
+
+.time-desc {
+    margin-bottom: 40rpx;
+}
+
+.st03 {
+    margin: 60rpx 0 30rpx 28rpx;
+}
+
+.img03 {
+    width: 196rpx;
+    height: 64rpx;
+    margin-bottom: 20rpx;
+}
+
+.supplement03 {
+    padding-top: 30rpx;
+    margin-bottom: 80rpx;
+}
+
+.milestone {
+    position: relative;
+}
+
+.mileLine {
+    position: absolute;
+    top: 25rpx;
+    left: 2rpx;
+    width: 4rpx;
+    /*height: 1660rpx;*/
+    background: #D8D8D8;
+}
+
+/* 企业荣誉 */
+.st04 {
+    margin-bottom: 30rpx;
+}
+
+.option-title {
+    margin-bottom: 12rpx;
+    font: 600 28rpx/48rpx PingFangSC;
+}
+
+.option {
+    position: relative;
+    margin-left: 28rpx;
+    font: 400 28rpx/49rpx PingFangSC;
+}
+
+.option::before {
+    content: "";
+    position: absolute;
+    top: 20rpx;
+    left: -28rpx;
+    width: 8rpx;
+    height: 8rpx;
+    border-radius: 999rpx;
+    background: #BBBBBB;
+}
+
+.pics {
+    margin: 20rpx 0 40rpx;
+}
+
+.img04 {
+    display: inline-block;
+    width: 326rpx;
+    height: 218rpx;
+}
+
+.st05 {
+    margin: 60rpx 0 20rpx 28rpx;
+}
+
+.link {
+    border-bottom: 1rpx solid #DDDDDD;
+    font: 28rpx/80rpx PingFangSC;
+    color: #2F78EF;
+}
+
+.link:active {
+    opacity: 0.7;
+}
+
+.st06 {
+    margin: 58rpx 0 30rpx 28rpx;
+}
+
+.img05 {
+    width: 670rpx;
+    height: 452rpx;
+    margin-top: 20rpx;
+}

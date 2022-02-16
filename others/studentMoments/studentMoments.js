@@ -9,8 +9,8 @@ import {
   removeLocalStorage,
   setLocalStorage
 } from "../../utils/util"
-import { createBarrage, getBarrageList } from "../../api/studentComments/index"
-import { store } from '../../store/index'
+import { createBarrage, getBarrageList } from "../../api/studentComments"
+import { store } from '../../store'
 import { GLOBAL_KEY } from '../../lib/config'
 import bxPoint from "../../utils/bxPoint"
 import dayjs from "dayjs"

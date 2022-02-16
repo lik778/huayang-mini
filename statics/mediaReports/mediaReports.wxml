@@ -1,0 +1,6 @@
+<view class="media-reports">
+    <view class="media-item" wx:for="{{reports}}" wx:key="index" bindtap="onItemTap" data-item="{{item}}">
+        <image class="cover" src="{{item.url}}" mode="aspectFill"></image>
+        <view class="title"><text class="limit-two-line">{{item.title}}</text></view>
+    </view>
+</view>

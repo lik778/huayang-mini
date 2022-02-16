@@ -146,6 +146,17 @@
       ]
     },
     {
+      "root": "statics",
+      "pages": [
+        "companyIntroduce/companyIntroduce",
+        "hySchool/hySchool",
+        "teacherTeam/teacherTeam",
+        "courseIntroduce/courseIntroduce",
+        "friendsActivity/friendsActivity",
+        "mediaReports/mediaReports"
+      ]
+    },
+    {
       "root": "others",
       "pages": [
         "goodMorningResult/goodMorningResult",

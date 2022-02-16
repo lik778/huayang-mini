@@ -1,0 +1,79 @@
+.teacher-team {
+    padding: 40rpx 40rpx 0;
+}
+
+/* 通用 */
+.title {
+    padding: 20rpx 0;
+    font: 500 48rpx/48rpx PingFangSC;
+}
+
+.sub-title {
+    position: relative;
+    margin: 40rpx 0 30rpx 28rpx;
+    font: 500 32rpx/44rpx PingFangSC;
+}
+
+.teachers {
+    overflow: hidden;
+}
+
+.sub-title::before {
+    content: "";
+    position: absolute;
+    top: 14rpx;
+    left: -28rpx;
+    width: 13rpx;
+    height: 13rpx;
+    transform: rotate(45deg);
+    background: #FF6658;
+}
+
+.teacher-item {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 60rpx;
+}
+
+.teacher-avatar {
+    width: 200rpx;
+    height: 332rpx;
+}
+
+.teacher-introduce {
+    margin-left: 40rpx;
+}
+
+.info {
+    margin-bottom: 30rpx;
+}
+
+.name {
+    font: 40rpx/40rpx PingFangSC;
+    background: linear-gradient(218deg, #FF6658 0%, #050204 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.job {
+    font: 28rpx/28rpx PingFangSC;
+    color: #F24B3C;
+}
+
+.resume {
+    display: block;
+    position: relative;
+    margin: 12rpx 0 0 22rpx;
+    font: 28rpx/40rpx PingFangSC;
+}
+
+.resume::before {
+    content: "";
+    position: absolute;
+    top: 16rpx;
+    left: -22rpx;
+    width: 8rpx;
+    height: 8rpx;
+    border-radius: 999rpx;
+    background: #BBBBBB;
+}
