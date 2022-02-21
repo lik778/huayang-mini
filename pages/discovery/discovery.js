@@ -353,7 +353,7 @@ Page({
 			}
 		} = e.currentTarget.dataset
 		if (rank <= 9) {
-			bxPoint("new_homepage_tab_button_click", {
+			bxPoint("new_homepage_tab2022_button_click", {
 				tab_tag: rank
 			}, false)
 		} else {

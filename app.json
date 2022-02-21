@@ -153,7 +153,8 @@
         "teacherTeam/teacherTeam",
         "courseIntroduce/courseIntroduce",
         "friendsActivity/friendsActivity",
-        "mediaReports/mediaReports"
+        "mediaReports/mediaReports",
+        "publicActivities/publicActivities"
       ]
     },
     {
@@ -168,7 +169,8 @@
       "root": "huayangLife",
       "pages": [
         "lifeDetail/lifeDetail",
-        "lifeList/lifeList"
+        "lifeList/lifeList",
+        "hyPerson/hyPerson"
       ]
     },
     {

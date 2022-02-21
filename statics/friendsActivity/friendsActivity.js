@@ -4,6 +4,7 @@ import request from "../../lib/request";
 import { ROOT_URL } from "../../lib/config";
 import { getHistoryAlbums, getHistoryAlbumsById } from "../../api/competition/index";
 import { $notNull } from "../../utils/util";
+import bxPoint from "../../utils/bxPoint";
 
 Page({
 
@@ -39,6 +40,7 @@ Page({
    */
   onShow: function () {
     this.run()
+    bxPoint("university_activity_page", {})
   },
 
   /**
@@ -66,13 +68,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
 
   },
 
@@ -147,6 +142,8 @@ Page({
 
     link += `/#/home/detail/${item.id}`;
 
+    bxPoint("university_activity_list_click", {activity_id: item.id, activity_title: item.title, activity_run_date: item.run_time}, false)
+
     if (+item.pay_online === 1) {
       // 收费活动
       wx.navigateTo({url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}`});
@@ -158,8 +155,9 @@ Page({
 
   // 查看往期相册
   handleAlbumTap(e) {
-    let item = e.currentTarget.dataset.item
-    let link = `${request.baseUrl}/#/home/albums/${item.album_id}`
+    let {album_id, album} = e.currentTarget.dataset.item
+    let link = `${request.baseUrl}/#/home/albums/${album_id}`
+    bxPoint("university_photos_list_click", {photos_id: album_id, photos_title: album.name , photo_nums: album.pic_count, video_nums: album.video_count}, false)
     wx.navigateTo({url: "/pages/activityAlbum/activityAlbum?link=" + encodeURIComponent(link)})
   },
 
@@ -169,6 +167,7 @@ Page({
     switch(type) {
       case "public": {
         // 近期活动
+        bxPoint("university_activity_more_click", {}, false)
         wx.navigateTo({url: "/pages/activities/activities"})
         break
       }
@@ -176,6 +175,9 @@ Page({
         // 赛事相册
         let link_url = "https://huayang.baixing.com/#/home/albumList"
         let link = `/pages/pureWebview/pureWebview?link=${link_url}`
+
+        bxPoint("university_photos_more_click", {}, false)
+
         wx.navigateTo({url: link})
         break
       }

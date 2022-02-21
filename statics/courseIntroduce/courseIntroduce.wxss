@@ -1,3 +1,5 @@
+@import "/assets/css/common.wxss";
+
 .course-introduce {
     padding: 40rpx;
 }
@@ -54,13 +56,13 @@
 
 .live-title {
     width: 390rpx;
-    font: 36rpx/50rpx PingFangSC;
+    font: 500 32rpx/44rpx PingFangSC;
 }
 
 .live-date {
     margin: 28rpx 0 0;
     font: 28rpx/28rpx PingFangSC;
-    color: rgba(0,0,0, 0.8);
+    color: rgba(0,0,0, 0.6);
 }
 
 .live-btn {
@@ -115,7 +117,7 @@
 .public-title {
     width: 496rpx;
     height: 88rpx;
-    font: 32rpx/44rpx PingFangSC;
+    font: 500 32rpx/44rpx PingFangSC;
 }
 
 .separate {
@@ -210,9 +212,8 @@
 .travel-cover {
     position: relative;
     overflow: hidden;
-    width: 690rpx;
-    height: 344rpx;
-    border-radius: 16rpx 16rpx 6px 6px;
+    width: 670rpx;
+    height: 336rpx;
 }
 
 .travel-cover-picture {
@@ -234,8 +235,8 @@
 }
 
 .travel-title {
-    margin: 24rpx 0 12rpx;
-    font: 500 36rpx/50rpx PingFangSC;
+    margin: 20rpx 0;
+    font: 500 32rpx/44rpx PingFangSC;
 }
 
 .travel-info {
@@ -254,10 +255,8 @@
 }
 
 .price-01 {
-    margin: 0 12rpx 0 0;
-    line-height: 52rpx;
-    font-size: 52rpx;
-    font-weight: 500;
+    margin: 0 12rpx 0 6rpx;
+    font: 48rpx/48rpx PingFangSC;
 }
 
 .price-02 {
@@ -268,8 +267,8 @@
 }
 
 .travel-visit-no {
-    font: 32rpx/32rpx PingFangSC;
-    color: rgba(0, 0, 0, 0.5);
+    font: 28rpx/28rpx PingFangSC;
+    color: rgba(0, 0, 0, 0.6);
 }
 
 /* 线上课 */
@@ -347,7 +346,7 @@
 }
 
 .course-info-bottom-right {
-    font-size: 24rpx;
+    font-size: 28rpx;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: rgba(0, 0, 0, 0.6);

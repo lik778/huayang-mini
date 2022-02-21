@@ -1,7 +1,7 @@
 <view class="friends-activity">
     <!-- 近期活动 -->
     <block wx:if="{{publicList.length > 0}}">
-        <view class="title" bindtap="goToMorePage" data-key="public"><text>公开课</text><text class="more">查看全部 ›</text></view>
+        <view class="title" bindtap="goToMorePage" data-key="public"><text>近期活动</text><text class="more">查看全部 ›</text></view>
         <view class="activity-item" wx:for="{{publicList}}" wx:key="index" bindtap="goToPureWebview"
               data-item="{{item}}">
             <image class="cover" src="{{item.cover_url}}" mode="aspectFill"></image>

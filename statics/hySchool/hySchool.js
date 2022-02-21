@@ -1,3 +1,5 @@
+import bxPoint from "../../utils/bxPoint";
+
 Page({
 
   /**
@@ -25,7 +27,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    bxPoint("university_ page", {})
   },
 
   /**
@@ -60,10 +62,15 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "花样老年大学，为银发新青年打造社交体验式学习新场景",
+      path: "/statics/hySchool/hySchool",
+      imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1645149928wadXmv.jpg"
+    }
   },
   // 查看更多师资
   goToTeacherTeam() {
+    bxPoint("university_teacher_more_click", {}, false)
     wx.navigateTo({url: "/statics/teacherTeam/teacherTeam"})
   }
 })

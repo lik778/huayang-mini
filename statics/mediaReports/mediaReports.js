@@ -1,5 +1,6 @@
 import request from "../../lib/request";
 import { ROOT_URL } from "../../lib/config"
+import bxPoint from "../../utils/bxPoint";
 
 Page({
 
@@ -49,7 +50,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    bxPoint("huayang_media_page", {})
   },
 
   /**
@@ -84,11 +85,15 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "作为中老年行业的领头羊，花样百姓已获得百家权威媒体报道",
+      path: "/statics/mediaReports/mediaReports"
+    }
   },
 
   onItemTap(e) {
-    let {link} = e.currentTarget.dataset.item
+    let {link, title} = e.currentTarget.dataset.item
+    bxPoint("huayang_media_list_click", {media_news_title: title}, false)
     wx.navigateTo({url: `/pages/pureWebview/pureWebview?link=${link}`});
   }
 })

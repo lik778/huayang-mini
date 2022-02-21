@@ -111,8 +111,8 @@
     position: absolute;
     top: 22rpx;
     left: -28rpx;
-    width: 8rpx;
-    height: 8rpx;
+    width: 10rpx;
+    height: 10rpx;
     border-radius: 999rpx;
     background: #BBBBBB;
 }
@@ -143,10 +143,9 @@
 .mileLine {
     position: absolute;
     top: 25rpx;
-    left: 2rpx;
-    width: 4rpx;
-    /*height: 1660rpx;*/
-    background: #D8D8D8;
+    left: 4rpx;
+    width: 1rpx;
+    background: #DDDDDD;
 }
 
 /* 企业荣誉 */

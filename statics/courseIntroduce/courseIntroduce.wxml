@@ -61,7 +61,7 @@
             <view class="travel-title limit-two-line">{{item.title}}</view>
             <view class="travel-info">
                 <view class="travel-price">¥<text class="price-01">{{item.discount_price / 100}}</text><text
-                        wx:if="{{item.price > 0}}" class="price-02">¥{{item.price / 100}}</text></view>
+                        wx:if="{{false}}" class="price-02">¥{{item.price / 100}}</text></view>
                 <view class="travel-visit-no">{{item.buy_count}}人已购</view>
             </view>
         </view>

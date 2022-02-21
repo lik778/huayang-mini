@@ -90,11 +90,7 @@
     <view class="option">闵行区经济突出贡献单位</view>
 
     <view class="sub-title st05">媒体报道</view>
-    <view class="link">《环球时报》专题报道花样时尚模特大赛</view>
-    <view class="link">《福布斯》杂志专访花样百姓创始人罗颖女士</view>
-    <view class="link">《新民晚报》专题报道花样大学</view>
-    <view class="link">《ELLE》杂志专题报道花样百姓系列活动</view>
-    <view class="link">上海电视台新闻综合频道专题报道花样时尚模特大赛</view>
+    <view class="link" wx:for="{{reports}}" wx:key="index" bindtap="goToReport" data-item="{{item}}">{{item.title}}</view>
 
     <view class="sub-title st06">团队介绍</view>
     <view class="desc">花样百姓的团队是一群热情优秀的年轻人，团队成员来自于一线互联网公司、知名媒体和公益机构。她们因为被花样百姓的使命感召而汇聚，对“第二人生”的幸福事业充满了热情。花样百姓的团队是用户心中最闪亮的星，她们让用户的感受永远都是“温暖、有爱又专业”。</view>

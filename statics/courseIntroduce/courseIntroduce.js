@@ -4,6 +4,7 @@ import request from "../../lib/request";
 import { ROOT_URL } from "../../lib/config";
 import { getYouZanKeChengList, queryTravelList } from "../../api/live/index";
 import dayjs from "dayjs";
+import bxPoint from "../../utils/bxPoint";
 
 Page({
 
@@ -38,6 +39,7 @@ Page({
 	 */
 	onShow: function () {
 		this.run();
+		 bxPoint("university_course_introduction", {})
 	},
 
 	/**
@@ -65,13 +67,6 @@ Page({
 	 * 页面上拉触底事件的处理函数
 	 */
 	onReachBottom: function () {
-
-	},
-
-	/**
-	 * 用户点击右上角分享
-	 */
-	onShareAppMessage: function () {
 
 	},
 
@@ -180,6 +175,7 @@ Page({
 	// 查看视频号直播回放
 	onReviewTap(e) {
 		let {video_url, id, title} = e.currentTarget.dataset.item;
+		bxPoint("university_llive_notice_page_reply_list", {live_replay_id: id, live_replay_title: title}, false)
 		wx.navigateTo({url: "/pages/channelReview/channelReview?link=" + video_url});
 	},
 
@@ -200,6 +196,8 @@ Page({
 
 		link += `/#/home/detail/${item.id}`;
 
+		bxPoint("university_activity_list_click", {activity_id: item.id}, false)
+
 		if (+item.pay_online === 1) {
 			// 收费活动
 			wx.navigateTo({url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}`});
@@ -212,6 +210,7 @@ Page({
 	// 查看线下课
 	onAdsItemTap(e) {
 		let {item} = e.currentTarget.dataset;
+		bxPoint("university_course_enroll_click", {course_id: item.id, course_title: item.title}, false)
 		if (item) {
 			wx.navigateToMiniProgram({
 				appId: "wx95fb6b5dbe8739b7",
@@ -222,7 +221,8 @@ Page({
 
 	// 查看游学线路
 	onTravelItemTap(e) {
-		let {id} = e.currentTarget.dataset.item;
+		let {id, name, title} = e.currentTarget.dataset.item;
+		bxPoint("university_travel_click", {edu_travel_id: id, edu_travel_name: name, edu_travel_title: title}, false)
 		wx.navigateToMiniProgram({
 			appId: "wx2ea757d51abc1f47",
 			path: "/pages/travelDetail/travelDetail?productId=" + id
@@ -232,6 +232,7 @@ Page({
 	// 查看线上课
 	toVideoCourseDetail(e) {
 		let item = e.currentTarget.dataset.item
+		bxPoint("university_series_list_click", {series_id: item.id}, false)
 		wx.navigateTo({url: `/subCourse/videoCourse/videoCourse?videoId=${item.id}`})
 	},
 
@@ -241,26 +242,31 @@ Page({
 		switch(type) {
 			case "live": {
 				// 直播
+				bxPoint("university_llive_notice_page_more_click", {}, false)
 				wx.navigateTo({url: "/pages/channelLive/channelLive"})
 				break
 			}
 			case "public": {
 				// 公开课
-				wx.navigateTo({url: "/pages/activities/activities"})
+				bxPoint("university_activity_more_click", {}, false)
+				wx.navigateTo({url: "/statics/publicActivities/publicActivities"})
 				break
 			}
 			case "offline": {
 				// 线下课
+				bxPoint("university_course_more_click", {}, false)
 				wx.navigateTo({url: "/pages/shopSubject/shopSubject"})
 				break
 			}
 			case "travel": {
 				// 游学
+				bxPoint("university_travel_more_click", {}, false)
 				wx.navigateToMiniProgram({appId: "wx2ea757d51abc1f47", path: "pages/index/index"})
 				break
 			}
 			case "online": {
 				// 线上课
+				bxPoint("university_series_more_click", {}, false)
 				wx.navigateTo({url: "/subCourse/qualityCourse/qualityCourse"})
 				break
 			}
