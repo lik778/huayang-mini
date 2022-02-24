@@ -1,7 +1,16 @@
-import { getFindBanner } from "../../api/course/index"
-import { $notNull } from "../../utils/util"
-import { getYouZanKeChengList } from "../../api/live/index"
+import {
+	getFindBanner
+} from "../../api/course/index"
+import {
+	$notNull
+} from "../../utils/util"
+import {
+	getYouZanKeChengList
+} from "../../api/live/index"
 import dayjs from "dayjs"
+import {
+	offlineTrainList
+} from "../../utils/mock"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -12,7 +21,7 @@ Page({
 	data: {
 		globalShow: false,
 		bannerList: [],
-		list: []
+		list: offlineTrainList
 	},
 
 	/**
@@ -82,18 +91,27 @@ Page({
 		switch (linkType) {
 			case "youzan": {
 				// 有赞商城
-				wx.navigateToMiniProgram({appId: "wx95fb6b5dbe8739b7", path: link})
+				wx.navigateToMiniProgram({
+					appId: "wx95fb6b5dbe8739b7",
+					path: link
+				})
 				break
 			}
 			case "travel": {
 				// 游学
-				wx.navigateToMiniProgram({appId: "wx2ea757d51abc1f47", path: link})
+				wx.navigateToMiniProgram({
+					appId: "wx2ea757d51abc1f47",
+					path: link
+				})
 				break
 			}
 			default: {
 				wx.navigateTo({
-					url: link, fail() {
-						wx.switchTab({url: link})
+					url: link,
+					fail() {
+						wx.switchTab({
+							url: link
+						})
 					}
 				})
 			}
@@ -107,30 +125,60 @@ Page({
 	},
 	// 处理轮播点击事件
 	handleBannerTap(e) {
-		let {link, link_type, id} = e.currentTarget.dataset.item
+		let {
+			link,
+			link_type,
+			id
+		} = e.currentTarget.dataset.item
 		this.naviMiniProgram(link, link_type)
-		bxPoint("course_banner_click", {banner_id: id}, false)
+		bxPoint("course_banner_click", {
+			banner_id: id
+		}, false)
 	},
 	// 获取banner图片
 	getBanner() {
-		getFindBanner({scene: 24}).then((bannerList) => {
-			this.setData({bannerList})
+		getFindBanner({
+			scene: 24
+		}).then((bannerList) => {
+			this.setData({
+				bannerList
+			})
 		})
 	},
 	// 获取有赞培训课数据
 	getList() {
-		getYouZanKeChengList({offset: 0, limit: 999})
-			.then(({data: {list}}) => {
-				list = list || []
-				list = list.map(n => ({
-					...n,
-					price: (n.price / 100).toFixed(0)
-				}))
-				this.setData({list})
-			})
-			.finally(() => {
-				this.setData({globalShow: true})
-			})
+		let list = this.data.list.concat([])
+		list = list.map(n => ({
+			...n,
+			price: (n.price / 100).toFixed(0)
+		}))
+		this.setData({
+			list
+		})
+		this.setData({
+			globalShow: true
+		})
+		// getYouZanKeChengList({
+		// 		offset: 0,
+		// 		limit: 999
+		// 	})
+		// 	.then(({
+		// 		data: {
+		// 			list
+		// 		}
+		// 	}) => {
+		// 		list = list || []
+		// 		list = list.map(n => ({
+		// 			...n,
+		// 			price: (n.price / 100).toFixed(0)
+		// 		}))
+		// 		this.setData({
+		// 			list
+		// 		})
+		// 	})
+		// 	.finally(() => {
+		// 		this.setData({globalShow: true})
+		// 	})
 	},
 	// 唤醒电话
 	onPhoneCall() {
@@ -142,7 +190,9 @@ Page({
 	// 唤醒客服消息
 	handleServiceTap() {
 		wx.openCustomerServiceChat({
-			extInfo: {url: 'https://work.weixin.qq.com/kfid/kfc85fe86a0e7ad8fa3'},
+			extInfo: {
+				url: 'https://work.weixin.qq.com/kfid/kfc85fe86a0e7ad8fa3'
+			},
 			corpId: 'ww8d4cae43fb34dc92',
 			complete() {
 				bxPoint("course_service_click", {}, false)
@@ -159,13 +209,22 @@ Page({
 	},
 	// 培训课课程item点击
 	onAdsItemTap(e) {
-		let {item} = e.currentTarget.dataset
+		let {
+			item
+		} = e.currentTarget.dataset
 		if (item) {
-			bxPoint("course_enroll_list_click", {course_id: item.id, course_title: item.title}, false)
-			wx.navigateToMiniProgram({
-				appId: "wx95fb6b5dbe8739b7",
-				path: `${item.page_url}?alias=${item.alias}`,
+			bxPoint("course_enroll_list_click", {
+				course_id: item.id,
+				course_title: item.title
+			}, false)
+
+			wx.navigateTo({
+				url: `/subCourse/descriptionOfofflineTrainCourse/descriptionOfofflineTrainCourse?id=${item.id}`,
 			})
+			// wx.navigateToMiniProgram({
+			// 	appId: "wx95fb6b5dbe8739b7",
+			// 	path: `${item.page_url}?alias=${item.alias}`,
+			// })
 		}
 	}
 })

@@ -21,60 +21,62 @@
     <!-- 师资介绍 -->
     <view class="title">师资介绍</view>
     <view class="teachers">
-        <!-- 方圆 -->
+        <!-- 花花 -->
         <view class="teacher-item">
-            <image class="teacher-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644803604QwdTdZ.jpg"
+            <image class="teacher-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1645669381ENHHFD.jpg"
                    mode="aspectFit"></image>
             <view class="teacher-introduce">
                 <view class="info">
-                    <text class="name">方圆</text><text class="job">「模特走秀」导师</text>
+                    <text class="name">花花</text><text class="job">「第二人生幸福课」导师</text>
                 </view>
-                <text class="resume">世界模特小姐亚军</text>
-                <text class="resume">资深模特导师</text>
-                <text class="resume">国际超模大赛评委</text>
-                <text class="resume">全国十佳新锐秀导</text>
+                <text class="resume">百姓网CEO</text>
+                <text class="resume">花样百姓创始人&CEO</text>
+                <text class="resume">1997-2001华东师范大学工\n商管理学士</text>
+                <text class="resume">中欧国际商学院EMBA15级</text>
             </view>
+        </view>
+        <!-- Dana -->
+        <view class="teacher-item">
+            <view class="teacher-introduce">
+                <view class="info">
+                    <text class="name">Dana</text><text class="job">「第二人生幸福课」导师</text>
+                </view>
+                <text class="resume">国际认证NLP高级执行师</text>
+                <text class="resume">大脑科学领导力教练</text>
+                <text class="resume">精通禅修、道医、气功疗愈</text>
+                <text class="resume">中欧国际商学院EMBA教练</text>
+                <text class="resume">担任香港科技大学中英文\nEMBA项目个人成长教练</text>
+            </view>
+            <image class="teacher-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1645669537XntYBP.jpg"
+                   mode="aspectFit"></image>
         </view>
         <!-- 樊悦 -->
         <view class="teacher-item">
+            <image class="teacher-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1645669894IHgrkj.jpg"
+                   mode="aspectFit"></image>
             <view class="teacher-introduce">
                 <view class="info">
                     <text class="name">樊悦</text><text class="job">「时尚穿搭」导师</text>
                 </view>
                 <text class="resume">明星造型搭配顾问</text>
                 <text class="resume">原Onlylady女人志资深\n编辑</text>
-                <text class="resume">原阿里集团优酷土豆资\n深编辑</text>
+                <text class="resume">原阿里集团优酷土豆资深\n编辑</text>
                 <text class="resume">花样百姓时尚主编</text>
             </view>
-            <image class="teacher-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644803705Fgjrqn.jpg"
-                   mode="aspectFit"></image>
         </view>
-        <!-- 李璐羽 -->
-        <view class="teacher-item">
-            <image class="teacher-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644803761znyMiR.jpg"
-                   mode="aspectFit"></image>
-            <view class="teacher-introduce">
-                <view class="info">
-                    <text class="name">李璐羽</text><text class="job">「美妆发型」导师</text>
-                </view>
-                <text class="resume">明星化妆师</text>
-                <text class="resume">上海戏剧学院讲师</text>
-                <text class="resume">上海电视台春晚特邀化妆师</text>
-                <text class="resume">上海世博会开幕活动特邀化\n妆师</text>
-            </view>
-        </view>
-        <!-- 陈顾榕 -->
+        <!-- 子姗 -->
         <view class="teacher-item">
             <view class="teacher-introduce">
                 <view class="info">
-                    <text class="name">陈顾榕</text><text class="job">「经络瑜伽」导师</text>
+                    <text class="name">子姗</text><text class="job">「身心疗愈」导师</text>
                 </view>
-                <text class="resume">明星私人瑜伽教练</text>
-                <text class="resume">上海Flame Yoga连锁瑜\n伽品牌创始人</text>
-                <text class="resume">出版书籍《办公室瑜伽》\n《随时随地瑜伽》</text>
-                <text class="resume">全美瑜伽联盟E-RYT500\n小时认证导师</text>
+                <text class="resume">针灸推拿博士</text>
+                <text class="resume">中医临床硕士</text>
+                <text class="resume">台湾中山医学大学营养学士</text>
+                <text class="resume">国家高级营养师20年的营养\n医学个案经验</text>
+                <text class="resume">身心疗愈工作者10年心理疗\n愈工作坊翻译经验</text>
             </view>
-            <image class="teacher-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644806484cKBgwa.jpg"
+            <image class="teacher-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1645669983ZXIMgj.jpg"
                    mode="aspectFit"></image>
         </view>
     </view>

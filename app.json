@@ -134,7 +134,8 @@
         "collegeActivity/collegeActivity",
         "qualityCourse/qualityCourse",
         "historyActivity/historyActivity",
-        "introduce/introduce"
+        "introduce/introduce",
+        "descriptionOfofflineTrainCourse/descriptionOfofflineTrainCourse"
       ]
     },
     {

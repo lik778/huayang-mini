@@ -29,7 +29,7 @@
 
 /* 师资介绍 */
 .teachers {
-    padding: 20rpx 40rpx 0;
+    padding: 20rpx 12rpx 0;
 }
 
 .teacher-item {

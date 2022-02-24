@@ -11,6 +11,7 @@ Page({
         category: "幸福课导师",
         teachers: [
           { name: "花花", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644817655qPcPQX.jpg", course: "「第二人生幸福课」导师", resume: ["百姓网CEO", "花样百姓创始人&CEO", "1997-2001华东师范大学工\n商管理学士", "中欧国际商学院EMBA15级"]},
+          { name: "Dana", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1645670697Ylewjn.jpg", course: "「第二人生幸福课」导师", resume: ["国际认证NLP高级执行师", "大脑科学领导力教练", "精通禅修、道医、气功疗愈", "中欧国际商学院EMBA教练",'担任香港科技大学中英文\nEMBA项目个人成长教练']},
         ]
       },
       {

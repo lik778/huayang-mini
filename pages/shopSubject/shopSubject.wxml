@@ -19,7 +19,7 @@
     <view class="admission" wx:if="{{list.length > 0}}">
         <view class="layout-header">
             <text class="lay-title">正在招生</text>
-            <text class="lay-more" bindtap="onMoreTap">查看全部</text>
+            <!-- <text class="lay-more" bindtap="onMoreTap">查看全部</text> -->
         </view>
 
         <view class="ads-content">

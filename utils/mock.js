@@ -206,3 +206,59 @@ export const userList = [{
     headImage: "https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJ8VgiafwqRW6I0icXvm1QSayFy07J8J4lSjtWuicWVb7aLejvquXl7ficMVf9BQNqKlO46J0ps2CicIicg/132"
   }
 ];
+
+export const offlineTrainList = [{
+  id: 1,
+  describe: "专属40+线下课程，小班教学，还有线上视频",
+  image: "https://img.yzcdn.cn/upload_files/2021/12/06/FlI8KxvbMGTp8UR3mvLhhPJ2pypM.png?imageView2/0/w/240/h/240/q/75",
+  description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639374666ltSbNR.jpg, https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639374666ltSbNR.jpg',
+  contact: "17398305519",
+  origin_price: 299900,
+  price: 248000,
+  title: "彩妆训练营",
+}, {
+  id: 2,
+  describe: "专属40+线下课程，小班教学，还有线上视频",
+  image: "https://img.yzcdn.cn/upload_files/2021/12/06/FlI8KxvbMGTp8UR3mvLhhPJ2pypM.png?imageView2/0/w/240/h/240/q/75",
+  description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639374666ltSbNR.jpg',
+  contact: "17398305519",
+  origin_price: 299900,
+  price: 248000,
+  title: "彩妆训练营",
+}, {
+  id: 3,
+  describe: "专属40+线下课程，小班教学，还有线上视频",
+  image: "https://img.yzcdn.cn/upload_files/2021/12/06/FlI8KxvbMGTp8UR3mvLhhPJ2pypM.png?imageView2/0/w/240/h/240/q/75",
+  description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639374666ltSbNR.jpg',
+  contact: "17398305519",
+  origin_price: 299900,
+  price: 248000,
+  title: "彩妆训练营",
+}, {
+  id: 4,
+  describe: "专属40+线下课程，小班教学，还有线上视频",
+  image: "https://img.yzcdn.cn/upload_files/2021/12/06/FlI8KxvbMGTp8UR3mvLhhPJ2pypM.png?imageView2/0/w/240/h/240/q/75",
+  description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639374666ltSbNR.jpg',
+  contact: "17398305519",
+  origin_price: 299900,
+  price: 248000,
+  title: "彩妆训练营",
+}, {
+  id: 5,
+  describe: "专属40+线下课程，小班教学，还有线上视频",
+  image: "https://img.yzcdn.cn/upload_files/2021/12/06/FlI8KxvbMGTp8UR3mvLhhPJ2pypM.png?imageView2/0/w/240/h/240/q/75",
+  description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639374666ltSbNR.jpg',
+  contact: "17398305519",
+  origin_price: 299900,
+  price: 248000,
+  title: "彩妆训练营",
+}, {
+  id: 6,
+  describe: "专属40+线下课程，小班教学，还有线上视频",
+  image: "https://img.yzcdn.cn/upload_files/2021/12/06/FlI8KxvbMGTp8UR3mvLhhPJ2pypM.png?imageView2/0/w/240/h/240/q/75",
+  description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639374666ltSbNR.jpg',
+  contact: "17398305519",
+  origin_price: 299900,
+  price: 248000,
+  title: "彩妆训练营",
+}]
