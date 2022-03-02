@@ -44,7 +44,7 @@
                 </view>
                 <view class="info-operate">
                     <text class="info-price">{{item.price}}</text>
-                    <view class="info-btn">点击报名</view>
+                    <view class="info-btn">{{item.button_name}}</view>
                 </view>
             </view>
         </view>

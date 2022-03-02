@@ -10,7 +10,7 @@ Page({
       {
         category: "幸福课导师",
         teachers: [
-          { name: "花花", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644817655qPcPQX.jpg", course: "「第二人生幸福课」导师", resume: ["百姓网CEO", "花样百姓创始人&CEO", "1997-2001华东师范大学工\n商管理学士", "中欧国际商学院EMBA15级"]},
+          { name: "花花", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644817655qPcPQX.jpg", course: "「第二人生幸福课」导师", resume: ["百姓网CEO", "花样百姓创始人&CEO", "华东师范大学工商管理学士", "中欧国际商学院EMBA15级"]},
           { name: "Dana", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1645670697Ylewjn.jpg", course: "「第二人生幸福课」导师", resume: ["国际认证NLP高级执行师", "大脑科学领导力教练", "精通禅修、道医、气功疗愈", "中欧国际商学院EMBA教练",'担任香港科技大学中英文\nEMBA项目个人成长教练']},
         ]
       },
@@ -52,8 +52,8 @@ Page({
         teachers: [
           { name: "胡伟立", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644820276faeOnu.jpg", course: "「文化气质」导师", resume: ["海派作家", "资深文化观察者", "《沪申故事》主笔", "花样百姓特约顾问"]},
           { name: "子姗", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644820349NsfKvM.jpg", course: "「身心疗愈」导师", resume: ["针灸推拿博士", "中医临床硕士", "台湾中山医学大学营养学士", "国家高级营养师20年的营养\n医学个案经验", "身心疗愈工作者10年心理疗\n愈工作坊翻译经验"]},
-          { name: "李妍", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644820417JHwLed.jpg", course: "「艺术绘画」导师", resume: ["获艺术导师资格证", "策划并撰写女性艺术家专栏", "策划《带你看展系列活动》\n《艺术与茶》等艺术项目", "实验画室艺术修养课主讲人\n以及留学作品集指导"]},
-          { name: "王艾文", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644820528wwvnFF.jpg", course: "「艺术绘画」导师", resume: ["中央美术学院", "《书中有书》等作品收录中\n央美术学院出版丛书", "参上海没顶艺术中心热浪展", "参国际威尼斯双年展中国馆 "]},
+          { name: "李妍", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644820417JHwLed.jpg", course: "「艺术绘画」导师", resume: ["中央美术学院", "《书中有书》等作品收录中\n央美术学院出版丛书", "参上海没顶艺术中心热浪展", "参国际威尼斯双年展中国馆 "]},
+          { name: "王艾文", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644820528wwvnFF.jpg", course: "「艺术绘画」导师", resume: ["获艺术导师资格证", "策划并撰写女性艺术家专栏", "策划《带你看展系列活动》\n《艺术与茶》等艺术项目", "实验画室艺术修养课主讲人\n以及留学作品集指导"]},
           { name: "林晓真", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644820845OoNeiH.jpg", course: "「中国花道」导师", resume: ["中国林派花道创始人", "中国花道传承协会理事长", "茶道美学十六行法创始人", "中国首本花道心境书籍\n《挽花心境》作者", "浙江农林大学艺术学院导师"]},
           { name: "葛晓慧", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644820941XdNclP.jpg", course: "「拍照姿势」导师", resume: ["中国十大名模", "7年职业礼仪形象讲师", "中国新面孔模特大赛冠军", "ACI国家注册国际礼仪培训师", "中国形象设计师协会导师"]},
           { name: "杨波", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644821031YmJQEe.jpg", course: "「红酒品鉴」导师", resume: ["前红酒客WineKee CEO", "畅酒窖 ChangCellar总经理", "英国WEST L3高级品酒师"]},

@@ -16,13 +16,16 @@ Page({
    */
   onLoad: function (options) {
     offlineTrainList.map(item => {
+      let item1 = {
+        ...item
+      }
       if (Number(item.id) === Number(options.id)) {
-        item.description_image = item.description_image ? item.description_image.split(',') : []
+        item1.description_image = item.description_image ? item.description_image.split(',') : []
         wx.setNavigationBarTitle({
           title: item.title
         })
         this.setData({
-          info: item
+          info: item1
         })
       }
     })
@@ -35,7 +38,9 @@ Page({
         url: 'https://work.weixin.qq.com/kfid/kfc85fe86a0e7ad8fa3'
       },
       corpId: 'ww8d4cae43fb34dc92',
-      success(res) {}
+      complete() {
+        bxPoint("course_service_click", {}, false)
+      }
     })
   },
 

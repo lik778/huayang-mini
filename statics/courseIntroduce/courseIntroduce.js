@@ -5,6 +5,7 @@ import { ROOT_URL } from "../../lib/config";
 import { getYouZanKeChengList, queryTravelList } from "../../api/live/index";
 import dayjs from "dayjs";
 import bxPoint from "../../utils/bxPoint";
+import {offlineTrainList} from "../../utils/mock"
 
 Page({
 
@@ -93,15 +94,24 @@ Page({
 			});
 
 		// 线下培训课
-		getYouZanKeChengList({offset: 0, limit: 3})
-			.then(({data: {list}}) => {
-				list = list || [];
-				list = list.map(n => ({
-					...n,
-					price: (n.price / 100).toFixed(0)
-				}));
-				this.setData({offlineList: list});
-			});
+		let offlineListData=offlineTrainList.concat([])
+		offlineListData = offlineListData.map(n => ({
+			...n,
+			price: (n.price / 100).toFixed(0)
+		}))
+		this.setData({
+			offlineList:offlineListData
+		})
+
+		// getYouZanKeChengList({offset: 0, limit: 3})
+		// 	.then(({data: {list}}) => {
+		// 		list = list || [];
+		// 		list = list.map(n => ({
+		// 			...n,
+		// 			price: (n.price / 100).toFixed(0)
+		// 		}));
+		// 		this.setData({offlineList: list});
+		// 	});
 
 		// 城市慢游
 		queryTravelList({
@@ -209,14 +219,29 @@ Page({
 
 	// 查看线下课
 	onAdsItemTap(e) {
-		let {item} = e.currentTarget.dataset;
-		bxPoint("university_course_enroll_click", {course_id: item.id, course_title: item.title}, false)
+		let {
+			item
+		} = e.currentTarget.dataset
 		if (item) {
-			wx.navigateToMiniProgram({
-				appId: "wx95fb6b5dbe8739b7",
-				path: `${item.page_url}?alias=${item.alias}`,
-			});
+			bxPoint("university_course_enroll_click", {course_id: item.id, course_title: item.title}, false)
+
+			wx.navigateTo({
+				url: `/subCourse/descriptionOfofflineTrainCourse/descriptionOfofflineTrainCourse?id=${item.id}`,
+			})
+			// wx.navigateToMiniProgram({
+			// 	appId: "wx95fb6b5dbe8739b7",
+			// 	path: `${item.page_url}?alias=${item.alias}`,
+			// })
 		}
+
+		// let {item} = e.currentTarget.dataset;
+		// bxPoint("university_course_enroll_click", {course_id: item.id, course_title: item.title}, false)
+		// if (item) {
+		// 	wx.navigateToMiniProgram({
+		// 		appId: "wx95fb6b5dbe8739b7",
+		// 		path: `${item.page_url}?alias=${item.alias}`,
+		// 	});
+		// }
 	},
 
 	// 查看游学线路
