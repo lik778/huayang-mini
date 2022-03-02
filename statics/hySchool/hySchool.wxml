@@ -1,0 +1,105 @@
+<view class="school">
+    <!-- 学校背景  -->
+    <view class="title">学校背景</view>
+    <image class="img01" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644802777AyYriu.jpg"
+           mode="aspectFill"></image>
+    <view class="desc">
+        花样老年大学成立于2020年5月，是由花样百姓推出的新概念中老年大学，定位高知终身学习人群，以“提升第二人生身心幸福指数”为宗旨，整合社会各界资源和体验式学习方式，为学员创造愉悦、自信、满足的学习体验。
+    </view>
+    <view class="desc">2020年12月，经上海市老年教育领导小组办公室同意，花样老年大学获得正式资质，成为首批政府认可的社会力量举办的老年大学。</view>
+    <view class="desc">2021年1月，国家教育部副部长翁铁慧远程连线花样老年大学考察。</view>
+    <view class="desc">2021年9月，花样老年大学成为上海市老年教育指定的时尚类师资认证培训机构。</view>
+    <view class="desc supplement01">2021年12月，花样大学授牌成为上海市老年教育师资培训中心基地。</view>
+
+    <!-- 办学特色 -->
+    <view class="title">办学特色</view>
+    <view class="desc">花样大学的办学理念：线上线下融合学习（OMO）、体验式学习、项目式学习（PBL）。</view>
+    <view class="desc supplement01">
+        花样老年大学汇聚顶级名师，集线上课、线下课、研学、游学于一体，将学习与社交、旅行等各种体验相结合，收获的不仅是兴趣技能的提升，还有高质量的社交圈层，以及丰富、有趣、有品质的生活方式。
+    </view>
+
+    <!-- 师资介绍 -->
+    <view class="title">师资介绍</view>
+    <view class="teachers">
+        <!-- 花花 -->
+        <view class="teacher-item">
+            <image class="teacher-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1645669381ENHHFD.jpg"
+                   mode="aspectFit"></image>
+            <view class="teacher-introduce">
+                <view class="info">
+                    <text class="name">花花</text><text class="job">「第二人生幸福课」导师</text>
+                </view>
+                <text class="resume">百姓网CEO</text>
+                <text class="resume">花样百姓创始人&CEO</text>
+                <text class="resume">华东师范大学工商管理学士</text>
+                <text class="resume">中欧国际商学院EMBA15级</text>
+            </view>
+        </view>
+        <!-- Dana -->
+        <view class="teacher-item">
+            <view class="teacher-introduce">
+                <view class="info">
+                    <text class="name">Dana</text><text class="job">「第二人生幸福课」导师</text>
+                </view>
+                <text class="resume">国际认证NLP高级执行师</text>
+                <text class="resume">大脑科学领导力教练</text>
+                <text class="resume">精通禅修、道医、气功疗愈</text>
+                <text class="resume">中欧国际商学院EMBA教练</text>
+                <text class="resume">担任香港科技大学中英文\nEMBA项目个人成长教练</text>
+            </view>
+            <image class="teacher-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1645669537XntYBP.jpg"
+                   mode="aspectFit"></image>
+        </view>
+        <!-- 樊悦 -->
+        <view class="teacher-item">
+            <image class="teacher-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1645669894IHgrkj.jpg"
+                   mode="aspectFit"></image>
+            <view class="teacher-introduce">
+                <view class="info">
+                    <text class="name">樊悦</text><text class="job">「时尚穿搭」导师</text>
+                </view>
+                <text class="resume">明星造型搭配顾问</text>
+                <text class="resume">原Onlylady女人志资深\n编辑</text>
+                <text class="resume">原阿里集团优酷土豆资深\n编辑</text>
+                <text class="resume">花样百姓时尚主编</text>
+            </view>
+        </view>
+        <!-- 子姗 -->
+        <view class="teacher-item">
+            <view class="teacher-introduce">
+                <view class="info">
+                    <text class="name">子姗</text><text class="job">「身心疗愈」导师</text>
+                </view>
+                <text class="resume">针灸推拿博士</text>
+                <text class="resume">中医临床硕士</text>
+                <text class="resume">台湾中山医学大学营养学士</text>
+                <text class="resume">国家高级营养师20年的营养\n医学个案经验</text>
+                <text class="resume">身心疗愈工作者10年心理疗\n愈工作坊翻译经验</text>
+            </view>
+            <image class="teacher-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1645669983ZXIMgj.jpg"
+                   mode="aspectFit"></image>
+        </view>
+    </view>
+    <view class="more-teachers" bindtap="goToTeacherTeam"><text>查看全部</text><image class="arrow" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644807190zopKgE.jpg" mode="aspectFit"></image></view>
+
+    <!-- 学员画像 -->
+    <view class="title">学员画像</view>
+    <view class="desc">花样老年大学学员以40-60岁女性为主，有良好的教育背景和职业经历（企业家、企业高管、公务员、医生、教授等专业工作者），她们热爱学习，热爱生活，乐于结交新朋友，追求充实又有意义的生活方式。
+    </view>
+    <image class="img02" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644919042QrpZnz.jpg"
+           mode="aspectFill"></image>
+
+    <!-- 校区介绍 -->
+    <view class="title">校区介绍</view>
+    <view class="desc">花样目前在上海已开设两个线下教学点，分别位于黄浦区南苏州路933号、闵行区顾戴路2337号维璟中心广场A座。</view>
+    <view class="school-pictures">
+        <image class="school-img" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644803873lERhMg.jpg"
+               mode="aspectFit"></image>
+        <image class="school-img" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644803901DEAHkP.jpg"
+               mode="aspectFit"></image>
+        <image class="school-img" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644803918GpjCno.jpg"
+               mode="aspectFit"></image>
+        <image class="school-img" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644803928vcEeYd.jpg"
+               mode="aspectFit"></image>
+    </view>
+</view>

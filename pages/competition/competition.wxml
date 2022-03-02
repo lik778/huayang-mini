@@ -56,7 +56,7 @@
                         <text class="photo-info">照片 {{contentItem.album.pic_count}}</text>
                         <view class="separate"></view>
                         <text class="photo-info">视频 {{contentItem.album.video_count}}</text>
-                        <view -class="separate"></view>
+                        <view class="separate"></view>
                         <text class="photo-info">访问 {{contentItem.album.view_count}}</text>
                     </view>
                 </view>

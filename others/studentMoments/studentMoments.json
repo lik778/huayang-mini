@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "校友动态",
+  "usingComponents": {
+    "contact": "/components/contact/contact",
+    "authModule": "/components/auth/auth",
+    "studentMomentLike": "/components/studentMomentLike/studentMomentLike"
+  }
+}

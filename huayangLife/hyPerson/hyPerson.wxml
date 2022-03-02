@@ -1,0 +1,10 @@
+<view class="life-list-container">
+  <view class="waterfall-list">
+    <waterfall refresh="{{refresh}}" bind:clickItem='toDetail' wx:if='{{waterfallList!==null}}' list="{{waterfallList}}"></waterfall>
+  </view>
+
+  <!-- 到底啦 -->
+  <view class="is-bottom-module" wx:if="{{isBottom}}">
+    <image class="is-bottom" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1638864447cJIUMH.jpg"></image>
+  </view>
+</view>

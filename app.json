@@ -134,7 +134,8 @@
         "collegeActivity/collegeActivity",
         "qualityCourse/qualityCourse",
         "historyActivity/historyActivity",
-        "introduce/introduce"
+        "introduce/introduce",
+        "descriptionOfofflineTrainCourse/descriptionOfofflineTrainCourse"
       ]
     },
     {
@@ -143,6 +144,18 @@
         "detail/detail",
         "category/category",
         "temporary/temporary"
+      ]
+    },
+    {
+      "root": "statics",
+      "pages": [
+        "companyIntroduce/companyIntroduce",
+        "hySchool/hySchool",
+        "teacherTeam/teacherTeam",
+        "courseIntroduce/courseIntroduce",
+        "friendsActivity/friendsActivity",
+        "mediaReports/mediaReports",
+        "publicActivities/publicActivities"
       ]
     },
     {
@@ -157,7 +170,8 @@
       "root": "huayangLife",
       "pages": [
         "lifeDetail/lifeDetail",
-        "lifeList/lifeList"
+        "lifeList/lifeList",
+        "hyPerson/hyPerson"
       ]
     },
     {

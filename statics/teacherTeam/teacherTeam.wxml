@@ -1,0 +1,16 @@
+<view class="teacher-team">
+    <view class="title">师资介绍</view>
+    <view class="teachers" wx:for="{{teacherList}}" wx:key="index">
+        <view class="sub-title">{{item.category}}</view>
+        <view class="teacher-item" wx:for="{{item.teachers}}" wx:for-item="subItem" wx:for-index="subIndex">
+            <image class="teacher-avatar" src="{{subItem.avatar}}"
+                   mode="aspectFit"></image>
+            <view class="teacher-introduce">
+                <view class="info">
+                    <text class="name">{{subItem.name}}</text><text class="job">{{subItem.course}}</text>
+                </view>
+                <text class="resume" wx:for="{{subItem.resume}}" wx:for-item="resumeItem" wx:for-index="resumeIndex">{{resumeItem}}</text>
+            </view>
+        </view>
+    </view>
+</view>

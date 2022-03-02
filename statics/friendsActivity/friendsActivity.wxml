@@ -1,0 +1,50 @@
+<view class="friends-activity">
+    <!-- 近期活动 -->
+    <block wx:if="{{publicList.length > 0}}">
+        <view class="title" bindtap="goToMorePage" data-key="public"><text>近期活动</text><text class="more">查看全部 ›</text></view>
+        <view class="activity-item" wx:for="{{publicList}}" wx:key="index" bindtap="goToPureWebview"
+              data-item="{{item}}">
+            <image class="cover" src="{{item.cover_url}}" mode="aspectFill"></image>
+            <view class="content">
+                <view class="public-title limit-two-line">{{item.title}}</view>
+                <view class="separate"></view>
+                <view class="date">
+                    <view class="year">{{item.year}}年</view>
+                    <view>{{item.month}}月</view>
+                </view>
+            </view>
+        </view>
+    </block>
+
+    <!-- 活动相册 -->
+    <view class="title" bindtap="goToMorePage" data-key="albums"><text>活动相册</text><text class="more">查看全部 ›</text></view>
+    <view class="history-item" wx:for="{{albumList}}" wx:key="index">
+        <view class="photo-card" wx:for="{{item.content}}" bindtap="handleAlbumTap" data-item="{{contentItem}}"
+              wx:for-index="contentIndex" wx:for-item="contentItem">
+            <view class="photo-content">
+                <image class="photo-cover" src="{{contentItem.album.cover+'?x-oss-process=style/huayang'}}"
+                       mode="aspectFill"></image>
+                <view class="photo-layer">
+                    <text class="photo-info">照片 {{contentItem.album.pic_count}}</text>
+                    <view class="separate"></view>
+                    <text class="photo-info">视频 {{contentItem.album.video_count}}</text>
+                    <view class="separate"></view>
+                    <text class="photo-info">访问 {{contentItem.album.view_count}}</text>
+                </view>
+            </view>
+            <view class="album-title limit-two-line">{{contentItem.album.name}}</view>
+        </view>
+    </view>
+
+    <!-- 校友说 -->
+    <view class="title"><text>校友说</text></view>
+    <view class="comments">
+        <view class="comment-item" wx:for="{{comments}}" wx:key="index">
+            <image class="comment-avatar" src="{{item.avatar}}" mode="aspectFill"></image>
+            <view class="comment-info">
+                <text class="comment-username">{{item.username}}</text>
+                <text class="comment-content">{{item.comment}}</text>
+            </view>
+        </view>
+    </view>
+</view>

@@ -73,11 +73,6 @@
     vertical-align: unset;
 }
 
-/* 正在招生 */
-.admission {}
-
-.ads-content {}
-
 .ads-item {
     overflow: hidden;
     padding: 0 40rpx 40rpx;
@@ -140,7 +135,6 @@
 }
 
 /* 课程咨询 */
-.consult {}
 
 .consult-content {
     overflow: hidden;
@@ -199,7 +193,6 @@
 }
 
 /* 常见问题 */
-.question {}
 
 .question-content {
     margin: 0 40rpx 80rpx;
