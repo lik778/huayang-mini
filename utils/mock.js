@@ -211,10 +211,10 @@ export const offlineTrainList = [{
   id: 1,
   describe: "提升艺术修为，塑造魅力自我",
   image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646124994nkQSyY.jpg",
-  description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646125049vAyVGk.jpg',
+  description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646186882UHFdve.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646186882MtfHBl.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646186882NJNYtQ.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646186882SNeQbv.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646186882ntGrHn.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646186888YrWJqC.jpg',
   contact: "17398305519",
   origin_price: 299900,
   price: 320000,
   title: "艺术绘画课 色彩初级班·印象派",
-  button_name:"联系客服"
+  button_name: "联系客服"
 }]
