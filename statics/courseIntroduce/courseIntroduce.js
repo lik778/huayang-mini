@@ -97,7 +97,7 @@ Page({
 		let offlineListData=offlineTrainList.concat([])
 		offlineListData = offlineListData.map(n => ({
 			...n,
-			price: (n.price / 100).toFixed(0)
+			price:n.price? (n.price / 100).toFixed(0):''
 		}))
 		this.setData({
 			offlineList:offlineListData

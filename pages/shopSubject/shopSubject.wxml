@@ -31,7 +31,7 @@
                         <text class="info-desc limit-one-line" wx-if="{{item.describe}}">{{item.describe}}</text>
                     </view>
                     <view class="info-operate">
-                        <text class="info-price">{{item.price}}</text>
+                        <text class="info-price" style="visibility:{{item.price?'visible':'hidden'}}">{{item.price}}</text>
                         <view class="info-btn">{{item.button_name}}</view>
                     </view>
                 </view>
