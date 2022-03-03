@@ -1,6 +1,6 @@
 <!--subCourse/descriptionOfofflineTrainCourse/descriptionOfofflineTrainCourse.wxml-->
 <view class="container">
-  <image wx:for="{{info.description_image}}" src="{{item}}" mode="widthFix"></image>
+  <image lazy-load='{{true}}' wx:for="{{info.description_image}}" src="{{item}}" mode="widthFix"></image>
   <view class="concact-module">
     <button class="concact-button" bindtap="contactService">联系客服</button>
   </view>
