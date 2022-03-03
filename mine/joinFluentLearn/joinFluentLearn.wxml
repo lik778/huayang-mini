@@ -1,9 +1,6 @@
 <view class="join-video-member">
     <view wx:if="{{video}}" class="hy-intro-video-wrap">
-        <video id="hy-video-join-fluent-learn-content" bindtap="onPauseCollegeVideo" class="hy-video" src="{{video}}" poster="{{video_cover}}" controls="{{false}}"
-               custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}"
-               enable-progress-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}"
-               show-play-btn="{{false}}" autoplay="{{false}}" loop="{{true}}"></video>
+        <video id="hy-video-join-fluent-learn-content" bindtap="onPauseCollegeVideo" class="hy-video" src="{{video}}" poster="{{video_cover}}" controls="{{false}}" custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}" enable-progress-gesture="{{false}}" play-btn-position="top" show-center-play-btn="{{false}}" show-play-btn="{{false}}" autoplay="{{false}}" loop="{{true}}"></video>
         <view class="hy-video-content-mask" wx:if="{{!isCollegeVideoPlaying}}" catchtap="onPlayCollegeVideo">
             <image class="pause-icon" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1619061373BeZzQx.jpg"></image>
         </view>
@@ -13,8 +10,7 @@
         <view class="card-desc">{{desc}}</view>
     </view>
 
-    <image class="interest" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754BErAnd.jpg"
-        mode="aspectFit"></image>
+    <image class="interest" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1618825754BErAnd.jpg" mode="aspectFit"></image>
     <view class="interest-item" wx:for="{{features}}" wx:key="index">
         <image class="interest-icon" src="{{item.icon}}" mode="aspectFit"></image>
         <view class="interest-detail">
@@ -42,7 +38,7 @@
         </view>
     </view>
 
-     <view class="share-btn" bindtap="onShareBtnTap"></view>
+    <view class="share-btn" bindtap="onShareBtnTap"></view>
 
     <!-- 新版购买按钮 -->
     <view class="button-module" style="padding-bottom:{{isIphoneXRSMax?'20px':''}}">
@@ -72,12 +68,10 @@
 
 
     <!-- 授权弹窗 -->
-    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent"
-        bind:authCompleteEvent="authCompleteEvent"></authModule>
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
 
     <!-- 畅学卡弹窗 -->
-    <fluentLearnModal show="{{didShowFluentLearnModal}}" message="您已拥有花样老年大学畅学卡" confirmText="立即查看"
-        bind:confirm="onFluentLearnConfirm" />
+    <fluentLearnModal show="{{didShowFluentLearnModal}}" message="您已拥有花样老年大学畅学卡" confirmText="立即查看" bind:confirm="onFluentLearnConfirm" />
 
     <!-- 邀请码购买弹窗 -->
     <view class="invite-code-module" wx:if='{{showCodeBox}}'>

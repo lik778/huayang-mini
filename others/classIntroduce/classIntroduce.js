@@ -13,7 +13,9 @@ Page({
    */
   data: {
     didShowAuth: false,
-    mobile: ""
+    mobile: "",
+    previewVideo: null,
+    playing: false
   },
   authInfo() {
     if (!this.data.mobile) {
@@ -27,6 +29,18 @@ Page({
     }
   },
 
+  playVideoTap() {
+    this.data.previewVideo.play()
+    this.setData({
+      playing: true
+    })
+  },
+
+  pauseTap() {
+    this.setData({
+      playing: false
+    })
+  },
   // 用户授权取消
   authCancelEvent() {
     this.setData({
@@ -56,7 +70,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    this.data.previewVideo = wx.createVideoContext("video", this)
   },
 
   /**

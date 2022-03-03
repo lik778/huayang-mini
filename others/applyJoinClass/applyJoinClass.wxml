@@ -47,7 +47,7 @@
       <view class="common-line-label">职业</view>
       <picker bindchange="jobChangeTap" value="{{index}}" range="{{jobList}}">
         <view class="common-line-one-input">
-          <view class="{{form.job?'common-line-one-input-main-active common-line-one-input-main':'common-line-one-input-main'}}">{{form.job||'请选择您的职业'}}</view>
+          <view class="{{form.job?'common-line-one-input-main-active common-line-one-input-main':'common-line-one-input-main'}} limit-one-line">{{form.job||'请选择您的职业'}}</view>
           <view class="common-line-one-input-arrow">
             <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646279274sOCUJo.jpg"></image>
           </view>

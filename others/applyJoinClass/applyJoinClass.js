@@ -16,7 +16,7 @@ Page({
    */
   data: {
     array: ['中国'],
-    index: 1,
+    index: 0,
     genderList: ['女', '男'],
     lifeStatusList: ['在职', '退休返聘', '已退休'],
     jobList: ['企业管理者/公务员/国企', '事业单位/律师', '医生', '老师等专业工作者/其他'],

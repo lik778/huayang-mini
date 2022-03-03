@@ -1,4 +1,5 @@
 /* others/applyJoinClass/applyJoinClass.wxss */
+@import "../../assets/css/common.wxss";
 .apply-join-class-container {}
 
 .logo {
@@ -74,7 +75,7 @@
 .common-line-one-input-main {
   width: 374rpx;
   height: 84rpx;
-  border: 2rpx solid #979797;
+  border: 1rpx solid #979797;
   border-right: none;
   line-height: 84rpx;
   padding: 0 24rpx;
@@ -111,7 +112,7 @@
   height: 84rpx;
   border-top-right-radius: 8rpx;
   border-bottom-right-radius: 8rpx;
-  border: 1px solid #979797;
+  border: 1rpx solid #979797;
   position: relative;
 }
 

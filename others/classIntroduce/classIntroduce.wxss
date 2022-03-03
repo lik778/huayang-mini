@@ -1,5 +1,52 @@
 /* others/classIntroduce/classIntroduce.wxss */
-.class-introduce-container>image {
+.image-module {
+  padding-bottom: 100rpx;
+  position: relative;
+}
+
+.image-module .video {
+  position: absolute;
+  width: 670rpx;
+  height: 376rpx;
+  left: 50%;
+  top: 902rpx;
+  transform: translateX(-50%);
+  z-index: 5;
+}
+
+.video-box {
+  position: relative;
+}
+
+.video-box .play-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 82rpx;
+  height: 82rpx;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2rpx solid #FFFFFF;
+  box-sizing: border-box;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-box image {
+  width: 26rpx;
+  height: 32rpx;
+  vertical-align: bottom;
+}
+
+.image-module video {
+  width: 670rpx;
+  height: 376rpx;
+}
+
+.image-module>image {
   width: 100%;
   vertical-align: bottom;
 }

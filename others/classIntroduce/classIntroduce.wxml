@@ -1,6 +1,22 @@
 <!--others/classIntroduce/classIntroduce.wxml-->
 <view class="class-introduce-container">
-  <image mode="widthFix" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646186882UHFdve.jpg"></image>
+  <view class="image-module">
+    <image mode="widthFix" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646310049xjojLf.jpg"></image>
+    <image mode="widthFix" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646310187xGTQKT.jpg"></image>
+    <image mode="widthFix" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646310207AUCcnf.jpg"></image>
+    <image mode="widthFix" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646310223akRROE.jpg"></image>
+    <view class="video">
+      <view class="video-box">
+        <video id='video' src="http://video.huayangbaixing.com/sv/3da62d46-17f4fc0260f/3da62d46-17f4fc0260f.mp4" controls="{{playing}}" custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}" enable-progress-gesture="{{false}}" play-btn-position="bottom" show-center-play-btn="{{false}}" show-play-btn="{{playing}}" autoplay="{{false}}" loop="{{true}}" show-fullscreen-btn='{{false}}' bindpause='pauseTap'></video>
+        <view class="play-icon" bindtap="playVideoTap" wx:if="{{!playing}}">
+          <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646310772eIeKoD.jpg"></image>
+        </view>
+      </view>
+    </view>
+
+
+  </view>
+
   <view class="button" bindtap="authInfo">
     <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646298279MmGywZ.jpg"></image>
   </view>
