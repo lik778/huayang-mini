@@ -1,10 +1,14 @@
 // others/applyJoinClass/applyJoinClass.js
 import {
+  getLocalStorage,
   isNumber
 } from "../../utils/util"
 import {
   daxueEnter
 } from "../../api/course/index"
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
 Page({
 
   /**
@@ -22,7 +26,7 @@ Page({
       gender: "",
       status: "",
       job: "",
-      stu_mobile: "17398305519"
+      stu_mobile: ""
     }
   },
 
@@ -79,8 +83,15 @@ Page({
       ...this.data.form
     }
     form.gender = form.gender === '男' ? 1 : 2
-    daxueEnter(form).then(res => {
-      console.log(res)
+    daxueEnter(form).then(() => {
+      wx.navigateTo({
+        url: '/others/applyJoinClassResult/applyJoinClassResult',
+      })
+    }).catch(err => {
+      wx.showToast({
+        title: err,
+        icon: 'none'
+      })
     })
   },
 
@@ -106,6 +117,15 @@ Page({
    */
   onLoad: function (options) {
 
+    if (options.mobile || getLocalStorage(GLOBAL_KEY.accountInfo)) {
+      this.setData({
+        ['form.stu_mobile']: options.mobile || JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).mobile
+      })
+    } else {
+      wx.navigateTo({
+        url: '/others/classIntroduce/classIntroduce',
+      })
+    }
   },
 
   /**
@@ -150,10 +170,4 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "navigationBarTitleText": "入学申请",
+  "usingComponents": {
+    "authModule": "../../components/auth/auth"
+  }
 }

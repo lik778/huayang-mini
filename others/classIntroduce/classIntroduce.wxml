@@ -1,2 +1,10 @@
 <!--others/classIntroduce/classIntroduce.wxml-->
-<text>others/classIntroduce/classIntroduce.wxml</text>
+<view class="class-introduce-container">
+  <image mode="widthFix" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646186882UHFdve.jpg"></image>
+  <view class="button" bindtap="authInfo">
+    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646298279MmGywZ.jpg"></image>
+  </view>
+
+  <!-- 授权弹窗 -->
+  <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent" />
+</view>
