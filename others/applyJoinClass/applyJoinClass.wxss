@@ -1,0 +1,127 @@
+/* others/applyJoinClass/applyJoinClass.wxss */
+@import "../../assets/css/common.wxss";
+.apply-join-class-container {}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  padding-top: 80rpx;
+}
+
+.logo image {
+  width: 288rpx;
+  height: 186rpx;
+  vertical-align: bottom;
+}
+
+.title-module {
+  padding-top: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title-line {
+  width: 96rpx;
+  height: 2rpx;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.title-module text {
+  margin: 0 32rpx;
+  font-size: 36rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 52rpx;
+}
+
+.input-module {}
+
+.common-line-one {
+  padding: 80rpx 60rpx 0 40rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.common-line-label {
+  font-size: 36rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 50rpx;
+  flex-shrink: 0;
+  width: 72rpx;
+}
+
+.common-line-label-spcial {
+  line-height: 44rpx;
+}
+
+.common-line-one-input {
+  flex-shrink: 0;
+  display: flex;
+}
+
+.common-line-one-input input {
+  width: 460rpx;
+  height: 84rpx;
+  border: 1rpx solid #979797;
+  border-radius: 8rpx;
+  padding: 0 24rpx;
+}
+
+.common-line-one-input-main {
+  width: 374rpx;
+  height: 84rpx;
+  border: 1rpx solid #979797;
+  border-right: none;
+  line-height: 84rpx;
+  padding: 0 24rpx;
+  border-top-left-radius: 8rpx;
+  border-bottom-left-radius: 8rpx;
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.common-line-one-input-main-active {
+  color: #000;
+}
+
+.button {
+  width: calc(100% - 60rpx);
+  height: 96rpx;
+  border-radius: 999rpx;
+  background-color: rgba(255, 68, 51, 1);
+  text-align: center;
+  line-height: 96rpx;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin: 0 auto;
+  margin-top: 168rpx;
+  margin-bottom: 52rpx;
+}
+
+.common-line-one-input-arrow {
+  width: 84rpx;
+  height: 84rpx;
+  border-top-right-radius: 8rpx;
+  border-bottom-right-radius: 8rpx;
+  border: 1rpx solid #979797;
+  position: relative;
+}
+
+.common-line-one-input-arrow image {
+  width: 22rpx;
+  height: 12rpx;
+  vertical-align: bottom;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

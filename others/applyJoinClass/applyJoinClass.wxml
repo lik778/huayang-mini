@@ -1,0 +1,62 @@
+<!--others/applyJoinClass/applyJoinClass.wxml-->
+<view class="apply-join-class-container">
+  <view class="logo">
+    <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646273686tdatcE.jpg"></image>
+  </view>
+  <view class="title-module">
+    <view class="title-line"></view>
+    <text>花样老年大学入学申请表</text>
+    <view class="title-line"></view>
+  </view>
+  <view class="input-module">
+    <view class="common-line-one">
+      <view class="common-line-label">姓名</view>
+      <view class="common-line-one-input">
+        <input type="text" placeholder="请输入您的姓名" bindinput="inputRealName" />
+      </view>
+    </view>
+    <view class="common-line-one">
+      <view class="common-line-label">年龄</view>
+      <view class="common-line-one-input">
+        <input type="text" placeholder="请输入您的年龄" bindinput="inputAge" />
+      </view>
+    </view>
+    <view class="common-line-one">
+      <view class="common-line-label">性别</view>
+      <picker bindchange="genderChangeTap" value="{{index}}" range="{{genderList}}">
+        <view class="common-line-one-input">
+          <view class="{{form.gender?'common-line-one-input-main-active common-line-one-input-main':'common-line-one-input-main'}}">{{form.gender||'请选择您的性别'}}</view>
+          <view class="common-line-one-input-arrow">
+            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646279274sOCUJo.jpg"></image>
+          </view>
+        </view>
+      </picker>
+    </view>
+    <view class="common-line-one">
+      <view class="common-line-label common-line-label-spcial">生活状态</view>
+      <picker bindchange="lifeStatusChangeTap" value="{{index}}" range="{{lifeStatusList}}">
+        <view class="common-line-one-input">
+          <view class="{{form.status?'common-line-one-input-main-active common-line-one-input-main':'common-line-one-input-main'}}">{{form.status||'请选择您的生活状态'}}</view>
+          <view class="common-line-one-input-arrow">
+            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646279274sOCUJo.jpg"></image>
+          </view>
+        </view>
+      </picker>
+    </view>
+    <view class="common-line-one">
+      <view class="common-line-label">职业</view>
+      <picker bindchange="jobChangeTap" value="{{index}}" range="{{jobList}}">
+        <view class="common-line-one-input">
+          <view class="{{form.job?'common-line-one-input-main-active common-line-one-input-main':'common-line-one-input-main'}} limit-one-line">{{form.job||'请选择您的职业'}}</view>
+          <view class="common-line-one-input-arrow">
+            <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646279274sOCUJo.jpg"></image>
+          </view>
+        </view>
+      </picker>
+    </view>
+
+
+
+    <view class="button" bindtap="saveTap">保存</view>
+  </view>
+</view>

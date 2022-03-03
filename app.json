@@ -163,7 +163,10 @@
       "pages": [
         "goodMorningResult/goodMorningResult",
         "newYearFlag/newYearFlag",
-        "newYearFlagPost/newYearFlagPost"
+        "newYearFlagPost/newYearFlagPost",
+        "applyJoinClassResult/applyJoinClassResult",
+        "applyJoinClass/applyJoinClass",
+        "classIntroduce/classIntroduce"
       ]
     },
     {

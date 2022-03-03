@@ -1,0 +1,23 @@
+/* others/applyJoinClassResult/applyJoinClassResult.wxss */
+.apply-join-class-result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+image {
+  width: 262rpx;
+  height: 240rpx;
+  vertical-align: bottom;
+  padding-top: 100rpx;
+  padding-bottom: 80rpx;
+}
+
+text {
+  font-size: 36rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #000000;
+  line-height: 50rpx;
+  text-align: center;
+}
