@@ -150,7 +150,7 @@ Page({
 		let list = this.data.list.concat([])
 		list = list.map(n => ({
 			...n,
-			price: (n.price / 100).toFixed(0)
+			price: n.price ? (n.price / 100).toFixed(0) : ''
 		}))
 		this.setData({
 			list
@@ -191,7 +191,7 @@ Page({
 	handleServiceTap() {
 		wx.openCustomerServiceChat({
 			extInfo: {
-				url: 'https://work.weixin.qq.com/kfid/kfc85fe86a0e7ad8fa3'
+			  url: 'https://work.weixin.qq.com/kfid/kfce6a22d7afb999123'
 			},
 			corpId: 'ww8d4cae43fb34dc92',
 			complete() {

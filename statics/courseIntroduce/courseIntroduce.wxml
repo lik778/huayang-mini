@@ -43,7 +43,7 @@
                     <text class="info-desc limit-one-line" wx-if="{{item.describe}}">{{item.describe}}</text>
                 </view>
                 <view class="info-operate">
-                    <text class="info-price">{{item.price}}</text>
+                    <text class="info-price" style="visibility:{{item.price?'visible':'hidden'}}">{{item.price}}</text>
                     <view class="info-btn">{{item.button_name}}</view>
                 </view>
             </view>
@@ -60,8 +60,7 @@
             </view>
             <view class="travel-title limit-two-line">{{item.title}}</view>
             <view class="travel-info">
-                <view class="travel-price">¥<text class="price-01">{{item.discount_price / 100}}</text><text
-                        wx:if="{{false}}" class="price-02">¥{{item.price / 100}}</text></view>
+                <view class="travel-price">¥<text class="price-01">{{item.discount_price / 100}}</text><text wx:if="{{false}}" class="price-02">¥{{item.price / 100}}</text></view>
                 <view class="travel-visit-no">{{item.buy_count}}人已购</view>
             </view>
         </view>
