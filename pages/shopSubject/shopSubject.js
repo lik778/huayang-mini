@@ -184,7 +184,7 @@ Page({
 	onPhoneCall() {
 		bxPoint("course_phone_call_click", {}, false)
 		wx.makePhoneCall({
-			phoneNumber: "15000961093",
+			phoneNumber: "18017268535",
 		})
 	},
 	// 唤醒客服消息
