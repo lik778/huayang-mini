@@ -223,8 +223,18 @@ export const offlineTrainList = [{
   image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646124994nkQSyY.jpg",
   description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360610fOyRnk.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360628LfWyIz.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360641bsbYUd.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360654ypfosb.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360668HSDiIY.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360587FgEHNu.jpg',
   contact: "17398305519",
-  origin_price: 299900,
+  origin_price: 399000,
   price: 320000,
   title: "艺术绘画课 色彩初级班·印象派",
+  button_name: "联系客服"
+}, {
+  id: 3,
+  describe: "量身雕琢您的魅力形象",
+  image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646372935CmGQZf.jpg",
+  description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646373062FtkMTE.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646373077LjpEKZ.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646373091ilPWOu.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646373104jBZImF.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646373123UpEPIF.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360587FgEHNu.jpg',
+  contact: "17398305519",
+  origin_price: 299900,
+  price: 199900,
+  title: "形象气质管理课",
   button_name: "联系客服"
 }]
