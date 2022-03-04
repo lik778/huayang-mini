@@ -27,7 +27,8 @@ Page({
       status: "",
       job: "",
       stu_mobile: ""
-    }
+    },
+    lock: false
   },
 
   inputRealName(e) {
@@ -79,20 +80,32 @@ Page({
       })
       return
     }
-    let form = {
-      ...this.data.form
+    if (!this.data.lock) {
+      this.setData({
+        lock: true
+      })
+      let form = {
+        ...this.data.form
+      }
+      form.gender = form.gender === '男' ? 1 : 2
+      daxueEnter(form).then(() => {
+        wx.navigateTo({
+          url: '/others/applyJoinClassResult/applyJoinClassResult',
+        })
+        this.setData({
+          lock: false
+        })
+      }).catch(err => {
+        this.setData({
+          lock: false
+        })
+        wx.showToast({
+          title: err,
+          icon: 'none'
+        })
+      })
     }
-    form.gender = form.gender === '男' ? 1 : 2
-    daxueEnter(form).then(() => {
-      wx.navigateTo({
-        url: '/others/applyJoinClassResult/applyJoinClassResult',
-      })
-    }).catch(err => {
-      wx.showToast({
-        title: err,
-        icon: 'none'
-      })
-    })
+
   },
 
   verifyForm() {
