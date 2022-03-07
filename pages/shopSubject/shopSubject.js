@@ -184,16 +184,14 @@ Page({
 	onPhoneCall() {
 		bxPoint("course_phone_call_click", {}, false)
 		wx.makePhoneCall({
-			phoneNumber: "18017268535",
+			phoneNumber: "18001862372",
 		})
 	},
 	// 唤醒客服消息
 	handleServiceTap() {
 		wx.openCustomerServiceChat({
-			extInfo: {
-			  url: 'https://work.weixin.qq.com/kfid/kfce6a22d7afb999123'
-			},
-			corpId: 'ww8d4cae43fb34dc92',
+		  extInfo: {url: 'https://work.weixin.qq.com/kfid/kfc16674b49d8f7dc5f'},
+      corpId: 'ww8d4cae43fb34dc92',
 			complete() {
 				bxPoint("course_service_click", {}, false)
 			}

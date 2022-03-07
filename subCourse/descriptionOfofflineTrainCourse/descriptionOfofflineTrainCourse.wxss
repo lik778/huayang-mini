@@ -1,8 +1,12 @@
 /* subCourse/descriptionOfofflineTrainCourse/descriptionOfofflineTrainCourse.wxss */
 .container image {
   width: 100%;
-  padding-bottom: 120rpx;
+
   vertical-align: bottom;
+}
+
+.desc-image {
+  padding-bottom: 120rpx;
 }
 
 .concact-module {
