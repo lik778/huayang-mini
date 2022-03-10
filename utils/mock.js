@@ -221,7 +221,7 @@ export const offlineTrainList = [{
   id: 1,
   describe: "提升艺术修为，塑造魅力自我",
   image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646124994nkQSyY.jpg",
-  description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360610fOyRnk.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360628LfWyIz.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646633346HCCQcd.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646633172Nahdou.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360668HSDiIY.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646632491roPqna.jpg',
+  description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360610fOyRnk.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360628LfWyIz.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646633346HCCQcd.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646878741yoTHob.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360668HSDiIY.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646632491roPqna.jpg',
   contact: "17398305519",
   origin_price: 399000,
   price: 320000,
