@@ -25,7 +25,7 @@
         <image wx:for="{{equityImages}}" wx:key="index" class="equity-item" src="{{item}}" mode="aspectFill"></image>
     </view>
 
-    <view class="course">花样精品课</view>
+    <view class="course" wx:if="{{hotList.length}}">花样精品课</view>
     <view class="course-item" wx:for="{{hotList}}" wx:key="index" data-item="{{item}}" bindtap="goToVideoDetail">
         <image class="cover-image" src="{{item.coverImg}}" mode="aspectFill"></image>
         <view class="course-info">
@@ -59,7 +59,10 @@
             <!--    </view>-->
             <!--</view>-->
             <!-- 原价 -->
-            <view class="button-module-type-two" bindtap="buy">
+            <view class="button-module-type-two" bindtap="buy" wx:if="{{payChannel==='110'}}">
+                <text>立即领取</text>
+            </view>
+            <view class="button-module-type-two" bindtap="buy" wx:else>
                 <text>立即购买 {{discountPrice}}元</text>
                 <!--<text>原价 {{price}}元/年</text>-->
             </view>
