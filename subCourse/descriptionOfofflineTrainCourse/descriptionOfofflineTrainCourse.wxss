@@ -1,11 +1,58 @@
 /* subCourse/descriptionOfofflineTrainCourse/descriptionOfofflineTrainCourse.wxss */
 .container image {
   width: 100%;
-
   vertical-align: bottom;
 }
 
 .desc-image {
+  position: relative;
+}
+
+.desc-image .video {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 1292rpx;
+  z-index: 10;
+  width: 672rpx;
+  height: 380rpx;
+}
+
+.video-box {
+  position: relative;
+}
+
+.video-box video {
+  width: 672rpx;
+  height: 380rpx;
+  vertical-align: bottom;
+}
+
+.play-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 82rpx;
+  height: 82rpx;
+  z-index: 11;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2rpx solid #FFFFFF;
+  box-sizing: border-box;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video image {
+  width: 26rpx;
+  height: 32rpx;
+  vertical-align: bottom;
+}
+
+
+.last-image {
   padding-bottom: 120rpx;
 }
 

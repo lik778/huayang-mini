@@ -2,7 +2,16 @@
 <view class="container">
   <view class="desc-image">
     <image lazy-load='{{true}}' wx:for="{{info.description_image}}" src="{{item}}" mode="widthFix"></image>
+    <view class="video" wx:if="{{info.id===5}}">
+      <view class="video-box">
+        <video id='video' src="http://video.huayangbaixing.com/sv/2c8c8bd8-17f86568854/2c8c8bd8-17f86568854.mp4" controls="{{playing}}" custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}" enable-progress-gesture="{{false}}" play-btn-position="bottom" show-center-play-btn="{{false}}" show-play-btn="{{playing}}" autoplay="{{false}}" loop="{{true}}" show-fullscreen-btn='{{false}}' bindpause='pauseTap'></video>
+        <view class="play-icon" bindtap="playVideoTap" wx:if="{{!playing}}">
+          <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646310772eIeKoD.jpg"></image>
+        </view>
+      </view>
+    </view>
   </view>
+  <image class="last-image" lazy-load='{{true}}' mode="widthFix" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646632491roPqna.jpg"></image>
   <view class="concact-module">
     <button class="concact-button" bindtap="contactService">联系客服</button>
   </view>
