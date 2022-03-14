@@ -8,11 +8,11 @@
     <view class="desc">2020年12月，经上海市老年教育领导小组办公室同意，花样老年大学获得正式资质，成为首批政府认可的社会力量举办的老年大学。</view>
     <view class="desc">2021年1月，国家教育部副部长翁铁慧远程连线花样老年大学考察。</view>
     <view class="desc">2021年9月，花样老年大学成为上海市老年教育指定的时尚类师资认证培训机构。</view>
-    <view class="desc supplement01">2021年12月，花样大学授牌成为上海市老年教育师资培训中心基地。</view>
+    <view class="desc supplement01">2021年12月，花样老年大学授牌成为上海市老年教育师资培训中心基地。</view>
 
     <!-- 办学特色 -->
     <view class="title">办学特色</view>
-    <view class="desc">花样大学的办学理念：线上线下融合学习（OMO）、体验式学习、项目式学习（PBL）。</view>
+    <view class="desc">花样老年大学的办学理念：线上线下融合学习（OMO）、体验式学习、项目式学习（PBL）。</view>
     <view class="desc supplement01">
         花样老年大学汇聚顶级名师，集线上课、线下课、研学、游学于一体，将学习与社交、旅行等各种体验相结合，收获的不仅是兴趣技能的提升，还有高质量的社交圈层，以及丰富、有趣、有品质的生活方式。
     </view>
@@ -85,7 +85,7 @@
 
     <!-- 校区介绍 -->
     <view class="title">校区介绍</view>
-    <view class="desc">花样目前在上海已开设两个线下教学点，分别位于黄浦区南苏州路933号、闵行区顾戴路2337号维璟中心广场A座。</view>
+    <view class="desc">花样老年大学目前在上海已开设两个线下教学点，分别位于黄浦区南苏州路933号、闵行区顾戴路2337号维璟中心广场A座。</view>
     <view class="school-pictures">
         <image class="school-img" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644803873lERhMg.jpg" mode="aspectFit"></image>
         <image class="school-img" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644803901DEAHkP.jpg" mode="aspectFit"></image>

@@ -8,7 +8,21 @@ Page({
    * 页面的初始数据
    */
   data: {
-    info: ''
+    info: '',
+    playing: false
+  },
+
+  playVideoTap() {
+    this.data.previewVideo.play()
+    this.setData({
+      playing: true
+    })
+  },
+
+  pauseTap() {
+    this.setData({
+      playing: false
+    })
   },
 
   /**
@@ -34,12 +48,18 @@ Page({
   /* 联系客服 */
   contactService() {
     wx.openCustomerServiceChat({
-      extInfo: {url: 'https://work.weixin.qq.com/kfid/kfc16674b49d8f7dc5f'},
+      extInfo: {
+        url: 'https://work.weixin.qq.com/kfid/kfc16674b49d8f7dc5f'
+      },
       corpId: 'ww8d4cae43fb34dc92',
       complete() {
         bxPoint("course_service_click", {}, false)
       }
     })
+  },
+
+  onReady() {
+    this.data.previewVideo = wx.createVideoContext("video", this)
   },
 
   /**
