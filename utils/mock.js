@@ -218,6 +218,16 @@ export const offlineTrainList = [{
   title: "第二人生幸福课",
   button_name: "联系客服"
 }, {
+  id: 6,
+  describe: "50+新青年学急救，为家庭保驾护航！",
+  image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647247425UsRWMS.jpg",
+  description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647247438EgNwDl.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647247451WmapFN.jpg',
+  contact: "18001862372",
+  origin_price: 399900,
+  price: '',
+  title: "急救常识课",
+  button_name: "联系客服"
+}, {
   id: 1,
   describe: "提升艺术修为，塑造魅力自我",
   image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646124994nkQSyY.jpg",
@@ -257,4 +267,4 @@ export const offlineTrainList = [{
   price: 299900,
   title: "花样女团训练营·初级班",
   button_name: "联系客服"
-}, ]
+}]
