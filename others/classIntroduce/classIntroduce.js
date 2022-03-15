@@ -15,7 +15,8 @@ Page({
     didShowAuth: false,
     mobile: "",
     previewVideo: null,
-    playing: false
+    playing: false,
+    channel: ""
   },
   authInfo() {
     if (!this.data.mobile) {
@@ -24,7 +25,7 @@ Page({
       })
     } else {
       wx.navigateTo({
-        url: `/others/applyJoinClass/applyJoinClass?mobile=${this.data.mobile}`,
+        url: `/others/applyJoinClass/applyJoinClass?mobile=${this.data.mobile}&channel=${this.data.channel}`,
       })
     }
   },
@@ -62,6 +63,11 @@ Page({
     if (getLocalStorage(GLOBAL_KEY.accountInfo)) {
       this.setData({
         mobile: JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).mobile
+      })
+    }
+    if (options.channel) {
+      this.setData({
+        channel: options.channel
       })
     }
   },
