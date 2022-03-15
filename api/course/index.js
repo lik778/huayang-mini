@@ -652,6 +652,11 @@ export const daxueEnter = params => {
 	return request._post(URL.daxueEnter, params)
 }
 
+// 获取生活状态&职业列表
+export const lifeStatusAndJobList=params=>{
+  return request._get(URL.lifeStatusAndJobList,params)
+}
+
 // 获取训练营分期信息
 
 export const getCampStageMessgae = params => {

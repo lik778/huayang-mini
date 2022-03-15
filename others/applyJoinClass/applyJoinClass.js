@@ -4,7 +4,8 @@ import {
   isNumber
 } from "../../utils/util"
 import {
-  daxueEnter
+  daxueEnter,
+  lifeStatusAndJobList
 } from "../../api/course/index"
 import {
   GLOBAL_KEY
@@ -24,10 +25,13 @@ Page({
       real_name: "",
       age: "",
       gender: "",
-      status: "",
-      job: "",
-      stu_mobile: ""
+      live_status_type: "",
+      job_type: "",
+      stu_mobile: "",
+      channel: ""
     },
+    jobForm: '',
+    lifeStatusForm: "",
     lock: false
   },
 
@@ -57,7 +61,8 @@ Page({
     let index = Number(e.detail.value)
     let value = this.data.lifeStatusList[index]
     this.setData({
-      ['form.status']: value
+      ['form.live_status_type']: value.value,
+      lifeStatusForm: value.label
     })
     console.log(value)
   },
@@ -65,9 +70,10 @@ Page({
     let index = Number(e.detail.value)
     let value = this.data.jobList[index]
     this.setData({
-      ['form.job']: value
+      ['form.job_type']: value.value,
+      jobForm: value.label
     })
-    console.log(value)
+    console.log(value.label)
   },
 
   saveTap() {
@@ -118,18 +124,38 @@ Page({
       return "请输入正确的年龄"
     } else if (!form.gender) {
       return "请选择您的性别"
-    } else if (!form.status) {
+    } else if (!form.live_status_type) {
       return "请选择您的生活状态"
-    } else if (!form.job) {
+    } else if (!form.job_type) {
       return "请选择您的职业"
     }
     return true
   },
+
+  getList() {
+    lifeStatusAndJobList({
+      enum_type: "job_type,live_status_type"
+    }).then(({
+      data
+    }) => {
+      let list1 = data.cfg.job_type
+      let list2 = data.cfg.live_status_type
+      this.setData({
+        jobList: list1 || [],
+        lifeStatusList: list2 || [],
+      })
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    if (options.channel) {
+      this.setData({
+        ['form.channel']: options.channel
+      })
+    }
     if (options.mobile || getLocalStorage(GLOBAL_KEY.accountInfo)) {
       this.setData({
         ['form.stu_mobile']: options.mobile || JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).mobile
@@ -139,6 +165,7 @@ Page({
         url: '/others/classIntroduce/classIntroduce',
       })
     }
+    this.getList()
   },
 
   /**
