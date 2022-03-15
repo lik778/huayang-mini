@@ -34,9 +34,9 @@
     </view>
     <view class="common-line-one">
       <view class="common-line-label common-line-label-spcial">生活状态</view>
-      <picker bindchange="lifeStatusChangeTap" value="{{index}}" range="{{lifeStatusList}}">
+      <picker bindchange="lifeStatusChangeTap" value="{{index}}" range="{{lifeStatusList}}" range-key='label'>
         <view class="common-line-one-input">
-          <view class="{{form.status?'common-line-one-input-main-active common-line-one-input-main':'common-line-one-input-main'}}">{{form.status||'请选择您的生活状态'}}</view>
+          <view class="{{lifeStatusForm?'common-line-one-input-main-active common-line-one-input-main':'common-line-one-input-main'}}">{{lifeStatusForm||'请选择您的生活状态'}}</view>
           <view class="common-line-one-input-arrow">
             <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646279274sOCUJo.jpg"></image>
           </view>
@@ -45,9 +45,9 @@
     </view>
     <view class="common-line-one">
       <view class="common-line-label">职业</view>
-      <picker bindchange="jobChangeTap" value="{{index}}" range="{{jobList}}">
+      <picker bindchange="jobChangeTap" value="{{index}}" range="{{jobList}}" range-key='label'>
         <view class="common-line-one-input">
-          <view class="{{form.job?'common-line-one-input-main-active common-line-one-input-main':'common-line-one-input-main'}} limit-one-line">{{form.job||'请选择您的职业'}}</view>
+          <view class="{{jobForm?'common-line-one-input-main-active common-line-one-input-main':'common-line-one-input-main'}} limit-one-line">{{jobForm||'请选择您的职业'}}</view>
           <view class="common-line-one-input-arrow">
             <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646279274sOCUJo.jpg"></image>
           </view>
