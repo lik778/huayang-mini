@@ -59,7 +59,7 @@
             <!--    </view>-->
             <!--</view>-->
             <!-- 原价 -->
-            <view class="button-module-type-two" bindtap="buy" wx:if="{{payChannel==='110'}}">
+            <view class="button-module-type-two" bindtap="buy" wx:if="{{didGiftForFluentCard}}">
                 <text>立即领取</text>
             </view>
             <view class="button-module-type-two" bindtap="buy" wx:else>

@@ -279,3 +279,8 @@ export function getUserJoinedActivitiesByMobile(params) {
 export function getUserPersonPageInfo(params) {
   return request._get(URL.queryUserPersonPageInfo, params)
 }
+
+// 获得畅学卡渠道信息
+export function getFluentCardChannelInfo(params) {
+  return request._get(URL.queryFluentCardChannelInfo, params)
+}

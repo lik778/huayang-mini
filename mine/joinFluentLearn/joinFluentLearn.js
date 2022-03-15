@@ -1,10 +1,10 @@
 import {
-  checkUserHasAddress,
+  checkUserHasAddress, getFluentCardChannelInfo,
   getFluentCardInfo,
   getFluentLearnInfo,
   getPartnerInfo,
   payForFluentCard
-} from "../../api/mine/index"
+} from "../../api/mine/index";
 import {
   agentUserBind
 } from "../../api/auth/index"
@@ -66,6 +66,7 @@ Page({
       "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1623744296FOAkiM.jpg",
       "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1623744313wgpfWa.jpg"
     ],
+    didGiftForFluentCard: false, // 是否将畅学卡作为礼品赠送
   },
   /**
    * 生命周期函数--监听页面加载
@@ -89,9 +90,13 @@ Page({
      * 小程序卡片中满足 sceneInviteId=0 且 channel!=undefined 时，在支付时上传渠道来源
      */
     if (inviteId == 0 && channel != undefined) {
-      this.setData({
-        payChannel: channel
-      })
+      // 2022.3.15服务花样大学免费赠送一年畅学卡活动需求（页参inviteId=0&channel=*）
+      getFluentCardChannelInfo({channel})
+        .then(({data}) => {
+          this.setData({didGiftForFluentCard: $notNull(data)})
+        })
+
+      this.setData({payChannel: channel})
     }
     this.setData({
       inviteId,
@@ -374,17 +379,12 @@ Page({
       message
     }) => {
       if (code === 0) {
-        /* 2022.3.11服务花样大学免费赠送一年畅学卡活动需求（页参inviteId=0&channel=110） */
-        if (params.channel === '110') {
-          // 购买畅学卡成功，判断用户是否填写收货地址信息
-          this.checkHasFillAddress().then(() => {
-            wx.navigateTo({
-              url: "/mine/fluentCardCallback/fluentCardCallback"
-            })
-          }).catch()
-          // 关闭邀请码购买弹窗
-          this.closeCodeBox()
-          return
+        // 畅学卡作为礼品赠送，不唤醒支付
+        if (this.data.didGiftForFluentCard) {
+          wx.navigateTo({
+            url: "/mine/fluentCardCallback/fluentCardCallback"
+          })
+          return false
         }
         payFluentCard({
             id: data.id,
