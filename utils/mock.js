@@ -208,63 +208,77 @@ export const userList = [{
 ];
 
 export const offlineTrainList = [{
-  id: 2,
-  describe: "一门帮助人们发掘自我优势，培养积极情绪，塑造幸福的第二人生的课程。",
-  image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646300047mYWBFT.jpg",
-  description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360508oOjGYp.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360531ozSUuK.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360543OGamiZ.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360560LYAcfV.jpg',
-  contact: "18001862372",
-  origin_price: 299900,
-  price: '',
-  title: "第二人生幸福课",
-  button_name: "联系客服"
-}, {
-  id: 6,
-  describe: "50+新青年学急救，为家庭保驾护航！",
-  image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647247425UsRWMS.jpg",
-  description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647247438EgNwDl.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647247451WmapFN.jpg',
-  contact: "18001862372",
-  origin_price: 399900,
-  price: '',
-  title: "急救常识课",
-  button_name: "联系客服"
-}, {
-  id: 1,
-  describe: "提升艺术修为，塑造魅力自我",
-  image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646124994nkQSyY.jpg",
-  description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360610fOyRnk.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360628LfWyIz.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646633346HCCQcd.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646878741yoTHob.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360668HSDiIY.jpg',
-  contact: "18001862372",
-  origin_price: 399000,
-  price: 320000,
-  title: "艺术绘画课 色彩初级班·印象派",
-  button_name: "联系客服"
-}, {
-  id: 3,
-  describe: "量身雕琢您的魅力形象",
-  image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646372935CmGQZf.jpg",
-  description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646373062FtkMTE.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646373077LjpEKZ.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646373091ilPWOu.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646373104jBZImF.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646373123UpEPIF.jpg',
-  contact: "18001862372",
-  origin_price: 299900,
-  price: 199900,
-  title: "形象气质管理课",
-  button_name: "联系客服"
-}, {
-  id: 4,
-  describe: "圆梦走秀，收获自信风采！",
-  image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647222971aDkcGq.jpg",
-  description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647227785fcCEXz.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647227805vxEWEv.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647227859aCANBj.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647228010zDyYlQ.jpg',
-  contact: "18001862372",
-  origin_price: 499900,
-  price: 320000,
-  title: "花样超模集训营 初级班",
-  button_name: "联系客服"
-}, {
-  id: 5,
-  describe: "舞出节奏、绽放风采！",
-  image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647229278fQXiRt.jpg",
-  description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647228076XXNyrG.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647228092jDcUCP.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647228106fNEkgJ.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647228117RLUYbN.jpg',
-  contact: "18001862372",
-  origin_price: 399900,
-  price: 299900,
-  title: "花样女团训练营·初级班",
-  button_name: "联系客服"
-}]
+    id: 2,
+    describe: "一门帮助人们发掘自我优势，培养积极情绪，塑造幸福的第二人生的课程。",
+    image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646300047mYWBFT.jpg",
+    description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360508oOjGYp.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360531ozSUuK.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360543OGamiZ.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360560LYAcfV.jpg',
+    contact: "18001862372",
+    origin_price: 299900,
+    price: '',
+    title: "第二人生幸福课",
+    button_name: "联系客服"
+  }, {
+    id: 6,
+    describe: "50+新青年学急救，为家庭保驾护航！",
+    image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647247425UsRWMS.jpg",
+    description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647247438EgNwDl.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647247451WmapFN.jpg',
+    contact: "18001862372",
+    origin_price: 399900,
+    price: '',
+    title: "急救常识课",
+    button_name: "联系客服"
+  },
+
+  {
+    id: 7,
+    describe: "体验正念冥想，体味活在当下",
+    image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647337160CAOTXC.jpg",
+    description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647337123bYbKtF.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647337136beGsED.jpg',
+    contact: "18001862372",
+    origin_price: 399900,
+    price: '',
+    title: "正念冥想课",
+    button_name: "联系客服"
+  },
+  {
+    id: 1,
+    describe: "提升艺术修为，塑造魅力自我",
+    image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646124994nkQSyY.jpg",
+    description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360610fOyRnk.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360628LfWyIz.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646633346HCCQcd.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646878741yoTHob.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646360668HSDiIY.jpg',
+    contact: "18001862372",
+    origin_price: 399000,
+    price: 320000,
+    title: "艺术绘画课 色彩初级班·印象派",
+    button_name: "联系客服"
+  }, {
+    id: 3,
+    describe: "量身雕琢您的魅力形象",
+    image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646372935CmGQZf.jpg",
+    description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646373062FtkMTE.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646373077LjpEKZ.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646373091ilPWOu.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646373104jBZImF.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646373123UpEPIF.jpg',
+    contact: "18001862372",
+    origin_price: 299900,
+    price: 199900,
+    title: "形象气质管理课",
+    button_name: "联系客服"
+  }, {
+    id: 4,
+    describe: "圆梦走秀，收获自信风采！",
+    image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647222971aDkcGq.jpg",
+    description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647227785fcCEXz.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647227805vxEWEv.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647227859aCANBj.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647228010zDyYlQ.jpg',
+    contact: "18001862372",
+    origin_price: 499900,
+    price: 320000,
+    title: "花样超模集训营 初级班",
+    button_name: "联系客服"
+  }, {
+    id: 5,
+    describe: "舞出节奏、绽放风采！",
+    image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647229278fQXiRt.jpg",
+    description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647228076XXNyrG.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647228092jDcUCP.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647228106fNEkgJ.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647228117RLUYbN.jpg',
+    contact: "18001862372",
+    origin_price: 399900,
+    price: 299900,
+    title: "花样女团训练营·初级班",
+    button_name: "联系客服"
+  }
+]
