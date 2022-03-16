@@ -260,17 +260,19 @@ export const offlineTrainList = [{
     price: 199900,
     title: "形象气质管理课",
     button_name: "联系客服"
-  }, {
-    id: 4,
-    describe: "圆梦走秀，收获自信风采！",
-    image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647222971aDkcGq.jpg",
-    description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647227785fcCEXz.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647227805vxEWEv.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647227859aCANBj.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647228010zDyYlQ.jpg',
-    contact: "18001862372",
-    origin_price: 499900,
-    price: 320000,
-    title: "花样超模集训营 初级班",
-    button_name: "联系客服"
-  }, {
+  },
+  // {
+  //   id: 4,
+  //   describe: "圆梦走秀，收获自信风采！",
+  //   image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647222971aDkcGq.jpg",
+  //   description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647227785fcCEXz.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647227805vxEWEv.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647227859aCANBj.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647228010zDyYlQ.jpg',
+  //   contact: "18001862372",
+  //   origin_price: 499900,
+  //   price: 320000,
+  //   title: "花样超模集训营 初级班",
+  //   button_name: "联系客服"
+  // },
+  {
     id: 5,
     describe: "舞出节奏、绽放风采！",
     image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647229278fQXiRt.jpg",
