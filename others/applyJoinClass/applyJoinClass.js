@@ -115,6 +115,8 @@ Page({
           }
           payForFluentCard(params).then(res => {
             this.navigateToResultPage()
+          }).catch(() => {
+            this.navigateToResultPage()
           })
         } else {
           this.navigateToResultPage()
@@ -154,7 +156,6 @@ Page({
       data
     }) => {
       if ($notNull(data) && data.status === FluentLearnUserType.active) {
-        console.log(21)
         this.setData({
           hasVip: true
         })
