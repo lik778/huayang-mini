@@ -1,6 +1,7 @@
 <!--others/applyJoinClassResult/applyJoinClassResult.wxml-->
 <view class="apply-join-class-result-container">
   <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646294250xLwvIU.jpg"></image>
-  <text> 您已成功提交报名资料，\n\n花样老年大学顾问老师会在24小时内\n和您取得联系
+  <text> 您已成功提交报名资料，\n\n点击下方按钮，添加课程顾问老师微信
   </text>
+  <view class="add-teacher" bindtap="showWxCode">添加课程顾问</view>
 </view>
