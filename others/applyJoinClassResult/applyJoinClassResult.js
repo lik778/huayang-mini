@@ -7,7 +7,11 @@ Page({
   data: {
 
   },
-
+  showWxCode() {
+    wx.previewImage({
+      urls: ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647571047LaWGXt.jpg'],
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

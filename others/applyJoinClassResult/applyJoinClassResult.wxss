@@ -21,3 +21,18 @@ text {
   line-height: 50rpx;
   text-align: center;
 }
+
+.add-teacher {
+  width: calc(100% - 60rpx);
+  height: 96rpx;
+  border-radius: 999rpx;
+  background-color: rgba(255, 68, 51, 1);
+  text-align: center;
+  line-height: 96rpx;
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin: 0 auto;
+  margin-top: 168rpx;
+}

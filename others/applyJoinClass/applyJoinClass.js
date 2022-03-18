@@ -1,15 +1,23 @@
 // others/applyJoinClass/applyJoinClass.js
 import {
+  payForFluentCard,
+  getFluentCardInfo
+} from "../../api/mine/index";
+import {
+  $notNull,
   getLocalStorage,
+  hasAccountInfo,
+  hasUserInfo,
   isNumber
 } from "../../utils/util"
+import {
+  FluentLearnUserType,
+  GLOBAL_KEY
+} from "../../lib/config"
 import {
   daxueEnter,
   lifeStatusAndJobList
 } from "../../api/course/index"
-import {
-  GLOBAL_KEY
-} from "../../lib/config"
 Page({
 
   /**
@@ -20,6 +28,7 @@ Page({
     index: 0,
     genderList: ['女', '男'],
     lifeStatusList: ['在职', '退休返聘', '已退休'],
+    hasVip: false,
     jobList: ['企业管理者/公务员/国企', '事业单位/律师', '医生', '老师等专业工作者/其他'],
     form: {
       real_name: "",
@@ -94,13 +103,25 @@ Page({
         ...this.data.form
       }
       form.gender = form.gender === '男' ? 1 : 2
-      daxueEnter(form).then(() => {
-        wx.navigateTo({
-          url: '/others/applyJoinClassResult/applyJoinClassResult',
-        })
-        this.setData({
-          lock: false
-        })
+      daxueEnter(form).then(async () => {
+        await this.checkUserFluentLearnStatus()
+        if (Number(this.data.form.channel) === 1) {
+          // 3.17报名送畅学卡
+          let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+          let params = {
+            user_snow_id: accountInfo.snow_id,
+            open_id: getLocalStorage(GLOBAL_KEY.openId),
+            channel: 120
+          }
+          payForFluentCard(params).then(res => {
+            this.navigateToResultPage()
+          }).catch(() => {
+            this.navigateToResultPage()
+          })
+        } else {
+          this.navigateToResultPage()
+        }
+
       }).catch(err => {
         this.setData({
           lock: false
@@ -112,6 +133,34 @@ Page({
       })
     }
 
+  },
+
+  navigateToResultPage() {
+    wx.navigateTo({
+      url: '/others/applyJoinClassResult/applyJoinClassResult',
+    })
+    this.setData({
+      lock: false
+    })
+  },
+
+  /**
+   * 检查用户畅学卡状态
+   */
+  checkUserFluentLearnStatus() {
+    if (!hasUserInfo() || !hasAccountInfo()) return
+    let accountInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
+    getFluentCardInfo({
+      user_snow_id: accountInfo.snow_id
+    }).then(({
+      data
+    }) => {
+      if ($notNull(data) && data.status === FluentLearnUserType.active) {
+        this.setData({
+          hasVip: true
+        })
+      }
+    })
   },
 
   verifyForm() {
