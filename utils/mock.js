@@ -282,5 +282,27 @@ export const offlineTrainList = [{
     price: 299900,
     title: "花样女团训练营·初级班",
     button_name: "联系客服"
-  }
+  },
+  {
+    id: 8,
+    describe: "记录精彩生活，秀出鲜活人生！",
+    image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647565276sriTkg.jpg",
+    description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647565319cHKoQk.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647565331WSFDIK.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647565525SxRiRZ.jpg',
+    contact: "18001862372",
+    origin_price: 199900,
+    price: 99900,
+    title: "花样抖音达人初级课•短视频制作入门",
+    button_name: "联系客服"
+  },
+  {
+    id: 9,
+    describe: "成为最会玩儿的50+生活家！",
+    image: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647565626fZWKOT.jpg",
+    description_image: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647565781xxUrGq.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647565797bSOLXi.jpg,https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647565807bDxQfF.jpg',
+    contact: "18001862372",
+    origin_price: 139900,
+    price: 129900,
+    title: "花样抖音达人中级课·玩转本地生活",
+    button_name: "联系客服"
+  },
 ]
