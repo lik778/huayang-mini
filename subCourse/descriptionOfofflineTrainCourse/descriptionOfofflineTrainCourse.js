@@ -1,7 +1,4 @@
 // subCourse/descriptionOfofflineTrainCourse/descriptionOfofflineTrainCourse.js
-import {
-  offlineTrainList
-} from "../../utils/mock"
 Page({
 
   /**
@@ -29,19 +26,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    offlineTrainList.map(item => {
-      let item1 = {
-        ...item
-      }
-      if (Number(item.id) === Number(options.id)) {
-        item1.description_image = item.description_image ? item.description_image.split(',') : []
-        wx.setNavigationBarTitle({
-          title: item.title
-        })
-        this.setData({
-          info: item1
-        })
-      }
+    let info = {
+      ...options,
+      image: options.image.split(",")
+    }
+    console.log(info)
+    this.setData({
+      info: info
+    })
+    wx.setNavigationBarTitle({
+      title: info.title || '线下培训'
     })
   },
 
