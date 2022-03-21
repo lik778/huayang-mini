@@ -4,7 +4,7 @@
     <image mode="widthFix" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646310049xjojLf.jpg"></image>
     <image mode="widthFix" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646310187xGTQKT.jpg"></image>
     <image mode="widthFix" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646310207AUCcnf.jpg"></image>
-    <image mode="widthFix" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646310223akRROE.jpg"></image>
+    <image mode="widthFix" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647598283QCBNWR.jpg"></image>
     <view class="video">
       <view class="video-box">
         <video id='video' src="http://video.huayangbaixing.com/sv/3da62d46-17f4fc0260f/3da62d46-17f4fc0260f.mp4" poster="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646361407vwjaNr.jpg" controls="{{playing}}" custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}" enable-progress-gesture="{{false}}" play-btn-position="bottom" show-center-play-btn="{{false}}" show-play-btn="{{playing}}" autoplay="{{false}}" loop="{{true}}" show-fullscreen-btn='{{false}}' bindpause='pauseTap'></video>

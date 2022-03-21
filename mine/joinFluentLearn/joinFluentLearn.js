@@ -1,5 +1,6 @@
 import {
-  checkUserHasAddress, getFluentCardChannelInfo,
+  checkUserHasAddress,
+  getFluentCardChannelInfo,
   getFluentCardInfo,
   getFluentLearnInfo,
   getPartnerInfo,
@@ -91,12 +92,30 @@ Page({
      */
     if (inviteId == 0 && channel != undefined) {
       // 2022.3.15服务花样大学免费赠送一年畅学卡活动需求（页参inviteId=0&channel=*）
-      getFluentCardChannelInfo({channel})
-        .then(({data}) => {
-          this.setData({didGiftForFluentCard: $notNull(data)})
+      getFluentCardChannelInfo({
+          channel
         })
-
-      this.setData({payChannel: channel})
+        .then(({
+          data
+        }) => {
+          this.setData({
+            didGiftForFluentCard: $notNull(data)
+          })
+        })
+      // channel大于100数据pv打点为免费小于100是付费购买页面 jj-2022-03-21梨花
+      if (Number(channel) > 100) {
+        // this.pageViewFreePoint()
+        bxPoint("changxue_free", {
+          remmend_id: getLocalStorage(GLOBAL_KEY.superiorDistributeUserId)
+        })
+      } else {
+        this.pageViewPayPoint()
+      }
+      this.setData({
+        payChannel: channel
+      })
+    } else {
+      this.pageViewPayPoint()
     }
     this.setData({
       inviteId,
@@ -108,7 +127,11 @@ Page({
     this.getCardInfo()
     this.getHotkecheng()
   },
-
+  pageViewPayPoint() {
+    bxPoint("changxue_buy", {
+      remmend_id: getLocalStorage(GLOBAL_KEY.superiorDistributeUserId)
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -120,9 +143,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    bxPoint("changxue_buy", {
-      remmend_id: getLocalStorage(GLOBAL_KEY.superiorDistributeUserId)
-    })
+
     this.checkUserFluentLearnStatus()
   },
 
@@ -360,7 +381,12 @@ Page({
         }, false)
       } else {
         // jj-2021-03-12梨花
-        bxPoint("changxue_buy_pay", {}, false)
+        if (Number(this.data.payChannel) > 100) {
+          bxPoint("changxue_free_get", {}, false)
+        } else {
+          bxPoint("changxue_buy_pay", {}, false)
+        }
+
       }
     }
 
@@ -382,7 +408,7 @@ Page({
         // 畅学卡作为礼品赠送，不唤醒支付
         if (this.data.didGiftForFluentCard) {
           wx.navigateTo({
-            url: "/mine/fluentCardCallback/fluentCardCallback"
+            url: "/mine/fluentCardCallback/fluentCardCallback?free=true"
           })
           return false
         }
@@ -510,8 +536,13 @@ Page({
     this.setData({
       showContact: true
     })
-    // jj-2021-03-12梨花
-    bxPoint("changxue_contact", {}, false)
+    if (Number(this.data.payChannel) > 100) {
+       // jj-2022-03-21梨花
+      bxPoint("changxue_free_contact", {}, false)
+    } else {
+      // jj-2021-03-12梨花
+      bxPoint("changxue_contact", {}, false)
+    }
   },
   // 关闭联系客服
   onCloseContactModal() {
