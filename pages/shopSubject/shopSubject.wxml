@@ -1,79 +1,79 @@
 <view class="shop-subject" wx:if="{{globalShow}}">
-    <!-- banner -->
-    <view wx:if="{{bannerList.length!==0}}">
-        <!-- banner 滚动区域 -->
-        <view class="swiper-box" id="swiper-box">
-            <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}" duration="{{500}}">
-                <swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="handleBannerTap" data-item="{{item}}">
-                    <view class="swiper-cover"></view>
-                    <image mode="aspectFill" src="{{item.pic_url}}"></image>
-                </swiper-item>
-            </swiper>
-            <view class="swiper-dot">
-                <view wx:for="{{bannerList}}" wx:key="index" wx:if="{{bannerList.length>1}}" class="{{current===index?'swiper-dot-item-active swiper-dot-item':'swiper-dot-item'}}"></view>
-            </view>
-        </view>
+  <!-- banner -->
+  <view wx:if="{{bannerList.length!==0}}">
+    <!-- banner 滚动区域 -->
+    <view class="swiper-box" id="swiper-box">
+      <swiper class="swiper-item-box" bindchange="changeSwiperIndex" circular autoplay interval="{{3000}}" duration="{{500}}">
+        <swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="handleBannerTap" data-item="{{item}}">
+          <view class="swiper-cover"></view>
+          <image mode="aspectFill" src="{{item.pic_url}}"></image>
+        </swiper-item>
+      </swiper>
+      <view class="swiper-dot">
+        <view wx:for="{{bannerList}}" wx:key="index" wx:if="{{bannerList.length>1}}" class="{{current===index?'swiper-dot-item-active swiper-dot-item':'swiper-dot-item'}}"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 正在招生 -->
+  <view class="admission" wx:if="{{list.length > 0}}">
+    <view class="layout-header">
+      <text class="lay-title">正在招生</text>
+      <!-- <text class="lay-more" bindtap="onMoreTap">查看全部</text> -->
     </view>
 
-    <!-- 正在招生 -->
-    <view class="admission" wx:if="{{list.length > 0}}">
-        <view class="layout-header">
-            <text class="lay-title">正在招生</text>
-            <!-- <text class="lay-more" bindtap="onMoreTap">查看全部</text> -->
+    <view class="ads-content">
+      <view class="ads-item" wx:for="{{list}}" wx:key="index" bindtap="onAdsItemTap" data-item="{{item}}">
+        <image class="item-cover" src="{{item.pic_url}}" mode="aspectFill"></image>
+        <view class="item-info">
+          <view>
+            <text class="info-title limit-two-line">{{item.name}}</text>
+            <text class="info-desc limit-one-line" wx-if="{{item.desc_info}}">{{item.desc_info}}</text>
+          </view>
+          <view class="info-operate">
+            <text class="info-price" style="visibility:{{item.price?'visible':'hidden'}}">{{item.price}}</text>
+            <view class="info-btn">{{item.button_name||'联系客服'}}</view>
+          </view>
         </view>
-
-        <view class="ads-content">
-            <view class="ads-item" wx:for="{{list}}" wx:key="index" bindtap="onAdsItemTap" data-item="{{item}}">
-                <image class="item-cover" src="{{item.image}}" mode="aspectFill"></image>
-                <view class="item-info">
-                    <view>
-                        <text class="info-title limit-two-line">{{item.title}}</text>
-                        <text class="info-desc limit-one-line" wx-if="{{item.describe}}">{{item.describe}}</text>
-                    </view>
-                    <view class="info-operate">
-                        <text class="info-price" style="visibility:{{item.price?'visible':'hidden'}}">{{item.price}}</text>
-                        <view class="info-btn">{{item.button_name}}</view>
-                    </view>
-                </view>
-            </view>
-        </view>
+      </view>
     </view>
+  </view>
 
-    <!-- 课程咨询 -->
-    <view class="consult">
-        <view class="layout-header">
-            <text class="lay-title">课程咨询</text>
-        </view>
-        <view class="consult-content">
-            <image class="consult-image" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1638952592FlYPBP.jpg" mode="aspectFill"></image>
-            <view class="consult-info">
-                <text class="consult-title">学院招生办</text>
-                <view class="consult-btn phone" bindtap="onPhoneCall">点击电话咨询</view>
-                <view class="consult-btn service" bindtap="handleServiceTap">点击教务咨询</view>
-                <text class="consult-time">服务时间：工作日9:00-18:00</text>
-            </view>
-        </view>
+  <!-- 课程咨询 -->
+  <view class="consult">
+    <view class="layout-header">
+      <text class="lay-title">课程咨询</text>
     </view>
+    <view class="consult-content">
+      <image class="consult-image" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1638952592FlYPBP.jpg" mode="aspectFill"></image>
+      <view class="consult-info">
+        <text class="consult-title">学院招生办</text>
+        <view class="consult-btn phone" bindtap="onPhoneCall">点击电话咨询</view>
+        <view class="consult-btn service" bindtap="handleServiceTap">点击教务咨询</view>
+        <text class="consult-time">服务时间：工作日9:00-18:00</text>
+      </view>
+    </view>
+  </view>
 
-    <!-- 常见问题 -->
-    <view class="question">
-        <view class="layout-header">
-            <text class="lay-title">常见问题</text>
-        </view>
-        <view class="question-content">
-            <view class="qs-item">
-                <view class="qs-item-title">1、购买之后如何进入课程学习？</view>
-                <view class="qs-item-answer">下单后，请添加学院招生办服务微信，根据您所报名的具体课程，由招生办老师分发入学须知及课程具体安排，如有课程相关疑问亦可微信咨询。</view>
-            </view>
-            <view class="qs-item">
-                <view class="qs-item-title">2、线下课程的防疫措施如何？</view>
-                <view class="qs-item-answer">疫情期间，配合上海市防疫办要求，学员入学前需提供随申码及行程码信息，现场签到配合测温及消毒工作。</view>
-            </view>
-            <view class="qs-item">
-                <view class="qs-item-title">3、发票如何开具?</view>
-                <view class="qs-item-answer">你可以联系学院招生办，提供发票信息(包括公司名称、税号)。发票默认开具增值税普通发票，发票内容“服务费”。</view>
-            </view>
-        </view>
+  <!-- 常见问题 -->
+  <view class="question">
+    <view class="layout-header">
+      <text class="lay-title">常见问题</text>
     </view>
+    <view class="question-content">
+      <view class="qs-item">
+        <view class="qs-item-title">1、购买之后如何进入课程学习？</view>
+        <view class="qs-item-answer">下单后，请添加学院招生办服务微信，根据您所报名的具体课程，由招生办老师分发入学须知及课程具体安排，如有课程相关疑问亦可微信咨询。</view>
+      </view>
+      <view class="qs-item">
+        <view class="qs-item-title">2、线下课程的防疫措施如何？</view>
+        <view class="qs-item-answer">疫情期间，配合上海市防疫办要求，学员入学前需提供随申码及行程码信息，现场签到配合测温及消毒工作。</view>
+      </view>
+      <view class="qs-item">
+        <view class="qs-item-title">3、发票如何开具?</view>
+        <view class="qs-item-answer">你可以联系学院招生办，提供发票信息(包括公司名称、税号)。发票默认开具增值税普通发票，发票内容“服务费”。</view>
+      </view>
+    </view>
+  </view>
 
 </view>

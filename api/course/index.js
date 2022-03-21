@@ -774,3 +774,9 @@ export function getJoinedOfflineCourseList(params) {
 export function getTeacherList(params) {
 	return request._get(URL.queryTeacherList, params)
 }
+
+
+// 获取线下课icon下的线下课列表
+export function getOfflineCourseListOfIndex(params) {
+	return request._get(URL.getOfflineCourseListOfIndex, params)
+}
