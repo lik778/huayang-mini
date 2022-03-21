@@ -1,5 +1,5 @@
 import bxPoint from "../../utils/bxPoint";
-
+import {getTeacherList  } from "../../api/course/index";
 Page({
 
   /**
@@ -78,7 +78,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    getTeacherList().then(res=>{
+      console.log(res)
+    })
   },
 
   /**
