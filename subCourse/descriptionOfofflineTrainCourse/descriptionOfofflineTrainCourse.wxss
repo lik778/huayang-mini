@@ -1,4 +1,8 @@
 /* subCourse/descriptionOfofflineTrainCourse/descriptionOfofflineTrainCourse.wxss */
+.container {
+  padding-bottom: 120rpx;
+}
+
 .container image {
   width: 100%;
   vertical-align: bottom;

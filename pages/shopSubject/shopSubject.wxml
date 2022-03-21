@@ -28,7 +28,7 @@
         <view class="item-info">
           <view>
             <text class="info-title limit-two-line">{{item.name}}</text>
-            <text class="info-desc limit-one-line" wx-if="{{item.desc_info}}">{{item.describe}}</text>
+            <text class="info-desc limit-one-line" wx-if="{{item.desc_info}}">{{item.desc_info}}</text>
           </view>
           <view class="info-operate">
             <text class="info-price" style="visibility:{{item.price?'visible':'hidden'}}">{{item.price}}</text>

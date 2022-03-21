@@ -2,7 +2,7 @@
 <view class="container">
   <view class="desc-image">
     <image lazy-load='{{true}}' wx:for="{{info.image}}" src="{{item}}" mode="widthFix"></image>
-    <view class="video" wx:if="{{info.video_url}}" style="bottom:{{info.video_Bottom_height}}rpx">
+    <view class="video" wx:if="{{info.video_url}}" style="bottom:{{info.height}}rpx">
       <view class="video-box">
         <video id='video' src="{{info.video_url}}" controls="{{playing}}" custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}" enable-progress-gesture="{{false}}" play-btn-position="bottom" show-center-play-btn="{{false}}" show-play-btn="{{playing}}" autoplay="{{false}}" loop="{{true}}" show-fullscreen-btn='{{false}}' bindpause='pauseTap'></video>
         <view class="play-icon" bindtap="playVideoTap" wx:if="{{!playing}}">

@@ -28,9 +28,9 @@ Page({
   onLoad: function (options) {
     let info = {
       ...options,
-      image: options.image.split(",")
+      image: options.image.split(","),
+      height: options.video_url ? Number(options.video_bottom_height) + 1302 : ''
     }
-    console.log(info)
     this.setData({
       info: info
     })
