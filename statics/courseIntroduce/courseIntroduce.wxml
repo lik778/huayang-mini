@@ -36,15 +36,15 @@
     <block wx:if="{{offlineList.length > 0}}">
         <view class="title supplement02" bindtap="goToMorePage" data-key="offline"><text>线下课</text><text class="more">查看全部 ›</text></view>
         <view class="ads-item" wx:for="{{offlineList}}" wx:key="index" bindtap="onAdsItemTap" data-item="{{item}}">
-            <image class="item-cover" src="{{item.image}}" mode="aspectFill"></image>
+            <image class="item-cover" src="{{item.pic_url}}" mode="aspectFill"></image>
             <view class="item-info">
                 <view>
-                    <text class="info-title limit-two-line">{{item.title}}</text>
-                    <text class="info-desc limit-one-line" wx-if="{{item.describe}}">{{item.describe}}</text>
+                    <text class="info-title limit-two-line">{{item.name}}</text>
+                    <text class="info-desc limit-one-line" wx-if="{{item.desc_info}}">{{item.desc_info}}</text>
                 </view>
                 <view class="info-operate">
                     <text class="info-price" style="visibility:{{item.price?'visible':'hidden'}}">{{item.price}}</text>
-                    <view class="info-btn">{{item.button_name}}</view>
+                    <view class="info-btn">{{item.button_name||"联系客服"}}</view>
                 </view>
             </view>
         </view>
