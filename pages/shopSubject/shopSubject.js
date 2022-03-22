@@ -9,9 +9,6 @@ import {
   getYouZanKeChengList
 } from "../../api/live/index"
 import dayjs from "dayjs"
-import {
-  offlineTrainList
-} from "../../utils/mock"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
