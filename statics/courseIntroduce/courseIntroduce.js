@@ -38,7 +38,7 @@ Page({
 
   getOfflineCourseList() {
     getOfflineCourseListOfIndex({
-      limit: 999
+      limit: 3
     }).then(({
       data
     }) => {
