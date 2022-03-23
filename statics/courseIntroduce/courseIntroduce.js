@@ -18,9 +18,6 @@ import bxPoint from "../../utils/bxPoint";
 import {
   getOfflineCourseListOfIndex
 } from "../../api/course/index"
-import {
-  offlineTrainList
-} from "../../utils/mock"
 
 Page({
 
@@ -145,26 +142,6 @@ Page({
           publicList: list
         });
       });
-
-    // // 线下培训课
-    // let offlineListData = offlineTrainList.concat([])
-    // offlineListData = offlineListData.map(n => ({
-    //   ...n,
-    //   price: n.price ? (n.price / 100).toFixed(0) : ''
-    // }))
-    // this.setData({
-    //   offlineList: offlineListData
-    // })
-
-    // getYouZanKeChengList({offset: 0, limit: 3})
-    // 	.then(({data: {list}}) => {
-    // 		list = list || [];
-    // 		list = list.map(n => ({
-    // 			...n,
-    // 			price: (n.price / 100).toFixed(0)
-    // 		}));
-    // 		this.setData({offlineList: list});
-    // 	});
 
     // 城市慢游
     queryTravelList({
@@ -306,7 +283,7 @@ Page({
       }, false)
 
       wx.navigateTo({
-        url: `/subCourse/descriptionOfofflineTrainCourse/descriptionOfofflineTrainCourse?id=${item.id}&image=${item.desc_pic_url}&video_url=${item.video_url}&video_bottom_height=${item.video_bottom_height}&title=${item.name}`,
+        url: `/subCourse/descriptionOfofflineTrainCourse/descriptionOfofflineTrainCourse?id=${item.id}`,
       })
       // wx.navigateToMiniProgram({
       // 	appId: "wx95fb6b5dbe8739b7",

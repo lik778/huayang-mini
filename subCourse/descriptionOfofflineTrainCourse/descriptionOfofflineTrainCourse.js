@@ -1,3 +1,7 @@
+// subCourse/descriptionOfofflineTrainCourse/descriptionOfofflineTrainCourse.js
+import {
+  getOfflineCourseDetailOfIndex
+} from "../../api/course/index"
 import bxPoint from "../../utils/bxPoint";
 
 Page({
@@ -7,6 +11,7 @@ Page({
    */
   data: {
     info: '',
+    id: "",
     playing: false
   },
 
@@ -23,21 +28,36 @@ Page({
     })
   },
 
+  getDetail() {
+    getOfflineCourseDetailOfIndex({
+      id: this.data.id
+    }).then(({
+      data
+    }) => {
+      let info = {
+        ...data,
+        image: data.desc_pic_url.split(","),
+        height: data.video_url ? Number(data.video_bottom_height) + 1302 : ''
+      }
+      this.setData({
+        info
+      })
+      wx.setNavigationBarTitle({
+        title: info.name || '线下培训'
+      })
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let info = {
-      ...options,
-      image: options.image.split(","),
-      height: options.video_url ? Number(options.video_bottom_height) + 1302 : ''
-    }
     this.setData({
-      info: info
+      id: options.id
+    }, () => {
+      this.getDetail()
     })
-    wx.setNavigationBarTitle({
-      title: info.title || '线下培训'
-    })
+
   },
 
   /* 联系客服 */
@@ -61,6 +81,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: this.data.info.name,
+      path: `/subCourse/descriptionOfofflineTrainCourse/descriptionOfofflineTrainCourse?id=${this.data.info.id}`
+    }
   }
 })

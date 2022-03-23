@@ -780,3 +780,9 @@ export function getTeacherList(params) {
 export function getOfflineCourseListOfIndex(params) {
 	return request._get(URL.getOfflineCourseListOfIndex, params)
 }
+
+// 获取线下课icon下的线下课详情
+export function getOfflineCourseDetailOfIndex(params) {
+	return request._get(URL.getOfflineCourseDetailOfIndex, params)
+}
+
