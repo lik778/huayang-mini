@@ -213,7 +213,7 @@ Page({
   handleServiceTap() {
     wx.openCustomerServiceChat({
       extInfo: {
-        url: 'https://work.weixin.qq.com/kfid/kfc16674b49d8f7dc5f'
+        url: 'https://work.weixin.qq.com/kfid/kfcdba4386d5d74c0b5'
       },
       corpId: 'ww8d4cae43fb34dc92',
       complete() {
