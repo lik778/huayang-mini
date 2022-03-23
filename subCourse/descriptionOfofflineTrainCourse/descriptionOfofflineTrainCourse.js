@@ -44,7 +44,7 @@ Page({
   contactService() {
     wx.openCustomerServiceChat({
       extInfo: {
-        url: 'https://work.weixin.qq.com/kfid/kfcdba4386d5d74c0b5'
+        url: 'https://work.weixin.qq.com/kfid/kfce6a22d7afb999123'
       },
       corpId: 'ww8d4cae43fb34dc92',
       complete() {
