@@ -55,6 +55,9 @@ Page({
     this.setData({
       id: options.id
     }, () => {
+      bxPoint('offlinecourse_page', {
+        offlinecourse_id: options.id
+      })
       this.getDetail()
     })
 
@@ -67,8 +70,10 @@ Page({
         url: 'https://work.weixin.qq.com/kfid/kfce6a22d7afb999123'
       },
       corpId: 'ww8d4cae43fb34dc92',
-      complete() {
-        bxPoint("course_service_click", {}, false)
+      complete: () => {
+        bxPoint("offlinecourse_contact_click", {
+          offlinecourse_id: this.data.id
+        }, false)
       }
     })
   },
