@@ -16,7 +16,7 @@
     margin: 40% auto;
     width: 600rpx;
     height: 620rpx;
-    padding: 50rpx 30rpx 40rpx;
+    padding: 50rpx 36rpx 40rpx;
     box-sizing: border-box;
     border-radius: 16rpx;
     background: white;

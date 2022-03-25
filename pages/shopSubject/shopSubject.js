@@ -9,9 +9,6 @@ import {
   getYouZanKeChengList
 } from "../../api/live/index"
 import dayjs from "dayjs"
-import {
-  offlineTrainList
-} from "../../utils/mock"
 import bxPoint from "../../utils/bxPoint"
 
 Page({
@@ -241,7 +238,7 @@ Page({
       }, false)
 
       wx.navigateTo({
-        url: `/subCourse/descriptionOfofflineTrainCourse/descriptionOfofflineTrainCourse?id=${item.id}&image=${item.desc_pic_url}&video_url=${item.video_url}&video_bottom_height=${item.video_bottom_height}&title=${item.name}`,
+        url: `/subCourse/descriptionOfofflineTrainCourse/descriptionOfofflineTrainCourse?id=${item.id}`,
       })
       // wx.navigateToMiniProgram({
       // 	appId: "wx95fb6b5dbe8739b7",
