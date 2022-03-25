@@ -18,6 +18,8 @@
 }
 
 .title {
+    width: 670rpx;
+    box-sizing: border-box;
     padding: 30rpx;
     border: 1rpx solid #DDDDDD;
     border-top: 0 none;
