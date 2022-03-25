@@ -10,6 +10,7 @@
                 <view class="no-data-btn">立即登录</view>
             </view>
             <block wx:else>
+               <view class="user-info-container">
                 <image src="{{userInfo.avatar_url}}" bindtap="getAuth"></image>
                 <view class="user-info">
                     <view class="nick-name">
@@ -17,6 +18,7 @@
                         <view class="teacher-card" wx:if="{{isUserHaveTeacherCard}}" bindtap="goToPersonCard">个人主页</view>
                     </view>
                 </view>
+               </view>
             </block>
         </view>
     </view>
@@ -26,7 +28,7 @@
         <view class="function-list">
             <view class="function-item" bindtap="goToYouZanOrderPage">
                 <view class="function-item-left">
-                    <image src="/assets/images/common/order.png"></image>
+                    <image src="/assets/images/common/order.png" style="width: 52rpx;height: 54rpx;"></image>
                     <view class="function-item-box">
                         <view class="function-item-top">我的订单</view>
                     </view>
@@ -35,7 +37,7 @@
             </view>
             <view class="function-item" bindtap="onFluentCardTap">
                 <view class="function-item-left">
-                    <image src="/assets/images/common/fluentCard.png"></image>
+                    <image src="/assets/images/common/fluentCard.png" style="width: 44rpx;height: 34rpx;"></image>
                     <view class="function-item-box">
                         <view class="function-item-top">我的畅学卡</view>
                     </view>
@@ -44,7 +46,7 @@
             </view>
             <view class="function-item" bindtap="goToJoinedActivities">
                 <view class="function-item-left">
-                    <image src="/assets/images/common/mineActivities.png"></image>
+                    <image src="/assets/images/common/mineActivities.png" style="width: 48rpx;height: 42rpx;"></image>
                     <view class="function-item-box">
                         <view class="function-item-top">我的活动</view>
                     </view>
