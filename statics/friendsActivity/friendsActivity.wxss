@@ -1,5 +1,6 @@
 @import "/assets/css/common.wxss";
 .friends-activity {
+    overflow: hidden;
     padding: 40rpx 40rpx 0;
 }
 /* 通用 */
