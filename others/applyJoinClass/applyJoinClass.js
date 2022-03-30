@@ -18,6 +18,7 @@ import {
   daxueEnter,
   lifeStatusAndJobList
 } from "../../api/course/index"
+import bxPoint from "../../utils/bxPoint"
 Page({
 
   /**
@@ -104,6 +105,10 @@ Page({
       }
       form.gender = form.gender === '男' ? 1 : 2
       daxueEnter(form).then(async () => {
+        // JJ-2022-03-30
+        bxPoint('post_card_free_get_submit_click', {
+          channel: this.data.form.channel || ""
+        }, false)
         await this.checkUserFluentLearnStatus()
         if (Number(this.data.form.channel) === 1) {
           // 3.17报名送畅学卡
@@ -137,7 +142,7 @@ Page({
 
   navigateToResultPage() {
     wx.navigateTo({
-      url: '/others/applyJoinClassResult/applyJoinClassResult',
+      url: `/others/applyJoinClassResult/applyJoinClassResult?channel=${this.data.form.channel}`,
     })
     this.setData({
       lock: false
@@ -206,6 +211,10 @@ Page({
       })
     }
     if (options.mobile || getLocalStorage(GLOBAL_KEY.accountInfo)) {
+      // JJ-2022-03-30
+      bxPoint('post_free_get_submit_page', {
+        channel: options.channel || ""
+      })
       this.setData({
         ['form.stu_mobile']: options.mobile || JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).mobile
       })

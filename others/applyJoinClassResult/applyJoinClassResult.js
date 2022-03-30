@@ -1,13 +1,18 @@
 // others/applyJoinClassResult/applyJoinClassResult.js
+import bxPoint from "../../utils/bxPoint"
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    channel: ''
   },
   showWxCode() {
+    // JJ-2022-03-30
+    bxPoint('post_changxue_free_get_success_contact ', {
+      channel: this.data.form.channel || ""
+    }, false)
     wx.previewImage({
       urls: ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647571047LaWGXt.jpg'],
     })
@@ -16,7 +21,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    if (options.channel) {
+      this.setData({
+        channel: options.channel
+      })
+    }
+    // JJ-2022-03-30
+    bxPoint('post_changxue_free_get_success ', {
+      channel: options.channel || ""
+    })
   },
 
   /**
