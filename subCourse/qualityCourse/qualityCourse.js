@@ -1,5 +1,5 @@
 import bxPoint from "../../utils/bxPoint"
-import { $notNull, getLocalStorage } from "../../utils/util"
+import { $notNull, getLocalStorage, hasAccountInfo } from "../../utils/util";
 import { GLOBAL_KEY } from "../../lib/config"
 import { getModelDataList, getVideoTypeList, queryVideoCourseListByBuyTag } from "../../api/course/index"
 
@@ -33,6 +33,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if (!hasAccountInfo()) {
+      this.setData({didShowAuth: true})
+    }
+
     this.run()
   },
 
@@ -286,5 +290,17 @@ Page({
           }
         })
       })
+  },
+  // 用户授权取消
+  authCancelEvent() {
+    this.setData({
+      didShowAuth: false
+    })
+  },
+  // 用户确认授权
+  authCompleteEvent() {
+    this.setData({
+      didShowAuth: false
+    })
   },
 })
