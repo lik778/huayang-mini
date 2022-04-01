@@ -9,6 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    didShowAuth: false,
     currentIndex: -1,
     currentTagName: "",
     pageSize: {
