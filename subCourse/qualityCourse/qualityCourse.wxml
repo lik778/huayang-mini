@@ -76,4 +76,7 @@
             <view class="list-none-text">课程努力制作中!</view>
         </view>
     </view>
+
+    <!-- 授权弹窗 -->
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent" />
 </view>
