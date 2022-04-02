@@ -17,8 +17,19 @@ Page({
       {
         category: "形体类课程导师",
         teachers: [
+          { name: "白勇程", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1648894350eEUgnC.jpg", course: "「模特走秀」导师", resume: ["MCFA模特教学体系高级考官", "荣获CCTV模特电视大赛全国\n季军", "10年以上专业模特教学经验"]},
+          { name: "冯珂", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1648894211InCeNp.jpg", course: "「模特走秀」导师", resume: ["资深超模，新丝路、英模签约\n模特", "2009年世界小姐江苏区冠军", "新丝路模特大赛全国十佳"]},
+          { name: "杨沐妮", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1648894244hIihUU.jpg", course: "「模特&舞蹈」导师", resume: ["拥有7年模特&舞蹈专业教学\n经验", "卫视春晚等大型盛典节目编\n舞设计经验", "MBA模特大赛亚军"]},
+      
+
+
+
           { name: "方圆", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644818305wALPVZ.jpg", course: "「模特走秀」导师", resume: ["世界模特小姐亚军", "资深模特导师", "国际超模大赛评委", "全国十佳新锐秀导"]},
           { name: "梓瑶", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644818328EuPHUC.jpg", course: "「模特形体」导师", resume: ["2014环球国际模特大赛\n中国十佳模特", "2015世界超模大赛华中区\n冠军", "2014中国国际模特大赛华\n中区亚军", "北京时装周执行幕后编导"]},
+
+          { name: "严曼宁", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1648894272oZKdAb.jpg", course: "「模特&舞蹈」导师", resume: ["中国舞十三级、芭蕾舞六级", "8年模特行业背景，火石签约\n模特", "拥有丰富舞蹈&走秀双专业带\n教经验"]},
+          { name: "喻婧媛", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1648894292HKzVRG.jpg", course: "「女团舞蹈」导师", resume: ["擅长Hip-hop、Urban、Jazz等专业舞种", "参与COSM等知名时尚盛典\n编排及表演", "合作明星：张艺兴、吴昕、\n张碧晨等"]},
+
           { name: "付一杨", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644818345kPaXZv.jpg", course: "「形体芭蕾」导师", resume: ["前香港芭蕾舞团演员", "2015年南非国际芭蕾舞大赛\n铜奖", "第三届北京国际芭蕾舞暨编\n导大赛银奖", "上海戏剧学院毕业"]},
           { name: "李楠", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644818443iNJIYS.jpg", course: "「尊巴舞蹈」导师", resume: ["尊巴国际认证教练", "国家级健身指导员", "亚洲体适能健身教练", "IDANCE课程创始人", "莱美认证教练"]},
           { name: "陈顾榕", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644818626ZisSWX.jpg", course: "「经络瑜伽」导师", resume: ["明星私人瑜伽教练", "上海Flame Yoga连锁瑜伽\n品牌创始人", "出版书籍《办公室瑜伽》\n《随时随地瑜伽》", "全美瑜伽联盟E-RYT500小\n时认证导师"]},

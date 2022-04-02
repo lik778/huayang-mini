@@ -20,57 +20,53 @@
     <!-- 师资介绍 -->
     <view class="title">师资介绍</view>
     <view class="teachers">
-        <!-- 花花 -->
+        <!-- 白勇程 -->
         <view class="teacher-item">
-            <image class="teacher-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1645669381ENHHFD.jpg" mode="aspectFit"></image>
+            <image class="teacher-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1648894350eEUgnC.jpg" mode="aspectFit"></image>
             <view class="teacher-introduce">
                 <view class="info">
-                    <text class="name">花花</text><text class="job">「第二人生幸福课」导师</text>
+                    <text class="name">白勇程</text><text class="job">「模特走秀」导师</text>
                 </view>
-                <text class="resume">百姓网CEO</text>
-                <text class="resume">花样百姓创始人&CEO</text>
-                <text class="resume">华东师范大学工商管理学士</text>
-                <text class="resume">中欧国际商学院EMBA15级</text>
+                <text class="resume">MCFA模特教学体系高级考官</text>
+                <text class="resume">荣获CCTV模特电视大赛全国\n季军</text>
+                <text class="resume">10年以上专业模特教学经验</text>
             </view>
         </view>
-        <!-- Dana -->
+        <!-- 冯珂 -->
         <view class="teacher-item">
             <view class="teacher-introduce">
                 <view class="info">
-                    <text class="name">Dana</text><text class="job">「第二人生幸福课」导师</text>
+                    <text class="name">冯珂</text><text class="job">「模特走秀」导师</text>
                 </view>
-                <text class="resume">国际认证的NLP高级执行师，\n情商教练，大脑科学领导力教\n练, 共享领导力团队教练</text>
-                <text class="resume">中欧商学院外聘EMBA教练</text>
-                <text class="resume">行业领先跨国企业全球高管团\n队教练</text>
+                <text class="resume">资深超模，新丝路、英模签约\n模特</text>
+                <text class="resume">2009年世界小姐江苏区冠军</text>
+                <text class="resume">新丝路模特大赛全国十佳</text>
             </view>
-            <image class="teacher-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1645669537XntYBP.jpg" mode="aspectFit"></image>
+            <image class="teacher-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1648894211InCeNp.jpg" mode="aspectFit"></image>
         </view>
-        <!-- 樊悦 -->
+        <!-- 杨沐妮 -->
         <view class="teacher-item">
-            <image class="teacher-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1645669894IHgrkj.jpg" mode="aspectFit"></image>
+            <image class="teacher-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1648894244hIihUU.jpg" mode="aspectFit"></image>
             <view class="teacher-introduce">
                 <view class="info">
-                    <text class="name">樊悦</text><text class="job">「时尚穿搭」导师</text>
+                    <text class="name">杨沐妮</text><text class="job">「模特&舞蹈」导师</text>
                 </view>
-                <text class="resume">明星造型搭配顾问</text>
-                <text class="resume">原Onlylady女人志资深\n编辑</text>
-                <text class="resume">原阿里集团优酷土豆资深\n编辑</text>
-                <text class="resume">花样百姓时尚主编</text>
+                <text class="resume">拥有7年模特&舞蹈专业教学\n经验</text>
+                <text class="resume">卫视春晚等大型盛典节目编\n舞设计经验</text>
+                <text class="resume">MBA模特大赛亚军</text>
             </view>
         </view>
-        <!-- 子姗 -->
+        <!-- 严曼宁 -->
         <view class="teacher-item">
             <view class="teacher-introduce">
                 <view class="info">
-                    <text class="name">子姗</text><text class="job">「身心疗愈」导师</text>
+                    <text class="name">严曼宁</text><text class="job">「模特&舞蹈」导师</text>
                 </view>
-                <text class="resume">针灸推拿博士</text>
-                <text class="resume">中医临床硕士</text>
-                <text class="resume">台湾中山医学大学营养学士</text>
-                <text class="resume">国家高级营养师20年的营养\n医学个案经验</text>
-                <text class="resume">身心疗愈工作者10年心理疗\n愈工作坊翻译经验</text>
+                <text class="resume">中国舞十三级、芭蕾舞六级</text>
+                <text class="resume">8年模特行业背景，火石签约\n模特</text>
+                <text class="resume">拥有丰富舞蹈&走秀双专业带\n教经验</text>
             </view>
-            <image class="teacher-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1645669983ZXIMgj.jpg" mode="aspectFit"></image>
+            <image class="teacher-avatar" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1648894272oZKdAb.jpg" mode="aspectFit"></image>
         </view>
     </view>
     <view class="more-teachers" bindtap="goToTeacherTeam"><text>查看全部</text>
