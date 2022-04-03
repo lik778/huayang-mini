@@ -64,7 +64,10 @@
     display: block;
     position: relative;
     margin: 12rpx 0 0 22rpx;
-    font: 28rpx/40rpx PingFangSC;
+    font-size: 28rpx;
+    line-height:40rpx ;
+    font-family: PingFangSC;
+    /* font: 28rpx/40rpx PingFangSC; */
 }
 
 .resume::before {
