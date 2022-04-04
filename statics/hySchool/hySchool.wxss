@@ -5,13 +5,13 @@
 
 /* 通用 */
 .title {
-    padding: 20rpx 0;
+    padding-bottom: 20rpx;
     margin-bottom: 20rpx;
     font: 500 48rpx/48rpx PingFangSC;
 }
 
 .desc {
-    margin-bottom: 50rpx;
+    padding-bottom: 50rpx;
     font: 28rpx/40rpx PingFangSC;
     text-align: justify;
 }
@@ -24,7 +24,7 @@
 }
 
 .supplement01 {
-    padding-bottom: 30rpx;
+    margin-bottom: 50rpx;
 }
 
 /* 师资介绍 */
@@ -64,7 +64,10 @@
     display: block;
     position: relative;
     margin: 12rpx 0 0 22rpx;
-    font: 28rpx/40rpx PingFangSC;
+    font-size: 28rpx;
+    line-height:40rpx ;
+    font-family: PingFangSC;
+    /* font: 28rpx/40rpx PingFangSC; */
 }
 
 .resume::before {
@@ -83,7 +86,7 @@
     justify-content: center;
     align-items: center;
     height: 88rpx;
-    margin-bottom: 80rpx;
+    margin-bottom: 100rpx;
     box-sizing: border-box;
     border: 1rpx solid black;
     border-radius: 999rpx;
@@ -107,7 +110,7 @@
     display: block;
     width: 526rpx;
     height: 336rpx;
-    margin: 0 auto 108rpx;
+    margin: 0 auto 100rpx;
 }
 
 /* 校区介绍 */
