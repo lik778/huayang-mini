@@ -20,7 +20,7 @@ Page({
           { name: "白勇程", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1648894350eEUgnC.jpg", course: "「模特走秀」导师", resume: ["MCFA模特教学体系高级考官", "荣获CCTV模特电视大赛全国\n季军", "10年以上专业模特教学经验"]},
           { name: "冯珂", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1648894211InCeNp.jpg", course: "「模特走秀」导师", resume: ["资深超模，新丝路、英模签约\n模特", "2009年世界小姐江苏区冠军", "新丝路模特大赛全国十佳"]},
           { name: "杨沐妮", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1648894244hIihUU.jpg", course: "「模特&舞蹈」导师", resume: ["拥有7年模特&舞蹈专业教学\n经验", "卫视春晚等大型盛典节目编\n舞设计经验", "MBA模特大赛亚军"]},
-      
+
 
 
 
@@ -140,6 +140,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "花样明星师资介绍",
+      imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1649229494uRlVgh.jpg",
+      path: "/statics/teacherTeam/teacherTeam"
+    }
   }
 })
