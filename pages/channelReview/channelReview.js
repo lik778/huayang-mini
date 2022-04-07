@@ -64,7 +64,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: "花样直播，成就向往的生活，成为更好的自己～",
-      imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639987387CcNSwq.jpg",
+      imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1649227120luQbeC.jpg",
       path: "/pages/channelLive/channelLive"
     }
   },
