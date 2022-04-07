@@ -580,7 +580,7 @@ Page({
               buttonType = ButtonType.noLogin
             }
             res.series_detail.video_detail = videoCourseList
-            // if (+res.series_detail.is_section === 1) videoCourseList = videoCourseList.reverse()
+            if (+res.series_detail.is_section === 1) videoCourseList = videoCourseList.reverse()
             this.setData({
               videoCourseData: res,
               videoPlayerSrc,
