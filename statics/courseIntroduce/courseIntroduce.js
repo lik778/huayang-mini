@@ -221,18 +221,14 @@ Page({
 
   // 查看视频号直播回放
   onReviewTap(e) {
-    let {
-      video_url,
-      id,
-      title
-    } = e.currentTarget.dataset.item;
+    let {video_url, id, title, cover} = e.currentTarget.dataset.item
     bxPoint("university_llive_notice_page_reply_list", {
       live_replay_id: id,
       live_replay_title: title
     }, false)
     wx.navigateTo({
-      url: "/pages/channelReview/channelReview?link=" + video_url
-    });
+      url: `/pages/channelReview/channelReview?link=${video_url}&title=${title}&id=${id}&cover=${cover}`
+    })
   },
 
   // 查看公开课

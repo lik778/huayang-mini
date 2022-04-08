@@ -315,7 +315,7 @@ Page({
     if (!hasAccountInfo()) return this.setData({didShowAuth: true})
     let {video_url, id, title, cover} = e.currentTarget.dataset.item
     wx.navigateTo({
-      url: `/pages/channelReview/channelReview?link=${video_url}&title=${title}&cover=${cover}`,
+      url: `/pages/channelReview/channelReview?link=${video_url}&title=${title}&id=${id}&cover=${cover}`,
       success() {
         bxPoint("live_notice_page_replay", {live_replay_id: id, live_replay_title: title}, false)
       }
