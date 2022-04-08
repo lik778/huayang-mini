@@ -4,17 +4,23 @@ Page({
    * 页面的初始数据
    */
   data: {
-    link: ""
+    link: "",
+    title: "",
+    cover: "",
+    loading: true,
+    didRedirect: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let link = options.link
+    let { link, title, cover, didRedirect } = options
     if (link) {
-      this.setData({link})
+      this.setData({link, title, cover, didRedirect: didRedirect === "yes"})
     }
+
+    wx.showLoading({title: '加载中'})
   },
 
   /**
@@ -63,9 +69,13 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: "花样直播，成就向往的生活，成为更好的自己～",
-      imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1649227120luQbeC.jpg",
-      path: "/pages/channelLive/channelLive"
+      title: this.data.title,
+      imageUrl: this.data.cover,
+      path: `/pages/channelReview/channelReview?link=${this.data.link}&didRedirect=yes`
     }
   },
+  onLoadMetaDataDone() {
+    this.setData({loading: false})
+    wx.hideLoading()
+  }
 })
