@@ -21,12 +21,6 @@ Page({
           { name: "冯珂", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1648894211InCeNp.jpg", course: "「模特走秀」导师", resume: ["资深超模，新丝路、英模签约\n模特", "2009年世界小姐江苏区冠军", "新丝路模特大赛全国十佳"]},
           { name: "杨沐妮", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1648894244hIihUU.jpg", course: "「模特&舞蹈」导师", resume: ["拥有7年模特&舞蹈专业教学\n经验", "卫视春晚等大型盛典节目编\n舞设计经验", "MBA模特大赛亚军"]},
 
-
-
-
-          { name: "方圆", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644818305wALPVZ.jpg", course: "「模特走秀」导师", resume: ["世界模特小姐亚军", "资深模特导师", "国际超模大赛评委", "全国十佳新锐秀导"]},
-          { name: "梓瑶", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644818328EuPHUC.jpg", course: "「模特形体」导师", resume: ["2014环球国际模特大赛\n中国十佳模特", "2015世界超模大赛华中区\n冠军", "2014中国国际模特大赛华\n中区亚军", "北京时装周执行幕后编导"]},
-
           { name: "严曼宁", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1648894272oZKdAb.jpg", course: "「模特&舞蹈」导师", resume: ["中国舞十三级、芭蕾舞六级", "8年模特行业背景，火石签约\n模特", "拥有丰富舞蹈&走秀双专业带\n教经验"]},
           { name: "喻婧媛", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1648894292HKzVRG.jpg", course: "「女团舞蹈」导师", resume: ["擅长Hip-hop、Urban、Jazz等专业舞种", "参与COSM等知名时尚盛典\n编排及表演", "合作明星：张艺兴、吴昕、\n张碧晨等"]},
 
@@ -62,7 +56,6 @@ Page({
         category: "艺术类课程导师",
         teachers: [
           { name: "胡伟立", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644820276faeOnu.jpg", course: "「文化气质」导师", resume: ["海派作家", "资深文化观察者", "《沪申故事》主笔", "花样百姓特约顾问"]},
-          { name: "子姗", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644820349NsfKvM.jpg", course: "「身心疗愈」导师", resume: ["针灸推拿博士", "中医临床硕士", "台湾中山医学大学营养学士", "国家高级营养师20年的营养\n医学个案经验", "身心疗愈工作者10年心理疗\n愈工作坊翻译经验"]},
           { name: "李妍", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644820417JHwLed.jpg", course: "「艺术绘画」导师", resume: ["中央美术学院", "《书中有书》等作品收录中\n央美术学院出版丛书", "参上海没顶艺术中心热浪展", "参国际威尼斯双年展中国馆 "]},
           { name: "王艾文", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644820528wwvnFF.jpg", course: "「艺术绘画」导师", resume: ["获艺术导师资格证", "策划并撰写女性艺术家专栏", "策划《带你看展系列活动》\n《艺术与茶》等艺术项目", "实验画室艺术修养课主讲人\n以及留学作品集指导"]},
           { name: "林晓真", avatar: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1644820845OoNeiH.jpg", course: "「中国花道」导师", resume: ["中国林派花道创始人", "中国花道传承协会理事长", "茶道美学十六行法创始人", "中国首本花道心境书籍\n《挽花心境》作者", "浙江农林大学艺术学院导师"]},
