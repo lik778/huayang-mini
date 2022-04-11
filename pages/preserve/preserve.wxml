@@ -1,0 +1,4 @@
+<view class="preserve">
+    <image class="icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1649656801bNIABw.jpg" mode="aspectFit"></image>
+    <view class="tips">系统维护中，请稍后重试</view>
+</view>

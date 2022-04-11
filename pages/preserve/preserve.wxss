@@ -1,0 +1,16 @@
+.preserve {
+    padding-top: 342rpx;
+    text-align: center;
+    font-size: 0;
+}
+
+.icon {
+    width: 290rpx;
+    height: 178rpx;
+    margin-bottom: 74rpx;
+}
+
+.tips {
+    font: 40rpx/56rpx PingFangSC;
+    color: #6A738D;
+}
