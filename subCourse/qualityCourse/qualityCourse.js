@@ -1,7 +1,17 @@
 import bxPoint from "../../utils/bxPoint"
-import { $notNull, getLocalStorage, hasAccountInfo } from "../../utils/util";
-import { GLOBAL_KEY } from "../../lib/config"
-import { getModelDataList, getVideoTypeList, queryVideoCourseListByBuyTag } from "../../api/course/index"
+import {
+  $notNull,
+  getLocalStorage,
+  hasAccountInfo
+} from "../../utils/util";
+import {
+  GLOBAL_KEY
+} from "../../lib/config"
+import {
+  getModelDataList,
+  getVideoTypeList,
+  queryVideoCourseListByBuyTag
+} from "../../api/course/index"
 
 Page({
 
@@ -35,7 +45,9 @@ Page({
    */
   onLoad: function (options) {
     if (!hasAccountInfo()) {
-      this.setData({didShowAuth: true})
+      this.setData({
+        didShowAuth: true
+      })
     }
 
     this.run()
@@ -69,11 +81,18 @@ Page({
 
   },
 
-  onPageScroll({scrollTop}) {
+  onPageScroll({
+    scrollTop
+  }) {
     if (this.data.pageScrollLock) return
-    this.setData({pageScrollLock: true})
+    this.setData({
+      pageScrollLock: true
+    })
     let t = setTimeout(() => {
-      this.setData({didShowFixedTabsLayout: scrollTop >= this.data.tabsOffsetTop, pageScrollLock: false})
+      this.setData({
+        didShowFixedTabsLayout: scrollTop >= this.data.tabsOffsetTop,
+        pageScrollLock: false
+      })
       clearTimeout(t)
     }, 50)
   },
@@ -130,6 +149,12 @@ Page({
     let self = this
     wx.navigateTo({
       url: "/subCourse/practiceDetail/practiceDetail?courseId=" + e.currentTarget.dataset.id,
+      complete() {
+        // 2022.4.11-JJ
+        bxPoint("university_series_course_click", {
+          course_id: e.currentTarget.dataset.id
+        }, false)
+      }
     })
   },
   // 获取课程列表
@@ -219,12 +244,24 @@ Page({
         arr.push(res[i].value)
         keyArr.push(res[i].key)
       }
-      this.setData({titleList: arr, keyArr: keyArr})
-      this.changeTab({index, tagname: arr[index]})
+      this.setData({
+        titleList: arr,
+        keyArr: keyArr
+      })
+      this.changeTab({
+        index,
+        tagname: arr[index]
+      })
       if (this.data.didFromDiscovery && this.data.tabsOffsetTop !== 0) {
-        this.setData({didFromDiscovery: false})
+        this.setData({
+          didFromDiscovery: false
+        })
         getApp().globalData.discoveryToPracticeTabIndex = undefined
-        wx.pageScrollTo({selector: "#practice-page", scrollTop: this.data.tabsOffsetTop, duration: 400})
+        wx.pageScrollTo({
+          selector: "#practice-page",
+          scrollTop: this.data.tabsOffsetTop,
+          duration: 400
+        })
       }
     })
   },
@@ -244,7 +281,10 @@ Page({
       // 学校课程页内部切换tab，不重新请求数据
       // if (!this.data.didFromDiscovery && (+index === +this.data.currentIndex)) return
 
-      this.setData({currentIndex: index, currentTagName: tagName})
+      this.setData({
+        currentIndex: index,
+        currentTagName: tagName
+      })
     } else {
       index = 0
     }
@@ -252,8 +292,14 @@ Page({
     this.setData({
       videoList: [],
       structuredList: [],
-      pageSize: {offset: 0, limit: 10},
-      structuredPageSize: {offset: 0, limit: 10}
+      pageSize: {
+        offset: 0,
+        limit: 10
+      },
+      structuredPageSize: {
+        offset: 0,
+        limit: 10
+      }
     })
 
     // 设置页面位置
@@ -272,17 +318,23 @@ Page({
     this.getVideoList(index)
 
     // 打点
-    bxPoint("series_tab_button", {tab_tag: this.data.titleList[index]}, false)
+    bxPoint("series_tab_button", {
+      tab_tag: this.data.titleList[index]
+    }, false)
   },
   // 获取模特结构化动作列表
   getModelStructureList() {
     getModelDataList({
-      kecheng_type: 3,
-      offset: this.data.structuredPageSize.offset,
-      limit: this.data.structuredPageSize.limit
-    })
-      .then(({data: list}) => {
-        if (list.length < this.data.structuredPageSize.limit) this.setData({noMoreStructureData: true})
+        kecheng_type: 3,
+        offset: this.data.structuredPageSize.offset,
+        limit: this.data.structuredPageSize.limit
+      })
+      .then(({
+        data: list
+      }) => {
+        if (list.length < this.data.structuredPageSize.limit) this.setData({
+          noMoreStructureData: true
+        })
         this.setData({
           structuredList: [...this.data.structuredList, ...list],
           structuredPageSize: {
