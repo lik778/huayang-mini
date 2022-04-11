@@ -78,11 +78,8 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		bxPoint("course_details", {
-			from_uid: getApp().globalData.super_user_id,
-			source: getApp().globalData.source,
-			keChengId: this.data.courseId
-		})
+    // 2022.4.11-JJ
+		bxPoint("university_ course_page ",{course_id:this.data.options.courseId})
 	},
 
 	/**
@@ -252,7 +249,8 @@ Page({
 
 	// 处理分享按钮点击事件
 	handleShareTap() {
-		bxPoint("course_share", {}, false)
+    // 2022.4.11-JJ
+    bxPoint("university_ course_share_click",{course_id:this.data.options.courseId},false)
 	},
 
 	// 开始练习
@@ -263,7 +261,6 @@ Page({
 			return
 		}
 
-		bxPoint("practice_begin", {keChengId: this.data.courseId}, false)
 		createPracticeRecordInToday()
 
 		const self = this
@@ -295,8 +292,9 @@ Page({
 			})
 
 			// 加入课程
-			joinCourseInGuide({kecheng_id_str: this.data.courseId})
-
+      joinCourseInGuide({kecheng_id_str: this.data.courseId})
+      // 2022.4.11-JJ
+      bxPoint("university_ university_ course_start_click ",{course_id:this.data.options.courseId},false)
 			wx.navigateTo({
 				url: `/subCourse/actionPage/actionPage?parentBootCampId=${this.data.parentBootCampId}&lessonDate=${this.data.lessonDate}`,
 				success(res) {

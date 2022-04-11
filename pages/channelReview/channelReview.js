@@ -50,7 +50,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      totalVisitDuration:0
+    })
   },
 
   videoPlayTimeUpdate(e) {
@@ -67,6 +69,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
+    // 2022.4.8-JJ
     bxPoint("live_replay_duration", {
       live_replay_id: this.data.id,
       live_replay_title: this.data.title,
@@ -83,6 +86,7 @@ Page({
    */
   onUnload: function () {
     if (this.data.needRecordDuration) {
+      // 2022.4.8-JJ
       bxPoint("live_replay_duration", {
         live_replay_id: this.data.id,
         live_replay_title: this.data.title,

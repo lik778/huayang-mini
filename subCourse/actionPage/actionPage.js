@@ -58,7 +58,9 @@ Page({
 		bgAudio: null, // 背景音乐播放器
 
 		accordPause: false, // 用户是否手动暂停
-		accordPauseBgAudio: false // 记录是否用户主动暂停背景播放器运行
+    accordPauseBgAudio: false, // 记录是否用户主动暂停背景播放器运行
+    
+    needRecordPlayDuration:true
 	},
 
 	/**
@@ -179,7 +181,8 @@ Page({
 				err_target_name: self.data.targetActionObj.name,
 			})
 		})
-
+    // 2022.4.11-JJ
+    bxPoint("university_ course_start_page",{course_id:this.data.courseInfo.id})
 		// 监听小程序切后台事件
 		wx.onAppHide(this.onAppHideCallback)
 		// 监听小程序切前台事件
@@ -202,13 +205,25 @@ Page({
 	 * 生命周期函数--监听页面隐藏
 	 */
 	onHide: function () {
-
+    // 2022.4.11-JJ
+    let time=this.data.globalRecordTimeText.split(":")
+    let time1=Number(time[0])*60+Number(time[1])
+    bxPoint("university_ course_duration",{course_id:this.data.courseInfo.id,course_learning_duration:time1},false)
+    this.setData({
+      needRecordPlayDuration:false
+    })
 	},
 
 	/**
 	 * 生命周期函数--监听页面卸载
 	 */
 	onUnload: function () {
+    if(this.data.needRecordPlayDuration){
+      // 2022.4.11-JJ
+      let time=this.data.globalRecordTimeText.split(":")
+      let time1=Number(time[0])*60+Number(time[1])
+      bxPoint("university_ course_duration",{course_id:this.data.courseInfo.id,course_learning_duration:time1},false)
+    }
 		this.destroyResource()
 	},
 
@@ -254,7 +269,6 @@ Page({
 		// 继续播放背景音乐音频
 		this.data.backgroundMusicAudio.play()
 
-		bxPoint("course_play", {})
 	},
 	// 监听小程序切后台的回掉函数
 	onAppHideCallback() {
@@ -269,7 +283,8 @@ Page({
 	 * 秀一下
 	 */
 	async show() {
-		bxPoint("course_show", {practice_time: this.data.globalRecordTiming, traincamp_id: this.data.parentBootCampId, lesson_date: dayjs(this.data.lessonDate).format("YYYY-MM-DD")}, false)
+    // 2022.4.11-JJ
+		bxPoint("university_ course_finish_share_click", {course_id:this.data.courseInfo.id}, false)
 
 		let url = `/subCourse/actionPost/actionPost?actionName=${this.data.courseInfo.name}&duration=${this.data.globalRecordTimeText}&actionNo=${this.data.originData.length}&keChengId=${this.data.courseInfo.id}&bootCampId=${this.data.parentBootCampId}`
 		wx.redirectTo({url})
@@ -308,7 +323,6 @@ Page({
 			this.toggleAction("pause")
 			// 记录用户手动暂停，onShow时不会自动启动
 			this.setData({accordPause: true})
-			bxPoint("course_operation", {event: "stop", action_num: this.data.targetActionObj.id}, false)
 		} else {
 			this.toggleAction("play")
 			this.setData({accordPause: false})
@@ -325,7 +339,7 @@ Page({
 			confirmText: "确定",
 			success(res) {
 				if (res.confirm) {
-					bxPoint("course_operation", {event: "exit", action_num: self.data.targetActionObj.id}, false)
+
 					wx.navigateBack()
 				} else if (res.cancel) {
 				}
@@ -619,12 +633,15 @@ Page({
 				})
 			})
 		} else {
-			bxPoint("course_play_complete", {practice_time: this.data.globalRecordTiming, traincamp_id: this.data.parentBootCampId, lesson_date: dayjs(this.data.lessonDate).format("YYYY-MM-DD")}, false)
+		
 			// 训练结束
 			this.setData({
 				didShowResultLayer: true,
 				didPracticeDone: true
-			})
+      })
+      // 2022.4.11-JJ
+      bxPoint("university_ course_finish_page",{course_id:this.data.courseInfo.id})
+
 			// 停止播放背景音乐
 			this.data.backgroundMusicAudio.stop()
 			// 停止全局记时器
@@ -650,9 +667,6 @@ Page({
 			targetActionObj: nextActionObj,
 			targetActionIndex: 0,
 		})
-		if ($notNull(nextActionObj)) {
-			bxPoint("course_operation", {event: isPrevious ? "previous" : "next", action_num: nextActionObj.id}, false)
-		}
 	},
 	// 开始课程演示
 	startCourse(data) {

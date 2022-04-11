@@ -112,7 +112,8 @@ Page({
 	 * 用户点击右上角分享
 	 */
 	onShareAppMessage: function () {
-		bxPoint("course_clock", {type: "clock"}, false)
+    // 2022.4.11-JJ
+		bxPoint("course_clock", {type: 1,course_id:this.data.postData.course_id}, false)
 		return {
 			title: "跟着花样一起变美，变自信",
 			path: `/subCourse/practiceDetail/practiceDetail?courseId=${this.data.postData.keChengId}&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}`
@@ -276,7 +277,9 @@ Page({
 	},
 	saveToLocal() {
 		const self = this
-		bxPoint("course_clock", {type: "hold"}, false)
+    // 2022.4.11-JJ
+    console.log(this.data.postData)
+    bxPoint("course_clock", {type: 2,course_id:this.data.postData.keChengId}, false)
 		if (!this.data._didDrawCanvasDone) {
 			wx.showLoading({
 				title: '海报生成中...',

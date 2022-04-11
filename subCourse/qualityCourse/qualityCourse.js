@@ -130,6 +130,12 @@ Page({
     let self = this
     wx.navigateTo({
       url: "/subCourse/practiceDetail/practiceDetail?courseId=" + e.currentTarget.dataset.id,
+      complete(){
+        // 2022.4.11-JJ
+         bxPoint("university_series_course_click", {
+          course_id:e.currentTarget.dataset.id
+        }, false)
+      }
     })
   },
   // 获取课程列表
