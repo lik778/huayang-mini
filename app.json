@@ -37,7 +37,8 @@
     "pages/channelReview/channelReview",
     "pages/activities/activities",
     "pages/pureWebview/pureWebview",
-    "pages/shopSubject/shopSubject"
+    "pages/shopSubject/shopSubject",
+    "pages/preserve/preserve"
   ],
   "requiredBackgroundModes": [
     "audio",
