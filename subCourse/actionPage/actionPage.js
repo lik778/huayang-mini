@@ -231,7 +231,7 @@ Page({
     // 2022.4.11-JJ
     let time = this.data.globalRecordTimeText.split(":")
     let time1 = Number(time[0]) * 60 + Number(time[1])
-    bxPoint("university_ course_duration", {
+    bxPoint("university_course_duration", {
       course_id: this.data.courseInfo.id,
       course_learning_duration: time1
     }, false)
@@ -248,7 +248,7 @@ Page({
       // 2022.4.11-JJ
       let time = this.data.globalRecordTimeText.split(":")
       let time1 = Number(time[0]) * 60 + Number(time[1])
-      bxPoint("university_ course_duration", {
+      bxPoint("university_course_duration", {
         course_id: this.data.courseInfo.id,
         course_learning_duration: time1
       }, false)
