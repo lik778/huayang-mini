@@ -1,3 +1,4 @@
+import bxPoint from "../../utils/bxPoint"
 Page({
 
   /**
@@ -7,6 +8,11 @@ Page({
     link: "",
     title: "",
     cover: "",
+    id: "",
+    totalDuration: "",
+    lastPlaySecondTime: '',
+    totalVisitDuration: 0,
+    needRecordDuration: true,
     loading: true,
     didRedirect: false
   },
@@ -15,12 +21,22 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let { link, title, cover, didRedirect } = options
+    let {
+      link = '', title = '', cover = '', didRedirect, id = ''
+    } = options
     if (link) {
-      this.setData({link, title, cover, didRedirect: didRedirect === "yes"})
+      this.setData({
+        link,
+        title,
+        cover,
+        id,
+        didRedirect: didRedirect === "yes"
+      })
     }
 
-    wx.showLoading({title: '加载中'})
+    wx.showLoading({
+      title: '加载中'
+    })
   },
 
   /**
@@ -37,18 +53,43 @@ Page({
 
   },
 
+  videoPlayTimeUpdate(e) {
+    let time = parseInt(e.detail.currentTime)
+    if (time !== this.data.lastPlaySecondTime) {
+      this.setData({
+        lastPlaySecondTime: time,
+        totalVisitDuration: this.data.totalVisitDuration + 1
+      })
+    }
+  },
+
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    bxPoint("live_replay_duration", {
+      live_replay_id: this.data.id,
+      live_replay_title: this.data.title,
+      total_duration: this.data.totalDuration,
+      total_visit_duration: this.data.totalVisitDuration,
+    }, false)
+    this.setData({
+      needRecordDuration: false
+    })
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    if (this.data.needRecordDuration) {
+      bxPoint("live_replay_duration", {
+        live_replay_id: this.data.id,
+        live_replay_title: this.data.title,
+        total_duration: this.data.totalDuration,
+        total_visit_duration: this.data.totalVisitDuration,
+      }, false)
+    }
   },
 
   /**
@@ -74,8 +115,11 @@ Page({
       path: `/pages/channelReview/channelReview?link=${this.data.link}&didRedirect=yes`
     }
   },
-  onLoadMetaDataDone() {
-    this.setData({loading: false})
+  onLoadMetaDataDone(e) {
+    this.setData({
+      loading: false,
+      totalDuration: parseInt(e.detail.duration)
+    })
     wx.hideLoading()
   }
 })
