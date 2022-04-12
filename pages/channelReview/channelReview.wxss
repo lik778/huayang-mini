@@ -1,6 +1,9 @@
-
+.channel-review{
+  background: black;
+  height: 100vh;
+}
 .video-element {
-    height: 100vh;
+    height:calc(100vh - 60rpx);
     width: 100vw;
     background: black;
 }
