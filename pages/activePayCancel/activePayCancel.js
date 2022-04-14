@@ -14,8 +14,7 @@ Page({
    */
   onLoad: function (options) {
     let { successUrl, orderId } = options;
-
-    if (successUrl) {
+    if (orderId) {
       successUrl = decodeURIComponent(successUrl)
       this.setData({successUrl, orderId})
     }
@@ -68,13 +67,11 @@ Page({
   },
 
   back() {
-    if (this.data.successUrl) {
-      wx.redirectTo({
-				url: this.data.successUrl,
-				fail() {
-					wx.switchTab({url: "/pages/discovery/discovery"})
-				}
-      })
-    }
+    wx.redirectTo({
+      url: this.data.successUrl,
+      fail() {
+        wx.switchTab({url: "/pages/discovery/discovery"})
+      }
+    })
   }
 })

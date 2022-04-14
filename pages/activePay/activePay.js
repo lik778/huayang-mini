@@ -145,7 +145,7 @@ Page({
 			payCourse({id: this.data.orderId, name: "报名小程序付费活动"}).then((res) => {
 				if (res.errMsg === "requestPayment:ok") {
 					wx.redirectTo({
-						url: this.data.payData.successUrl || "/mine/personActivity/personActivity",
+						url: this.data.payData.successUrl || "/mine/joinedActivities/joinedActivities",
 						fail() {
 							wx.switchTab({url: "/pages/discovery/discovery"})
 						}

@@ -130,9 +130,18 @@ Page({
 
   // 返回
   back() {
-    wx.reLaunch({
-      url: '/pages/practice/practice',
-    })
+    if(this.data.backPage==='list'){
+      wx.navigateTo({
+        url: `/subCourse/campPeriodList/campPeriodList?campId=${this.data.campId}&joinDate=${this.data.joinDate}`,
+      })
+    }else if(this.data.backPage==='apply'||this.data.backIndex){
+      wx.reLaunch({
+        url: `/subCourse/joinCamp/joinCamp?id=${this.data.videoData.id}`,
+      })
+    }else{
+      wx.navigateBack()
+    }
+
   },
 
   // 获取有赞id
@@ -715,7 +724,11 @@ Page({
     let choosedDay = options.dayNum === undefined ? options.dayNum : Number(options.dayNum)
     let fromPage = options.from === undefined ? '' : options.from
     let campId = options.id
-
+    if(options.from==='list'||options.from==='apply'){
+      this.setData({
+        backPage:options.from
+      })
+    }
     let {
       scene,
       share,

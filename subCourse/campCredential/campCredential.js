@@ -1,7 +1,9 @@
 // subCourse/campCredential/campCredential.js
 import {
   getLocalStorage,
-  isIphoneXRSMax
+  isIphoneXRSMax,
+  hasAccountInfo,
+  hasUserInfo
 } from "../../utils/util"
 import {
   drawFont,
@@ -37,14 +39,22 @@ Page({
     hostBg: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606447725FvEaJd.jpg",
     LogoList: [],
     isRowStyle: false,
-    sevenActivityCampId: 17, //2021-12-15 7天私域快闪群活动训练营ID
+    didShowAuth: false,
+    isShare: false
   },
 
   // 返回
   back() {
-    wx.redirectTo({
-      url: `/subCourse/campDetail/campDetail?id=${this.data.campData.id}&share=true`,
-    })
+    if (this.data.isShare) {
+      wx.switchTab({
+        url: '/pages/discovery/discovery',
+      })
+    } else {
+      wx.redirectTo({
+        url: `/subCourse/campDetail/campDetail?id=${this.data.campData.id}&share=true`,
+      })
+    }
+
   },
 
   // 分享朋友
@@ -129,13 +139,14 @@ Page({
     ctx.font = 'normal 12px PingFangSC-Regular, PingFang SC'
     let campNameX = (286 - measureTextWidth(ctx, `《${campName}》`)) / 2
     ctx.scale(3, 3)
+
     drawImage(ctx, this.data.hostBg, 0, 0, 286, 510).then(async () => {
-      if (this.data.campData.id !== this.data.sevenActivityCampId) {
-        let res1 = await drawImageAuto(ctx, this.data.LogoList[0], this.data.LogoList[1])
-        this.setData({
-          isRowStyle: res1
-        })
-      }
+      // if (this.data.campData.id !== this.data.sevenActivityCampId) {
+      //   let res1 = await drawImageAuto(ctx, this.data.LogoList[0], this.data.LogoList[1])
+      //   this.setData({
+      //     isRowStyle: res1
+      //   })
+      // }
       drawFont(ctx, String(userName), '#0B0B0B', 'bold', 'SourceHanSerifCN-Bold, SourceHanSerifCN', 22, userNameX, 177)
       drawFont(ctx, `《${campName}》`, '#730807', 'normal', 'PingFangSC-Regular, PingFang SC', 12, campNameX, 237)
       drawFont(ctx, this.data.Nowdate, '#000000', 'normal', 'PingFangSC-Light, PingFang SC', 10, 117, 342)
@@ -162,9 +173,8 @@ Page({
    */
   onLoad: function (options) {
     let logoList = ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606721434GSUkFm.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606721430eIijle.jpg']
-    let campData = JSON.parse(options.campData)
+    let campData = JSON.parse(decodeURIComponent(options.campData))
     campData.name = campData.name.length > 12 ? campData.name.slice(0, 12) : campData.name
-    let userName = options.userName.length > 6 ? options.userName.slice(0, 6) : options.userName
     let logoData = options.logo === '' ? logoList : options.logo.split(",")
     let date = new Date();
     let year = date.getFullYear();
@@ -181,13 +191,34 @@ Page({
       mainHeight: isIphoneXRSMax() ? systemParams.screenHeight - systemParams.statusBarHeight - 117 : systemParams.screenHeight - systemParams.statusBarHeight - 97,
       radio: ((systemParams.screenWidth - 90) / 286).toFixed(2),
       campData,
-      userName,
       Nowdate,
       LogoList: logoData,
-      hostBg: campData.id === this.data.sevenActivityCampId ? 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639551039psUfBH.jpg' : "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606447725FvEaJd.jpg"
+      hostBg: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639551039psUfBH.jpg',
+      isShare: options.isShare
     })
+  },
 
-    this.drawCredential()
+  // 用户授权取消
+  authCancelEvent() {
+    wx.switchTab({
+      url: '/pages/discovery/discovery',
+      complete: () => {
+        this.setData({
+          didShowAuth: false
+        })
+      }
+    })
+  },
+
+  // 用户确认授权
+  authCompleteEvent() {
+    let userName = JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)).nickname
+    this.setData({
+      didShowAuth: false,
+      userName: userName.length > 6 ? userName.slice(0, 6) : userName
+    }, () => {
+      this.drawCredential()
+    })
   },
 
   /**
@@ -201,7 +232,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if (!hasAccountInfo() || !hasUserInfo()) {
+      this.setData({
+        didShowAuth: true
+      })
+    } else {
+      this.drawCredential()
+    }
   },
 
   /**
