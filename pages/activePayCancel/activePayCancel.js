@@ -67,13 +67,11 @@ Page({
   },
 
   back() {
-    if (this.data.successUrl) {
-      wx.redirectTo({
-				url: this.data.successUrl,
-				fail() {
-					wx.switchTab({url: "/pages/discovery/discovery"})
-				}
-      })
-    }
+    wx.redirectTo({
+      url: this.data.successUrl,
+      fail() {
+        wx.switchTab({url: "/pages/discovery/discovery"})
+      }
+    })
   }
 })
