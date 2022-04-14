@@ -77,6 +77,7 @@ Page({
 						case "activity": {
 							ary.forEach(item => {
 								headLines.push({
+									pay_online: item.pay_online,
 									type: "activity",
 									title: `同城活动：${item.title}`,
 									id: item.id
@@ -434,13 +435,8 @@ Page({
 
 		link += `/#/home/detail/${item.id}`
 
-		if (+item.pay_online === 1) {
-			// 收费活动
-			wx.navigateTo({url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}`})
-		} else {
-			// 免费活动
-			wx.navigateTo({url: `/pages/pureWebview/pureWebview?link=${link}`})
-		}
+
+		wx.navigateTo({url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}`})
 	},
 	/* 获取首页直播预告 */
 	getCurrentChannelLive() {

@@ -74,7 +74,7 @@ Page({
 		let params = {offset: 0, limit: 100, mobile}
 		if (this.data.curTagIndex !== 0) params['status'] = this.data.curTagIndex
 		getUserJoinedActivitiesByMobile(params)
-			.then(({data: list}) => {
+			.then(({data: {list}}) => {
 				list = list || []
 				list = list.map(n => ({
 					...n,
@@ -109,7 +109,7 @@ Page({
 		}
 
 		link += `/#/home/detail/${item.id}`
-		wx.navigateTo({url: `/pages/pureWebview/pureWebview?link=${link}`})
+		wx.navigateTo({url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}`})
 	},
 	goToActivitiesPage() {
 		wx.navigateTo({url: "/pages/activities/activities"})
