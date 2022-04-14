@@ -134,7 +134,7 @@ Page({
       wx.navigateTo({
         url: `/subCourse/campPeriodList/campPeriodList?campId=${this.data.campId}&joinDate=${this.data.joinDate}`,
       })
-    }else if(this.data.backPage==='apply'){
+    }else if(this.data.backPage==='apply'||this.data.backIndex){
       wx.reLaunch({
         url: `/subCourse/joinCamp/joinCamp?id=${this.data.videoData.id}`,
       })

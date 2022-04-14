@@ -39,14 +39,22 @@ Page({
     hostBg: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606447725FvEaJd.jpg",
     LogoList: [],
     isRowStyle: false,
-    didShowAuth: false
+    didShowAuth: false,
+    isShare: false
   },
 
   // 返回
   back() {
-    wx.redirectTo({
-      url: `/subCourse/campDetail/campDetail?id=${this.data.campData.id}&share=true`,
-    })
+    if (this.data.isShare) {
+      wx.switchTab({
+        url: '/pages/discovery/discovery',
+      })
+    } else {
+      wx.redirectTo({
+        url: `/subCourse/campDetail/campDetail?id=${this.data.campData.id}&share=true`,
+      })
+    }
+
   },
 
   // 分享朋友
@@ -185,7 +193,8 @@ Page({
       campData,
       Nowdate,
       LogoList: logoData,
-      hostBg: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639551039psUfBH.jpg'
+      hostBg: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639551039psUfBH.jpg',
+      isShare: options.isShare
     })
   },
 
@@ -207,7 +216,7 @@ Page({
     this.setData({
       didShowAuth: false,
       userName: userName.length > 6 ? userName.slice(0, 6) : userName
-    },()=>{
+    }, () => {
       this.drawCredential()
     })
   },
