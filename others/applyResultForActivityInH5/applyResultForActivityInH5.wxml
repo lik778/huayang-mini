@@ -1,0 +1,28 @@
+<!--others/applyResultForActivityInH5/applyResultForActivityInH5.wxml-->
+<view class="apply-esult-for-activity-in-h5-container">
+  <view class="banner">
+    <image src="{{activityData.cover_url}}"></image>
+  </view>
+  <view class="apply-result-title">{{activityData.ret_top_text||'恭喜您成功报名！'}}</view>
+
+  <view class="pay-info" wx:if="{{activityData.pay_online===1}}">
+    <view class="pay-user-info">
+      <view class="pay-info-label">支付用户：</view>
+      <view class="pay-info-value limit-one-line">{{orderData.order.mobile||userInfo.nickname}}</view>
+    </view>
+    <view class="pay-order-num-info ">
+      <view class="pay-info-label">订单编号：</view>
+      <view class="pay-info-value  limit-one-line">{{orderData.order.num}}</view>
+    </view>
+    <view class="pay-time-info limit-one-line">
+      <view class="pay-info-label">订单时间：</view>
+      <view class="pay-info-value">{{orderData.order.created_at}}</view>
+    </view>
+  </view>
+
+  <view class="notice-title">{{activityData.ret_remark_text||"如有任何问题可联系小花：021-31279158"}}</view>
+
+  <view class="add-teacher-button" bindtap="addTeacherTap">
+    添加老师，加入学习群
+  </view>
+</view>
