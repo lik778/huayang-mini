@@ -11,6 +11,7 @@ import {
 import {
   GLOBAL_KEY
 } from "../../lib/config"
+import bxPoint from "../../utils/bxPoint";
 Page({
 
   /**
@@ -26,6 +27,13 @@ Page({
   addTeacherTap() {
     wx.previewImage({
       urls: [this.data.activityData.ret_guide_qrcode],
+      success: () => {
+        // 2022-04-15 JJ
+        bxPoint("university_activity_detail_contact_click", {
+          activity_id: this.data.activityId,
+          order_id: this.data.orderId
+        }, false)
+      }
     })
   },
 
@@ -88,7 +96,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    // 2022-04-15 JJ
+    bxPoint("university_activity_detail_enroll_success", {
+      activity_id: this.data.activityId,
+      order_id: this.data.orderId
+    })
   },
 
   /**
