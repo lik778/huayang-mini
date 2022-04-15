@@ -71,7 +71,6 @@ Page({
     }, false)
     wx.getSetting({
       success: (res) => {
-        console.log(res)
         if (res.authSetting['scope.writePhotosAlbum']) {
           wx.authorize({
             scope: 'scope.writePhotosAlbum',
