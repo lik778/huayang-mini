@@ -11,7 +11,7 @@ Page({
   showWxCode() {
     // JJ-2022-03-30
     bxPoint('post_changxue_free_get_success_contact ', {
-      channel: this.data.form.channel || ""
+      channel: this.data.channel || ""
     }, false)
     wx.previewImage({
       urls: ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1647571047LaWGXt.jpg'],

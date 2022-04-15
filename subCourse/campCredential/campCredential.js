@@ -232,12 +232,18 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    // console.log(encodeURIComponent(JSON.stringify({id:19,name:"14天模特走秀训练营"})))
     if (!hasAccountInfo() || !hasUserInfo()) {
       this.setData({
         didShowAuth: true
       })
     } else {
-      this.drawCredential()
+      let userName = JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)).nickname
+      this.setData({
+        userName: userName.length > 6 ? userName.slice(0, 6) : userName
+      }, () => {
+        this.drawCredential()
+      })
     }
   },
 
