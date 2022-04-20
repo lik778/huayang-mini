@@ -392,7 +392,9 @@ Page({
         open_id: openid,
         series_id: this.data.videoCourseId,
       }).then(() => {
-        this.setData({noPayForCourse: true})
+        this.setData({
+          noPayForCourse: true
+        })
         resolve()
       })
     })
@@ -439,9 +441,9 @@ Page({
                 isIos = true
                 if ((res.series_detail.price === 0 || res.series_detail.discount_price === '') && userGrade >= res.series_detail.user_grade) {
                   // 如果是免费课程则自动加入
-                  if(!hasAccountInfo() || !hasUserInfo()){
+                  if (!hasAccountInfo() || !hasUserInfo()) {
                     buttonType = ButtonType.noLogin
-                  }else{
+                  } else {
                     await self.getFreeVideoCourse()
                     buttonType = ButtonType.joined
                   }
@@ -459,7 +461,7 @@ Page({
                     // 完全免费则自动加入
                     if (!hasAccountInfo() || !hasUserInfo()) {
                       buttonType = ButtonType.noLogin
-                    }else{
+                    } else {
                       await self.getFreeVideoCourse()
                       buttonType = ButtonType.joined
                     }
@@ -543,11 +545,7 @@ Page({
                   videoPlayerSrc = videoCourseList[this.data.shareIndex].url
                   nowCoursePlayIndex = this.data.shareIndex
                 } else {
-                  if (res.series_detail.promotion_video) {
-                    // 存在宣传视频
-                    videoPlayerSrc = res.series_detail.promotion_video
-                    nowCoursePlayIndex = ''
-                  } else if (has_free_visit !== -1) {
+                  if (has_free_visit !== -1) {
                     // 有试看课
                     videoPlayerSrc = videoCourseList[has_free_visit].url
                     nowCoursePlayIndex = has_free_visit
@@ -561,11 +559,7 @@ Page({
                   }
                 }
               } else if (!this.data.shareIndex) {
-                if (res.series_detail.promotion_video) {
-                  // 存在宣传视频
-                  videoPlayerSrc = res.series_detail.promotion_video
-                  nowCoursePlayIndex = ''
-                } else if (has_free_visit !== -1) {
+                if (has_free_visit !== -1) {
                   // 有试看课
                   videoPlayerSrc = videoCourseList[has_free_visit].url
                   nowCoursePlayIndex = has_free_visit
@@ -604,10 +598,16 @@ Page({
               nowCoursePlayIndex,
               videoPlayerLock,
               isIos,
-              buttonType
+              buttonType: hasAccountInfo() &&
+                hasUserInfo() ? buttonType : ButtonType.noLogin
+            }, () => {
+              setTimeout(() => {
+                console.log(this.data.buttonType), 2000
+              })
             })
             // 未购买直接播放
-            if (!this.data.noPayForCourse && videoPlayerSrc !== '') {
+            if (!this.data.noPayForCourse && videoPlayerSrc !== '' && (hasAccountInfo() &&
+                hasUserInfo())) {
               setTimeout(() => {
                 this.videoContext.play()
               }, 1000)
@@ -876,6 +876,7 @@ Page({
   // 授权弹窗确认回调
   authCompleteEvent() {
     this.checkHasJoined()
+    this.getVideoCourseData()
     setTimeout(() => {
       let userInfo = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo))
       this.setData({

@@ -12,36 +12,28 @@
 
   <!-- 视频播放器区域 -->
   <view class="video-fixed-box">
-    <view class="video-module"
-      style="width:{{videoPlayStyle.width}}px;height:{{videoPlayStyle.height}}px;margin-top:{{(showStudyToast&&hasLogin)||showSuccess?'88rpx':0}}"
-      bindpause="pauseVideo">
+    <view class="video-module" style="width:{{videoPlayStyle.width}}px;height:{{videoPlayStyle.height}}px;margin-top:{{(showStudyToast&&hasLogin)||showSuccess?'88rpx':0}}" bindpause="pauseVideo">
       <view class="video-cover" wx:if='{{!inPlaying||onlySelected}}'>
         <image src="{{videoCourseData.series_detail.video_pic}}"></image>
       </view>
       <view class="icon" wx:if="{{!inPlaying||onlySelected}}">
-        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610091513AyQCFg.jpg" class="video-player-lock"
-          wx:if='{{videoPlayerSrc===""}}' bindtap="{{buttonType===1?'login':''}}">
+        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610091513AyQCFg.jpg" class="video-player-lock" wx:if='{{videoPlayerSrc===""||buttonType===1}}' bindtap="{{buttonType===1?'login':''}}">
         </image>
 
-        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610084939NUbObx.jpg" class="video-player-play"
-          bindtap="playVideo" wx:else>
+        <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610084939NUbObx.jpg" class="video-player-play" bindtap="playVideo" wx:else>
         </image>
 
       </view>
-      <video src="{{videoPlayerSrc}}" id="videoPlayer" bindplay="videoPlaying" bindtimeupdate="processChange"
-        controls="{{videoPlayerSrc===''?false:true}}" show-center-play-btn="{{false}}" bindended="endVideo"></video>
+      <video src="{{videoPlayerSrc}}" id="videoPlayer" bindplay="videoPlaying" bindtimeupdate="processChange" controls="{{videoPlayerSrc===''?false:true}}" show-center-play-btn="{{false}}" bindended="endVideo"></video>
     </view>
   </view>
 
   <!-- 视频介绍区域 -->
-  <view class="video-desciption"
-    style="padding-top:{{(showStudyToast&&hasLogin)||showSuccess?videoPlayStyle.height+74+'px':videoPlayStyle.height+30+'px'}}">
+  <view class="video-desciption" style="padding-top:{{(showStudyToast&&hasLogin)||showSuccess?videoPlayStyle.height+74+'px':videoPlayStyle.height+30+'px'}}">
     <view class="video-description-title-line">
       <text>{{videoCourseData.series_detail.teacher_desc}}</text>
-      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610093007wRvmte.jpg"
-        wx:if='{{videoCourseData.series_detail.series_tag===1}}' class="video-description-title-icon-one"></image>
-      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610093044JklmJB.jpg"
-        wx:if='{{videoCourseData.series_detail.series_tag===2}}' class="video-description-title-icon-two"></image>
+      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610093007wRvmte.jpg" wx:if='{{videoCourseData.series_detail.series_tag===1}}' class="video-description-title-icon-one"></image>
+      <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610093044JklmJB.jpg" wx:if='{{videoCourseData.series_detail.series_tag===2}}' class="video-description-title-icon-two"></image>
     </view>
     <view class="video-description-sub-title">{{videoCourseData.series_detail.name}}</view>
     <view class="video-description-msg-line">
@@ -64,35 +56,27 @@
   </view>
   <!-- 课程列表 -->
   <view class="course-list" wx:if="{{tabIndex===0}}">
-    <view
-      class="{{(nowCoursePlayIndex===index&&inPlaying)||(nowCoursePlayIndex===index&&onlySelected)?'course-item course-item-active course-item-choosed':'course-item'}}"
-      wx:for="{{videoCourseData.series_detail.video_detail}}" wx:key="index"
-      bindtap="{{item.type==='lock'?'':item.type==='试看'?'playVideo':hasLogin?'playVideo':'login'}}"
-      data-index='{{index}}'>
+    <view class="{{(nowCoursePlayIndex===index&&inPlaying)||(nowCoursePlayIndex===index&&onlySelected)?'course-item course-item-active course-item-choosed':'course-item'}}" wx:for="{{videoCourseData.series_detail.video_detail}}" wx:key="index" bindtap="{{item.type==='lock'||buttonType===1?'':item.type==='试看'?'playVideo':hasLogin?'playVideo':'login'}}" data-index='{{index}}'>
       <view class="course-item-left">
         <view class="course-item-left-left">
-          <text wx:if='{{nowCoursePlayIndex===index&&inPlaying&&!onlySelected}}'>正在播放</text>
+          <image wx:if='{{item.type==="lock"||buttonType===1}}' src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610099720PyyMdF.jpg" class="course-item-left-lock">
+          </image>
+          <text wx:elif='{{nowCoursePlayIndex===index&&inPlaying&&!onlySelected}}'>正在播放</text>
           <text wx:elif='{{item.type==="试看"}}'>试看</text>
           <text wx:elif='{{item.type==="好友相送"}}'>好友相送</text>
-          <image wx:elif='{{item.type==="play"}}'
-            src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610099660VfkTTv.jpg" class="course-item-left-play">
-          </image>
-          <image wx:elif='{{item.type==="lock"}}'
-            src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610099720PyyMdF.jpg" class="course-item-left-lock">
+          <image wx:elif='{{item.type==="play"}}' src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610099660VfkTTv.jpg" class="course-item-left-play">
           </image>
         </view>
         <view class="course-item-left-right">
           <view class="course-item-middle-top">
             第{{item.Index}}节 {{item.time}}
           </view>
-          <view
-            class="{{noPayForCourse&&videoCourseData.series_detail.gift_limit_count>0?'course-item-middle-bottom':'course-item-middle-bottom course-item-middle-bottom-long'}}">
+          <view class="{{noPayForCourse&&videoCourseData.series_detail.gift_limit_count>0?'course-item-middle-bottom':'course-item-middle-bottom course-item-middle-bottom-long'}}">
             {{item.title}}
           </view>
         </view>
       </view>
-      <view class="course-item-right" wx:if="{{noPayForCourse&&videoCourseData.series_detail.gift_limit_count>0}}"
-        catchtap="inviteFriend" data-index="{{index}}">
+      <view class="course-item-right" wx:if="{{noPayForCourse&&videoCourseData.series_detail.gift_limit_count>0}}" catchtap="inviteFriend" data-index="{{index}}">
         <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610100096RUWUwN.jpg"></image>
       </view>
     </view>
@@ -110,15 +94,12 @@
   <view class="guess-like" wx:if='{{videoCourseData.recommend_series||videoCourseData.recommend_traincamp}}'>
     <view class="guess-like-title">猜你喜欢</view>
     <!-- 视频课 -->
-    <view class="guess-like-item" wx:for="{{videoCourseData.recommend_series}}" wx:key="index" bindtap="toCoursePage"
-      data-item='{{item}}' wx:if='{{videoCourseData.recommend_series}}'>
+    <view class="guess-like-item" wx:for="{{videoCourseData.recommend_series}}" wx:key="index" bindtap="toCoursePage" data-item='{{item}}' wx:if='{{videoCourseData.recommend_series}}'>
       <view class="guess-like-item-left">
         <image class="guess-like-item-left-teach-img" src="{{item.kecheng_series.cover_pic}}"></image>
         <!-- 课程标签 -->
-        <image wx:if='{{item.kecheng_series.series_tag===2}}' class="guess-like-item-left-icon-one"
-          src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610346880xcxKuX.jpg"></image>
-        <image wx:if='{{item.kecheng_series.series_tag===1}}' class="guess-like-item-left-icon-two"
-          src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610346924HakzZt.jpg"></image>
+        <image wx:if='{{item.kecheng_series.series_tag===2}}' class="guess-like-item-left-icon-one" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610346880xcxKuX.jpg"></image>
+        <image wx:if='{{item.kecheng_series.series_tag===1}}' class="guess-like-item-left-icon-two" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610346924HakzZt.jpg"></image>
       </view>
       <view class="guess-like-item-right">
         <view class="guess-like-item-right-top">
@@ -144,8 +125,7 @@
       </view>
     </view>
     <!-- 训练营 -->
-    <view class="guess-like-item-camp" style="height:{{videoPlayStyle.campHeight}}px"
-      wx:if='{{videoCourseData.recommend_traincamp}}' bindtap="toCampPage">
+    <view class="guess-like-item-camp" style="height:{{videoPlayStyle.campHeight}}px" wx:if='{{videoCourseData.recommend_traincamp}}' bindtap="toCampPage">
       <view class="guess-like-item-camp-cover"></view>
       <view class="guess-like-item-camp-bg">
         <image src="{{videoCourseData.recommend_traincamp.cover_pic}}"></image>
@@ -204,8 +184,7 @@
     </view>
 
     <!-- 等级限制 -->
-    <view class="pay-button-level-limit subject-bg-color pay-button-common" bindtap="openLevelLimitBox"
-      wx:if="{{buttonType===4}}">
+    <view class="pay-button-level-limit subject-bg-color pay-button-common" bindtap="openLevelLimitBox" wx:if="{{buttonType===4}}">
       Lv {{videoCourseData.series_detail.user_grade}} 等级开启
     </view>
     <!-- ios -->
@@ -256,8 +235,7 @@
     </view>
   </view>
   <!-- 分销推广按钮 -->
-  <view class="share-friend" bindtap="shareCourse" style="bottom:{{noPayForCourse?'80rpx':'140rpx'}}"
-    wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&videoCourseData.series_detail.sharePrice!==''&&videoCourseData.series_detail.sharePrice>0}}">
+  <view class="share-friend" bindtap="shareCourse" style="bottom:{{noPayForCourse?'80rpx':'140rpx'}}" wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&videoCourseData.series_detail.sharePrice!==''&&videoCourseData.series_detail.sharePrice>0}}">
     <view class="share-friend-box">
       <button open-type="share">推广成功赚{{videoCourseData.series_detail.sharePrice}}元</button>
       <view class="share-text subject-bg-color">推广成功赚{{videoCourseData.series_detail.sharePrice}}元</view>
