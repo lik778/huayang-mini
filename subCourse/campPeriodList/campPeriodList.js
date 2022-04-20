@@ -36,7 +36,7 @@ Page({
       })
     } else {
       wx.navigateTo({
-        url: `/subCourse/campDetail/campDetail?id=${this.data.campId}&dayNum=${index}`,
+        url: `/subCourse/campDetail/campDetail?id=${this.data.campId}&dayNum=${index}&back=list`,
       })
     }
   },

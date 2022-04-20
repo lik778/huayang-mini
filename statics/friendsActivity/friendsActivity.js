@@ -144,13 +144,7 @@ Page({
 
     bxPoint("university_activity_list_click", {activity_id: item.id, activity_title: item.title, activity_run_date: item.run_time}, false)
 
-    if (+item.pay_online === 1) {
-      // 收费活动
-      wx.navigateTo({url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}`});
-    } else {
-      // 免费活动
-      wx.navigateTo({url: `/pages/pureWebview/pureWebview?link=${link}`});
-    }
+    wx.navigateTo({url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}`})
   },
 
   // 查看往期相册

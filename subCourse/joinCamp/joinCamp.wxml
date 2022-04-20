@@ -1,9 +1,9 @@
 <!--加入训练营-->
 <view class="join-camp" wx:if="{{campDetailData.id}}">
 	<!-- navibar栏 -->
-	<view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+	<!-- <view class="navigation" style="padding-top:{{statusHeight+44}}px;">
 		<naviBar title="{{titleName}}" color="#fff" titleColor="#000000" forceGoBackIndex="{{backIndex}}"></naviBar>
-	</view>
+	</view> -->
 	<view class="detail">
 		<image src="{{item}}" wx:for="{{campDetailData.desc}}" mode="widthFix" wx:key="index"></image>
 	</view>
