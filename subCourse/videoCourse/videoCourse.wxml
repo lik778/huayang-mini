@@ -56,15 +56,15 @@
   </view>
   <!-- 课程列表 -->
   <view class="course-list" wx:if="{{tabIndex===0}}">
-    <view class="{{(nowCoursePlayIndex===index&&inPlaying)||(nowCoursePlayIndex===index&&onlySelected)?'course-item course-item-active course-item-choosed':'course-item'}}" wx:for="{{videoCourseData.series_detail.video_detail}}" wx:key="index" bindtap="{{item.type==='lock'?'':item.type==='试看'?'playVideo':hasLogin?'playVideo':'login'}}" data-index='{{index}}'>
+    <view class="{{(nowCoursePlayIndex===index&&inPlaying)||(nowCoursePlayIndex===index&&onlySelected)?'course-item course-item-active course-item-choosed':'course-item'}}" wx:for="{{videoCourseData.series_detail.video_detail}}" wx:key="index" bindtap="{{item.type==='lock'||buttonType===1?'':item.type==='试看'?'playVideo':hasLogin?'playVideo':'login'}}" data-index='{{index}}'>
       <view class="course-item-left">
         <view class="course-item-left-left">
-          <text wx:if='{{nowCoursePlayIndex===index&&inPlaying&&!onlySelected}}'>正在播放</text>
+          <image wx:if='{{item.type==="lock"||buttonType===1}}' src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610099720PyyMdF.jpg" class="course-item-left-lock">
+          </image>
+          <text wx:elif='{{nowCoursePlayIndex===index&&inPlaying&&!onlySelected}}'>正在播放</text>
           <text wx:elif='{{item.type==="试看"}}'>试看</text>
           <text wx:elif='{{item.type==="好友相送"}}'>好友相送</text>
           <image wx:elif='{{item.type==="play"}}' src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610099660VfkTTv.jpg" class="course-item-left-play">
-          </image>
-          <image wx:elif='{{item.type==="lock"}}' src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1610099720PyyMdF.jpg" class="course-item-left-lock">
           </image>
         </view>
         <view class="course-item-left-right">
