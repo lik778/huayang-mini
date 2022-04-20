@@ -92,7 +92,7 @@ Page({
     // 检查用户是否已一键订阅所有直播预约
     this.subScribeMessage(this.data.LongSubscribeTempId)
     // 往期回放
-    getChannelLives({status: 3, is_show: 1}).then((data) => {
+    getChannelLives({status: 3, is_show: 1, limit: 9999, offset: 0}).then((data) => {
       this.setData({reviewChannelList: data})
     })
     // 即将开播
