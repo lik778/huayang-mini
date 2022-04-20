@@ -91,7 +91,7 @@ Page({
     this.getChannelLiveInfo()
     // 检查用户是否已一键订阅所有直播预约
     this.subScribeMessage(this.data.LongSubscribeTempId)
-    // 往期回放
+    // 往期所有回放
     getChannelLives({status: 3, is_show: 1, limit: 9999, offset: 0}).then((data) => {
       this.setData({reviewChannelList: data})
     })
