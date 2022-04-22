@@ -39,7 +39,8 @@
     "minifyWXML": true,
     "showES6CompileOption": false,
     "useCompilerPlugins": false,
-    "ignoreUploadUnusedFiles": false
+    "ignoreUploadUnusedFiles": false,
+    "lazyloadPlaceholderEnable": false
   },
   "compileType": "miniprogram",
   "libVersion": "2.19.6",
