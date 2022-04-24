@@ -34,7 +34,8 @@ Page({
     noticeInfo: {},
     eventId: 0,
     didShowAuth: false,
-    hasOtherPlatformLive: false
+    hasOtherPlatformLive: false,
+    hasSubscribeStatus: false
   },
 
   /**
@@ -103,10 +104,9 @@ Page({
     getUserAttentionOfficeAccount({
       open_id: openId
     }).then(res => {
-      // this.setData({
-      //   hasSubscribeStatus:res
-      // })
-      console.log(res)
+      this.setData({
+        hasSubscribeStatus: res.data
+      })
     })
   },
 
@@ -262,9 +262,18 @@ Page({
     let {
       index = '', item = ''
     } = e.currentTarget.dataset
-    console.log(index, item)
     wx.previewImage({
       urls: ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1650766230iUzkqN.jpg'],
+      complete: () => {
+        let params = {
+          open_id: getLocalStorage(GLOBAL_KEY.openId),
+          status: this.data.hasSubscribeStatus ? index : 0,
+        }
+        if (item.id) {
+          params['zhibo_id'] = item.id
+        }
+        subscribeMiniProgramMessage(params)
+      }
     })
   },
   onSubscribeTap(e) {
@@ -328,7 +337,7 @@ Page({
                 console.log(index)
                 let params = {
                   open_id: getLocalStorage(GLOBAL_KEY.openId),
-                  status: source === 7 ? 0 : index,
+                  status: index,
                 }
                 if (id) {
                   params['zhibo_id'] = id
