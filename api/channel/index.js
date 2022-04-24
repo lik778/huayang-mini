@@ -1,15 +1,21 @@
 import request from "../../lib/request"
-import { URL } from "../../lib/config"
+import {
+  URL
+} from "../../lib/config"
 
 export function getChannelLives(params) {
-	return new Promise((resolve, reject) => {
-		request._get(URL.queryChannelLives, params).then(({data: {list}}) => {
-			list = list || []
-			resolve(list)
-		}).catch((err) => {
-			reject(err)
-		})
-	})
+  return new Promise((resolve, reject) => {
+    request._get(URL.queryChannelLives, params).then(({
+      data: {
+        list
+      }
+    }) => {
+      list = list || []
+      resolve(list)
+    }).catch((err) => {
+      reject(err)
+    })
+  })
 }
 
 /**
@@ -18,14 +24,16 @@ export function getChannelLives(params) {
  * @returns {Promise<unknown>}
  */
 export function getHomeChannelLive(params) {
-	return new Promise((resolve, reject) => {
-		request._get(URL.queryHomeChannelLive, params).then(({data}) => {
-			data = data || []
-			resolve(data)
-		}).catch((err) => {
-			reject(err)
-		})
-	})
+  return new Promise((resolve, reject) => {
+    request._get(URL.queryHomeChannelLive, params).then(({
+      data
+    }) => {
+      data = data || []
+      resolve(data)
+    }).catch((err) => {
+      reject(err)
+    })
+  })
 }
 
 /**
@@ -34,14 +42,16 @@ export function getHomeChannelLive(params) {
  * @returns {Promise<unknown>}
  */
 export function getCurrentTimeChannelLiveInfo(params) {
-	return new Promise((resolve, reject) => {
-		request._get(URL.queryCurrentTimeChannelLive, params).then(({data}) => {
-			data = data || {}
-			resolve(data)
-		}).catch((err) => {
-			reject(err)
-		})
-	})
+  return new Promise((resolve, reject) => {
+    request._get(URL.queryCurrentTimeChannelLive, params).then(({
+      data
+    }) => {
+      data = data || {}
+      resolve(data)
+    }).catch((err) => {
+      reject(err)
+    })
+  })
 }
 
 /**
@@ -50,11 +60,13 @@ export function getCurrentTimeChannelLiveInfo(params) {
  * @returns {Promise<unknown>}
  */
 export function getHistorySubscribeLives(params) {
-	return new Promise((resolve, reject) => {
-		request._get(URL.queryHistorySubscribeChannelLives, params).then(({data}) => {
-			resolve(data)
-		})
-	})
+  return new Promise((resolve, reject) => {
+    request._get(URL.queryHistorySubscribeChannelLives, params).then(({
+      data
+    }) => {
+      resolve(data)
+    })
+  })
 }
 
 /**
@@ -63,14 +75,21 @@ export function getHistorySubscribeLives(params) {
  * @returns {Promise<unknown>}
  */
 export const subscribeMiniProgramMessage = (params) => {
-	return new Promise((resolve, reject) => {
-		request._post(URL.subscribeMiniMessage, params).then(({data,code}) => {
-			if (code === 0) {
-				resolve(data)
-			}
-		}).catch((err) => {
-			reject(err)
-		})
-	})
+  return new Promise((resolve, reject) => {
+    request._post(URL.subscribeMiniMessage, params).then(({
+      data,
+      code
+    }) => {
+      if (code === 0) {
+        resolve(data)
+      }
+    }).catch((err) => {
+      reject(err)
+    })
+  })
 }
 
+/* 判断用户是否关注公众号 */
+export const getUserAttentionOfficeAccount = params => {
+  return request._get(URL.getUserAttentionOfficeAccount, params)
+}
