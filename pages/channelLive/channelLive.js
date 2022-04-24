@@ -4,8 +4,10 @@ import {
   hasAccountInfo,
   hasUserInfo
 } from "../../utils/util"
+import request from "../../lib/request"
 import {
-  GLOBAL_KEY
+  GLOBAL_KEY,
+  ROOT_URL
 } from "../../lib/config";
 import {
   getChannelLives,
@@ -262,8 +264,9 @@ Page({
     let {
       index = '', item = ''
     } = e.currentTarget.dataset
+    let src = ROOT_URL.dev === request.baseUrl ? "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1650799994YdZfet.jpg" : "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1650766230iUzkqN.jpg"
     wx.previewImage({
-      urls: ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1650766230iUzkqN.jpg'],
+      urls: [src],
       complete: () => {
         let params = {
           open_id: getLocalStorage(GLOBAL_KEY.openId),
