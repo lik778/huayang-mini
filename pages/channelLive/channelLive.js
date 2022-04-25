@@ -261,11 +261,19 @@ Page({
       })
   },
   openImagePreview(e) {
+    if (!hasUserInfo()) {
+      this.setData({
+        didShowAuth: true
+      })
+      return
+    }
+
+
     let {
       index = '', item = ''
     } = e.currentTarget.dataset
 
-    if(item.sub) return
+    if (item.sub) return
 
     let params = {
       open_id: getLocalStorage(GLOBAL_KEY.openId),
@@ -276,20 +284,37 @@ Page({
     }
     subscribeMiniProgramMessage(params)
 
-    if (this.data.hasSubscribeStatus) return
+    if (this.data.hasSubscribeStatus) {
+      wx.showToast({
+        title: '订阅成功',
+      })
+
+      let oldList = this.data.subscribeChannelList.slice()
+      let target = oldList.find(res => res.id === item.id)
+      if (target) {
+        target.sub = $notNull(target)
+      }
+      console.log(oldList)
+      this.setData({
+        subscribeChannelList: oldList
+      })
+      return
+    }
 
 
-    let src = ROOT_URL.dev === request.baseUrl ? "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1650799994YdZfet.jpg" : "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1650766230iUzkqN.jpg"
+    let src = ROOT_URL.dev === request.baseUrl ? "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1650864612mlePwC.jpg" : "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1650864568Zzirwb.jpg"
     wx.previewImage({
       urls: [src]
     })
   },
   onSubscribeTap(e) {
+
     if (!hasUserInfo()) return this.setData({
       didShowAuth: true
     })
+
     // 订阅过长期通知
-    if (this.data.didSubscribeAllChannelLives) return false
+    if (this.data.didSubscribeAllChannelLives && !this.data.hasOtherPlatformLive) return false
     let {
       index,
       item: {
@@ -320,6 +345,7 @@ Page({
         break;
       }
     }
+
     wx.getSetting({
       withSubscriptions: true,
       success(res) {

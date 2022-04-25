@@ -40,7 +40,8 @@
     "showES6CompileOption": false,
     "useCompilerPlugins": false,
     "ignoreUploadUnusedFiles": false,
-    "lazyloadPlaceholderEnable": false
+    "lazyloadPlaceholderEnable": false,
+    "useStaticServer": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.19.6",
