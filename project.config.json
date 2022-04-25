@@ -22,6 +22,7 @@
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
+    "lazyloadPlaceholderEnable": false,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
     "useApiHostProcess": true,
@@ -40,7 +41,6 @@
     "showES6CompileOption": false,
     "useCompilerPlugins": false,
     "ignoreUploadUnusedFiles": false,
-    "lazyloadPlaceholderEnable": false,
     "useStaticServer": true
   },
   "compileType": "miniprogram",
@@ -49,6 +49,10 @@
   "projectname": "%E8%8A%B1%E6%A0%B7%E7%99%BE%E5%A7%93%2B",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  },
   "condition": {
     "plugin": {
       "list": []
@@ -62,9 +66,5 @@
     "miniprogram": {
       "list": []
     }
-  },
-  "editorSetting": {
-    "tabIndent": "insertSpaces",
-    "tabSize": 2
   }
 }
