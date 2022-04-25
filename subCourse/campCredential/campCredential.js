@@ -119,6 +119,19 @@ Page({
                   })
                 }
               })
+            },
+            fail() {
+              wx.showModal({
+                title: '相册授权',
+                content: '保存失败，未获得您的授权，请前往设置授权',
+                confirmText: '去设置',
+                confirmColor: '#33c71b',
+                success(res) {
+                  if (res.confirm) {
+                    wx.openSetting()
+                  }
+                }
+              })
             }
           })
         }
@@ -172,6 +185,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
     let logoList = ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606721434GSUkFm.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606721430eIijle.jpg']
     let campData = JSON.parse(decodeURIComponent(options.campData))
     campData.name = campData.name.length > 12 ? campData.name.slice(0, 12) : campData.name
@@ -279,9 +293,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    let link = `subCourse/campCredential/campCredential?campData=${encodeURIComponent(JSON.stringify(this.data.campData))}&isShare=true&logo=`
     return {
       title: `我正在参加${this.data.campData.name}，每天都有看的见的变化，快来试试`,
-      path: `/subCourse/joinCamp/joinCamp?id=${this.data.campData.id}&share=true`
+      path: link
     }
   }
 })

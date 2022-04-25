@@ -136,7 +136,7 @@ Page({
       })
     }else if(this.data.backPage==='apply'||this.data.backIndex){
       wx.reLaunch({
-        url: `/subCourse/joinCamp/joinCamp?id=${this.data.videoData.id}`,
+        url: `/subCourse/joinCamp/joinCamp?id=${this.data.campId}`,
       })
     }else{
       wx.navigateBack()

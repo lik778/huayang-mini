@@ -53,7 +53,7 @@ Page({
   toBootcampDetailPage() {
     bxPoint("camp_join", {}, false)
     wx.navigateTo({
-      url: `/subCourse/campDetail/campDetail?id=${this.data.campId}&share=true`
+      url: `/subCourse/campDetail/campDetail?id=${this.data.campId}`
     })
   },
   // 打点
