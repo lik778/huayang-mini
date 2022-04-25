@@ -264,19 +264,24 @@ Page({
     let {
       index = '', item = ''
     } = e.currentTarget.dataset
+
+    if (item.sub) return
+
+    let params = {
+      open_id: getLocalStorage(GLOBAL_KEY.openId),
+      status: this.data.hasSubscribeStatus ? index : 0,
+    }
+    if (item.id) {
+      params['zhibo_id'] = item.id
+    }
+    subscribeMiniProgramMessage(params)
+
+    if (this.data.hasSubscribeStatus) return
+
+
     let src = ROOT_URL.dev === request.baseUrl ? "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1650799994YdZfet.jpg" : "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1650766230iUzkqN.jpg"
     wx.previewImage({
-      urls: [src],
-      complete: () => {
-        let params = {
-          open_id: getLocalStorage(GLOBAL_KEY.openId),
-          status: this.data.hasSubscribeStatus ? index : 0,
-        }
-        if (item.id) {
-          params['zhibo_id'] = item.id
-        }
-        subscribeMiniProgramMessage(params)
-      }
+      urls: [src]
     })
   },
   onSubscribeTap(e) {
