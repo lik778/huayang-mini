@@ -37,7 +37,7 @@
           <view class="live-date">{{item.start_time}}</view>
         </view>
         <view class="live-btn {{(item.sub || didSubscribeAllChannelLives) && 'subscribe'}}">
-          {{(item.sub || didSubscribeAllChannelLives) ? "已订阅" : "开播提醒"}}</view>
+          {{hasOtherPlatformLive ? item.sub ? "已订阅" : (item.sub || didSubscribeAllChannelLives) ? "已订阅" : "开播提醒":"开播提醒"}}</view>
       </view>
     </view>
   </view>

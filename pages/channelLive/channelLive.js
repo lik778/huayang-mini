@@ -265,7 +265,7 @@ Page({
       index = '', item = ''
     } = e.currentTarget.dataset
 
-    if (item.sub) return
+    if(item.sub) return
 
     let params = {
       open_id: getLocalStorage(GLOBAL_KEY.openId),
