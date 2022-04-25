@@ -29,15 +29,15 @@
         </view>
       </block>
     </view>
-    <view class="layout-item" wx:for="{{subscribeChannelList}}" wx:key="index">
+    <view class="layout-item" wx:for="{{subscribeChannelList}}" wx:key="index" bindtap="{{item.source===7?'openImagePreview':'onSubscribeTap'}}" data-index="2" data-item="{{item}}">
       <image class="layout-cover" src="{{item.cover}}" mode="aspectFill"></image>
       <view class="layout-content">
         <view>
           <view class="live-title limit-one-line">{{item.title}}</view>
           <view class="live-date">{{item.start_time}}</view>
         </view>
-        <view class="live-btn {{(item.sub || didSubscribeAllChannelLives) && 'subscribe'}}" bindtap="{{item.source===7?'openImagePreview':'onSubscribeTap'}}" data-index="2" data-item="{{item}}">
-          {{(item.sub || didSubscribeAllChannelLives) ? "已订阅" : "开播提醒"}}</view>
+        <view class="live-btn {{ hasOtherPlatformLive ? item.sub ?  'subscribe' :'':(item.sub || didSubscribeAllChannelLives)? 'subscribe':''}}">
+          {{hasOtherPlatformLive ? item.sub ? "已订阅" :"开播提醒":(item.sub || didSubscribeAllChannelLives)?'已订阅':"开播提醒"}}</view>
       </view>
     </view>
   </view>
@@ -45,9 +45,9 @@
   <!-- 精彩回放 -->
   <view class="layout" wx:if="{{reviewChannelList.length > 0}}">
     <view class="layout-title">精彩回放</view>
-    <view class="layout-item" wx:for="{{reviewChannelList}}" wx:key="index">
+    <view class="layout-item" wx:for="{{reviewChannelList}}" wx:key="index" bindtap="onReview" data-item="{{item}}">
       <image class="layout-cover" src="{{item.cover}}" mode="aspectFill"></image>
-      <view class="layout-content" bindtap="onReview" data-item="{{item}}">
+      <view class="layout-content">
         <view>
           <view class="live-title limit-one-line">{{item.title}}</view>
           <view class="live-date">{{item.start_time}}</view>
