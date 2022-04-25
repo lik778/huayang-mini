@@ -36,8 +36,8 @@
           <view class="live-title limit-one-line">{{item.title}}</view>
           <view class="live-date">{{item.start_time}}</view>
         </view>
-        <view class="live-btn {{ hasOtherPlatformLive ? item.sub ?  'subscribe' :'':(item.sub || didSubscribeAllChannelLives)? 'subscribe':''}}">
-          {{hasOtherPlatformLive ? item.sub ? "已订阅" :"开播提醒":(item.sub || didSubscribeAllChannelLives)?'已订阅':"开播提醒"}}</view>
+        <view class="live-btn {{item.source===7?item.sub?'subscribe':'':(item.sub || didSubscribeAllChannelLives)?'subscribe':'' }}">
+          {{item.source===7?item.sub?'已订阅':'开播提醒':(item.sub || didSubscribeAllChannelLives)?'已订阅':'开播提醒'}}</view>
       </view>
     </view>
   </view>

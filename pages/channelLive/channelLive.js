@@ -133,6 +133,7 @@ Page({
       let list = data.filter(res => {
         return res.source === 7
       })
+      console.log(data)
       this.setData({
         subscribeChannelList: data,
         hasOtherPlatformLive: list.length > 0 ? true : false
