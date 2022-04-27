@@ -1,7 +1,7 @@
 <!--subCourse/descriptionOfofflineTrainCourse/descriptionOfofflineTrainCourse.wxml-->
 <view class="container">
   <view class="desc-image">
-    <image lazy-load='{{true}}' wx:for="{{info.image}}" src="{{item}}" mode="widthFix"></image>
+    <image lazy-load='{{true}}' wx:for="{{info.video_url?info.image[0]:info.image}}" src="{{item}}" mode="widthFix"></image>
     <view class="video" wx:if="{{info.video_url}}" style="bottom:{{info.height}}rpx">
       <view class="video-box">
         <video id='video' src="{{info.video_url}}" controls="{{playing}}" custom-cache="{{false}}" object-fit="cover" enable-play-gesture="{{false}}" enable-progress-gesture="{{false}}" play-btn-position="bottom" show-center-play-btn="{{false}}" show-play-btn="{{playing}}" autoplay="{{false}}" loop="{{true}}" show-fullscreen-btn='{{false}}' bindpause='pauseTap'></video>
@@ -10,8 +10,8 @@
         </view>
       </view>
     </view>
+    <image lazy-load='{{true}}' wx:if="{{info.video_url}}" wx:for="{{info.image[1]}}" src="{{item}}" mode="widthFix"></image>
   </view>
-  <!-- <image class="last-image" lazy-load='{{true}}' mode="widthFix" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1646632491roPqna.jpg"></image> -->
   <view class="concact-module">
     <button class="concact-button" bindtap="contactService">联系客服</button>
   </view>
