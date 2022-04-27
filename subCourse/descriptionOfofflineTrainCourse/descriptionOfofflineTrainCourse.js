@@ -35,10 +35,14 @@ Page({
       data
     }) => {
       let info = {
-        ...data,
-        image: data.desc_pic_url.split(","),
-        height: data.video_url ? Number(data.video_bottom_height) + 1302 : ''
+        ...data
       }
+      info.image = info.desc_pic_url.split(',')
+
+      info.image = info.video_url ? [info.image.slice(0, 2), info.image.slice(2, info.image.length)] : info.image
+
+      console.log(info)
+
       this.setData({
         info
       })

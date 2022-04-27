@@ -13,13 +13,9 @@
 }
 
 .desc-image .video {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 1292rpx;
-  z-index: 10;
-  width: 672rpx;
-  height: 380rpx;
+  display: flex;
+  justify-content: center;
+  vertical-align: bottom;
 }
 
 .video-box {
@@ -39,7 +35,7 @@
   transform: translate(-50%, -50%);
   width: 82rpx;
   height: 82rpx;
-  z-index: 11;
+  z-index: 10;
   background: rgba(0, 0, 0, 0.5);
   border: 2rpx solid #FFFFFF;
   box-sizing: border-box;
@@ -68,6 +64,7 @@
   justify-content: center;
   background: #fff;
   position: fixed;
+  z-index: 11;
   bottom: 0;
   left: 0;
 }
