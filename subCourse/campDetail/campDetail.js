@@ -1,4 +1,3 @@
-// subCourse/trainingCampDetail/trainingCampDetail.js
 import baseUrl from "../../lib/request"
 import {
   checkNeedToFillInfo,
@@ -15,7 +14,16 @@ import {
   studyLogCreate
 } from "../../api/course/index"
 import { getProductInfo, getYouZanAppId } from "../../api/mall/index"
-import { computeDate, dateAddDays, getLocalStorage, getNowDate, getNowDateAll, setLocalStorage } from "../../utils/util"
+import {
+	$notNull,
+	computeDate,
+	dateAddDays,
+	getLocalStorage,
+	getNowDate,
+	getNowDateAll, hasAccountInfo,
+	hasUserInfo,
+	setLocalStorage
+} from "../../utils/util";
 import bxPoint from '../../utils/bxPoint'
 import { GLOBAL_KEY } from "../../lib/config"
 import { getFluentCardInfo } from "../../api/mine/index"
@@ -393,13 +401,17 @@ Page({
       getHasJoinCamp({
         traincamp_id: this.data.campId
       }).then(res => {
-        this.setData({
-          joinDate: res.date,
-          period: res.period
-        })
-        this.getCampDetailData().then(() => {
-          resolve()
-        })
+				if ($notNull(res)) {
+					this.setData({
+						joinDate: res.date,
+						period: res.period
+					})
+					this.getCampDetailData().then(() => {
+						resolve()
+					})
+				} else {
+					wx.reLaunch({url: `/subCourse/joinCamp/joinCamp?id=${this.data.campId}`,})
+				}
       })
     })
   },
@@ -721,7 +733,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let choosedDay = options.dayNum === undefined ? options.dayNum : Number(options.dayNum)
+		let {
+			scene,
+			share,
+			promote_uid = "",
+			selectedDayNum = ""
+		} = options
+		let choosedDay = 0
+		if (!!selectedDayNum) {
+			choosedDay = +selectedDayNum
+		} else {
+			choosedDay = options.dayNum === undefined ? options.dayNum : Number(options.dayNum)
+		}
     let fromPage = options.from === undefined ? '' : options.from
     let campId = options.id
     if(options.from==='list'||options.from==='apply'){
@@ -729,11 +752,6 @@ Page({
         backPage:options.from
       })
     }
-    let {
-      scene,
-      share,
-      promote_uid = "",
-    } = options
     // 设置邀请人id
     if (promote_uid !== '') {
       this.setData({
@@ -763,7 +781,10 @@ Page({
       fromPage
     })
 
-
+		// 检查用户授权状态
+		if (!hasUserInfo() || !hasAccountInfo()) {
+			wx.reLaunch({url: `/subCourse/joinCamp/joinCamp?id=${campId}`})
+		}
   },
 
   /**
@@ -889,7 +910,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    let shareLink = '/subCourse/joinCamp/joinCamp?id=' +
+    let shareLink = '/subCourse/campDetail/campDetail?id=' +
       this.data.campId +
       `&invite_user_id=${getLocalStorage(GLOBAL_KEY.userId)}&share=true`
     if (this.data.promoteUid !== '') {
@@ -899,6 +920,8 @@ Page({
         shareLink += `&promote_uid=${this.data.userInfo.id}`
       }
     }
+		// 2022-05-06 dudu 新增分享卡片参数selectedDayNum用于付费用户快速访问某天的课程
+		shareLink += `&selectedDayNum=${this.data.dayNum}`
     return {
       title: `我正在参加${this.data.campData.name}，每天都有看的见的变化，快来试试`,
       path: shareLink
