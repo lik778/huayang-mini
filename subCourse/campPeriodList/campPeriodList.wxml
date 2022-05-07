@@ -2,12 +2,10 @@
 <view class="container">
   <!-- 周期列表 -->
   <view class="list">
-    <view class="item" wx:for="{{periodList.chinaNum}}" wx:key="{{index}}" bindtap="toDetail"
-      data-item="{{periodList.num1[index]}}">
+    <view class="item" wx:for="{{periodList}}" wx:key="{{index}}" bindtap="toDetail" data-item="{{index}}">
       <view class="item-left">
-        <view class="item-left-text" wx:if="{{item==='零'}}">预告课程</view>
-        <view class="item-left-text" wx:else>第{{item}}天课程</view>
-        <view wx:if="{{whatDay===periodList.num1[index]}}" class="today-course subject-bg-color">今日课程</view>
+        <view class="item-left-text">{{item.title}}</view>
+        <view wx:if="{{whatDay===index}}" class="today-course subject-bg-color">今日课程</view>
       </view>
       <view class="item-right subject-font-color">去学习</view>
     </view>

@@ -1,6 +1,7 @@
 // subCourse/campPeriodList/campPeriodList.js
 import {
-  getCampDetail
+  getCampDetail,
+  getMenyCourseList
 } from "../../api/course/index"
 import {
   convertToChinaNum,
@@ -68,9 +69,12 @@ Page({
 
   // 获取多个训练营数据
   getManyCamoData(period) {
-    let result = this.getAllNum(0, period);
-    this.setData({
-      periodList: result
+    getMenyCourseList({
+      traincamp_id: this.data.campId
+    }).then(res => {
+      this.setData({
+        periodList: res || []
+      })
     })
   },
 
