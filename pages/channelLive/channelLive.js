@@ -112,14 +112,21 @@ Page({
     })
   },
 
-  run() {
+  async run() {
     this.getChannelLiveInfo()
     this.hasSubscribe()
     // 检查用户是否已一键订阅所有直播预约
-    this.subScribeMessage(this.data.LongSubscribeTempId)
+    await this.subScribeMessage(this.data.LongSubscribeTempId)
     // 往期所有回放
-    getChannelLives({status: 3, is_show: 1, limit: 9999, offset: 0}).then((data) => {
-      this.setData({reviewChannelList: data})
+    getChannelLives({
+      status: 3,
+      is_show: 1,
+      limit: 9999,
+      offset: 0
+    }).then((data) => {
+      this.setData({
+        reviewChannelList: data
+      })
     })
     // 即将开播
     getChannelLives({
@@ -133,12 +140,12 @@ Page({
       let list = data.filter(res => {
         return res.source === 7
       })
-      console.log(data)
       this.setData({
         subscribeChannelList: data,
         hasOtherPlatformLive: list.length > 0 ? true : false
+      }, () => {
+        this.loadHistorySubscribeChannelLives()
       })
-      this.loadHistorySubscribeChannelLives()
     })
   },
   // 预约直播
@@ -236,7 +243,7 @@ Page({
   },
   // 加载历史已订阅视频号直播列表
   loadHistorySubscribeChannelLives() {
-    if (this.data.didSubscribeAllChannelLives) return false
+    if (this.data.didSubscribeAllChannelLives && !this.data.hasOtherPlatformLive) return false
     let openId = getLocalStorage(GLOBAL_KEY.openId)
     if (!openId) return false
     getHistorySubscribeLives({
@@ -400,26 +407,36 @@ Page({
   },
   // 检查通知订阅状态
   subScribeMessage(tempId) {
-    let self = this
-    wx.getSetting({
-      withSubscriptions: true,
-      success(res) {
-        if (res.subscriptionsSetting[tempId] === "accept") {
+    return new Promise(resolve => {
+      let self = this
+      wx.getSetting({
+        withSubscriptions: true,
+        success(res) {
+          console.log(res.subscriptionsSetting, 1)
+          if (res.subscriptionsSetting[tempId] === "accept") {
+            self.setData({
+              didSubscribeAllChannelLives: true
+            }, () => {
+              resolve()
+            })
+          } else if (res.subscriptionsSetting[tempId] === "reject") {
+            self.setData({
+              didSubscribeAllChannelLives: false
+            }, () => {
+              resolve()
+            })
+          } else {
+            resolve()
+          }
+        },
+        complete() {
           self.setData({
-            didSubscribeAllChannelLives: true
-          })
-        } else if (res.subscriptionsSetting[tempId] === "reject") {
-          self.setData({
-            didSubscribeAllChannelLives: false
+            showPage: true
           })
         }
-      },
-      complete() {
-        self.setData({
-          showPage: true
-        })
-      }
+      })
     })
+
   },
   // 用户授权取消
   authCancelEvent() {
