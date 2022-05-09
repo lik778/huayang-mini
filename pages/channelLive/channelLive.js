@@ -243,7 +243,7 @@ Page({
   },
   // 加载历史已订阅视频号直播列表
   loadHistorySubscribeChannelLives() {
-    // if (this.data.didSubscribeAllChannelLives) return false
+    if (this.data.didSubscribeAllChannelLives && !this.data.hasOtherPlatformLive) return false
     let openId = getLocalStorage(GLOBAL_KEY.openId)
     if (!openId) return false
     getHistorySubscribeLives({
