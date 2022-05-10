@@ -11,5 +11,5 @@
     </view>
   </view>
   <!-- 返回 -->
-  <view class="back subject-bg-color" bindtap="backCampDetail">返回</view>
+  <view class="back subject-bg-color" wx:if="{{!share}}" bindtap="backCampDetail">返回</view>
 </view>
