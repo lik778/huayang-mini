@@ -1,12 +1,15 @@
 // subCourse/campPeriodList/campPeriodList.js
 import {
   getCampDetail,
-  getMenyCourseList
+  getMenyCourseList,
+  getHasJoinCamp
 } from "../../api/course/index"
 import {
   convertToChinaNum,
   dateAddDays,
-  computeDate
+  computeDate,
+  hasAccountInfo,
+  hasUserInfo
 } from "../../utils/util"
 Page({
 
@@ -19,7 +22,8 @@ Page({
     courseList: "",
     joinDate: '',
     whatDay: "",
-    periodList: []
+    periodList: [],
+    share: false
   },
 
   // 返回训练营详情
@@ -98,55 +102,50 @@ Page({
    */
   onLoad: function (options) {
     let {
-      campId,
-      joinDate
+      campId = '', joinDate = '', share = false
     } = options
+
+    /* 判断是否携带必要参数 */
+    if (!campId || !joinDate) {
+      wx.switchTab({
+        url: '/pages/discovery/discovery',
+      })
+      return
+    }
+
+    /* 判断是否授过权 */
+    if (!hasAccountInfo() || !hasUserInfo()) {
+      wx.redirectTo({
+        url: `/subCourse/joinCamp/joinCamp?id=${campId}`
+      })
+      return
+    }
+
+    /* 判断是否加入过训练营 */
+    getHasJoinCamp({
+      traincamp_id: campId
+    }).then(res => {
+      if (!res.status || res.status !== 1) {
+        wx.redirectTo({
+          url: `/subCourse/joinCamp/joinCamp?id=${campId}`,
+        })
+        return
+      }
+    })
+
     this.setData({
       campId,
-      joinDate
+      joinDate,
+      share
     })
     this.getCampDetailData(campId)
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
+  /*** 用户点击右上角分享*/
+  onShareAppMessage: function () {
+    return {
+      title: `在花样百姓，过积极、健康、时尚的品质生活`,
+      path: `/subCourse/campPeriodList/campPeriodList?campId=${this.data.campId}&joinDate=${this.data.joinDate}&share=true`
+    }
+  }
 })
