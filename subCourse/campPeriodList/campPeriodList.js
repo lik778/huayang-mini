@@ -144,7 +144,7 @@ Page({
   /*** 用户点击右上角分享*/
   onShareAppMessage: function () {
     return {
-      title: `在花样百姓，过积极、健康、时尚的品质生活`,
+      title: `${this.data.campData.name}`,
       path: `/subCourse/campPeriodList/campPeriodList?campId=${this.data.campId}&joinDate=${this.data.joinDate}&share=true`
     }
   }
