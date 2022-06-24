@@ -33,7 +33,7 @@
       <image class="layout-cover" src="{{item.cover}}" mode="aspectFill"></image>
       <view class="layout-content">
         <view>
-          <view class="live-title limit-one-line">{{item.title}}</view>
+          <view class="live-title limit-two-line">{{item.title}}</view>
           <view class="live-date">{{item.start_time}}</view>
         </view>
         <view class="live-btn {{item.source===7?item.sub?'subscribe':'':(item.sub || didSubscribeAllChannelLives)?'subscribe':'' }}">
@@ -49,7 +49,7 @@
       <image class="layout-cover" src="{{item.cover}}" mode="aspectFill"></image>
       <view class="layout-content">
         <view>
-          <view class="live-title limit-one-line">{{item.title}}</view>
+          <view class="live-title limit-two-line">{{item.title}}</view>
           <view class="live-date">{{item.start_time}}</view>
         </view>
         <view class="live-btn review">观看回放</view>
