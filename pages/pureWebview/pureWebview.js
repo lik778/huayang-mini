@@ -72,7 +72,7 @@ Page({
     } else {
       // 常规活动分享内容
       return {
-        title: "50+线下活动，让你的退休生活更精彩",
+        title: "让你的外表和内在都更精彩，开启幸福第二人生",
         path: `/pages/pureWebview/pureWebview?link=${encodeURIComponent(this.data.link)}`
       }
     }
