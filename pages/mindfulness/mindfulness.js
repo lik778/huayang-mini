@@ -7,15 +7,15 @@ const CANVAS_HEIGHT = 375
 // 背景参数
 const ORIGIN_X = CANVAS_WIDTH / 2 // 圆心x
 const ORIGIN_Y = CANVAS_HEIGHT / 2 // 圆心y
-const BG_R = 140 // 背景半径
 const BG_LINE_WIDTH = 18 // 背景边框宽度
+const BG_R = 140 - BG_LINE_WIDTH / 2 // 背景半径
 const BG_IMAGE_X = ORIGIN_X - BG_R // 背景图片x
 const BG_IMAGE_Y = ORIGIN_Y - BG_R // 背景图片y
 const BG_IMAGE_W = 2 * BG_R // 背景图device width
 const BG_IMAGE_H = 2 * BG_R // 背景图device height
 // 进度条参数
 const PG_LINE_WIDTH = BG_LINE_WIDTH / 2 // 进度条边框宽度
-const PG_R = BG_R - (BG_LINE_WIDTH - PG_LINE_WIDTH) / 2 // 进度条半径
+const PG_R = BG_R - (BG_LINE_WIDTH - PG_LINE_WIDTH) / 2 + BG_LINE_WIDTH / 2 // 进度条半径
 const PG_DOT_R = 14 // 进度点半径
 const PG_DOT_LINE_WIDTH = 5 // 进度点边框宽度
 // 波纹参数
@@ -23,7 +23,7 @@ const WAVE_LINE_WIDTH = 1 // 波浪边框宽度
 const WAVE_R = PG_R + PG_LINE_WIDTH / 2 - WAVE_LINE_WIDTH / 2 // 波浪半径
 
 // 频率
-const frequency = 1000 / 16.6
+const frequency = 1000 / 16.66
 
 
 Page({
@@ -36,13 +36,16 @@ Page({
 
 		progressCanvas: null,
 		progressCTX: null,
-		current: 0,
-		bgLineColor: "#8d8d8d",
+		current: 0, // 进度条刻度
+		bgLineColor: "rgba(255,255,255, 0.3)",
 		progressLineColor: "white",
 		didStopProgressAnimate: false,
 		didStopWaveAnimate: false,
 		didAnimateInit: false,
 
+		times: 187, // 音频时长
+		showTime: "",
+		audioUrl: "https://video.huayangbaixing.com/sv/4b9ddaa9-181f6574e6a/4b9ddaa9-181f6574e6a.mp3", // 音频地址
 		bgAudio: null,
 		audioLink: "",
 		needInitBgAudio: true,
@@ -117,11 +120,14 @@ Page({
 	// 初始化音频播放器 & 下载音频文件
 	initAudioResource() {
 		wx.showLoading({title: "正在下载音频...", mask: true})
-		this._downloadAudio("https://video.huayangbaixing.com/sv/4b9ddaa9-181f6574e6a/4b9ddaa9-181f6574e6a.mp3").then((file) => {
+		this._downloadAudio(this.data.audioUrl).then((file) => {
 			this.data.audioLink = file
 		}).finally(() => {
 			wx.hideLoading()
 		})
+
+		let st = this._formatTimes(this.data.times)
+		this.setData({showTime: st})
 	},
 
 	// 运行动画
@@ -145,15 +151,19 @@ Page({
 				ctx.scale(dpr, dpr)
 
 				ctx.save()
+				ctx.arc(ORIGIN_X, ORIGIN_Y, BG_R, 0, 2 * Math.PI)
+				ctx.lineWidth = BG_LINE_WIDTH
+				ctx.strokeStyle = this.data.bgLineColor
+				ctx.stroke()
+				ctx.restore()
+
+				ctx.save()
 				ctx.beginPath()
 				ctx.arc(ORIGIN_X, ORIGIN_Y, BG_R, 0, 2 * Math.PI)
 				ctx.clip()
-				let avatarImgRes = await this._loadNetworkImageRes(canvas, "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657272555PYtbbm.jpg")
+				let avatarImgRes = await this._loadNetworkImageRes(canvas, "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657783238tSsToE.jpg")
 				ctx.drawImage(avatarImgRes, BG_IMAGE_X, BG_IMAGE_Y, BG_IMAGE_W, BG_IMAGE_H)
-				ctx.lineWidth = BG_LINE_WIDTH
-				ctx.strokeStyle = this.data.bgLineColor
 				ctx.closePath()
-				ctx.stroke()
 				ctx.restore()
 			})
 	},
@@ -280,11 +290,17 @@ Page({
 	playProgressAnimate(seconds) {
 		let canvas = this.data.progressCanvas
 		let total = seconds * frequency
+		let times = this.data.times
 
 		let fn = () => {
 			this.data.current = this.data.didStopProgressAnimate ? this.data.current : this.data.current + 1
 			this.data.progressCTX.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 			this.updateProgress(this.data.current / total * 2)
+
+			// 更新倒计时
+			let newShowTime = this.data.current / frequency | 0
+			let st = this._formatTimes(times - newShowTime)
+			if (st !== this.data.showTime) this.setData({showTime: st})
 
 			canvas.requestAnimationFrame(fn)
 		}
@@ -334,7 +350,7 @@ Page({
 				this._switchAnimateState("start")
 			} else {
 				this.initCanvasAnimate()
-				this.setData({didAnimateInit: true})
+				this.setData({didAnimateInit: true, bgAudioPaused: false})
 			}
 		})
 
@@ -462,5 +478,16 @@ Page({
 			}
 		}
 		this.setData({didStopWaveAnimate: bool, didStopProgressAnimate: bool, bgAudioPaused: bool})
+	},
+
+	// 格式化时间
+	_formatTimes(seconds) {
+		let result = ""
+		if (seconds >= 0) {
+			result = `${String(seconds/60|0).padStart(2, "0")}:${String(seconds%60).padStart(2, "0")}`
+		} else {
+			result = "00:00"
+		}
+		return result
 	}
 })

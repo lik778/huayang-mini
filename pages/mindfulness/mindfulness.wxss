@@ -3,7 +3,7 @@
     position: relative;
     height: 100vh;
 		box-sizing: border-box;
-    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657272555PYtbbm.jpg") no-repeat center;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657783537SjkQCi.jpg") no-repeat center;
     background-size: cover;
 }
 
@@ -31,9 +31,25 @@
     height: inherit;
 }
 
+.showtime {
+		position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+		margin: auto;
+    width: 192rpx;
+    height: 88rpx;
+		text-align: center;
+		border-radius: 999rpx;
+    background: rgba(0,0,0, 0.6);
+		font: 500 36rpx/88rpx "PingFang SC";
+		color: white;
+}
+
 .content {
     position: absolute;
-		bottom: -90rpx;
+		bottom: -100rpx;
     width: 100%;
 		display: flex;
 		flex-direction: column;
@@ -65,7 +81,7 @@
 }
 
 .icon {
-    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657691902uJPnQb.jpg") no-repeat center;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657691935Qovbmu.jpg") no-repeat center;
     background-size: contain;
 }
 
@@ -78,19 +94,20 @@
     height: 60rpx;
 }
 
-.right {
-    background-image: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657691935Qovbmu.jpg");
-}
-
 .left {
     background-image: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657691924REIFWm.jpg");
 }
 
 .center {
+		position: relative;
     width: 176rpx;
     height: 176rpx;
 }
 
-.center.playing {
-    background-image: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657764993tOPJxL.jpg");
+.center > image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: inherit;
+    height: inherit;
 }

@@ -1,11 +1,13 @@
 <view class="container" style="padding-top:  {{statusHeight+44}}px;">
     <naviBar title="" style="padding-top: {{statusHeight+44}}px;" color="transparent" titleColor="#000000"></naviBar>
-    <image class="bg" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657272555PYtbbm.jpg" mode="aspectFill" />
+    <!--<image class="bg" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657783537SjkQCi.jpg" mode="aspectFill" />-->
 
     <view class="time-wrap">
         <canvas type="2d" id="bgCanvas" />
         <canvas type="2d" id="waveCanvas" />
         <canvas type="2d" id="progressCanvas" />
+
+        <view class="showtime" wx:if="{{showTime}}">{{showTime}}</view>
 
         <view class="content">
             <view class="title">深入睡眠冥想</view>
@@ -15,7 +17,10 @@
 
     <view class="operate">
         <view class="icon left" bindtap="_operateSeek" data-type="backward"></view>
-        <view class="icon center {{bgAudioPaused ? '' : 'playing'}}" bindtap="_toggleAudio"></view>
+        <view class="center" bindtap="_toggleAudio">
+            <image mode="aspectFit" wx:if="{{bgAudioPaused}}" src="../../assets/images/common/mindfulness-pause.png"></image>
+            <image mode="aspectFit" wx:else src="../../assets/images/common/mindfulness-play.png"></image>
+        </view>
         <view class="icon right" bindtap="_operateSeek" data-type="speed"></view>
     </view>
 </view>
