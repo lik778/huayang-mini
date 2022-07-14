@@ -1,0 +1,75 @@
+.container {
+		overflow: hidden;
+    position: relative;
+    height: 100vh;
+		box-sizing: border-box;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657272555PYtbbm.jpg") no-repeat center;
+    background-size: cover;
+}
+
+.bg {
+		position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+		filter: blur(12px);
+}
+
+.time-wrap {
+    position: relative;
+    width: 375px;
+    height: 375px;
+		margin: 0 auto;
+}
+
+#bgCanvas, #progressCanvas, #waveCanvas {
+    position: absolute;
+    width: inherit;
+    height: inherit;
+}
+
+.content {
+    position: absolute;
+		bottom: -90rpx;
+    width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+}
+
+.title {
+		font: 500 40rpx/1 PingFangSC;
+		color: white;
+}
+
+.subtitle {
+    margin-top: 28rpx;
+		font: 28rpx/1 "PingFang TC";
+		color: rgba(255, 255, 255, 0.8);
+}
+
+
+.operate {
+		box-sizing: border-box;
+    width: 100vw;
+		position: absolute;
+    bottom: 140rpx;
+		padding: 0 100rpx;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+}
+
+.left, .right {
+    width: 60rpx;
+    height: 60rpx;
+}
+
+.center {
+    width: 176rpx;
+    height: 176rpx;
+}

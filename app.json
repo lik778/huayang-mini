@@ -38,7 +38,8 @@
     "pages/activities/activities",
     "pages/pureWebview/pureWebview",
     "pages/shopSubject/shopSubject",
-    "pages/preserve/preserve"
+    "pages/preserve/preserve",
+    "pages/mindfulness/mindfulness"
   ],
   "requiredBackgroundModes": [
     "audio",
