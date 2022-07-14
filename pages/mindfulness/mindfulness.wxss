@@ -48,9 +48,7 @@
 }
 
 .content {
-    position: absolute;
-		bottom: -100rpx;
-    width: 100%;
+    width: 100vw;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -72,8 +70,7 @@
 .operate {
 		box-sizing: border-box;
     width: 100vw;
-		position: absolute;
-    bottom: 140rpx;
+    margin-top: 140rpx;
 		padding: 0 100rpx;
 		display: flex;
 		justify-content: space-between;
@@ -90,8 +87,8 @@
 }
 
 .left, .right {
-    width: 60rpx;
-    height: 60rpx;
+    width: 30px;
+    height: 30px;
 }
 
 .left {
@@ -100,8 +97,8 @@
 
 .center {
 		position: relative;
-    width: 176rpx;
-    height: 176rpx;
+    width: 88px;
+    height: 88px;
 }
 
 .center > image {

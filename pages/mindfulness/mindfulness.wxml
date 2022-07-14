@@ -2,20 +2,20 @@
     <naviBar title="" style="padding-top: {{statusHeight+44}}px;" color="transparent" titleColor="#000000"></naviBar>
     <!--<image class="bg" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657783537SjkQCi.jpg" mode="aspectFill" />-->
 
-    <view class="time-wrap">
+    <view class="time-wrap" style="margin-top: {{customCanvasMarginTop}}px;">
         <canvas type="2d" id="bgCanvas" />
         <canvas type="2d" id="waveCanvas" />
         <canvas type="2d" id="progressCanvas" />
 
         <view class="showtime" wx:if="{{showTime}}">{{showTime}}</view>
-
-        <view class="content">
-            <view class="title">深入睡眠冥想</view>
-            <view class="subtitle">共5分钟</view>
-        </view>
     </view>
 
-    <view class="operate">
+    <view class="content">
+        <view class="title">深入睡眠冥想</view>
+        <view class="subtitle">共5分钟</view>
+    </view>
+
+    <view class="operate" style="margin-top: {{140 + customCanvasMarginTop}}rpx;">
         <view class="icon left" bindtap="_operateSeek" data-type="backward"></view>
         <view class="center" bindtap="_toggleAudio">
             <image mode="aspectFit" wx:if="{{bgAudioPaused}}" src="../../assets/images/common/mindfulness-pause.png"></image>

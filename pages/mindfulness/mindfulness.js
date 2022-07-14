@@ -8,7 +8,7 @@ const CANVAS_HEIGHT = 375
 const ORIGIN_X = CANVAS_WIDTH / 2 // 圆心x
 const ORIGIN_Y = CANVAS_HEIGHT / 2 // 圆心y
 const BG_LINE_WIDTH = 18 // 背景边框宽度
-const BG_R = 140 - BG_LINE_WIDTH / 2 // 背景半径
+const BG_R = 140 // 背景半径
 const BG_IMAGE_X = ORIGIN_X - BG_R // 背景图片x
 const BG_IMAGE_Y = ORIGIN_Y - BG_R // 背景图片y
 const BG_IMAGE_W = 2 * BG_R // 背景图device width
@@ -33,6 +33,7 @@ Page({
    */
   data: {
 		statusHeight: 0,
+		customCanvasMarginTop: 0,
 
 		progressCanvas: null,
 		progressCTX: null,
@@ -106,12 +107,19 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage() {
-
-  },
+  // onShareAppMessage() {
+	//
+  // },
 
 	run() {
-		this.setData({statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight})
+		let remain = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).safeArea.height - 667
+		if (remain > 0) {
+			this.setData({customCanvasMarginTop: remain / 2})
+		}
+
+		this.setData({
+			statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
+		})
 
 		this.initBgCanvas()
 		this.initProgressCanvas()
@@ -151,10 +159,10 @@ Page({
 				ctx.scale(dpr, dpr)
 
 				ctx.save()
-				ctx.arc(ORIGIN_X, ORIGIN_Y, BG_R, 0, 2 * Math.PI)
+				ctx.arc(ORIGIN_X, ORIGIN_Y, BG_R + BG_LINE_WIDTH / 2, 0, 2 * Math.PI)
 				ctx.lineWidth = BG_LINE_WIDTH
-				ctx.strokeStyle = this.data.bgLineColor
-				ctx.stroke()
+				ctx.fillStyle = this.data.bgLineColor
+				ctx.fill()
 				ctx.restore()
 
 				ctx.save()
@@ -202,14 +210,14 @@ Page({
 				ctx.scale(dpr, dpr)
 
 				// 波纹01
-				const max = WAVE_LINE_WIDTH * 1000 / 4 // 控制波纹速度
+				const max = WAVE_LINE_WIDTH * 3200 / 8 // 控制波纹速度
 				let cur = 0
 				let cur2 = 0
 				let cur3 = 0
 				let waveFn = () => {
 					ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 
-					ctx.strokeStyle = "rgba(255,255,255,0.7)"
+					ctx.strokeStyle = "rgba(255,255,255,0.5)"
 
 					// 波纹1
 					if (cur >= max) cur = 0
@@ -217,7 +225,7 @@ Page({
 					ctx.save()
 					ctx.lineWidth = WAVE_LINE_WIDTH * (max - cur + 0.001)/max
 					ctx.beginPath()
-					ctx.arc(ORIGIN_X, ORIGIN_Y, WAVE_R + cur/max * BG_IMAGE_X, 0, 2 * Math.PI)
+					ctx.arc(ORIGIN_X, ORIGIN_Y, WAVE_R + cur/max * (BG_IMAGE_X - BG_LINE_WIDTH / 2), 0, 2 * Math.PI)
 					ctx.closePath()
 					ctx.stroke()
 					ctx.restore()
@@ -229,7 +237,7 @@ Page({
 						ctx.save()
 						ctx.lineWidth = WAVE_LINE_WIDTH * (max - cur2 + 0.001)/max
 						ctx.beginPath()
-						ctx.arc(ORIGIN_X, ORIGIN_Y, WAVE_R + cur2/max * BG_IMAGE_X, 0, 2 * Math.PI)
+						ctx.arc(ORIGIN_X, ORIGIN_Y, WAVE_R + cur2/max * (BG_IMAGE_X - BG_LINE_WIDTH / 2), 0, 2 * Math.PI)
 						ctx.closePath()
 						ctx.stroke()
 						ctx.restore()
@@ -242,7 +250,7 @@ Page({
 						ctx.save()
 						ctx.lineWidth = WAVE_LINE_WIDTH * (max - cur3 + 0.001)/max
 						ctx.beginPath()
-						ctx.arc(ORIGIN_X, ORIGIN_Y, WAVE_R + cur3/max * BG_IMAGE_X, 0, 2 * Math.PI)
+						ctx.arc(ORIGIN_X, ORIGIN_Y, WAVE_R + cur3/max * (BG_IMAGE_X - BG_LINE_WIDTH / 2), 0, 2 * Math.PI)
 						ctx.closePath()
 						ctx.stroke()
 						ctx.restore()
