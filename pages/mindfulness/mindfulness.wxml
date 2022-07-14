@@ -14,8 +14,8 @@
     </view>
 
     <view class="operate">
-        <image class="left" bindtap="_backward" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657691924REIFWm.jpg"></image>
-        <image class="center" bindtap="_toggleAudio" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657691902uJPnQb.jpg"></image>
-        <image class="right" bindtap="_speed" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657691935Qovbmu.jpg"></image>
+        <view class="icon left" bindtap="_operateSeek" data-type="backward"></view>
+        <view class="icon center {{bgAudioPaused ? '' : 'playing'}}" bindtap="_toggleAudio"></view>
+        <view class="icon right" bindtap="_operateSeek" data-type="speed"></view>
     </view>
 </view>

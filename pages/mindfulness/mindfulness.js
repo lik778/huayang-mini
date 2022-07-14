@@ -36,7 +36,6 @@ Page({
 
 		progressCanvas: null,
 		progressCTX: null,
-		requestId: 0,
 		current: 0,
 		bgLineColor: "#8d8d8d",
 		progressLineColor: "white",
@@ -46,13 +45,17 @@ Page({
 
 		bgAudio: null,
 		audioLink: "",
+		needInitBgAudio: true,
+		bgAudioPaused: true,
+
+		operateLock: false, // 快进、倒退操作锁
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+		this.initAudioResource()
   },
 
   /**
@@ -80,7 +83,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-		this.data.bgAudio.destroy()
+
   },
 
   /**
@@ -109,14 +112,11 @@ Page({
 
 		this.initBgCanvas()
 		this.initProgressCanvas()
-
-		this.initAudio()
 	},
 
 	// 初始化音频播放器 & 下载音频文件
-	initAudio() {
+	initAudioResource() {
 		wx.showLoading({title: "正在下载音频...", mask: true})
-		this.data.bgAudio = wx.getBackgroundAudioManager()
 		this._downloadAudio("https://video.huayangbaixing.com/sv/4b9ddaa9-181f6574e6a/4b9ddaa9-181f6574e6a.mp3").then((file) => {
 			this.data.audioLink = file
 		}).finally(() => {
@@ -282,19 +282,13 @@ Page({
 		let total = seconds * frequency
 
 		let fn = () => {
-			if (this.data.current >= total) {
-				return canvas.cancelAnimationFrame(this.data.requestId)
-			}
-
 			this.data.current = this.data.didStopProgressAnimate ? this.data.current : this.data.current + 1
 			this.data.progressCTX.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 			this.updateProgress(this.data.current / total * 2)
 
 			canvas.requestAnimationFrame(fn)
 		}
-
-		let requestId = canvas.requestAnimationFrame(fn)
-		this.setData({requestId})
+		canvas.requestAnimationFrame(fn)
 	},
 
 	// 加载网络图片
@@ -324,54 +318,55 @@ Page({
 
 	// 播放音频
 	_playAudio() {
-		let audio = this.data.bgAudio
+		let audio = wx.getBackgroundAudioManager()
 		audio.title = "花样正念"
-		let link = this.data.audioLink
-		return new Promise(resolve => {
-			audio.src = link
+		audio.src = this.data.audioLink
 
-			// 监听音频加载成功可以播放
-			audio.onCanplay(() => {
-				console.log('bg audio resource ready')
-			})
-
-			// 监听音频开始播放
-			audio.onPlay(() => {
-				console.log('bg audio play');
-				if (this.data.didAnimateInit) {
-					this._switchAnimateState("start")
-				} else {
-					this.initCanvasAnimate()
-					this.setData({didAnimateInit: true})
-				}
-				this.data.bgAudioPaused = false
-			})
-
-			// 监听音频暂停
-			audio.onPause(() => {
-				console.log('bg audio pause', this.data.bgAudio.currentTime)
-				this._switchAnimateState("stop")
-				this.data.bgAudioPaused = true
-			})
-
-			// 监听音频完成跳转事件
-			audio.onSeeked(() => {
-				console.log("bg audio seeked", this.data.bgAudio.currentTime)
-			})
-
-			audio.onEnded(() => {
-				console.log('bg audio end')
-				this.data.bgAudioPaused = true
-				resolve()
-			})
-
-			// 兼容外置播放器解析音频报错问题
-			audio.onError((err) => {
-				console.error("bg audio error", err)
-				this.data.bgAudioPaused = true
-				resolve()
-			})
+		// 监听音频加载成功可以播放
+		audio.onCanplay(() => {
+			console.log('bg audio resource ready')
 		})
+
+		// 监听音频开始播放
+		audio.onPlay(() => {
+			console.log('bg audio play')
+			if (this.data.didAnimateInit) {
+				this._switchAnimateState("start")
+			} else {
+				this.initCanvasAnimate()
+				this.setData({didAnimateInit: true})
+			}
+		})
+
+		// 监听音频暂停
+		audio.onPause(() => {
+			console.log('bg audio pause', this.data.bgAudio.currentTime)
+			this._switchAnimateState("stop")
+		})
+
+		// 监听音频完成跳转事件
+		audio.onSeeked(() => {
+			console.log("bg audio seeked", this.data.bgAudio.currentTime)
+		})
+
+		audio.onEnded(() => {
+			console.log('bg audio end')
+			this._resetAudioSeek()
+		})
+
+		audio.onStop(() => {
+			console.log('bg audio stop');
+			this._resetAudioSeek()
+		})
+
+		// 兼容外置播放器解析音频报错问题
+		audio.onError((err) => {
+			console.error("bg audio error", err)
+			this.setData({bgAudioPaused: true})
+			this._switchAnimateState("stop")
+		})
+
+		this.setData({bgAudio: audio, needInitBgAudio: false})
 	},
 
 	// 暂停or继续播放
@@ -379,7 +374,7 @@ Page({
 		let audio = this.data.bgAudio
 
 		// 初始化音频&开始播放
-		if (audio.src == null) {
+		if (this.data.needInitBgAudio) {
 			return this._playAudio()
 		}
 
@@ -387,6 +382,29 @@ Page({
 			audio.play()
 		} else {
 			audio.pause()
+		}
+	},
+
+	// 操作进度
+	_operateSeek(e) {
+		if (this.data.operateLock) return false
+
+		this.setData({operateLock: true})
+		let lockTimer = setTimeout(() => {
+			this.setData({operateLock: false})
+			clearTimeout(lockTimer)
+		}, 500)
+
+		let type = e.currentTarget.dataset.type
+		switch (type) {
+			case "backward": {
+				this._backward()
+				break
+			}
+			case "speed": {
+				this._speed()
+				break
+			}
 		}
 	},
 
@@ -411,14 +429,19 @@ Page({
 		let curTime = audio.currentTime
 		let duration = audio.duration
 		let nextTime = curTime + 15
-		nextTime = nextTime >= duration ? duration : nextTime
 		if (nextTime >= duration) {
-			this.setData({current: audio.duration})
+			audio.stop()
 		} else {
 			this.setData({current: this.data.current + 15 * frequency})
+			audio.seek(nextTime)
 		}
 		console.log('快进', curTime, nextTime);
-		audio.seek(nextTime)
+	},
+
+	// 重置音频进度
+	_resetAudioSeek() {
+		this.setData({current: 0, needInitBgAudio: true})
+		this._switchAnimateState("stop")
 	},
 
 	/**
@@ -438,6 +461,6 @@ Page({
 				break
 			}
 		}
-		this.setData({didStopWaveAnimate: bool, didStopProgressAnimate: bool})
+		this.setData({didStopWaveAnimate: bool, didStopProgressAnimate: bool, bgAudioPaused: bool})
 	}
 })

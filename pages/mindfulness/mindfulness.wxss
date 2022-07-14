@@ -64,12 +64,33 @@
 		align-items: center;
 }
 
+.icon {
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657691902uJPnQb.jpg") no-repeat center;
+    background-size: contain;
+}
+
+.icon:active {
+    opacity: 0.9;
+}
+
 .left, .right {
     width: 60rpx;
     height: 60rpx;
 }
 
+.right {
+    background-image: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657691935Qovbmu.jpg");
+}
+
+.left {
+    background-image: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657691924REIFWm.jpg");
+}
+
 .center {
     width: 176rpx;
     height: 176rpx;
+}
+
+.center.playing {
+    background-image: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657764993tOPJxL.jpg");
 }
