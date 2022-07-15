@@ -22,8 +22,6 @@ const PG_DOT_LINE_WIDTH = 5 // 进度点边框宽度
 const WAVE_LINE_WIDTH = 1 // 波浪边框宽度
 const WAVE_R = PG_R + PG_LINE_WIDTH / 2 - WAVE_LINE_WIDTH / 2 // 波浪半径
 
-// 频率
-const frequency = 1000 / 16.66
 
 
 Page({
@@ -34,6 +32,7 @@ Page({
   data: {
 		statusHeight: 0,
 		customCanvasMarginTop: 0,
+		frequency: 0, // 频率
 
 		progressCanvas: null,
 		progressCTX: null,
@@ -44,9 +43,13 @@ Page({
 		didStopWaveAnimate: false,
 		didAnimateInit: false,
 
-		times: 187, // 音频时长
-		showTime: "",
-		audioUrl: "https://video.huayangbaixing.com/sv/4b9ddaa9-181f6574e6a/4b9ddaa9-181f6574e6a.mp3", // 音频地址
+		title: "",
+		poster: "",
+		backgroundImage: "",
+		times: 187, // 音频时长（秒）
+		showTime: "", // 音频准确时间
+		dimTime: "", // 音频大致时间
+		audioUrl: "", // 音频地址
 		bgAudio: null,
 		audioLink: "",
 		needInitBgAudio: true,
@@ -59,7 +62,21 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-		this.initAudioResource()
+		const eventChannel = this.getOpenerEventChannel()
+
+		eventChannel.on("transmitData", (data) => {
+			let item = JSON.parse(data)
+			this.setData({
+				audioUrl: item.url,
+				title: item.title,
+				times: item.duration,
+				poster: item.poster,
+				backgroundImage: item.backgroundImage,
+				frequency: 1000 / item.frequency
+			})
+
+			this.initAudioResource()
+		})
   },
 
   /**
@@ -87,7 +104,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-
+		this._destroyAudio()
   },
 
   /**
@@ -134,8 +151,9 @@ Page({
 			wx.hideLoading()
 		})
 
-		let st = this._formatTimes(this.data.times)
-		this.setData({showTime: st})
+		let st = this._formatTimes(this.data.times) // 精确时长
+		let dt = this.data.times/60|0 // 模糊时长
+		this.setData({showTime: st, dimTime: dt})
 	},
 
 	// 运行动画
@@ -169,7 +187,7 @@ Page({
 				ctx.beginPath()
 				ctx.arc(ORIGIN_X, ORIGIN_Y, BG_R, 0, 2 * Math.PI)
 				ctx.clip()
-				let avatarImgRes = await this._loadNetworkImageRes(canvas, "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657783238tSsToE.jpg")
+				let avatarImgRes = await this._loadNetworkImageRes(canvas, this.data.poster)
 				ctx.drawImage(avatarImgRes, BG_IMAGE_X, BG_IMAGE_Y, BG_IMAGE_W, BG_IMAGE_H)
 				ctx.closePath()
 				ctx.restore()
@@ -297,6 +315,7 @@ Page({
 	// 运行进度条动画
 	playProgressAnimate(seconds) {
 		let canvas = this.data.progressCanvas
+		let frequency = this.data.frequency
 		let total = seconds * frequency
 		let times = this.data.times
 
@@ -439,7 +458,7 @@ Page({
 		let nextTime = curTime - 15
 		nextTime = nextTime > 0 ? nextTime : 0
 		if (nextTime > 0) {
-			this.setData({current: this.data.current - 15 * frequency})
+			this.setData({current: this.data.current - 15 * this.data.frequency})
 		} else {
 			this.setData({current: 0})
 		}
@@ -456,7 +475,7 @@ Page({
 		if (nextTime >= duration) {
 			audio.stop()
 		} else {
-			this.setData({current: this.data.current + 15 * frequency})
+			this.setData({current: this.data.current + 15 * this.data.frequency})
 			audio.seek(nextTime)
 		}
 		console.log('快进', curTime, nextTime);
@@ -497,5 +516,12 @@ Page({
 			result = "00:00"
 		}
 		return result
+	},
+
+	// 销毁音频
+	_destroyAudio() {
+		if (this.data.bgAudio) {
+			this.data.bgAudio.stop()
+		}
 	}
 })

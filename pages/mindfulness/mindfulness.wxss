@@ -3,7 +3,9 @@
     position: relative;
     height: 100vh;
 		box-sizing: border-box;
-    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657783537SjkQCi.jpg") no-repeat center;
+    background-color: #8d8d8d;
+    background-repeat: no-repeat;
+    background-position: center;
     background-size: cover;
 }
 
@@ -107,4 +109,11 @@
     right: 0;
     width: inherit;
     height: inherit;
+}
+
+#test {
+    position: fixed;
+		left: 9999px;
+    width: 0;
+    height: 0;
 }

@@ -1,0 +1,13 @@
+<view>
+    <view class="container">
+        <view class="item" wx:for="{{list}}" wx:key="index" bindtap="goToMindfulness" data-item="{{item}}">
+            <image class="cover" mode="aspectFill" src="{{item.poster}}"></image>
+            <view class="content">
+                <view class="title limit-one-line">{{item.title}}</view>
+                <view class="subTitle">{{item.dimTime}}</view>
+            </view>
+        </view>
+    </view>
+
+    <canvas id="test" type="2d"></canvas>
+</view>

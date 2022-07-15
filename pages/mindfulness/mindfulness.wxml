@@ -1,6 +1,5 @@
-<view class="container" style="padding-top:  {{statusHeight+44}}px;">
+<view class="container" style="padding-top:  {{statusHeight+44}}px;background-image: url('{{backgroundImage}}');">
     <naviBar title="" style="padding-top: {{statusHeight+44}}px;" color="transparent" titleColor="#000000"></naviBar>
-    <!--<image class="bg" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657783537SjkQCi.jpg" mode="aspectFill" />-->
 
     <view class="time-wrap" style="margin-top: {{customCanvasMarginTop}}px;">
         <canvas type="2d" id="bgCanvas" />
@@ -11,8 +10,8 @@
     </view>
 
     <view class="content">
-        <view class="title">深入睡眠冥想</view>
-        <view class="subtitle">共5分钟</view>
+        <view class="title">{{title}}</view>
+        <view class="subtitle">共 {{dimTime}} 分钟</view>
     </view>
 
     <view class="operate" style="margin-top: {{140 + customCanvasMarginTop}}rpx;">
@@ -23,4 +22,5 @@
         </view>
         <view class="icon right" bindtap="_operateSeek" data-type="speed"></view>
     </view>
+
 </view>

@@ -1,5 +1,4 @@
 import bxPoint from "../utils/bxPoint"
-import { getYouZanHomeLink } from "../api/life/index";
 
 Component({
   data: {
