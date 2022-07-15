@@ -32,8 +32,9 @@ Page({
   data: {
 		statusHeight: 0,
 		customCanvasMarginTop: 0,
-		frequency: 0, // 频率
+		frequency: 0, // 屏幕刷新率
 
+		_cancelRequestAnimationFrame: false, // 取消requestAnimationFrame
 		progressCanvas: null,
 		progressCTX: null,
 		current: 0, // 进度条刻度
@@ -226,6 +227,7 @@ Page({
 				canvas.width = res[0].width * dpr
 				canvas.height = res[0].height * dpr
 				ctx.scale(dpr, dpr)
+				let waveRequestId = 0
 
 				// 波纹01
 				const max = WAVE_LINE_WIDTH * 3200 / 8 // 控制波纹速度
@@ -233,6 +235,10 @@ Page({
 				let cur2 = 0
 				let cur3 = 0
 				let waveFn = () => {
+					if (this.data._cancelRequestAnimationFrame) {
+						return canvas.cancelAnimationFrame(waveRequestId)
+					}
+
 					ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 
 					ctx.strokeStyle = "rgba(255,255,255,0.5)"
@@ -277,7 +283,7 @@ Page({
 					canvas.requestAnimationFrame(waveFn)
 				}
 				let t = setTimeout(() => {
-					canvas.requestAnimationFrame(waveFn)
+					waveRequestId = canvas.requestAnimationFrame(waveFn)
 					clearTimeout(t)
 				}, 900)
 			})
@@ -318,8 +324,12 @@ Page({
 		let frequency = this.data.frequency
 		let total = seconds * frequency
 		let times = this.data.times
+		let progressRequestId = 0
 
 		let fn = () => {
+			if (this.data._cancelRequestAnimationFrame) {
+				return canvas.cancelAnimationFrame(progressRequestId)
+			}
 			this.data.current = this.data.didStopProgressAnimate ? this.data.current : this.data.current + 1
 			this.data.progressCTX.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 			this.updateProgress(this.data.current / total * 2)
@@ -331,7 +341,7 @@ Page({
 
 			canvas.requestAnimationFrame(fn)
 		}
-		canvas.requestAnimationFrame(fn)
+		progressRequestId = canvas.requestAnimationFrame(fn)
 	},
 
 	// 加载网络图片
@@ -523,5 +533,6 @@ Page({
 		if (this.data.bgAudio) {
 			this.data.bgAudio.stop()
 		}
+		this.setData({_cancelRequestAnimationFrame: true})
 	}
 })

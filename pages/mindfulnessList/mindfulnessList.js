@@ -117,7 +117,7 @@ Page({
 						}
 					}
 					if (index >= 2) {
-						self.setData({frequency: Number(t2 -t1).toFixed(2)})
+						self.setData({frequency: Number(t2 -t1).toFixed(4)})
 						return canvas.cancelAnimationFrame(requestId)
 					}
 					index += 1
