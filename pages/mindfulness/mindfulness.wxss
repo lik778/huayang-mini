@@ -1,0 +1,112 @@
+.container {
+		overflow: hidden;
+    position: relative;
+    height: 100vh;
+		box-sizing: border-box;
+    background-color: #8d8d8d;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.bg {
+		position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+		filter: blur(12px);
+}
+
+.time-wrap {
+    position: relative;
+    width: 375px;
+    height: 375px;
+		margin: 0 auto;
+}
+
+#bgCanvas, #progressCanvas, #waveCanvas {
+    position: absolute;
+    width: inherit;
+    height: inherit;
+}
+
+.showtime {
+		position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+		margin: auto;
+    width: 192rpx;
+    height: 88rpx;
+		text-align: center;
+		border-radius: 999rpx;
+    background: rgba(0,0,0, 0.6);
+		font: 500 36rpx/88rpx "PingFang SC";
+		color: white;
+}
+
+.content {
+    width: 100vw;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+}
+
+.title {
+		font: 500 40rpx/1 PingFangSC;
+		color: white;
+}
+
+.subtitle {
+    margin-top: 28rpx;
+		font: 28rpx/1 "PingFang TC";
+		color: rgba(255, 255, 255, 0.8);
+}
+
+
+.operate {
+		box-sizing: border-box;
+    width: 100vw;
+    margin-top: 140rpx;
+		padding: 0 100rpx;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+}
+
+.icon {
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657691935Qovbmu.jpg") no-repeat center;
+    background-size: contain;
+}
+
+.icon:active {
+    opacity: 0.9;
+}
+
+.left, .right {
+    width: 30px;
+    height: 30px;
+}
+
+.left {
+    background-image: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1657691924REIFWm.jpg");
+}
+
+.center {
+		position: relative;
+    width: 88px;
+    height: 88px;
+}
+
+.center > image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: inherit;
+    height: inherit;
+}
