@@ -9,5 +9,5 @@
         </view>
     </view>
 
-    <canvas id="test" type="2d"></canvas>
+    <!--<canvas id="test" type="2d"></canvas>-->
 </view>

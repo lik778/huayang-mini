@@ -73,7 +73,7 @@ Page({
 				times: item.duration,
 				poster: item.poster,
 				backgroundImage: item.backgroundImage,
-				frequency: 1000 / item.frequency
+				frequency: 1000 / 16.66
 			})
 
 			this.initAudioResource()
@@ -238,7 +238,8 @@ Page({
 				let cur3 = 0
 				let waveFn = () => {
 					if (this.data._cancelRequestAnimationFrame) {
-						return canvas.cancelAnimationFrame(waveRequestId)
+						// return canvas.cancelAnimationFrame(waveRequestId)
+						return clearInterval(waveRequestId)
 					}
 
 					ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
@@ -282,10 +283,13 @@ Page({
 						ctx.restore()
 					}
 
-					canvas.requestAnimationFrame(waveFn)
+					// canvas.requestAnimationFrame(waveFn)
 				}
 				let t = setTimeout(() => {
-					waveRequestId = canvas.requestAnimationFrame(waveFn)
+					// waveRequestId = canvas.requestAnimationFrame(waveFn)
+					waveRequestId = setInterval(() => {
+						waveFn()
+					}, 16)
 					clearTimeout(t)
 				}, 900)
 			})
@@ -294,6 +298,8 @@ Page({
 	// 更新进度条
 	updateProgress(angle) {
 		let ctx = this.data.progressCTX
+
+		if (angle >= 2) angle = 2
 
 		// 进度条动画
 		ctx.lineWidth = PG_LINE_WIDTH
@@ -330,20 +336,23 @@ Page({
 
 		let fn = () => {
 			if (this.data._cancelRequestAnimationFrame) {
-				return canvas.cancelAnimationFrame(progressRequestId)
+				// return canvas.cancelAnimationFrame(progressRequestId)
+				return clearInterval(progressRequestId)
 			}
 			this.data.current = this.data.didStopProgressAnimate ? this.data.current : this.data.current + 1
 			this.data.progressCTX.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 			this.updateProgress(this.data.current / total * 2)
 
 			// 更新倒计时
-			let newShowTime = this.data.current / frequency | 0
-			let st = this._formatTimes(times - newShowTime)
+			let st = this._formatTimes(times - this.data.bgAudio.currentTime | 0)
 			if (st !== this.data.showTime) this.setData({showTime: st})
 
-			canvas.requestAnimationFrame(fn)
+			// canvas.requestAnimationFrame(fn)
 		}
-		progressRequestId = canvas.requestAnimationFrame(fn)
+		// progressRequestId = canvas.requestAnimationFrame(fn)
+		progressRequestId = setInterval(() => {
+			fn()
+		}, 16)
 	},
 
 	// 加载网络图片
