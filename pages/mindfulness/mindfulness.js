@@ -145,12 +145,14 @@ Page({
 
 	// 初始化音频播放器 & 下载音频文件
 	initAudioResource() {
-		wx.showLoading({title: "正在下载音频...", mask: true})
-		this._downloadAudio(this.data.audioUrl).then((file) => {
-			this.data.audioLink = file
-		}).finally(() => {
-			wx.hideLoading()
-		})
+		// wx.showLoading({title: "正在下载音频...", mask: true})
+		// this._downloadAudio(this.data.audioUrl).then((file) => {
+		// 	this.data.audioLink = file
+		// }).finally(() => {
+		// 	wx.hideLoading()
+		// })
+
+		this.data.audioLink = this.data.audioUrl
 
 		let st = this._formatTimes(this.data.times) // 精确时长
 		let dt = this.data.times/60|0 // 模糊时长
@@ -397,9 +399,16 @@ Page({
 			this._switchAnimateState("stop")
 		})
 
+		// 监听音频开始跳转操作
+		audio.onSeeking(() => {
+			console.log("bg audio seeking", this.data.bgAudio.currentTime)
+			this._switchAnimateState("stop", false)
+		})
+
 		// 监听音频完成跳转事件
 		audio.onSeeked(() => {
 			console.log("bg audio seeked", this.data.bgAudio.currentTime)
+			this._switchAnimateState("start", false)
 		})
 
 		audio.onEnded(() => {
@@ -446,7 +455,7 @@ Page({
 		let lockTimer = setTimeout(() => {
 			this.setData({operateLock: false})
 			clearTimeout(lockTimer)
-		}, 500)
+		}, 800)
 
 		let type = e.currentTarget.dataset.type
 		switch (type) {
@@ -500,9 +509,10 @@ Page({
 	/**
 	 * 切换动画状态
 	 * @param state, stop:暂停, start:启动
+	 * @param didCheckout, 是否更新按钮状态
 	 * @private
 	 */
-	_switchAnimateState(state) {
+	_switchAnimateState(state, didCheckout = true) {
 		let bool = false
 		switch (state) {
 			case "stop": {
@@ -514,7 +524,10 @@ Page({
 				break
 			}
 		}
-		this.setData({didStopWaveAnimate: bool, didStopProgressAnimate: bool, bgAudioPaused: bool})
+		this.setData({didStopWaveAnimate: bool, didStopProgressAnimate: bool})
+		if (didCheckout) {
+			this.setData({bgAudioPaused: bool})
+		}
 	},
 
 	// 格式化时间
