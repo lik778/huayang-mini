@@ -29,9 +29,9 @@
 }
 
 .tab-bar-item cover-image {
-  width: 74rpx;
-  height: 74rpx;
-  margin-bottom: 4rpx;
+  width: 60rpx;
+  height: 60rpx;
+  margin-bottom: 6rpx;
 }
 
 .tab-bar-item cover-image.ground {
@@ -39,7 +39,8 @@
 }
 
 .tab-bar-item cover-view {
-  font-size: 32rpx;
+  font-size: 24rpx;
+	color: rgba(34, 34, 34, 0.6);
 }
 
 .tab-bar-item .content {

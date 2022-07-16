@@ -110,10 +110,3 @@
     width: inherit;
     height: inherit;
 }
-
-#test {
-    position: fixed;
-		left: 9999px;
-    width: 0;
-    height: 0;
-}

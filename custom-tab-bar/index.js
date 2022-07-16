@@ -4,13 +4,19 @@ Component({
   data: {
     selected: 0,
     color: "#666666",
-    selectedColor: "#FF5544",
+    selectedColor: "#FE5141",
     list: [{
         "pagePath": "/pages/discovery/discovery",
         "selectedIconPath": "../assets/images/common/homeActive.png",
         "iconPath": "../assets/images/common/home.png",
         "text": "首页",
       },
+			{
+				"pagePath": "/pages/mindfulnessList/mindfulnessList",
+				"selectedIconPath": "../assets/images/common/mindfulness.png",
+				"iconPath": "../assets/images/common/mindfulness.png",
+				"text": "正念练习",
+			},
       {
         "pagePath": "/pages/userCenter/userCenter",
         "selectedIconPath": "../assets/images/common/mineActive.png",
@@ -18,13 +24,9 @@ Component({
         "text": "我的",
       }
     ],
-    youZanHomeLink: ""
   },
   attached() {},
   created() {
-    // getYouZanHomeLink().then((link) => {
-    //   this.setData({youZanHomeLink: link})
-    // })
   },
   methods: {
     switchTab(e) {
@@ -36,8 +38,13 @@ Component({
         bxPoint("homepage_mine_visit", {}, false)
       }
 
+			//
+			else if (this.data.selected === 1 && url === '/pages/mindfulnessList/mindfulnessList') {
+
+			}
+
       // 我的TAB
-      else if (this.data.selected === 1 && url === '/pages/discovery/discovery') {
+      else if (this.data.selected === 2 && url === '/pages/discovery/discovery') {
         bxPoint("minepage_home_visit", {}, false)
       }
 

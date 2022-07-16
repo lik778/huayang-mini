@@ -1,5 +1,9 @@
 @import "../../assets/css/common.wxss";
 
+.mindfulness-list {
+    padding-bottom: 150rpx;
+}
+
 .container {
 		display: flex;
 		flex-wrap: wrap;
@@ -35,4 +39,11 @@
 .subTitle {
 		font: 28rpx/1 PingFangSC;
 		color: rgba(0, 0, 0, 0.3);
+}
+
+#test {
+    position: fixed;
+    left: 9999px;
+    width: 0;
+    height: 0;
 }

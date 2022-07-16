@@ -209,6 +209,9 @@
         "pagePath": "pages/discovery/discovery"
       },
       {
+        "pagePath": "pages/mindfulnessList/mindfulnessList"
+      },
+      {
         "pagePath": "pages/userCenter/userCenter"
       }
     ]
