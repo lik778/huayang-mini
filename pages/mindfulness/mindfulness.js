@@ -73,7 +73,7 @@ Page({
 				times: item.duration,
 				poster: item.poster,
 				backgroundImage: item.backgroundImage,
-				frequency: 1000 / item.frequency
+				frequency: 1000 / 16.66
 			})
 
 			this.initAudioResource()
@@ -145,12 +145,14 @@ Page({
 
 	// 初始化音频播放器 & 下载音频文件
 	initAudioResource() {
-		wx.showLoading({title: "正在下载音频...", mask: true})
-		this._downloadAudio(this.data.audioUrl).then((file) => {
-			this.data.audioLink = file
-		}).finally(() => {
-			wx.hideLoading()
-		})
+		// wx.showLoading({title: "正在下载音频...", mask: true})
+		// this._downloadAudio(this.data.audioUrl).then((file) => {
+		// 	this.data.audioLink = file
+		// }).finally(() => {
+		// 	wx.hideLoading()
+		// })
+
+		this.data.audioLink = this.data.audioUrl
 
 		let st = this._formatTimes(this.data.times) // 精确时长
 		let dt = this.data.times/60|0 // 模糊时长
@@ -236,7 +238,8 @@ Page({
 				let cur3 = 0
 				let waveFn = () => {
 					if (this.data._cancelRequestAnimationFrame) {
-						return canvas.cancelAnimationFrame(waveRequestId)
+						// return canvas.cancelAnimationFrame(waveRequestId)
+						return clearInterval(waveRequestId)
 					}
 
 					ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
@@ -280,10 +283,13 @@ Page({
 						ctx.restore()
 					}
 
-					canvas.requestAnimationFrame(waveFn)
+					// canvas.requestAnimationFrame(waveFn)
 				}
 				let t = setTimeout(() => {
-					waveRequestId = canvas.requestAnimationFrame(waveFn)
+					// waveRequestId = canvas.requestAnimationFrame(waveFn)
+					waveRequestId = setInterval(() => {
+						waveFn()
+					}, 16)
 					clearTimeout(t)
 				}, 900)
 			})
@@ -292,6 +298,8 @@ Page({
 	// 更新进度条
 	updateProgress(angle) {
 		let ctx = this.data.progressCTX
+
+		if (angle >= 2) angle = 2
 
 		// 进度条动画
 		ctx.lineWidth = PG_LINE_WIDTH
@@ -328,20 +336,23 @@ Page({
 
 		let fn = () => {
 			if (this.data._cancelRequestAnimationFrame) {
-				return canvas.cancelAnimationFrame(progressRequestId)
+				// return canvas.cancelAnimationFrame(progressRequestId)
+				return clearInterval(progressRequestId)
 			}
 			this.data.current = this.data.didStopProgressAnimate ? this.data.current : this.data.current + 1
 			this.data.progressCTX.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 			this.updateProgress(this.data.current / total * 2)
 
 			// 更新倒计时
-			let newShowTime = this.data.current / frequency | 0
-			let st = this._formatTimes(times - newShowTime)
+			let st = this._formatTimes(times - this.data.bgAudio.currentTime | 0)
 			if (st !== this.data.showTime) this.setData({showTime: st})
 
-			canvas.requestAnimationFrame(fn)
+			// canvas.requestAnimationFrame(fn)
 		}
-		progressRequestId = canvas.requestAnimationFrame(fn)
+		// progressRequestId = canvas.requestAnimationFrame(fn)
+		progressRequestId = setInterval(() => {
+			fn()
+		}, 16)
 	},
 
 	// 加载网络图片
@@ -397,9 +408,16 @@ Page({
 			this._switchAnimateState("stop")
 		})
 
+		// 监听音频开始跳转操作
+		audio.onSeeking(() => {
+			console.log("bg audio seeking", this.data.bgAudio.currentTime)
+			this._switchAnimateState("stop", false)
+		})
+
 		// 监听音频完成跳转事件
 		audio.onSeeked(() => {
 			console.log("bg audio seeked", this.data.bgAudio.currentTime)
+			this._switchAnimateState("start", false)
 		})
 
 		audio.onEnded(() => {
@@ -446,7 +464,7 @@ Page({
 		let lockTimer = setTimeout(() => {
 			this.setData({operateLock: false})
 			clearTimeout(lockTimer)
-		}, 500)
+		}, 800)
 
 		let type = e.currentTarget.dataset.type
 		switch (type) {
@@ -500,9 +518,10 @@ Page({
 	/**
 	 * 切换动画状态
 	 * @param state, stop:暂停, start:启动
+	 * @param didCheckout, 是否更新按钮状态
 	 * @private
 	 */
-	_switchAnimateState(state) {
+	_switchAnimateState(state, didCheckout = true) {
 		let bool = false
 		switch (state) {
 			case "stop": {
@@ -514,7 +533,10 @@ Page({
 				break
 			}
 		}
-		this.setData({didStopWaveAnimate: bool, didStopProgressAnimate: bool, bgAudioPaused: bool})
+		this.setData({didStopWaveAnimate: bool, didStopProgressAnimate: bool})
+		if (didCheckout) {
+			this.setData({bgAudioPaused: bool})
+		}
 	},
 
 	// 格式化时间

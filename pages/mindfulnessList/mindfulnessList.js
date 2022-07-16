@@ -7,7 +7,7 @@ Page({
    */
   data: {
 		list: [],
-		frequency: 0
+		// frequency: 0
   },
 
   /**
@@ -68,12 +68,14 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage() {
-
+		return {
+			title: "花样正念练习"
+		}
   },
 
 	run() {
 		this.getList()
-		this._getScreenFrequency()
+		// this._getScreenFrequency()
 	},
 
 	getList() {
@@ -93,7 +95,8 @@ Page({
 		wx.navigateTo({
 			url: "/pages/mindfulness/mindfulness",
 			success(res) {
-				res.eventChannel.emit("transmitData", JSON.stringify({...item, frequency: self.data.frequency}))
+				// frequency: self.data.frequency
+				res.eventChannel.emit("transmitData", JSON.stringify({...item}))
 			}
 		})
 	},
