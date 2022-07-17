@@ -22,7 +22,7 @@ const PG_DOT_LINE_WIDTH = 5 // 进度点边框宽度
 const WAVE_LINE_WIDTH = 1 // 波浪边框宽度
 const WAVE_R = PG_R + PG_LINE_WIDTH / 2 - WAVE_LINE_WIDTH / 2 // 波浪半径
 
-
+const UNIT = 16.66
 
 Page({
 
@@ -47,7 +47,7 @@ Page({
 		title: "",
 		poster: "",
 		backgroundImage: "",
-		times: 187, // 音频时长（秒）
+		times: 0, // 音频时长（秒）
 		showTime: "", // 音频准确时间
 		dimTime: "", // 音频大致时间
 		audioUrl: "", // 音频地址
@@ -73,7 +73,7 @@ Page({
 				times: item.duration,
 				poster: item.poster,
 				backgroundImage: item.backgroundImage,
-				frequency: 1000 / 16.66
+				frequency: 1000 / UNIT
 			})
 
 			this.initAudioResource()
@@ -289,7 +289,7 @@ Page({
 					// waveRequestId = canvas.requestAnimationFrame(waveFn)
 					waveRequestId = setInterval(() => {
 						waveFn()
-					}, 16)
+					}, UNIT)
 					clearTimeout(t)
 				}, 900)
 			})
@@ -352,7 +352,7 @@ Page({
 		// progressRequestId = canvas.requestAnimationFrame(fn)
 		progressRequestId = setInterval(() => {
 			fn()
-		}, 16)
+		}, UNIT)
 	},
 
 	// 加载网络图片
@@ -383,7 +383,7 @@ Page({
 	// 播放音频
 	_playAudio() {
 		let audio = wx.getBackgroundAudioManager()
-		audio.title = "花样正念"
+		audio.title = this.data.title
 		audio.src = this.data.audioLink
 
 		// 监听音频加载成功可以播放
@@ -511,7 +511,8 @@ Page({
 
 	// 重置音频进度
 	_resetAudioSeek() {
-		this.setData({current: 0, needInitBgAudio: true})
+		let st = this._formatTimes(0)
+		this.setData({current: 0, needInitBgAudio: true, showTime: st})
 		this._switchAnimateState("stop")
 	},
 
