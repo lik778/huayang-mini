@@ -60,4 +60,5 @@
   color: #FFFFFF;
   margin: 0 auto;
   margin-bottom: 60rpx;
+  overflow: hidden;
 }

@@ -38,7 +38,9 @@
     "pages/activities/activities",
     "pages/pureWebview/pureWebview",
     "pages/shopSubject/shopSubject",
-    "pages/preserve/preserve"
+    "pages/preserve/preserve",
+    "pages/mindfulness/mindfulness",
+    "pages/mindfulnessList/mindfulnessList"
   ],
   "requiredBackgroundModes": [
     "audio",
@@ -205,6 +207,9 @@
     "list": [
       {
         "pagePath": "pages/discovery/discovery"
+      },
+      {
+        "pagePath": "pages/mindfulnessList/mindfulnessList"
       },
       {
         "pagePath": "pages/userCenter/userCenter"

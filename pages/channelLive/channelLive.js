@@ -95,7 +95,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: "花样直播，成就向往的生活，成为更好的自己～",
-      imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1649227120luQbeC.jpg",
+      imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1655714243gAEAeo.jpg",
       path: "/pages/channelLive/channelLive"
     }
   },
@@ -112,15 +112,17 @@ Page({
     })
   },
 
-  run() {
+  async run() {
     this.getChannelLiveInfo()
     this.hasSubscribe()
     // 检查用户是否已一键订阅所有直播预约
-    this.subScribeMessage(this.data.LongSubscribeTempId)
-    // 往期回放
+    await this.subScribeMessage(this.data.LongSubscribeTempId)
+    // 往期所有回放
     getChannelLives({
       status: 3,
-      is_show: 1
+      is_show: 1,
+      limit: 9999,
+      offset: 0
     }).then((data) => {
       this.setData({
         reviewChannelList: data
@@ -141,8 +143,9 @@ Page({
       this.setData({
         subscribeChannelList: data,
         hasOtherPlatformLive: list.length > 0 ? true : false
+      }, () => {
+        this.loadHistorySubscribeChannelLives()
       })
-      this.loadHistorySubscribeChannelLives()
     })
   },
   // 预约直播
@@ -240,9 +243,11 @@ Page({
   },
   // 加载历史已订阅视频号直播列表
   loadHistorySubscribeChannelLives() {
-    if (this.data.didSubscribeAllChannelLives) return false
+    console.log(this.data.didSubscribeAllChannelLives, !this.data.hasOtherPlatformLive)
+    if (this.data.didSubscribeAllChannelLives && !this.data.hasOtherPlatformLive) return
+
     let openId = getLocalStorage(GLOBAL_KEY.openId)
-    if (!openId) return false
+    if (!openId) return
     getHistorySubscribeLives({
         open_id: openId
       })
@@ -404,26 +409,36 @@ Page({
   },
   // 检查通知订阅状态
   subScribeMessage(tempId) {
-    let self = this
-    wx.getSetting({
-      withSubscriptions: true,
-      success(res) {
-        if (res.subscriptionsSetting[tempId] === "accept") {
+    return new Promise(resolve => {
+      let self = this
+      wx.getSetting({
+        withSubscriptions: true,
+        success(res) {
+          console.log(res.subscriptionsSetting, 1)
+          if (res.subscriptionsSetting[tempId] === "accept") {
+            self.setData({
+              didSubscribeAllChannelLives: true
+            }, () => {
+              resolve()
+            })
+          } else if (res.subscriptionsSetting[tempId] === "reject") {
+            self.setData({
+              didSubscribeAllChannelLives: false
+            }, () => {
+              resolve()
+            })
+          } else {
+            resolve()
+          }
+        },
+        complete() {
           self.setData({
-            didSubscribeAllChannelLives: true
-          })
-        } else if (res.subscriptionsSetting[tempId] === "reject") {
-          self.setData({
-            didSubscribeAllChannelLives: false
+            showPage: true
           })
         }
-      },
-      complete() {
-        self.setData({
-          showPage: true
-        })
-      }
+      })
     })
+
   },
   // 用户授权取消
   authCancelEvent() {

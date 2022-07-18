@@ -76,11 +76,11 @@ const bxPoint = function(siteId, params, ispv = true) {
     ...params,
     time: +new Date(),
     site_id: siteId,
-    __debug: "1", // 打点数据，测试环境携带__dev，上线后去除该字段
+    // __debug: "1", // 打点数据，测试环境携带__dev，上线后去除该字段
     tracktype: ispv ? "pageview" : "event",
     event_type: 'huayang'
   }
-  request._get('https://www.baixing.com/c/ev/huayang', params).then()
+  request._get('https://cloud.baixing.com.cn/api/huayang-log/log', params).then()
 }
 
 export default bxPoint

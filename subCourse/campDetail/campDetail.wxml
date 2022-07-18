@@ -1,4 +1,3 @@
-<!--subCourse/trainingCampDetail/trainingCampDetail.wxml-->
 <view class="container" wx:if="{{campData!==''&&canShowPage}}">
   <!-- 返回按钮 -->
   <view class="back-icon" bindtap="back" style="padding-top:{{statusBarHeight}}px">
@@ -32,20 +31,23 @@
       </block>
     </swiper>
     <view class="dot-list" wx:if="{{advertisingList.length>1}}">
-      <view wx:for="{{advertisingList}}" wx:key="{{index}}"
-        class="{{index===advertisingIndex?'dot-item dot-active-item':'dot-item'}}"></view>
+      <view wx:for="{{advertisingList}}" wx:key="{{index}}" class="{{index===advertisingIndex?'dot-item dot-active-item':'dot-item'}}"></view>
     </view>
   </view>
   <!-- 主体 -->
   <view class="main">
     <!-- 日历切换 -->
     <view class="calendar">
-      <view class="calendar-left" wx:if="{{choosedDay!==0}}">
+      <!-- <view class="calendar-left" wx:if="{{choosedDay!==0}}">
         {{hasStartCampType===2?todayDate===showDate?'今日':'日期':'日期'}}：{{showDate}}
       </view>
       <view class="calendar-left" wx:else>
         预告课程
+      </view> -->
+      <view class="calendar-left">
+        {{dayTitle}}
       </view>
+
       <view class="calendar-right subject-font-color" bindtap="toChangeDate">
         查看课表
       </view>
@@ -54,19 +56,16 @@
       <!-- 视频播放器 -->
       <view class="video-player" wx:if="{{videoData.src!==''}}">
         <view class="video-box">
-          <video id="video" show-center-play-btn="{{false}}" bindfullscreenchange="enterFull" src="{{videoData.src}}"
-            style="height:{{videoHeight}}px" bindtimeupdate="processChange"></video>
+          <video id="video" show-center-play-btn="{{false}}" bindfullscreenchange="enterFull" src="{{videoData.src}}" style="height:{{videoHeight}}px" bindtimeupdate="processChange"></video>
           <image src="{{videoData.pic}}" wx:if="{{showCover}}" class="video-cover"></image>
-          <image src="/assets/images/common/play.png" wx:if="{{showPlayIcon}}" class="video-play" bindtap="playVideo"
-            wx:if="{{!showLock}}"></image>
+          <image src="/assets/images/common/play.png" wx:if="{{showPlayIcon}}" class="video-play" bindtap="playVideo" wx:if="{{!showLock}}"></image>
           <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1603853206UOIXkK.jpg" wx:else class="video-play">
           </image>
         </view>
       </view>
       <!-- 课程列表 -->
       <view class="course-list">
-        <view class="course-item" wx:for="{{courseList}}" wx:key="*this" bindtap="{{showLock?'':'toCoursedetail'}}"
-          data-item="{{item}}" data-index='{{index}}'>
+        <view class="course-item" wx:for="{{courseList}}" wx:key="*this" bindtap="{{showLock?'':'toCoursedetail'}}" data-item="{{item}}" data-index='{{index}}'>
           <view class="course-item-left">
             <block wx:if="{{!showLock}}">
               <!-- <image src="{{iconSrcList.course}}" wx:if="{{item.type==='kecheng'}}"></image> -->
@@ -83,10 +82,8 @@
               <!-- <view class="course-item-right-bottom" wx:if='{{item.type==="kecheng"&&item.duration!=="NaN分钟"}}'>
                 {{item.duration}}</view> -->
             </view>
-            <view class="{{showLock?'course-item-study course-item-study-lock':'course-item-study subject-bg-color'}}"
-              wx:if="{{item.type==='url'||item.type==='product'}}">前往</view>
-            <view class="{{showLock?'course-item-study course-item-study-lock':'course-item-study subject-bg-color'}}"
-              wx:else>学习
+            <view class="{{showLock?'course-item-study course-item-study-lock':'course-item-study subject-bg-color'}}" wx:if="{{item.type==='url'||item.type==='product'}}">前往</view>
+            <view class="{{showLock?'course-item-study course-item-study-lock':'course-item-study subject-bg-color'}}" wx:else>学习
             </view>
           </view>
         </view>
@@ -98,8 +95,7 @@
     </view>
   </view>
   <!-- 分享跳转海报按钮 -->
-  <view class="share-poster-box subject-bg-color " wx:if='{{showShareButton&&courseList.length>0}}'
-    bindtap="toCampPoster">
+  <view class="share-poster-box subject-bg-color " wx:if='{{showShareButton&&courseList.length>0}}' bindtap="toCampPoster">
     学习打卡
     <!-- share-poster-box -->
   </view>
@@ -127,8 +123,7 @@
     </view>
   </view>
   <!-- 分销按钮 -->
-  <view class="share-friend" bindtap="shareCamp"
-    wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&campData.sharePrice!==''}}">
+  <view class="share-friend" bindtap="shareCamp" wx:if="{{userInfo!==''&&userInfo.kecheng_user.is_promoter===1&&campData.sharePrice!==''}}">
     <view class="share-friend-box">
       <view class="share-friend-bg">
         <image src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606186110bQsZDj.jpg"></image>

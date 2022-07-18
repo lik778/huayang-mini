@@ -3,6 +3,9 @@ import {
   getActivityDetail
 } from "../../api/mine/index"
 import {
+  getUserAttentionOfficeAccount
+} from "../../api/channel/index"
+import {
   queryOrderDetail
 } from "../../api/course/index"
 import {
@@ -21,12 +24,14 @@ Page({
     orderData: '',
     activityData: "",
     activityId: '',
-    orderId: ""
+    orderId: "",
+    isSubscribeOfficeAccount: false
   },
 
   addTeacherTap() {
+    let qrcodeUrl = this.data.isSubscribeOfficeAccount ? this.data.activityData.ret_guide_qrcode : this.data.activityData.ret_guide_gongzhonghao_qrcode
     wx.previewImage({
-      urls: [this.data.activityData.ret_guide_qrcode],
+      urls: [qrcodeUrl],
       success: () => {
         // 2022-04-15 JJ
         bxPoint("university_activity_detail_contact_click", {
@@ -69,6 +74,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    getUserAttentionOfficeAccount({
+      open_id: getLocalStorage(GLOBAL_KEY.openId)
+    }).then(res => {
+      if (res.data) {
+        this.setData({
+          isSubscribeOfficeAccount: true
+        })
+      }
+    })
     if (options.orderId && options.activityId) {
       let userInfo = getLocalStorage(GLOBAL_KEY.userInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)) : ""
       this.setData({

@@ -32,10 +32,10 @@ Page({
         let link = ''
         let userId = JSON.parse(getLocalStorage(GLOBAL_KEY.userId))
         let mobile = JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)).mobile
-        if (request.baseUrl === 'https://huayang.baixing.cn') {
+        if (request.baseUrl === 'https://dev.huayangbaixing.com') {
           // 测试环境
           if (res.win_type === 'laohuji') {
-            link = `https://huayang.baixing.cn/#/home/miniprogram/lottery?activity_id=${activity_id}&user_id=${userId}&mobile=${mobile}`
+            link = `https://dev.huayangbaixing.com/#/home/miniprogram/lottery?activity_id=${activity_id}&user_id=${userId}&mobile=${mobile}`
           }
         } else {
           // 生产环境

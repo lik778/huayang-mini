@@ -70,33 +70,28 @@ Page({
 			let headLines = []
 			if ($notNull(data)) {
 				for (let key in data) {
-					let ary = data[key]
+					let ary = data[key] || []
 
 					switch (key) {
-						// 花样活动
-						case "activity": {
-							ary.forEach(item => {
-								headLines.push({
-									pay_online: item.pay_online,
-									type: "activity",
-									title: `同城活动：${item.title}`,
-									id: item.id
-								})
+						case "configToutiaoItemList": {
+							ary.forEach((item) => {
+								if (item.schema.includes("http")) {
+									headLines.push({
+										type: "huaYang",
+										title: item.title,
+										link: `/subCourse/noAuthWebview/noAuthWebview?link=${item.schema}`
+									})
+								} else {
+									headLines.push({
+										type: "huaYang",
+										title: item.title,
+										link: item.schema
+									})
+								}
 							})
 							break
 						}
-						case "good": {
-							// 有赞商品
-							ary.forEach(item => {
-								headLines.push({
-									type: "youZan",
-									title: `严选上新：${item.title}`,
-									link: `${item.page_url}?alias=${item.alias}`
-								})
-							})
-							break
-						}
-						case "hylife": {
+						case "lifeMediaList": {
 							// 花样好生活
 							ary.forEach(item => {
 								if (+item.type === 3) {
@@ -117,23 +112,12 @@ Page({
 							})
 							break
 						}
-						case "kecheng": {
-							// 有赞培训课
-							ary.forEach(item => {
-								headLines.push({
-									type: "youZan",
-									title: `最新课程：${item.title}`,
-									link: `${item.page_url}?alias=${item.alias}`
-								})
-							})
-							break
-						}
-						case "zhibo": {
+						case "zhiboReviews": {
 							// 花样视频号直播预约页
 							ary.forEach(item => {
 								headLines.push({
 									type: "huaYang",
-									title: `直播预告：${item.title}`,
+									title: `直播回放：${item.title}`,
 									link: "/pages/channelLive/channelLive"
 								})
 							})
@@ -321,23 +305,12 @@ Page({
 		let { type, link } = item
 		bxPoint("new_homepage_headline", {}, false)
 		switch (type) {
-			case "activity": {
-				this.onNewsContentTap({currentTarget: { dataset: {item} }})
-				break
-			}
 			case "huaYang": {
 				wx.navigateTo({
 					url: link,
 					fail() {
 						wx.switchTab({url: link})
 					}
-				})
-				break
-			}
-			case "youZan": {
-				wx.navigateToMiniProgram({
-					appId: "wx95fb6b5dbe8739b7",
-					path: link,
 				})
 				break
 			}

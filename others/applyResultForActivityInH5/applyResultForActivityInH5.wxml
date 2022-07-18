@@ -20,9 +20,9 @@
     </view>
   </view>
 
-  <view class="notice-title">{{activityData.ret_remark_text||"如有任何问题可联系小花：021-31279158"}}</view>
+  <!-- <view class="notice-title">{{!isSubscribeOfficeAccount?activityData.ret_guide_gongzhonghao_text||"关注公众号":activityData.ret_remark_text||"如有任何问题可联系小花：021-31279158"}}</view> -->
 
   <view class="add-teacher-button" bindtap="addTeacherTap">
-    添加老师，加入学习群
+    {{!isSubscribeOfficeAccount?activityData.ret_guide_gongzhonghao_text||"关注公众号":activityData.ret_remark_text||"添加老师，加入学习群"}}
   </view>
 </view>

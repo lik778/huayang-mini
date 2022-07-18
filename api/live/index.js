@@ -207,7 +207,7 @@ export const getHomeIcons = params => {
 
 /* 花样头条 */
 export const getHomeHeadLines = () => {
-	return request._get(URL.queryHomeHeadLines)
+	return request._get(URL.queryNewHeadLines)
 }
 
 /* 获取有赞同步的培训课 */

@@ -67,13 +67,13 @@ Page({
       return {
         title: "花样百姓品牌介绍",
         imageUrl: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639997736gcurPq.jpg",
-        path: `/pages/pureWebview/pureWebview?link=${this.data.link}`
+        path: `/pages/pureWebview/pureWebview?link=${encodeURIComponent(this.data.link)}`
       }
     } else {
       // 常规活动分享内容
       return {
-        title: "50+线下活动，让你的退休生活更精彩",
-        path: `/pages/pureWebview/pureWebview?link=${this.data.link}`
+        title: "让你的外表和内在都更精彩，开启幸福第二人生",
+        path: `/pages/pureWebview/pureWebview?link=${encodeURIComponent(this.data.link)}`
       }
     }
   },
