@@ -40,7 +40,8 @@
     "pages/shopSubject/shopSubject",
     "pages/preserve/preserve",
     "pages/mindfulness/mindfulness",
-    "pages/mindfulnessList/mindfulnessList"
+    "pages/mindfulnessList/mindfulnessList",
+    "pages/mindfulnessPost/mindfulnessPost"
   ],
   "requiredBackgroundModes": [
     "audio",

@@ -49,9 +49,11 @@ Page({
 		didStopWaveAnimate: false,
 		didAnimateInit: false,
 
+		audioId: 0,
 		title: "",
 		poster: "",
 		backgroundImage: "",
+		qrcode: "",
 		times: 0, // 音频时长（秒）
 		showTime: "", // 音频准确时间
 		dimTime: "", // 音频大致时间
@@ -64,6 +66,7 @@ Page({
 		operateLock: false, // 快进、倒退操作锁
 
 		didShowResultLayer: false, // 是否展示结果页
+		continuesDay: 0, // 持续打卡天数
   },
 
   /**
@@ -79,16 +82,17 @@ Page({
 		// 获取正念练习详情
 		getMindfulnessDetail({id: audioId}).then((item) => {
 			this.setData({
+				audioId: item.id,
 				audioUrl: item.url,
 				title: item.title,
 				times: item.duration,
 				poster: item.poster + "?x-oss-process=style/huayang",
 				backgroundImage: item.backgroundImage + "?x-oss-process=style/huayang",
+				qrcode: item.shareQrCode,
 				frequency: 1000 / UNIT
 			})
 
 			this.run()
-			console.log('阶段1');
 		})
 
 		// 权限检查
@@ -102,6 +106,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady() {
+
   },
 
   /**
@@ -142,11 +147,22 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  // onShareAppMessage() {
-	//
-  // },
+  onShareAppMessage() {
+		return {
+			title: this.data.title,
+			path: `/pages/mindfulness/mindfulness?audioId=${this.data.audioId}`,
+			imageUrl: this.data.poster
+		}
+  },
 
 	run() {
+		let remain = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).safeArea.height - 667
+		if (remain > 0) {
+			this.setData({customCanvasMarginTop: remain / 2})
+		}
+
+		// this._mindfulnessDone()
+
 		this.initAudioResource()
 		this.initBgCanvas()
 		this.initProgressCanvas()
@@ -587,11 +603,19 @@ Page({
 
 	// 正念练习顺利结束
 	_mindfulnessDone() {
-		checkInMindfulness({bizId: "", bizType: "PRACTISE", onlineMinute: this.data.dimTime, userId: ""})
-			.then(() => {
+		checkInMindfulness({bizId: this.data.audioId, bizType: "PRACTISE", onlineMinute: this.data.dimTime, userId: getLocalStorage(GLOBAL_KEY.userId)})
+			.then((data) => {
 				this.setData({
-					didShowResultLayer: true
+					didShowResultLayer: true,
+					continuesDay: data.continuousDay
 				})
 			})
+	},
+
+	// 正念练习打卡分享
+	show() {
+		let st = this._formatTimes(this.data.times)
+		let url = `/pages/mindfulnessPost/mindfulnessPost?actionName=${this.data.title}&duration=${st}&continuesDay=${this.data.continuesDay}&qrcode=${this.data.qrcode}`
+		wx.redirectTo({url})
 	}
 })

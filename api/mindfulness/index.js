@@ -25,8 +25,8 @@ export function getMindfulnessDetail(params) {
 export function checkInMindfulness(params) {
 	return new Promise((resolve) => {
 		request._post(URL.checkMindfulness, params)
-			.then(() => {
-				resolve()
+			.then(({data}) => {
+				resolve(data)
 			})
 	})
 }

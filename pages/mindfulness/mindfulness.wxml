@@ -38,7 +38,7 @@
                 </view>
                 <view class="split-line"></view>
                 <view class="result-data-item">
-                    <text class="result-data-item-01">{{9999}}</text>
+                    <text class="result-data-item-01">{{continuesDay}}</text>
                     <text>连续打卡</text>
                 </view>
             </view>

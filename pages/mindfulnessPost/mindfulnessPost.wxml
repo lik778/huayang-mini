@@ -1,0 +1,37 @@
+<view class="mindfulness-post">
+    <view class="navigation" style="padding-top:{{statusHeight+44}}px;">
+        <naviBar title="" color="#37383B" forceGoBackIndex="{{true}}" forceGoBackPath="{{backPath}}"></naviBar>
+    </view>
+    <view class="post">
+        <view class="top-lay" style="background-image: url('{{postData.cover}}');">
+            <view class="date">
+                <text>{{postData.date}}</text>
+                <view class="record-no"><text>第</text><text class="record-no-text"> {{postData.recordNo}} </text><text>天打卡</text></view>
+            </view>
+            <view class="action-name">{{postData.actionName}}</view>
+        </view>
+        <view class="bottom-lay">
+            <view class="left-top">
+                <image class="avatar" mode="aspectFill" src="{{postData.avatar}}"></image>
+                <text class="nickname limit-one-line">{{postData.nickname}}</text>
+            </view>
+            <view class="left-bottom">
+                <view class="practice-no">
+                    <text class="no">{{postData.duration}}</text>
+                    <text class="tip">训练时长</text>
+                </view>
+            </view>
+            <view class="right">
+                <image class="qr-code" mode="aspectFill" src="{{postData.qrcode}}"></image>
+                <text class="small-tip">长按识别二维码</text>
+                <text class="small-tip">一起练习</text>
+            </view>
+        </view>
+    </view>
+    <view class="operate">
+        <button open-type="share" class="share-btn subject-font-color" bind:tap="punchCard">分享到群内打卡</button>
+        <view class="save subject-bg-color" bind:tap="saveToLocal">保存海报到相册</view>
+    </view>
+    <canvas style="height:480px;width:300px;" id="canvas-order" canvas-id="mindfulnessOrder"></canvas>
+</view>
+
