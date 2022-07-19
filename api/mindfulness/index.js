@@ -10,3 +10,23 @@ export function getMindfulnessList(params) {
 			})
 	})
 }
+
+// 获取单节正念练习详情
+export function getMindfulnessDetail(params) {
+	return new Promise((resolve) => {
+		request._get(URL.queryMindfulnessDetail, params)
+			.then(({data}) => {
+				resolve(data)
+			})
+	})
+}
+
+// 正念打卡
+export function checkInMindfulness(params) {
+	return new Promise((resolve) => {
+		request._post(URL.checkMindfulness, params)
+			.then(() => {
+				resolve()
+			})
+	})
+}

@@ -75,33 +75,33 @@ Page({
 
 	run() {
 		this.getList()
-		// this._getScreenFrequency()
+		// this._catchScreenFrequency()
 	},
 
 	getList() {
 		getMindfulnessList().then((data) => {
 			data = data || []
-			data = data.map((item) => ({
-				...item,
-				dimTime: `${item.duration/60|0}分钟`
-			}))
+			data = data.map((item) => {
+				let dt = item.duration/60|0
+				if (item.duration % 60 >= 45) dt += 1
+				return {
+					...item,
+					dimTime: `${dt}分钟`
+				}
+			})
 			this.setData({list: data})
 		})
 	},
 
 	goToMindfulness(e) {
 		let {item} = e.currentTarget.dataset
-		let self = this
 		wx.navigateTo({
-			url: "/pages/mindfulness/mindfulness",
-			success(res) {
-				// frequency: self.data.frequency
-				res.eventChannel.emit("transmitData", JSON.stringify({...item}))
-			}
+			url: `/pages/mindfulness/mindfulness?audioId=${item.id}`,
 		})
 	},
 
-	_getScreenFrequency() {
+	// 捕捉屏幕刷新率
+	_catchScreenFrequency() {
 		const query = wx.createSelectorQuery()
 		let self = this
 		query.select('#test')
