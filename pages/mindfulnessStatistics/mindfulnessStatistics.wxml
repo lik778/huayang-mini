@@ -1,0 +1,26 @@
+<view class="mindfulness-statistics">
+    <naviBar style="padding-top:{{statusHeight+44}}px;" title="练习历程" color="transparent" titleColor="#000000"></naviBar>
+
+    <view class="statistics" style="margin-top:{{statusHeight+44}}px;">
+        <view class="statistics-wrap">
+            <view class="stat-item">
+                <view class="number">{{mindfulnessStatisticsData.totalOnlineMinute}}</view>
+                <view class="stat-item-title">累计 (分钟)</view>
+            </view>
+
+            <view class="stat-item">
+                <view class="number">{{mindfulnessStatisticsData.continuousDay}}</view>
+                <view class="stat-item-title">累计 (天数)</view>
+            </view>
+
+            <view class="stat-item">
+                <view class="number">{{mindfulnessStatisticsData.totalDay}}</view>
+                <view class="stat-item-title">连续 (天数)</view>
+            </view>
+        </view>
+    </view>
+
+    <view class="calendar">
+
+    </view>
+</view>

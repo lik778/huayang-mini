@@ -1,205 +1,134 @@
 @import "../../assets/css/common.wxss";
 
+/* 用户信息 */
 .user-center {
-  background: #F9F9F9;
-  padding-bottom: 200rpx;
-  min-height: 100vh;
-  box-sizing: border-box;
+		background: #F9F9F9;
+		padding-bottom: 200rpx;
+		min-height: 100vh;
+		box-sizing: border-box;
+    background: linear-gradient(180deg, #FFDADA 0%, #FFF8F8 30%, #FFFFFF 100%);
 }
 
-.user-center.nodata {
-  padding-bottom: 300rpx;
+/* 登录信息 */
+.wx-auth {
+    margin-bottom: 48rpx;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 10px 36rpx 0;
 }
 
-/* 个人信息  */
-.banner {
-  /* width: 100%; */
-  overflow: hidden;
-  margin-bottom: 40rpx;
-  font-size: 0;
+.wx-auth-info {
+		display: flex;
+		align-items: center;
 }
 
-.banner-bg {
-  width: 100%;
-  height: 400rpx;
-  background: black;
+.avatar {
+    width: 136rpx;
+    height: 136rpx;
+    margin-right: 30rpx;
+		border-radius: 999rpx;
 }
 
-.banner-bg.sign {
-  height: 556rpx;
+.name {
+    width: 510rpx;
+		font: 52rpx/1 PingFangSC;
 }
 
-.message {
-  position: absolute;
-  /* padding: 0 50rpx; */
-  display: flex;
-  align-items: center;
-  top: 168rpx;
-  color: #fff;
-  font-size: 44rpx;
-  font-weight: bold;
-  box-sizing: border-box;
-  /* width: calc(100vw - 100rpx); */
-}
-.user-info-container{
-  display: flex;
-  align-items: center;
-  padding: 0 50rpx;
-  width: calc(100vw - 100rpx);
-}
-.user-info-container>image {
-  width: 132rpx;
-  height: 132rpx;
-  border: 4rpx solid white;
-  box-sizing: border-box;
-  vertical-align: bottom;
-  border-radius: 50%;
-  margin-right: 30rpx;
-  flex-shrink: 0;
+
+.home-page {
+		white-space: nowrap;
+		font: 32rpx/1 PingFangSC;
 }
 
-.message .no-data-layout {
-  display: flex;
-  flex-direction: column;
-  color: white;
-  padding: 0 50rpx;
+.home-page:active {
+    opacity: 0.9;
 }
 
-.no-data-layout>.no-data-title {
-  font: 500 52rpx/52rpx PingFangSC;
+.home-page::after {
+		content: "";
+		display: inline-block;
+    width: 14rpx;
+    height: 20rpx;
+    margin-left: 14rpx;
+    margin-top: 6rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1658289993gvvhWC.jpg") no-repeat center;
+    background-size: contain;
 }
 
-.no-data-layout>.no-data-sub-title {
-  margin: 32rpx 0 60rpx;
-  font: 32rpx/52rpx PingFangSC;
+/* 练习数据 */
+.statistics {
+    width: 690rpx;
+    height: 288rpx;
+    margin: 0 auto 20rpx;
+    padding: 54rpx 32rpx 48rpx;
+		box-sizing: border-box;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1658287865ZpALSY.jpg") no-repeat center;
+    background-size: contain;
+    color: white;
 }
 
-.no-data-layout>.no-data-btn {
-  width: 280rpx;
-  height: 80rpx;
-  font: 600 32rpx/80rpx PingFangSC;
-  text-align: center;
-  background: #FF5544;
+.statistics:active {
+    opacity: 0.9;
 }
 
-.message .user-info {
-  display: flex;
-  flex-direction: column;
+.stat-top {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 }
 
-.message .user-info .nick-name {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 510rpx;
+.stat-wrap {
+		display: flex;
+		align-items: center;
 }
 
-.message .user-info .vip-tag {
-  width: 32rpx;
-  height: 32rpx;
-  border-radius: 0;
-  margin: 0 4rpx 0 14rpx;
-  vertical-align: middle;
+.stat-icon {
+    width: 46rpx;
+    height: 40rpx;
+    margin-right: 32rpx;
 }
 
-.nick-name .name-text {
-  font-size: 24rpx;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 600;
-  color: #DEB78F;
-  line-height: 24rpx;
-  height: 24rpx;
-  background: linear-gradient(90deg, #F2D6B8 0%, #CEA375 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  white-space: nowrap;
-  vertical-align: middle;
+.stat-title {
+		font: 36rpx/1 PingFangSC;
 }
 
-.message .name {
-  font-size: 52rpx;
-  font-family: PingFangSC-Semibold, PingFang SC;
-  font-weight: 600;
-  color: #FFFFFF;
-  line-height: 52rpx;
+
+.stat-calendar {
+		display: flex;
+		align-items: center;
+		font: 28rpx/28rpx PingFangSC;
 }
 
-.message .teacher-card {
-  display: inline-block;
-  font: 32rpx/32rpx PingFangSC;
+.stat-calendar-arrow {
+    width: 16rpx;
+    height: 24rpx;
+    margin-left: 16rpx;
 }
 
-.message .teacher-card::after {
-  display: inline-block;
-  content: "";
-  width: 14rpx;
-  height: 20rpx;
-  margin: 6rpx 0 0 14rpx;
-  font-size: 0;
-  background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1640678877oPKQYZ.jpg") no-repeat center;
-  background-size: contain;
+.stat-bottom {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin: 54rpx 50rpx 0;
 }
 
-/* 专属邀请码 */
-.invite-self-code {
-  position: absolute;
-  top: 480rpx;
-  width: 100vw;
-  box-sizing: border-box;
-  padding: 0 40rpx;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.stat-item {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 }
 
-.invite-self-code-left {
-  font-size: 32rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: #FFFFFF;
-  line-height: 32rpx;
+.number {
+    margin-bottom: 28rpx;
+		font: 600 40rpx/1 PingFangSC;
 }
 
-.invite-self-code-right {
-  width: 480rpx;
-  height: 80rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32rpx;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 500;
-  color: #834B25;
-  background: #FF5544 linear-gradient(90deg, #FBD8B3 0%, #ECCBA9 100%);
-  border-radius: 999rpx;
+.stat-item-title {
+		font: 24rpx/1 PingFangSC;
+		color: rgba(255, 255, 255, 0.8);
 }
-
-/* 广告位 */
-.ad {
-  width: 690rpx;
-  height: 172rpx;
-  margin: 60rpx auto 40rpx;
-}
-
-.ad.nodata {
-  top: 160rpx;
-}
-
-.ad.partner {
-  top: -212rpx;
-}
-
-.swiper-item-box {
-  width: 100%;
-  height: 172rpx;
-}
-
-.swiper-item-box image {
-  width: 100%;
-  height: 100%;
-  border-radius: 8rpx;
-}
-
 
 /* 功能栏 */
 .function {

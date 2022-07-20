@@ -30,3 +30,13 @@ export function checkInMindfulness(params) {
 			})
 	})
 }
+
+// 获取用户正念练习的统计信息
+export function getMindfulnessStatistics(params) {
+	return new Promise((resolve) => {
+		request._get(URL.queryMindfulnessStatistics, params)
+			.then(({data}) => {
+				resolve(data)
+			})
+	})
+}

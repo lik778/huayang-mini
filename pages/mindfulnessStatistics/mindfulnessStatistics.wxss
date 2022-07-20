@@ -1,0 +1,50 @@
+.mindfulness-statistics {
+		overflow: hidden;
+		height: 100vh;
+    background: #F9F9F9 url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1658301566cZnsNk.jpg") no-repeat top;
+    background-size: contain;
+}
+
+.statistics {
+    padding-top: 98rpx;
+}
+
+.statistics-wrap {
+		overflow: hidden;
+    display: flex;
+		justify-content: space-between;
+		align-items: center;
+    margin: 0 auto 20rpx;
+		padding: 50rpx 40rpx;
+    width: 690rpx;
+    height: 200rpx;
+		box-sizing: border-box;
+		border-radius: 8rpx;
+    background: white;
+}
+
+.stat-item {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+}
+
+.number {
+    margin-bottom: 24rpx;
+		font: 600 52rpx/1 PingFangSC;
+}
+
+.stat-item-title {
+		font: 24rpx/1 PingFangSC;
+		color: rgba(0, 0, 0, 0.4);
+}
+
+/* 日历 */
+.calendar {
+    width: 690rpx;
+    height: 764rpx;
+		margin: 0 auto;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1658301601nYwZAn.jpg") no-repeat center;
+    background-size: contain;
+}

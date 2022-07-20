@@ -1,6 +1,6 @@
 import { FluentLearnUserType, GLOBAL_KEY } from "../../lib/config"
 import dayjs from "dayjs"
-import { getFindBanner, getPhoneNumber } from "../../api/course/index"
+import { getPhoneNumber } from "../../api/course/index"
 import {
   getFluentCardInfo,
   getFluentLearnInfo,
@@ -15,25 +15,8 @@ import {
   splitTargetNoString
 } from "../../utils/util"
 import bxPoint from "../../utils/bxPoint"
-import { getTaskEntranceStatus } from "../../api/task/index"
-import { getYouZanAppId } from "../../api/mall/index"
+import { getMindfulnessStatistics } from "../../api/mindfulness/index";
 
-const Level = [{
-    label: "准合伙人",
-    value: 0,
-  }, {
-    label: "初级合伙人",
-    value: 1,
-  },
-  {
-    label: "中级合伙人",
-    value: 2,
-  },
-  {
-    label: "高级合伙人",
-    value: 3,
-  },
-];
 Page({
 
   /**
@@ -49,13 +32,18 @@ Page({
     phoneNumber: "",
     existNo: undefined,
     cardBtnText: "授权登录",
-    bannerList: [],
     disHasFluentLearnUserInfo: false, // 是否有畅学卡会员信息
     isFluentLearnExpired: false, // 畅学卡依然有效
     cardName: "", // 畅学卡名称
     cardDesc: "", // 畅学卡描述
     isUserHaveTeacherCard: false, // 当前用户是否有教师卡片
-    teacherInfo: null
+    teacherInfo: null,
+
+		mindfulnessStatisticsData: {
+			continuousDay: 0,
+			totalDay: 0,
+			totalOnlineMinute: 0
+		}
   },
   /**
    * 处理长昵称
@@ -86,43 +74,6 @@ Page({
     wx.navigateTo({
       url: "/mine/convertCash/convertCash"
     })
-  },
-  /**
-   * 处理广告位点击事件
-   * @param e
-   */
-  onBannerItemTap(e) {
-    let {
-      link,
-      link_type,
-      id,
-      pic_url
-    } = e.currentTarget.dataset.item
-    bxPoint("mine_banner", {
-      mine_banner_id: id,
-      mine_banner_src: pic_url,
-      mine_banner_url: link,
-      mine_banner_mode: link_type,
-    }, false)
-    if (e.currentTarget.dataset.item.need_auth === 1) {
-      if (!hasUserInfo() || !hasAccountInfo()) {
-        return this.setData({
-          didShowAuth: true
-        })
-      }
-    }
-    if (link_type === 'youzan') {
-      getYouZanAppId().then(appId => {
-        wx.navigateToMiniProgram({
-          appId,
-          path: link
-        })
-      })
-    } else {
-      wx.navigateTo({
-        url: link
-      })
-    }
   },
   // 处理畅学卡按钮点击事件
   onFluentCardTap() {
@@ -184,16 +135,6 @@ Page({
     })
   },
 
-  getBanner() {
-    getFindBanner({
-      scene: 18
-    }).then((list) => {
-      this.setData({
-        bannerList: list
-      })
-    })
-  },
-
   /**
    * 请求畅学卡信息
    */
@@ -231,7 +172,9 @@ Page({
       this.setData({
         didShowAuth: true
       })
-    }
+    } else {
+
+		}
   },
   // 用户授权取消
   authCancelEvent() {
@@ -404,6 +347,14 @@ Page({
 
           this.setData({isUserHaveTeacherCard: $notNull(data)})
         })
+
+			// 获取正念练习数据
+			getMindfulnessStatistics({bizType: "PRACTISE", userId: getLocalStorage(GLOBAL_KEY.userId)})
+				.then((data) => {
+					if (data) {
+						this.setData({mindfulnessStatisticsData: data})
+					}
+				})
     }
 
     if (hasUserInfo() && !hasAccountInfo()) {
@@ -525,7 +476,6 @@ Page({
     }
     this.calcUserCreatedTime()
     bxPoint("applets_mine", {})
-    this.getBanner()
     this.getNumber()
     this.setData({
       showMoneyNotice: false
