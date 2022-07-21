@@ -42,9 +42,77 @@
 
 /* 日历 */
 .calendar {
+    position: relative;
     width: 690rpx;
-    height: 764rpx;
 		margin: 0 auto;
-    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1658301601nYwZAn.jpg") no-repeat center;
+    padding-bottom: 80rpx;
+    box-shadow: 0 4px 16px 0 rgba(0,0,0,0.1300);
+    border-radius: 8px;
+    background: white;
+}
+
+.calendar-title {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+    height: 124rpx;
+		border-bottom: 2rpx solid #F1F1F1;
+}
+
+.icon {
+		padding: 30rpx 38rpx;
+}
+
+.next, .prev {
+    width: 16rpx;
+    height: 24rpx;
+    background: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1658372574XZhmSR.jpg") no-repeat center;
     background-size: contain;
+}
+
+.next {
+    background-image: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1658372635BysYfX.jpg");
+}
+
+.next.disabled {
+    background-image: url("https://huayang-img.oss-cn-shanghai.aliyuncs.com/1658372712VZgiXV.jpg");
+}
+
+.calendar-content {
+		margin: 38rpx 0 0;
+    padding: 0 34rpx;
+}
+
+.calendar-week {
+		display: flex;
+		align-items: center;
+		color: rgba(0, 0, 0, 0.4);
+}
+
+.calendar-date {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+}
+
+.calendar-item {
+    width: 52rpx;
+    height: 52rpx;
+		margin: 18rpx 19rpx;
+		border-radius: 8rpx;
+		text-align: center;
+		font: 24rpx/52rpx PingFangSC;
+}
+
+.calendar-item.active {
+    background: #FF5544;
+		color: white;
+}
+
+.corner {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+    width: 80rpx;
+    height: 80rpx;
 }

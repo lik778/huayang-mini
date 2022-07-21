@@ -40,3 +40,13 @@ export function getMindfulnessStatistics(params) {
 			})
 	})
 }
+
+// 获取正念练习历程
+export function getMindfulnessCalendar(params) {
+	return new Promise((resolve) => {
+		request._get(URL.queryMindfulnessCalendar, params)
+			.then(({data}) => {
+				resolve(data)
+			})
+	})
+}
