@@ -42,7 +42,8 @@
     "pages/mindfulness/mindfulness",
     "pages/mindfulnessList/mindfulnessList",
     "pages/mindfulnessPost/mindfulnessPost",
-    "pages/mindfulnessStatistics/mindfulnessStatistics"
+    "pages/mindfulnessStatistics/mindfulnessStatistics",
+    "pages/travels/travels"
   ],
   "requiredBackgroundModes": [
     "audio",

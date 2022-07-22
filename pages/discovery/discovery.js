@@ -46,19 +46,17 @@ Page({
 		}, //生活方式瀑布流分页
 		channelLiveInfo: null, // 开播的视频号直播信息
 		noticeLiveInfo: null, // 未开播的视频号直播信息
-	}
-	,
+	},
 	run() {
 		// 加载icons
 		getHomeIcons().then(({
 			data
 		}) => {
 			data = data || []
-			if (data.length === 13) {
+			if (data.length === 9) {
 				this.setData({
 					f1: data.slice(0, 4),
 					f2: data.slice(4, 9),
-					f3: data.slice(9, 13)
 				})
 			}
 		})

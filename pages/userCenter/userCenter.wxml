@@ -8,7 +8,7 @@
     </view>
 
     <!-- 练习数据 -->
-    <view class="statistics">
+    <view class="statistics" bindtap="goToMindfulnessStatistics">
         <view class="stat-top">
            <view class="stat-wrap">
                <image class="stat-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1658295767RayIis.jpg" mode="aspectFit"></image>

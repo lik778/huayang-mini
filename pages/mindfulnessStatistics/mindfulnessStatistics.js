@@ -105,8 +105,8 @@ Page({
 
 	getOnlineCalendar() {
 		let t = this.data.targetDateObj
-		getMindfulnessCalendar({bizType: "PRACTISE", userId: getLocalStorage(GLOBAL_KEY.userId), startTime: t.date(1).unix(), endTime: t.date(dayjs(t).daysInMonth()).unix()})
-			.then(({data}) => {
+		getMindfulnessCalendar({bizType: "PRACTISE", userId: getLocalStorage(GLOBAL_KEY.userId), startTime: t.date(1).unix()*1000, endTime: t.date(dayjs(t).daysInMonth()).unix()*1000})
+			.then((data) => {
 				console.log(data)
 			})
 	},

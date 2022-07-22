@@ -440,6 +440,15 @@ Page({
     })
   },
 
+	// 跳转到练习历程
+	goToMindfulnessStatistics() {
+		if (!hasUserInfo() || !hasAccountInfo()) {
+			return this.setData({didShowAuth: true})
+		}
+
+		wx.navigateTo({url: "/pages/mindfulnessStatistics/mindfulnessStatistics"})
+	},
+
   /**
    * 生命周期函数--监听页面加载
    */

@@ -50,3 +50,15 @@ export function getMindfulnessCalendar(params) {
 			})
 	})
 }
+
+// 请求游学列表
+export function getTravelList(params) {
+	return new Promise((resolve, reject) => {
+		request._get(URL.queryTravelList, params).then(({data}) => {
+			data = data || []
+			resolve(data)
+		}).catch((err) => {
+			reject(err)
+		})
+	})
+}
