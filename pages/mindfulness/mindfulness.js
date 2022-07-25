@@ -55,6 +55,7 @@ Page({
 		backgroundImage: "",
 		qrcode: "",
 		times: 0, // 音频时长（秒）
+		fixedShowTime: "", // 固定时间
 		showTime: "", // 音频准确时间
 		dimTime: "", // 音频大致时间
 		audioUrl: "", // 音频地址
@@ -181,7 +182,7 @@ Page({
 
 		let st = this._formatTimes(this.data.times) // 精确时长
 		let dt = this.data.times/60|0 // 模糊时长
-		this.setData({showTime: st, dimTime: dt})
+		this.setData({fixedShowTime: st, showTime: st, dimTime: dt})
 	},
 
 	// 运行动画
@@ -462,6 +463,7 @@ Page({
 
 		audio.onEnded(() => {
 			console.log('bg audio end')
+			wx.showLoading({title: "加载中...", mask: true})
 			this._mindfulnessDone()
 			this._resetAudioSeek()
 		})
@@ -542,6 +544,12 @@ Page({
 		let curTime = audio.currentTime
 		let duration = audio.duration
 		let nextTime = curTime + 15
+
+		if (duration - curTime <= 15) {
+			console.log("声音时间不足15秒，禁止快进");
+			return false
+		}
+
 		if (nextTime >= duration) {
 			audio.stop()
 		} else {
@@ -607,8 +615,12 @@ Page({
 			.then((data) => {
 				this.setData({
 					didShowResultLayer: true,
-					continuesDay: data.continuousDay
+					continuesDay: data.continuousDay || 1
 				})
+				wx.hideLoading()
+			})
+			.catch(() => {
+				wx.hideLoading()
 			})
 	},
 

@@ -1,5 +1,5 @@
 <view class="container" style="padding-top:{{statusHeight+44}}px;background-image: url('{{backgroundImage}}');">
-    <naviBar title="" style="padding-top:{{statusHeight+44}}px;" color="transparent" titleColor="#000000"></naviBar>
+    <naviBar title="" backPathBelongTab="{{true}}" backPath="/pages/mindfulnessList/mindfulnessList" style="padding-top:{{statusHeight+44}}px;" color="transparent" titleColor="#000000"></naviBar>
 
     <view class="time-wrap" style="margin-top: {{customCanvasMarginTop}}px;">
         <canvas type="2d" id="bgCanvas" />
@@ -33,7 +33,7 @@
             </view>
             <view class="result-data">
                 <view class="result-data-item">
-                    <text class="result-data-item-01">{{showTime}}</text>
+                    <text class="result-data-item-01">{{fixedShowTime}}</text>
                     <text>训练时长</text>
                 </view>
                 <view class="split-line"></view>

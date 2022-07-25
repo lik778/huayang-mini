@@ -138,7 +138,7 @@
 
 .operate {
     position: fixed;
-    bottom: 12rpx;
+    bottom: calc(env(safe-area-inset-bottom) + 12rpx);
     left: 0;
     right: 0;
     display: flex;
