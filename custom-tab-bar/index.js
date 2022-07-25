@@ -33,20 +33,26 @@ Component({
       const data = e.currentTarget.dataset
       const url = data.path
 
-      // 首页TAB
-      if (this.data.selected === 0 && url === '/pages/userCenter/userCenter') {
-        bxPoint("homepage_mine_visit", {}, false)
-      }
-
-			//
-			else if (this.data.selected === 1 && url === '/pages/mindfulnessList/mindfulnessList') {
-
+			// 首页
+			if (this.data.selected === 0 && url === '/pages/mindfulnessList/mindfulnessList') {
+				bxPoint("homepage_mindfulness_visit", {}, false)
+			} else if (this.data.selected === 0 && url === '/pages/userCenter/userCenter') {
+				bxPoint("homepage_mine_visit", {}, false)
 			}
 
-      // 我的TAB
-      else if (this.data.selected === 2 && url === '/pages/discovery/discovery') {
-        bxPoint("minepage_home_visit", {}, false)
-      }
+			// 正念练习
+			else if (this.data.selected === 1 && url === '/pages/discovery/discovery') {
+				bxPoint("mindfulness_homepage_visit", {}, false)
+			} else if (this.data.selected === 1 && url === '/pages/userCenter/userCenter') {
+				bxPoint("mindfulness_mine_visit", {}, false)
+			}
+
+			// 我的
+			else if (this.data.selected === 2 && url === '/pages/discovery/discovery') {
+				bxPoint("mine_homepage_visit", {}, false)
+			} else if (this.data.selected === 2 && url === '/pages/mindfulnessList/mindfulnessList') {
+				bxPoint("mine_mindfulness_visit", {}, false)
+			}
 
       wx.switchTab({url})
     }

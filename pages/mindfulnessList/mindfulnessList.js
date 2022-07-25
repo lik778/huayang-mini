@@ -1,4 +1,5 @@
 import { getMindfulnessList } from "../../api/mindfulness/index";
+import bxPoint from "../../utils/bxPoint";
 
 Page({
 
@@ -20,7 +21,9 @@ Page({
 			})
 		}
 		this.run()
-  },
+
+		bxPoint("mindfulness_practice_page", {})
+	},
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -97,6 +100,9 @@ Page({
 		let {item} = e.currentTarget.dataset
 		wx.navigateTo({
 			url: `/pages/mindfulness/mindfulness?audioId=${item.id}`,
+			success() {
+				bxPoint("mindfulness_practice_audio_play", {audio_id: item.id}, false)
+			}
 		})
 	},
 

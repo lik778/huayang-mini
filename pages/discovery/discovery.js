@@ -415,7 +415,6 @@ Page({
 			data.description = data.description || "花样喊你看直播"
 			this.setData({channelLiveInfo: data})
 		}).catch((err) => {
-			console.log(err);
 			getHomeChannelLive().then((res) => {
 				this.setData({channelLiveInfo: null})
 				if ($notNull(res)) {

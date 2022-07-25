@@ -1,19 +1,13 @@
 {
   "plugins": {
     "live-player-plugin": {
-      "version": "1.3.0",
+      "version": "1.3.5",
       "provider": "wx2b03c6e691cd7370"
     }
   },
   "usingComponents": {
     "van-dialog": "./miniprogram_npm/@vant/weapp/dialog/index"
   },
-  "navigateToMiniProgramAppIdList": [
-    "wx95fb6b5dbe8739b7",
-    "wx6593cf087b7686dd",
-    "wx85d130227f745fc5",
-    "wx2ea757d51abc1f47"
-  ],
   "pages": [
     "pages/discovery/discovery",
     "pages/competition/competition",
