@@ -32,7 +32,7 @@
                 <view class="calendar-item" wx:for="{{weeks}}" wx:key="index">{{item}}</view>
             </view>
             <view class="calendar-date">
-                <view class="calendar-item" wx:for="{{dates}}" wx:key="index">{{item}}</view>
+                <view class="calendar-item {{item.checkin ? 'active' : ''}}" wx:for="{{dates}}" wx:key="index">{{item.date}}</view>
             </view>
         </view>
 
