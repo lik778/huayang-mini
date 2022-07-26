@@ -60,7 +60,7 @@
             </view>
         </view>
 
-        <view class="floor f3">
+        <view class="floor f3" wx:if="{{f3.length > 0}}">
             <view class="f-card" wx:for="{{f3}}" wx:key="index" bindtap="onIconItemTap" data-item="{{item}}"
                   style="background-image: url('{{item.cover}}');">
                 <text class="f-title">{{item.title}}</text>

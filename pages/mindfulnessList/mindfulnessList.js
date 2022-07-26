@@ -1,4 +1,5 @@
 import { getMindfulnessList } from "../../api/mindfulness/index";
+import bxPoint from "../../utils/bxPoint";
 
 Page({
 
@@ -20,7 +21,9 @@ Page({
 			})
 		}
 		this.run()
-  },
+
+		bxPoint("mindfulness_practice_page", {})
+	},
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -75,33 +78,36 @@ Page({
 
 	run() {
 		this.getList()
-		// this._getScreenFrequency()
+		// this._catchScreenFrequency()
 	},
 
 	getList() {
 		getMindfulnessList().then((data) => {
 			data = data || []
-			data = data.map((item) => ({
-				...item,
-				dimTime: `${item.duration/60|0}分钟`
-			}))
+			data = data.map((item) => {
+				let dt = item.duration/60|0
+				if (item.duration % 60 >= 45) dt += 1
+				return {
+					...item,
+					dimTime: `${dt}分钟`
+				}
+			})
 			this.setData({list: data})
 		})
 	},
 
 	goToMindfulness(e) {
 		let {item} = e.currentTarget.dataset
-		let self = this
 		wx.navigateTo({
-			url: "/pages/mindfulness/mindfulness",
-			success(res) {
-				// frequency: self.data.frequency
-				res.eventChannel.emit("transmitData", JSON.stringify({...item}))
+			url: `/pages/mindfulness/mindfulness?audioId=${item.id}`,
+			success() {
+				bxPoint("mindfulness_practice_audio_play", {audio_id: item.id}, false)
 			}
 		})
 	},
 
-	_getScreenFrequency() {
+	// 捕捉屏幕刷新率
+	_catchScreenFrequency() {
 		const query = wx.createSelectorQuery()
 		let self = this
 		query.select('#test')

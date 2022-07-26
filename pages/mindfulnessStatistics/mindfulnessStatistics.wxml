@@ -1,0 +1,41 @@
+<view class="mindfulness-statistics">
+    <naviBar style="padding-top:{{statusHeight+44}}px;" title="练习历程" color="transparent" titleColor="white"></naviBar>
+
+    <view class="statistics" style="margin-top:{{statusHeight+44}}px;">
+        <view class="statistics-wrap">
+            <view class="stat-item">
+                <view class="number">{{mindfulnessStatisticsData.totalOnlineMinute || 0}}</view>
+                <view class="stat-item-title">累计 (分钟)</view>
+            </view>
+
+            <view class="stat-item">
+                <view class="number">{{mindfulnessStatisticsData.totalDay || 0}}</view>
+                <view class="stat-item-title">累计 (天数)</view>
+            </view>
+
+            <view class="stat-item">
+                <view class="number">{{mindfulnessStatisticsData.continuousDay || 0}}</view>
+                <view class="stat-item-title">连续 (天数)</view>
+            </view>
+        </view>
+    </view>
+
+    <view class="calendar">
+        <view class="calendar-title">
+            <view class="icon" bindtap="toggleMonth" data-item="prev"><view class="prev"></view></view>
+            <view class="month">{{currentMonthFormat}}</view>
+            <view class="icon" bindtap="toggleMonth" data-item="next"><view class="next {{isCurrentMonth ? 'disabled' : ''}}"></view></view>
+        </view>
+
+        <view class="calendar-content">
+            <view class="calendar-week">
+                <view class="calendar-item" wx:for="{{weeks}}" wx:key="index">{{item}}</view>
+            </view>
+            <view class="calendar-date">
+                <view class="calendar-item {{item.checkin ? 'active' : ''}}" wx:for="{{dates}}" wx:key="index">{{item.date}}</view>
+            </view>
+        </view>
+
+        <image class="corner" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1658372967MydWNF.jpg" mode="aspectFit"></image>
+    </view>
+</view>

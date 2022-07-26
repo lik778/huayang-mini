@@ -1,0 +1,8 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "naviBar": "../../components/navibar/navibar"
+  },
+  "pageOrientation": "portrait",
+  "backgroundColor": "#37383B"
+}

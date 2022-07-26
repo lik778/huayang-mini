@@ -140,8 +140,8 @@
 
 .f1 .f-title {
   position: relative;
-  margin-top: 20rpx;
-  font: 32rpx/32rpx PingFangSC;
+  margin-top: 24rpx;
+  font: 28rpx/1 PingFangSC;
 }
 
 /*.f1 .f-title.live::after {*/
@@ -162,8 +162,8 @@
 }
 
 .f2 .f-title {
-  margin-top: 4rpx;
-  font: 28rpx/28rpx PingFangSC;
+  margin-top: 24rpx;
+  font: 24rpx/1 PingFangSC;
 }
 
 .f3 .f-title {

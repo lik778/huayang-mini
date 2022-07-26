@@ -28,17 +28,17 @@
   flex-direction: column;
 }
 
-.tab-bar-item cover-image {
+.tab-bar-item .tab-bar-image {
   width: 60rpx;
   height: 60rpx;
   margin-bottom: 6rpx;
 }
 
-.tab-bar-item cover-image.ground {
+.tab-bar-item .ground {
   width: 110rpx;
 }
 
-.tab-bar-item cover-view {
+.tab-bar-item {
   font-size: 24rpx;
 	color: rgba(34, 34, 34, 0.6);
 }

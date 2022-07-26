@@ -53,18 +53,5 @@
     "tabIndent": "insertSpaces",
     "tabSize": 2
   },
-  "condition": {
-    "plugin": {
-      "list": []
-    },
-    "game": {
-      "list": []
-    },
-    "gamePlugin": {
-      "list": []
-    },
-    "miniprogram": {
-      "list": []
-    }
-  }
+  "condition": {}
 }

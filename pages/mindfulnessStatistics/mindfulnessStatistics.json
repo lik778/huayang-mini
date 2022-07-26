@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "练习历程",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "naviBar": "../../components/navibar/navibar"
+  }
+}
