@@ -96,11 +96,6 @@ Page({
 			this.run()
 		})
 
-		// 权限检查
-		if (!hasUserInfo() || !hasAccountInfo()) {
-			this.setData({didShowAuth: true})
-		}
-
   },
 
   /**
@@ -485,6 +480,11 @@ Page({
 
 	// 暂停or继续播放
 	_toggleAudio() {
+		// 权限检查
+		if (!hasUserInfo() || !hasAccountInfo()) {
+			return this.setData({didShowAuth: true})
+		}
+
 		let audio = this.data.bgAudio
 
 		// 初始化音频&开始播放
@@ -615,7 +615,7 @@ Page({
 			.then((data) => {
 				this.setData({
 					didShowResultLayer: true,
-					continuesDay: data.continuousDay || 1
+					continuesDay: data.continuousDay
 				})
 				wx.hideLoading()
 			})
