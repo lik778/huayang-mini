@@ -21,7 +21,9 @@ Page({
 			continuousDay: 0,
 			totalDay: 0,
 			totalOnlineMinute: 0
-		}
+		},
+
+		lock: false
 	},
 
 	/**
@@ -105,7 +107,6 @@ Page({
 
 	getOnlineCalendar() {
 		let t = this.data.targetDateObj;
-
 		getMindfulnessCalendar({
 			bizType: "PRACTISE",
 			userId: getLocalStorage(GLOBAL_KEY.userId),
@@ -119,20 +120,23 @@ Page({
 						date: dayjs(item.checkinTime).date()
 					}));
 					let od = this.data.dates.slice();
-					let nd = []
+					let nd = [];
 					for (let i = 0; i < od.length; i++) {
-						let item = od[i]
+						let item = od[i];
 						if (item === "") {
-							nd.push("")
+							nd.push("");
 						} else {
-							let checkDateTarget = data.find(n => n.date === item.date)
-							nd.push({...item, checkin: $notNull(checkDateTarget)})
+							let checkDateTarget = data.find(n => n.date === item.date);
+							nd.push({...item, checkin: $notNull(checkDateTarget)});
 						}
 					}
 
-					this.setData({dates: nd})
+					this.setData({dates: nd, lock: false});
 				}
-			);
+			)
+			.catch(() => {
+				this.setData({lock: false})
+			})
 	},
 
 	// 计算日历
@@ -158,6 +162,8 @@ Page({
 	},
 
 	toggleMonth(e) {
+		if (this.data.lock) return false
+
 		let {item} = e.currentTarget.dataset;
 		let t = this.data.targetDateObj;
 		let n = null;
@@ -177,7 +183,7 @@ Page({
 		}
 
 		if (n) {
-			this.setData({targetDateObj: n});
+			this.setData({targetDateObj: n, lock: true});
 			this._calcCalendar(n);
 
 			// 检查是否当月

@@ -23,12 +23,12 @@
             </view>
 
             <view class="stat-item">
-                <view class="number">{{mindfulnessStatisticsData.continuousDay}}</view>
+                <view class="number">{{mindfulnessStatisticsData.totalDay}}</view>
                 <view class="stat-item-title">累计 (天数)</view>
             </view>
 
             <view class="stat-item">
-                <view class="number">{{mindfulnessStatisticsData.totalDay}}</view>
+                <view class="number">{{mindfulnessStatisticsData.continuousDay}}</view>
                 <view class="stat-item-title">连续 (天数)</view>
             </view>
         </view>
@@ -37,7 +37,7 @@
     <!-- 功能栏 -->
     <view class="function">
         <view class="function-list">
-            <view class="function-item" bindtap="goToYouZanOrderPage">
+            <view class="function-item" bindtap="goToYouZanOrderPage" wx:if="{{false}}">
                 <view class="function-item-left">
                     <image src="/assets/images/common/order.png" style="width: 52rpx;height: 54rpx;"></image>
                     <view class="function-item-box">
@@ -92,7 +92,7 @@
             <!--				</view>-->
             <!--				<image src="/assets/images/common/arrow.png"></image>-->
             <!--			</view>-->
-            <view class="function-item" bindtap="goToBooks">
+            <view class="function-item" bindtap="goToBooks" wx:if="{{false}}">
                 <view class="function-item-left">
                     <image src="/assets/images/common/book.png" class="task-image"></image>
                     <view class="function-item-box">
@@ -101,7 +101,7 @@
                 </view>
                 <image src="/assets/images/common/arrow.png"></image>
             </view>
-            <view class="function-item" bindtap="goToConvertCashPage">
+            <view class="function-item" bindtap="goToConvertCashPage" wx:if="{{false}}">
                 <view class="function-item-left">
                     <image src="/assets/images/common/newBalance.png" class="task-image"></image>
                     <view class="function-item-box">
