@@ -1,5 +1,5 @@
-<view class="container" style="padding-top:  {{statusHeight+44}}px;background-image: url('{{backgroundImage}}');">
-    <naviBar title="" style="padding-top: {{statusHeight+44}}px;" color="transparent" titleColor="#000000"></naviBar>
+<view class="container" style="padding-top:{{statusHeight+44}}px;background-image: url('{{backgroundImage}}');">
+    <naviBar title="" backPathBelongTab="{{true}}" backPath="/pages/mindfulnessList/mindfulnessList" style="padding-top:{{statusHeight+44}}px;" color="transparent" titleColor="#000000"></naviBar>
 
     <view class="time-wrap" style="margin-top: {{customCanvasMarginTop}}px;">
         <canvas type="2d" id="bgCanvas" />
@@ -23,4 +23,33 @@
         <view class="icon right" bindtap="_operateSeek" data-type="speed"></view>
     </view>
 
+    <!-- 结果层 -->
+    <view class="result-layer" wx:if="{{didShowResultLayer}}" style="padding-top:{{statusHeight+44}}px;min-height:{{screenHeight-statusHeight-43}}px;">
+        <image class="star-layer" mode="aspectFit" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1604035220YUWYhD.jpg"></image>
+        <view class="result-content">
+            <view class="result-header">
+                <text class="txt-01">哇，您太棒了!</text>
+                <text class="txt-02">恭喜您完成了练习</text>
+            </view>
+            <view class="result-data">
+                <view class="result-data-item">
+                    <text class="result-data-item-01">{{fixedShowTime}}</text>
+                    <text>训练时长</text>
+                </view>
+                <view class="split-line"></view>
+                <view class="result-data-item">
+                    <text class="result-data-item-01">{{continuesDay}}</text>
+                    <text>连续打卡</text>
+                </view>
+            </view>
+
+            <view class="clockIn" bind:tap="show">分享</view>
+        </view>
+    </view>
+
+
+    <!-- 授权弹窗 -->
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent"
+                bind:authCompleteEvent="authCompleteEvent">
+    </authModule>
 </view>

@@ -1,0 +1,85 @@
+@import "../../assets/css/common.wxss";
+
+.home {
+    padding-bottom: 40rpx;
+}
+
+/* 城市慢游 */
+.travel {
+    padding: 0 30rpx;
+    background: white;
+}
+
+.travel-layout {
+    margin: 72rpx 0 48rpx;
+    font: 500 52rpx/52rpx PingFangSC;
+}
+
+.travel-item:active {
+    opacity: 0.9;
+}
+
+.travel-cover {
+    position: relative;
+    overflow: hidden;
+    width: 690rpx;
+    height: 344rpx;
+    border-radius: 16rpx 16rpx 6px 6px;
+}
+
+.travel-cover-picture {
+    width: 100%;
+    height: 100%;
+}
+
+.day-count {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 128rpx;
+    height: 52rpx;
+    border-radius: 0 6rpx 0 0;
+    font: bold 28rpx/52rpx PingFangSC;
+    text-align: center;
+    color: white;
+    background: #FF4444;
+}
+
+.travel-title {
+    margin: 24rpx 0 12rpx;
+    font: 500 36rpx/50rpx PingFangSC;
+}
+
+.travel-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 48rpx;
+}
+
+.travel-price {
+    display: flex;
+    align-items: flex-end;
+    font-size: 32rpx;
+    font-weight: 500;
+    color: #FF4444;
+}
+
+.price-01 {
+    margin: 0 12rpx 0 0;
+    line-height: 52rpx;
+    font-size: 52rpx;
+    font-weight: 500;
+}
+
+.price-02 {
+    text-decoration: line-through;
+    font-size: 32rpx;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.travel-visit-no {
+    font: 32rpx/32rpx PingFangSC;
+    color: rgba(0, 0, 0, 0.5);
+}

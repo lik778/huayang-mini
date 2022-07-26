@@ -1,0 +1,117 @@
+<template name="introduce-title">
+	<view class="introduce-title">
+		<image class="template-img" src="{{src}}" mode="aspectFit|aspectFill|widthFix" />
+	</view>
+</template>
+<template name="introduce-part2">
+	<view class="template2-h1">
+		{{title}}
+	</view>
+	<image class="tempalte2-img" src="{{src}}" mode="aspectFit|aspectFill|widthFix" />
+	<rich-text nodes="{{content}}" class="template2-content" />
+</template>
+<template name="introduce-part3">
+	<view class="template3-h1">
+		{{title}}
+	</view>
+	<rich-text class="templat3-content" nodes="{{content}}" />
+	<view class="template3-p" wx:if="{{detail !== ''}}">
+		{{detail}}
+	</view>
+	<view class="template3-img">
+		<image class="template3-img-1" src="{{src1}}" mode="aspectFit|aspectFill|widthFix" />
+		<image class="template3-img-2" src="{{src2}}" mode="aspectFit|aspectFill|widthFix" />
+	</view>
+</template>
+<!-- 头部图片 -->
+<view class="mindfulness-introduce">
+	<image class="img01" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1658461067IzhYDD.jpg" mode="aspectFit|aspectFill|widthFix" />
+</view>
+<!-- 什么是正念 -->
+<view>
+	<template is="introduce-title" data="{{...list[0]}}" />
+	<view class="partone-content">
+		<view class="partone-content-title" wx:key="unique" wx:for="{{partContent1}}">
+			<view class="p-c-t">
+				<text>{{item.title}}</text>
+			</view>
+			<text class="p-c-b" wx:for="{{item.content}}" wx:key="*this">{{item}}</text>
+		</view>
+		<view class="partone-content-detail">
+			<image class="detail-img1" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1658720266oboQeK.jpg" mode="aspectFit|aspectFill|widthFix" />
+			<view class="deatail-c">
+				正念是当我们有意识地，不加评判地把注意力放在当下时所产生的那份
+				<text class="theme-green jue-zhi">觉知</text>
+				，借此了解自己，培育内在的智慧与爱。
+			</view>
+			<image class="detail-img2" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1658721403qESapE.jpg" mode="aspectFit|aspectFill|widthFix" />
+		</view>
+	</view>
+</view>
+<!-- 正念有什么好处 -->
+<view>
+	<template is="introduce-title" data="{{...list[1]}}" />
+	<view class="parttwo-content">
+		<template
+		 is="introduce-part2"
+		 wx:for="{{partContent2}}"
+		 wx:key="unique"
+		 data="{{...item}}"
+		/>
+		<view class="template2-h1">
+			<text >{{'除此之外，\n正念练习者最常提到的好处还有'}}</text>
+		</view>
+		<view class="part2-last">
+			<image class="part2-last-img1" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1658732117zXuHin.jpg" mode="aspectFit|aspectFill|widthFix" />
+			<view class="part2-last-lis">
+				<view wx:for="{{partLastLis}}" class="part2-li" wx:key="*this">
+					{{item}}
+				</view>
+			</view>
+		</view>
+	</view>
+</view>
+<!-- 应用领域 -->
+<view>
+	<template is="introduce-title" data="{{...list[2]}}" />
+	<view class="partthree-content">
+		<template
+		 is="introduce-part3"
+		 wx:for="{{partContent3}}"
+		 wx:key="unique"
+		 data="{{...item}}"
+		/>
+		<view class="part3-last">
+			<view class="template3-h1">
+				🥘 正念走进生活
+			</view>
+			<view class="part3-last-p">
+				最后，正念其实已经影响到我们生活的很多方
+			</view>
+			<view class="part3-last-green">
+				正常饮食
+			</view>
+			<view class="part3-last-p">
+				不管是节食，暴食，还是饮食不规律，很多时候其实不止是饮食出现了问题，更多的还是人的意识和心境。正念进食就是要求我们去有意识的进食。倾听身体的诉求，去解读它的意识，然后适当的去满足它，而非对抗它。
+			</view>
+			<view class="part3-last-img">
+				<image class="template3-img-1" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1658750017jDUNjJ.jpg" mode="aspectFit|aspectFill|widthFix" />
+				<image class="template3-img-2" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1658750043iRAqTB.jpg" mode="aspectFit|aspectFill|widthFix" />
+			</view>
+			<view class="part3-last-green">
+				正常分娩
+			</view>
+			<view class="part3-last-p">
+				创始人 Nancy Bardacke，是美国加州大学旧金山医学院的导师助产士。课程创于1998年，是将正念分娩减压课程与孕产妇行为认知教育相结合的身心保健课程。对于减少分娩恐惧，促进自然分娩，改善母儿结局，促进亲子及家庭关系具有显著效果。
+			</view>
+			<view class="part3-last-green">
+				正常老龄
+			</view>
+			<view class="part3-last-p">
+				正念疗法被证明会对大脑产生积极的影响，长期的正念修行不仅可以缓解老人的孤独感，还会改善高血压、增强免疫系统的工作能力、阻止抑郁症的发生并能够大大的缓解失眠。
+			</view>
+			<image class="part3-last-bottom" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1658750410TRMWYv.jpg" mode="aspectFit|aspectFill|widthFix" />
+		</view>
+	</view>
+</view>
+
