@@ -18,17 +18,17 @@
         </view>
         <view class="stat-bottom">
             <view class="stat-item">
-                <view class="number">{{mindfulnessStatisticsData.totalOnlineMinute}}</view>
+                <view class="number">{{mindfulnessStatisticsData.totalOnlineMinute || 0}}</view>
                 <view class="stat-item-title">累计 (分钟)</view>
             </view>
 
             <view class="stat-item">
-                <view class="number">{{mindfulnessStatisticsData.totalDay}}</view>
+                <view class="number">{{mindfulnessStatisticsData.totalDay || 0}}</view>
                 <view class="stat-item-title">累计 (天数)</view>
             </view>
 
             <view class="stat-item">
-                <view class="number">{{mindfulnessStatisticsData.continuousDay}}</view>
+                <view class="number">{{mindfulnessStatisticsData.continuousDay || 0}}</view>
                 <view class="stat-item-title">连续 (天数)</view>
             </view>
         </view>
