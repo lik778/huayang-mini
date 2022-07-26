@@ -1,5 +1,6 @@
-import { getLocalStorage } from "../../utils/util";
+import { getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util";
 import { GLOBAL_KEY } from "../../lib/config";
+import { checkInMindfulness, getMindfulnessDetail } from "../../api/mindfulness/index";
 
 // 画布大小
 const CANVAS_WIDTH = 375
@@ -30,8 +31,12 @@ Page({
    * 页面的初始数据
    */
   data: {
+		didShowAuth: false,
+
 		statusHeight: 0,
+		screenHeight: 0,
 		customCanvasMarginTop: 0,
+
 		frequency: 0, // 屏幕刷新率
 
 		_cancelRequestAnimationFrame: false, // 取消requestAnimationFrame
@@ -44,10 +49,13 @@ Page({
 		didStopWaveAnimate: false,
 		didAnimateInit: false,
 
+		audioId: 0,
 		title: "",
 		poster: "",
 		backgroundImage: "",
+		qrcode: "",
 		times: 0, // 音频时长（秒）
+		fixedShowTime: "", // 固定时间
 		showTime: "", // 音频准确时间
 		dimTime: "", // 音频大致时间
 		audioUrl: "", // 音频地址
@@ -57,34 +65,49 @@ Page({
 		bgAudioPaused: true,
 
 		operateLock: false, // 快进、倒退操作锁
+
+		didShowResultLayer: false, // 是否展示结果页
+		continuesDay: 0, // 持续打卡天数
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-		const eventChannel = this.getOpenerEventChannel()
+		let {audioId} = options
+		this.setData({
+			statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
+			screenHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).screenHeight,
+		})
 
-		eventChannel.on("transmitData", (data) => {
-			let item = JSON.parse(data)
+		// 获取正念练习详情
+		getMindfulnessDetail({id: audioId}).then((item) => {
 			this.setData({
+				audioId: item.id,
 				audioUrl: item.url,
 				title: item.title,
 				times: item.duration,
-				poster: item.poster,
-				backgroundImage: item.backgroundImage,
+				poster: item.poster + "?x-oss-process=style/huayang",
+				backgroundImage: item.backgroundImage + "?x-oss-process=style/huayang",
+				qrcode: item.shareQrCode,
 				frequency: 1000 / UNIT
 			})
 
-			this.initAudioResource()
+			this.run()
 		})
+
+		// 权限检查
+		if (!hasUserInfo() || !hasAccountInfo()) {
+			this.setData({didShowAuth: true})
+		}
+
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady() {
-		this.run()
+
   },
 
   /**
@@ -125,9 +148,13 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  // onShareAppMessage() {
-	//
-  // },
+  onShareAppMessage() {
+		return {
+			title: this.data.title,
+			path: `/pages/mindfulness/mindfulness?audioId=${this.data.audioId}`,
+			imageUrl: this.data.poster
+		}
+  },
 
 	run() {
 		let remain = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).safeArea.height - 667
@@ -135,10 +162,9 @@ Page({
 			this.setData({customCanvasMarginTop: remain / 2})
 		}
 
-		this.setData({
-			statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
-		})
+		// this._mindfulnessDone()
 
+		this.initAudioResource()
 		this.initBgCanvas()
 		this.initProgressCanvas()
 	},
@@ -156,7 +182,7 @@ Page({
 
 		let st = this._formatTimes(this.data.times) // 精确时长
 		let dt = this.data.times/60|0 // 模糊时长
-		this.setData({showTime: st, dimTime: dt})
+		this.setData({fixedShowTime: st, showTime: st, dimTime: dt})
 	},
 
 	// 运行动画
@@ -355,6 +381,20 @@ Page({
 		}, UNIT)
 	},
 
+	// 用户确认授权
+	authCompleteEvent() {
+		this.setData({
+			didShowAuth: false,
+		})
+	},
+
+	// 用户授权取消
+	authCancelEvent() {
+		this.setData({
+			didShowAuth: false
+		})
+	},
+
 	// 加载网络图片
 	_loadNetworkImageRes(canvas, imgUrl) {
 		return new Promise((resolve) => {
@@ -389,6 +429,7 @@ Page({
 		// 监听音频加载成功可以播放
 		audio.onCanplay(() => {
 			console.log('bg audio resource ready')
+			wx.hideLoading()
 		})
 
 		// 监听音频开始播放
@@ -422,6 +463,8 @@ Page({
 
 		audio.onEnded(() => {
 			console.log('bg audio end')
+			wx.showLoading({title: "加载中...", mask: true})
+			this._mindfulnessDone()
 			this._resetAudioSeek()
 		})
 
@@ -446,6 +489,7 @@ Page({
 
 		// 初始化音频&开始播放
 		if (this.data.needInitBgAudio) {
+			wx.showLoading({title: "加载中...", mask: true})
 			return this._playAudio()
 		}
 
@@ -500,6 +544,12 @@ Page({
 		let curTime = audio.currentTime
 		let duration = audio.duration
 		let nextTime = curTime + 15
+
+		if (duration - curTime <= 15) {
+			console.log("声音时间不足15秒，禁止快进");
+			return false
+		}
+
 		if (nextTime >= duration) {
 			audio.stop()
 		} else {
@@ -518,8 +568,8 @@ Page({
 
 	/**
 	 * 切换动画状态
-	 * @param state, stop:暂停, start:启动
-	 * @param didCheckout, 是否更新按钮状态
+	 * @param state stop:暂停, start:启动
+	 * @param didCheckout 是否更新按钮状态
 	 * @private
 	 */
 	_switchAnimateState(state, didCheckout = true) {
@@ -557,5 +607,27 @@ Page({
 			this.data.bgAudio.stop()
 		}
 		this.setData({_cancelRequestAnimationFrame: true})
+	},
+
+	// 正念练习顺利结束
+	_mindfulnessDone() {
+		checkInMindfulness({bizId: this.data.audioId, bizType: "PRACTISE", onlineMinute: this.data.dimTime, userId: getLocalStorage(GLOBAL_KEY.userId)})
+			.then((data) => {
+				this.setData({
+					didShowResultLayer: true,
+					continuesDay: data.continuousDay || 1
+				})
+				wx.hideLoading()
+			})
+			.catch(() => {
+				wx.hideLoading()
+			})
+	},
+
+	// 正念练习打卡分享
+	show() {
+		let st = this._formatTimes(this.data.times)
+		let url = `/pages/mindfulnessPost/mindfulnessPost?actionName=${this.data.title}&duration=${st}&continuesDay=${this.data.continuesDay}&qrcode=${this.data.qrcode}`
+		wx.redirectTo({url})
 	}
 })

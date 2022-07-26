@@ -1,0 +1,177 @@
+@import "../../assets/css/common.wxss";
+
+.mindfulness-post {
+    overflow: hidden;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: #37383B;
+}
+
+.post {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600rpx;
+    height: 960rpx;
+    background: #aaa;
+}
+
+.top-lay {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: inherit;
+    height: 730rpx;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    color: white;
+}
+
+.date {
+    display: flex;
+    flex-direction: column;
+    margin: 30rpx 0 0 30rpx;
+    font: bold 64rpx/74rpx Condensed;
+}
+
+.record-no {
+    font: bold 36rpx/50rpx PingFang SC;
+}
+
+.record-no-text {
+    font: bold 54rpx/50rpx Condensed;
+}
+
+.slogan {
+    font: 500 40rpx/56rpx PingFang SC;
+    text-align: center;
+}
+
+.action-name {
+    margin: 0 0 20rpx 188rpx;
+    font: 600 36rpx/36rpx PingFang SC;
+}
+
+.bottom-lay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 230rpx;
+    background: white;
+}
+
+.left-top {
+    position: absolute;
+    top: -60rpx;
+    left: 38rpx;
+    display: flex;
+    align-items: flex-end;
+}
+
+.avatar {
+    width: 120rpx;
+    height: 120rpx;
+    border: 4rpx solid white;
+    border-radius: 999rpx;
+    box-sizing: border-box;
+    margin-right: 30rpx;
+}
+
+.nickname {
+    width: 230rpx;
+    height: 36rpx;
+    font: 36rpx/36rpx PingFang SC;
+}
+
+.left-bottom {
+    position: absolute;
+    left: 38rpx;
+    bottom: 32rpx;
+    width: 300rpx;
+    display: flex;
+    align-items: center;
+}
+
+.practice-no {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 30rpx;
+}
+
+.practice-no:last-child {
+    margin-right: 0;
+}
+
+.no {
+    font: bold 60rpx/72rpx Condensed;
+}
+
+.tip {
+    font: 28rpx/28rpx PingFang SC;
+}
+
+.small-tip {
+    font: 20rpx/28rpx PingFang SC;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 38rpx;
+    bottom: 14rpx;
+}
+
+.qr-code {
+    width: 136rpx;
+    height: 136rpx;
+    margin-bottom: 2rpx;
+}
+
+.operate {
+    position: fixed;
+    bottom: calc(env(safe-area-inset-bottom) + 12rpx);
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30rpx;
+}
+
+.share-btn,
+.save {
+    text-align: center;
+    width: 330rpx;
+    height: 96rpx;
+    border-radius: 999rpx;
+    box-sizing: border-box;
+    font: 500 32rpx/96rpx PingFang SC;
+
+}
+
+.share-btn:active,
+.save:active {
+    opacity: 0.8;
+}
+
+.share-btn {
+    background: white;
+}
+
+.save {
+    color: white;
+}
+
+#canvas-order {
+    position: absolute;
+    left: 300%;
+}

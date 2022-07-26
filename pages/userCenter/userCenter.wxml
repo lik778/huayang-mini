@@ -1,32 +1,43 @@
-<view class="user-center {{nodata && 'nodata'}}" wx:if="{{loading}}">
-    <view class="banner">
-        <!-- 背景图 -->
-        <image class="banner-bg {{ nodata ? 'sign' : ''}}" src="{{ nodata ? '/assets/images/common/banner-bg-sign.png' : '/assets/images/common/banner-bg.png' }}"/>
-        <!-- 个人信息 -->
-        <view class="message">
-            <view class="no-data-layout" wx:if="{{nodata}}" bindtap="getAuth">
-                <text class="no-data-title">花样百姓</text>
-                <text class="no-data-sub-title">面向50岁+新青年的生活方式平台，倡导和引领积极、健康、时尚的品质生活方式。</text>
-                <view class="no-data-btn">立即登录</view>
+<view class="user-center" wx:if="{{loading}}" style="padding-top:{{statusHeight+44}}px;">
+    <!-- 登录信息 -->
+    <view class="wx-auth" bindtap="getAuth">
+        <view class="wx-auth-info">
+            <image class="avatar" src="{{nodata ? 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1658297078nUazFf.jpg' : userInfo.avatar_url}}" mode="aspectFit"></image>
+            <text class="name {{nodata ? '' : 'limit-one-line'}}">{{nodata ? "点击注册 / 登录" : userInfo.nick_name || userInfo.nickname}}</text>
+        </view>
+    </view>
+
+    <!-- 练习数据 -->
+    <view class="statistics" bindtap="goToMindfulnessStatistics">
+        <view class="stat-top">
+           <view class="stat-wrap">
+               <image class="stat-icon" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1658295767RayIis.jpg" mode="aspectFit"></image>
+               <text class="stat-title">练习数据</text>
+           </view>
+            <view class="stat-calendar"><text>练习历程</text><image class="stat-calendar-arrow" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1658295966vHqXUY.jpg"></image></view>
+        </view>
+        <view class="stat-bottom">
+            <view class="stat-item">
+                <view class="number">{{mindfulnessStatisticsData.totalOnlineMinute}}</view>
+                <view class="stat-item-title">累计 (分钟)</view>
             </view>
-            <block wx:else>
-               <view class="user-info-container">
-                <image src="{{userInfo.avatar_url}}" bindtap="getAuth"></image>
-                <view class="user-info">
-                    <view class="nick-name">
-                        <view class="name limit-one-line" style="max-width: {{isUserHaveTeacherCard ? '350rpx' : '500rpx'}};">{{userInfo.nick_name || userInfo.nickname}}</view>
-                        <view class="teacher-card" wx:if="{{isUserHaveTeacherCard}}" bindtap="goToPersonCard">个人主页</view>
-                    </view>
-                </view>
-               </view>
-            </block>
+
+            <view class="stat-item">
+                <view class="number">{{mindfulnessStatisticsData.totalDay}}</view>
+                <view class="stat-item-title">累计 (天数)</view>
+            </view>
+
+            <view class="stat-item">
+                <view class="number">{{mindfulnessStatisticsData.continuousDay}}</view>
+                <view class="stat-item-title">连续 (天数)</view>
+            </view>
         </view>
     </view>
 
     <!-- 功能栏 -->
     <view class="function">
         <view class="function-list">
-            <view class="function-item" bindtap="goToYouZanOrderPage">
+            <view class="function-item" bindtap="goToYouZanOrderPage" wx:if="{{false}}">
                 <view class="function-item-left">
                     <image src="/assets/images/common/order.png" style="width: 52rpx;height: 54rpx;"></image>
                     <view class="function-item-box">
@@ -81,7 +92,7 @@
             <!--				</view>-->
             <!--				<image src="/assets/images/common/arrow.png"></image>-->
             <!--			</view>-->
-            <view class="function-item" bindtap="goToBooks">
+            <view class="function-item" bindtap="goToBooks" wx:if="{{false}}">
                 <view class="function-item-left">
                     <image src="/assets/images/common/book.png" class="task-image"></image>
                     <view class="function-item-box">
@@ -90,7 +101,7 @@
                 </view>
                 <image src="/assets/images/common/arrow.png"></image>
             </view>
-            <view class="function-item" bindtap="goToConvertCashPage">
+            <view class="function-item" bindtap="goToConvertCashPage" wx:if="{{false}}">
                 <view class="function-item-left">
                     <image src="/assets/images/common/newBalance.png" class="task-image"></image>
                     <view class="function-item-box">
@@ -114,16 +125,6 @@
                 <image src="/assets/images/common/arrow.png"></image>
             </view>
         </view>
-    </view>
-
-    <!-- 广告位 -->
-    <view class="ad {{ nodata && 'nodata' }}" wx:if="{{bannerList.length > 0}}">
-        <swiper class="swiper-item-box" circular autoplay interval="{{3000}}" duration="{{500}}">
-            <swiper-item wx:for="{{bannerList}}" wx:key="index" bindtap="onBannerItemTap" data-item="{{item}}">
-                <view class="swiper-cover"></view>
-                <image mode="cover" src="{{item.pic_url}}"></image>
-            </swiper-item>
-        </swiper>
     </view>
 
     <!-- 授权弹窗 -->
