@@ -625,7 +625,7 @@ Page({
 	// 正念练习打卡分享
 	show() {
 		let st = this._formatTimes(this.data.times)
-		let url = `/pages/mindfulnessPost/mindfulnessPost?actionName=${this.data.title}&duration=${st}&continuesDay=${this.data.continuesDay}&qrcode=${this.data.qrcode}`
+		let url = `/pages/mindfulnessPost/mindfulnessPost?actionName=${this.data.title}&duration=${st}&continuesDay=${this.data.continuesDay}&qrcode=${this.data.qrcode}&image=${this.data.poster}`
 		wx.redirectTo({url})
 	}
 })
