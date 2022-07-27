@@ -86,7 +86,7 @@ Page({
   onReachBottom: function () {
 
   },
-  async cookData({actionName, duration, continuesDay, qrcode}) {
+  async cookData({actionName, duration, continuesDay, qrcode, image}) {
     let now = new Date()
     let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
     let cover = await queryPunchCardBg()
@@ -99,7 +99,7 @@ Page({
       nickname: accountInfo.nick_name,
       duration,
       qrcode,
-      cover,
+      cover: image,
     }
 
     this.setData({
