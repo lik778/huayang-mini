@@ -157,8 +157,6 @@ Page({
 			this.setData({customCanvasMarginTop: remain / 2})
 		}
 
-		// this._mindfulnessDone()
-
 		this.initAudioResource()
 		this.initBgCanvas()
 		this.initProgressCanvas()
