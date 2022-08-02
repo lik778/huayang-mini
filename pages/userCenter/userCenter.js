@@ -347,14 +347,6 @@ Page({
 
           this.setData({isUserHaveTeacherCard: $notNull(data)})
         })
-
-			// 获取正念练习数据
-			getMindfulnessStatistics({bizType: "PRACTISE", userId: getLocalStorage(GLOBAL_KEY.userId)})
-				.then((data) => {
-					if (data) {
-						this.setData({mindfulnessStatisticsData: data})
-					}
-				})
     }
 
     if (hasUserInfo() && !hasAccountInfo()) {
@@ -497,6 +489,13 @@ Page({
         this.getFluentInfo()
       })
 
+			// 获取正念练习数据
+			getMindfulnessStatistics({bizType: "PRACTISE", userId: getLocalStorage(GLOBAL_KEY.userId)})
+				.then((data) => {
+					if (data) {
+						this.setData({mindfulnessStatisticsData: data})
+					}
+				})
     }
   },
 
