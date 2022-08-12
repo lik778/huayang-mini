@@ -90,7 +90,6 @@ Page({
     let now = new Date()
     let accountInfo = getLocalStorage(GLOBAL_KEY.accountInfo) ? JSON.parse(getLocalStorage(GLOBAL_KEY.accountInfo)) : {}
     let cover = await queryPunchCardBg()
-
     let data = {
       date: `${now.getFullYear()} ${String(now.getMonth() + 1).padStart(2, "0")}/${String(now.getDate()).padStart(2, "0")}`,
       recordNo: continuesDay,
@@ -99,7 +98,7 @@ Page({
       nickname: accountInfo.nick_name,
       duration,
       qrcode,
-      cover: image,
+      cover: cover,
     }
 
     this.setData({
