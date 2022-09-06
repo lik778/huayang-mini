@@ -611,10 +611,14 @@ Page({
 	_mindfulnessDone() {
 		checkInMindfulness({bizId: this.data.audioId, bizType: "PRACTISE", onlineMinute: this.data.dimTime, userId: getLocalStorage(GLOBAL_KEY.userId)})
 			.then((data) => {
-				this.setData({
-					didShowResultLayer: true,
-					continuesDay: data.continuousDay
-				})
+        const url = `/pages/mindfulnessClock/mindfulnessClock?continuesDay=${data.continuousDay}`
+        wx.navigateTo({
+          url
+        })
+				// this.setData({
+				// 	didShowResultLayer: true,
+				// 	continuesDay: data.continuousDay
+				// })
 				wx.hideLoading()
 			})
 			.catch(() => {

@@ -1,0 +1,52 @@
+<view class="container" style="padding-top: {{statusHeight+44}}px;">
+  <naviBar title="" backPathBelongTab="{{true}}" backPath="/pages/mindfulnessList/mindfulnessList" style="padding-top:{{statusHeight+44}}px;" color="transparent"  titleColor="#fff" title="打卡成功"></naviBar>
+  <view class="container-top">
+    <image  class="complete-img" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1662366455xkBuly.jpg" mode="aspectFit"  alt="logo"/>
+    <text class="complete">恭喜您完成了打卡!</text>
+  </view>
+  <view class="container-content">
+    <view class="content-share">
+      <!-- 训练时长 -->
+      <view class="tranining">
+        <view class="punch-duraction">
+          03:15
+        </view>
+        <view class="txt-time">训练时长</view>
+      </view>
+      <view class="tips"></view>
+      <!-- 打卡天数 -->
+      <view class="punch">
+        <view class="punch-duraction">
+          2
+        </view>
+        <view class="txt-time">连续打卡</view>
+      </view>
+      <!-- 分享 -->
+      <view class="sharing">
+        分享好友
+      </view>
+    </view>
+    <view class="content-calendar">
+      <view class="calendar-month">
+        <view class="pre">
+        </view>
+        <view class="calendar-show-time">
+          2022 年  07 月
+        </view>
+        <view class="next">
+        </view>
+      </view>
+      <view class="calendar-day">
+        <!-- 周 -->
+        <view class="weeks">
+          <view  wx:for="{{weeks}}" class="weeks-day">{{item}}</view>
+        </view>
+        <!-- 天 -->
+        <view class="days">
+          <view class="days-item">
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
