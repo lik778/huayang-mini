@@ -36,7 +36,7 @@ Page({
     campData: "",
     userName: '',
     Nowdate: '',
-    hostBg: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606447725FvEaJd.jpg",
+    hostBg: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1662462912ZgjZHI.jpg",
     LogoList: [],
     isRowStyle: false,
     didShowAuth: false,
@@ -207,7 +207,7 @@ Page({
       campData,
       Nowdate,
       LogoList: logoData,
-      hostBg: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639551039psUfBH.jpg',
+      hostBg: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1662462912ZgjZHI.jpg',
       isShare: options.isShare
     })
   },
@@ -295,7 +295,7 @@ Page({
   onShareAppMessage: function () {
     let link = `subCourse/campCredential/campCredential?campData=${encodeURIComponent(JSON.stringify(this.data.campData))}&isShare=true&logo=`
     return {
-      title: `我正在参加${this.data.campData.name}，每天都有看的见的变化，快来试试`,
+      title: `我正在参加${this.data.campData.name}，正念让我遇见更好的生活！`,
       path: link
     }
   }
