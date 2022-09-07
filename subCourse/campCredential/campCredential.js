@@ -195,6 +195,7 @@ Page({
     let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
     let Nowdate = year + "年" + month + "月"
     let systemParams = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
+    let hostBg = (campData.type && campData.type === 'mindfulness') ? 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1662462912ZgjZHI.jpg' : 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606447725FvEaJd.jpg '
     this.setData({
       statusBarHeight: systemParams.statusBarHeight,
       systemParams: systemParams,
@@ -207,7 +208,7 @@ Page({
       campData,
       Nowdate,
       LogoList: logoData,
-      hostBg: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1662462912ZgjZHI.jpg',
+      hostBg: hostBg,
       isShare: options.isShare
     })
   },
