@@ -38,7 +38,8 @@
     "pages/mindfulnessPost/mindfulnessPost",
     "pages/mindfulnessStatistics/mindfulnessStatistics",
     "pages/travels/travels",
-    "pages/mindfulnessClock/mindfulnessClock"
+    "pages/mindfulnessClock/mindfulnessClock",
+    "pages/mindfulnessPoster/mindfulnessPoster"
   ],
   "requiredBackgroundModes": [
     "audio",

@@ -82,6 +82,7 @@ Page({
 
 		// 获取正念练习详情
 		getMindfulnessDetail({id: audioId}).then((item) => {
+      console.log(item)
 			this.setData({
 				audioId: item.id,
 				audioUrl: item.url,
@@ -611,7 +612,7 @@ Page({
 	_mindfulnessDone() {
 		checkInMindfulness({bizId: this.data.audioId, bizType: "PRACTISE", onlineMinute: this.data.dimTime, userId: getLocalStorage(GLOBAL_KEY.userId)})
 			.then((data) => {
-        const url = `/pages/mindfulnessClock/mindfulnessClock?continuesDay=${data.continuousDay}`
+        const url = `/pages/mindfulnessClock/mindfulnessClock?fixedShowTime=${this.data.fixedShowTime}`
         wx.navigateTo({
           url
         })

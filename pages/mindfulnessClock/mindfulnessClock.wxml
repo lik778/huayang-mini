@@ -9,7 +9,7 @@
       <!-- 训练时长 -->
       <view class="tranining">
         <view class="punch-duraction">
-          03:15
+          {{totalDuration}}
         </view>
         <view class="txt-time">训练时长</view>
       </view>
@@ -17,33 +17,41 @@
       <!-- 打卡天数 -->
       <view class="punch">
         <view class="punch-duraction">
-          2
+          {{
+            mindfulnessStatisticsData.continuousDay
+          }}
         </view>
         <view class="txt-time">连续打卡</view>
       </view>
       <!-- 分享 -->
-      <view class="sharing">
+      <view class="sharing" bindtap="bindSharing">
         分享好友
       </view>
     </view>
     <view class="content-calendar">
       <view class="calendar-month">
-        <view class="pre">
+        <view class="icon"data-change="pre"  bindtap="bindChangeMonth">
+          <view class="pre" >
+         </view>
         </view>
         <view class="calendar-show-time">
-          2022 年  07 月
+          {{currentMonthFormat}}
         </view>
-        <view class="next">
+        <view class="icon" data-change="next" bindtap="bindChangeMonth" >
+          <view class="{{ checkedNext ? 'next' : 'disable' }}">
+        </view>
         </view>
       </view>
       <view class="calendar-day">
         <!-- 周 -->
         <view class="weeks">
-          <view  wx:for="{{weeks}}" class="weeks-day">{{item}}</view>
+          <view  wx:for="{{weeks}}" wx:key="*this" class="weeks-day">{{item}}</view>
         </view>
         <!-- 天 -->
         <view class="days">
-          <view class="days-item">
+          <view wx:for="{{days}}" wx:key="day" class="days-item {{ item.isChecked ? 'already' : '' }} {{ item.isCurrent ? 'current' : '' }} {{ !item.isCurrentMonth ? 'isCurrentMonth' : '' }}">
+          {{item.day}}
+          <image wx:if="{{ item.isCurrent }}" src="https://huayang-img.oss-cn-shanghai.aliyuncs.com/1662705316azWbeV.jpg" class="select" mode="aspectFit" ></image>
           </view>
         </view>
       </view>
