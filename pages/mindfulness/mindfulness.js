@@ -82,7 +82,6 @@ Page({
 
 		// 获取正念练习详情
 		getMindfulnessDetail({id: audioId}).then((item) => {
-      console.log(item)
 			this.setData({
 				audioId: item.id,
 				audioUrl: item.url,

@@ -1,5 +1,8 @@
-import { GLOBAL_KEY } from '../../lib/config'
-import { getLocalStorage  } from "../../utils/util";
+import { GLOBAL_KEY , WX_AUTH_TYPE, ErrorLevel} from '../../lib/config'
+import { getLocalStorage, queryWxAuth , toast } from "../../utils/util";
+import {
+  collectError
+} from "../../api/auth/index"
 
 
 Page({
@@ -12,7 +15,9 @@ Page({
      posterData: {},
      canvasWidth: 0,
      canvasheight: 0,
-     qrCode: ''
+     qrCode: '',
+     _didDrawCanvasDone: false,
+     _invokeSaveToLocalAction: false
   },
 
   /**
@@ -22,13 +27,19 @@ Page({
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
       qrCode: options.qrCode
+      // qrCode: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/user_avatar_2557.jpg'
     })
-    // 
+
     this.initPoster({
       actionName: options.actionName,
       continuesDay: options.continuesDay,
       duration: options.duration
     })
+    // this.initPoster({
+    //   actionName: '121',
+    //   continuesDay: 1,
+    //   duration: 1,
+    // })
     let timer = setTimeout(() => {
       this.initCanvas()
       clearInterval(timer)
@@ -59,7 +70,8 @@ Page({
         // 初始化背景
         this.setData({
           canvasWidth: width,
-          canvasheight: height
+          canvasheight: height,
+          canvas: canvas
         })
         this.initBg(canvas,ctx,width,height,url,0,0)
         // 初始化打卡数据
@@ -74,6 +86,7 @@ Page({
     let image = canvas.createImage()
     image.onload = () => {
       ctx.beginPath()
+      // ctx.fillRect(0,0,width,height)
       ctx.drawImage(image, x, y, width,height)
       this.initPosterData(canvas,ctx)
     }
@@ -154,17 +167,17 @@ Page({
     let  { canvasWidth, canvasheight } = this.data
     this.drawArc(canvas, ctx,30,524,15,2,accountImage)
     this.drawText(ctx,'13px PingFangSC-Medium',accountName,51,509,'#FFFFFF')
-    this.drawText(ctx,'12px PingFangSC-Regular',actionName,51,526,'#FEFFFF')
+    this.drawText(ctx,'12px PingFangSC-Regular',actionName,51,526,'#EEEEEE')
     // 连续打卡
     this.drawText(ctx,'12px PingFangSC-Medium',`${continuesDay}天`,canvasWidth - 99,509,'#FFFFFF')
-    this.drawText(ctx,'12px PingFangSC-Medium','连续打卡',canvasWidth - 127,526,'#FEFFFF')
+    this.drawText(ctx,'12px PingFangSC-Medium','连续打卡',canvasWidth - 127,526,'#EEEEEE')
     // 连续打卡右侧线条
     this.initLine(ctx,canvasWidth - 70.5,509,canvasWidth - 70.5,535,1,'#FEFFFF')
     // 训练时长
     this.drawText(ctx,'12px PingFangSC-Medium',`${duration}`,canvasWidth - 45,509,'#FFFFFF')
-    this.drawText(ctx,'12px PingFangSC-Medium','训练时长',canvasWidth - 63,526,'#FEFFFF')
+    this.drawText(ctx,'12px PingFangSC-Medium','训练时长',canvasWidth - 63,526,'#EEEEEE')
     // 绘制分享二维码
-    this.drawRect(ctx,0,579,canvasWidth,262,'#ffffff')
+    this.drawRect(ctx,0,579,canvasWidth,131,'#ffffff')
     let imageQr = canvas.createImage()
     imageQr.onload = () => {
       ctx.beginPath()
@@ -172,5 +185,91 @@ Page({
     }
     imageQr.src = this.data.qrCode
     ctx.closePath()
+    // 我在花样百姓 一 正念生活，花样人生-canvas对文本的操作api少，使用图片代替文字
+    // this.drawText(ctx,'bold 13px PingFangSC-Medium','我在',100,617,'#333333')
+    // this.drawText(ctx,'bold 13px PingFangSC-Medium','花样百姓',126,617,'#FF5544')
+    // this.drawText(ctx,'bold 13px PingFangSC-Medium','花样百姓',126,617,'#FF5544')
+    // 线条
+    this.initLine(ctx,100.5,639,canvasWidth - 15,639,1,'#EEEEEE')
+    // 长按扫码立即学习
+
+    // 绘制完成了
+      this.setData({
+        _didDrawCanvasDone: true
+      },() => {
+        if(this.data._invokeSaveToLocalAction) {
+          this.savePoster()
+        }
+      })
   },
+
+  // 保存图片
+  savePoster() {
+    let { canvasWidth, canvasheight, canvas } = this.data
+    // 保存前先判断是否已经绘制完毕，绘制完继续往下走，没有绘制完需要等待绘制完成之后再调用该函数
+    if(!this.data._didDrawCanvasDone) {
+      this.setData({
+        _invokeSaveToLocalAction: true
+      })
+      return
+    }
+    
+    this.saveCanvasImageTolocal(canvas,0,68,canvasWidth,636).then(({ tempFilePath }) => {
+      wx.hideLoading()
+      console.log(tempFilePath)
+      queryWxAuth(WX_AUTH_TYPE.writePhotosAlbum).then(() => {
+        wx.saveImageToPhotosAlbum({
+          filePath: tempFilePath,
+          success(res) {
+            toast('图片保存成功', 3000, 'success')
+          },
+          fail(error) {
+            toast('图片保存失败')
+            collectError({
+              level: ErrorLevel.p1,
+              page: "dd.actionPost.saveImageToPhotosAlbum",
+              error_code: 400,
+              error_message: error
+            })
+          }
+        })
+      })
+    }).catch(() => {
+      wx.showModal({
+        title: '相册授权',
+        content: '保存失败，未获得您的授权，请前往设置授权',
+        confirmText: '去设置',
+        confirmColor: '#33c71b',
+        success(res) {
+          if (res.confirm) {
+            wx.openSetting()
+          }
+        }
+      })
+    })
+  },
+
+  // 生成图片临时目录
+
+  saveCanvasImageTolocal(canvas,x,y,width,height) {
+    return new Promise((resolve,reject) => {
+      wx.showLoading({
+        title: '海报生成中...',
+        mask: true
+      })
+      wx.canvasToTempFilePath({
+        x: x,
+        y: y,
+        width: width,
+        height: height,
+        canvas: canvas,
+        success(result) {
+          resolve(result)
+        },
+        fail(err) {
+          reject(err)
+        }
+      })
+    })
+  }
 })

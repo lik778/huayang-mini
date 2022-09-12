@@ -1,11 +1,26 @@
 
 #myCanvas {
-  width: 100%;
-  height: 1400rpx;
-  border-bottom: 5px solid red;
+  width: inherit;
+  height: inherit;
 } 
-
-.save {
-  padding-bottom: 108rpx;
+.canvas-poster {
   overflow: hidden;
+  width: 100%;
+  height: 710px;
+}
+.save-container {
+  overflow: hidden;
+  padding: 0 30rpx 108rpx;
+}
+.save-poster {
+  width: 100%;
+  height: 96rpx;
+  line-height: 96rpx;
+  text-align: center;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  background: #FF4433;
+  background-image: linear-gradient(135deg, #FFA562 0%, #FF4452 100%);
+  border-radius: 48rpx;
 }

@@ -133,7 +133,6 @@ Page({
           }
         }
       }
-      console.log(nd)
       this.setData({
         days: nd,
         lock: false
@@ -160,7 +159,6 @@ Page({
         this.setData({
           lock: false,
         })
-        console.log('12')
       } else {
         let nextMonth = lastTargetObj.add(1,'month')
         this.setData({
