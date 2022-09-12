@@ -11,7 +11,8 @@ Page({
      statusHeight: 0,
      posterData: {},
      canvasWidth: 0,
-     canvasheight: 0
+     canvasheight: 0,
+     qrCode: ''
   },
 
   /**
@@ -19,13 +20,14 @@ Page({
    */
   onLoad(options) {
     this.setData({
-      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight
+      statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
+      qrCode: options.qrCode
     })
     // 
     this.initPoster({
-      actionName: '完成慈溪的联系',
-      continuesDay: 2,
-      duration: '03:15'
+      actionName: options.actionName,
+      continuesDay: options.continuesDay,
+      duration: options.duration
     })
     let timer = setTimeout(() => {
       this.initCanvas()
@@ -161,5 +163,14 @@ Page({
     // 训练时长
     this.drawText(ctx,'12px PingFangSC-Medium',`${duration}`,canvasWidth - 45,509,'#FFFFFF')
     this.drawText(ctx,'12px PingFangSC-Medium','训练时长',canvasWidth - 63,526,'#FEFFFF')
+    // 绘制分享二维码
+    this.drawRect(ctx,0,579,canvasWidth,262,'#ffffff')
+    let imageQr = canvas.createImage()
+    imageQr.onload = () => {
+      ctx.beginPath()
+      ctx.drawImage(imageQr, 25.76, 609, 57.6,57.6)
+    }
+    imageQr.src = this.data.qrCode
+    ctx.closePath()
   },
 })

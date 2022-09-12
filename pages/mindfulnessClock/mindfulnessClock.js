@@ -22,20 +22,22 @@ Page({
     checkedNext: false,
     currentMonthFormat: '',
     lock: false,
-    totalDuration: ''
+    totalDuration: '',
+    qrCode: '',
+    actionName: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    console.log(options.fixedShowTime)
-    let totalDuration = options.fixedShowTime || 60
-    // let formatAfterDuration = this._formatTime(totalDuration)
+    let totalDuration = options.fixedShowTime
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
       targetObj: dayjs(),
-      totalDuration: totalDuration
+      totalDuration: totalDuration,
+      qrCode: options.qrCode,
+      actionName: options.actionName
     })
     this.run()
   },
@@ -189,7 +191,7 @@ Page({
     // 分享好友
   bindSharing() {
     wx.navigateTo({
-      url: '/pages/mindfulnessPoster/mindfulnessPoster'
+      url: `/pages/mindfulnessPoster/mindfulnessPoster?qrCode=${this.data.qrCode}&duration=${this.data.mindfulnessStatisticsData.totalOnlineMinute}&continuesDay=${this.data.mindfulnessStatisticsData.continuousDay}&actionName=${this.data.actionName}`
     })
   }
 })
