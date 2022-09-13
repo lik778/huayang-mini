@@ -115,7 +115,7 @@ Page({
           nd.push('')
         } else {
           if(cur.isCurrentMonth) {
-            let isExitRes = res.find(ir => ir.day === cur.day)
+            let isExitRes = res.find(ir => ir.day === cur.day && ir.day != today)
             let isExitCurrent = res.find(ir => ir.day === cur.day && ir.day === today )
             nd.push({
               day: cur.day,
