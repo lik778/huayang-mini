@@ -66,14 +66,15 @@ Page({
         canvas.width = width * dpr
         canvas.height = height * dpr
         ctx.scale(dpr, dpr)
-        const url = "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1662716884qfOpmg.jpg"
+        const url = "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1663048449lZDjVj.jpg"
+        // const url = 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1662716884qfOpmg.jpg'
         // 初始化背景
         this.setData({
           canvasWidth: width,
           canvasheight: height,
           canvas: canvas
         })
-        this.initBg(canvas,ctx,width,height,url,0,0)
+        this.initBg(canvas,ctx,width,617,url,0,0)
         // 初始化打卡数据
         // this.initPosterData(canvas,ctx)
         
@@ -136,7 +137,7 @@ Page({
       ctx.clip()
       // ctx.fillStyle = 'pink'
       // ctx.fillRect(15,509,30,30)
-      ctx.drawImage(image,15,509,30,30)
+      ctx.drawImage(image,15,507,30,30)
       // 背景图片-
       // this.initBg(canvas,ctx,30,30,accountImage,15,509)
       ctx.closePath()
@@ -161,21 +162,32 @@ Page({
     })
   },
 
+  // 绘制图片
+  drawImag(canvas,ctx,src,x,y,width,height) {
+    let drawImag = canvas.createImage()
+    drawImag.onload = () => {
+      ctx.beginPath()
+      ctx.drawImage(drawImag, x, y, width, height)
+      ctx.closePath()
+    }
+    drawImag.src = src
+  },
+
     // 绘制打卡数据
   initPosterData(canvas,ctx) {
     let { actionName,duration, continuesDay, accountName, accountImage } = this.data.posterData
     let  { canvasWidth, canvasheight } = this.data
-    this.drawArc(canvas, ctx,30,524,15,2,accountImage)
+    this.drawArc(canvas, ctx,30,522,15,2,accountImage)
     this.drawText(ctx,'13px PingFangSC-Medium',accountName,51,509,'#FFFFFF')
-    this.drawText(ctx,'12px PingFangSC-Regular',actionName,51,526,'#EEEEEE')
+    this.drawText(ctx,'12px PingFangSC-Regular',actionName,51,526,'#888888')
     // 连续打卡
     this.drawText(ctx,'12px PingFangSC-Medium',`${continuesDay}天`,canvasWidth - 99,509,'#FFFFFF')
-    this.drawText(ctx,'12px PingFangSC-Medium','连续打卡',canvasWidth - 127,526,'#EEEEEE')
+    this.drawText(ctx,'12px PingFangSC-Medium','连续打卡',canvasWidth - 127,526,'#888888')
     // 连续打卡右侧线条
-    this.initLine(ctx,canvasWidth - 70.5,509,canvasWidth - 70.5,535,1,'#FEFFFF')
+    this.initLine(ctx,canvasWidth - 70.5,509,canvasWidth - 70.5,535,1,'#888888')
     // 训练时长
     this.drawText(ctx,'12px PingFangSC-Medium',`${duration}`,canvasWidth - 45,509,'#FFFFFF')
-    this.drawText(ctx,'12px PingFangSC-Medium','训练时长',canvasWidth - 63,526,'#EEEEEE')
+    this.drawText(ctx,'12px PingFangSC-Medium','训练时长',canvasWidth - 63,526,'#888888')
     // 绘制分享二维码
     this.drawRect(ctx,0,579,canvasWidth,131,'#ffffff')
     let imageQr = canvas.createImage()
@@ -185,6 +197,8 @@ Page({
     }
     imageQr.src = this.data.qrCode
     ctx.closePath()
+    this.drawImag(canvas,ctx,'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1663052076aZmEDf.jpg',100,617,221,13)
+    this.drawImag(canvas,ctx,'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1663052242qycokz.jpg',100,649,128,13)
     // 我在花样百姓 一 正念生活，花样人生-canvas对文本的操作api少，使用图片代替文字
     // this.drawText(ctx,'bold 13px PingFangSC-Medium','我在',100,617,'#333333')
     // this.drawText(ctx,'bold 13px PingFangSC-Medium','花样百姓',126,617,'#FF5544')

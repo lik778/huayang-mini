@@ -10,7 +10,7 @@
 }
 .save-container {
   overflow: hidden;
-  padding: 0 30rpx 108rpx;
+  padding: 0 30rpx 59rpx;
 }
 .save-poster {
   width: 100%;

@@ -189,7 +189,7 @@ Page({
     // 分享好友
   bindSharing() {
     wx.navigateTo({
-      url: `/pages/mindfulnessPoster/mindfulnessPoster?qrCode=${this.data.qrCode}&duration=${this.data.mindfulnessStatisticsData.totalOnlineMinute}&continuesDay=${this.data.mindfulnessStatisticsData.continuousDay}&actionName=${this.data.actionName}`
+      url: `/pages/mindfulnessPoster/mindfulnessPoster?qrCode=${this.data.qrCode}&duration=${this.data.totalDuration}&continuesDay=${this.data.mindfulnessStatisticsData.continuousDay}&actionName=${this.data.actionName}`
     })
   }
 })
