@@ -137,7 +137,7 @@ Page({
       ctx.clip()
       // ctx.fillStyle = 'pink'
       // ctx.fillRect(15,509,30,30)
-      ctx.drawImage(image,15,507,30,30)
+      ctx.drawImage(image,17,507,30,30)
       // 背景图片-
       // this.initBg(canvas,ctx,30,30,accountImage,15,509)
       ctx.closePath()
@@ -177,19 +177,19 @@ Page({
   initPosterData(canvas,ctx) {
     let { actionName,duration, continuesDay, accountName, accountImage } = this.data.posterData
     let  { canvasWidth, canvasheight } = this.data
-    this.drawArc(canvas, ctx,30,522,15,2,accountImage)
-    this.drawText(ctx,'13px PingFangSC-Medium',accountName,51,509,'#FFFFFF')
-    this.drawText(ctx,'12px PingFangSC-Regular',actionName,51,526,'#888888')
+    this.drawArc(canvas, ctx,32,522,15,2,accountImage)
+    this.drawText(ctx,'13px PingFangSC-Medium',accountName,53,509,'#FFFFFF')
+    this.drawText(ctx,'12px PingFangSC-Regular',actionName,53,526,'#888888')
     // 连续打卡
-    this.drawText(ctx,'12px PingFangSC-Medium',`${continuesDay}天`,canvasWidth - 99,509,'#FFFFFF')
-    this.drawText(ctx,'12px PingFangSC-Medium','连续打卡',canvasWidth - 127,526,'#888888')
+    this.drawText(ctx,'12px PingFangSC-Medium',`${continuesDay}天`,canvasWidth - 101,509,'#FFFFFF')
+    this.drawText(ctx,'12px PingFangSC-Medium','连续打卡',canvasWidth - 129,526,'#888888')
     // 连续打卡右侧线条
-    this.initLine(ctx,canvasWidth - 70.5,509,canvasWidth - 70.5,535,1,'#888888')
+    this.initLine(ctx,canvasWidth - 72.5,509,canvasWidth - 72.5,537,1,'#888888')
     // 训练时长
-    this.drawText(ctx,'12px PingFangSC-Medium',`${duration}`,canvasWidth - 45,509,'#FFFFFF')
-    this.drawText(ctx,'12px PingFangSC-Medium','训练时长',canvasWidth - 63,526,'#888888')
+    this.drawText(ctx,'12px PingFangSC-Medium',`${duration}`,canvasWidth - 47,509,'#FFFFFF')
+    this.drawText(ctx,'12px PingFangSC-Medium','训练时长',canvasWidth - 65,526,'#888888')
     // 绘制分享二维码
-    this.drawRect(ctx,0,579,canvasWidth,131,'#ffffff')
+    this.drawRect(ctx,0,579,canvasWidth,132,'#ffffff')
     let imageQr = canvas.createImage()
     imageQr.onload = () => {
       ctx.beginPath()

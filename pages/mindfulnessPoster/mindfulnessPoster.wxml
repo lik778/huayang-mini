@@ -1,5 +1,5 @@
 <view class="poster-container">
-  <naviBar title="" backPathBelongTab="{{true}}" backPath="/pages/mindfulnessClock/mindfulnessClock" style="padding-top:{{statusHeight+44}}px;" color="transparent" title="分享卡片" titleColor="#ffffff"></naviBar>
+  <naviBar title="" backPathBelongTab="{{true}}" backPath="/pages/mindfulnessList/mindfulnessList" style="padding-top:{{statusHeight+44}}px;" color="transparent" title="分享卡片" titleColor="#ffffff"></naviBar>
   <!-- canvas -->
   <view class="canvas-poster">
     <canvas id="myCanvas" type="2d"></canvas>
