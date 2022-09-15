@@ -230,7 +230,7 @@ Page({
     let userName = JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)).nickname
     this.setData({
       didShowAuth: false,
-      userName: userName.length > 6 ? userName.slice(0, 6) : userName
+      userName: userName.length > 15 ? userName.slice(0, 15) : userName
     }, () => {
       this.drawCredential()
     })
