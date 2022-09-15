@@ -3,7 +3,9 @@ import { getLocalStorage, queryWxAuth , toast } from "../../utils/util";
 import {
   collectError
 } from "../../api/auth/index"
-
+import {
+  queryPunchCardBg,
+} from "../../api/course/index"
 
 Page({
 
@@ -37,8 +39,8 @@ Page({
     })
     // this.initPoster({
     //   actionName: '121',
-    //   continuesDay: 1,
-    //   duration: 1,
+    //   continuesDay: 2,
+    //   duration: '00:00',
     // })
     let timer = setTimeout(() => {
       this.initCanvas()
@@ -51,7 +53,7 @@ Page({
     wx.createSelectorQuery()
     .select('#myCanvas') // 在 WXML 中填入的 id
     .fields({ node: true, size: true })
-    .exec((res) => {
+    .exec( async (res) => {
         // Canvas 对象
         const canvas = res[0].node
         // 渲染上下文
@@ -68,13 +70,16 @@ Page({
         ctx.scale(dpr, dpr)
         const url = "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1663048449lZDjVj.jpg"
         // const url = 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1662716884qfOpmg.jpg'
+
+        // let url =  await queryPunchCardBg()
+        
         // 初始化背景
         this.setData({
           canvasWidth: width,
           canvasheight: height,
           canvas: canvas
         })
-        this.initBg(canvas,ctx,width,617,url,0,0)
+        this.initBg(canvas,ctx,width,width / 0.616,url,0,0)
         // 初始化打卡数据
         // this.initPosterData(canvas,ctx)
         
@@ -137,7 +142,7 @@ Page({
       ctx.clip()
       // ctx.fillStyle = 'pink'
       // ctx.fillRect(15,509,30,30)
-      ctx.drawImage(image,17,507,30,30)
+      ctx.drawImage(image,20,507,30,30)
       // 背景图片-
       // this.initBg(canvas,ctx,30,30,accountImage,15,509)
       ctx.closePath()
@@ -177,17 +182,17 @@ Page({
   initPosterData(canvas,ctx) {
     let { actionName,duration, continuesDay, accountName, accountImage } = this.data.posterData
     let  { canvasWidth, canvasheight } = this.data
-    this.drawArc(canvas, ctx,32,522,15,2,accountImage)
-    this.drawText(ctx,'13px PingFangSC-Medium',accountName,53,509,'#FFFFFF')
-    this.drawText(ctx,'12px PingFangSC-Regular',actionName,53,526,'#888888')
+    this.drawArc(canvas, ctx,35,522,15,2,accountImage)
+    this.drawText(ctx,'14px PingFangSC-Medium',accountName,56,509,'#FFFFFF')
+    this.drawText(ctx,'14px PingFangSC-Regular',actionName,56,526,'#888888')
     // 连续打卡
-    this.drawText(ctx,'12px PingFangSC-Medium',`${continuesDay}天`,canvasWidth - 101,509,'#FFFFFF')
-    this.drawText(ctx,'12px PingFangSC-Medium','连续打卡',canvasWidth - 129,526,'#888888')
+    this.drawText(ctx,'14px PingFangSC-Medium',`${continuesDay}天`,canvasWidth - 105,509,'#FFFFFF')
+    this.drawText(ctx,'14px PingFangSC-Medium','连续打卡',canvasWidth - 136,526,'#888888')
     // 连续打卡右侧线条
-    this.initLine(ctx,canvasWidth - 72.5,509,canvasWidth - 72.5,537,1,'#888888')
+    this.initLine(ctx,canvasWidth - 75.5,509,canvasWidth - 75.5,539,1,'#888888')
     // 训练时长
-    this.drawText(ctx,'12px PingFangSC-Medium',`${duration}`,canvasWidth - 47,509,'#FFFFFF')
-    this.drawText(ctx,'12px PingFangSC-Medium','训练时长',canvasWidth - 65,526,'#888888')
+    this.drawText(ctx,'14px PingFangSC-Medium',`${duration}`,canvasWidth - 50,509,'#FFFFFF')
+    this.drawText(ctx,'14px PingFangSC-Medium','训练时长',canvasWidth - 68,526,'#888888')
     // 绘制分享二维码
     this.drawRect(ctx,0,579,canvasWidth,132,'#ffffff')
     let imageQr = canvas.createImage()

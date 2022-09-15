@@ -209,6 +209,7 @@
 
 .current {
   position: relative;
+  animation: fadeIn 2s ease-in-out forwards;
 }
 
 .current::after {
@@ -223,6 +224,7 @@
   background: #FF4433;
   background-image: linear-gradient(135deg, #FFA562 0%, #FF4452 100%);
   border-radius: 6px;
+  /* animation: fadeIn 2s ease-in-out forwards; */
 }
 
 
