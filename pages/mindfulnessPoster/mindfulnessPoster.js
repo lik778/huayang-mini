@@ -126,6 +126,14 @@ Page({
     ctx.fillStyle = color
     ctx.fillRect(x,y,width,height)
   },
+  // 绘制 1/4 圆
+  drawArc4(ctx,x,y,r,px,py,color) {
+    ctx.beginPath()
+    ctx.arc(x,y,r,px,py)
+    ctx.fillStyle = color
+    ctx.fill()
+    ctx.closePath()
+  },
 
   //  裁剪圆
   drawArc(canvas,ctx,x,y,r,width,accountImage) {
@@ -183,33 +191,40 @@ Page({
     let { actionName,duration, continuesDay, accountName, accountImage } = this.data.posterData
     let  { canvasWidth, canvasheight } = this.data
     this.drawArc(canvas, ctx,35,522,15,2,accountImage)
-    this.drawText(ctx,'14px PingFangSC-Medium',accountName,56,509,'#FFFFFF')
-    this.drawText(ctx,'14px PingFangSC-Regular',actionName,56,526,'#888888')
+    this.drawText(ctx,'13px PingFangSC-Medium',accountName,56,509,'#FFFFFF')
+    this.drawText(ctx,'12px PingFangSC-Regular',actionName,56,526,'#888888')
     // 连续打卡
-    this.drawText(ctx,'14px PingFangSC-Medium',`${continuesDay}天`,canvasWidth - 105,509,'#FFFFFF')
-    this.drawText(ctx,'14px PingFangSC-Medium','连续打卡',canvasWidth - 136,526,'#888888')
+    this.drawText(ctx,'13px PingFangSC-Medium',`${continuesDay}天`,canvasWidth - 105,509,'#FFFFFF')
+    this.drawText(ctx,'12px PingFangSC-Medium','连续打卡',canvasWidth - 132,526,'#888888')
     // 连续打卡右侧线条
     this.initLine(ctx,canvasWidth - 75.5,509,canvasWidth - 75.5,539,1,'#888888')
     // 训练时长
-    this.drawText(ctx,'14px PingFangSC-Medium',`${duration}`,canvasWidth - 50,509,'#FFFFFF')
-    this.drawText(ctx,'14px PingFangSC-Medium','训练时长',canvasWidth - 68,526,'#888888')
+    this.drawText(ctx,'13px PingFangSC-Medium',`${duration}`,canvasWidth - 55,509,'#FFFFFF')
+    this.drawText(ctx,'12px PingFangSC-Medium','训练时长',canvasWidth - 68,526,'#888888')
+
+    // 绘制边角矩形
+    this.drawArc4(ctx,8,587,8,  0 , 2 * Math.PI, '#ffffff')
+    this.drawArc4(ctx,canvasWidth - 8,587,8, 0 , 2 * Math.PI, '#ffffff')
+    this.drawRect(ctx,8,579,canvasWidth - 16,8,'#ffffff')
+    // 绘制矩形
+    this.drawRect(ctx,0,587,canvasWidth,132,'#ffffff')
     // 绘制分享二维码
-    this.drawRect(ctx,0,579,canvasWidth,132,'#ffffff')
+
     let imageQr = canvas.createImage()
     imageQr.onload = () => {
       ctx.beginPath()
-      ctx.drawImage(imageQr, 25.76, 609, 57.6,57.6)
+      ctx.drawImage(imageQr, 25.76, 609, 62,62)
     }
     imageQr.src = this.data.qrCode
     ctx.closePath()
-    this.drawImag(canvas,ctx,'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1663052076aZmEDf.jpg',100,617,221,13)
-    this.drawImag(canvas,ctx,'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1663052242qycokz.jpg',100,649,128,13)
+    this.drawImag(canvas,ctx,'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1663052076aZmEDf.jpg',102,617,221,13)
+    this.drawImag(canvas,ctx,'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1663052242qycokz.jpg',102,649,128,13)
     // 我在花样百姓 一 正念生活，花样人生-canvas对文本的操作api少，使用图片代替文字
     // this.drawText(ctx,'bold 13px PingFangSC-Medium','我在',100,617,'#333333')
     // this.drawText(ctx,'bold 13px PingFangSC-Medium','花样百姓',126,617,'#FF5544')
     // this.drawText(ctx,'bold 13px PingFangSC-Medium','花样百姓',126,617,'#FF5544')
     // 线条
-    this.initLine(ctx,100.5,639,canvasWidth - 15,639,1,'#EEEEEE')
+    this.initLine(ctx,102.5,639,canvasWidth - 15,639,1,'#EEEEEE')
     // 长按扫码立即学习
 
     // 绘制完成了
