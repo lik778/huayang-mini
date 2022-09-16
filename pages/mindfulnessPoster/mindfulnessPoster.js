@@ -20,7 +20,7 @@ Page({
      qrCode: '',
      _didDrawCanvasDone: false,
      _invokeSaveToLocalAction: false,
-    //  tempFilePath: '',
+     tempFilePath: '',
      audioId: '',
      actionName: ''
   },
@@ -78,10 +78,10 @@ Page({
         canvas.width = width * dpr
         canvas.height = height * dpr
         ctx.scale(dpr, dpr)
-        const url = "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1663048449lZDjVj.jpg"
+        // const url = "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1663048449lZDjVj.jpg"
         // const url = 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1662716884qfOpmg.jpg'
 
-        // let url =  await queryPunchCardBg()
+        let url =  await queryPunchCardBg()
         
         // 初始化背景
         this.setData({
@@ -259,6 +259,9 @@ Page({
     }
     
     this.saveCanvasImageTolocal(canvas,0,68,canvasWidth,636).then(({ tempFilePath }) => {
+      this.setData({
+        tempFilePath
+      })
       wx.hideLoading()
       queryWxAuth(WX_AUTH_TYPE.writePhotosAlbum).then(() => {
         wx.saveImageToPhotosAlbum({
@@ -320,7 +323,8 @@ Page({
   onShareAppMessage() {
     return {
       title: this.data.actionName,
-      path: `/pages/mindfulness/mindfulness?audioId=${this.data.audioId}`
+      path: `/pages/mindfulness/mindfulness?audioId=${this.data.audioId}`,
+      imageUrl: this.data.tempFilePath
     }
   },  
 
