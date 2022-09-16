@@ -611,7 +611,7 @@ Page({
 	_mindfulnessDone() {
 		checkInMindfulness({bizId: this.data.audioId, bizType: "PRACTISE", onlineMinute: this.data.dimTime, userId: getLocalStorage(GLOBAL_KEY.userId)})
 			.then((data) => {
-        const url = `/pages/mindfulnessClock/mindfulnessClock?fixedShowTime=${this.data.fixedShowTime}&qrCode=${this.data.qrcode}&actionName=${this.data.title}`
+        const url = `/pages/mindfulnessClock/mindfulnessClock?fixedShowTime=${this.data.fixedShowTime}&qrCode=${this.data.qrcode}&actionName=${this.data.title}&audioId=${this.data.audioId}`
         wx.navigateTo({
           url
         })

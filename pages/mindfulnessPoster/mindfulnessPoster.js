@@ -19,15 +19,25 @@ Page({
      canvasheight: 0,
      qrCode: '',
      _didDrawCanvasDone: false,
-     _invokeSaveToLocalAction: false
+     _invokeSaveToLocalAction: false,
+    //  tempFilePath: '',
+     audioId: '',
+     actionName: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    // console.log(options)
+    // let share = options.share || ''
+    // if(share === 'poster') return wx.navigateTo({
+    //   url: `/pages/mindfulness/mindfulness?audioId=${options.audioId}`,
+    // })
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
+      audioId: options.audioId,
+      actionName: options.actionName,
       qrCode: options.qrCode
       // qrCode: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/user_avatar_2557.jpg'
     })
@@ -250,7 +260,6 @@ Page({
     
     this.saveCanvasImageTolocal(canvas,0,68,canvasWidth,636).then(({ tempFilePath }) => {
       wx.hideLoading()
-      console.log(tempFilePath)
       queryWxAuth(WX_AUTH_TYPE.writePhotosAlbum).then(() => {
         wx.saveImageToPhotosAlbum({
           filePath: tempFilePath,
@@ -305,5 +314,21 @@ Page({
         }
       })
     })
-  }
+  },
+
+  // 分享给朋友
+  onShareAppMessage() {
+    return {
+      title: this.data.actionName,
+      path: `/pages/mindfulness/mindfulness?audioId=${this.data.audioId}`
+    }
+  },  
+
+  // 分享到朋友圈
+  // onShareTimeline() {
+  //   return {
+  //     title: this.data.actionName,
+  //     query: `share=poster&audioId=${this.data.audioId}`
+  //   }
+  //   }
 })

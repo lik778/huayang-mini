@@ -24,20 +24,23 @@ Page({
     lock: false,
     totalDuration: '',
     qrCode: '',
-    actionName: ''
+    actionName: '',
+    audioId: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    console.log(options)
     let totalDuration = options.fixedShowTime
     this.setData({
       statusHeight: JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams)).statusBarHeight,
       targetObj: dayjs(),
       totalDuration: totalDuration,
       qrCode: options.qrCode,
-      actionName: options.actionName
+      actionName: options.actionName,
+      audioId: options.audioId
     })
     this.run()
   },
@@ -189,7 +192,7 @@ Page({
     // 分享好友
   bindSharing() {
     wx.navigateTo({
-      url: `/pages/mindfulnessPoster/mindfulnessPoster?qrCode=${this.data.qrCode}&duration=${this.data.totalDuration}&continuesDay=${this.data.mindfulnessStatisticsData.continuousDay}&actionName=${this.data.actionName}`
+      url: `/pages/mindfulnessPoster/mindfulnessPoster?qrCode=${this.data.qrCode}&duration=${this.data.totalDuration}&continuesDay=${this.data.mindfulnessStatisticsData.continuousDay}&actionName=${this.data.actionName}&audioId=${this.data.audioId}`
     })
   }
 })
