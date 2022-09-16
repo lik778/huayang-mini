@@ -1,6 +1,10 @@
 @import "../../assets/css/common.wxss";
 
 .home {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     padding-bottom: 40rpx;
 }
 
@@ -8,6 +12,14 @@
 .travel {
     padding: 0 30rpx;
     background: white;
+}
+
+.first {
+  order: 2;
+}
+
+.seconed {
+  order: 1;
 }
 
 .travel-layout {
