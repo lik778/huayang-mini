@@ -205,7 +205,7 @@ Page({
     // 绘制边角矩形
     this.drawArc4(ctx,8,587,8,  0 , 2 * Math.PI, '#ffffff')
     this.drawArc4(ctx,canvasWidth - 8,587,8, 0 , 2 * Math.PI, '#ffffff')
-    this.drawRect(ctx,8,579,canvasWidth - 16,8,'#ffffff')
+    this.drawRect(ctx,8,579,canvasWidth - 16,15,'#ffffff')
     // 绘制矩形
     this.drawRect(ctx,0,587,canvasWidth,132,'#ffffff')
     // 绘制分享二维码
