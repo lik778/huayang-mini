@@ -36,7 +36,7 @@ Page({
     campData: "",
     userName: '',
     Nowdate: '',
-    hostBg: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606447725FvEaJd.jpg",
+    hostBg: "https://huayang-img.oss-cn-shanghai.aliyuncs.com/1662462912ZgjZHI.jpg",
     LogoList: [],
     isRowStyle: false,
     didShowAuth: false,
@@ -195,6 +195,7 @@ Page({
     let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
     let Nowdate = year + "年" + month + "月"
     let systemParams = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
+    let hostBg = (campData.type && campData.type === 'mindfulness') ? 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1662462912ZgjZHI.jpg' : 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606447725FvEaJd.jpg '
     this.setData({
       statusBarHeight: systemParams.statusBarHeight,
       systemParams: systemParams,
@@ -207,7 +208,7 @@ Page({
       campData,
       Nowdate,
       LogoList: logoData,
-      hostBg: 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1639551039psUfBH.jpg',
+      hostBg: hostBg,
       isShare: options.isShare
     })
   },
@@ -229,7 +230,7 @@ Page({
     let userName = JSON.parse(getLocalStorage(GLOBAL_KEY.userInfo)).nickname
     this.setData({
       didShowAuth: false,
-      userName: userName.length > 6 ? userName.slice(0, 6) : userName
+      userName: userName.length > 15 ? userName.slice(0, 15) : userName
     }, () => {
       this.drawCredential()
     })
@@ -295,7 +296,7 @@ Page({
   onShareAppMessage: function () {
     let link = `subCourse/campCredential/campCredential?campData=${encodeURIComponent(JSON.stringify(this.data.campData))}&isShare=true&logo=`
     return {
-      title: `我正在参加${this.data.campData.name}，每天都有看的见的变化，快来试试`,
+      title: `我正在参加${this.data.campData.name}，正念让我遇见更好的生活！`,
       path: link
     }
   }

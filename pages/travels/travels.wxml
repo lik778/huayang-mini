@@ -1,6 +1,6 @@
 <view class="home">
     <!-- 城市慢游 -->
-    <view class="travel" wx:if="{{cityWalkList.length > 0}}">
+    <view class="travel first" wx:if="{{cityWalkList.length > 0}}">
         <view class="travel-layout">城市慢游</view>
         <view class="travel-item" wx:for="{{cityWalkList}}" wx:key="index" bindtap="onTravelItemTap"
               data-item="{{item}}">
@@ -12,13 +12,13 @@
             <view class="travel-info">
                 <view class="travel-price">¥<text class="price-01">{{item.discount_price / 100}}</text><text
                         wx:if="{{item.price > 0}}" class="price-02">¥{{item.price / 100}}</text></view>
-                <view class="travel-visit-no">{{item.buy_count}}人已购</view>
+                <view class="travel-visit-no">累计{{item.buy_count}}人已购</view>
             </view>
         </view>
     </view>
 
     <!-- 精品秀游 -->
-    <view class="travel" wx:if="{{qualityTravelList.length > 0}}">
+    <view class="travel seconed" wx:if="{{qualityTravelList.length > 0}}">
         <view class="travel-layout">精品秀游</view>
         <view class="travel-item" wx:for="{{qualityTravelList}}" wx:key="index" bindtap="onTravelItemTap"
               data-item="{{item}}">
@@ -30,7 +30,7 @@
             <view class="travel-info">
                 <view class="travel-price">¥<text class="price-01">{{item.discount_price / 100}}</text><text
                         wx:if="{{item.price > 0}}" class="price-02">¥{{item.price / 100}}</text></view>
-                <view class="travel-visit-no">{{item.buy_count}}人已购</view>
+                <view class="travel-visit-no">累计{{item.buy_count}}人已购</view>
             </view>
         </view>
     </view>
