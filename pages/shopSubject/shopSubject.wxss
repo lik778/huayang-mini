@@ -2,6 +2,64 @@
 .shop-subject {
     overflow: hidden;
 }
+.activity-container {
+  padding: 0 40rpx;
+}
+
+.activity-tip {
+  position: absolute;
+  top: 10rpx;
+  left: 10rpx;
+  z-index: 999;
+  width: 128rpx;
+  height: 52rpx;
+  border-radius: 20rpx;
+  font: normal 28rpx/52rpx PingFangSC;
+  text-align: center;
+  color: white;
+  background: #eb5541;
+}
+.activity-item {
+  position: relative;
+  margin-bottom: 60rpx;
+}
+
+.activity-item:active {
+  opacity: 0.9;
+}
+
+.cover {
+  width: 670rpx;
+  height: 336rpx;
+  font-size: 0;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 18rpx;
+}
+
+.title {
+  width: 496rpx;
+  height: 88rpx;
+  font: 32rpx/44rpx PingFangSC;
+}
+
+.separate {
+  width: 2rpx;
+  height: 88rpx;
+  background: #DDDDDD;
+}
+
+.date {
+  width: 136rpx;
+  height: 88rpx;
+  font: 28rpx/44rpx PingFangSC;
+  color: rgba(0,0,0, 0.6);
+  text-align: right;
+}
 
 /* banner */
 .swiper-box {

@@ -1,13 +1,9 @@
 import {
   getFindBanner,
-  getOfflineCourseListOfIndex
+  getActivityList
 } from "../../api/course/index"
-import {
-  $notNull
-} from "../../utils/util"
-import {
-  getYouZanKeChengList
-} from "../../api/live/index"
+import { ROOT_URL } from "../../lib/config"
+import request from "../../lib/request"
 import dayjs from "dayjs"
 import bxPoint from "../../utils/bxPoint"
 
@@ -17,9 +13,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-    globalShow: false,
+    globalShow: true,
     bannerList: [],
-    list: []
+    list: [],
+    offset: 0,
+    limit: 10,
   },
 
   /**
@@ -82,29 +80,59 @@ Page({
   },
   // 启动函数
   run() {
-    this.getBanner()
+    // this.getBanner()
     this.getList()
-    this.getOfflineCourseList()
   },
 
-  getOfflineCourseList() {
-    getOfflineCourseListOfIndex({
-      limit: 999
-    }).then(({
-      data
-    }) => {
-      let list = data.list || []
-      if (list.length) {
-        list.forEach(item => {
-          item.price = item.price ? (item.price / 100).toFixed(2) : ''
-          item.price = item.price.split('.')[1] === '00' ? item.price.split('.')[0] : item.price
-        })
-      }
-      this.setData({
-        list: list
+  getList() {
+    getActivityList({offset: this.data.offset, limit: this.data.limit, platform: 1, status: 1, sort: "begin_time", classify: 1})
+      .then(({list}) => {
+        if (list.length < this.data.limit) {
+          this.setData({hasMore: false})
+        }
+        list = list || []
+        list = list.map(n => ({
+          ...n,
+          year: dayjs(n.start_time).year(),
+          month: dayjs(n.start_time).month() + 1,
+          date: dayjs(n.start_time).date(),
+        }))
+        let oldList = this.data.list.slice()
+        this.setData({list: [...oldList, ...list]})
       })
-    })
   },
+
+  goToPureWebview(e) {
+    let {item} = e.currentTarget.dataset
+    let link = ""
+    switch (request.baseUrl) {
+      case ROOT_URL.dev: {
+        link = 'https://dev.huayangbaixing.com'
+        break
+      }
+      case ROOT_URL.prd: {
+        link = 'https://huayang.baixing.com'
+        break
+      }
+    }
+
+    bxPoint("activity_list_click", {
+      activity_id: item.id,
+      activity_title: item.title,
+      activity_run_date: item.start_time
+    }, false)
+
+    link += `/#/home/detail/${item.id}`
+
+    if (+item.pay_online === 1) {
+      // 收费活动
+      wx.navigateTo({url: `/pages/activePlatform/activePlatform?link=${encodeURIComponent(link)}`})
+    } else {
+      // 免费活动
+      wx.navigateTo({url: `/pages/pureWebview/pureWebview?link=${link}`})
+    }
+  },
+
 
   naviMiniProgram(link, linkType) {
     switch (linkType) {
@@ -165,40 +193,40 @@ Page({
     })
   },
   // 获取有赞培训课数据
-  getList() {
-    let list = this.data.list.concat([])
-    list = list.map(n => ({
-      ...n,
-      price: n.price ? (n.price / 100).toFixed(0) : ''
-    }))
-    this.setData({
-      list
-    })
-    this.setData({
-      globalShow: true
-    })
-    // getYouZanKeChengList({
-    // 		offset: 0,
-    // 		limit: 999
-    // 	})
-    // 	.then(({
-    // 		data: {
-    // 			list
-    // 		}
-    // 	}) => {
-    // 		list = list || []
-    // 		list = list.map(n => ({
-    // 			...n,
-    // 			price: (n.price / 100).toFixed(0)
-    // 		}))
-    // 		this.setData({
-    // 			list
-    // 		})
-    // 	})
-    // 	.finally(() => {
-    // 		this.setData({globalShow: true})
-    // 	})
-  },
+  // getList() {
+  //   let list = this.data.list.concat([])
+  //   list = list.map(n => ({
+  //     ...n,
+  //     price: n.price ? (n.price / 100).toFixed(0) : ''
+  //   }))
+  //   this.setData({
+  //     list
+  //   })
+  //   this.setData({
+  //     globalShow: true
+  //   })
+  //   // getYouZanKeChengList({
+  //   // 		offset: 0,
+  //   // 		limit: 999
+  //   // 	})
+  //   // 	.then(({
+  //   // 		data: {
+  //   // 			list
+  //   // 		}
+  //   // 	}) => {
+  //   // 		list = list || []
+  //   // 		list = list.map(n => ({
+  //   // 			...n,
+  //   // 			price: (n.price / 100).toFixed(0)
+  //   // 		}))
+  //   // 		this.setData({
+  //   // 			list
+  //   // 		})
+  //   // 	})
+  //   // 	.finally(() => {
+  //   // 		this.setData({globalShow: true})
+  //   // 	})
+  // },
   // 唤醒电话
   onPhoneCall() {
     bxPoint("course_phone_call_click", {}, false)
