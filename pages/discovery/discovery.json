@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "花样老年大学",
+  "navigationBarTitleText": "花样百姓",
   "usingComponents": {
     "authModule": "../../components/auth/auth",
     "liveLayout": "../../components/liveLayout/liveLayout",
