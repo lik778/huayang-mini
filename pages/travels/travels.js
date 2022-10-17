@@ -71,7 +71,7 @@ Page({
 	onShareAppMessage: function () {
 		return {
 			title: "趁现在，和花样一起游学，享受精彩人生",
-			path: "/pages/index/index"
+			path: "/pages/travels/travels"
 		}
 	},
 	run() {
