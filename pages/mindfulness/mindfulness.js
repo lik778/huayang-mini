@@ -1,6 +1,7 @@
 import { getLocalStorage, hasAccountInfo, hasUserInfo } from "../../utils/util";
 import { GLOBAL_KEY } from "../../lib/config";
 import { checkInMindfulness, getMindfulnessDetail } from "../../api/mindfulness/index";
+import bxPoint from "../../utils/bxPoint"
 
 // 画布大小
 const CANVAS_WIDTH = 375
@@ -116,7 +117,10 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide() {
-
+    bxPoint('mindfulness_practice_audio_play_duration',{
+      audio_id: this.state.audioId,
+      audio_play_duration: this.state.showTime
+    },false)
   },
 
   /**
