@@ -21,7 +21,6 @@ import {
 } from "../../api/auth/index"
 
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -40,7 +39,8 @@ Page({
     LogoList: [],
     isRowStyle: false,
     didShowAuth: false,
-    isShare: false
+    isShare: false,
+    ctx:''
   },
 
   // 返回
@@ -54,7 +54,6 @@ Page({
         url: `/subCourse/campDetail/campDetail?id=${this.data.campData.id}&share=true`,
       })
     }
-
   },
 
   // 分享朋友
@@ -62,6 +61,54 @@ Page({
     bxPoint("page_camp_credential_share", {
       traincamp_id: this.data.campData.id
     }, false)
+  },
+
+  strLen(params){
+    let str = params
+    let len =0
+    let i,c
+    for(i=0;i<str.length;i++){
+      c = str.charCodeAt(i)
+      if((c>=0x0001 && c<= 0x007e) || (0xff60 <= c && c<= 0xff9f)){
+        len++
+      }else {
+        len +=2
+      }
+    }
+    return len
+  },
+
+  // 修改名称
+  changeShowName(){
+    var that= this
+    wx.showModal({
+      title: '您希望在证书上看到的名称',
+      content: that.data.userName,
+      editable : true,
+      success (res) {
+        if (res.confirm) {
+          if(that.strLen(res.content)>12){
+            wx.showModal({
+              title: '温馨提醒',
+              content: '名称超出一行啦，请适当缩短再试试吧，谢谢！',
+              editable : false
+            })
+          }
+          else{
+            let ctx = that.data.ctx
+            // 绘制前清空canvas
+            ctx.clearRect(0, 0, ctx.width, ctx.height)
+            that.setData({
+              userName:res.content
+            })
+            console.log('用户点击确定'+res.content)
+            that.drawCredential()
+          }
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      } 
+    })
   },
 
   // 保存到相册
@@ -142,9 +189,11 @@ Page({
   // 绘制canvas
   drawCredential() {
     wx.showLoading({
-      title: '绘制中...',
+      title: '证书绘制中...'
     })
-    let ctx = wx.createCanvasContext('canvas')
+    let ctx = this.data.ctx
+    // 绘制前清空canvas
+    ctx.clearRect(0, 0, ctx.width, ctx.height)
     let userName = this.data.userName
     let campName = this.data.campData.name
     ctx.font = 'bold 22px SourceHanSerifCN-Bold, SourceHanSerifCN'
@@ -161,6 +210,7 @@ Page({
       //   })
       // }
       drawFont(ctx, String(userName), '#0B0B0B', 'bold', 'SourceHanSerifCN-Bold, SourceHanSerifCN', 22, userNameX, 177)
+      //console.log('username='+userName)
       drawFont(ctx, `《${campName}》`, '#730807', 'normal', 'PingFangSC-Regular, PingFang SC', 12, campNameX, 237)
       drawFont(ctx, this.data.Nowdate, '#000000', 'normal', 'PingFangSC-Light, PingFang SC', 10, 117, 342)
       ctx.draw(false, () => {
@@ -168,12 +218,14 @@ Page({
           canvasId: 'canvas',
           success: (res) => {
             let tempFilePath = res.tempFilePath;
+            //console.log('canvasSrc'+tempFilePath)
             wx.hideLoading()
             this.setData({
               canvasSrc: tempFilePath
             })
           },
           fail: function (res) {
+            wx.hideLoading()
             console.log(res);
           }
         }, this);
@@ -185,7 +237,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options)
+    console.log('options'+options)
     let logoList = ['https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606721434GSUkFm.jpg', 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606721430eIijle.jpg']
     let campData = JSON.parse(decodeURIComponent(options.campData))
     campData.name = campData.name.length > 12 ? campData.name.slice(0, 12) : campData.name
@@ -196,6 +248,8 @@ Page({
     let Nowdate = year + "年" + month + "月"
     let systemParams = JSON.parse(getLocalStorage(GLOBAL_KEY.systemParams))
     let hostBg = (campData.type && campData.type === 'mindfulness') ? 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1662462912ZgjZHI.jpg' : 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606447725FvEaJd.jpg '
+    //let hostBg = 'https://huayang-img.oss-cn-shanghai.aliyuncs.com/1606447725FvEaJd.jpg'
+    let ctx = wx.createCanvasContext('canvas')
     this.setData({
       statusBarHeight: systemParams.statusBarHeight,
       systemParams: systemParams,
@@ -209,7 +263,8 @@ Page({
       Nowdate,
       LogoList: logoData,
       hostBg: hostBg,
-      isShare: options.isShare
+      isShare: options.isShare,
+      ctx:ctx
     })
   },
 
