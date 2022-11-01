@@ -101,8 +101,8 @@ Page({
     getMindfulnessCalendar({
       bizType: "PRACTISE",
       userId: getLocalStorage(GLOBAL_KEY.userId),
-      startTime: t.date(1).unix() * 1000,
-      endTime: t.date(t.daysInMonth()).unix() * 1000
+      startTime: t.date(1).hour(0).minute(0).millisecond(0).unix() * 1000,
+      endTime: t.date(t.daysInMonth()).hour(23).minute(59).millisecond(59).unix() * 1000
     }).then((data) => {
       let res = data || []
       let nd = []
