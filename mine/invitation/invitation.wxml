@@ -1,0 +1,46 @@
+<view class="invitation-container">
+  <view class="tags">
+    <view class="tags-item {{ index === current ? 'active-tags' : '' }}" wx:for="{{list}}" wx:key="index" bindtap="handelTagItem" data-index="{{index}}">
+      {{item}}
+    </view>
+  </view>
+
+  <!-- 我的邀请码 -->
+  <view class="myInvitation" wx:if="{{current === 0}}">
+    <text>我的邀请码：</text>
+    <text>{{myInvitation}}</text>
+    <button size="mini" open-type="share" class="share-btn" bindtap="shareToFriend">复制并分享</button>
+  </view>
+  <!-- 好友管理 -->
+  <view class="invitation-list" wx:if="{{current === 1}}">
+    <view class="alrealy-number">
+      <text>已邀请用户：</text>
+      <text class="a-n-c">{{invitationList.length}}</text>
+      <text>个</text>
+    </view>
+    <view class="already-item" wx:if="{{invitationList.length > 0}}"   wx:for="{{invitationList}}" wx:key="unique">
+      <view class="i-index">{{index + 1}}.</view>
+      <image class="a-i-head" src="{{item.avatar}}" mode="aspectFit"></image>
+      <text>{{item.nickname}}</text>
+    </view>
+  </view>
+  <!-- 填写邀请码 -->
+  <view class="fill-invitation" wx:if="{{current === 2 && !isAlready}}">
+    <view class="fill-input">
+      <text>填写邀请码：</text>
+      <input bindblur="bindblurInput" 
+      class="invitation-input" value="{{invitationNumber}}"  placeholder="输入好友邀请码"/>
+    </view>
+    <view class="share-btn submit-btn"  bindtap="setInvation">
+      确认提交
+    </view>
+  </view>
+  <!-- 邀请码已经填写 -->
+  <view class="fill-invitation-already" wx:if="{{current === 2 && isAlready}}">
+    <text>邀请码已填写完成：{{}}</text>
+    <text style="color:rgba(34, 34, 34, 0.6); ">{{invitationNumber}}</text>
+  </view>
+
+    <!-- 授权弹窗 -->
+    <authModule show="{{didShowAuth}}" bind:authCancelEvent="authCancelEvent" bind:authCompleteEvent="authCompleteEvent"></authModule>
+</view>

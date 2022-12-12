@@ -284,3 +284,23 @@ export function getUserPersonPageInfo(params) {
 export function getFluentCardChannelInfo(params) {
   return request._get(URL.queryFluentCardChannelInfo, params)
 }
+
+// 获取邀请码
+export function getInvationNumber(params) {
+  return request._get(URL.queryInvationNumber,params)
+}
+
+// 获取已邀请的好友列表
+export function getInvationList(params) {
+  return request._get(URL.queryInvationList,params)
+}
+
+// 填写邀请码
+export function setInvationNumber(params) {
+  return request._post(URL.queryInvationSet,params)
+}
+
+// 被邀请信息
+export function getAlreadyDetail(params) {
+  return request._get(URL.queryAlreadyNumber,params)
+}

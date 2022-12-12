@@ -1,0 +1,109 @@
+@import "/assets/css/common.wxss";
+.invitation-container {
+  padding:  40rpx;
+}
+.tags {
+  display: flex;
+  margin-bottom: 50rpx;
+}
+.tags-item {
+  padding: 16rpx 24rpx;
+  margin-right: 16rpx;
+  border: 2rpx solid #F2F2F4;
+  border-radius: 16rpx 0 16rpx 0;
+  box-sizing: border-box;
+  font: 28rpx/28rpx PingFangSC;
+  background: #F2F2F4;
+  color: #000000;
+}
+.active-tags {
+  border-color: #FF5544;
+  background: white;
+  color: #FF5544;
+}
+.myInvitation {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.share-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 30px;
+  background: #FF5544;
+  color: #fff;
+  border-radius: 20px;
+  margin: 0;
+  margin-left: 20px;
+}
+.submit-btn {
+  margin-top: 20px;
+}
+.invitation-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.a-n-c {
+  font-size: 24px;
+  color: #FF5544;
+  margin-right: 5px;
+}
+.alrealy-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.i-index {
+  width: 15px;
+}
+.already-item {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 10px;
+  color: rgba(34, 34, 34, 0.6);
+}
+.a-i-head {
+  width: 20px;
+  height: 20px;
+  margin: 0  20px 0 15px ;
+  border-radius: 50%;
+}
+.fill-invitation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.fill-invitation-already {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.fill-input {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.nvitation-input {
+  width: 100%;
+}
+.fill-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 23px;
+  margin-top: 20px;
+  background: #FF5544;
+  color: #fff;
+  border-radius: 20px;
+  font-size: 14px;
+}
+

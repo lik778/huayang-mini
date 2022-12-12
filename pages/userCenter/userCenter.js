@@ -266,6 +266,19 @@ Page({
       })
     }
   },
+  // 邀请好友
+  goToInvitationPage() {
+    if (hasUserInfo() && hasAccountInfo()) {
+      bxPoint("applet_mine_click_invitation", {}, false)
+      wx.navigateTo({
+        url: "/mine/invitation/invitation"
+      })
+    } else {
+      this.setData({
+        didShowAuth: true
+      })
+    }
+  },
   goToTaskCoursePage() {
     if (hasUserInfo() && hasAccountInfo()) {
       bxPoint("applet_mine_click_course", {}, false)

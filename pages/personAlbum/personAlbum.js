@@ -71,7 +71,15 @@ Page({
 	 */
 	onReachBottom: function () {
 		this.getList()
-	},
+  },
+  
+  // 处理url
+  fommatterUrl(url) {
+    if(!url.includes("x-oss-process=style/huayang-thumb") && !url.includes("x-oss-process=image/watermark")) {
+      return "?x-oss-process=style/huayang-small-thumb"
+    }
+    return url
+  },
 
 	/**
 	 * 用户点击右上角分享

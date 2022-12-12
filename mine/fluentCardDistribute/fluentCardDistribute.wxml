@@ -58,7 +58,7 @@
     </view>
 
     <view class="btns" style="height: {{108 + bottomNo}}rpx;">
-        <button open-type="share" class="btn" bindtap="shareToFriend">分享给好友</button>
+        <button open-type="share" class="btn" c>分享给好友</button>
         <view class="btn extrude" bindtap="saveToLocalAlbum">保存到相册</view>
     </view>
 </view>

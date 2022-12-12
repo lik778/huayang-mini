@@ -82,6 +82,15 @@
                 </view>
                 <image src="/assets/images/common/arrow.png"></image>
             </view>
+            <view class="function-item" bindtap="goToInvitationPage">
+                <view class="function-item-left">
+                    <image src="/assets/images/common/invation.png" class="task-image"></image>
+                    <view class="function-item-box">
+                        <view class="function-item-top">邀请好友</view>
+                    </view>
+                </view>
+                <image src="/assets/images/common/arrow.png"></image>
+            </view>
             <!--			<view class="function-item" bindtap="goToTaskLaunchPage" wx:if="{{false}}">-->
             <!--				<view class="function-item-left">-->
             <!--					<image src="/assets/images/common/task.png" class="task-image"></image>-->

@@ -76,7 +76,8 @@
         "cardWithdraw/cardWithdraw",
         "oldInviteNew/oldInviteNew",
         "books/books",
-        "joinedActivities/joinedActivities"
+        "joinedActivities/joinedActivities",
+        "invitation/invitation"
       ]
     },
     {
